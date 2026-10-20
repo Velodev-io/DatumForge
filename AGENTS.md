@@ -2,12 +2,12 @@
 
 Preserve docs and research. Read docs/README.md first. Follow STEP_ZERO lettered
 tasks in order; record blocked prerequisites and continue independent work.
-Modules 1, 2 and 3 were explicitly authorized on 2026-10-19; stop before Module 4. Maintain native macOS/Windows/Linux
+Modules 1, 2 and 3 were explicitly authorized on 2026-10-19. Module 3 interaction repairs and Module 4.0a-c workspace UI were authorized on 2026-10-20; stop before 4.1a exact features. Maintain native macOS/Windows/Linux
 architecture and the physical 8 GB baseline. Never claim unrun hardware/platform
 checks passed. UI owns display meshes; one worker owns exact geometry and writes.
 Keep Module 0 experiments under tests; no production feature shortcuts.
 
-Build and evidence commands: cmake/README.md and docs/testing/module-1.md and docs/testing/module-2.md and docs/testing/module-3.md.
+Build and evidence commands: cmake/README.md and docs/testing/module-1.md and docs/testing/module-2.md and docs/testing/module-3.md and docs/testing/module-4.md.
 Tests must use marked disposable roots and refuse release recovery paths.
 Use topic branches and review evidence; no remote/history rewriting without
 an actual destination/instruction. Do not delegate automatically.

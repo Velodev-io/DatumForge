@@ -7,7 +7,9 @@
 #include <QLineEdit>
 #include <QMainWindow>
 #include <QSettings>
+#include <QStackedWidget>
 #include <QTabBar>
+#include <QTabWidget>
 #include <QTreeWidget>
 #include <memory>
 namespace cad {
@@ -22,6 +24,14 @@ class MainWindow : public QMainWindow {
     Viewport *viewport = nullptr;
     SketchPanel *sketchPanel = nullptr;
     QTreeWidget *tree = nullptr;
+    QTabWidget *commandTabs = nullptr;
+    QStackedWidget *propertyPages = nullptr;
+    QByteArray treeProjection;
+    QString treeActiveDocument;
+    QLabel *editContext = nullptr;
+    bool wasSketchEditing = false;
+    void buildCommandTabs();
+    void refreshCommandTabs();
     QTabBar *documents = nullptr;
     QLabel *status = nullptr;
     QLabel *notice = nullptr;

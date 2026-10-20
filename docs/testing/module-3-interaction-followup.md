@@ -1,5 +1,11 @@
 # Module 3 interaction follow-up
 
+Historical circle-only closeout. The later [input/direct-editing repair](module-3-input-repair.md)
+and [4.0 workspace evidence](module-4.md) supersede current interaction and scope
+statements below, including mandatory grid snapping and Escape discarding a draft.
+The following results describe their original dated source; they remain unchanged
+as historical evidence.
+
 Date: 20 October 2026. Status: **feasible available-Mac Module 3 follow-up closed;
 full platform completion Blocked**. Stop before Module 4. No Module 4 implementation
 was performed or authorized.
@@ -62,7 +68,7 @@ slot also runs these workflows for both unit systems at each scale.
 | Native Module 3 | Pass at [100%](artifacts/module-3/runs/20261020T035603.673933Z/native-module3-100.txt), [125%](artifacts/module-3/runs/20261020T035603.673933Z/native-module3-125.txt), [150%](artifacts/module-3/runs/20261020T035603.673933Z/native-module3-150.txt), [175%](artifacts/module-3/runs/20261020T035603.673933Z/native-module3-175.txt), [200%](artifacts/module-3/runs/20261020T035603.673933Z/native-module3-200.txt); actual Cocoa B1 and pointer workflows in both mm/in, zero failed/skipped cases. |
 | Prior module regressions | Pass: native [Module 1](artifacts/module-3/runs/20261020T035603.673933Z/native-module1-regression.txt) and [Module 2](artifacts/module-3/runs/20261020T035603.673933Z/native-module2-regression.txt). |
 | Visual review | [100% mm circle](artifacts/module-3/runs/20261020T035603.673933Z/native-100/circle-drag-mm.png), [200% inch circle](artifacts/module-3/runs/20261020T035603.673933Z/native-200/circle-drag-in.png) and [100% accepted B1](artifacts/module-3/runs/20261020T035603.673933Z/native-100/sketches-native.png) inspected: live unit readout, dashed circle, contextual rows and persistent actions visible. [Review limits](artifacts/module-3/runs/20261020T035603.673933Z/visual-review.json). |
-| Source identity / evidence consistency | [Pass](artifacts/module-3/runs/20261020T035603.673933Z/evidence-consistency.json): current [tested inputs](artifacts/module-3/runs/20261020T035603.673933Z/source-identity.json) match; pins and frozen B1 unchanged. |
+| Source identity / evidence consistency | [Pass](artifacts/module-3/runs/20261020T035603.673933Z/evidence-consistency.json): historical [tested inputs](artifacts/module-3/runs/20261020T035603.673933Z/source-identity.json) match; pins and frozen B1 unchanged. |
 
 The [full run record](artifacts/module-3/runs/20261020T035603.673933Z/verification.json) contains exact commands, exit codes,
 durations and fresh host inventory. Source aggregate SHA-256:

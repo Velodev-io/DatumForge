@@ -1,0 +1,3 @@
+[1/4] Automatic MOC for target module4_workspace
+[2/3] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[3/3] Linking CXX executable module4_workspace

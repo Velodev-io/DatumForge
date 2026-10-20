@@ -1,0 +1,44 @@
+{
+  "status": "Pass: reviewed native layout subset; full matrix Blocked",
+  "scope": "Spatial comparison against preserved atlas and control visibility, not pixel or full SolidWorks parity",
+  "references": [
+    "research/ui-atlas/UI_DESIGN_NOTES.md",
+    "research/ui-atlas/images/img-006.png",
+    "research/ui-atlas/images/img-024.png",
+    "research/ui-atlas/images/img-079.webp"
+  ],
+  "native_screenshots_reviewed": [
+    "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/native-100/workspace-editing.png",
+    "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/native-100/workspace-model.png",
+    "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/native-200/workspace-editing.png",
+    "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/native-200/workspace-model.png",
+    "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/native-200/editable-shapes.png",
+    "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/native-200/circle-drag-in.png"
+  ],
+  "observations": [
+    "Features/Sketch/Evaluate labels are fully visible; shared sketch actions above graphics",
+    "Model/Properties/Document tabs and origin/planes/sketch tree on the left",
+    "Contextual circle properties, radius handles and driving-dimension explanation visible",
+    "Finish/Cancel remain outside scroll area near heading; numeric/advanced forms collapse",
+    "Central graphics dominate with optional right help rail and bottom documents/edit/units/save context",
+    "Dashed transient circle and inch radius readout visible",
+    "Accepted and saved/recoverable states are distinct; no in-progress primitive is committed"
+  ],
+  "deliberate_differences": [
+    "Native Qt/macOS controls and system theme, original icons, text manager tabs",
+    "Command tabs above groups; explicit Finish/Cancel buttons",
+    "Task Pane currently navigation help only; solid/assembly/drawing tools remain unavailable",
+    "No vendor artwork or full feature/configuration/display-manager compatibility"
+  ],
+  "automated_visibility": "All five effective scales passed tab-width/bounds, contextual diagnostic height and persistent finish-button visibility assertions at a 1280x800 window; resize while drawing also checked at 1100x720",
+  "unavailable": [
+    "Physical trackpad/mouse ergonomics",
+    "Alternate system appearance/contrast and assistive technology",
+    "Other platforms/hardware/real multiple monitors"
+  ],
+  "prior_failures_preserved": [
+    "docs/testing/artifacts/module-4/workspace-dev/native-candidate.txt",
+    "docs/testing/artifacts/module-4/workspace-dev/native-final-layout.txt"
+  ],
+  "correction": "Moved diagnostic outside scrolling inputs; removed native tab-padding override. The initial new visibility assertion compared the unwrapped size hint before relayout; it now processes layout and checks heightForWidth without weakening text visibility."
+}

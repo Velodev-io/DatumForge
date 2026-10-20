@@ -8,8 +8,10 @@ Start with [the specification index](docs/README.md).
 viewport, one exact-geometry worker, persistent documents, semantic undo/redo,
 Save/Save As, recovery, planar sketch editing, PlaneGCS constraints and typed
 expressions. See [Module 3 evidence and blockers](docs/testing/module-3.md).
-Windows/Linux and full R1 acceptance remain Blocked or Not run. Stop before
-Module 4; another user instruction is required.
+Module 3 input repairs and the authorized Module 4.0 workspace add command tabs,
+a left PropertyManager and direct shape editing. See [workspace evidence and
+blockers](docs/testing/module-4.md). Windows/Linux and full R1 acceptance remain
+Blocked or Not run. Stop before 4.1a exact features.
 
 Build and launch from this checkout:
 
@@ -17,7 +19,7 @@ Build and launch from this checkout:
 cmake --preset macos-debug
 cmake --build --preset macos-debug
 open build/macos-debug/cad-desktop.app
-python3 tools/verify_module3.py --native
+python3 tools/verify_workspace.py --native
 ```
 
 Use **New** to create a document, edit its name/units/typed parameters in the
@@ -25,29 +27,50 @@ Document tab, and use Save or Save As for a standalone `.cadproj` snapshot.
 Committed changes remain recoverable separately from the saved snapshot. Part documents also support planar sketches; solid features, mates and drawing
 content require later modules.
 
-For sketching, create a Part and choose **Create sketch** in Tools (or command
-search). Choose a support plane, then enter coordinates in document display units
-or click in the planar viewport. Lines/rectangles use two inputs; polylines append
-vertices with a moving endpoint/corner preview. For a circle, press its center,
-hold and drag to size the live radius, then release to finish it in the draft.
-A zero-radius release adds nothing. For numeric circles, enter X/Y and Radius and
-choose **Add center with numeric radius**. Arcs use the radius/start/sweep fields
-and a center input; they do not yet have a three-point pointer workflow. Select entities in the list to
-add supported constraints. Named expressions use `Width = 80 mm`; dimensions may
-refer to `Width`. **Solve preview** computes without committing; **Accept sketch
-edit** creates one recoverable operation. Escape first cancels an unfinished
-primitive, retaining completed draft geometry; Escape again cancels the sketch
-edit. The Cancel sketch edit button discards the entire edit. Enter accepts a solved
-preview only with viewport focus. For dragging, choose **Select / drag**, move a
-point, and solve the draft. Save explicitly to publish the portable project.
-See [supported combinations and current limits](docs/decisions/module-3-sketches.md).
+For sketching, create a Part and choose **Create sketch** in the Features or
+Sketch command tab. The left Properties tab contains the active sketch controls;
+Model contains the document tree, origin, planes and saved sketches. Double-click
+a plane to start a sketch or a sketch to edit it. Command search and native menus
+use the same actions.
+
+Choose Line, Rectangle or Circle in the Sketch tab. Lines and rectangles accept
+two clicks or a press/drag/release gesture. A circle supports clicking its center,
+moving, then clicking its radius; holding and dragging also works. The camera and
+first vertex stay in model coordinates when the drawing area changes size. Two-
+finger scrolling pans, pinch zooms at the pointer, and Space + left drag also pans.
+A mouse wheel zooms; F fits all geometry. Grid snap is optional and initially off.
+These trackpad paths have automated event coverage; physical-device checks remain
+Blocked.
+
+Press Escape to leave a drawing tool or cancel unfinished input, keeping completed
+geometry. In Select mode, drag a rectangle corner to resize it, an edge to move it,
+a circle circumference to resize it, or its center to move it. Select a shape to
+edit its coordinates, radius or rectangle width/height in Properties. A driving
+constraint can block free dragging; edit its dimension using **Dimension** or the
+expression field. Delete removes the selected shape; Undo/Redo applies to the
+current draft until **Finish Sketch** accepts one recoverable operation. To edit
+accepted geometry, double-click it or its sketch tree node. **Cancel Sketch**
+discards the entire edit.
+
+**Numeric input** and **Relations and expressions** expand on demand. Numeric
+creation uses document display units without pointer snapping; expressions such
+as `Width = 80 mm` remain available. Arcs use a center and numeric radius/start/
+sweep; a three-point arc gesture is not implemented. **Solve preview** runs the
+worker without accepting the draft. Enter accepts a solved preview only with
+viewport focus. Save explicitly publishes the portable project. See
+[supported combinations and current limits](docs/decisions/module-3-sketches.md).
 
 Use **Load reference box**, select a face/edge/body, and choose **Measure selection**.
 Right drag orbits, middle drag pans, the wheel zooms, and F fits the scene.
 Property dimensions are temporary previews; Cancel restores 10 × 20 × 30 mm.
 The app uses the pinned local dependency cache; it is not an installed release.
 
-The upcoming [Module 4.0 tasks](docs/TECH_SPEC.md#40--align-the-native-modeling-workspace-before-adding-solid-tools) explicitly schedule SolidWorks-style command tabs, a left PropertyManager/tree switch, and the overall modeling layout before solid-feature tools. Module 9 completes cross-document consistency and accessibility. This layout work is planned; Module 4 implementation has not started.
+The workspace follows the atlas placement of Features/Sketch/Evaluate commands,
+the left manager, central graphics, optional right Task Pane and bottom document/
+units/save status. Icons are original and the theme follows the native palette.
+Extrude, Revolve and other unfinished solid tools remain disabled with reasons.
+Module 9 completes cross-document consistency and accessibility; exact features
+start at the separate, currently unauthorized 4.1a boundary.
 
 ## Development
 

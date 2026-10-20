@@ -1,8 +1,11 @@
 #pragma once
 #include "protocol/Client.hpp"
 #include "render/SketchView.hpp"
+#include "sketch/Editing.hpp"
 #include <QCheckBox>
 #include <QComboBox>
+#include <QFormLayout>
+#include <QGroupBox>
 #include <QLabel>
 #include <QLineEdit>
 #include <QListWidget>
@@ -11,12 +14,22 @@ namespace cad {
 class SketchPanel : public QWidget {
     Q_OBJECT
     Client *client;
+    QWidget *propertyPane;
+    QFormLayout *rootForm;
     SketchView *view;
     QComboBox *sketches, *plane, *tool, *relation;
     QLineEdit *x, *y, *radius, *start, *sweep, *value, *nameExpression;
     QCheckBox *construction;
     QListWidget *entities, *constraints;
-    QLabel *context;
+    QLabel *context, *selectionTitle;
+    QGroupBox *selectionGroup;
+    QLineEdit *selectedX, *selectedY, *selectedRadius, *selectedWidth, *selectedHeight,
+        *selectedStart, *selectedSweep;
+    QPushButton *applySelection, *removeEntity;
+    std::optional<sketch::Sketch> gestureBefore;
+    sketch::Vec2 gestureOrigin;
+    QString gestureError;
+    std::vector<sketch::Sketch> draftUndo, draftRedo;
     QPushButton *preview, *accept, *cancel, *edit, *create, *add, *addConstraint, *removeConstraint,
         *setDimension, *setName;
     std::vector<sketch::Sketch> accepted, draft;
@@ -33,6 +46,11 @@ class SketchPanel : public QWidget {
     void updateRelations();
     void cancelInput();
     void updateToolFields();
+    void updateSelection();
+    void selectEntity(QString id);
+    void applySelected();
+    void deleteSelected();
+    void remember(sketch::Sketch before);
 
   public:
     explicit SketchPanel(Client *client, QWidget *parent = nullptr);
@@ -42,7 +60,47 @@ class SketchPanel : public QWidget {
     }
     void begin();
     void discard();
+    void editSelected(QString entity = {});
+    void setTool(QString name);
+    void undoDraftEdit();
+    void redoDraftEdit();
+    bool canUndoDraft() const {
+        return !draftUndo.empty();
+    }
+    bool canRedoDraft() const {
+        return !draftRedo.empty();
+    }
+    SketchView *canvas() const {
+        return view;
+    }
+    QWidget *propertyManager() const {
+        return propertyPane;
+    }
+    bool dimensionAvailable() const;
+    QString selectedEntity() const {
+        return selectedId;
+    }
+    QString sketchId() const {
+        return sketches->currentData().toString();
+    }
+    QString sketchName() const {
+        return sketches->currentText();
+    }
+    void chooseSketch(QString id);
+    void choosePlane(QString name);
+    void dimensionSelection();
+    void removeSelection() {
+        guard([&] { deleteSelected(); });
+    }
+    void finish() {
+        accept->click();
+    }
+    QString toolName() const {
+        return tool->currentText();
+    }
   signals:
     void editingChanged();
+    void toolChanged(QString tool);
+    void selectionChanged();
 };
 } // namespace cad

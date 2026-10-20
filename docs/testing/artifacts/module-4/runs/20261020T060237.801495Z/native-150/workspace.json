@@ -1,0 +1,9 @@
+{
+    "DPR": 1.5,
+    "command_tabs": 3,
+    "dimensions_via_shared_action": true,
+    "left_property_manager": true,
+    "physical_trackpad": "Blocked: application events only",
+    "platform": "cocoa",
+    "resize_while_drawing": true
+}

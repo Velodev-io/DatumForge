@@ -12,7 +12,7 @@
 | FR-002 | 3, 9 | 2 | T-02 | Blocked |
 | FR-003 | 5, 10, 11 | 1 | T-03 | Blocked |
 | FR-004 | 4, 10 | 1 | T-04 | Blocked |
-| FR-005 | 10 | 9 | T-05 | Not run |
+| FR-005 | 10 | 9 | T-05 | Blocked |
 | FR-006 | 3, 9 | 2 | T-06 | Blocked |
 | FR-007 | 9 | 2 | T-07 | Blocked |
 | FR-008 | 4, 9 | 2 | T-08 | Blocked |
@@ -65,7 +65,7 @@
 | NFR-015 | 13, 15 | 12 | T-55 | Not run |
 | NFR-016 | 4, 9, 12, 13 | 10 | T-56 | Not run |
 
-UI staging for FR-001, FR-003–FR-005: Module 1 supplies the native shell; [TECH_SPEC 4.0](TECH_SPEC.md#40--align-the-native-modeling-workspace-before-adding-solid-tools) explicitly owns command tabs, the left PropertyManager and the modeling layout before solid-feature controls. Module 9 completes cross-document consistency and accessibility. Primary owners above remain unchanged; this plan supplies no additional passing acceptance evidence.
+UI staging for FR-001, FR-003–FR-005: Module 1 supplies the native shell; [TECH_SPEC 4.0](TECH_SPEC.md#40--align-the-native-modeling-workspace-before-adding-solid-tools) explicitly owns command tabs, the left PropertyManager and the modeling layout before solid-feature controls. Module 9 completes cross-document consistency and accessibility. Primary owners above remain unchanged. The authorized [4.0 workspace implementation](testing/module-4.md) and [Module 3 input repair](testing/module-3-input-repair.md) supply available-Mac subset evidence, while full requirements remain Blocked for platform/device/accessibility/later-engine acceptance.
 
 ## Milestone acceptance
 
@@ -83,6 +83,6 @@ UI staging for FR-001, FR-003–FR-005: Module 1 supplies the native shell; [TEC
 
 Future evidence lives in `docs/testing/module-N.md`, plus referenced logs/images/raw samples. Test rows may link multiple procedures; a row passes only when all applicable required procedures pass. A module's unit tests cannot alone close its native, physical-hardware, or installed-build gates. Preserve failures and reasons for Blocked/Not applicable outcomes.
 
-Module 0 feasibility is recorded in [module-0](testing/module-0.md), its task status register, and [the product requirement register](testing/requirements.json). T-00 results do not close any T-01–T-56 row above. The user authorized Module 1 on 19 October 2026. [Module 1 evidence](testing/module-1.md) covers the Mac reference-workspace subsets of T-01/T-03/T-04/T-35/T-53. The associated full requirement rows remain Blocked for platform or later-module checks. The user subsequently authorized Module 2; [its evidence](testing/module-2.md) covers Mac document/persistence subsets T-02/T-06–T-10/T-34/T-39/T-51. Those full rows remain Blocked for the documented native matrix, conversion or later CAD integration; no complete product test is closed. The user explicitly authorized Module 3 afterward. [Module 3 evidence](testing/module-3.md) covers the available-Mac T-12–T-16 sketch/constraint/expression and native editing subsets. The [interaction follow-up](testing/module-3-interaction-followup.md) separately reproduces and closes the missing circle creation gesture on the available Mac; its native mm/in and scale evidence does not certify other platforms. Those full requirements remain Blocked for the unavailable native platform matrix and broader acceptance. Module 4 requires a new instruction.
+Module 0 feasibility is recorded in [module-0](testing/module-0.md), its task status register, and [the product requirement register](testing/requirements.json). T-00 results do not close any T-01–T-56 row above. The user authorized Module 1 on 19 October 2026. [Module 1 evidence](testing/module-1.md) covers the Mac reference-workspace subsets of T-01/T-03/T-04/T-35/T-53. The associated full requirement rows remain Blocked for platform or later-module checks. The user subsequently authorized Module 2; [its evidence](testing/module-2.md) covers Mac document/persistence subsets T-02/T-06–T-10/T-34/T-39/T-51. Those full rows remain Blocked for the documented native matrix, conversion or later CAD integration; no complete product test is closed. The user explicitly authorized Module 3 afterward. [Module 3 evidence](testing/module-3.md) covers the available-Mac T-12–T-16 sketch/constraint/expression and native editing subsets. The [interaction follow-up](testing/module-3-interaction-followup.md) separately reproduces and closes the missing circle creation gesture on the available Mac; its native mm/in and scale evidence does not certify other platforms. Those full requirements remain Blocked for the unavailable native platform matrix and broader acceptance. The later user instruction authorized Module 3 input repairs followed by 4.0a–c workspace UI. [Combined evidence](testing/module-4.md) records the current scope and remaining blockers. Stop before 4.1a exact features; no full Module 4 authorization is implied.
 
 The documentation checker verifies IDs, links, module/task structure, and status consistency only. It does not execute any CAD, UI, persistence, platform, or performance acceptance test.

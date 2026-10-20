@@ -4,10 +4,14 @@
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-1.md",
-      "docs/testing/artifacts/module-1/verification.json"
+      "docs/testing/artifacts/module-1/verification.json",
+      "docs/testing/module-3-input-repair.md",
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Mac native reference shell checked; other platforms/installed workspace checks Blocked."
+    "reason": "Available-Mac reference plus planar-sketch navigation, shared command tabs, left PropertyManager and editing/persistence subsets pass at five scales; physical-device, other-platform and later exact-feature acceptance remain Blocked."
   },
   "FR-002": {
     "test": "T-02",
@@ -24,10 +28,14 @@
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-1.md",
-      "docs/testing/artifacts/module-1/verification.json"
+      "docs/testing/artifacts/module-1/verification.json",
+      "docs/testing/module-3-input-repair.md",
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Mac reference navigation/picking checked; Windows/Linux and complete modeled geometry acceptance Blocked."
+    "reason": "Available-Mac reference plus planar-sketch navigation, shared command tabs, left PropertyManager and editing/persistence subsets pass at five scales; physical-device, other-platform and later exact-feature acceptance remain Blocked."
   },
   "FR-004": {
     "test": "T-04",
@@ -35,16 +43,26 @@
     "evidence": [
       "docs/testing/module-1.md",
       "docs/testing/artifacts/module-1/verification.json",
-      "docs/testing/module-2.md"
+      "docs/testing/module-2.md",
+      "docs/testing/module-3-input-repair.md",
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Mac reference preview/cancel and Module 2 metadata transactions/history checked; feature failure and accepted modeling corpus require Modules 3\u20134."
+    "reason": "Available-Mac reference plus planar-sketch navigation, shared command tabs, left PropertyManager and editing/persistence subsets pass at five scales; physical-device, other-platform and later exact-feature acceptance remain Blocked."
   },
   "FR-005": {
     "test": "T-05",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-3-input-repair.md",
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Available-Mac shared actions, contextual properties and familiar layout subset pass; simplified layout, cross-document consistency, accessibility and other native platforms remain for Module 9."
   },
   "FR-006": {
     "test": "T-06",
@@ -81,10 +99,14 @@
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-2.md",
-      "docs/testing/artifacts/module-2/verification.json"
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/module-3-input-repair.md",
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Mac metadata semantic undo/redo and bounded retention pass; feature/assembly edit history and full workload retention need later modules."
+    "reason": "Mac metadata semantic undo/redo and bounded retention pass; feature/assembly edit history and full workload retention need later modules. Later Mac input/direct-editing and draft-history regressions pass; physical-device and full platform/engine acceptance remain Blocked."
   },
   "FR-010": {
     "test": "T-10",
@@ -107,50 +129,70 @@
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-3.md",
-      "docs/testing/artifacts/module-3/verification.json"
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/testing/module-3-input-repair.md",
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked."
+    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked. Later Mac input/direct-editing and draft-history regressions pass; physical-device and full platform/engine acceptance remain Blocked."
   },
   "FR-013": {
     "test": "T-13",
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-3.md",
-      "docs/testing/artifacts/module-3/verification.json"
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/testing/module-3-input-repair.md",
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked."
+    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked. Later Mac input/direct-editing and draft-history regressions pass; physical-device and full platform/engine acceptance remain Blocked."
   },
   "FR-014": {
     "test": "T-14",
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-3.md",
-      "docs/testing/artifacts/module-3/verification.json"
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/testing/module-3-input-repair.md",
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked."
+    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked. Later Mac input/direct-editing and draft-history regressions pass; physical-device and full platform/engine acceptance remain Blocked."
   },
   "FR-015": {
     "test": "T-15",
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-3.md",
-      "docs/testing/artifacts/module-3/verification.json"
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/testing/module-3-input-repair.md",
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked."
+    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked. Later Mac input/direct-editing and draft-history regressions pass; physical-device and full platform/engine acceptance remain Blocked."
   },
   "FR-016": {
     "test": "T-16",
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-3.md",
-      "docs/testing/artifacts/module-3/verification.json"
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/testing/module-3-input-repair.md",
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked."
+    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked. Later Mac input/direct-editing and draft-history regressions pass; physical-device and full platform/engine acceptance remain Blocked."
   },
   "FR-017": {
     "test": "T-17",

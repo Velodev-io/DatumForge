@@ -17,7 +17,7 @@ namespace cad {
 MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRoot)
     : QMainWindow(parent) {
     setObjectName("cadMainWindow");
-    setWindowTitle("CAD Workbench · Native reference workspace");
+    setWindowTitle("CAD Workbench");
     resize(1280, 800);
     settings = settingsFile.isEmpty()
                    ? std::make_unique<QSettings>()
@@ -31,7 +31,10 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
         sketchPanel->begin();
         refresh();
     });
+    buildCommandTabs();
     connect(sketchPanel, &SketchPanel::editingChanged, this, &MainWindow::refresh);
+    connect(sketchPanel, &SketchPanel::toolChanged, this, [this] { refreshCommandTabs(); });
+    connect(sketchPanel, &SketchPanel::selectionChanged, this, [this] { refreshCommandTabs(); });
     connect(client, &Client::changed, this, &MainWindow::refresh);
     connect(client, &Client::changed, this, [this] {
         if (!recoveryChecked && client->ready()) {
@@ -93,7 +96,13 @@ void MainWindow::buildFrame() {
     add("sketch", "Create sketch", tools, {}, "Requires Module 3 sketch implementation.");
     add("extrude", "Extrude", tools, {}, "Requires Module 4 feature implementation.");
     auto *fit = add("fit", "Zoom to fit", view, QKeySequence("F"));
-    connect(fit, &QAction::triggered, viewport = new Viewport(this), &Viewport::fit);
+    viewport = new Viewport(this);
+    connect(fit, &QAction::triggered, this, [this] {
+        if (state().projectOpen && sketchPanel && sketchPanel->isVisible())
+            sketchPanel->canvas()->fit();
+        else
+            viewport->fit();
+    });
     for (const auto &name : {"Isometric", "Front", "Top", "Right"}) {
         auto *a = add(QString("view.") + name, name, view);
         connect(a, &QAction::triggered, this, [this, name] { viewport->setView(name); });
@@ -114,6 +123,8 @@ void MainWindow::buildFrame() {
     search->setObjectName("commandSearch");
     search->setPlaceholderText("Find command…");
     search->setClearButtonEnabled(true);
+    search->setMaximumWidth(340);
+    search->setMinimumWidth(180);
     toolbar->addWidget(search);
     auto *results = new QMenu(search);
     connect(search, &QLineEdit::textEdited, this, [this, results](QString query) {
@@ -158,9 +169,9 @@ void MainWindow::buildFrame() {
         viewport->setVisible(index == 1);
         findChild<QLabel *>("welcomePanel")->setVisible(index == 0);
     });
-    auto *dock = new QDockWidget("Model and properties", this);
+    auto *dock = new QDockWidget("Manager", this);
     dock->setObjectName("modelDock");
-    dock->setMinimumWidth(240);
+    dock->setMinimumWidth(300);
     auto *tabs = new QTabWidget;
     tabs->setObjectName("managerTabs");
     tree = new QTreeWidget;
@@ -175,12 +186,18 @@ void MainWindow::buildFrame() {
             auto id = items.first()->data(0, Qt::UserRole + 1).toString();
             if (!id.isEmpty() && id != state().activeDocument)
                 client->switchDocument(id);
+            else if (sketchPanel && !sketchPanel->active()) {
+                auto sketch = items.first()->data(0, Qt::UserRole + 3).toString();
+                if (!sketch.isEmpty())
+                    sketchPanel->chooseSketch(sketch);
+            }
             return;
         }
         if (!items.empty())
             choose(items.first()->data(0, Qt::UserRole).value<Selection>());
     });
     auto *properties = new QWidget;
+    properties->setObjectName("referenceProperties");
     auto *form = new QFormLayout(properties);
     form->addRow(new QLabel("Temporary dimensions (mm)"));
     auto spin = [&](QString name, double value) {
@@ -217,8 +234,10 @@ void MainWindow::buildFrame() {
     view->addAction(dock->toggleViewAction());
     auto *resources = new QDockWidget("Resources", this);
     resources->setObjectName("resourcesDock");
-    auto *info = new QLabel("Native workbench\n\nReference scene only\n\nProject persistence: "
-                            "Module 2\nSketching: Module 3\nFeatures: Module 4");
+    auto *info =
+        new QLabel("Navigation\n\nTwo fingers to pan\nPinch to zoom\nSpace + drag to pan\nF to "
+                   "fit\n\nSketch editing\n\nSelect geometry for properties\nDouble-click to edit "
+                   "a sketch\nEscape to leave a drawing tool");
     info->setMargin(12);
     resources->setWidget(info);
     addDockWidget(Qt::RightDockWidgetArea, resources);
@@ -263,6 +282,7 @@ void MainWindow::refresh() {
         commands.get("save")->setProperty("unavailableReason", QString());
         commands.get("save")->setToolTip("Publish a standalone project snapshot");
     }
+    refreshCommandTabs();
     if (s.projectOpen) {
         refreshProjectUI();
         return;
@@ -272,6 +292,9 @@ void MainWindow::refresh() {
         sketchPanel->hide();
     }
     commands.get("sketch")->setEnabled(false);
+    findChild<QToolBar *>("viewportToolbar")->show();
+    if (propertyPages)
+        propertyPages->setCurrentIndex(0);
     if (documents->count() != 2 || documents->tabText(0) != "Welcome") {
         syncing = true;
         while (documents->count())

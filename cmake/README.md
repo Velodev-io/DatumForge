@@ -103,3 +103,22 @@ headless Qt runs do not certify graphics or focus. The available Mac runs on
 physical 8 GiB hardware; full SRS resource budgets remain for Module 11. See
 [Module 3 evidence](../docs/testing/module-3.md) and
 [adapter decisions/limits](../docs/decisions/module-3-sketches.md).
+
+
+Module 3 interaction repair and authorized Module 4.0 workspace verification:
+
+```sh
+python3 tools/verify_workspace.py --native
+python3 tools/clean_reproduce.py --module 4
+python3 docs/scripts/check_specs.py --write-report
+```
+
+This runner preserves timestamped records under `docs/testing/artifacts/module-4`.
+It runs the complete enabled CTest suite, static checks, Module 3 and workspace
+Cocoa workflows at five effective scales, and the prior native module regressions.
+`module3_input` checks camera/input math and synthetic trackpad events;
+`module3_contracts shapeEditing` checks draft editing with the real worker;
+`module4_workspace` checks shared actions, left properties, tree state, document
+switching and layout restoration. GUI/IPC tests require a logged-in native session
+and local IPC permission. Physical-device, other-platform and full 8 GB resource
+acceptance remain separate gates. See [workspace evidence](../docs/testing/module-4.md).

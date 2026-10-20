@@ -1,6 +1,6 @@
 # DatumForge — specification set
 
-**Version:** 0.1 · **Date:** 19 October 2026 · **Status:** Modules 1–3 available-Mac scope verified; Module 3 evidence recorded separately; cross-platform matrix Blocked; stop before Module 4.
+**Version:** 0.1 · **Date:** 19 October 2026 · **Status:** Prior Modules 1–3 Mac evidence preserved; Module 3 input repair and authorized Module 4.0 UI verified on available Mac; full matrix Blocked; stop before 4.1a exact features.
 
 This project will deliver a native, offline-first mechanical CAD application for macOS, Windows, and Linux, with a SolidWorks-familiar workspace and an **8 GB system RAM minimum**. DatumForge is the product name; the local workspace name does not imply complete SolidWorks compatibility.
 
@@ -36,14 +36,15 @@ The format follows the earlier DeskCore plan: **Module 0 → Module 1 → Module
 | Windows, Linux, or Mac product builds | Mac development build tested; Windows/Linux Blocked; installed release builds Not run |
 | Real 8 GB workload validation | Not run |
 | Document metadata, saved/recoverable revisions, semantic undo/redo | Available-Mac foundation tested; full requirement acceptance Blocked |
-| Planar sketches, constraints and expressions | Available-Mac implementation including [circle drag/preview follow-up](testing/module-3-interaction-followup.md); see [Module 3 evidence](testing/module-3.md) |
+| Planar sketches, constraints and expressions | Available-Mac implementation including [later input/direct-editing repair](testing/module-3-input-repair.md); see [Module 3 evidence](testing/module-3.md) |
+| Command tabs / left PropertyManager / direct sketch editing | Available-Mac [input repair](testing/module-3-input-repair.md) and [4.0 workspace evidence](testing/module-4.md); physical-device/full platform acceptance Blocked |
 | Solid features, mates, drawing content, and release tests | Not run |
 
-Module 0 experiments remain isolated under tests and tools. The user authorized Modules 1 and 2 on 19 October 2026. Their available-Mac implementation and tests are recorded separately. Cross-platform completion remains Blocked. The user explicitly authorized Module 3 in the subsequent instruction; its implementation and verification are recorded in [Module 3 evidence](testing/module-3.md). Stop before Module 4 and ask the user before proceeding. Unavailable platform and hardware checks remain Blocked.
+Module 0 experiments remain isolated under tests and tools. The user authorized Modules 1 and 2 on 19 October 2026. Their available-Mac implementation and tests are recorded separately. Cross-platform completion remains Blocked. The user explicitly authorized Module 3 in the subsequent instruction; its implementation and verification are recorded in [Module 3 evidence](testing/module-3.md). The subsequent instruction on 20 October authorizes Module 3 input/direct-editing repair followed by Module 4.0a–c UI and verification. Stop before 4.1a exact features. Unavailable platform and hardware checks remain Blocked.
 
-## Upcoming UI work
+## Workspace UI scope
 
-The user requested explicit UI scheduling on 20 October 2026. [Module 4.0a–c](TECH_SPEC.md#40--align-the-native-modeling-workspace-before-adding-solid-tools) will add Features/Sketch/Evaluate command tabs, a left PropertyManager shared with the model tree, and the overall modeling layout before solid-feature controls. Module 9 completes consistency and accessibility across document types. These tasks remain unimplemented and require Module 4 authorization; the stop boundary remains unchanged.
+The user requested explicit UI scheduling on 20 October 2026. [Module 4.0a–c](TECH_SPEC.md#40--align-the-native-modeling-workspace-before-adding-solid-tools) adds Features/Sketch/Evaluate command tabs, a left PropertyManager shared with the model tree, and the overall modeling layout before solid-feature controls. Module 9 completes consistency and accessibility across document types. The user subsequently authorized this implementation order. These UI tasks are implemented and verified for available-Mac scope in [workspace evidence](testing/module-4.md), with full native/device acceptance Blocked and exact features still unimplemented; the new boundary is 4.1a.
 
 ## Checking the specification set
 

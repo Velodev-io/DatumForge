@@ -1,3 +1,4 @@
+#include "sketch/Editing.hpp"
 #include "sketch/Sketch.hpp"
 #include "support/check.hpp"
 using namespace cad::sketch;
@@ -44,6 +45,31 @@ int main() {
         invalid.entities[1].id = invalid.entities[0].id;
         rejects([&] { invalid.validate(); });
         rejects([&] { parse({s.map(), s.map()}); });
+        Sketch edit;
+        auto edges = edit.rectangle({0, 0}, {.08, .05});
+        auto corner = edit.entities[2].id;
+        auto changed = dragEntity(edit, corner, {.08, .05}, {.09, .06});
+        CHECK(edit.entities[2].point.x == .08);
+        CHECK(changed.entities[2].id == corner);
+        near(changed.entities[1].point.x, .09);
+        near(changed.entities[3].point.y, .06);
+        CHECK(rectangleOf(changed, edges[0]).has_value());
+        rejects([&] { dragEntity(edit, corner, {.08, .05}, {-.01, .06}); });
+        auto editCenter = edit.point({.2, 0});
+        auto circle = edit.circle(editCenter, .01);
+        auto resized = dragEntity(edit, circle, {.21, 0}, {.215, 0});
+        near(resized.entity(circle).radius, .015);
+        Constraint radius;
+        radius.kind = "Radius";
+        radius.a = circle;
+        radius.value = .01;
+        edit.constraints.push_back(radius);
+        rejects([&] { dragEntity(edit, circle, {.21, 0}, {.215, 0}); });
+        auto erased = eraseEntity(edit, edges[0]);
+        CHECK(erased.entities.size() == 2 && erased.constraints.size() == 1);
+        CHECK(erased.entity(circle).id == circle);
+        erased = eraseEntity(erased, circle);
+        CHECK(erased.entities.empty() && erased.constraints.empty());
         std::cout << "3.1a: frames, primitives, connected points, construction, snap, persistent "
                      "IDs, bounded invalid input\n";
     });

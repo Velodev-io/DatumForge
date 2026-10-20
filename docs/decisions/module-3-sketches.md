@@ -1,6 +1,7 @@
 # Module 3 — sketch and expression adapter decisions
 
-Date: 20 October 2026. Authorized scope: Module 3, stopping before Module 4.
+Date: 20 October 2026. Authorized scope: Module 3 and subsequent input repairs; workspace UI 4.0a–c
+was authorized separately. Stop before 4.1a exact features.
 [Evidence](../testing/module-3.md), [scope record](implementation-scope.json).
 
 ## Semantic ownership and persistence
@@ -42,23 +43,45 @@ center/radius/start/positive-sweep arcs are supported, including construction fl
 Arcs exclude a zero/full-turn sweep. Coordinates/radii are bounded to 1 km;
 line length/radius must exceed 1 nm. Display unit changes do not rescale geometry.
 
-The native property form and planar viewport edit the same draft. The viewport
-picks points/segments/circles/arcs, highlights selection, snaps pointer input to existing points
-and a 1 mm grid, and provides pan/zoom. Typed coordinate input bypasses the display
-snap grid and retains its parsed SI value. The current snap tolerance is 0.15 mm in
-model coordinates; a screen-distance snapping preference remains a UX follow-up.
-Polyline input shares endpoints and is finished by changing tools or accepting the
-edit. Line/polyline/rectangle pointer input shows a local rubber-band preview after
-the first vertex. Circle input presses at the snapped center, sizes a transient
-radius while held, and releases one circle into the sketch draft. No point, curve,
-solver request or durable operation is created per mouse movement; a zero-radius
-release adds nothing. The explicit numeric button still creates a circle using
-X/Y and Radius in display units without pointer grid rounding. Arc centers remain
-click/coordinate inputs with numeric radius/start/sweep; a three-point arc gesture
-is not implemented. Tool changes discard incomplete input while retaining
-completed draft geometry. Radius fields appear only for circle/arc and angle fields
-only for arc; the empty viewport identifies that no sketch exists. Rectangle construction creates shared corner points; horizontal/vertical and
-dimensional constraints are explicit user choices, not hidden inferred constraints.
+The native property form and planar viewport edit the same bounded draft. The
+camera stores its model center and world scale independently of viewport size;
+screen/model conversion is inverse and resizing does not change world anchors.
+Fit includes complete circle/arc bounds. Point snapping uses eight logical screen
+pixels; an optional 1 mm grid is initially off. Typed coordinates bypass pointer
+snapping. Two-finger pixel scrolling pans, native pinch zooms at the cursor, mouse
+wheel zooms and Space + left drag/middle drag pans. Synthetic event tests establish
+these application paths, not physical-device delivery or system preference parity.
+
+Line/rectangle input supports two clicks or dragging; polyline shares endpoints.
+Circle input supports click-center/move/click-radius and press/drag/release with a
+live unit readout. Zero-radius completion adds no entity. Pointer movement holds
+only transient coordinates or updates the local semantic projection; no worker
+request or project write is queued per movement. Worker solve/preview occurs at a
+completed direct-edit gesture, property apply or explicit preview. Circle/arc
+numeric creation remains precise. Arcs use numeric radius/start/positive-sweep;
+a three-point arc gesture remains unavailable. Tool switches drop unfinished
+input and retain completed geometry.
+
+Select mode exposes rectangle corners and circle radial handles. An isolated,
+axis-aligned four-line loop is recognized semantically without changing persistent
+IDs or adding a rectangle schema. Corner resizing retains the opposite corner;
+edge dragging translates the rectangle. Crossing/collapsing it is rejected.
+Connected networks may use ordinary point/line editing instead. New rectangles
+have four explicit horizontal/vertical relations, visible in the relation list;
+existing projects are not silently migrated. Circle/arc circumference dragging
+changes radius; center points translate their geometry. General line/point edits
+remain supported. Direct dragging conservatively refuses affected constraints
+other than horizontal/vertical and explains the controlling relation; arbitrary
+constraint-aware nonlinear dragging is not claimed. The worker independently
+solves and validates all submitted previews and accepted changes.
+
+Selection properties expose display-unit coordinates, circle/arc radius and
+isolated rectangle width/height; arc start/sweep remain numeric. Existing driving
+Radius/Length expressions are edited instead of being silently overridden.
+Delete removes dependent relations and unused support points. Draft Undo/Redo
+retains at most 40 semantic sketch copies; it does not change project revision.
+Accept remains one durable semantic operation; accepted project history retains
+the existing storage bounds and does not copy BReps.
 
 ## Supported constraint combinations
 
@@ -120,8 +143,9 @@ project operations are disabled while editing; application close explicitly asks
 to discard a draft. A pending commit cannot be described as canceled. Enter accepts
 only a solved preview with viewport focus; Enter in a value editor does not commit.
 Escape first cancels pending circle/vertex input and retains completed draft
-geometry; when no input is pending it cancels the editable sketch draft. The
-explicit Cancel sketch edit button always discards the whole edit. Every accepted dimension edit, constraint deletion,
+geometry; otherwise it leaves the drawing tool and clears selection without
+discarding completed geometry. The explicit Cancel Sketch button discards the
+whole edit. Every accepted dimension edit, constraint deletion,
 undo and redo is one durable semantic operation.
 
 ## Remaining decisions and gates
@@ -130,7 +154,7 @@ Windows/Linux, Intel/minimum macOS, installed builds and native assistive-techno
 checks require their real environments. The available M2 has physical 8 GiB RAM;
 this is not a full 8 GB B0–B5 performance result. The application workflow uses no
 network service, but an OS-network-disabled run is separately Blocked until a
-controlled procedure is available. Full snapping preferences, advanced arc
+controlled procedure is available. Additional snapping preferences, advanced arc
 constraints, reference-plane attachment to future solids, indexed feature history,
-and broad resource/performance acceptance remain explicit later work. Module 4
+and broad resource/performance acceptance remain explicit later work. Workspace UI 4.0a–c is authorized separately; 4.1a exact features
 requires another user instruction.

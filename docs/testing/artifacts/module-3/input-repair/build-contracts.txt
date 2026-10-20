@@ -1,0 +1,30 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.4s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/31] Automatic MOC for target cad_client
+[2/29] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/29] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/29] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/29] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Editing.cpp.o
+[6/29] Linking CXX static library libcad_sketch_model.a
+[7/29] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[8/29] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[9/29] Automatic MOC for target cad_desktop_ui
+[10/29] Linking CXX static library libcad_planegcs.a
+[11/29] Linking CXX static library libcad_sketch_solver.a
+[12/29] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[13/29] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[14/29] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[15/29] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[16/29] Linking CXX executable cad-worker
+[17/29] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[18/29] Linking CXX static library libcad_desktop_ui.a
+[19/29] Building CXX object CMakeFiles/module3_model.dir/tests/module3/model.cpp.o
+[20/29] Automatic MOC for target module3_input
+[21/28] Automatic MOC for target module3_contracts
+[22/27] Building CXX object CMakeFiles/module3_input.dir/tests/module3/input.cpp.o
+[23/27] Linking CXX executable module3_model
+[24/27] Linking CXX executable module3_input
+[25/27] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[26/27] Linking CXX executable module3_contracts

@@ -1,7 +1,7 @@
 # Technical Specification and Implementation Plan — Solidworks Clone
 
 **Version:** 0.1 · **Date:** 19 October 2026  
-**Status:** Modules 1–3 available-Mac scope implemented and scoped verification recorded; cross-platform matrix Blocked. Modules 4–12 have not started; full product acceptance remains pending.
+**Status:** Modules 1–3 available-Mac scope implemented and scoped verification recorded; cross-platform matrix Blocked. Module 4.0 workspace UI is implemented/verified for available-Mac scope; exact features 4.1–4.4 and Modules 5–12 have not started; full product acceptance remains pending.
 **Constraints:** Native macOS/Windows/Linux, local core, **8 GB system RAM minimum**.  
 **Authority:** [SRS](SRS.md) → [SDD](SDD.md) → contracts below → ordered modules. [Step Zero](STEP_ZERO.md) is Module 0.
 
@@ -281,7 +281,7 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 #### 3.1 — Create planar sketch editing
 
 - [x] **3.1a:** Implement support-plane coordinate frames, points/lines/polylines/rectangles/circles/arcs, construction flags, snapping, and persistent sketch IDs.
-- [x] **3.1b:** Integrate viewport/entity selection, dimensions, truthful empty/edit context, tool-specific fields, and command previews with semantic transactions. Circle pointer input must press at the center, resize continuously while held, and finish into the local draft on release; Escape cancels the in-progress primitive before canceling the sketch. Line/polyline/rectangle input must show the pending segment or opposite corner before completion. Numeric creation remains precise and separate from pointer snapping.
+- [x] **3.1b:** Integrate viewport/entity selection, dimensions, truthful empty/edit context, tool-specific fields, and command previews with semantic transactions. Circle pointer input must press at the center, resize continuously while held, and finish into the local draft on release; Escape cancels the in-progress primitive or leaves the drawing tool while retaining completed draft geometry; explicit Cancel Sketch discards the whole edit. Line/polyline/rectangle input must show the pending segment or opposite corner before completion. Numeric creation remains precise and separate from pointer snapping. Reopened on 20 October 2026 for a stable camera during viewport/dock resizing, screen-distance snapping with an optional grid, click/drag creation, trackpad pan/pinch, direct selection properties/handles, bounded draft undo/redo, and tool cancellation that preserves completed draft geometry.
 
 #### 3.2 — Integrate constraints and diagnosis
 
@@ -303,7 +303,7 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 **Completion check:** B1 sketch stage works natively and offline with real solver and persistence evidence.
 
-**Evidence:** `docs/testing/module-3.md` and `docs/testing/module-3-interaction-followup.md`. **Current status:** 8 tasks Pass for available-Mac implementation/logic scope, including the separately reproduced and verified circle gesture follow-up. 3.4c is Blocked for full native platform completion; actual Mac interaction evidence is recorded separately. Windows/Linux and OS-network-disabled acceptance remain Blocked. Stop before Module 4.
+**Evidence:** `docs/testing/module-3.md` and the separate interaction repair reports. **Current status:** 3.1b repairs and expanded direct-editing/draft-history checks Pass for available-Mac scope; see `docs/testing/module-3-input-repair.md` and the combined workspace run. Historical results remain scoped to their original coverage. 3.4c is Blocked for full native platform completion; actual Mac interaction evidence is recorded separately. Windows/Linux and OS-network-disabled acceptance remain Blocked. Later authorization covers only 4.0a–c workspace UI; stop before 4.1a.
 
 
 ### Module 4 — Exact part features and measurement
@@ -314,10 +314,10 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 4.0 — Align the native modeling workspace before adding solid tools
 
-These tasks are planned at the user's request on 20 October 2026. Execute 4.0a → 4.0b → 4.0c before 4.1a once Module 4 is authorized. This scheduling does not authorize Module 4 implementation or renumber existing feature tasks.
+The user authorized the proposed implementation order on 20 October 2026: repair Module 3 interaction first, then execute 4.0a → 4.0b → 4.0c and verify available targets. Authorization covers these workspace tasks only; stop before 4.1a exact features. Existing feature task IDs remain unchanged. See the implementation scope record.
 
-- [ ] **4.0a:** Introduce SolidWorks-style **Features / Sketch / Evaluate command tabs** using the existing shared action registry, menus, search, shortcuts and real command availability. Group discoverable sketch tools and contextual commands with original icons and text. Unimplemented operations must remain unavailable with reasons; no decorative functioning controls. Preserve native macOS global menus and native Windows/Linux behavior.
-- [ ] **4.0b:** Put the active **PropertyManager on the left**, sharing the manager region with the model/feature tree. Provide a command title, selection prompts, contextual fields, persistent accept/cancel and diagnostics. Show planes, origin and sketches under the active document, adding feature/history nodes as their engines arrive. Keep the central viewport dominant, the right resource Task Pane optional/collapsible, and documents/units/edit/save/job status along the bottom. Preserve stable IDs, tree state, keyboard focus and worker transaction ownership when switching panels.
+- [x] **4.0a:** Introduce SolidWorks-style **Features / Sketch / Evaluate command tabs** using the existing shared action registry, menus, search, shortcuts and real command availability. Group discoverable sketch tools and contextual commands with original icons and text. Unimplemented operations must remain unavailable with reasons; no decorative functioning controls. Preserve native macOS global menus and native Windows/Linux behavior.
+- [x] **4.0b:** Put the active **PropertyManager on the left**, sharing the manager region with the model/feature tree. Provide a command title, selection prompts, contextual fields, persistent accept/cancel and diagnostics. Show planes, origin and sketches under the active document, adding feature/history nodes as their engines arrive. Keep the central viewport dominant, the right resource Task Pane optional/collapsible, and documents/units/edit/save/job status along the bottom. Preserve stable IDs, tree state, keyboard focus and worker transaction ownership when switching panels.
 - [ ] **4.0c — T-01, T-03–T-05 layout acceptance:** Compare actual native screenshots and workflows against the preserved UI atlas and SDD §10. Verify command discovery, switching tree/PropertyManager, circle creation/edit/cancel, disabled reasons, pan/zoom/selection, document switching and save status at 1280×800 and 100/125/150/175/200% scaling. Test supported native platforms when available; mark unavailable environments Blocked. Record deliberate differences from SolidWorks and check for clipped controls, inaccessible actions and extra geometry/project writes.
 
 #### 4.1 — Implement extrusion and revolve
@@ -345,7 +345,7 @@ These tasks are planned at the user's request on 20 October 2026. Execute 4.0a �
 
 **Completion check:** The planned modeling layout and B1 modeling slice pass with native evidence; large history/reference mutation corpus is owned by Module 5.
 
-**Evidence:** `docs/testing/module-4.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-4.md`. **Current status:** 4.0a/4.0b Pass for available-Mac scope; 4.0c Blocked for full platform/device acceptance despite passing Cocoa workflows and screenshots at all five effective scales. 4.1–4.4 exact features and related acceptance Not run. Stop before 4.1a.
 
 
 ### Module 5 — Dependencies, rebuilds, topology references, and repair
@@ -641,5 +641,5 @@ Keep test failures and unavailable environments visible. Visual screenshots, eng
 
 ## 8. Current implementation status
 
-Module 0 feasibility evidence remains in [module-0](testing/module-0.md). The user authorized Module 1 on 19 October 2026; see [Mac reference-workspace implementation and native evidence](testing/module-1.md). Its platform matrix remains Blocked. T-01/T-03/T-04/T-35/T-53 subsets have available-Mac evidence; full associated requirements remain Blocked and other product tests remain Not run. Module 2 document metadata, working/saved persistence, semantic undo/redo and recovery subsets are verified on the available Mac; see [Module 2 evidence](testing/module-2.md). Full associated requirement rows remain Blocked. Module 3 planar sketches, constraints, expressions and transactional editing have scoped available-Mac evidence in [Module 3](testing/module-3.md); full platform completion remains Blocked. Modules 4–12 have not started. Frozen fixture recipes, reference display and small storage fixtures do not establish SRS resource budgets. Documentation checks verify structure/evidence links only.
+Module 0 feasibility evidence remains in [module-0](testing/module-0.md). The user authorized Module 1 on 19 October 2026; see [Mac reference-workspace implementation and native evidence](testing/module-1.md). Its platform matrix remains Blocked. T-01/T-03/T-04/T-35/T-53 subsets have available-Mac evidence; full associated requirements remain Blocked and other product tests remain Not run. Module 2 document metadata, working/saved persistence, semantic undo/redo and recovery subsets are verified on the available Mac; see [Module 2 evidence](testing/module-2.md). Full associated requirement rows remain Blocked. Module 3 planar sketches, constraints, expressions and transactional editing have scoped available-Mac evidence in [Module 3](testing/module-3.md); full platform completion remains Blocked. Module 4.0 workspace UI is implemented/verified for available-Mac scope; exact features 4.1–4.4 and Modules 5–12 have not started. Frozen fixture recipes, reference display and small storage fixtures do not establish SRS resource budgets. Documentation checks verify structure/evidence links only.
 

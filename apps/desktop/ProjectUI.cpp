@@ -11,8 +11,10 @@
 #include <QMenuBar>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QSet>
 #include <QTabWidget>
 #include <QTimer>
+#include <QToolBar>
 #include <QVBoxLayout>
 namespace cad {
 namespace {
@@ -153,10 +155,18 @@ void MainWindow::buildProjectUI() {
     });
     connect(add("recover", "Review recovery…", file), &QAction::triggered, client,
             &Client::listRecoveries);
-    connect(add("undo", "Undo", edit, QKeySequence::Undo), &QAction::triggered, this,
-            [this] { client->projectCommand("Undo"); });
-    connect(add("redo", "Redo", edit, QKeySequence::Redo), &QAction::triggered, this,
-            [this] { client->projectCommand("Redo"); });
+    connect(add("undo", "Undo", edit, QKeySequence::Undo), &QAction::triggered, this, [this] {
+        if (sketchPanel && sketchPanel->active())
+            sketchPanel->undoDraftEdit();
+        else
+            client->projectCommand("Undo");
+    });
+    connect(add("redo", "Redo", edit, QKeySequence::Redo), &QAction::triggered, this, [this] {
+        if (sketchPanel && sketchPanel->active())
+            sketchPanel->redoDraftEdit();
+        else
+            client->projectCommand("Redo");
+    });
     auto *automatic = add("recoveryPreference", "Offer recovery on startup", edit);
     automatic->setCheckable(true);
     automatic->setChecked(settings->value("startup/offerRecovery", true).toBool());
@@ -288,30 +298,91 @@ void MainWindow::refreshProjectUI() {
     }
     if (documents->count() == 0)
         documents->addTab("No open document");
-    tree->clear();
-    tree->setHeaderLabel("Project documents");
-    for (auto item : s.documentRecords) {
-        auto d = item.toMap();
-        auto *row = new QTreeWidgetItem(
-            tree, {d.value("name").toString() + " (" + d.value("type").toString() + ")"});
-        row->setData(0, Qt::UserRole + 1, d.value("id").toString());
-        row->setSelected(d.value("id").toString() == s.activeDocument);
-        for (auto parameter : d.value("parameters").toArray()) {
-            auto p = parameter.toMap();
-            auto unit = p.value("dimension").toString() == "length"  ? d.value("units").toString()
-                        : p.value("dimension").toString() == "angle" ? "rad"
-                        : p.value("dimension").toString() == "mass"  ? "kg"
-                                                                     : "1";
-            double value = p.value("value_si").toDouble() /
-                           domain::toSI(1, p.value("dimension").toString(), unit);
-            auto *field = new QTreeWidgetItem(row, {p.value("name").toString() + " = " +
-                                                    QString::number(value, 'g', 10) + " " + unit});
-            field->setData(0, Qt::UserRole + 1, d.value("id").toString());
+    QByteArray projection = QCborValue(s.documentRecords).toCbor();
+    projection += s.activeDocument.toUtf8();
+    projection +=
+        sketchPanel && sketchPanel->active() ? sketchPanel->sketchId().toUtf8() : QByteArray();
+    if (projection != treeProjection) {
+        QSet<QString> expanded, seen;
+        QString selectedKey;
+        for (auto *item : tree->findItems("*", Qt::MatchWildcard | Qt::MatchRecursive)) {
+            auto key = item->data(0, Qt::UserRole + 2).toString();
+            seen.insert(key);
+            if (item->isExpanded())
+                expanded.insert(key);
+            if (item->isSelected())
+                selectedKey = key;
         }
-        row->setExpanded(true);
+        if (treeActiveDocument != s.activeDocument) {
+            selectedKey.clear();
+            treeActiveDocument = s.activeDocument;
+        }
+        tree->clear();
+        treeProjection = projection;
+        tree->setHeaderLabel("Project documents");
+        for (auto item : s.documentRecords) {
+            auto d = item.toMap();
+            auto *row = new QTreeWidgetItem(
+                tree, {d.value("name").toString() + " (" + d.value("type").toString() + ")"});
+            row->setData(0, Qt::UserRole + 1, d.value("id").toString());
+            auto documentId = d.value("id").toString();
+            row->setData(0, Qt::UserRole + 2, documentId);
+            row->setSelected(selectedKey.isEmpty() ? documentId == s.activeDocument
+                                                   : selectedKey == documentId);
+            if (d.value("type").toString() == "Part") {
+                auto *origin = new QTreeWidgetItem(row, {"Origin"});
+                origin->setData(0, Qt::UserRole + 1, documentId);
+                origin->setData(0, Qt::UserRole + 2, documentId + "/origin");
+                for (auto name : {"XY", "XZ", "YZ"}) {
+                    auto *plane = new QTreeWidgetItem(row, {QString(name) + " Plane"});
+                    plane->setData(0, Qt::UserRole + 1, documentId);
+                    plane->setData(0, Qt::UserRole + 2, documentId + "/" + name);
+                    plane->setData(0, Qt::UserRole + 4, QString(name));
+                }
+                bool hasDraft = false;
+                for (auto value : d.value("sketches").toArray()) {
+                    auto sketch = value.toMap();
+                    auto id = sketch.value("id").toString();
+                    bool editing =
+                        sketchPanel && sketchPanel->active() && sketchPanel->sketchId() == id;
+                    hasDraft |= editing;
+                    auto *node = new QTreeWidgetItem(
+                        row, {sketch.value("name").toString() + (editing ? " (editing)" : "")});
+                    node->setIcon(0, commands.get("sketch")->icon());
+                    node->setData(0, Qt::UserRole + 1, documentId);
+                    node->setData(0, Qt::UserRole + 2, id);
+                    node->setData(0, Qt::UserRole + 3, id);
+                    node->setSelected(selectedKey == id);
+                }
+                if (sketchPanel && sketchPanel->active() && documentId == s.activeDocument &&
+                    !hasDraft) {
+                    auto *node =
+                        new QTreeWidgetItem(row, {sketchPanel->sketchName() + " (editing)"});
+                    node->setIcon(0, commands.get("sketch")->icon());
+                    node->setData(0, Qt::UserRole + 1, documentId);
+                    node->setData(0, Qt::UserRole + 2, sketchPanel->sketchId());
+                }
+            }
+            for (auto parameter : d.value("parameters").toArray()) {
+                auto p = parameter.toMap();
+                auto unit = p.value("dimension").toString() == "length"
+                                ? d.value("units").toString()
+                            : p.value("dimension").toString() == "angle" ? "rad"
+                            : p.value("dimension").toString() == "mass"  ? "kg"
+                                                                         : "1";
+                double value = p.value("value_si").toDouble() /
+                               domain::toSI(1, p.value("dimension").toString(), unit);
+                auto *field =
+                    new QTreeWidgetItem(row, {p.value("name").toString() + " = " +
+                                              QString::number(value, 'g', 10) + " " + unit});
+                field->setData(0, Qt::UserRole + 1, d.value("id").toString());
+            }
+            row->setExpanded(!seen.contains(documentId) || expanded.contains(documentId));
+        }
     }
     syncing = false;
     viewport->hide();
+    findChild<QToolBar *>("viewportToolbar")->hide();
     auto *welcome = findChild<QLabel *>("welcomePanel");
     welcome->setText(active.isEmpty()
                          ? "<h2>No open document</h2><p>Choose a document from the model tree.</p>"
@@ -352,20 +423,41 @@ void MainWindow::refreshProjectUI() {
         commands.get(id)->setEnabled(false);
         commands.get(id)->setToolTip("Close the project to inspect a temporary reference scene");
     }
+    bool sketchVisible = sketchPanel && sketchPanel->isVisible();
+    commands.get("fit")->setEnabled(sketchVisible);
+    commands.get("fit")->setToolTip(sketchVisible ? "Fit sketch geometry" : "Select a sketch");
     for (auto id : {"save", "saveAs", "document.new", "project.close"})
         commands.get(id)->setEnabled(idle);
     commands.get("close")->setEnabled(idle && !active.isEmpty());
     commands.get("close")->setText("Close document");
     commands.get("undo")->setEnabled(idle && s.canUndo);
     commands.get("redo")->setEnabled(idle && s.canRedo);
-    status->setText((s.stale ? "STALE · " : "") + s.job + " · " + s.save);
-    notice->setText(s.message);
+    bool draft = sketchPanel && sketchPanel->active();
+    status->setText(!idle                           ? "Working…"
+                    : draft                         ? "Sketch draft"
+                    : s.savedRevision == s.revision ? "Saved"
+                                                    : "Unsaved · Recovery available");
+    status->setToolTip(s.save + "\n" + s.message);
+    notice->setText(s.phase == Phase::Failed ? s.message
+                    : draft                  ? "Editing " + sketchPanel->sketchName()
+                                             : QString());
+    notice->setToolTip(s.message);
     if (sketchPanel && sketchPanel->active()) {
-        for (auto id : {"new", "open", "save", "saveAs", "document.new", "project.close", "close",
-                        "undo", "redo"})
+        for (auto id : {
+                 "new",
+                 "open",
+                 "save",
+                 "saveAs",
+                 "document.new",
+                 "project.close",
+                 "close",
+             })
             commands.get(id)->setEnabled(false);
+        commands.get("undo")->setEnabled(idle && sketchPanel->canUndoDraft());
+        commands.get("redo")->setEnabled(idle && sketchPanel->canRedoDraft());
         documents->setEnabled(false);
     } else
         documents->setEnabled(idle);
+    refreshCommandTabs();
 }
 } // namespace cad

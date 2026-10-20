@@ -1,0 +1,10 @@
+[1/11] Automatic MOC for target cad_desktop_ui
+[2/11] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[3/11] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[4/11] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[5/11] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[6/11] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[7/11] Linking CXX static library libcad_desktop_ui.a
+[8/11] Automatic MOC for target module3_input
+[9/10] Building CXX object CMakeFiles/module3_input.dir/tests/module3/input.cpp.o
+[10/10] Linking CXX executable module3_input

@@ -30,5 +30,17 @@
     "date": "2026-10-20",
     "quote": "okk so close the module 3 first properly and adjust this -SolidWorks-style command tabs, left PropertyManager and overall layout , somehwere in upcoming modules sections",
     "scope": "Close feasible Module 3 interaction gaps and verify; schedule future UI alignment in Module 4.0 and Module 9 documentation only. No Module 4 implementation authorization. Unavailable checks remain Blocked."
-  }
+  },
+  "interaction_and_workspace_authorization": {
+    "source": "Direct user instruction after the read-only review and proposed implementation order",
+    "date": "2026-10-20",
+    "quote": "ok so start the implementation in the implementation order",
+    "scope": "Repair and verify Module 3 camera/input/direct-editing gaps first; implement and verify Module 4.0a-c native modeling workspace next; run feasible mouse/trackpad-event, scaling, persistence and responsiveness checks. Physical-device and unavailable platform checks remain Blocked. Stop before 4.1a exact feature implementation.",
+    "authorized_tasks": [
+      "4.0a",
+      "4.0b",
+      "4.0c"
+    ]
+  },
+  "stop_before_task": "4.1a"
 }

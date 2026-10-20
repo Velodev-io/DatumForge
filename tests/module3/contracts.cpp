@@ -2,6 +2,7 @@
 #include "SketchPanel.hpp"
 #include "render/SketchView.hpp"
 #include "render/Viewport.hpp"
+#include "sketch/Editing.hpp"
 #include <QApplication>
 #include <QDir>
 #include <QFile>
@@ -14,6 +15,7 @@
 #include <QSurfaceFormat>
 #include <QTemporaryDir>
 #include <QTest>
+#include <QToolButton>
 #ifdef Q_OS_UNIX
 #include <signal.h>
 #endif
@@ -38,10 +40,22 @@ void mark(QString root) {
 QCborMap part(Client &c) {
     return c.state().documentRecords[0].toMap();
 }
+void reveal(QWidget &w, QWidget *widget) {
+    std::vector<QWidget *> sections;
+    for (auto *p = widget->parentWidget(); p; p = p->parentWidget())
+        if (p->property("disclosureToggle").isValid())
+            sections.push_back(p);
+    for (auto it = sections.rbegin(); it != sections.rend(); ++it) {
+        auto *toggle = w.findChild<QToolButton *>((*it)->property("disclosureToggle").toString());
+        if (toggle && !toggle->isChecked())
+            QTest::mouseClick(toggle, Qt::LeftButton);
+    }
+}
 void click(QWidget &w, QString name) {
     auto *b = w.findChild<QPushButton *>(name);
     if (!b)
         qFatal("Missing button");
+    reveal(w, b);
     for (auto *s : w.findChildren<QScrollArea *>())
         if (s->isAncestorOf(b))
             s->ensureWidgetVisible(b);
@@ -64,15 +78,179 @@ class Contracts : public QObject {
         gestures(false, "mm");
         gestures(false, "in");
     }
+    void shapeEditing() {
+        editingWorkflow(false);
+    }
     void nativeSketches() {
         if (!qEnvironmentVariableIsSet("CAD_NATIVE_TESTS"))
             QSKIP("Blocked: native session required");
         exercise(true);
         gestures(true, "mm");
         gestures(true, "in");
+        editingWorkflow(true);
     }
 
   private:
+    void editingWorkflow(bool native) {
+        QTemporaryDir root(QDir::tempPath() + "/cad-module3-edit-XXXXXX"),
+            files(QDir::tempPath() + "/cad-module3-files-XXXXXX");
+        QVERIFY(root.isValid() && files.isValid());
+        mark(root.path());
+        mark(files.path());
+        auto prefs = files.filePath("settings.ini");
+        QSettings settings(prefs, QSettings::IniFormat);
+        settings.setValue("startup/offerRecovery", false);
+        settings.sync();
+        MainWindow window(prefs, nullptr, root.path());
+        window.show();
+        if (native) {
+            QVERIFY(QTest::qWaitForWindowExposed(&window));
+            window.raise();
+            window.activateWindow();
+            QVERIFY(QTest::qWaitForWindowActive(&window));
+        }
+        auto *c = window.workerClient();
+        QVERIFY(wait([&] { return c->ready(); }));
+        c->newProject("Part", "Editable shapes");
+        QVERIFY(wait([&] { return ready(*c); }));
+        window.command("sketch")->trigger();
+        auto *panel = window.findChild<SketchPanel *>();
+        auto *view = window.findChild<SketchView *>();
+        auto *tool = window.findChild<QComboBox *>("sketchTool");
+        tool->setCurrentText("Circle");
+        window.findChild<QLineEdit *>("sketchRadius")->setText("5");
+        coordinate(window, 0, 0);
+        tool->setCurrentText("Rectangle");
+        coordinate(window, -20, -10);
+        coordinate(window, 20, 10);
+        auto revision = c->state().revision;
+        QTest::keyClick(view, Qt::Key_Escape);
+        QVERIFY(panel->active());
+        QCOMPARE(tool->currentText(), QString("Select / drag"));
+        window.command("undo")->trigger();
+        QCOMPARE(window.findChild<QListWidget *>("sketchEntities")->count(), 2);
+        window.command("redo")->trigger();
+        QCOMPARE(window.findChild<QListWidget *>("sketchEntities")->count(), 10);
+        QCOMPARE(c->state().revision, revision);
+        click(window, "acceptSketchButton");
+        QVERIFY2(wait([&] { return ready(*c) && c->state().revision == revision + 1; }),
+                 qPrintable(c->state().message));
+        auto accepted = part(*c).value("sketches").toArray();
+        click(window, "editSketchButton");
+        window.command("fit")->trigger();
+        QTest::qWait(30);
+        auto circle = sketch::parse(accepted)[0].entities[1];
+        auto center = sketch::parse(accepted)[0].entities[0].point;
+        QPoint start = view->screen({center.x + circle.radius, center.y}).toPoint();
+        QTest::mousePress(view, Qt::LeftButton, Qt::NoModifier, start);
+        auto *list = window.findChild<QListWidget *>("sketchEntities");
+        QSignalSpy removed(list->model(), &QAbstractItemModel::rowsRemoved),
+            inserted(list->model(), &QAbstractItemModel::rowsInserted);
+        auto operation = c->latestOperation();
+        std::vector<double> timings;
+        for (int i = 1; i <= 60; ++i) {
+            QPoint at = start + QPoint(i, 0);
+            QElapsedTimer timer;
+            timer.start();
+            QMouseEvent move(QEvent::MouseMove, at, view->mapToGlobal(at), Qt::NoButton,
+                             Qt::LeftButton, Qt::NoModifier);
+            QApplication::sendEvent(view, &move);
+            QApplication::processEvents();
+            timings.push_back(timer.nsecsElapsed() / 1e6);
+        }
+        QCOMPARE(removed.size(), 0);
+        QCOMPARE(inserted.size(), 0);
+        QCOMPARE(c->latestOperation(), operation);
+        QCOMPARE(c->state().revision, revision + 1);
+        QTest::mouseRelease(view, Qt::LeftButton, Qt::NoModifier, start + QPoint(60, 0));
+        QVERIFY(wait([&] { return !c->outstanding(); }));
+        QVERIFY(panel->active());
+        auto *radius = window.findChild<QLineEdit *>("selectedRadius");
+        QVERIFY(!radius->isHidden());
+        radius->setText("7.25");
+        click(window, "applySelectionProperties");
+        QVERIFY2(wait([&] { return !c->outstanding() && c->state().phase == Phase::PreviewReady; }),
+                 qPrintable(c->state().message));
+        QCOMPARE(part(*c).value("sketches").toArray(), accepted);
+        click(window, "acceptSketchButton");
+        QVERIFY(wait([&] { return ready(*c) && c->state().revision == revision + 2; }));
+        auto sized = part(*c).value("sketches").toArray();
+        auto semantics = sketch::parse(sized);
+        QCOMPARE(semantics[0].entity(circle.id).radius, .00725);
+        window.command("undo")->trigger();
+        QVERIFY(
+            wait([&] { return ready(*c) && part(*c).value("sketches").toArray() == accepted; }));
+        window.command("redo")->trigger();
+        QVERIFY(wait([&] { return ready(*c) && part(*c).value("sketches").toArray() == sized; }));
+        click(window, "editSketchButton");
+        auto corner = semantics[0].entities[4].id;
+        auto *entities = window.findChild<QListWidget *>("sketchEntities");
+        entities->clearSelection();
+        for (int i = 0; i < entities->count(); ++i)
+            if (entities->item(i)->data(Qt::UserRole).toString() == corner)
+                entities->item(i)->setSelected(true);
+        window.findChild<QLineEdit *>("selectedWidth")->setText("60");
+        window.findChild<QLineEdit *>("selectedHeight")->setText("30");
+        click(window, "applySelectionProperties");
+        QVERIFY2(wait([&] { return !c->outstanding() && c->state().phase == Phase::PreviewReady; }),
+                 qPrintable(c->state().message));
+        click(window, "acceptSketchButton");
+        QVERIFY(wait([&] { return ready(*c) && c->state().revision == revision + 5; }));
+        auto resized = part(*c).value("sketches").toArray();
+        semantics = sketch::parse(resized);
+        auto rect = sketch::rectangleOf(semantics[0], corner);
+        QVERIFY(rect.has_value());
+        double left = 1e100, right = -1e100, bottom = 1e100, top = -1e100;
+        for (auto &id : rect->points) {
+            auto p = semantics[0].entity(id).point;
+            left = std::min(left, p.x);
+            right = std::max(right, p.x);
+            bottom = std::min(bottom, p.y);
+            top = std::max(top, p.y);
+        }
+        QVERIFY(std::abs(right - left - .06) < 1e-10 && std::abs(top - bottom - .03) < 1e-10);
+        click(window, "editSketchButton");
+        entities->clearSelection();
+        for (int i = 0; i < entities->count(); ++i)
+            if (entities->item(i)->data(Qt::UserRole).toString() == circle.id)
+                entities->item(i)->setSelected(true);
+        click(window, "deleteSelectedEntity");
+        QCOMPARE(entities->count(), 8);
+        window.command("undo")->trigger();
+        QCOMPARE(entities->count(), 10);
+        window.command("redo")->trigger();
+        QCOMPARE(entities->count(), 8);
+        click(window, "cancelSketchButton");
+        QCOMPARE(part(*c).value("sketches").toArray(), resized);
+        auto path = files.filePath("edits.cadproj");
+        c->saveProject(path);
+        QVERIFY(wait([&] { return ready(*c) && c->state().savedRevision == c->state().revision; }));
+        c->closeProject();
+        QVERIFY(wait([&] { return !c->state().projectOpen && !c->outstanding(); }));
+        c->openProject(path);
+        QVERIFY(wait([&] { return ready(*c); }));
+        QCOMPARE(part(*c).value("sketches").toArray(), resized);
+        if (native) {
+            auto folder = qEnvironmentVariable("CAD_ARTIFACT_DIR");
+            QVERIFY(!folder.isEmpty());
+            std::sort(timings.begin(), timings.end());
+            QFile f(folder + "/input-latency.json");
+            QVERIFY(f.open(QIODevice::WriteOnly));
+            f.write(QJsonDocument(
+                        QJsonObject{
+                            {"samples", int(timings.size())},
+                            {"p95_event_to_paint_ms", timings[size_t(timings.size() * .95)]},
+                            {"max_ms", timings.back()},
+                            {"list_rebuilds_during_drag", 0},
+                            {"worker_commands_during_drag", 0},
+                            {"source", "Application-dispatched mouse events plus event processing; "
+                                       "not physical trackpad latency or SRS acceptance"}})
+                        .toJson());
+            QVERIFY(window.grab().save(folder + "/editable-shapes.png"));
+        }
+        window.close();
+    }
+
     void gestures(bool native, QString units) {
         qInfo() << "Pointer gesture workflow in" << units;
         QTemporaryDir root(QDir::tempPath() + "/cad-module3-gesture-XXXXXX"),
@@ -127,7 +305,10 @@ class Contracts : public QObject {
                 for (int dx = -3; dx <= 3; ++dx) {
                     auto color = image.pixelColor(qRound((at.x() + dx) * ratio),
                                                   qRound((at.y() + dy) * ratio));
-                    if (color.green() > 150 && (color.blue() > 150 || color.red() > 200))
+                    if ((color.blue() > 140 && color.blue() > color.red() * 1.3 &&
+                         color.blue() > color.green() * 1.1) ||
+                        (color.red() > 160 && color.green() > 90 &&
+                         color.red() > color.blue() * 1.5))
                         return true;
                 }
             return false;
@@ -231,10 +412,11 @@ class Contracts : public QObject {
         QCOMPARE(result[0].entities[3].radius, expectedRadius);
         QCOMPARE(result[0].entities[5].radius, expectedRadius);
         QCOMPARE(result[0].entities[5].kind, QString("Arc"));
-        // Escape without a pending primitive cancels the complete edit.
+        // Escape leaves the tool and preserves the complete edit. Explicit Cancel discards it.
         view->setFocus();
         QTest::keyClick(view, Qt::Key_Escape);
-        QVERIFY(!window.findChild<SketchPanel *>()->active());
+        QVERIFY(window.findChild<SketchPanel *>()->active());
+        click(window, "cancelSketchButton");
         QCOMPARE(part(*c).value("sketches").toArray(), accepted);
         window.close();
     }
@@ -290,7 +472,7 @@ class Contracts : public QObject {
         QVERIFY(view);
         click(window, "previewSketchButton");
         view->setFocus();
-        QTest::keyClick(view, Qt::Key_Escape);
+        click(window, "cancelSketchButton");
         QVERIFY(!window.findChild<SketchPanel *>()->active());
         QVERIFY(wait([&] { return !c->outstanding(); }));
         QVERIFY(c->state().phase != Phase::PreviewReady);
@@ -321,7 +503,8 @@ class Contracts : public QObject {
         QApplication::sendEvent(view, &move);
         QCOMPARE(view->pick(point + QPoint(30, -10)), draggedId);
         QTest::mouseRelease(view, Qt::LeftButton, Qt::NoModifier, point + QPoint(30, -10));
-        QTest::keyClick(view, Qt::Key_Escape);
+        QVERIFY(wait([&] { return !c->outstanding(); }));
+        click(window, "cancelSketchButton");
         QCOMPARE(part(*c).value("sketches").toArray(), accepted);
         window.command("undo")->trigger();
         QVERIFY(
@@ -344,8 +527,8 @@ class Contracts : public QObject {
                 click(window, "addSketchConstraint");
             };
             addRelation("Fixed", 0);
-            for (int j = 0; j < 4; ++j)
-                addRelation(j % 2 ? "Vertical" : "Horizontal", 4 + j);
+            // Rectangle creation already adds the four orientation relations.
+            QCOMPARE(window.findChild<QListWidget *>("sketchConstraints")->count(), 5);
             window.findChild<QLineEdit *>("sketchNameExpression")
                 ->setText(index ? "Width = 20 mm" : "Width = 80 mm");
             click(window, "setSketchName");
@@ -416,7 +599,7 @@ class Contracts : public QObject {
         click(window, "editSketchDimension");
         click(window, "previewSketchButton");
         QVERIFY(wait([&] { return !c->outstanding(); }));
-        QTest::keyClick(window.findChild<QLineEdit *>("sketchDimension"), Qt::Key_Escape);
+        click(window, "cancelSketchButton");
         QCOMPARE(part(*c).value("sketches").toArray(), accepted);
         click(window, "editSketchButton");
         constraints->setCurrentRow(6);
@@ -463,10 +646,12 @@ class Contracts : public QObject {
             for (auto *scroll : window.findChildren<QScrollArea *>())
                 scroll->verticalScrollBar()->setValue(0);
             QTest::qWait(30);
+            click(window, "editSketchButton");
             for (auto id : {"previewSketchButton", "acceptSketchButton", "cancelSketchButton"}) {
                 auto *button = window.findChild<QPushButton *>(id);
                 QVERIFY(button->visibleRegion().boundingRect().height() > 0);
             }
+            click(window, "cancelSketchButton");
             QVERIFY(window.grab().save(artifacts + "/sketches-native.png"));
             QFile report(artifacts + "/native.json");
             QVERIFY(report.open(QIODevice::WriteOnly));

@@ -1,6 +1,13 @@
 # Module 3 evidence
 
-Status: **feasible available-Mac Module 3 work and interaction follow-up verified; full platform completion Blocked**. The user explicitly authorized Module 3 on
+Status: **available-Mac Module 3 baseline and follow-ups; full platform completion Blocked**.
+Current interaction/shape-editing behavior is recorded in [the later input repair](module-3-input-repair.md)
+and [Module 4.0 workspace evidence](module-4.md). The dated logs and results below
+remain historical; their hashes identify their own tested source, not the new UI.
+A [pre-repair copy](artifacts/module-4/workspace-dev/module-3-before-input-workspace.md)
+is preserved.
+
+Original scope: The user explicitly authorized Module 3 on
 19 October 2026 and required stopping before Module 4. Execution continued on
 20 October. [Scope record](../decisions/implementation-scope.json).
 
@@ -8,7 +15,8 @@ The previous session left a placeholder and no Module 3 implementation. Work
 followed 3.1a → 3.1b → 3.2a → 3.2b → 3.3a → 3.3b → 3.4a → 3.4b → 3.4c, with
 incremental model, storage, solver, parser and interaction evidence retained in
 [the artifact directory](artifacts/module-3). No agents were delegated work.
-Module 4 has not started.
+Module 4 had not started at this baseline. The later authorization covers only
+workspace tasks 4.0a–c; exact features remain beyond 4.1a.
 
 The user found a circle-creation gesture gap after the original closeout: the
 old tests covered numeric circles and point dragging but did not test circle
@@ -22,7 +30,7 @@ results below remain historical evidence of their actual coverage.
 | Task | Result and actual scope |
 |---|---|
 | 3.1a | Pass: SI support frames; points, shared-endpoint lines/polylines/rectangles, circles and arcs; construction flags; point/grid snapping; stable UUIDs and bounded typed serialization. |
-| 3.1b | Pass on available Mac: native planar viewport/entity selection, dimension labels, circle press/drag/release and transient cancellation, line/polyline/rectangle previews, contextual fields/empty state, editable drafts, worker previews, generation-bound cancellation and durable semantic acceptance. [Follow-up evidence](module-3-interaction-followup.md). |
+| 3.1b | Pass on available Mac: native planar viewport/entity selection, dimension labels, circle press/drag/release and transient cancellation, line/polyline/rectangle previews, contextual fields/empty state, editable drafts, worker previews, generation-bound cancellation and durable semantic acceptance. [Circle follow-up](module-3-interaction-followup.md) and [later input/direct-editing repair](module-3-input-repair.md). |
 | 3.2a | Pass: real pinned PlaneGCS mapping with owned variables/constants, fixed anchors and the documented geometric/dimensional combinations. Unsupported selections are disabled with reasons and rejected in the worker. |
 | 3.2b | Pass: finite/degeneracy/radius checks, independent residuals, Jacobian-rank freedom, redundant/conflicting constraint IDs, line-direction and tangent-side continuity, preserved accepted state on failure. |
 | 3.3a | Pass: SI/display conversion, dimensional arithmetic/functions/names, cycle/domain/nonfinite rejection, 4 KiB / 256-node / 32-level bounds; no general code evaluation. |
@@ -139,4 +147,6 @@ they do not prove five different monitors or all Mac GPUs.
 | Advanced arc constraints and general nonlinear branch navigation | Unsupported combinations remain unavailable with reasons. Supported R1 combinations and conservative continuity policy are documented in the ADR. |
 | Product identity/license/distribution and remote | Existing owner decisions remain open; no remote, signing, publication or history rewrite was performed. |
 
-Stop before Module 4. Further implementation requires the user's next instruction.
+The original closeout stopped before Module 4. The later authorization covers
+[Module 3 input repair](module-3-input-repair.md) and [4.0a–c workspace UI](module-4.md).
+Stop before 4.1a exact features; further implementation requires the user's next instruction.
