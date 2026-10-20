@@ -1,6 +1,6 @@
 # Source builds and commands
 
-Module 0 experiments plus the authorized Modules 1–3 native workspace and persistence foundation. `dependencies.lock.json` pins upstream source archives and extracted
+Module 0 experiments plus the authorized Modules 1–4 native workspace, persistence, sketch and exact feature foundation. `dependencies.lock.json` pins upstream source archives and extracted
 PlaneGCS files by SHA-256. Qt's archive was also checked against its official
 checksum. Source commit identities for OCCT/Eigen/FreeCAD are immutable. Ninja's
 tag archive is content-locked. Builds never select floating branches or silently
@@ -122,3 +122,5 @@ Cocoa workflows at five effective scales, and the prior native module regression
 switching and layout restoration. GUI/IPC tests require a logged-in native session
 and local IPC permission. Physical-device, other-platform and full 8 GB resource
 acceptance remain separate gates. See [workspace evidence](../docs/testing/module-4.md).
+
+Module 4 feature verification: `python3 tools/verify_module4.py --native --clean` on the logged-in available Mac. Each run preserves logs under `docs/testing/artifacts/module-4/features-runs/`; latest feature status is separate from historical workspace evidence. Tests use marked disposable roots; no existing user app session is reused. See [Module 4 evidence](../docs/testing/module-4.md).

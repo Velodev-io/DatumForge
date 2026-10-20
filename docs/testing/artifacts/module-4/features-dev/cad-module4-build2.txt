@@ -1,0 +1,2 @@
+[1/2] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[2/2] Linking CXX static library libcad_part.a

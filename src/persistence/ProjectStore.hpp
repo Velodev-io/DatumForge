@@ -55,6 +55,7 @@ class ProjectStore {
     qint64 revision() const;
     QCborMap state() const;
     QCborArray sketches(QString document) const;
+    QCborArray features(QString document) const;
     QCborMap execute(const wire::Envelope &e);
     QCborMap outcome(QString operation) const;
     QCborArray recoveryOffers() const;

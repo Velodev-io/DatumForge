@@ -18,7 +18,7 @@ class Worker : public QObject {
     QQueue<cad::wire::Envelope> queue;
     QMap<QString, QPair<QByteArray, QCborMap>> outcomes;
     QMap<QString, cad::PackedMesh> cachedDisplays;
-    void chunks(const cad::wire::Envelope &e, const cad::PackedMesh &packed) {
+    void chunks(const cad::wire::Envelope &e, const cad::PackedMesh &packed, qint64 revision = 1) {
         auto id = cad::wire::text(packed.manifest, "transfer_id");
         for (qsizetype offset = 0; offset < packed.bytes.size(); offset += 4096) {
             QCborMap chunk;
@@ -26,7 +26,7 @@ class Worker : public QObject {
             chunk.insert(QStringLiteral("offset"), offset);
             chunk.insert(QStringLiteral("bytes"), packed.bytes.mid(offset, 4096));
             auto frame = cad::wire::reply(e, "Chunk", chunk);
-            frame.insert(QStringLiteral("result_revision"), 1);
+            frame.insert(QStringLiteral("result_revision"), revision);
             send(frame);
         }
     }
@@ -89,9 +89,12 @@ class Worker : public QObject {
         using wire::require;
         if (projects.handles(e.command)) {
             auto data = projects.run(e);
+            auto bytes = data.take(QStringLiteral("_display_bytes")).toByteArray();
             auto answer = wire::reply(e, "Succeeded", data);
             answer.insert(QStringLiteral("result_revision"), projects.revision());
             send(answer);
+            if (!bytes.isEmpty())
+                chunks(e, {data.value("display_manifest").toMap(), bytes}, projects.revision());
             return;
         }
         cad::domain::check(!projects.open(), "InvalidInput",

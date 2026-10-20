@@ -1,4 +1,5 @@
 #include "ProjectStore.hpp"
+#include "geometry/occt/Part.hpp"
 #include "sketch/Solver.hpp"
 #include <QDateTime>
 #include <QDir>
@@ -12,6 +13,7 @@ namespace {
 constexpr int application = 1128350800;
 const QString sketchManifest = "cad-semantic-v1;SI;objects=opaque-v1;strict-schema;sketch-v1;"
                                "PlaneGCS=256fc7eff3379911ab5daf88e10182c509aa8052;adapter=1";
+const QString featureManifest = sketchManifest + ";features-v1;OCCT=7.9.2;part-adapter=1";
 const QString manifest = "cad-semantic-v1;SI;objects=opaque-v1;strict-schema;no-feature-engine";
 QByteArray encode(const QCborMap &map) {
     auto bytes = QCborValue(map).toCbor(QCborValue::SortKeysInMaps);
@@ -81,7 +83,8 @@ void validateDelta(const QCborMap &d) {
         return;
     auto type = wire::text(d, "type");
     check(QStringList{"restore_document", "delete_document", "rename", "units", "set_parameter",
-                      "remove_parameter", "attach_object", "detach_object", "set_sketches"}
+                      "remove_parameter", "attach_object", "detach_object", "set_sketches",
+                      "set_features"}
               .contains(type),
           "InvalidProject", "Unsupported semantic delta in project history");
     if (type == "restore_document") {
@@ -104,7 +107,11 @@ void validateDelta(const QCborMap &d) {
     } else {
         domain::id(wire::text(d, "owner"));
         domain::id(wire::text(d, "document"));
-        if (type == "set_sketches") {
+        if (type == "set_features") {
+            wire::keys(d, {"type", "owner", "document", "features"});
+            check(d.value("features").isArray(), "InvalidInput", "Feature array required");
+            features::parse(d.value("features").toArray());
+        } else if (type == "set_sketches") {
             wire::keys(d, {"type", "owner", "document", "sketches"});
             check(d.value("sketches").isArray(), "InvalidInput", "Sketch array required");
             sketch::validateAccepted(d.value("sketches").toArray());
@@ -151,7 +158,7 @@ void compatible(Database &db) {
           "This is not a supported CAD project");
     check(db.scalar("PRAGMA user_version").toInt() == 1, "IncompatibleSchema",
           "Project schema is unsupported; original file was not changed");
-    check(QStringList{manifest, sketchManifest}.contains(
+    check(QStringList{manifest, sketchManifest, featureManifest}.contains(
               db.scalar("SELECT manifest FROM project_meta").toString()),
           "IncompatibleSchema",
           "Unsupported semantic/object encoding; original file was not changed");
@@ -291,8 +298,8 @@ void ProjectStore::validate(Database &candidate, bool saved) const {
         domain::Parameter::parse(values({{"name", p[0].toString()},
                                          {"dimension", p[1].toString()},
                                          {"value_si", p[2].toDouble()}}));
-    for (auto table : {"features", "dependencies", "\"references\"", "constraints", "occurrences",
-                       "mates", "drawing_views", "annotations", "evaluation_results"}) {
+    for (auto table : {"dependencies", "\"references\"", "constraints", "occurrences", "mates",
+                       "drawing_views", "annotations", "evaluation_results"}) {
         auto sql = QString("SELECT count(*) FROM %1").arg(table).toUtf8();
         check(candidate.scalar(sql.constData()).toLongLong() == 0, "UnsupportedOperation",
               "This module cannot validate future geometry/solver definitions");
@@ -321,6 +328,27 @@ void ProjectStore::validate(Database &candidate, bool saved) const {
                 sketchIds.insert(id);
             }
         }
+    }
+    for (auto row :
+         candidate.rows("SELECT f.definition,d.id,d.type,f.version,f.ordinal FROM features f JOIN "
+                        "entities e ON e.id=f.entity_id JOIN documents d ON d.id=e.document_id")) {
+        check(row[2].toString() == "Part" && row[3].toInt() == 1 && row[4].toInt() == 0 &&
+                  candidate.scalar("SELECT manifest FROM project_meta").toString() ==
+                      featureManifest,
+              "InvalidProject", "Invalid feature collection context or manifest");
+        auto collection = decode(row[0]);
+        wire::keys(collection, {"features"});
+        check(collection.value("features").isArray(), "InvalidProject",
+              "Feature collection required");
+        auto a = collection.value("features").toArray();
+        for (auto &f : features::parse(a)) {
+            check(!sketchIds.contains(f.id), "InvalidProject", "Feature identity collision");
+            sketchIds.insert(f.id);
+        }
+        auto data = candidate.rows("SELECT definition FROM sketch_entities WHERE entity_id=?",
+                                   {owner(candidate, row[1].toString())});
+        kernel::Part::build(
+            data.empty() ? QCborArray{} : decode(data[0][0]).value("sketches").toArray(), a);
     }
     candidate.forEachRow("SELECT operation_id,request_hash,base_revision,new_revision,"
                          "intent,before_delta,after_delta,outcome FROM commands",
@@ -401,6 +429,7 @@ QCborMap ProjectStore::state() const {
                             {"revision", r[4].toLongLong()},
                             {"properties_entity", entity},
                             {"parameters", params},
+                            {"features", features(doc)},
                             {"sketches", sketches(doc)},
                             {"sketch_diagnostics", sketch::validateAccepted(sketches(doc))}}));
     }
@@ -424,6 +453,11 @@ QCborArray ProjectStore::sketches(QString document) const {
     auto rows = db->rows("SELECT definition FROM sketch_entities WHERE entity_id=?",
                          {owner(*db, document)});
     return rows.empty() ? QCborArray{} : decode(rows[0][0]).value("sketches").toArray();
+}
+QCborArray ProjectStore::features(QString document) const {
+    auto rows =
+        db->rows("SELECT definition FROM features WHERE entity_id=?", {owner(*db, document)});
+    return rows.empty() ? QCborArray{} : decode(rows[0][0]).value("features").toArray();
 }
 QCborMap ProjectStore::outcome(QString op) const {
     domain::id(op);
@@ -457,6 +491,42 @@ QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse) {
                        {"entity", properties}});
     }
     check(!entity.isEmpty(), "ReferenceMissing", "Select an open document");
+    if (e.command == "SetFeatures") {
+        wire::keys(p, {"features"});
+        check(p.value("features").isArray(), "InvalidInput", "Feature array required");
+        check(db->scalar("SELECT type FROM documents WHERE id=?", {doc}).toString() == "Part",
+              "UnsupportedOperation", "Features require a Part");
+        auto incoming = p.value("features").toArray();
+        QSet<QString> ids;
+        for (auto row : db->rows("SELECT id FROM documents UNION SELECT id FROM entities"))
+            ids.insert(row[0].toString());
+        for (auto row : db->rows("SELECT id FROM documents")) {
+            auto d = row[0].toString();
+            for (auto &s : sketch::parse(sketches(d))) {
+                ids.insert(s.id);
+                for (auto &v : s.entities)
+                    ids.insert(v.id);
+                for (auto &v : s.constraints)
+                    ids.insert(v.id);
+            }
+            if (d != doc)
+                for (auto &f : features::parse(features(d)))
+                    ids.insert(f.id);
+        }
+        for (auto &f : features::parse(incoming)) {
+            check(!ids.contains(f.id), "InvalidInput", "Feature identity collision");
+            ids.insert(f.id);
+        }
+        kernel::Part::build(sketches(doc), incoming);
+        inverse = values({{"type", "set_features"},
+                          {"owner", entity},
+                          {"document", doc},
+                          {"features", features(doc)}});
+        return values({{"type", "set_features"},
+                       {"owner", entity},
+                       {"document", doc},
+                       {"features", incoming}});
+    }
     if (e.command == "SetSketches") {
         wire::keys(p, {"sketches"});
         check(p.value("sketches").isArray(), "InvalidInput", "Sketch array required");
@@ -482,6 +552,9 @@ QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse) {
                 for (auto &c : other.constraints)
                     ids.insert(c.id);
             }
+        for (auto row : db->rows("SELECT id FROM documents"))
+            for (auto &f : features::parse(features(row[0].toString())))
+                ids.insert(f.id);
         for (auto &s : all) {
             QStringList incoming{s.id};
             for (auto &e : s.entities)
@@ -493,6 +566,7 @@ QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse) {
                 ids.insert(id);
             }
         }
+        kernel::Part::build(sketch::encode(all), features(doc));
         inverse = values({{"type", "set_sketches"},
                           {"owner", entity},
                           {"document", doc},
@@ -593,7 +667,18 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
                          {entity, wire::text(d, "document")})
                       .toInt() == 1,
               "ReferenceMissing", "History entity/document context no longer resolves");
-        if (type == "set_sketches") {
+        if (type == "set_features") {
+            auto a = d.value("features").toArray();
+            kernel::Part::build(sketches(wire::text(d, "document")), a);
+            if (a.empty())
+                db->run("DELETE FROM features WHERE entity_id=?", {entity});
+            else
+                db->run("INSERT INTO features VALUES(?,1,0,?) ON CONFLICT(entity_id) DO UPDATE SET "
+                        "definition=excluded.definition",
+                        {entity, encode(values({{"features", a}}))});
+            db->run("UPDATE project_meta SET manifest=?", {featureManifest});
+        } else if (type == "set_sketches") {
+            kernel::Part::build(d.value("sketches").toArray(), features(wire::text(d, "document")));
             auto bytes = encode(values({{"sketches", d.value("sketches")}}));
             if (d.value("sketches").toArray().empty())
                 db->run("DELETE FROM sketch_entities WHERE entity_id=?", {entity});
@@ -602,7 +687,8 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
                     "INSERT INTO sketch_entities VALUES(?,?) ON CONFLICT(entity_id) DO UPDATE SET "
                     "definition=excluded.definition",
                     {entity, bytes});
-            db->run("UPDATE project_meta SET manifest=?", {sketchManifest});
+            db->run("UPDATE project_meta SET manifest=? WHERE manifest!=?",
+                    {sketchManifest, featureManifest});
         } else if (type == "set_parameter")
             db->run("INSERT INTO parameters VALUES(?,?,?,?) ON CONFLICT(owner,name) DO UPDATE SET "
                     "dimension=excluded.dimension,value_si=excluded.value_si",

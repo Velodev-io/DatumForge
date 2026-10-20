@@ -1,4 +1,5 @@
 #include "MainWindow.hpp"
+#include "FeaturePanel.hpp"
 #include "SketchPanel.hpp"
 #include "protocol/Client.hpp"
 #include "render/Viewport.hpp"
@@ -32,6 +33,30 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
         refresh();
     });
     buildCommandTabs();
+    featurePanel = new FeaturePanel(client);
+    propertyPages->addWidget(featurePanel);
+    for (auto pair :
+         {std::pair{"extrude", "Extrude"}, std::pair{"revolve", "Revolve"},
+          std::pair{"fillet", "Fillet"}, std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"},
+          std::pair{"pattern", "LinearPattern"}, std::pair{"mirror", "Mirror"},
+          std::pair{"circularPattern", "CircularPattern"}})
+        connect(commands.get(pair.first), &QAction::triggered, this,
+                [this, pair] { featurePanel->begin(pair.second); });
+    connect(featurePanel, &FeaturePanel::editingChanged, this, &MainWindow::refresh);
+    connect(tree, &QTreeWidget::itemDoubleClicked, this, [this](QTreeWidgetItem *item, int) {
+        auto id = item->data(0, Qt::UserRole + 5).toString();
+        if (!id.isEmpty() && !sketchPanel->active())
+            featurePanel->begin({}, id);
+    });
+    auto *cancelFeature = new QAction(this);
+    cancelFeature->setObjectName("cancelFeatureAction");
+    cancelFeature->setEnabled(false);
+    cancelFeature->setShortcut(QKeySequence(Qt::Key_Escape));
+    addAction(cancelFeature);
+    connect(cancelFeature, &QAction::triggered, this, [this] {
+        if (featurePanel->active())
+            featurePanel->discard();
+    });
     connect(sketchPanel, &SketchPanel::editingChanged, this, &MainWindow::refresh);
     connect(sketchPanel, &SketchPanel::toolChanged, this, [this] { refreshCommandTabs(); });
     connect(sketchPanel, &SketchPanel::selectionChanged, this, [this] { refreshCommandTabs(); });
@@ -291,6 +316,7 @@ void MainWindow::refresh() {
         sketchPanel->install({}, idle);
         sketchPanel->hide();
     }
+    viewport->setContext("mm · Reference scene");
     commands.get("sketch")->setEnabled(false);
     findChild<QToolBar *>("viewportToolbar")->show();
     if (propertyPages)
@@ -378,6 +404,16 @@ void MainWindow::saveLayout() {
     settings->sync();
 }
 void MainWindow::closeEvent(QCloseEvent *event) {
+    if (featurePanel && featurePanel->active() && !client->outstanding()) {
+        if (QMessageBox::question(this, "Discard feature draft?",
+                                  "This feature has not been accepted. Discard before closing?",
+                                  QMessageBox::Discard | QMessageBox::Cancel,
+                                  QMessageBox::Cancel) != QMessageBox::Discard) {
+            event->ignore();
+            return;
+        }
+        featurePanel->discard();
+    }
     if (sketchPanel && sketchPanel->active() && !client->outstanding()) {
         auto choice = QMessageBox::question(
             this, "Discard sketch draft?",

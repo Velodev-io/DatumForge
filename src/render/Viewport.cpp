@@ -153,7 +153,7 @@ void Viewport::setStale(bool value) {
         update();
         return;
     }
-    overlay.setText((stale ? "STALE · " : "") + QString("mm · Reference scene · ") + mode +
+    overlay.setText((stale ? "STALE · " : "") + sceneLabel + " · " + mode +
                     "\nLeft: select · Right: orbit · Middle: pan · Wheel: zoom");
     overlay.adjustSize();
     update();
@@ -235,7 +235,9 @@ Selection Viewport::pick(QPointF pos) const {
         }
     if (filter == "Body" || filter == "Component") {
         if (!hit.empty())
-            return {filter, "body/reference-box", hit.occurrence};
+            return {filter,
+                    hit.occurrence == "part" ? hit.entity.left(36) : QString("body/reference-box"),
+                    hit.occurrence};
         return {};
     }
     if (filter != "Edge")

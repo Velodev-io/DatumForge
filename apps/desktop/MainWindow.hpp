@@ -16,6 +16,7 @@ namespace cad {
 class Client;
 class Viewport;
 class SketchPanel;
+class FeaturePanel;
 class MainWindow : public QMainWindow {
     Q_OBJECT
     CommandRegistry commands;
@@ -23,6 +24,8 @@ class MainWindow : public QMainWindow {
     Client *client = nullptr;
     Viewport *viewport = nullptr;
     SketchPanel *sketchPanel = nullptr;
+    FeaturePanel *featurePanel = nullptr;
+    void refreshFeatures();
     QTreeWidget *tree = nullptr;
     QTabWidget *commandTabs = nullptr;
     QStackedWidget *propertyPages = nullptr;

@@ -13,10 +13,10 @@ import tempfile
 
 ROOT=Path(__file__).resolve().parents[1]
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--without-geometry',action='store_true');p.add_argument('--module',choices=['0','1','2','3','4'],default='0');args=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--without-geometry',action='store_true');p.add_argument('--output',type=Path);p.add_argument('--module',choices=['0','1','2','3','4'],default='0');args=p.parse_args()
     subprocess.run(['python3',str(ROOT/'tools/fetch_dependencies.py')],check=True)
     files=subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard','-z'],cwd=ROOT).decode().split('\0')
-    artifact=ROOT/f'docs/testing/artifacts/module-{args.module}/clean-reproduction.txt'
+    artifact=args.output or ROOT/f'docs/testing/artifacts/module-{args.module}/clean-reproduction.txt'
     with tempfile.TemporaryDirectory(prefix='cad-clean-source-') as directory,artifact.open('w') as log:
         clean=Path(directory)
         for name in filter(None,files):

@@ -1,0 +1,68 @@
+{
+  "scope": "Module 4 exact features, measurement, native B1 and earlier regressions on available Mac; stop before Module 5",
+  "status": "Interrupted: source changed during review; not final evidence",
+  "native_requested": true,
+  "clean_requested": true,
+  "artifacts": "docs/testing/artifacts/module-4/features-runs/20261020T112841.246003Z",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.46217054199951235
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 45.07547262500157
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 43.28027533298882
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.4449802919989452
+    }
+  ],
+  "blocked": [
+    "Physical mouse/trackpad ergonomics",
+    "Windows/Linux/X11/Wayland native builds",
+    "Intel/minimum macOS/additional GPUs",
+    "Native assistive technology/alternate appearance",
+    "Installed builds/signing/upgrades",
+    "Controlled OS-network-disabled workflow",
+    "Full physical 8 GB B0\u2013B5 resource budgets",
+    "Physical power loss/full-volume storage"
+  ],
+  "host": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "physical_ram_bytes": 8589934592,
+    "cpu": "Apple M2",
+    "os_version": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83"
+  },
+  "reason": "Stopped before native/clean checks after copied-body edge dressing, target selection and a focused geometry/native regression were added. Initial enabled CTest suite passed, but this run is not bound to final source hashes."
+}

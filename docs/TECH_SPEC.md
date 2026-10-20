@@ -1,7 +1,7 @@
 # Technical Specification and Implementation Plan — Solidworks Clone
 
 **Version:** 0.1 · **Date:** 19 October 2026  
-**Status:** Modules 1–3 available-Mac scope implemented and scoped verification recorded; cross-platform matrix Blocked. Module 4.0 workspace UI is implemented/verified for available-Mac scope; exact features 4.1–4.4 and Modules 5–12 have not started; full product acceptance remains pending.
+**Status:** Modules 1–3 available-Mac scope implemented and scoped verification recorded; cross-platform matrix Blocked. Module 4.0 workspace UI is implemented/verified for available-Mac scope; exact features 4.1–4.4 are implemented with verification in progress; Modules 5–12 have not started; full product acceptance remains pending.
 **Constraints:** Native macOS/Windows/Linux, local core, **8 GB system RAM minimum**.  
 **Authority:** [SRS](SRS.md) → [SDD](SDD.md) → contracts below → ordered modules. [Step Zero](STEP_ZERO.md) is Module 0.
 
@@ -303,7 +303,7 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 **Completion check:** B1 sketch stage works natively and offline with real solver and persistence evidence.
 
-**Evidence:** `docs/testing/module-3.md` and the separate interaction repair reports. **Current status:** 3.1b repairs and expanded direct-editing/draft-history checks Pass for available-Mac scope; see `docs/testing/module-3-input-repair.md` and the combined workspace run. Historical results remain scoped to their original coverage. 3.4c is Blocked for full native platform completion; actual Mac interaction evidence is recorded separately. Windows/Linux and OS-network-disabled acceptance remain Blocked. Later authorization covers only 4.0a–c workspace UI; stop before 4.1a.
+**Evidence:** `docs/testing/module-3.md` and the separate interaction repair reports. **Current status:** 3.1b repairs and expanded direct-editing/draft-history checks Pass for available-Mac scope; see `docs/testing/module-3-input-repair.md` and the combined workspace run. Historical results remain scoped to their original coverage. 3.4c is Blocked for full native platform completion; actual Mac interaction evidence is recorded separately. Windows/Linux and OS-network-disabled acceptance remain Blocked. Later authorization initially covered 4.0a–c workspace UI; the subsequent explicit Module 4 instruction now covers 4.1a onward and stops before Module 5.
 
 
 ### Module 4 — Exact part features and measurement
@@ -314,7 +314,7 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 4.0 — Align the native modeling workspace before adding solid tools
 
-The user authorized the proposed implementation order on 20 October 2026: repair Module 3 interaction first, then execute 4.0a → 4.0b → 4.0c and verify available targets. Authorization covers these workspace tasks only; stop before 4.1a exact features. Existing feature task IDs remain unchanged. See the implementation scope record.
+The user authorized the proposed implementation order on 20 October 2026: repair Module 3 interaction first, then execute 4.0a → 4.0b → 4.0c and verify available targets. That historical authorization covered workspace tasks only. The subsequent instruction explicitly authorizes all remaining Module 4 tasks, starting with 4.1a; stop before Module 5. Existing feature task IDs remain unchanged. See the implementation scope record.
 
 - [x] **4.0a:** Introduce SolidWorks-style **Features / Sketch / Evaluate command tabs** using the existing shared action registry, menus, search, shortcuts and real command availability. Group discoverable sketch tools and contextual commands with original icons and text. Unimplemented operations must remain unavailable with reasons; no decorative functioning controls. Preserve native macOS global menus and native Windows/Linux behavior.
 - [x] **4.0b:** Put the active **PropertyManager on the left**, sharing the manager region with the model/feature tree. Provide a command title, selection prompts, contextual fields, persistent accept/cancel and diagnostics. Show planes, origin and sketches under the active document, adding feature/history nodes as their engines arrive. Keep the central viewport dominant, the right resource Task Pane optional/collapsible, and documents/units/edit/save/job status along the bottom. Preserve stable IDs, tree state, keyboard focus and worker transaction ownership when switching panels.
@@ -345,7 +345,7 @@ The user authorized the proposed implementation order on 20 October 2026: repair
 
 **Completion check:** The planned modeling layout and B1 modeling slice pass with native evidence; large history/reference mutation corpus is owned by Module 5.
 
-**Evidence:** `docs/testing/module-4.md`. **Current status:** 4.0a/4.0b Pass for available-Mac scope; 4.0c Blocked for full platform/device acceptance despite passing Cocoa workflows and screenshots at all five effective scales. 4.1–4.4 exact features and related acceptance Not run. Stop before 4.1a.
+**Evidence:** `docs/testing/module-4.md`. **Current status:** 4.0a/4.0b Pass for available-Mac scope; 4.0c Blocked for full platform/device acceptance despite passing Cocoa workflows and screenshots at all five effective scales. 4.1–4.4 exact features implemented; verification in progress. Stop before Module 5 (5.1a).
 
 
 ### Module 5 — Dependencies, rebuilds, topology references, and repair

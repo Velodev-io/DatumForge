@@ -11,7 +11,7 @@ expressions. See [Module 3 evidence and blockers](docs/testing/module-3.md).
 Module 3 input repairs and the authorized Module 4.0 workspace add command tabs,
 a left PropertyManager and direct shape editing. See [workspace evidence and
 blockers](docs/testing/module-4.md). Windows/Linux and full R1 acceptance remain
-Blocked or Not run. Stop before 4.1a exact features.
+Blocked or Not run. Remaining Module 4 exact features are authorized and implemented; final verification is in progress. Stop before Module 5.
 
 Build and launch from this checkout:
 
@@ -19,12 +19,12 @@ Build and launch from this checkout:
 cmake --preset macos-debug
 cmake --build --preset macos-debug
 open build/macos-debug/cad-desktop.app
-python3 tools/verify_workspace.py --native
+python3 tools/verify_module4.py --native --clean
 ```
 
 Use **New** to create a document, edit its name/units/typed parameters in the
 Document tab, and use Save or Save As for a standalone `.cadproj` snapshot.
-Committed changes remain recoverable separately from the saved snapshot. Part documents also support planar sketches; solid features, mates and drawing
+Committed changes remain recoverable separately from the saved snapshot. Part documents support planar sketches and the Module 4 exact feature set. Mates and drawing
 content require later modules.
 
 For sketching, create a Part and choose **Create sketch** in the Features or
@@ -68,9 +68,20 @@ The app uses the pinned local dependency cache; it is not an installed release.
 The workspace follows the atlas placement of Features/Sketch/Evaluate commands,
 the left manager, central graphics, optional right Task Pane and bottom document/
 units/save status. Icons are original and the theme follows the native palette.
-Extrude, Revolve and other unfinished solid tools remain disabled with reasons.
-Module 9 completes cross-document consistency and accessibility; exact features
-start at the separate, currently unauthorized 4.1a boundary.
+Accept a closed sketch, then choose **Extrude** or **Revolve**. The left Properties
+panel provides profile, operation, target, direction/extent and axis controls.
+Choose **Preview**, then **Accept feature** to record a recoverable transaction;
+**Cancel** or Escape discards a cancelable feature draft. Select current edges for
+constant fillet/equal-distance chamfer, or use Hole/Linear pattern/Circular pattern/
+Mirror for supported exact cases. Double-click a feature tree node to edit its
+parameters. Accepted sketch edits replay the current ordered history atomically.
+
+Evaluate measures exact current geometry in the worker; display modes and mesh
+detail do not change dimensions. Assign a positive density for mass. Feature timings
+expand on demand. See [supported feature cases and limits](docs/decisions/module-4-features.md)
+and [Module 4 verification](docs/testing/module-4.md). General dependency optimization
+and topology repair start in Module 5, which is not authorized. Module 9 completes
+cross-document consistency and accessibility.
 
 ## Development
 

@@ -1,5 +1,7 @@
 # Module 3 — sketch and expression adapter decisions
 
+Current scope note: the later explicit Module 4 instruction supersedes the historical 4.1a stop boundary below. See [authorization](implementation-scope.json). Stop before Module 5; earlier evidence remains scoped to its original run.
+
 Date: 20 October 2026. Authorized scope: Module 3 and subsequent input repairs; workspace UI 4.0a–c
 was authorized separately. Stop before 4.1a exact features.
 [Evidence](../testing/module-3.md), [scope record](implementation-scope.json).

@@ -1,0 +1,20 @@
+[1/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/qp_eq.cpp.o
+[5/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[6/20] Building CXX object CMakeFiles/cad_expressions.dir/src/domain/Expressions.cpp.o
+[7/20] Building C object CMakeFiles/cad_sqlite.dir/.deps/src/sqlite/sqlite3.c.o
+[8/20] Linking CXX static library libcad_planegcs.a
+[9/20] Linking CXX static library libcad_expressions.a
+[10/20] Linking C static library libcad_sqlite.a
+[11/20] Building CXX object CMakeFiles/cad_geometry.dir/src/geometry/occt/ReferenceScene.cpp.o
+[12/20] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[13/20] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Database.cpp.o
+[14/20] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[15/20] Linking CXX static library libcad_sketch_solver.a
+[16/20] Linking CXX static library libcad_geometry.a
+[17/20] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[18/20] Linking CXX static library libcad_persistence.a
+[19/20] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[20/20] Linking CXX executable cad-worker

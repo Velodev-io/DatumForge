@@ -1,4 +1,5 @@
 #pragma once
+#include "geometry/occt/Part.hpp"
 #include "persistence/ProjectStore.hpp"
 #include "sketch/Solver.hpp"
 #include <QFile>
@@ -40,13 +41,33 @@ class Projects {
         return open() ? store->revision() : 0;
     }
     bool handles(QString command) const {
-        return QStringList{
-                   "NewProject",     "CreateDocument",  "RenameDocument", "SetDocumentUnits",
-                   "SetParameter",   "RemoveParameter", "Undo",           "Redo",
-                   "SwitchDocument", "CloseDocument",   "CloseProject",   "GrantFile",
-                   "InspectProject", "OpenProject",     "SaveProject",    "SaveAs",
-                   "ListRecoveries", "RecoverProject",  "AttachObject",   "DetachObject",
-                   "CollectObjects", "SetSketches",     "PreviewSketches"}
+        return QStringList{"NewProject",
+                           "CreateDocument",
+                           "RenameDocument",
+                           "SetDocumentUnits",
+                           "SetParameter",
+                           "RemoveParameter",
+                           "Undo",
+                           "Redo",
+                           "SwitchDocument",
+                           "CloseDocument",
+                           "CloseProject",
+                           "GrantFile",
+                           "InspectProject",
+                           "OpenProject",
+                           "SaveProject",
+                           "SaveAs",
+                           "ListRecoveries",
+                           "RecoverProject",
+                           "AttachObject",
+                           "DetachObject",
+                           "CollectObjects",
+                           "SetSketches",
+                           "PreviewSketches",
+                           "SetFeatures",
+                           "PreviewFeatures",
+                           "DisplayPart",
+                           "MeasurePart"}
                    .contains(command) ||
                (command == "QueryOperation" && open());
     }
@@ -143,6 +164,58 @@ class Projects {
                              (e.command == "SaveAs" &&
                               store->outcome(e.operation).value("durable").toBool())),
                   "StaleSession", "The project session changed");
+            if (e.command == "PreviewFeatures" || e.command == "DisplayPart" ||
+                e.command == "MeasurePart") {
+                check(e.revision == store->revision(), "StaleRevision",
+                      "Part result revision changed");
+                auto definitions = store->features(e.context.document);
+                if (e.command == "PreviewFeatures") {
+                    wire::keys(p, {"features", "deflection_mm"});
+                    check(p.value("features").isArray(), "InvalidInput", "Feature array required");
+                    definitions = p.value("features").toArray();
+                } else if (e.command == "DisplayPart")
+                    wire::keys(p, {"deflection_mm"});
+                else
+                    wire::keys(p, {"body", "token", "second_token", "density_kg_m3"});
+                auto part = kernel::Part::build(store->sketches(e.context.document), definitions);
+                double assignedDensity = 0;
+                for (auto value : store->state().value("documents").toArray()) {
+                    auto d = value.toMap();
+                    if (d.value("id").toString() != e.context.document)
+                        continue;
+                    for (auto parameter : d.value("parameters").toArray()) {
+                        auto q = parameter.toMap();
+                        if (q.value("name").toString() == "MaterialDensityKgM3")
+                            assignedDensity = q.value("value_si").toDouble();
+                    }
+                }
+
+                QCborMap reply;
+                if (e.command == "MeasurePart") {
+                    reply.insert(QStringLiteral("part_measurement"),
+                                 part.measure(e.revision, wire::text(p, "body"),
+                                              wire::text(p, "token"),
+                                              (features::number(p, "density_kg_m3", 0, 1e6) > 0
+                                                   ? features::number(p, "density_kg_m3", 0, 1e6)
+                                                   : assignedDensity),
+                                              wire::text(p, "second_token")));
+                } else {
+                    auto packed = pack(part.mesh(features::number(p, "deflection_mm", .01, 5)));
+                    reply.insert(QStringLiteral("display_manifest"), packed.manifest);
+                    // The host streams and removes this private value before sending control data.
+                    reply.insert(QStringLiteral("_display_bytes"), packed.bytes);
+                    reply.insert(QStringLiteral("part_measurement"),
+                                 part.measure(e.revision, {}, {}, assignedDensity));
+                    reply.insert(QStringLiteral("feature_diagnostics"), part.diagnostics);
+                    reply.insert(QStringLiteral("topology_history"), part.history);
+                    reply.insert(QStringLiteral("topology"), part.topology());
+                    QCborArray bodies;
+                    for (auto &b : part.bodies)
+                        bodies.append(b.id);
+                    reply.insert(QStringLiteral("bodies"), bodies);
+                }
+                return reply;
+            }
             if (e.command == "PreviewSketches") {
                 wire::keys(p, {"sketches"});
                 check(e.revision == store->revision(), "StaleRevision",

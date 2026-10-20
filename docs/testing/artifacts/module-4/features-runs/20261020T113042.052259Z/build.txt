@@ -1,0 +1,33 @@
+[1/35] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/35] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/35] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/35] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[5/35] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[6/35] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[7/35] Linking CXX static library libcad_part.a
+[8/35] Linking CXX static library libcad_planegcs.a
+[9/35] Automatic MOC for target cad_desktop_ui
+[10/34] Linking CXX static library libcad_sketch_solver.a
+[11/34] Linking CXX executable cad-worker
+[12/34] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[13/34] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[14/34] Linking CXX static library libcad_desktop_ui.a
+[15/34] Automatic MOC for target module4_contracts
+[16/33] Building CXX object CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o
+[17/33] Linking CXX executable solver_spike
+[18/33] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[19/33] Linking CXX executable module1_contracts
+[20/33] Linking CXX executable module2_storage
+[21/33] Linking CXX executable module2_contracts
+[22/33] Linking CXX executable module2_fault_worker
+[23/33] Linking CXX executable module2_dispatch
+[24/33] Linking CXX executable module3_persistence
+[25/33] Linking CXX executable module3_input
+[26/33] Linking CXX executable module3_contracts
+[27/33] Linking CXX executable module3_solver
+[28/33] Linking CXX executable module4_workspace
+[29/33] Linking CXX executable module4_geometry
+[30/33] Linking CXX executable module4_persistence
+[31/33] Linking CXX executable module4_variants
+[32/33] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[33/33] Linking CXX executable module4_contracts

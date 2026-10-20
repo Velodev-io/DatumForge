@@ -16,6 +16,6 @@
 | Installed clean builds/upgrades | Blocked until actual product packages exist | Module 12; source archive is not an installer |
 | Other-platform formatter/toolchains | Blocked: only Mac arm64 clang-format 21.1.8 wheel and native compiler verified | Build maintainer; select native tool pins on each host |
 
-The user authorized Modules 1 and 2 on 19 October 2026; available-Mac evidence is in [module-1](../testing/module-1.md) and [module-2](../testing/module-2.md). The cross-platform matrix remains Blocked. Module 3 requires new authorization. Release gates are
+The user authorized Modules 1 and 2 on 19 October 2026; available-Mac evidence is in [module-1](../testing/module-1.md) and [module-2](../testing/module-2.md). The cross-platform matrix remains Blocked. Modules 3 and 4 were subsequently explicitly authorized; their available-Mac scope is recorded in [Module 3](../testing/module-3.md) and [Module 4](../testing/module-4.md). Stop before Module 5. Release gates are
 retained even if available-target experiments pass. No budget or R1 scope revision
 is proposed merely to close an unavailable check.

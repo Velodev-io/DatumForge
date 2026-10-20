@@ -1,3 +1,4 @@
+#include "FeaturePanel.hpp"
 #include "MainWindow.hpp"
 #include "SketchPanel.hpp"
 #include "domain/Documents.hpp"
@@ -353,6 +354,15 @@ void MainWindow::refreshProjectUI() {
                     node->setData(0, Qt::UserRole + 2, id);
                     node->setData(0, Qt::UserRole + 3, id);
                     node->setSelected(selectedKey == id);
+                }
+                for (auto f : d.value("features").toArray()) {
+                    auto feature = f.toMap();
+                    auto *node = new QTreeWidgetItem(row, {feature.value("name").toString() + " (" +
+                                                           feature.value("kind").toString() + ")"});
+                    node->setData(0, Qt::UserRole + 1, documentId);
+                    node->setData(0, Qt::UserRole + 2, feature.value("id").toString());
+                    node->setData(0, Qt::UserRole + 5, feature.value("id").toString());
+                    node->setIcon(0, commands.get("extrude")->icon());
                 }
                 if (sketchPanel && sketchPanel->active() && documentId == s.activeDocument &&
                     !hasDraft) {

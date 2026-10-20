@@ -1,5 +1,7 @@
 # Module 3 input and direct editing repair
 
+Current scope note: the later explicit Module 4 instruction supersedes the historical 4.1a stop boundary below. See [authorization](../decisions/implementation-scope.json). Stop before Module 5; earlier evidence remains scoped to its original run.
+
 Date: 20 October 2026. Status: **feasible available-Mac repair verified; full
 platform/physical-device acceptance Blocked**. Scope: repair the user-reported resize, trackpad and
 post-creation editing gaps before authorized Module 4.0 workspace work. Stop before

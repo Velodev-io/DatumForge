@@ -177,7 +177,7 @@ void Client::enqueue(wire::Envelope e) {
         emit changed();
         return;
     }
-    if (e.command == "PreviewReference")
+    if (e.command == "PreviewReference" || e.command == "PreviewFeatures")
         preview = e;
     else {
         if (outstanding() >= limits::outstanding) {
@@ -305,21 +305,40 @@ void Client::select(Selection s) {
     if (!s.empty() && (!instance || !((s.kind == "Face" && display->faceIds.contains(s.entity)) ||
                                       (s.kind == "Edge" && display->edgeIds.contains(s.entity)) ||
                                       ((s.kind == "Body" || s.kind == "Component") &&
-                                       s.entity == "body/reference-box"))))
+                                       (s.entity == "body/reference-box" ||
+                                        (projection.projectOpen && wire::uuid(s.entity)))))))
         return;
     projection.selection = s;
     emit changed();
 }
 void Client::measure() {
-    if (!projection.current() || projection.selection.empty())
+    if (!projection.current() || (projection.selection.empty() && !projection.projectOpen))
         return;
+    if (projection.projectOpen && projection.selection.empty()) {
+        projectCommand("MeasurePart", QCborMap{{QStringLiteral("body"), QString()},
+                                               {QStringLiteral("token"), QString()},
+                                               {QStringLiteral("second_token"), QString()},
+                                               {QStringLiteral("density_kg_m3"), 0.}});
+        return;
+    }
     auto s = projection.selection;
     QCborMap p;
     p.insert(QStringLiteral("kind"), s.kind);
     p.insert(QStringLiteral("entity"), s.entity);
     p.insert(QStringLiteral("occurrence"), s.occurrence);
     projection.job = "Measuring exact worker geometry";
-    enqueue(request("Measure", p));
+    if (projection.projectOpen) {
+        auto entity = s.entity;
+        auto slash = entity.indexOf('/');
+        auto body = slash < 0 ? entity : entity.left(slash),
+             token = slash < 0 ? QString() : entity.mid(slash + 1).section("/segment/", 0, 0);
+        QCborMap query{{QStringLiteral("body"), body},
+                       {QStringLiteral("token"), token},
+                       {QStringLiteral("second_token"), QString()},
+                       {QStringLiteral("density_kg_m3"), 0.}};
+        enqueue(request("MeasurePart", query));
+    } else
+        enqueue(request("Measure", p));
     emit changed();
 }
 void Client::queryOperation(QString operation) {
@@ -351,8 +370,9 @@ void Client::receive(const QCborMap &m) {
         return;
     wire::require(sameRequest(e, found->request), "reply request correlation");
     auto revision = wire::integer(m, "result_revision");
-    bool reference =
-        QStringList{"LoadReference", "PreviewReference", "Measure"}.contains(e.command);
+    bool reference = QStringList{"LoadReference",   "PreviewReference", "Measure",
+                                 "PreviewFeatures", "DisplayPart",      "MeasurePart"}
+                         .contains(e.command);
     if ((reference && !visibleResult(projection, e, revision)) || e.epoch != projection.epoch) {
         pending.erase(found);
         transfers.clear();
@@ -384,21 +404,42 @@ void Client::receive(const QCborMap &m) {
         display = std::move(mesh);
         projection.revision = revision;
         projection.stale = false;
-        projection.phase = e.command == "PreviewReference" ? Phase::PreviewReady : Phase::Ready;
+        projection.phase = (e.command == "PreviewReference" || e.command == "PreviewFeatures")
+                               ? Phase::PreviewReady
+                               : Phase::Ready;
         projection.job = e.command == "PreviewReference" ? "Preview — no document was committed"
                                                          : "Reference scene ready";
         projection.message.clear();
         pending.erase(found);
         emit meshChanged(display);
+        if (e.command == "DisplayPart" || e.command == "PreviewFeatures") {
+            projection.job = e.command == "PreviewFeatures" ? "Feature preview · not committed"
+                                                            : "Exact part ready";
+            emit partResult(partReply);
+        }
         emit changed();
         pump();
         return;
     }
     wire::require(status == "Succeeded", "unknown response status");
     if (data.contains(QStringLiteral("display_manifest"))) {
-        wire::require(revision == 1 && data.value("display_manifest").isMap(), "display result");
+        wire::require((projection.projectOpen || revision == 1) &&
+                          data.value("display_manifest").isMap(),
+                      "display result");
+        if (e.command == "DisplayPart" || e.command == "PreviewFeatures")
+            partReply = data;
         found->result = revision;
         transfers.begin(e, data.value("display_manifest").toMap());
+        return;
+    }
+    if (e.command == "MeasurePart") {
+        wire::require(data.value("part_measurement").isMap(), "Exact part measurement required");
+        pending.erase(found);
+        projection.phase = Phase::Ready;
+        projection.job = "Exact measurement ready";
+        emit partResult(data);
+        emit changed();
+        pump();
         return;
     }
     if (e.command == "PreviewSketches") {
@@ -435,6 +476,14 @@ void Client::receive(const QCborMap &m) {
         wire::require(data.value("project_state").isMap(), "project state map");
         installProject(data.value("project_state").toMap());
         pending.erase(found);
+        for (auto value : projection.documentRecords) {
+            auto d = value.toMap();
+            if (d.value("id").toString() == projection.activeDocument &&
+                !d.value("features").toArray().empty()) {
+                displayPart();
+                break;
+            }
+        }
         emit projectChanged();
         emit changed();
         pump();
@@ -529,7 +578,7 @@ void Client::installProject(const QCborMap &m) {
         wire::require(item.isMap(), "document record map");
         auto d = item.toMap();
         wire::keys(d, {"id", "type", "name", "units", "revision", "properties_entity", "parameters",
-                       "sketches", "sketch_diagnostics"});
+                       "sketches", "sketch_diagnostics", "features"});
         auto id = domain::id(wire::text(d, "id"));
         wire::require(!seen.contains(id), "duplicate document identity");
         seen.insert(id);
@@ -602,10 +651,38 @@ void Client::discardSketchPreview() {
     projection.job = "Preview canceled · accepted sketch retained";
     emit changed();
 }
+void Client::displayPart() {
+    if (!projection.projectOpen || projection.activeDocument.isEmpty())
+        return;
+    enqueue(request("DisplayPart", QCborMap{{QStringLiteral("deflection_mm"), .2}}));
+}
+void Client::cancelPartPreview() {
+    ++projection.generation;
+    preview.reset();
+    projection.phase = Phase::Ready;
+    projection.message.clear();
+    bool hasFeatures = false;
+    for (auto value : projection.documentRecords) {
+        auto d = value.toMap();
+        if (d.value("id").toString() == projection.activeDocument)
+            hasFeatures = !d.value("features").toArray().empty();
+    }
+    if (hasFeatures)
+        displayPart();
+    else {
+        display.reset();
+        emit meshChanged({});
+    }
+    emit changed();
+}
 void Client::projectCommand(QString command, QCborMap payload) {
     if (!projectReady())
         return;
     projection.job = "Running " + command;
+    if (command == "PreviewFeatures") {
+        ++projection.generation;
+        projection.phase = Phase::PreviewPending;
+    }
     enqueue(request(command, payload));
     emit changed();
 }

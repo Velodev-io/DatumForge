@@ -109,8 +109,10 @@ def main() -> int:
             errors.append("Authorization stop boundary must follow the last authorized module")
         partial = authorization.get("interaction_and_workspace_authorization", {})
         permitted_tasks = set(partial.get("authorized_tasks", []))
-        if permitted_tasks and (not partial.get("quote") or permitted_tasks != {"4.0a", "4.0b", "4.0c"} or authorization.get("stop_before_task") != "4.1a"):
+        if permitted_tasks and (not partial.get("quote") or permitted_tasks != {"4.0a", "4.0b", "4.0c"} or (4 not in authorized and authorization.get("stop_before_task") != "4.1a")):
             errors.append("Partial Module 4 authorization must explicitly permit only 4.0a-c and stop before 4.1a")
+        if 4 in authorized and (not authorization.get("module_4_authorization", {}).get("quote") or authorization.get("stop_before_task") != "5.1a"):
+            errors.append("Full Module 4 requires explicit user authorization and a stop before 5.1a")
         if any(int(task.split(".")[0]) not in authorized and task not in permitted_tasks for task in checked):
             errors.append("Checked task is outside the explicitly authorized module/task scope")
     if len(set(task_ids)) != len(task_ids):
@@ -123,8 +125,8 @@ def main() -> int:
         "scope": "Documentation structure only; no product acceptance tests executed",
         "checked_at_utc": datetime.now(timezone.utc).isoformat(),
         "status": "pass" if not errors else "fail",
-        "product_implementation": "Modules 1-3 foundation plus authorized 4.0 workspace UI; exact features 4.1 onward unimplemented",
-        "product_acceptance_tests": "Modules 1-3 and workspace 4.0 subsets exercised on Mac; full R1 requirements remain Not run or Blocked",
+        "product_implementation": "Modules 1-4 scoped implementation on the available Mac; see task and module evidence",
+        "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
         "documents": {name: {"sha256": hashlib.sha256(text.encode()).hexdigest(),
                              "lines": len(text.splitlines()), "words": len(text.split())}
                       for name, text in texts.items()},

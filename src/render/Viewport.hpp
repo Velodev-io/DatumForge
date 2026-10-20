@@ -16,6 +16,7 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     QOpenGLBuffer buffer{QOpenGLBuffer::VertexBuffer};
     QOpenGLVertexArrayObject vao;
     QLabel overlay{this};
+    QString sceneLabel = "mm · Reference scene";
     QString mode = "Shaded with edges", filter = "Face", graphicsDetails;
     QVector3D center;
     float yaw = 35, pitch = -25, distance = 100, span = 50;
@@ -44,6 +45,10 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     void setMesh(MeshPtr value);
     void setSelection(Selection value);
     void setStale(bool value);
+    void setContext(QString value) {
+        sceneLabel = std::move(value);
+        setStale(stale);
+    }
     void setMode(QString value);
     void setFilter(QString value) {
         filter = value;

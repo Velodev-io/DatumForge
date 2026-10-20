@@ -1,0 +1,42 @@
+[1/9] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Editing.cpp.o
+[2/9] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[3/9] Linking CXX static library libcad_sketch_model.a
+[4/9] Building CXX object CMakeFiles/cad_protocol.dir/src/protocol/Mesh.cpp.o
+[5/9] Linking CXX static library libcad_protocol.a
+[6/9] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/Model.cpp.o
+[7/9] Linking CXX static library libcad_feature_model.a
+[8/9] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+FAILED: [code=1] CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o -MF CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o.d -o CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/Part.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/Part.cpp:184:25: error: invalid use of member 'history' in static member function
+  184 |                         history(out,f.id,cut,b.shape); b.shape=cut.Shape();
+      |                         ^~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/Part.cpp:188:25: error: invalid use of member 'history' in static member function
+  188 |                         history(out,f.id,fuse,b.shape); b.shape=fuse.Shape();
+      |                         ^~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/Part.cpp:199:148: error: invalid use of member 'history' in static member function
+  199 |                     BRepPrimAPI_MakePrism prism(profile,normal*d); check(prism.IsDone(),"InvalidGeometry","Extrusion failed"); tool=prism.Shape(); history(out,f.id,prism,profile);
+      |                                                                                                                                                    ^~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/Part.cpp:205:123: error: invalid use of member 'history' in static member function
+  205 |                     check(revolve.IsDone(),"InvalidGeometry","Revolve failed or crosses its axis"); tool=revolve.Shape(); history(out,f.id,revolve,profile);
+      |                                                                                                                           ^~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/Part.cpp:223:132: error: invalid use of member 'history' in static member function
+  223 |                 check(op->IsDone(),"InvalidGeometry",f.kind+" failed; reduce size or choose supported edges"); valid(op->Shape()); history(out,f.id,*op,b.shape); b.shape=op->Shape();
+      |                                                                                                                                    ^~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/Part.cpp:322:72: error: call to member function 'append' is ambiguous
+  322 |     check(!first,"InvalidGeometry","No displayable part"); m.instances.append({"part",{}}); m.validate(); return m;
+      |                                                            ~~~~~~~~~~~~^~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qlist.h:515:10: note: candidate function
+  515 |     void append(parameter_type t) { emplaceBack(t); }
+      |          ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qlist.h:517:10: note: candidate function
+  517 |     void append(rvalue_ref t)
+      |          ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qlist.h:525:10: note: candidate function
+  525 |     void append(const QList<T> &l)
+      |          ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qlist.h:529:10: note: candidate function
+  529 |     void append(QList<T> &&l);
+      |          ^
+6 errors generated.
+ninja: build stopped: subcommand failed.

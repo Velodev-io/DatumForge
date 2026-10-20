@@ -1,0 +1,66 @@
+[1/71] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Editing.cpp.o
+[2/71] Automatic MOC for target cad_client
+[3/70] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[4/70] Linking CXX static library libcad_sketch_model.a
+[5/70] Building CXX object CMakeFiles/cad_expressions.dir/src/domain/Expressions.cpp.o
+[6/70] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/Model.cpp.o
+[7/70] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[8/70] Linking CXX static library libcad_client.a
+[9/70] Linking CXX static library libcad_expressions.a
+[10/70] Linking CXX static library libcad_feature_model.a
+[11/70] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[12/70] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Database.cpp.o
+[13/70] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[14/70] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[15/70] Linking CXX static library libcad_sketch_solver.a
+[16/70] Linking CXX static library libcad_part.a
+[17/70] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[18/70] Automatic MOC for target cad_desktop_ui
+[19/70] Linking CXX static library libcad_persistence.a
+[20/70] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[21/70] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[22/70] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[23/70] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[24/70] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+[25/70] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[26/70] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[27/70] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[28/70] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[29/70] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+[30/70] Linking CXX executable cad-worker
+[31/70] Linking CXX static library libcad_desktop_ui.a
+[32/70] Automatic MOC for target module3_input
+[33/69] Building CXX object CMakeFiles/module2_domain.dir/tests/module2/domain.cpp.o
+[34/69] Automatic MOC for target module3_contracts
+[35/68] Automatic MOC for target module4_workspace
+[36/67] Automatic MOC for target module4_contracts
+[37/66] Building CXX object CMakeFiles/module2_storage.dir/tests/module2/storage.cpp.o
+[38/66] Building CXX object CMakeFiles/module2_fault_worker.dir/tests/module2/fault_worker.cpp.o
+[39/66] Building CXX object CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o
+[40/66] Building CXX object CMakeFiles/module3_model.dir/tests/module3/model.cpp.o
+[41/66] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[42/66] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[43/66] Building CXX object CMakeFiles/module3_expressions.dir/tests/module3/expressions.cpp.o
+[44/66] Building CXX object CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o
+[45/66] Building CXX object CMakeFiles/module4_persistence.dir/tests/module4/persistence.cpp.o
+[46/66] Building CXX object CMakeFiles/module3_input.dir/tests/module3/input.cpp.o
+[47/66] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[48/66] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[49/66] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[50/66] Linking CXX executable module1_contracts
+[51/66] Linking CXX executable module2_domain
+[52/66] Linking CXX executable module2_storage
+[53/66] Linking CXX executable module2_contracts
+[54/66] Linking CXX executable module2_fault_worker
+[55/66] Linking CXX executable module2_dispatch
+[56/66] Linking CXX executable module3_model
+[57/66] Linking CXX executable module3_persistence
+[58/66] Linking CXX executable module3_input
+[59/66] Linking CXX executable module3_contracts
+[60/66] Linking CXX executable module3_solver
+[61/66] Linking CXX executable module3_expressions
+[62/66] Linking CXX executable module4_workspace
+[63/66] Linking CXX executable module4_geometry
+[64/66] Linking CXX executable module4_persistence
+[65/66] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[66/66] Linking CXX executable module4_contracts

@@ -45,6 +45,7 @@ class Client : public QObject {
     QTimer deadlines;
     int referenceInstances = 1;
     QString lastOperation;
+    QCborMap partReply;
     void receive(const QCborMap &map);
     void installProject(const QCborMap &state);
     bool projectReady();
@@ -93,6 +94,8 @@ class Client : public QObject {
     void createDocument(QString type, QString name, QString units = "mm");
     void projectCommand(QString command, QCborMap payload = {});
     void discardSketchPreview();
+    void displayPart();
+    void cancelPartPreview();
     void switchDocument(QString id);
     void closeDocument();
     void closeProject();
@@ -109,6 +112,7 @@ class Client : public QObject {
     void projectInspection(QCborMap inspection);
     void projectChanged();
     void sketchPreview(QCborArray sketches);
+    void partResult(QCborMap result);
     void sketchDiagnosed(QCborArray diagnostics);
     void operationOutcome(QString operation, QString outcome);
 };

@@ -1,0 +1,9 @@
+Analyzed tests/unit/harness_probe.cpp
+Analyzed tests/integration/protocol_spike.cpp
+Analyzed tests/integration/storage_spike.cpp
+Analyzed tests/integration/cad_spike.cpp
+Analyzed tests/integration/solver_spike.cpp
+Analyzed tests/integration/mate_spike.cpp
+Analyzed tests/native/slice_worker.cpp
+Analyzed tests/native/slice_desktop.cpp
+Analyzed src/protocol/Mesh.cpp

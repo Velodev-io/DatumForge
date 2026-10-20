@@ -1,0 +1,339 @@
+[1/79] Automatic MOC for target cad_client
+[2/79] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/79] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/79] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/79] Building CXX object CMakeFiles/cad_client.dir/cad_client_autogen/mocs_compilation.cpp.o
+[6/79] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[7/79] Linking CXX static library libcad_client.a
+[8/79] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[9/79] Linking CXX static library libcad_planegcs.a
+[10/79] Automatic MOC for target cad_desktop_ui
+[11/79] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[12/79] Linking CXX static library libcad_sketch_solver.a
+[13/79] Building CXX object CMakeFiles/module1_adversary.dir/tests/module1/adversary.cpp.o
+[14/79] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[15/79] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[16/79] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+FAILED: [code=1] CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cad_desktop_ui_autogen/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtNetwork" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGLWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGL" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o -MF CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o.d -o CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop/ProjectUI.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop/ProjectUI.cpp:359:95: error: no viable conversion from 'const QCborValue' to 'const QVariant'
+  359 |                     node->setData(0,Qt::UserRole+1,documentId);node->setData(0,Qt::UserRole+2,feature.value("id"));node->setData(0,Qt::UserRole+5,feature.value("id"));node->setIcon(0,commands.get("extrude")->icon());}
+      |                                                                                               ^~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:220:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QVariant &' for 1st argument
+  220 |     QVariant(const QVariant &other);
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:254:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'int' for 1st argument
+  254 |     QVariant(int i) noexcept;
+      |     ^        ~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:255:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'uint' (aka 'unsigned int') for 1st argument
+  255 |     QVariant(uint ui) noexcept;
+      |     ^        ~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:256:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'qlonglong' (aka 'long long') for 1st argument
+  256 |     QVariant(qlonglong ll) noexcept;
+      |     ^        ~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:257:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'qulonglong' (aka 'unsigned long long') for 1st argument
+  257 |     QVariant(qulonglong ull) noexcept;
+      |     ^        ~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:258:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'bool' for 1st argument
+  258 |     QVariant(bool b) noexcept;
+      |     ^        ~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:259:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'double' for 1st argument
+  259 |     QVariant(double d) noexcept;
+      |     ^        ~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:260:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'float' for 1st argument
+  260 |     QVariant(float f) noexcept;
+      |     ^        ~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:263:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QChar' for 1st argument
+  263 |     QVariant(QChar qchar) noexcept;
+      |     ^        ~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:264:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QDate' for 1st argument
+  264 |     QVariant(QDate date) noexcept;
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:265:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QTime' for 1st argument
+  265 |     QVariant(QTime time) noexcept;
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:266:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QBitArray &' for 1st argument
+  266 |     QVariant(const QBitArray &bitarray) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:267:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QByteArray &' for 1st argument
+  267 |     QVariant(const QByteArray &bytearray) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:268:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QDateTime &' for 1st argument
+  268 |     QVariant(const QDateTime &datetime) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:269:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QHash<QString, QVariant> &' for 1st argument
+  269 |     QVariant(const QHash<QString, QVariant> &hash) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:270:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QJsonArray &' for 1st argument
+  270 |     QVariant(const QJsonArray &jsonArray) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:271:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QJsonObject &' for 1st argument
+  271 |     QVariant(const QJsonObject &jsonObject) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:272:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QList<QVariant> &' for 1st argument
+  272 |     QVariant(const QList<QVariant> &list) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:273:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QLocale &' for 1st argument
+  273 |     QVariant(const QLocale &locale) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:274:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QMap<QString, QVariant> &' for 1st argument
+  274 |     QVariant(const QMap<QString, QVariant> &map) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:275:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QRegularExpression &' for 1st argument
+  275 |     QVariant(const QRegularExpression &re) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:276:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QString &' for 1st argument
+  276 |     QVariant(const QString &string) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:277:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QStringList &' (aka 'const QList<QString> &') for 1st argument
+  277 |     QVariant(const QStringList &stringlist) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:278:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QUrl &' for 1st argument
+  278 |     QVariant(const QUrl &url) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:282:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QJsonValue &' for 1st argument
+  282 |     QVariant(const QJsonValue &jsonValue) noexcept(Private::FitsInInternalSize<sizeof(CborValueStandIn)>);
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:283:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QModelIndex &' for 1st argument
+  283 |     QVariant(const QModelIndex &modelIndex) noexcept(Private::FitsInInternalSize<8 + 2 * sizeof(quintptr)>);
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:284:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QUuid' for 1st argument
+  284 |     QVariant(QUuid uuid) noexcept(Private::FitsInInternalSize<16>);
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:285:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QSize' for 1st argument
+  285 |     QVariant(QSize size) noexcept;
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:286:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QSizeF' for 1st argument
+  286 |     QVariant(QSizeF size) noexcept(Private::FitsInInternalSize<sizeof(qreal) * 2>);
+      |     ^        ~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:287:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QPoint' for 1st argument
+  287 |     QVariant(QPoint pt) noexcept;
+      |     ^        ~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:288:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QPointF' for 1st argument
+  288 |     QVariant(QPointF pt) noexcept(Private::FitsInInternalSize<sizeof(qreal) * 2>);
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:289:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QLine' for 1st argument
+  289 |     QVariant(QLine line) noexcept(Private::FitsInInternalSize<sizeof(int) * 4>);
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:290:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QLineF' for 1st argument
+  290 |     QVariant(QLineF line) noexcept(Private::FitsInInternalSize<sizeof(qreal) * 4>);
+      |     ^        ~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:291:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QRect' for 1st argument
+  291 |     QVariant(QRect rect) noexcept(Private::FitsInInternalSize<sizeof(int) * 4>);
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:292:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QRectF' for 1st argument
+  292 |     QVariant(QRectF rect) noexcept(Private::FitsInInternalSize<sizeof(qreal) * 4>);
+      |     ^        ~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:295:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QEasingCurve &' for 1st argument
+  295 |     QVariant(const QEasingCurve &easing) noexcept(false);
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:296:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QJsonDocument &' for 1st argument
+  296 |     QVariant(const QJsonDocument &jsonDocument) noexcept(false);
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:297:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QPersistentModelIndex &' for 1st argument
+  297 |     QVariant(const QPersistentModelIndex &modelIndex) noexcept(false);
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:300:24: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const char *' for 1st argument
+  300 |     QT_ASCII_CAST_WARN QVariant(const char *str) noexcept(false)
+      |                        ^        ~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:304:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QLatin1StringView' (aka 'QLatin1String') for 1st argument
+  304 |     QVariant(QLatin1StringView string) noexcept(false); // converts to QString
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:328:12: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QVariant &&' for 1st argument
+  328 |     inline QVariant(QVariant &&other) noexcept : d(other.d)
+      |            ^        ~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:681:12: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'void *' for 1st argument
+  681 |     inline QVariant(void *) = delete;
+      |            ^        ~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:688:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QMetaType::Type' for 1st argument
+  688 |     QVariant(QMetaType::Type) = delete;
+      |     ^        ~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:700:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'Qt::GlobalColor' for 1st argument
+  700 |     QVariant(Qt::GlobalColor) = delete;
+      |     ^        ~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:701:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'Qt::BrushStyle' for 1st argument
+  701 |     QVariant(Qt::BrushStyle) = delete;
+      |     ^        ~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:702:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'Qt::PenStyle' for 1st argument
+  702 |     QVariant(Qt::PenStyle) = delete;
+      |     ^        ~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:703:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'Qt::CursorShape' for 1st argument
+  703 |     QVariant(Qt::CursorShape) = delete;
+      |     ^        ~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:310:5: note: candidate template ignored: requirement 'std::disjunction_v<std::is_pointer<QCborValue>, std::is_member_pointer<QCborValue>>' was not satisfied [with T = QCborValue]
+  310 |     QVariant(T) = delete;
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:219:14: note: explicit constructor is not a candidate
+  219 |     explicit QVariant(QMetaType type, const void *copy = nullptr);
+      |              ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:232:14: note: explicit constructor is not a candidate
+  232 |     explicit QVariant(std::in_place_type_t<T>, Args&&... args)
+      |              ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:429:14: note: explicit constructor is not a candidate
+  429 |     explicit QVariant(Type type)
+      |              ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qtreewidget.h:134:64: note: passing argument to parameter 'value' here
+  134 |     virtual void setData(int column, int role, const QVariant &value);
+      |                                                                ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop/ProjectUI.cpp:359:147: error: no viable conversion from 'const QCborValue' to 'const QVariant'
+  359 |                     node->setData(0,Qt::UserRole+1,documentId);node->setData(0,Qt::UserRole+2,feature.value("id"));node->setData(0,Qt::UserRole+5,feature.value("id"));node->setIcon(0,commands.get("extrude")->icon());}
+      |                                                                                                                                                   ^~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:220:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QVariant &' for 1st argument
+  220 |     QVariant(const QVariant &other);
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:254:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'int' for 1st argument
+  254 |     QVariant(int i) noexcept;
+      |     ^        ~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:255:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'uint' (aka 'unsigned int') for 1st argument
+  255 |     QVariant(uint ui) noexcept;
+      |     ^        ~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:256:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'qlonglong' (aka 'long long') for 1st argument
+  256 |     QVariant(qlonglong ll) noexcept;
+      |     ^        ~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:257:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'qulonglong' (aka 'unsigned long long') for 1st argument
+  257 |     QVariant(qulonglong ull) noexcept;
+      |     ^        ~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:258:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'bool' for 1st argument
+  258 |     QVariant(bool b) noexcept;
+      |     ^        ~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:259:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'double' for 1st argument
+  259 |     QVariant(double d) noexcept;
+      |     ^        ~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:260:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'float' for 1st argument
+  260 |     QVariant(float f) noexcept;
+      |     ^        ~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:263:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QChar' for 1st argument
+  263 |     QVariant(QChar qchar) noexcept;
+      |     ^        ~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:264:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QDate' for 1st argument
+  264 |     QVariant(QDate date) noexcept;
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:265:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QTime' for 1st argument
+  265 |     QVariant(QTime time) noexcept;
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:266:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QBitArray &' for 1st argument
+  266 |     QVariant(const QBitArray &bitarray) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:267:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QByteArray &' for 1st argument
+  267 |     QVariant(const QByteArray &bytearray) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:268:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QDateTime &' for 1st argument
+  268 |     QVariant(const QDateTime &datetime) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:269:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QHash<QString, QVariant> &' for 1st argument
+  269 |     QVariant(const QHash<QString, QVariant> &hash) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:270:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QJsonArray &' for 1st argument
+  270 |     QVariant(const QJsonArray &jsonArray) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:271:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QJsonObject &' for 1st argument
+  271 |     QVariant(const QJsonObject &jsonObject) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:272:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QList<QVariant> &' for 1st argument
+  272 |     QVariant(const QList<QVariant> &list) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:273:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QLocale &' for 1st argument
+  273 |     QVariant(const QLocale &locale) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:274:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QMap<QString, QVariant> &' for 1st argument
+  274 |     QVariant(const QMap<QString, QVariant> &map) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:275:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QRegularExpression &' for 1st argument
+  275 |     QVariant(const QRegularExpression &re) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:276:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QString &' for 1st argument
+  276 |     QVariant(const QString &string) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:277:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QStringList &' (aka 'const QList<QString> &') for 1st argument
+  277 |     QVariant(const QStringList &stringlist) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:278:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QUrl &' for 1st argument
+  278 |     QVariant(const QUrl &url) noexcept;
+      |     ^        ~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:282:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QJsonValue &' for 1st argument
+  282 |     QVariant(const QJsonValue &jsonValue) noexcept(Private::FitsInInternalSize<sizeof(CborValueStandIn)>);
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:283:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QModelIndex &' for 1st argument
+  283 |     QVariant(const QModelIndex &modelIndex) noexcept(Private::FitsInInternalSize<8 + 2 * sizeof(quintptr)>);
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:284:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QUuid' for 1st argument
+  284 |     QVariant(QUuid uuid) noexcept(Private::FitsInInternalSize<16>);
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:285:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QSize' for 1st argument
+  285 |     QVariant(QSize size) noexcept;
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:286:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QSizeF' for 1st argument
+  286 |     QVariant(QSizeF size) noexcept(Private::FitsInInternalSize<sizeof(qreal) * 2>);
+      |     ^        ~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:287:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QPoint' for 1st argument
+  287 |     QVariant(QPoint pt) noexcept;
+      |     ^        ~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:288:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QPointF' for 1st argument
+  288 |     QVariant(QPointF pt) noexcept(Private::FitsInInternalSize<sizeof(qreal) * 2>);
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:289:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QLine' for 1st argument
+  289 |     QVariant(QLine line) noexcept(Private::FitsInInternalSize<sizeof(int) * 4>);
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:290:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QLineF' for 1st argument
+  290 |     QVariant(QLineF line) noexcept(Private::FitsInInternalSize<sizeof(qreal) * 4>);
+      |     ^        ~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:291:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QRect' for 1st argument
+  291 |     QVariant(QRect rect) noexcept(Private::FitsInInternalSize<sizeof(int) * 4>);
+      |     ^        ~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:292:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QRectF' for 1st argument
+  292 |     QVariant(QRectF rect) noexcept(Private::FitsInInternalSize<sizeof(qreal) * 4>);
+      |     ^        ~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:295:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QEasingCurve &' for 1st argument
+  295 |     QVariant(const QEasingCurve &easing) noexcept(false);
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:296:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QJsonDocument &' for 1st argument
+  296 |     QVariant(const QJsonDocument &jsonDocument) noexcept(false);
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:297:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const QPersistentModelIndex &' for 1st argument
+  297 |     QVariant(const QPersistentModelIndex &modelIndex) noexcept(false);
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:300:24: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'const char *' for 1st argument
+  300 |     QT_ASCII_CAST_WARN QVariant(const char *str) noexcept(false)
+      |                        ^        ~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:304:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QLatin1StringView' (aka 'QLatin1String') for 1st argument
+  304 |     QVariant(QLatin1StringView string) noexcept(false); // converts to QString
+      |     ^        ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:328:12: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QVariant &&' for 1st argument
+  328 |     inline QVariant(QVariant &&other) noexcept : d(other.d)
+      |            ^        ~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:681:12: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'void *' for 1st argument
+  681 |     inline QVariant(void *) = delete;
+      |            ^        ~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:688:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'QMetaType::Type' for 1st argument
+  688 |     QVariant(QMetaType::Type) = delete;
+      |     ^        ~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:700:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'Qt::GlobalColor' for 1st argument
+  700 |     QVariant(Qt::GlobalColor) = delete;
+      |     ^        ~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:701:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'Qt::BrushStyle' for 1st argument
+  701 |     QVariant(Qt::BrushStyle) = delete;
+      |     ^        ~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:702:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'Qt::PenStyle' for 1st argument
+  702 |     QVariant(Qt::PenStyle) = delete;
+      |     ^        ~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:703:5: note: candidate constructor not viable: no known conversion from 'const QCborValue' to 'Qt::CursorShape' for 1st argument
+  703 |     QVariant(Qt::CursorShape) = delete;
+      |     ^        ~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:310:5: note: candidate template ignored: requirement 'std::disjunction_v<std::is_pointer<QCborValue>, std::is_member_pointer<QCborValue>>' was not satisfied [with T = QCborValue]
+  310 |     QVariant(T) = delete;
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:219:14: note: explicit constructor is not a candidate
+  219 |     explicit QVariant(QMetaType type, const void *copy = nullptr);
+      |              ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:232:14: note: explicit constructor is not a candidate
+  232 |     explicit QVariant(std::in_place_type_t<T>, Args&&... args)
+      |              ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:429:14: note: explicit constructor is not a candidate
+  429 |     explicit QVariant(Type type)
+      |              ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qtreewidget.h:134:64: note: passing argument to parameter 'value' here
+  134 |     virtual void setData(int column, int role, const QVariant &value);
+      |                                                                ^
+2 errors generated.
+[17/79] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+ninja: build stopped: subcommand failed.

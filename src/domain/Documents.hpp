@@ -80,6 +80,9 @@ struct Parameter {
              : out.dimension == "angle" ? "rad"
              : out.dimension == "mass"  ? "kg"
                                         : "1");
+        if (out.name == "MaterialDensityKgM3")
+            check(out.dimension == "scalar" && out.value > 0 && out.value <= 1e6, "InvalidInput",
+                  "Material density must be positive kg/m³, at most 1,000,000");
         return out;
     }
     QCborMap map() const {

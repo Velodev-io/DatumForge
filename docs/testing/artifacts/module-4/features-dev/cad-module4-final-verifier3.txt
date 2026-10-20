@@ -1,0 +1,5 @@
+Running configure
+Running build
+Running ctest
+Running format
+Running static-analysis

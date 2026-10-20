@@ -76,7 +76,8 @@ QString recoveryRoot(QString path, bool initializeDevelopment) {
         auto temp = QFileInfo(QDir::tempPath()).canonicalFilePath();
         check(path.startsWith(temp + '/') &&
                   (QFileInfo(path).fileName().startsWith("cad-module2-") ||
-                   QFileInfo(path).fileName().startsWith("cad-module3-")),
+                   QFileInfo(path).fileName().startsWith("cad-module3-") ||
+                   QFileInfo(path).fileName().startsWith("cad-module4-")),
               "PermissionDenied", "Refused unmarked/non-disposable test root");
     } else {
         QFile marker(path + "/.cad-development-root");

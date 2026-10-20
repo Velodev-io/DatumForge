@@ -1,3 +1,4 @@
+#include "FeaturePanel.hpp"
 #include "MainWindow.hpp"
 #include "SketchPanel.hpp"
 #include "protocol/Client.hpp"
@@ -56,9 +57,11 @@ void MainWindow::buildCommandTabs() {
     auto *check = findChild<QCheckBox *>("sketchGrid");
     connect(grid, &QAction::toggled, check, &QCheckBox::setChecked);
     connect(check, &QCheckBox::toggled, grid, &QAction::setChecked);
-    for (auto pair : {std::pair{"revolve", "Revolve"}, std::pair{"fillet", "Fillet"},
-                      std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"},
-                      std::pair{"pattern", "Pattern"}, std::pair{"mirror", "Mirror"}})
+    for (auto pair :
+         {std::pair{"revolve", "Revolve"}, std::pair{"fillet", "Fillet"},
+          std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"},
+          std::pair{"pattern", "Linear pattern"}, std::pair{"circularPattern", "Circular pattern"},
+          std::pair{"mirror", "Mirror"}})
         add(pair.first, pair.second, "Exact features are planned after workspace UI (4.1/4.2)");
     auto *toolbar = addToolBar("CommandManager");
     toolbar->setObjectName("commandManager");
@@ -85,7 +88,7 @@ void MainWindow::buildCommandTabs() {
         commandTabs->addTab(bar, name);
     };
     page("Features", {"sketch", "sketch.edit", "", "extrude", "revolve", "", "fillet", "chamfer",
-                      "hole", "pattern", "mirror"});
+                      "hole", "pattern", "circularPattern", "mirror"});
     page("Sketch", {"sketch", "sketch.edit", "", "sketch.tool.Select / drag", "sketch.tool.Line",
                     "sketch.tool.Rectangle", "sketch.tool.Circle", "sketch.tool.Arc",
                     "sketch.tool.Polyline", "sketch.tool.Point", "", "sketch.dimension",
@@ -172,7 +175,7 @@ void MainWindow::refreshCommandTabs() {
               "Select geometry in an active sketch");
     available("sketch.grid", part, "Open a Part document");
     for (auto name : {"Isometric", "Front", "Top", "Right"})
-        available("view." + QString(name), !state().projectOpen && bool(client->mesh()) && idle,
+        available("view." + QString(name), bool(client->mesh()) && idle && !editing,
                   "Load a 3D reference scene");
     if (editing && !wasSketchEditing) {
         commandTabs->setCurrentIndex(1);
@@ -184,5 +187,6 @@ void MainWindow::refreshCommandTabs() {
                                  : part  ? " · Part"
                                          : ""));
     propertyPages->setCurrentIndex(state().projectOpen ? (part ? 1 : 2) : 0);
+    refreshFeatures();
 }
 } // namespace cad

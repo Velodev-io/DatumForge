@@ -1,5 +1,7 @@
 # Module 3 evidence
 
+Current scope note: the later explicit Module 4 instruction supersedes the historical 4.1a stop boundary below. See [authorization](../decisions/implementation-scope.json). Stop before Module 5; earlier evidence remains scoped to its original run.
+
 Status: **available-Mac Module 3 baseline and follow-ups; full platform completion Blocked**.
 Current interaction/shape-editing behavior is recorded in [the later input repair](module-3-input-repair.md)
 and [Module 4.0 workspace evidence](module-4.md). The dated logs and results below
