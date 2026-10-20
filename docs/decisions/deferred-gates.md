@@ -16,6 +16,6 @@
 | Installed clean builds/upgrades | Blocked until actual product packages exist | Module 12; source archive is not an installer |
 | Other-platform formatter/toolchains | Blocked: only Mac arm64 clang-format 21.1.8 wheel and native compiler verified | Build maintainer; select native tool pins on each host |
 
-Module 1 remains unstarted and requires the user's approval. Release gates are
+The user authorized Module 1 on 19 October 2026; its Mac reference-workspace evidence is in [module-1](../testing/module-1.md). The cross-platform matrix remains Blocked, and Module 2 has not started. Release gates are
 retained even if available-target experiments pass. No budget or R1 scope revision
 is proposed merely to close an unavailable check.

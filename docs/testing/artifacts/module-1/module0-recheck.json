@@ -1,0 +1,12 @@
+[
+  {
+    "name": "build",
+    "exit": 0,
+    "output": "[1/1] Linking CXX executable slice_desktop.app/Contents/MacOS/slice_desktop\n"
+  },
+  {
+    "name": "test",
+    "exit": 8,
+    "output": "Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug\n      Start  1: harness.pass\n 1/12 Test  #1: harness.pass .....................   Passed    0.01 sec\n      Start  2: harness.failure_reporting\n 2/12 Test  #2: harness.failure_reporting ........   Passed    0.05 sec\n      Start  3: measurement.statistics\n 3/12 Test  #3: measurement.statistics ...........   Passed    0.06 sec\n      Start  4: harness.deliberate_failure\n 4/12 Test  #4: harness.deliberate_failure .......***Not Run (Disabled)   0.00 sec\n      Start  5: protocol.boundaries\n 5/12 Test  #5: protocol.boundaries ..............   Passed    0.08 sec\n      Start  6: storage.crash_matrix\n 6/12 Test  #6: storage.crash_matrix .............   Passed    0.54 sec\n      Start  7: cad.geometry_topology\n 7/12 Test  #7: cad.geometry_topology ............   Passed    0.34 sec\n      Start  8: cad.sketch_solver\n 8/12 Test  #8: cad.sketch_solver ................   Passed    0.01 sec\n      Start  9: cad.rigid_mates\n 9/12 Test  #9: cad.rigid_mates ..................   Passed    0.24 sec\n      Start 10: native.process_transport\n10/12 Test #10: native.process_transport .........***Failed    0.08 sec\nFAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/native/slice_desktop.cpp:183: server.listen(path)\n\n      Start 11: fixtures.determinism\n11/12 Test #11: fixtures.determinism .............   Passed    0.05 sec\n      Start 12: isolation.research\n12/12 Test #12: isolation.research ...............   Passed    0.13 sec\n\n91% tests passed, 1 tests failed out of 11\n\nTotal Test time (real) =   1.60 sec\n\nThe following tests did not run:\n\t  4 - harness.deliberate_failure (Disabled)\n\nThe following tests FAILED:\n\t 10 - native.process_transport (Failed)\nErrors while running CTest\n"
+  }
+]

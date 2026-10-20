@@ -1,0 +1,206 @@
+{
+  "scope": "Debug Qt Test harness with 100 copies of one 12-triangle reference box; not B3 or NFR performance acceptance",
+  "limitations": "Camera-command presentation proxy and point memory snapshots; background/swap uncontrolled; no GPU/shared/steady/peak/cold-launch accounting",
+  "rows": [
+    {
+      "effective_dpr": 1.0,
+      "graphics": "OpenGL 4.1; DPR 1; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "viewport_logical": [
+        1177,
+        622
+      ],
+      "fixture": {
+        "edges": 12,
+        "faces": 6,
+        "id": "M1-reference-box-100-v1",
+        "instance_transforms_sha256": "22af6f47039f44752812f16baeb4d7c9135f6625491f428fd6cd549e710fbe1f",
+        "mesh_bytes_sha256": "17a9c605df09bddea3d9c5a155611716004ea397dc87f8868a2bdbc5a1dc6041",
+        "triangles": 12,
+        "units": "mm",
+        "vertices": 36
+      },
+      "camera_command_to_frameSwapped": {
+        "n": 60,
+        "median_ms": 13.071458499999999,
+        "p95_nearest_rank_ms": 14.36275
+      },
+      "cpu_submission_including_initial_frames": {
+        "n": 83,
+        "median_ms": 0.396,
+        "p95_nearest_rank_ms": 0.587666
+      },
+      "process_memory_point_samples": [
+        {
+          "physical_footprint_bytes": 112378816,
+          "pid": 64583,
+          "resident_bytes": 158400512
+        },
+        {
+          "physical_footprint_bytes": 4211168,
+          "pid": 64584,
+          "resident_bytes": 23478272
+        }
+      ]
+    },
+    {
+      "effective_dpr": 1.25,
+      "graphics": "OpenGL 4.1; DPR 1.25; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "viewport_logical": [
+        1177,
+        622
+      ],
+      "fixture": {
+        "edges": 12,
+        "faces": 6,
+        "id": "M1-reference-box-100-v1",
+        "instance_transforms_sha256": "22af6f47039f44752812f16baeb4d7c9135f6625491f428fd6cd549e710fbe1f",
+        "mesh_bytes_sha256": "17a9c605df09bddea3d9c5a155611716004ea397dc87f8868a2bdbc5a1dc6041",
+        "triangles": 12,
+        "units": "mm",
+        "vertices": 36
+      },
+      "camera_command_to_frameSwapped": {
+        "n": 60,
+        "median_ms": 13.468875,
+        "p95_nearest_rank_ms": 15.209542
+      },
+      "cpu_submission_including_initial_frames": {
+        "n": 83,
+        "median_ms": 0.377542,
+        "p95_nearest_rank_ms": 0.536042
+      },
+      "process_memory_point_samples": [
+        {
+          "physical_footprint_bytes": 140461064,
+          "pid": 64590,
+          "resident_bytes": 168869888
+        },
+        {
+          "physical_footprint_bytes": 4784656,
+          "pid": 64592,
+          "resident_bytes": 23461888
+        }
+      ]
+    },
+    {
+      "effective_dpr": 1.5,
+      "graphics": "OpenGL 4.1; DPR 1.5; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "viewport_logical": [
+        1177,
+        622
+      ],
+      "fixture": {
+        "edges": 12,
+        "faces": 6,
+        "id": "M1-reference-box-100-v1",
+        "instance_transforms_sha256": "22af6f47039f44752812f16baeb4d7c9135f6625491f428fd6cd549e710fbe1f",
+        "mesh_bytes_sha256": "17a9c605df09bddea3d9c5a155611716004ea397dc87f8868a2bdbc5a1dc6041",
+        "triangles": 12,
+        "units": "mm",
+        "vertices": 36
+      },
+      "camera_command_to_frameSwapped": {
+        "n": 60,
+        "median_ms": 13.764229,
+        "p95_nearest_rank_ms": 15.819667
+      },
+      "cpu_submission_including_initial_frames": {
+        "n": 80,
+        "median_ms": 0.372333,
+        "p95_nearest_rank_ms": 0.452875
+      },
+      "process_memory_point_samples": [
+        {
+          "physical_footprint_bytes": 177374240,
+          "pid": 64602,
+          "resident_bytes": 191545344
+        },
+        {
+          "physical_footprint_bytes": 4735504,
+          "pid": 64605,
+          "resident_bytes": 23412736
+        }
+      ]
+    },
+    {
+      "effective_dpr": 1.75,
+      "graphics": "OpenGL 4.1; DPR 1.75; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "viewport_logical": [
+        1177,
+        622
+      ],
+      "fixture": {
+        "edges": 12,
+        "faces": 6,
+        "id": "M1-reference-box-100-v1",
+        "instance_transforms_sha256": "22af6f47039f44752812f16baeb4d7c9135f6625491f428fd6cd549e710fbe1f",
+        "mesh_bytes_sha256": "17a9c605df09bddea3d9c5a155611716004ea397dc87f8868a2bdbc5a1dc6041",
+        "triangles": 12,
+        "units": "mm",
+        "vertices": 36
+      },
+      "camera_command_to_frameSwapped": {
+        "n": 60,
+        "median_ms": 13.534229499999999,
+        "p95_nearest_rank_ms": 15.834833
+      },
+      "cpu_submission_including_initial_frames": {
+        "n": 76,
+        "median_ms": 0.36370800000000003,
+        "p95_nearest_rank_ms": 0.494667
+      },
+      "process_memory_point_samples": [
+        {
+          "physical_footprint_bytes": 228721744,
+          "pid": 64610,
+          "resident_bytes": 197279744
+        },
+        {
+          "physical_footprint_bytes": 4719072,
+          "pid": 64611,
+          "resident_bytes": 21364736
+        }
+      ]
+    },
+    {
+      "effective_dpr": 2.0,
+      "graphics": "OpenGL 4.1; DPR 2; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "viewport_logical": [
+        1177,
+        622
+      ],
+      "fixture": {
+        "edges": 12,
+        "faces": 6,
+        "id": "M1-reference-box-100-v1",
+        "instance_transforms_sha256": "22af6f47039f44752812f16baeb4d7c9135f6625491f428fd6cd549e710fbe1f",
+        "mesh_bytes_sha256": "17a9c605df09bddea3d9c5a155611716004ea397dc87f8868a2bdbc5a1dc6041",
+        "triangles": 12,
+        "units": "mm",
+        "vertices": 36
+      },
+      "camera_command_to_frameSwapped": {
+        "n": 60,
+        "median_ms": 12.9623755,
+        "p95_nearest_rank_ms": 13.696875
+      },
+      "cpu_submission_including_initial_frames": {
+        "n": 83,
+        "median_ms": 0.390375,
+        "p95_nearest_rank_ms": 0.503292
+      },
+      "process_memory_point_samples": [
+        {
+          "physical_footprint_bytes": 314066072,
+          "pid": 64622,
+          "resident_bytes": 249446400
+        },
+        {
+          "physical_footprint_bytes": 4801040,
+          "pid": 64623,
+          "resident_bytes": 21708800
+        }
+      ]
+    }
+  ]
+}

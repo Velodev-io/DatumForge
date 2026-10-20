@@ -79,7 +79,7 @@ Step Zero is **Module 0** in [TECH_SPEC](TECH_SPEC.md). Follow the earlier plann
 
 ## 0.10 — Required module tests
 
-- [ ] **0.10a — T-00-SETUP:** Reproduce the minimal slice from a clean checkout using pins and documented commands. Expected: deterministic dependency selection, successful available-platform builds, and a correctly failing harness probe.
+- [x] **0.10a — T-00-SETUP:** Reproduce the minimal slice from a clean checkout using pins and documented commands. Expected: deterministic dependency selection, successful available-platform builds, and a correctly failing harness probe.
 - [x] **0.10b — T-00-ISOLATION:** Run fixtures in disposable roots and inspect touched paths. Expected: production projects/recovery and existing research remain untouched; no real data/secrets tracked.
 - [x] **0.10c — T-00-NATIVE:** Run shell/mesh/picking/measurement/worker-restart experiments. Expected: correct entity mapping, bounded transfer, stale reply rejection, and a still-responsive shell.
 - [x] **0.10d — T-00-CAD:** Run solver/geometry/topology/mate spikes with known valid and invalid cases. Expected: correct invariants, explicit ambiguous/conflict states, and unchanged prior model on failure.
@@ -90,4 +90,4 @@ Step Zero is **Module 0** in [TECH_SPEC](TECH_SPEC.md). Follow the earlier plann
 
 **Pass criteria:** Applicable spikes and setup tests pass on available targets; blocking architecture failures are resolved. Cross-platform feasibility remains incomplete while a required platform is untested. Partial foundation work may proceed on verified targets if it does not depend on the unresolved decision; release support may not be claimed.
 
-**Completion check:** A reproducible native slice, proven command/persistence ownership, viable geometry/solver/reference approach, bounded resource transport, isolated tests, and explicit support/decision records exist. Every required test has actual evidence. **Current result: Blocked — partial available-target evidence; Module 1 requires explicit user approval.**
+**Completion check:** A reproducible native slice, proven command/persistence ownership, viable geometry/solver/reference approach, bounded resource transport, isolated tests, and explicit support/decision records exist. Every required test has actual evidence. **Current result: Blocked — remaining platform/release feasibility gaps. Module 1 was subsequently authorized by the user on 19 October 2026; see testing/module-1.md.**

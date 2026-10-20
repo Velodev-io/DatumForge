@@ -8,10 +8,10 @@
 
 | Requirement | SDD sections | Primary module | Acceptance test | Current result |
 |---|---|---|---|---|
-| FR-001 | 10 | 1 | T-01 | Not run |
+| FR-001 | 10 | 1 | T-01 | Blocked |
 | FR-002 | 3, 9 | 2 | T-02 | Not run |
-| FR-003 | 5, 10, 11 | 1 | T-03 | Not run |
-| FR-004 | 4, 10 | 1 | T-04 | Not run |
+| FR-003 | 5, 10, 11 | 1 | T-03 | Blocked |
+| FR-004 | 4, 10 | 1 | T-04 | Blocked |
 | FR-005 | 10 | 9 | T-05 | Not run |
 | FR-006 | 3, 9 | 2 | T-06 | Not run |
 | FR-007 | 9 | 2 | T-07 | Not run |
@@ -42,7 +42,7 @@
 | FR-032 | 6, 11 | 8 | T-32 | Not run |
 | FR-033 | 11 | 8 | T-33 | Not run |
 | FR-034 | 4, 9 | 10 | T-34 | Not run |
-| FR-035 | 4, 5 | 1 | T-35 | Not run |
+| FR-035 | 4, 5 | 1 | T-35 | Blocked |
 | FR-036 | 12, 13 | 9 | T-36 | Not run |
 | FR-037 | 1, 13 | 9 | T-37 | Not run |
 | FR-038 | 5, 13 | 9 | T-38 | Not run |
@@ -60,7 +60,7 @@
 | NFR-010 | 10 | 9 | T-50 | Not run |
 | NFR-011 | 4, 9 | 10 | T-51 | Not run |
 | NFR-012 | 6, 8, 15 | 11 | T-52 | Not run |
-| NFR-013 | 2, 5 | 1 | T-53 | Not run |
+| NFR-013 | 2, 5 | 1 | T-53 | Blocked |
 | NFR-014 | 13 | 9 | T-54 | Not run |
 | NFR-015 | 13, 15 | 12 | T-55 | Not run |
 | NFR-016 | 4, 9, 12, 13 | 10 | T-56 | Not run |
@@ -81,6 +81,6 @@
 
 Future evidence lives in `docs/testing/module-N.md`, plus referenced logs/images/raw samples. Test rows may link multiple procedures; a row passes only when all applicable required procedures pass. A module's unit tests cannot alone close its native, physical-hardware, or installed-build gates. Preserve failures and reasons for Blocked/Not applicable outcomes.
 
-Module 0 feasibility is recorded in [module-0](testing/module-0.md), its task status register, and [the product requirement register](testing/requirements.json). T-00 results do not close any T-01–T-56 row above. Module 1 remains unstarted pending explicit user approval.
+Module 0 feasibility is recorded in [module-0](testing/module-0.md), its task status register, and [the product requirement register](testing/requirements.json). T-00 results do not close any T-01–T-56 row above. The user authorized Module 1 on 19 October 2026. [Module 1 evidence](testing/module-1.md) covers the Mac reference-workspace subsets of T-01/T-03/T-04/T-35/T-53. The five associated full requirement rows remain Blocked for platform or later-module checks; no other product test is closed. Module 2 has not started.
 
 The documentation checker verifies IDs, links, module/task structure, and status consistency only. It does not execute any CAD, UI, persistence, platform, or performance acceptance test.

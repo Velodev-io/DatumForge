@@ -1,9 +1,13 @@
 {
   "FR-001": {
     "test": "T-01",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Mac native reference shell checked; other platforms/installed workspace checks Blocked."
   },
   "FR-002": {
     "test": "T-02",
@@ -13,15 +17,23 @@
   },
   "FR-003": {
     "test": "T-03",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Mac reference navigation/picking checked; Windows/Linux and complete modeled geometry acceptance Blocked."
   },
   "FR-004": {
     "test": "T-04",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Reference preview/cancel checked; accepted modeling transactions/history and feature failure corpus require Modules 2\u20134."
   },
   "FR-005": {
     "test": "T-05",
@@ -205,9 +217,13 @@
   },
   "FR-035": {
     "test": "T-35",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Real worker isolation/restart and preview coalescing checked; actual geometry-job progress/cancellation/recovery need later modules and native targets."
   },
   "FR-036": {
     "test": "T-36",
@@ -313,9 +329,13 @@
   },
   "NFR-013": {
     "test": "T-53",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Mac reference process/source/link ownership checked; production project DB writes, durable revisions and other native targets remain pending."
   },
   "NFR-014": {
     "test": "T-54",

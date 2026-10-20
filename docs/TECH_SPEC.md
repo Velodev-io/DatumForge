@@ -1,7 +1,7 @@
 # Technical Specification and Implementation Plan — Solidworks Clone
 
 **Version:** 0.1 · **Date:** 19 October 2026  
-**Status:** Module 0 feasibility experiments implemented/in verification; production modules and product acceptance remain unstarted.
+**Status:** Module 1 Mac reference workspace verified; cross-platform matrix Blocked. Modules 2–12 have not started; full product acceptance remains pending.
 **Constraints:** Native macOS/Windows/Linux, local core, **8 GB system RAM minimum**.  
 **Authority:** [SRS](SRS.md) → [SDD](SDD.md) → contracts below → ordered modules. [Step Zero](STEP_ZERO.md) is Module 0.
 
@@ -212,30 +212,30 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 1.1 — Build the application frame
 
-- [ ] **1.1a:** Create the Qt main window, dock layout, document tabs, command registry, and persistent layout preferences; use original icons and clear unavailable-command reasons.
-- [ ] **1.1b:** Create explicit UI state for active document, edit mode, selection, command session, preview generation, and save/job status. Avoid an independent mutable model in each panel.
+- [x] **1.1a:** Create the Qt main window, dock layout, document tabs, command registry, and persistent layout preferences; use original icons and clear unavailable-command reasons.
+- [x] **1.1b:** Create explicit UI state for active document, edit mode, selection, command session, preview generation, and save/job status. Avoid an independent mutable model in each panel.
 
 #### 1.2 — Implement worker lifecycle and transport
 
-- [ ] **1.2a:** Start one CAD worker using private local IPC, negotiate versions/epoch, validate typed envelopes/limits, and expose correlated errors.
-- [ ] **1.2b:** Implement preview coalescing, bounded requests, operation-outcome query, disconnect/restart, and abandoned buffer cleanup. Worker death must leave the UI able to offer recovery.
+- [x] **1.2a:** Start one CAD worker using private local IPC, negotiate versions/epoch, validate typed envelopes/limits, and expose correlated errors.
+- [x] **1.2b:** Implement preview coalescing, bounded requests, operation-outcome query, disconnect/restart, and abandoned buffer cleanup. Worker death must leave the UI able to offer recovery.
 
 #### 1.3 — Implement the viewport boundary
 
-- [ ] **1.3a:** Display worker-generated meshes, instances, cameras, highlights, and selection IDs; route exact geometry queries to the worker.
-- [ ] **1.3b:** Support orbit/pan/zoom/fit/view modes, basic overlays, resize/docking, and stale-result rejection; measure the native slice on each available platform.
+- [x] **1.3a:** Display worker-generated meshes, instances, cameras, highlights, and selection IDs; route exact geometry queries to the worker.
+- [x] **1.3b:** Support orbit/pan/zoom/fit/view modes, basic overlays, resize/docking, and stale-result rejection; measure the native slice on each available platform.
 
 #### 1.4 — Required module tests
 
-- [ ] **1.4a — T-01, T-03, T-04, T-35, NFR-013 / T-53:** Verify shell placement, navigation, synchronized selection, explicit preview states, and architectural ownership on real native builds.
-- [ ] **1.4b — Protocol failure corpus:** Inject old epochs, out-of-order preview generations, lost acknowledgments, malformed control frames, invalid mesh indices, oversized allocation requests, and worker termination. Expect rejection/cleanup without UI model corruption.
+- [x] **1.4a — T-01, T-03, T-04, T-35, NFR-013 / T-53:** Verify shell placement, navigation, synchronized selection, explicit preview states, and architectural ownership on real native builds.
+- [x] **1.4b — Protocol failure corpus:** Inject old epochs, out-of-order preview generations, lost acknowledgments, malformed control frames, invalid mesh indices, oversized allocation requests, and worker termination. Expect rejection/cleanup without UI model corruption.
 - [ ] **1.4c — Native graphics matrix:** Verify picking/overlays at supported scales and X11/Wayland where applicable. Record actual Mac/Windows/Linux results separately; a box display is not part-modeling acceptance.
 
 **Test pass criteria:** A usable native shell renders correct revision-tagged data, rejects stale/malformed messages, and survives worker exit on every currently verified target.
 
 **Completion check:** UI/worker/render contracts work with real processes; untested platform rows remain pending.
 
-**Evidence:** `docs/testing/module-1.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-1.md`. **Current status:** 8 lettered tasks Pass on the available Mac reference-workspace scope; 1.4c Blocked pending other native platforms/hardware. Module 2 has not started.
 
 
 ### Module 2 — Document semantics, persistence, and recovery foundation
@@ -633,5 +633,5 @@ Keep test failures and unavailable environments visible. Visual screenshots, eng
 
 ## 8. Current implementation status
 
-Module 0 feasibility is underway; see [actual task evidence](testing/module-0.md). **Modules 1–12 and T-01–T-56 remain Not run.** Frozen fixture recipes do not imply evaluated production workloads. Spike results do not establish product recovery guarantees or SRS resource budgets. Documentation checks verify structure/evidence links only. Module 1 requires explicit user approval.
+Module 0 feasibility evidence remains in [module-0](testing/module-0.md). The user authorized Module 1 on 19 October 2026; see [Mac reference-workspace implementation and native evidence](testing/module-1.md). Its platform matrix remains Blocked. T-01/T-03/T-04/T-35/T-53 subsets have available-Mac evidence; full associated requirements remain Blocked and other product tests remain Not run. Modules 2–12 have not started. Frozen fixture recipes and reference display do not establish product recovery or SRS resource budgets. Documentation checks verify structure/evidence links only.
 

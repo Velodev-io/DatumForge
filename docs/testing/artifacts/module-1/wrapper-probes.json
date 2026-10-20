@@ -1,0 +1,50 @@
+[
+  {
+    "command": [
+      "cmake",
+      "--version"
+    ],
+    "exit": 0,
+    "output": "cmake version 4.3.1\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).\n"
+  },
+  {
+    "command": [
+      "cmake",
+      "-E",
+      "copy_if_different",
+      "/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-step-zero-wrapper-ffsxn5na/in",
+      "/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-step-zero-wrapper-ffsxn5na/out"
+    ],
+    "exit": 0,
+    "output": ""
+  },
+  {
+    "command": [
+      "cmake",
+      "-S",
+      "/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-step-zero-wrapper-ffsxn5na",
+      "-B",
+      "/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-step-zero-wrapper-ffsxn5na/build"
+    ],
+    "exit": 0,
+    "output": "-- Configuring done (0.1s)\n-- Generating done (0.0s)\n-- Build files have been written to: /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-step-zero-wrapper-ffsxn5na/build\n"
+  },
+  {
+    "command": [
+      "ctest",
+      "--version"
+    ],
+    "exit": 0,
+    "output": "ctest version 4.3.1\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake).\n"
+  },
+  {
+    "command": [
+      "ctest",
+      "--test-dir",
+      "/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-step-zero-wrapper-ffsxn5na/build",
+      "--output-on-failure"
+    ],
+    "exit": 0,
+    "output": "Test project /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-step-zero-wrapper-ffsxn5na/build\n    Start 1: ok\n1/1 Test #1: ok ...............................   Passed    0.00 sec\n\n100% tests passed, 0 tests failed out of 1\n\nTotal Test time (real) =   0.01 sec\n"
+  }
+]

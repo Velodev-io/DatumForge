@@ -54,7 +54,7 @@ def main() -> int:
         errors.append("SRS requirement/test IDs differ from the v0.1 baseline")
 
     trace = re.findall(
-        r"^\| ((?:FR|NFR)-\d{3}) \| ([\d, ]+) \| (\d+) \| (T-\d{2}) \| Not run \|$",
+        r"^\| ((?:FR|NFR)-\d{3}) \| ([\d, ]+) \| (\d+) \| (T-\d{2}) \| (?:Not run|Blocked|Pass|Fail|Not applicable) \|$",
         texts.get("TRACEABILITY.md", ""), re.MULTILINE)
     if {rid: tid for rid, _, _, tid in trace} != expected or len(trace) != len(expected):
         errors.append("Traceability has missing/duplicate/incorrect requirement or test rows")
@@ -94,8 +94,15 @@ def main() -> int:
             for artifact in record.get("evidence", []):
                 if not (root.parent / artifact).is_file():
                     errors.append(f"Missing task evidence: {task} / {artifact}")
-        if any(not task.startswith("0.") for task in checked):
-            errors.append("Module 1+ completion requires user approval; current scope is Module 0")
+        scope_path=root / "decisions/implementation-scope.json"
+        authorized={0}
+        if scope_path.exists():
+            authorization=json.loads(scope_path.read_text())
+            authorized=set(authorization.get("authorized_modules",[0]))
+            if 1 in authorized and authorization.get("module_1_authorization",{}).get("quote") != "proceed with module 1":
+                errors.append("Module 1 requires recorded explicit user authorization")
+        if any(int(task.split(".")[0]) not in authorized for task in checked):
+            errors.append("Checked task is outside the explicitly authorized module scope")
     if len(set(task_ids)) != len(task_ids):
         errors.append("Duplicate lettered implementation task IDs")
     for text, label in ((srs, "SRS"), (tech, "TECH_SPEC"), (step, "STEP_ZERO")):
@@ -106,8 +113,8 @@ def main() -> int:
         "scope": "Documentation structure only; no product acceptance tests executed",
         "checked_at_utc": datetime.now(timezone.utc).isoformat(),
         "status": "pass" if not errors else "fail",
-        "product_implementation": "Module 0 feasibility; production modules not started",
-        "product_acceptance_tests": "Not run",
+        "product_implementation": "Module 1 native reference workspace; see scoped evidence",
+        "product_acceptance_tests": "Module 1 subsets exercised on Mac; full R1 requirements remain Not run or Blocked",
         "documents": {name: {"sha256": hashlib.sha256(text.encode()).hexdigest(),
                              "lines": len(text.splitlines()), "words": len(text.split())}
                       for name, text in texts.items()},

@@ -1,6 +1,6 @@
 # Source builds and commands
 
-Module 0 only. `dependencies.lock.json` pins upstream source archives and extracted
+Module 0 experiments plus the authorized Module 1 native workspace. `dependencies.lock.json` pins upstream source archives and extracted
 PlaneGCS files by SHA-256. Qt's archive was also checked against its official
 checksum. Source commit identities for OCCT/Eigen/FreeCAD are immutable. Ninja's
 tag archive is content-locked. Builds never select floating branches or silently
@@ -26,7 +26,7 @@ cmake --build build/macos-debug --target static-analysis
 `format-check` uses content-locked clang-format 21.1.8 plus whitespace/UTF-8 checks.
 The Mac arm64 formatter wheel is pinned in `tools.lock.json`; other native wheels
 remain Blocked pending platform provisioning.
-`static-analysis` uses Clang's analyzer with real compile flags on our spikes.
+`static-analysis` uses Clang's analyzer with real compile flags on project-owned apps/src/tests, excluding vendor and generated sources.
 Windows/Linux presets are candidate commands; unrun checks remain Blocked.
 `cpack --config build/macos-debug/CPackSourceConfig.cmake -B build/packages` makes
 a source archive of experiments, **not** an installable product. Installed product
@@ -51,5 +51,18 @@ idempotently applied by the build script. The initial failed build is retained.
 Do not suppress the diagnostic globally. Record the patch hash with build evidence.
 
 Do not run two builds against the same dependency/build directory concurrently.
-Empty `src`/`apps` directories express the proposed layout; application features
-are intentionally absent until Module 1 approval. `.deps` and `build` are ignored.
+`apps/desktop` and `src/render` own Qt UI/display data, `src/protocol` owns the
+bounded typed transport, and `apps/cad-worker` plus `src/geometry/occt` own exact
+reference geometry. The production desktop links neither OCCT, SQLite nor Qt Test.
+`module1_contracts` and `module1_adversary` are separate test executables.
+`.deps` and `build` are ignored.
+
+Run `python3 tools/verify_module1.py --native` from a logged-in Mac desktop terminal
+for configure/build/CTest/format/analyzer/ownership/research checks and separate
+native 100/125/150/175/200% effective-scale runs. Without `--native`, CTest is
+headless and does not certify graphics. The scale overrides use one Retina display.
+Use `python3 tools/clean_reproduce.py --module 1` to reproduce a fresh source build
+and headless suite using verified local dependency binaries. Neither command
+builds an installed release or certifies another OS. The Mac `.app` is a development
+bundle with local dependency rpaths; its sibling worker is refreshed when changed.
+`CAD_GEOMETRY_SPIKES=OFF` disables old OCCT experiments, not the Module 1 worker.

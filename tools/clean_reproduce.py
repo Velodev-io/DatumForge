@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fresh source export and application build, with verified local dependency cache.
+"""Fresh source export and application build, with pinned source archives and existing built local dependencies.
 
 This proves a clean application source build, not a second from-scratch dependency
 build or a different platform. Keep those evidence classes separate.
@@ -13,11 +13,11 @@ import tempfile
 
 ROOT=Path(__file__).resolve().parents[1]
 def main():
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--without-geometry',action='store_true');args=p.parse_args()
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('--without-geometry',action='store_true');p.add_argument('--module',choices=['0','1'],default='0');args=p.parse_args()
     subprocess.run(['python3',str(ROOT/'tools/fetch_dependencies.py')],check=True)
     files=subprocess.check_output(['git','ls-files','--cached','--others','--exclude-standard','-z'],cwd=ROOT).decode().split('\0')
-    artifact=ROOT/'docs/testing/artifacts/module-0/clean-reproduction.txt'
-    with tempfile.TemporaryDirectory(prefix='cad-step-zero-clean-') as directory,artifact.open('w') as log:
+    artifact=ROOT/f'docs/testing/artifacts/module-{args.module}/clean-reproduction.txt'
+    with tempfile.TemporaryDirectory(prefix='cad-clean-source-') as directory,artifact.open('w') as log:
         clean=Path(directory)
         for name in filter(None,files):
             source=ROOT/name
@@ -32,7 +32,7 @@ def main():
         if args.without_geometry:command+=['-DCAD_GEOMETRY_SPIKES=OFF']
         run(command);run(['cmake','--build','--preset','macos-debug'])
         run(['ctest','--preset','macos-debug','--output-on-failure'])
-        log.write('Pass: fresh application source export/build/tests with SHA-256 verified dependency cache; no second dependency compilation and no installed-build claim.\n')
+        log.write('Pass: fresh application source export/build/tests with SHA-256 verified source archives and existing local built libraries; no second dependency compilation and no installed-build claim.\n')
     print('Pass: clean source reproduction; see',artifact)
 
 if __name__=='__main__':main()

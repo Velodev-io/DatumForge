@@ -1,0 +1,7 @@
+[1/7] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/7] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/7] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/7] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[5/7] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[6/7] Linking CXX static library libcad_planegcs.a
+[7/7] Linking CXX executable solver_spike

@@ -2,7 +2,7 @@
 
 Status: Not run. No implementation or product acceptance evidence.
 
-Module 0 must be reviewed first; Module 1 requires explicit user approval.
+Module 0/1 available-Mac evidence is recorded separately. This module has not started; no implementation authorization beyond Module 1 is recorded. Follow the documented prerequisites.
 
 ## Evidence fields for future execution
 

@@ -1,14 +1,14 @@
 {
   "scope": "Documentation structure only; no product acceptance tests executed",
-  "checked_at_utc": "2026-10-20T14:50:09.986231+00:00",
+  "checked_at_utc": "2026-10-20T14:50:10.121605+00:00",
   "status": "pass",
-  "product_implementation": "Module 0 feasibility; production modules not started",
-  "product_acceptance_tests": "Not run",
+  "product_implementation": "Module 1 native reference workspace; see scoped evidence",
+  "product_acceptance_tests": "Module 1 subsets exercised on Mac; full R1 requirements remain Not run or Blocked",
   "documents": {
     "README.md": {
-      "sha256": "e394d8f9984c1425cf2bd1654ef3cd8fb03c8a8f470e773dfd722852f9c076c8",
+      "sha256": "cc8eb317adb60e2cd5984b7f1937d02830e2f4d4d6ed5e7f3b5728598177b7c1",
       "lines": 44,
-      "words": 542
+      "words": 566
     },
     "SRS.md": {
       "sha256": "35ed64779d5153998fceb9ee7ee10502993b732650d11b5193d4069103264764",
@@ -21,19 +21,19 @@
       "words": 3964
     },
     "TECH_SPEC.md": {
-      "sha256": "793a8556a3f05dfac470ef8eba495716217cd5abc6c18b00fcc90732f2f192f6",
+      "sha256": "dbf49603be698dc5e14339ac7fa9185d9403d0960d369e6e58ef5f9b78901974",
       "lines": 637,
-      "words": 6544
+      "words": 6583
     },
     "STEP_ZERO.md": {
-      "sha256": "5415397fee4e00665d36b38f2620325665d78037ed3d5e97a34af9d881042d00",
+      "sha256": "23b189ab422dbc1fed57aa6f171b9d794228add57bc056bf1eeeb98d6062bb8e",
       "lines": 93,
-      "words": 1823
+      "words": 1831
     },
     "TRACEABILITY.md": {
-      "sha256": "1ae5e92031b3aafbcbf5cba4a1dbda286dba77c9a927206ab9caf50ecfded1ee",
+      "sha256": "32d9aef9f3d6e1f22963a97f427e7b0d2a73f5c532e7782d1645c5173d986292",
       "lines": 86,
-      "words": 1035
+      "words": 1065
     },
     "REFERENCES.md": {
       "sha256": "9df2410a2d7dec2b39308e4058d1bcecf5ec65794bb693c8455b98230bc7f5bc",
@@ -44,7 +44,7 @@
   "requirements": 56,
   "traceability_rows": 56,
   "modules": 13,
-  "unchecked_engineering_tasks": 117,
-  "completed_engineering_tasks": 39,
+  "unchecked_engineering_tasks": 108,
+  "completed_engineering_tasks": 48,
   "errors": []
 }

@@ -1,15 +1,13 @@
 # Development and review conventions
 
-Read docs/README.md and its linked specifications before editing. Follow Module
-0 lettered order; blocked prerequisites permit only independent later work.
+Read docs/README.md and its linked specifications before editing. Follow the documented module and lettered task order; blocked prerequisites permit only independent later work.
 Record Pass, Fail, Blocked, Not run or Not applicable with reason. Only check a
-task after verifying its whole completion condition. User approval is required
-before Module 1. Keep research unchanged and preserve evidence of failed runs.
+task after verifying its whole completion condition. Module 1 was explicitly authorized on 2026-10-19; stop before Module 2. Keep research unchanged and preserve evidence of failed runs.
 
 Use short topic branches from `main`; review changes with actual test evidence.
 Never rewrite shared history. This repository has no remote until supplied.
 No initial commit is required to run tests; source tree hashes identify uncommitted
-builds. All CAD spikes live under tests, not production feature implementations.
+builds. All CAD spikes live under tests; Module 1 production code lives under apps and src.
 
 Build commands and dependency options are recorded in `cmake/README.md`.
 Candidate presets are not verified-platform claims. Run the native manual matrix

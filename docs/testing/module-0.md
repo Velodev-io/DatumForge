@@ -1,11 +1,13 @@
 # Module 0 / Step Zero — implementation evidence
 
 **Date:** 19 October 2026. **Overall status: Blocked (partial available-target feasibility).**
-**39 lettered tasks verified; 9 remain Blocked. Module 1 has not started and requires explicit user approval.**
+**Latest follow-up: 40 lettered tasks verified; 8 remain Blocked. Module 1 was later explicitly authorized and implemented on the available Mac; see the follow-up below.**
+
+The original Module 0 stop recorded 39 Pass / 9 Blocked; its failed artifacts and original limitations remain preserved.
 
 The native architecture and physical **8 GB** minimum are unchanged. These are isolated
-Module 0 experiments, not an R1 CAD product. All T-01–T-56 product acceptance rows
-remain **Not run**. Research is unchanged: all **97 files** match the original SHA-256 baseline.
+Module 0 experiments, not an R1 CAD product. At the original stop all T-01–T-56 product acceptance rows
+were **Not run**. Later Module 1 subset evidence does not close full product acceptance. Research is unchanged: all **97 files** match the original SHA-256 baseline.
 Local Git was initialized without a remote or commit; uncommitted source/build hashes
 identify the work. No final product name, release application ID or product license
 was selected.
@@ -80,8 +82,9 @@ python3 docs/scripts/check_specs.py --write-report
 Dependency builds first ran with two jobs; OCCT's final source build used four jobs
 on the available Mac. Source/tool provisioning needs network; the built experiments
 use local data, one local worker and no account/service. Sandbox native UI/socket
-access was denied; authorized host runs provide the native evidence. Current wrapper
-stall means the commands are **not all currently reproducible**; preserve that blocker.
+access was denied; authorized host runs provide the native evidence. At the original Module 0 stop the wrapper
+stall made commands **not all reproducible**. The later follow-up below resolves
+that available-host reproduction gap; original failure evidence is retained.
 A ZIP of source experiments was generated locally, not an installer or publication.
 
 ## Lettered task evidence
@@ -104,7 +107,7 @@ prototype/available host; it does not close a platform or product acceptance req
 | 0.3b | **Blocked** | Mac dependency compatibility passes; Windows/Linux compiler/runtime pins and support verification unavailable. |
 | 0.3c | **Pass** | Content-locked project-local source strategy and explicit ABI/options established. |
 | 0.3d | **Blocked** | Dependency notices inventoried; product owner has not chosen product license/identity/distribution. |
-| 0.3e | **Blocked** | Mac commands built/tested/formatted/analyzed/archived; final CMake/Ninja wrapper stall unresolved. Other-platform commands unverified. |
+| 0.3e | **Blocked** | Available-Mac commands/clean reproduction now pass after the wrapper stall ceased reproducing. Other candidate toolchains/commands remain unverified. |
 | 0.4a | **Pass** | Marked disposable temp roots and development/test identities; production root refused. |
 | 0.4b | **Pass** | CTest, Qt Test and native matrix configured; deliberate failure proves executable/CTest nonzero exits. |
 | 0.4c | **Pass** | Real SQLite/files, external kills, write/full/permission errors and stale epochs/generations exercised. |
@@ -118,7 +121,7 @@ prototype/available host; it does not close a platform or product acceptance req
 | 0.6a | **Pass** | Available Mac: native Qt shell displays box created/meshed in OCCT worker. Other platforms unavailable. |
 | 0.6b | **Pass** | Mesh-only UI, face/edge picking/highlight, native label overlay and worker-side 6000 mm3 measurement demonstrated. |
 | 0.6c | **Pass** | Private inherited capability, version/epoch handshake, bounded CBOR/chunk fallback, range/checksum checks, stale generations and abandoned-buffer cleanup demonstrated; lost-ack storage dedup separate. |
-| 0.6d | **Blocked** | M2 OpenGL 4.1 native render/docking passes; all scales, minimum OS/Intel Mac, real driver failure and production renderer/Metal decision incomplete. |
+| 0.6d | **Blocked** | M2 render/docking and effective 100–200% Qt mapping pass in Module 1; minimum OS/Intel Mac, additional displays, real driver failure and renderer/Metal longevity remain incomplete. |
 | 0.6e | **Blocked** | Physical 8 GB slice footprint and navigation samples recorded; complete controlled/peak/GPU accounting and final-harness profile association remain incomplete. |
 | 0.7a | **Pass** | Pinned PlaneGCS rectangle/circle/DOF/drag/residual/redundant/conflict corpus passes; extraction shims documented. |
 | 0.7b | **Pass** | Exact extrusion/cut/four holes/fillet: analytic volume 35488.761101962 mm3, 15 faces, one solid; invalid construction retains prior model. |
@@ -134,7 +137,7 @@ prototype/available host; it does not close a platform or product acceptance req
 | 0.9b | **Pass** | Modules 1–4 first production slice frozen and mapped to FR/test IDs. |
 | 0.9c | **Pass** | Native, hardware, accessibility, advanced fixture and installed gates assigned to owners/modules. |
 | 0.9d | **Pass** | Specs/status/traceability synchronized; 8 GB/R1 budgets unchanged; product T-01–T-56 all Not run. |
-| 0.10a | **Blocked** | Clean source export with verified dependency cache passed 11 tests before final harness edits. Final CMake/Ninja/CTest wrapper stall prevents final clean reproducibility closure. |
+| 0.10a | **Pass (follow-up)** | Final available-Mac clean source export/build and all 13 enabled tests pass; earlier wrapper failures retained. See Module 1 clean-reproduction artifact. |
 | 0.10b | **Pass** | Disposable roots/production-root refusal and unchanged 97-file research hash baseline verified. |
 | 0.10c | **Pass** | Available Mac shell/mesh/face-edge picking/exact measurement/restart tests pass; stale/transfer adversarial corpus separate; platform gaps remain Blocked. |
 | 0.10d | **Pass** | Actual pinned OCCT/PlaneGCS/Eigen small valid/invalid CAD corpus passes; larger production CAD remains pending. |
@@ -142,7 +145,7 @@ prototype/available host; it does not close a platform or product acceptance req
 | 0.10f | **Pass** | Reviewed pins/notices/support/evidence and unresolved OD owners; no product acceptance or untested platform presented as passed. |
 
 
-## Remaining blockers and decisions before further production work
+## Historical blockers at the Module 0 stop (see follow-up)
 
 1. Restore reliable final CMake/Ninja/CTest wrapper execution and repeat clean
    reproduction on the final harness revision (0.3e/0.10a, build maintainer).
@@ -163,5 +166,20 @@ choices without changing R1 or relaxing budgets. The working-file identity lock 
 is not the final saved-file replacement locking implementation. No full R1 feature
 history, drawing, assembly UI, installed package or release guarantee is implemented.
 
-**Stop point: Module 0 partial/Blocked. Module 1 remains unstarted. Explicit user
-approval is required before any Module 1 work.**
+**Historical stop point: Module 0 partial/Blocked, awaiting explicit Module 1 approval.**
+
+## Follow-up after explicit Module 1 authorization — 19 October 2026
+
+The user instructed “proceed with module 1”. Fresh wrapper probes did not reproduce
+the prior stall; host-permission IPC tests separated the sandbox socket denial from
+real failures. The final [clean source export/build/test](artifacts/module-1/clean-reproduction.txt)
+passes all 13 enabled CTest entries, including the correctly failing harness probe
+check. **0.10a is now Pass on the available Mac**, using existing built local
+libraries and SHA-256 verified pinned source archives, not a new dependency build
+or another OS. 0.3e still has cross-platform command/toolchain gaps.
+
+[Module 1](module-1.md) records native exposed-window scale checks, worker/protocol
+corpora, source/link ownership and resource limitations. Current Module 0 totals
+are **40 Pass / 8 Blocked**. OD-01/02/04/06/07/08, physical-power-loss/filesystem
+coverage, controlled workload budgets and unavailable platforms remain open.
+The architecture and physical 8 GB baseline are unchanged. Module 2 has not started.

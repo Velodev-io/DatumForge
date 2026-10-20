@@ -1,0 +1,13 @@
+{
+  "scope": "Documentation structure only; no product acceptance tests executed",
+  "checked_at_utc": "2026-10-19T15:36:45.206166+00:00",
+  "status": "pass",
+  "product_implementation": "Module 1 native reference workspace; see scoped evidence",
+  "product_acceptance_tests": "Module 1 subsets exercised on Mac; full R1 requirements remain Not run or Blocked",
+  "requirements": 56,
+  "traceability_rows": 56,
+  "modules": 13,
+  "unchecked_engineering_tasks": 108,
+  "completed_engineering_tasks": 48,
+  "errors": []
+}

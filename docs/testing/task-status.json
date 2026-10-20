@@ -16,7 +16,7 @@
   },
   "0.1c": {
     "status": "Pass",
-    "scope": "OD-01–OD-08 have owners, evidence needs and open/blocking status.",
+    "scope": "OD-01\u2013OD-08 have owners, evidence needs and open/blocking status.",
     "evidence": [
       "docs/decisions/project-baseline.md"
     ]
@@ -97,11 +97,12 @@
   },
   "0.3e": {
     "status": "Blocked",
-    "scope": "Mac commands built/tested/formatted/analyzed/archived; final CMake/Ninja wrapper stall unresolved. Other-platform commands unverified.",
+    "scope": "Available Mac configure/build/test/format/analyzer/ownership and clean reproduction pass; the prior wrapper stall did not reproduce. Other-platform commands/toolchains remain unverified.",
     "evidence": [
       "cmake/README.md",
       "docs/testing/artifacts/module-0/source-package.txt",
-      "docs/testing/artifacts/module-0/build-issues.md"
+      "docs/testing/artifacts/module-0/build-issues.md",
+      "docs/testing/module-1.md"
     ]
   },
   "0.4a": {
@@ -131,7 +132,7 @@
   },
   "0.4d": {
     "status": "Pass",
-    "scope": "Module 0–12 evidence files and all 56 product requirement rows created with honest states.",
+    "scope": "Module 0\u201312 evidence files and all 56 product requirement rows created with honest states.",
     "evidence": [
       "docs/testing/requirements.json",
       "docs/testing/module-1.md"
@@ -146,7 +147,7 @@
   },
   "0.5a": {
     "status": "Pass",
-    "scope": "B0–B6 deterministic recipes/hashes, original source/license, invariants, bounds and corruption cases frozen; future workloads explicitly unexecuted.",
+    "scope": "B0\u2013B6 deterministic recipes/hashes, original source/license, invariants, bounds and corruption cases frozen; future workloads explicitly unexecuted.",
     "evidence": [
       "tests/fixtures/manifest.json",
       "tests/fixtures/generate.py",
@@ -213,19 +214,21 @@
   },
   "0.6d": {
     "status": "Blocked",
-    "scope": "M2 OpenGL 4.1 native render/docking passes; all scales, minimum OS/Intel Mac, real driver failure and production renderer/Metal decision incomplete.",
+    "scope": "M2 OpenGL 4.1 native render/docking and effective 100\u2013200% Qt scale mapping pass. Minimum OS/Intel Mac, physical display/driver failure and renderer/Metal longevity decisions remain incomplete.",
     "evidence": [
       "docs/testing/artifacts/module-0/final-native.txt",
-      "docs/decisions/feasibility-adrs.md"
+      "docs/decisions/feasibility-adrs.md",
+      "docs/testing/module-1.md"
     ]
   },
   "0.6e": {
     "status": "Blocked",
-    "scope": "Physical 8 GB slice footprint and navigation samples recorded; complete controlled/peak/GPU accounting and final-harness profile association remain incomplete.",
+    "scope": "Physical 8 GB Module 1 reference point-footprint and presentation-proxy samples are associated with final source hashes. Complete controlled steady/peak/shared/GPU workload accounting remains incomplete.",
     "evidence": [
       "docs/testing/artifacts/module-0/native-profile.txt",
       "docs/testing/artifacts/module-0/profile-summary.json",
-      "docs/testing/artifacts/module-0/final-native.txt"
+      "docs/testing/artifacts/module-0/final-native.txt",
+      "docs/testing/module-1.md"
     ]
   },
   "0.7a": {
@@ -312,7 +315,7 @@
   },
   "0.9b": {
     "status": "Pass",
-    "scope": "Modules 1–4 first production slice frozen and mapped to FR/test IDs.",
+    "scope": "Modules 1\u20134 first production slice frozen and mapped to FR/test IDs.",
     "evidence": [
       "docs/decisions/vertical-slice.md"
     ]
@@ -326,7 +329,7 @@
   },
   "0.9d": {
     "status": "Pass",
-    "scope": "Specs/status/traceability synchronized; 8 GB/R1 budgets unchanged; product T-01–T-56 all Not run.",
+    "scope": "Specs/status/traceability synchronized; 8 GB/R1 budgets unchanged; product T-01\u2013T-56 all Not run.",
     "evidence": [
       "docs/README.md",
       "docs/TRACEABILITY.md",
@@ -334,12 +337,12 @@
     ]
   },
   "0.10a": {
-    "status": "Blocked",
-    "scope": "Clean source export with verified dependency cache passed 11 tests before final harness edits. Final CMake/Ninja/CTest wrapper stall prevents final clean reproducibility closure.",
+    "status": "Pass",
+    "scope": "Follow-up: final clean application source export/build and 13 enabled tests pass on the available Mac with pinned source archives and existing built local libraries; dependencies not rebuilt; no other OS/install claim.",
     "evidence": [
-      "docs/testing/artifacts/module-0/clean-reproduction.txt",
-      "docs/testing/artifacts/module-0/build-issues.md",
-      "docs/testing/artifacts/module-0/final-ctest.txt"
+      "docs/testing/artifacts/module-1/clean-reproduction.txt",
+      "docs/testing/artifacts/module-1/source-identity.json",
+      "docs/testing/module-1.md"
     ]
   },
   "0.10b": {
@@ -382,6 +385,103 @@
       "docs/decisions/project-baseline.md",
       "docs/decisions/distribution.md",
       "docs/decisions/deferred-gates.md"
+    ]
+  },
+  "1.1a": {
+    "status": "Pass",
+    "scope": "Available Mac native frame, bottom document/status context, dock preferences, registry/search/original glyphs and explicit unavailable-command reasons verified.",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/verification.json",
+      "docs/testing/artifacts/module-1/source-identity.json",
+      "docs/testing/artifacts/module-1/ctest.txt",
+      "docs/testing/artifacts/module-1/native-matrix.json"
+    ]
+  },
+  "1.1b": {
+    "status": "Pass",
+    "scope": "One client-owned UI state drives panels/render selection, IDs, epoch/revision/generation, preview/edit/save/job states; native and lifecycle tests verified.",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/verification.json",
+      "docs/testing/artifacts/module-1/source-identity.json",
+      "docs/testing/artifacts/module-1/ctest.txt",
+      "docs/testing/artifacts/module-1/native-matrix.json"
+    ]
+  },
+  "1.2a": {
+    "status": "Pass",
+    "scope": "Real private one-worker IPC, capability/version/epoch, typed bounded envelopes, correlated errors and malicious peer rejection verified on Mac; other OS ACL rows Blocked in 1.4c.",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/verification.json",
+      "docs/testing/artifacts/module-1/source-identity.json",
+      "docs/testing/artifacts/module-1/ctest.txt",
+      "docs/testing/artifacts/module-1/native-matrix.json"
+    ]
+  },
+  "1.2b": {
+    "status": "Pass",
+    "scope": "Reference preview coalescing, bounded requests, nondurable session outcome/replay, worker death/stale display/restart and cleanup verified. Actual project recovery is unavailable pending Module 2.",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/verification.json",
+      "docs/testing/artifacts/module-1/source-identity.json",
+      "docs/testing/artifacts/module-1/ctest.txt",
+      "docs/testing/artifacts/module-1/native-matrix.json"
+    ]
+  },
+  "1.3a": {
+    "status": "Pass",
+    "scope": "Worker meshes and 1/100 shared-definition occurrences, camera/highlights/typed picking and exact face/edge/body measurement verified; no saved part claim.",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/verification.json",
+      "docs/testing/artifacts/module-1/source-identity.json",
+      "docs/testing/artifacts/module-1/ctest.txt",
+      "docs/testing/artifacts/module-1/native-matrix.json"
+    ]
+  },
+  "1.3b": {
+    "status": "Pass",
+    "scope": "Orbit/pan/zoom/F-fit/views/modes/overlays/resize/docks and stale result gates verified on available Mac; exposed-window raw timings recorded with full product budgets pending.",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/verification.json",
+      "docs/testing/artifacts/module-1/source-identity.json",
+      "docs/testing/artifacts/module-1/ctest.txt",
+      "docs/testing/artifacts/module-1/native-matrix.json"
+    ]
+  },
+  "1.4a": {
+    "status": "Pass",
+    "scope": "Module 1 reference-workspace subsets of native T-01/T-03/T-04/T-35/T-53 pass on measured Mac; full requirement rows remain Blocked for other targets and later modeling/persistence tests.",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/verification.json",
+      "docs/testing/artifacts/module-1/source-identity.json",
+      "docs/testing/artifacts/module-1/ctest.txt",
+      "docs/testing/artifacts/module-1/native-matrix.json"
+    ]
+  },
+  "1.4b": {
+    "status": "Pass",
+    "scope": "Malformed/version/capability/epoch/generation/correlation/checksum/index/allocation/lost-ack/worker-termination corpus rejects or cleans up without replacing valid state.",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/verification.json",
+      "docs/testing/artifacts/module-1/source-identity.json",
+      "docs/testing/artifacts/module-1/ctest.txt",
+      "docs/testing/artifacts/module-1/native-matrix.json"
+    ]
+  },
+  "1.4c": {
+    "status": "Blocked",
+    "scope": "Mac effective 100/125/150/175/native 200% exposed-window picking/overlay checks pass. Windows, Linux X11/Wayland and additional Mac hardware/driver checks unavailable; occluded-window diagnostic samples retained separately.",
+    "evidence": [
+      "docs/testing/module-1.md",
+      "docs/testing/artifacts/module-1/native-matrix.json",
+      "docs/testing/artifacts/module-1/host.json"
     ]
   }
 }
