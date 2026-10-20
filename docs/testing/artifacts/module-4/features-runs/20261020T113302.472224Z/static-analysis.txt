@@ -34,3 +34,15 @@ Analyzed src/sketch/Editing.cpp
 Analyzed tests/module3/model.cpp
 Analyzed tests/module3/persistence.cpp
 Analyzed tests/module3/input.cpp
+Analyzed tests/module3/contracts.cpp
+Analyzed src/sketch/Solver.cpp
+Analyzed tests/module3/solver.cpp
+Analyzed src/domain/Expressions.cpp
+Analyzed tests/module3/expressions.cpp
+Analyzed tests/module4/workspace.cpp
+Analyzed src/features/Model.cpp
+Analyzed src/geometry/occt/Part.cpp
+Analyzed tests/module4/geometry.cpp
+Analyzed tests/module4/persistence.cpp
+Analyzed tests/module4/contracts.cpp
+Analyzed tests/module4/variants.cpp
