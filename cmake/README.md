@@ -1,6 +1,6 @@
 # Source builds and commands
 
-Module 0 experiments plus the authorized Module 1 native workspace. `dependencies.lock.json` pins upstream source archives and extracted
+Module 0 experiments plus the authorized Modules 1–2 native workspace and persistence foundation. `dependencies.lock.json` pins upstream source archives and extracted
 PlaneGCS files by SHA-256. Qt's archive was also checked against its official
 checksum. Source commit identities for OCCT/Eigen/FreeCAD are immutable. Ninja's
 tag archive is content-locked. Builds never select floating branches or silently
@@ -66,3 +66,21 @@ and headless suite using verified local dependency binaries. Neither command
 builds an installed release or certifies another OS. The Mac `.app` is a development
 bundle with local dependency rpaths; its sibling worker is refreshed when changed.
 `CAD_GEOMETRY_SPIKES=OFF` disables old OCCT experiments, not the Module 1 worker.
+
+
+Module 2 verification (writes evidence under `docs/testing/artifacts/module-2`,
+preserving Module 0/1 runs):
+
+```sh
+python3 tools/verify_module2.py --native
+python3 tools/clean_reproduce.py --module 2
+python3 docs/scripts/check_specs.py --write-report
+```
+
+`module2_domain`, `module2_storage`, `module2_dispatch`, `module2_contracts` and
+`module2_fault_worker` are separate test executables. The fault worker links the
+production persistence library and observes its transaction/publication boundaries;
+no fault-control command or environment hook is shipped in the product worker.
+Native tests require a logged-in desktop. All storage tests require marked
+disposable temp roots and refuse release recovery directories. See
+[Module 2 evidence](../docs/testing/module-2.md) for limits and blocked platforms.

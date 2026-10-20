@@ -1,4 +1,5 @@
 #pragma once
+#include <QCborArray>
 #include <QMetaType>
 #include <QString>
 #include <QUuid>
@@ -33,6 +34,12 @@ struct WorkspaceState {
     QString save = "Reference scene — not a saved project";
     QString message;
     bool stale = false;
+    bool projectOpen = false;
+    qint64 savedRevision = -1;
+    QString savedPath, activeDocument;
+    QCborArray documentRecords;
+    QStringList openDocuments;
+    bool canUndo = false, canRedo = false;
     bool current() const {
         return !stale && (phase == Phase::Ready || phase == Phase::PreviewReady);
     }

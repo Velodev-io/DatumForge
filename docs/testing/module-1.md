@@ -2,7 +2,7 @@
 
 Status: **available Mac implementation verified; cross-platform completion Blocked**.
 The user explicitly authorized Module 1 on 19 October 2026: “proceed with module 1”.
-[Scope record](../decisions/implementation-scope.json). Module 2 has not started.
+[Scope record](../decisions/implementation-scope.json). This records the Module 1 boundary; subsequent Module 2 work is recorded in [module-2](module-2.md).
 
 **Task register:** 1.1a–1.3b and 1.4a–1.4b are Pass for the documented available-Mac reference scope; 1.4c remains Blocked. See [task-status.json](task-status.json).
 
@@ -182,5 +182,5 @@ completed. Thus SRS budgets and B0–B5/AC-01–AC-07 performance remain Not run
    locking and actual recovery are Module 2/10 work. Module 0 filesystem/power-loss
    gaps remain open; they are not converted into passes by a reference-scene restart.
 
-**Stop point: Module 1 feasible Mac work verified; platform matrix Blocked.
-Module 2 is not implemented and requires a new instruction before proceeding.**
+**Historical stop point: Module 1 feasible Mac work verified; platform matrix Blocked.
+A later explicit user instruction authorized Module 2; see [its separate evidence](module-2.md).**

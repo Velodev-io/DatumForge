@@ -1,0 +1,81 @@
+{
+  "recorded_at_utc": "2026-10-19T16:27:50.223140+00:00",
+  "architecture": "arm64",
+  "os": {
+    "command": [
+      "sw_vers"
+    ],
+    "exit_code": 0,
+    "output": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83"
+  },
+  "physical_memory": {
+    "command": [
+      "sysctl",
+      "-n",
+      "hw.memsize"
+    ],
+    "exit_code": 1,
+    "output": "sysctl: sysctl fmt -1 1024 1: Operation not permitted"
+  },
+  "cpu": {
+    "command": [
+      "sysctl",
+      "-n",
+      "machdep.cpu.brand_string"
+    ],
+    "exit_code": 1,
+    "output": "sysctl: sysctl fmt -1 1024 1: Operation not permitted"
+  },
+  "model": {
+    "command": [
+      "sysctl",
+      "-n",
+      "hw.model"
+    ],
+    "exit_code": 1,
+    "output": "sysctl: sysctl fmt -1 1024 1: Operation not permitted"
+  },
+  "compiler": {
+    "command": [
+      "clang",
+      "--version"
+    ],
+    "exit_code": 0,
+    "output": "Apple clang version 21.0.0 (clang-2100.1.1.101)\nTarget: arm64-apple-darwin25.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin"
+  },
+  "sdk": {
+    "command": [
+      "xcrun",
+      "--show-sdk-version"
+    ],
+    "exit_code": 0,
+    "output": "2026-10-19 21:57:51.252 xcodebuild[72623:1001202]  DVTFilePathFSEvents: Failed to start fs event stream.\n2026-10-19 21:57:51.518 xcodebuild[72623:1001201] [MT] DVTDeveloperPaths: Failed to get length of DARWIN_USER_CACHE_DIR from confstr(3), error = Error Domain=NSPOSIXErrorDomain Code=5 \"Input/output error\". Using NSCachesDirectory instead.\n26.5"
+  },
+  "cmake": {
+    "command": [
+      "cmake",
+      "--version"
+    ],
+    "exit_code": 0,
+    "output": "cmake version 4.3.1\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake)."
+  },
+  "gpu": {
+    "command": [
+      "system_profiler",
+      "SPDisplaysDataType",
+      "-json"
+    ],
+    "exit_code": 0,
+    "output": "{\n  \"SPDisplaysDataType\": [\n    {\n      \"_name\": \"Apple M2\",\n      \"spdisplays_metal\": \"spdisplays_supported\",\n      \"spdisplays_vendor\": \"sppci_vendor_Apple\",\n      \"sppci_bus\": \"spdisplays_builtin\",\n      \"sppci_cores\": \"8\",\n      \"sppci_device_type\": \"spdisplays_gpu\",\n      \"sppci_model\": \"Apple M2\"\n    }\n  ]\n}",
+    "sanitization": "Display serial identifiers omitted."
+  },
+  "storage": {
+    "command": [
+      "df",
+      "-h",
+      "."
+    ],
+    "exit_code": 0,
+    "output": "Filesystem      Size    Used   Avail Capacity iused ifree %iused  Mounted on\n/dev/disk3s5   228Gi   153Gi    51Gi    75%    2.2M  539M    0%   /System/Volumes/Data"
+  }
+}

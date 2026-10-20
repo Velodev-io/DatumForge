@@ -11,9 +11,13 @@
   },
   "FR-002": {
     "test": "T-02",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Mac document create/open/switch/close and unsaved warning pass; Windows/Linux and complete later-module document-content acceptance Blocked."
   },
   "FR-003": {
     "test": "T-03",
@@ -30,10 +34,11 @@
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-1.md",
-      "docs/testing/artifacts/module-1/verification.json"
+      "docs/testing/artifacts/module-1/verification.json",
+      "docs/testing/module-2.md"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Reference preview/cancel checked; accepted modeling transactions/history and feature failure corpus require Modules 2\u20134."
+    "reason": "Mac reference preview/cancel and Module 2 metadata transactions/history checked; feature failure and accepted modeling corpus require Modules 3\u20134."
   },
   "FR-005": {
     "test": "T-05",
@@ -43,33 +48,53 @@
   },
   "FR-006": {
     "test": "T-06",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Mac stable project/document/properties entity IDs and SI parameters pass; feature/component identities need Modules 3\u20137 and other platforms."
   },
   "FR-007": {
     "test": "T-07",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Mac standalone Save/Save As/backup/failure cases pass; native Windows/Linux filesystem publication checks Blocked."
   },
   "FR-008": {
     "test": "T-08",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Mac reference preview and durable recoverable/saved/error/stale states pass; later computed feature-state and other-platform integration pending."
   },
   "FR-009": {
     "test": "T-09",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Mac metadata semantic undo/redo and bounded retention pass; feature/assembly edit history and full workload retention need later modules."
   },
   "FR-010": {
     "test": "T-10",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Mac live writer/alias/schema/missing object refusal pass; external CAD references and Windows/Linux locks await native/later-module checks."
   },
   "FR-011": {
     "test": "T-11",
@@ -211,9 +236,13 @@
   },
   "FR-034": {
     "test": "T-34",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Mac committed semantic recovery after worker/app restart and lost publication acknowledgment pass; full cross-platform/feature fault corpus pending Module 10."
   },
   "FR-035": {
     "test": "T-35",
@@ -245,9 +274,13 @@
   },
   "FR-039": {
     "test": "T-39",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Newer schema refusal and failed migration-copy preservation pass on Mac; no supported prior-format converter exists yet; Module 10 and native platform checks pending."
   },
   "FR-040": {
     "test": "T-40",
@@ -317,9 +350,13 @@
   },
   "NFR-011": {
     "test": "T-51",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Mac commit/snapshot/migration skeleton failure cases preserve prior valid file and uncommitted revision; import/cancel/full-volume/cross-platform corpus needs later modules."
   },
   "NFR-012": {
     "test": "T-52",

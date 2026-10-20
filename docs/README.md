@@ -1,6 +1,6 @@
 # DatumForge — specification set
 
-**Version:** 0.1 · **Date:** 19 October 2026 · **Status:** Module 1 Mac reference workspace verified; cross-platform matrix Blocked; Module 2 not started.
+**Version:** 0.1 · **Date:** 19 October 2026 · **Status:** Modules 1–2 available-Mac scope verified; cross-platform matrix Blocked; stop before Module 3.
 
 This project will deliver a native, offline-first mechanical CAD application for macOS, Windows, and Linux, with a SolidWorks-familiar workspace and an **8 GB system RAM minimum**. DatumForge is the product name; the local workspace name does not imply complete SolidWorks compatibility.
 
@@ -32,12 +32,13 @@ The format follows the earlier DeskCore plan: **Module 0 → Module 1 → Module
 |---|---|
 | Public SolidWorks research and UI atlas | Available; see References for limitations |
 | SRS, SDD, TECH_SPEC, Step Zero | Written as proposed specifications |
-| Dependency integration / native application | Module 1 native shell/viewport/worker implemented on Mac; see [actual evidence](testing/module-1.md) |
+| Dependency integration / native application | Native shell/viewport/worker and document/persistence foundation implemented on Mac; see [Module 2 evidence](testing/module-2.md) |
 | Windows, Linux, or Mac product builds | Mac development build tested; Windows/Linux Blocked; installed release builds Not run |
 | Real 8 GB workload validation | Not run |
-| Feature, assembly, drawing, recovery, and release tests | Not run |
+| Document metadata, saved/recoverable revisions, semantic undo/redo | Available-Mac foundation tested; full requirement acceptance Blocked |
+| Modeling, mates, drawing content, and release tests | Not run |
 
-Module 0 experiments remain isolated under tests and tools. The user authorized Module 1 on 19 October 2026. Its native reference workspace is implemented and tested on the available Mac. Module 1 cross-platform completion remains Blocked; Module 2 has not started. Unavailable platform and hardware checks remain Blocked.
+Module 0 experiments remain isolated under tests and tools. The user authorized Modules 1 and 2 on 19 October 2026. Their available-Mac implementation and tests are recorded separately. Cross-platform completion remains Blocked. Module 3 has not started and requires new authorization. Unavailable platform and hardware checks remain Blocked.
 
 ## Checking the specification set
 

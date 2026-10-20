@@ -26,14 +26,24 @@ class MainWindow : public QMainWindow {
     QLineEdit *search = nullptr;
     QDoubleSpinBox *widthInput = nullptr, *heightInput = nullptr, *depthInput = nullptr;
     QComboBox *filter = nullptr, *viewMode = nullptr;
-    bool syncing = false;
+    bool syncing = false, recoveryChecked = false;
+    QLineEdit *documentName = nullptr, *parameterName = nullptr;
+    QComboBox *documentUnits = nullptr, *parameterDimension = nullptr, *parameterUnit = nullptr;
+    QDoubleSpinBox *parameterValue = nullptr;
+    QLabel *documentInfo = nullptr;
+    void buildProjectUI();
+    void refreshProjectUI();
+    bool confirmRecoverable(QString action);
+    void chooseSave(bool saveAs = false);
+    void showRecoveries(QCborArray offers);
     void buildFrame();
     void refresh();
     void rebuildTree();
     void choose(const Selection &selection);
 
   public:
-    explicit MainWindow(QString settingsFile = {}, QWidget *parent = nullptr);
+    explicit MainWindow(QString settingsFile = {}, QWidget *parent = nullptr,
+                        QString recoveryRoot = {});
     ~MainWindow() override;
     const WorkspaceState &state() const;
     Client *workerClient() const {

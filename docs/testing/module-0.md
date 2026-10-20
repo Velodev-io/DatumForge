@@ -182,4 +182,4 @@ or another OS. 0.3e still has cross-platform command/toolchain gaps.
 corpora, source/link ownership and resource limitations. Current Module 0 totals
 are **40 Pass / 8 Blocked**. OD-01/02/04/06/07/08, physical-power-loss/filesystem
 coverage, controlled workload budgets and unavailable platforms remain open.
-The architecture and physical 8 GB baseline are unchanged. Module 2 has not started.
+The architecture and physical 8 GB baseline are unchanged. This was the Module 1 stop point; subsequent explicitly authorized Module 2 work is recorded in [module-2](module-2.md).

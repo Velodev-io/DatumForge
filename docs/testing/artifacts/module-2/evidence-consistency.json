@@ -1,0 +1,23 @@
+{
+  "recorded_at_utc": "2026-10-19T16:31:28.027604+00:00",
+  "status": "Pass",
+  "scope": "Evidence/source consistency only; not unrun platform acceptance",
+  "source_sha256": "0290fea54daeb44be1e6d59f566d538631206c055f2d396f34bef2c6a05c0cb7",
+  "source_inputs_checked": 82,
+  "source_changes_since_verification": [],
+  "all_requested_verification_steps_exit_zero": true,
+  "clean_enabled_test_count": 18,
+  "fault_cases_passed": 35,
+  "module_2_tasks": {
+    "2.1a": "Pass",
+    "2.1b": "Pass",
+    "2.2a": "Pass",
+    "2.2b": "Pass",
+    "2.3a": "Pass",
+    "2.3b": "Pass",
+    "2.4a": "Pass",
+    "2.4b": "Blocked",
+    "2.4c": "Blocked"
+  },
+  "stop_before_module": 3
+}

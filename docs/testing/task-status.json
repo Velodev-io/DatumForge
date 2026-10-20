@@ -483,5 +483,104 @@
       "docs/testing/artifacts/module-1/native-matrix.json",
       "docs/testing/artifacts/module-1/host.json"
     ]
+  },
+  "2.1a": {
+    "status": "Pass",
+    "scope": "Available Mac: typed Part/Assembly/Drawing metadata, UUIDs, SI parameter/unit validation and monotonic revisions verified in production worker.",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/artifacts/module-2/source-identity.json",
+      "docs/testing/artifacts/module-2/ctest.txt",
+      "docs/testing/artifacts/module-2/fault-matrix.json"
+    ]
+  },
+  "2.1b": {
+    "status": "Pass",
+    "scope": "Available Mac: durable semantic request-hash/revision dedup, create/switch/close and bounded semantic undo/redo verified; no full BRep copies per edit.",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/artifacts/module-2/source-identity.json",
+      "docs/testing/artifacts/module-2/ctest.txt",
+      "docs/testing/artifacts/module-2/fault-matrix.json"
+    ]
+  },
+  "2.2a": {
+    "status": "Pass",
+    "scope": "Available Mac: strict schema/FKs/indexes, WAL/FULL working commits, bounded streamed objects, row-streamed ledger validation and authoritative/cache classification verified.",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/artifacts/module-2/source-identity.json",
+      "docs/testing/artifacts/module-2/ctest.txt",
+      "docs/testing/artifacts/module-2/fault-matrix.json"
+    ]
+  },
+  "2.2b": {
+    "status": "Pass",
+    "scope": "Available Mac: standalone snapshot/backup, Save As identity, saved/current revisions, canonical/UUID/inode locks, version refusal and migration-copy skeleton verified; native other-OS publication remains Blocked.",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/artifacts/module-2/source-identity.json",
+      "docs/testing/artifacts/module-2/ctest.txt",
+      "docs/testing/artifacts/module-2/fault-matrix.json"
+    ]
+  },
+  "2.3a": {
+    "status": "Pass",
+    "scope": "Available Mac: killed worker recovers committed revision, full native application restart offers newer recovery, Saved/Recoverable choice verified.",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/artifacts/module-2/source-identity.json",
+      "docs/testing/artifacts/module-2/ctest.txt",
+      "docs/testing/artifacts/module-2/fault-matrix.json"
+    ]
+  },
+  "2.3b": {
+    "status": "Pass",
+    "scope": "Available Mac: retained document/saved/history/job/export/recovery roots and GC; actual quota-full/denied-write and prepublication error recovery preserve prior valid snapshots.",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/artifacts/module-2/source-identity.json",
+      "docs/testing/artifacts/module-2/ctest.txt",
+      "docs/testing/artifacts/module-2/fault-matrix.json"
+    ]
+  },
+  "2.4a": {
+    "status": "Pass",
+    "scope": "Available Mac document-metadata subsets T-02/T-06\u2013T-10 pass across three kinds, persistence/IDs/SI, switch/close warning, original-operation replay and undo/redo boundaries. Full geometry and platform acceptance pending.",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/artifacts/module-2/source-identity.json",
+      "docs/testing/artifacts/module-2/ctest.txt",
+      "docs/testing/artifacts/module-2/fault-matrix.json"
+    ]
+  },
+  "2.4b": {
+    "status": "Blocked",
+    "scope": "Mac real-file/process exit/SIGKILL and lost-publication-ack cases pass; full Windows/Linux publication/recovery matrix unavailable. Physical power-loss hardware separately Blocked.",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/artifacts/module-2/source-identity.json",
+      "docs/testing/artifacts/module-2/ctest.txt",
+      "docs/testing/artifacts/module-2/fault-matrix.json"
+    ]
+  },
+  "2.4c": {
+    "status": "Blocked",
+    "scope": "Mac symlink/hardlink/live-writer/future-schema/missing-object/corrupt-history/migration-copy/actual SQLITE_FULL quota/denied-write checks pass; native Windows/Linux failure matrix unavailable; physical SSD exhaustion Not run.",
+    "evidence": [
+      "docs/testing/module-2.md",
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/artifacts/module-2/source-identity.json",
+      "docs/testing/artifacts/module-2/ctest.txt",
+      "docs/testing/artifacts/module-2/fault-matrix.json"
+    ]
   }
 }

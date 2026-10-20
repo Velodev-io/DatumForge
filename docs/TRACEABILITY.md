@@ -1,6 +1,6 @@
 # Requirements and acceptance traceability
 
-**Version:** 0.1 · **Date:** 19 October 2026 · **Status:** All product tests Not run.
+**Version:** 0.1 · **Date:** 19 October 2026 · **Status:** Modules 1–2 available-Mac subsets verified; full product requirements Not run or Blocked.
 
 [SRS](SRS.md) owns each requirement and its acceptance test definition. [SDD](SDD.md) sections describe the design. [TECH_SPEC](TECH_SPEC.md) modules own implementation and evidence; earlier modules supply prerequisites, later modules complete integration. [Step Zero](STEP_ZERO.md) owns T-00 feasibility/setup tests and does not satisfy the product acceptance rows below.
 
@@ -9,15 +9,15 @@
 | Requirement | SDD sections | Primary module | Acceptance test | Current result |
 |---|---|---|---|---|
 | FR-001 | 10 | 1 | T-01 | Blocked |
-| FR-002 | 3, 9 | 2 | T-02 | Not run |
+| FR-002 | 3, 9 | 2 | T-02 | Blocked |
 | FR-003 | 5, 10, 11 | 1 | T-03 | Blocked |
 | FR-004 | 4, 10 | 1 | T-04 | Blocked |
 | FR-005 | 10 | 9 | T-05 | Not run |
-| FR-006 | 3, 9 | 2 | T-06 | Not run |
-| FR-007 | 9 | 2 | T-07 | Not run |
-| FR-008 | 4, 9 | 2 | T-08 | Not run |
-| FR-009 | 9 | 2 | T-09 | Not run |
-| FR-010 | 9 | 2 | T-10 | Not run |
+| FR-006 | 3, 9 | 2 | T-06 | Blocked |
+| FR-007 | 9 | 2 | T-07 | Blocked |
+| FR-008 | 4, 9 | 2 | T-08 | Blocked |
+| FR-009 | 9 | 2 | T-09 | Blocked |
+| FR-010 | 9 | 2 | T-10 | Blocked |
 | FR-011 | 9, 11 | 6 | T-11 | Not run |
 | FR-012 | 3, 7 | 3 | T-12 | Not run |
 | FR-013 | 7 | 3 | T-13 | Not run |
@@ -41,12 +41,12 @@
 | FR-031 | 11 | 8 | T-31 | Not run |
 | FR-032 | 6, 11 | 8 | T-32 | Not run |
 | FR-033 | 11 | 8 | T-33 | Not run |
-| FR-034 | 4, 9 | 10 | T-34 | Not run |
+| FR-034 | 4, 9 | 10 | T-34 | Blocked |
 | FR-035 | 4, 5 | 1 | T-35 | Blocked |
 | FR-036 | 12, 13 | 9 | T-36 | Not run |
 | FR-037 | 1, 13 | 9 | T-37 | Not run |
 | FR-038 | 5, 13 | 9 | T-38 | Not run |
-| FR-039 | 9 | 10 | T-39 | Not run |
+| FR-039 | 9 | 10 | T-39 | Blocked |
 | FR-040 | 13, 15 | 12 | T-40 | Not run |
 | NFR-001 | 12 | 11 | T-41 | Not run |
 | NFR-002 | 12 | 11 | T-42 | Not run |
@@ -58,7 +58,7 @@
 | NFR-008 | 3, 8 | 4 | T-48 | Not run |
 | NFR-009 | 9, 12 | 5 | T-49 | Not run |
 | NFR-010 | 10 | 9 | T-50 | Not run |
-| NFR-011 | 4, 9 | 10 | T-51 | Not run |
+| NFR-011 | 4, 9 | 10 | T-51 | Blocked |
 | NFR-012 | 6, 8, 15 | 11 | T-52 | Not run |
 | NFR-013 | 2, 5 | 1 | T-53 | Blocked |
 | NFR-014 | 13 | 9 | T-54 | Not run |
@@ -81,6 +81,6 @@
 
 Future evidence lives in `docs/testing/module-N.md`, plus referenced logs/images/raw samples. Test rows may link multiple procedures; a row passes only when all applicable required procedures pass. A module's unit tests cannot alone close its native, physical-hardware, or installed-build gates. Preserve failures and reasons for Blocked/Not applicable outcomes.
 
-Module 0 feasibility is recorded in [module-0](testing/module-0.md), its task status register, and [the product requirement register](testing/requirements.json). T-00 results do not close any T-01–T-56 row above. The user authorized Module 1 on 19 October 2026. [Module 1 evidence](testing/module-1.md) covers the Mac reference-workspace subsets of T-01/T-03/T-04/T-35/T-53. The five associated full requirement rows remain Blocked for platform or later-module checks; no other product test is closed. Module 2 has not started.
+Module 0 feasibility is recorded in [module-0](testing/module-0.md), its task status register, and [the product requirement register](testing/requirements.json). T-00 results do not close any T-01–T-56 row above. The user authorized Module 1 on 19 October 2026. [Module 1 evidence](testing/module-1.md) covers the Mac reference-workspace subsets of T-01/T-03/T-04/T-35/T-53. The associated full requirement rows remain Blocked for platform or later-module checks. The user subsequently authorized Module 2; [its evidence](testing/module-2.md) covers Mac document/persistence subsets T-02/T-06–T-10/T-34/T-39/T-51. Those full rows remain Blocked for the documented native matrix, conversion or later CAD integration; no complete product test is closed. Module 3 requires new authorization.
 
 The documentation checker verifies IDs, links, module/task structure, and status consistency only. It does not execute any CAD, UI, persistence, platform, or performance acceptance test.

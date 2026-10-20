@@ -1,13 +1,14 @@
 #include "Client.hpp"
+#include "domain/Documents.hpp"
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
 #include <QFileInfo>
 #include <QRandomGenerator>
 namespace cad {
-Client::Client(QObject *parent, QString workerExecutable)
+Client::Client(QObject *parent, QString workerExecutable, QString recoveryRoot)
     : QObject(parent), privateRoot(QDir::tempPath() + "/cad-worker-XXXXXX"),
-      executable(workerExecutable) {
+      executable(workerExecutable), recoveryDirectory(recoveryRoot) {
     if (executable.isEmpty())
         executable = QCoreApplication::applicationDirPath() + "/cad-worker";
 #ifdef Q_OS_WIN
@@ -50,7 +51,11 @@ Client::Client(QObject *parent, QString workerExecutable)
     });
     connect(&process, &QProcess::started, this, [this] {
         auto endpoint = server.fullServerName().toUtf8().toBase64();
-        process.write(endpoint + ' ' + secret.toHex() + ' ' + projection.epoch.toUtf8() + '\n');
+        process.write(endpoint + ' ' + secret.toHex() + ' ' + projection.epoch.toUtf8() +
+                      (recoveryDirectory.isEmpty()
+                           ? QByteArray()
+                           : QByteArray(" ") + recoveryDirectory.toUtf8().toBase64()) +
+                      '\n');
         process.closeWriteChannel();
     });
     connect(&process, &QProcess::errorOccurred, this, [this](QProcess::ProcessError) {
@@ -60,8 +65,8 @@ Client::Client(QObject *parent, QString workerExecutable)
     });
     connect(&process, &QProcess::finished, this, [this](int, QProcess::ExitStatus) {
         if (!stopping)
-            fail("WorkerUnavailable",
-                 "Worker exited. Restart is available; document recovery arrives with Module 2.");
+            fail("WorkerUnavailable", "Worker exited. Restart can recover the last durable project "
+                                      "revision; pending operation outcomes can be queried.");
     });
     connect(&process, &QProcess::readyReadStandardError, this,
             [this] { process.readAllStandardError(); });
@@ -99,10 +104,11 @@ void Client::stop() {
 void Client::start() {
     stop();
     projection.epoch = newId();
-    projection.revision = 0;
+    if (!projection.projectOpen)
+        projection.revision = 0;
     projection.generation = 0;
     projection.selection = {};
-    projection.stale = bool(display);
+    projection.stale = bool(display) || projection.projectOpen;
     projection.phase = Phase::Empty;
     projection.job = "Starting local worker";
     projection.message.clear();
@@ -142,14 +148,17 @@ void Client::fail(QString code, QString message) {
     projection.phase = Phase::WorkerUnavailable;
     projection.job = "Failed";
     projection.message = code + ": " + message;
-    projection.stale = bool(display);
+    projection.stale = bool(display) || projection.projectOpen;
     projection.selection = {};
     emit changed();
 }
 void Client::restart() {
-    bool reopen = bool(display) || projection.phase != Phase::Empty;
+    auto project = projection.projectOpen ? projection.context.project : QString();
+    bool reopen = bool(display) || (!projection.projectOpen && projection.phase != Phase::Empty);
     start();
-    if (reopen)
+    if (!project.isEmpty())
+        recoverProject(project);
+    else if (reopen)
         loadReference(referenceInstances);
 }
 wire::Envelope Client::request(QString command, QCborMap payload) {
@@ -191,12 +200,26 @@ void Client::pump() {
         preview.reset();
     } else
         return;
-    pending.insert(e.request, {e, clock.elapsed() + 10000, 0});
-    lastOperation = e.operation;
+    pending.insert(e.request,
+                   {e,
+                    clock.elapsed() + ((e.command == "SaveProject" || e.command == "SaveAs" ||
+                                        e.command == "OpenProject")
+                                           ? 120000
+                                           : 10000),
+                    0});
+    if (!QStringList{"QueryOperation", "GrantFile", "RecoverProject", "ListRecoveries",
+                     "InspectProject"}
+             .contains(e.command))
+        lastOperation = e.operation;
     deadlines.start();
     peer->write(wire::frame(e.map()));
 }
 void Client::loadReference(int count) {
+    if (projection.projectOpen) {
+        projection.message = "Close the project before loading a temporary reference scene";
+        emit changed();
+        return;
+    }
     if (count != 1 && count != 100)
         return;
     referenceInstances = count;
@@ -328,7 +351,9 @@ void Client::receive(const QCborMap &m) {
         return;
     wire::require(sameRequest(e, found->request), "reply request correlation");
     auto revision = wire::integer(m, "result_revision");
-    if (!visibleResult(projection, e, revision)) {
+    bool reference =
+        QStringList{"LoadReference", "PreviewReference", "Measure"}.contains(e.command);
+    if ((reference && !visibleResult(projection, e, revision)) || e.epoch != projection.epoch) {
         pending.erase(found);
         transfers.clear();
         pump();
@@ -345,6 +370,8 @@ void Client::receive(const QCborMap &m) {
         projection.stale = bool(display);
         pending.erase(found);
         transfers.clear();
+        if (e.command == "GrantFile")
+            ordinary.clear();
         emit changed();
         pump();
         return;
@@ -374,6 +401,53 @@ void Client::receive(const QCborMap &m) {
         transfers.begin(e, data.value("display_manifest").toMap());
         return;
     }
+    if (data.contains(QStringLiteral("project_state"))) {
+        wire::require(data.value("project_state").isMap(), "project state map");
+        installProject(data.value("project_state").toMap());
+        pending.erase(found);
+        emit projectChanged();
+        emit changed();
+        pump();
+        return;
+    }
+    if (data.value("project_closed").toBool()) {
+        projection.projectOpen = false;
+        projection.documentRecords = {};
+        projection.openDocuments.clear();
+        projection.context = Context();
+        projection.activeDocument.clear();
+        projection.revision = 0;
+        projection.savedRevision = -1;
+        projection.savedPath.clear();
+        projection.phase = Phase::Empty;
+        projection.job = "Project closed; durable recovery retained";
+        projection.save = "No project open";
+        projection.stale = false;
+        pending.erase(found);
+        emit projectChanged();
+        emit changed();
+        pump();
+        return;
+    }
+    if (e.command == "GrantFile") {
+        pending.erase(found);
+        pump();
+        return;
+    }
+    if (e.command == "ListRecoveries") {
+        wire::require(data.value("recoveries").isArray(), "recovery list");
+        pending.erase(found);
+        emit recoveryOffers(data.value("recoveries").toArray());
+        pump();
+        return;
+    }
+    if (e.command == "InspectProject") {
+        wire::require(data.value("inspection").isMap(), "project inspection");
+        pending.erase(found);
+        emit projectInspection(data.value("inspection").toMap());
+        pump();
+        return;
+    }
     if (e.command == "Measure") {
         wire::keys(data, {"value", "unit", "label"});
         auto n = data.value("value");
@@ -386,14 +460,211 @@ void Client::receive(const QCborMap &m) {
         emit measured(result);
     } else if (e.command == "QueryOperation") {
         auto id = wire::text(data, "operation"), outcome = wire::text(data, "outcome");
-        wire::require(data.value("durable").isBool() && !data.value("durable").toBool(),
-                      "unexpected durability claim");
-        projection.message = outcome + " — reference operations are not durable project commands";
+        wire::require(data.value("durable").isBool(), "operation durability type");
+        if (projection.projectOpen)
+            wire::require(outcome == "DurablyRecorded" || outcome == "Unknown",
+                          "project operation outcome");
+        else
+            wire::require(!data.value("durable").toBool(), "unexpected reference durability claim");
+        projection.message =
+            outcome + (data.value("durable").toBool()
+                           ? " — recorded in durable project storage"
+                           : " — no durable outcome is recorded; inspect before retrying");
         emit operationOutcome(id, outcome);
     } else
         wire::require(false, "missing display manifest");
     pending.erase(found);
     emit changed();
     pump();
+}
+
+void Client::installProject(const QCborMap &m) {
+    wire::keys(m, {"project_id", "revision", "saved_revision", "save_generation", "active_document",
+                   "documents", "open_documents", "undo_available", "redo_available", "saved_path",
+                   "recoverable"});
+    auto project = domain::id(wire::text(m, "project_id")),
+         active = wire::text(m, "active_document");
+    if (!active.isEmpty())
+        domain::id(active);
+    auto rev = wire::integer(m, "revision");
+    wire::integer(m, "save_generation");
+    auto saved = m.value("saved_revision");
+    wire::require(saved.isInteger() && saved.toInteger() >= -1 && saved.toInteger() <= rev &&
+                      m.value("recoverable").isBool() && m.value("recoverable").toBool(),
+                  "project revision/durability");
+    auto docs = m.value("documents");
+    wire::require(docs.isArray() && docs.toArray().size() <= 128, "document records");
+    QSet<QString> seen;
+    for (const auto &item : docs.toArray()) {
+        wire::require(item.isMap(), "document record map");
+        auto d = item.toMap();
+        wire::keys(d,
+                   {"id", "type", "name", "units", "revision", "properties_entity", "parameters"});
+        auto id = domain::id(wire::text(d, "id"));
+        wire::require(!seen.contains(id), "duplicate document identity");
+        seen.insert(id);
+        domain::kind(wire::text(d, "type"));
+        domain::label(wire::text(d, "name"));
+        domain::units(wire::text(d, "units"));
+        domain::id(wire::text(d, "properties_entity"));
+        wire::require(wire::integer(d, "revision") <= rev && d.value("parameters").isArray(),
+                      "document revision/parameters");
+        for (auto p : d.value("parameters").toArray())
+            domain::Parameter::parse(p.toMap());
+    }
+    wire::require(active.isEmpty() || seen.contains(active), "active document identity");
+    QStringList opened;
+    wire::require(m.value("open_documents").isArray(), "open document list");
+    for (auto id : m.value("open_documents").toArray()) {
+        wire::require(id.isString() && seen.contains(id.toString()) &&
+                          !opened.contains(id.toString()),
+                      "open document identity");
+        opened.append(id.toString());
+    }
+    wire::require(active.isEmpty() || opened.contains(active), "active document must be open");
+    wire::require(m.value("undo_available").isBool() && m.value("redo_available").isBool(),
+                  "history availability");
+    bool changedContext =
+        projection.context.project != project || projection.activeDocument != active;
+    projection.projectOpen = true;
+    projection.context.project = project;
+    projection.context.document = active.isEmpty() ? project : active;
+    if (changedContext) {
+        projection.context.session = newId();
+        ++projection.generation;
+    }
+    projection.activeDocument = active;
+    projection.revision = rev;
+    projection.savedRevision = saved.toInteger();
+    projection.documentRecords = docs.toArray();
+    projection.openDocuments = opened;
+    projection.savedPath = wire::text(m, "saved_path");
+    projection.canUndo = m.value("undo_available").toBool();
+    projection.canRedo = m.value("redo_available").toBool();
+    projection.phase = Phase::Ready;
+    projection.stale = false;
+    projection.selection = {};
+    projection.editMode = "Document metadata";
+    projection.job = QString("Recoverable revision %1").arg(rev);
+    projection.save =
+        projection.savedRevision == rev
+            ? QString("Saved revision %1").arg(rev)
+            : QString("Modified · last saved %1")
+                  .arg(projection.savedRevision < 0 ? "never"
+                                                    : QString::number(projection.savedRevision));
+    projection.message.clear();
+    if (display) {
+        display.reset();
+        emit meshChanged({});
+    }
+}
+bool Client::projectReady() {
+    if (!alive || !projection.projectOpen || outstanding()) {
+        projection.message = "Wait for the active request, or open/recover a project first";
+        emit changed();
+        return false;
+    }
+    return true;
+}
+void Client::projectCommand(QString command, QCborMap payload) {
+    if (!projectReady())
+        return;
+    projection.job = "Running " + command;
+    enqueue(request(command, payload));
+    emit changed();
+}
+void Client::newProject(QString type, QString name, QString units, bool replace) {
+    if (!alive || outstanding())
+        return;
+    auto e = request("NewProject");
+    e.context = Context();
+    e.revision = 0;
+    e.payload.insert(QStringLiteral("id"), e.context.document);
+    e.payload.insert(QStringLiteral("type"), type);
+    e.payload.insert(QStringLiteral("name"), name);
+    e.payload.insert(QStringLiteral("units"), units);
+    e.payload.insert(QStringLiteral("properties_entity"), newId());
+    e.payload.insert(QStringLiteral("replace"), replace);
+    projection.job = "Creating recoverable project";
+    enqueue(e);
+    emit changed();
+}
+void Client::createDocument(QString type, QString name, QString units) {
+    QCborMap p;
+    p.insert(QStringLiteral("id"), newId());
+    p.insert(QStringLiteral("type"), type);
+    p.insert(QStringLiteral("name"), name);
+    p.insert(QStringLiteral("units"), units);
+    p.insert(QStringLiteral("properties_entity"), newId());
+    projectCommand("CreateDocument", p);
+}
+void Client::switchDocument(QString id) {
+    if (!projectReady())
+        return;
+    auto e = request("SwitchDocument");
+    e.context.document = id;
+    projection.job = "Switching document";
+    enqueue(e);
+    emit changed();
+}
+void Client::closeDocument() {
+    projectCommand("CloseDocument");
+}
+void Client::closeProject() {
+    QCborMap p;
+    p.insert(QStringLiteral("choice"), "KeepRecoverable");
+    projectCommand("CloseProject", p);
+}
+void Client::fileOperation(QString command, QString path, QCborMap payload) {
+    if (!alive || outstanding())
+        return;
+    auto token = newId();
+    QCborMap grant;
+    grant.insert(QStringLiteral("token"), token);
+    grant.insert(QStringLiteral("path"), path);
+    grant.insert(QStringLiteral("access"),
+                 (command == "SaveProject" || command == "SaveAs") ? "save" : "read");
+    enqueue(request("GrantFile", grant));
+    payload.insert(QStringLiteral("capability"), token);
+    enqueue(request(command, payload));
+    projection.job = (command == "SaveProject" || command == "SaveAs")
+                         ? QString("Saving revision %1").arg(projection.revision)
+                         : "Reading chosen project";
+    emit changed();
+}
+void Client::openProject(QString path, QString choice, bool replace) {
+    QCborMap p;
+    p.insert(QStringLiteral("choice"), choice);
+    p.insert(QStringLiteral("replace"), replace);
+    fileOperation("OpenProject", path, p);
+}
+void Client::inspectProject(QString path) {
+    fileOperation("InspectProject", path, {});
+}
+void Client::saveProject(QString path, bool saveAs) {
+    if (!projectReady())
+        return;
+    if (path.isEmpty())
+        path = projection.savedPath;
+    if (path.isEmpty()) {
+        projection.message = "Choose a destination before saving";
+        emit changed();
+        return;
+    }
+    QCborMap p;
+    if (saveAs)
+        p.insert(QStringLiteral("new_project_id"), newId());
+    fileOperation(saveAs ? "SaveAs" : "SaveProject", path, p);
+}
+void Client::listRecoveries() {
+    if (alive && !outstanding())
+        enqueue(request("ListRecoveries"));
+}
+void Client::recoverProject(QString id) {
+    if (!alive || outstanding())
+        return;
+    QCborMap p;
+    p.insert(QStringLiteral("project_id"), id);
+    enqueue(request("RecoverProject", p));
 }
 } // namespace cad

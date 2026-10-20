@@ -2,8 +2,8 @@
 
 | Gate | State / missing evidence | Owner / blocking effect |
 |---|---|---|
-| Windows 11 x86_64 | Blocked: no accessible native runner/compiler supplied | OD-02, Modules 0/1/9/12; cannot claim Windows support |
-| Ubuntu x86_64 X11 and Wayland | Blocked: no accessible native runner/session supplied | OD-02, Modules 0/1/9/12; both sessions needed |
+| Windows 11 x86_64 | Blocked: no accessible native runner/compiler supplied | OD-02, Modules 0/1/2/9/12; cannot claim Windows support |
+| Ubuntu x86_64 X11 and Wayland | Blocked: no accessible native runner/session supplied | OD-02, Modules 0/1/2/9/12; both sessions needed |
 | Mac x86_64 and macOS 13 minimum | Blocked: only macOS 26.6.2 arm64 available | OD-02, Modules 0/12; deployment-target flag is not runtime evidence |
 | Real 8 GB Windows/Linux systems | Blocked: unavailable; this Mac is physically 8 GB | OD-07, Module 11; cannot infer cross-platform performance |
 | VoiceOver/NVDA/Orca and all scales | Blocked until native assistive-technology/scaling procedures executed | OD-08, Module 9; AX presence alone insufficient |
@@ -16,6 +16,6 @@
 | Installed clean builds/upgrades | Blocked until actual product packages exist | Module 12; source archive is not an installer |
 | Other-platform formatter/toolchains | Blocked: only Mac arm64 clang-format 21.1.8 wheel and native compiler verified | Build maintainer; select native tool pins on each host |
 
-The user authorized Module 1 on 19 October 2026; its Mac reference-workspace evidence is in [module-1](../testing/module-1.md). The cross-platform matrix remains Blocked, and Module 2 has not started. Release gates are
+The user authorized Modules 1 and 2 on 19 October 2026; available-Mac evidence is in [module-1](../testing/module-1.md) and [module-2](../testing/module-2.md). The cross-platform matrix remains Blocked. Module 3 requires new authorization. Release gates are
 retained even if available-target experiments pass. No budget or R1 scope revision
 is proposed merely to close an unavailable check.

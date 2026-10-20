@@ -101,6 +101,8 @@ def main() -> int:
             authorized=set(authorization.get("authorized_modules",[0]))
             if 1 in authorized and authorization.get("module_1_authorization",{}).get("quote") != "proceed with module 1":
                 errors.append("Module 1 requires recorded explicit user authorization")
+        if 2 in authorized and authorization.get("module_2_authorization",{}).get("quote") != "go-ahead with moudle 2":
+            errors.append("Module 2 requires recorded explicit user authorization")
         if any(int(task.split(".")[0]) not in authorized for task in checked):
             errors.append("Checked task is outside the explicitly authorized module scope")
     if len(set(task_ids)) != len(task_ids):
@@ -113,8 +115,8 @@ def main() -> int:
         "scope": "Documentation structure only; no product acceptance tests executed",
         "checked_at_utc": datetime.now(timezone.utc).isoformat(),
         "status": "pass" if not errors else "fail",
-        "product_implementation": "Module 1 native reference workspace; see scoped evidence",
-        "product_acceptance_tests": "Module 1 subsets exercised on Mac; full R1 requirements remain Not run or Blocked",
+        "product_implementation": "Module 2 document/persistence foundation; see scoped evidence",
+        "product_acceptance_tests": "Modules 1/2 subsets exercised on Mac; full R1 requirements remain Not run or Blocked",
         "documents": {name: {"sha256": hashlib.sha256(text.encode()).hexdigest(),
                              "lines": len(text.splitlines()), "words": len(text.split())}
                       for name, text in texts.items()},

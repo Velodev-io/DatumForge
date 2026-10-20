@@ -1,3 +1,4 @@
+#include "Projects.hpp"
 #include "geometry/occt/ReferenceScene.hpp"
 #include <QCoreApplication>
 #include <QFile>
@@ -9,6 +10,7 @@
 #include <optional>
 namespace {
 class Worker : public QObject {
+    cad::worker::Projects projects;
     QLocalSocket socket;
     cad::wire::Frames input;
     QString epoch;
@@ -70,6 +72,8 @@ class Worker : public QObject {
         auto e = queue.dequeue();
         try {
             execute(e);
+        } catch (const cad::domain::Error &error) {
+            failure(e, error.code, QString::fromUtf8(error.what()));
         } catch (const Standard_Failure &error) {
             failure(e, "InvalidGeometry", QString::fromUtf8(error.GetMessageString()));
         } catch (const std::exception &error) {
@@ -83,6 +87,15 @@ class Worker : public QObject {
     void execute(const cad::wire::Envelope &e) {
         using namespace cad;
         using wire::require;
+        if (projects.handles(e.command)) {
+            auto data = projects.run(e);
+            auto answer = wire::reply(e, "Succeeded", data);
+            answer.insert(QStringLiteral("result_revision"), projects.revision());
+            send(answer);
+            return;
+        }
+        cad::domain::check(!projects.open(), "InvalidInput",
+                           "Close the project before opening a temporary reference scene");
         if (e.command == "QueryOperation") {
             wire::keys(e.payload, {"operation"});
             auto id = wire::text(e.payload, "operation");
@@ -188,8 +201,8 @@ class Worker : public QObject {
     }
 
   public:
-    Worker(QString address, QByteArray secret, QString workerEpoch)
-        : epoch(workerEpoch), capability(secret) {
+    Worker(QString address, QByteArray secret, QString workerEpoch, QString recovery)
+        : projects(recovery), epoch(workerEpoch), capability(secret) {
         socket.setReadBufferSize(cad::limits::control + 4);
         connect(&socket, &QLocalSocket::connected, this, [this] {
             send(cad::wire::bootstrap(epoch, capability));
@@ -217,6 +230,8 @@ class Worker : public QObject {
 } // namespace
 int main(int argc, char **argv) {
     QCoreApplication app(argc, argv);
+    app.setOrganizationName("local.solidworks-clone.dev");
+    app.setApplicationName("Solidworks Clone");
     try {
         QFile inherited;
         if (!inherited.open(stdin, QIODevice::ReadOnly))
@@ -224,13 +239,15 @@ int main(int argc, char **argv) {
         auto line = inherited.readLine(2048);
         cad::wire::require(line.endsWith('\n'), "bootstrap limit");
         auto parts = line.trimmed().split(' ');
-        cad::wire::require(parts.size() == 3, "bootstrap fields");
+        cad::wire::require((parts.size() == 3 || parts.size() == 4), "bootstrap fields");
         auto address = QString::fromUtf8(QByteArray::fromBase64(parts[0]));
         auto secret = QByteArray::fromHex(parts[1]);
         auto epoch = QString::fromUtf8(parts[2]);
         cad::wire::require(!address.isEmpty() && secret.size() == 32 && cad::wire::uuid(epoch),
                            "bootstrap types");
-        Worker worker(address, secret, epoch);
+        Worker worker(address, secret, epoch,
+                      parts.size() == 4 ? QString::fromUtf8(QByteArray::fromBase64(parts[3]))
+                                        : QString());
         return app.exec();
     } catch (const std::exception &error) {
         std::cerr << error.what() << '\n';

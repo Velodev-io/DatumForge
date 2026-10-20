@@ -1,7 +1,7 @@
 # Technical Specification and Implementation Plan — Solidworks Clone
 
 **Version:** 0.1 · **Date:** 19 October 2026  
-**Status:** Module 1 Mac reference workspace verified; cross-platform matrix Blocked. Modules 2–12 have not started; full product acceptance remains pending.
+**Status:** Modules 1–2 available-Mac scope verified; cross-platform matrix Blocked. Modules 3–12 have not started; full product acceptance remains pending.
 **Constraints:** Native macOS/Windows/Linux, local core, **8 GB system RAM minimum**.  
 **Authority:** [SRS](SRS.md) → [SDD](SDD.md) → contracts below → ordered modules. [Step Zero](STEP_ZERO.md) is Module 0.
 
@@ -235,7 +235,7 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 **Completion check:** UI/worker/render contracts work with real processes; untested platform rows remain pending.
 
-**Evidence:** `docs/testing/module-1.md`. **Current status:** 8 lettered tasks Pass on the available Mac reference-workspace scope; 1.4c Blocked pending other native platforms/hardware. Module 2 has not started.
+**Evidence:** `docs/testing/module-1.md`. **Current status:** 8 lettered tasks Pass on the available Mac reference-workspace scope; 1.4c Blocked pending other native platforms/hardware. Subsequent Module 2 work is recorded below.
 
 
 ### Module 2 — Document semantics, persistence, and recovery foundation
@@ -246,22 +246,22 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 2.1 — Implement documents and semantic transactions
 
-- [ ] **2.1a:** Implement part/assembly/drawing records, entities, typed parameters, units, revisions, and project identity; validate all incoming mutations in the worker.
-- [ ] **2.1b:** Add operation-id deduplication bound to request hash and revision. Implement document create/switch/close, command deltas, and basic undo/redo without retaining full BRep copies per edit.
+- [x] **2.1a:** Implement part/assembly/drawing records, entities, typed parameters, units, revisions, and project identity; validate all incoming mutations in the worker.
+- [x] **2.1b:** Add operation-id deduplication bound to request hash and revision. Implement document create/switch/close, command deltas, and basic undo/redo without retaining full BRep copies per edit.
 
 #### 2.2 — Implement working and saved storage
 
-- [ ] **2.2a:** Materialize schema/indexes/foreign keys, bounded object streams, private working DB, durable command commits, and authoritative-vs-cache object classification.
-- [ ] **2.2b:** Implement standalone snapshot publication, Save As, saved/current revision tracking, canonical writer locks, version rejection, and a migration-copy skeleton.
+- [x] **2.2a:** Materialize schema/indexes/foreign keys, bounded object streams, private working DB, durable command commits, and authoritative-vs-cache object classification.
+- [x] **2.2b:** Implement standalone snapshot publication, Save As, saved/current revision tracking, canonical writer locks, version rejection, and a migration-copy skeleton.
 
 #### 2.3 — Implement early recovery
 
-- [ ] **2.3a:** Recover committed semantic revisions after worker restart and offer saved versus recoverable versions on application restart.
-- [ ] **2.3b:** Add retained-root tracking for active jobs, history, and recovery; support storage errors without inventing success or deleting the previous valid project.
+- [x] **2.3a:** Recover committed semantic revisions after worker restart and offer saved versus recoverable versions on application restart.
+- [x] **2.3b:** Add retained-root tracking for active jobs, history, and recovery; support storage errors without inventing success or deleting the previous valid project.
 
 #### 2.4 — Required module tests
 
-- [ ] **2.4a — T-02, T-06–T-10:** Create all document kinds, persist identities and units, switch/close with unsaved changes, replay duplicate commands, and exercise undo/redo boundaries.
+- [x] **2.4a — T-02, T-06–T-10:** Create all document kinds, persist identities and units, switch/close with unsaved changes, replay duplicate commands, and exercise undo/redo boundaries.
 - [ ] **2.4b — T-07–T-08, T-34, T-39, NFR-011 / T-51:** Use real temporary SQLite/files to kill before/after working commit and saved-snapshot publication; expect exactly the documented durable/saved revision and intact originals.
 - [ ] **2.4c — Writer/schema/storage failures:** Try alias paths, a live second writer, newer schema, failed migration, disk full, denied write, and missing blob. Expect safe refusal and an actionable recovery path.
 
@@ -269,7 +269,7 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 **Completion check:** Document/persistence tests pass; later geometry and dependency acceptance is explicitly still pending.
 
-**Evidence:** `docs/testing/module-2.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-2.md`. **Current status:** 7 lettered tasks Pass for the documented available-Mac foundation; 2.4b/2.4c Blocked for full native platform completion despite passing Mac cases. Windows/Linux and physical power-loss checks remain Blocked. Stop before Module 3 pending new authorization.
 
 
 ### Module 3 — Planar sketches, constraints, and expressions
@@ -633,5 +633,5 @@ Keep test failures and unavailable environments visible. Visual screenshots, eng
 
 ## 8. Current implementation status
 
-Module 0 feasibility evidence remains in [module-0](testing/module-0.md). The user authorized Module 1 on 19 October 2026; see [Mac reference-workspace implementation and native evidence](testing/module-1.md). Its platform matrix remains Blocked. T-01/T-03/T-04/T-35/T-53 subsets have available-Mac evidence; full associated requirements remain Blocked and other product tests remain Not run. Modules 2–12 have not started. Frozen fixture recipes and reference display do not establish product recovery or SRS resource budgets. Documentation checks verify structure/evidence links only.
+Module 0 feasibility evidence remains in [module-0](testing/module-0.md). The user authorized Module 1 on 19 October 2026; see [Mac reference-workspace implementation and native evidence](testing/module-1.md). Its platform matrix remains Blocked. T-01/T-03/T-04/T-35/T-53 subsets have available-Mac evidence; full associated requirements remain Blocked and other product tests remain Not run. Module 2 document metadata, working/saved persistence, semantic undo/redo and recovery subsets are verified on the available Mac; see [Module 2 evidence](testing/module-2.md). Full associated requirement rows remain Blocked. Modules 3–12 have not started. Frozen fixture recipes, reference display and small storage fixtures do not establish SRS resource budgets. Documentation checks verify structure/evidence links only.
 

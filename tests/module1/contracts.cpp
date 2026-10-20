@@ -367,6 +367,9 @@ class Contracts : public QObject {
         if (!qEnvironmentVariableIsSet("CAD_NATIVE_TESTS"))
             QSKIP("Real native graphics check requires CAD_NATIVE_TESTS=1 and a desktop session");
         QTemporaryDir directory;
+        QSettings testPreferences(directory.filePath("layout.ini"), QSettings::IniFormat);
+        testPreferences.setValue("startup/offerRecovery", false);
+        testPreferences.sync();
         MainWindow window(directory.filePath("layout.ini"));
         window.show();
         QVERIFY(QTest::qWaitForWindowExposed(&window));

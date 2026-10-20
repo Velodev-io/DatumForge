@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Run Clang's analyzer against project-owned C++ sources with their actual compile flags."""
 import json
+import re
 from pathlib import Path
 import shlex
 import subprocess
@@ -20,5 +21,7 @@ for entry in entries:
         clean.append(arg)
     with tempfile.TemporaryDirectory(prefix='cad-step-zero-analyzer-') as temp:
         clean+=['--analyze','-Xanalyzer','-analyzer-output=text','-o',str(Path(temp)/'analysis.txt')]
-        subprocess.run(clean,cwd=entry['directory'],check=True,timeout=120)
+        result=subprocess.run(clean,cwd=entry['directory'],text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,timeout=120)
+        if result.stdout:print(result.stdout,end='',flush=True)
+        if result.returncode or re.search(r':\d+:\d+: warning:',result.stdout):raise SystemExit('Fail: analyzer reported an error or warning in '+str(source.relative_to(ROOT)))
     print('Analyzed',str(source.relative_to(ROOT)),flush=True)

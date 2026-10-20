@@ -31,7 +31,7 @@ assert 'TKernel' in worker and 'Qt6Test' not in worker, worker
 if sys.platform == 'darwin':
     packaged = a.build/'cad-desktop.app/Contents/MacOS/cad-worker'
     assert packaged.read_bytes() == (a.build/'cad-worker').read_bytes(), 'Packaged worker differs'
-record = {'status': 'Pass', 'scope': 'Module 1 ownership on this built target only',
+record = {'status': 'Pass', 'scope': 'Native UI/worker ownership on this built target only',
           'desktop_dependencies': ui, 'worker_dependencies': worker,
           'ui_source_files_checked': len(ui_sources),
           'desktop_sha256': hashlib.sha256(exe.read_bytes()).hexdigest()}

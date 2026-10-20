@@ -5,22 +5,34 @@
 #include <QDockWidget>
 #include <QFormLayout>
 #include <QMenuBar>
+#include <QMessageBox>
 #include <QPushButton>
 #include <QStatusBar>
 #include <QTabWidget>
+#include <QTimer>
 #include <QToolBar>
 #include <QVBoxLayout>
 namespace cad {
-MainWindow::MainWindow(QString settingsFile, QWidget *parent) : QMainWindow(parent) {
+MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRoot)
+    : QMainWindow(parent) {
     setObjectName("cadMainWindow");
     setWindowTitle("CAD Workbench · Native reference workspace");
     resize(1280, 800);
     settings = settingsFile.isEmpty()
                    ? std::make_unique<QSettings>()
                    : std::make_unique<QSettings>(settingsFile, QSettings::IniFormat);
-    client = new Client(this);
+    client = new Client(this, {}, recoveryRoot);
     buildFrame();
+    buildProjectUI();
     connect(client, &Client::changed, this, &MainWindow::refresh);
+    connect(client, &Client::changed, this, [this] {
+        if (!recoveryChecked && client->ready()) {
+            recoveryChecked = true;
+            if (settings->value("startup/offerRecovery", true).toBool())
+                QTimer::singleShot(0, this, [this] { client->listRecoveries(); });
+        }
+    });
+    connect(client, &Client::projectChanged, this, &MainWindow::refreshProjectUI);
     connect(client, &Client::meshChanged, this, [this](MeshPtr mesh) {
         viewport->setMesh(mesh);
         if (mesh) {
@@ -55,16 +67,21 @@ void MainWindow::buildFrame() {
         addAction(a);
         return a;
     };
-    const QString future = "Requires Module 2 project persistence; reference scenes are temporary.";
-    add("new", "New project", file, QKeySequence::New, future);
-    add("open", "Open project", file, QKeySequence::Open, future);
-    add("save", "Save", file, QKeySequence::Save, future);
+    add("new", "New project", file, QKeySequence::New);
+    add("open", "Open project", file, QKeySequence::Open);
+    add("save", "Save", file, QKeySequence::Save);
     auto *load = add("reference", "Load reference box", file);
     connect(load, &QAction::triggered, this, [this] { client->loadReference(); });
     auto *instances = add("instances", "Load 100 reference instances", file);
     connect(instances, &QAction::triggered, this, [this] { client->loadReference(100); });
     auto *close = add("close", "Close reference", file, QKeySequence::Close);
-    connect(close, &QAction::triggered, client, &Client::closeReference);
+    connect(close, &QAction::triggered, this, [this] {
+        if (state().projectOpen) {
+            if (confirmRecoverable("Close document"))
+                client->closeDocument();
+        } else
+            client->closeReference();
+    });
     add("sketch", "Create sketch", tools, {}, "Requires Module 3 sketch implementation.");
     add("extrude", "Extrude", tools, {}, "Requires Module 4 feature implementation.");
     auto *fit = add("fit", "Zoom to fit", view, QKeySequence("F"));
@@ -83,7 +100,7 @@ void MainWindow::buildFrame() {
     auto *toolbar = addToolBar("Workspace commands");
     toolbar->setObjectName("workspaceToolbar");
     toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    for (const auto &id : {"reference", "save", "fit", "measure"})
+    for (const auto &id : {"new", "open", "save", "fit", "measure"})
         toolbar->addAction(commands.get(id));
     search = new QLineEdit;
     search->setObjectName("commandSearch");
@@ -122,6 +139,14 @@ void MainWindow::buildFrame() {
     layout->addWidget(documents);
     setCentralWidget(center);
     connect(documents, &QTabBar::currentChanged, this, [this](int index) {
+        if (syncing)
+            return;
+        if (state().projectOpen) {
+            auto id = documents->tabData(index).toString();
+            if (!id.isEmpty() && id != state().activeDocument)
+                client->switchDocument(id);
+            return;
+        }
         viewport->setVisible(index == 1);
         findChild<QLabel *>("welcomePanel")->setVisible(index == 0);
     });
@@ -138,6 +163,12 @@ void MainWindow::buildFrame() {
         if (syncing)
             return;
         auto items = tree->selectedItems();
+        if (!items.empty() && state().projectOpen) {
+            auto id = items.first()->data(0, Qt::UserRole + 1).toString();
+            if (!id.isEmpty() && id != state().activeDocument)
+                client->switchDocument(id);
+            return;
+        }
         if (!items.empty())
             choose(items.first()->data(0, Qt::UserRole).value<Selection>());
     });
@@ -209,6 +240,43 @@ void MainWindow::buildFrame() {
 }
 void MainWindow::refresh() {
     const auto &s = state();
+    bool idle = client->ready() && client->outstanding() == 0;
+    for (auto id : {"new", "open", "recover"})
+        if (commands.get(id))
+            commands.get(id)->setEnabled(idle);
+    commands.get("save")->setEnabled(s.projectOpen && idle);
+    if (!s.projectOpen) {
+        commands.get("save")->setToolTip(
+            "Open or create a project before saving; reference scenes are temporary");
+        commands.get("save")->setProperty(
+            "unavailableReason",
+            "Reference scenes are temporary; open or create a project to save");
+    } else {
+        commands.get("save")->setProperty("unavailableReason", QString());
+        commands.get("save")->setToolTip("Publish a standalone project snapshot");
+    }
+    if (s.projectOpen) {
+        refreshProjectUI();
+        return;
+    }
+    if (documents->count() != 2 || documents->tabText(0) != "Welcome") {
+        syncing = true;
+        while (documents->count())
+            documents->removeTab(0);
+        documents->addTab("Welcome");
+        documents->addTab("Reference scene");
+        syncing = false;
+    }
+    documents->setEnabled(true);
+    commands.get("close")->setText("Close reference");
+    findChild<QLabel *>("welcomePanel")
+        ->setText("<h2>Native CAD Workbench</h2><p>Create or open a project, or load a temporary "
+                  "reference scene.</p>");
+    for (auto id : {"reference", "instances", "fit", "measure"})
+        commands.get(id)->setEnabled(idle);
+    for (auto id : {"document.new", "saveAs", "undo", "redo", "project.close"})
+        if (commands.get(id))
+            commands.get(id)->setEnabled(false);
     findChild<QLabel *>("welcomePanel")->setVisible(documents->currentIndex() == 0);
     viewport->setVisible(documents->currentIndex() == 1);
     status->setText(s.job + " · " + s.save);
@@ -235,6 +303,10 @@ void MainWindow::refresh() {
     syncing = false;
 }
 void MainWindow::rebuildTree() {
+    if (state().projectOpen) {
+        refreshProjectUI();
+        return;
+    }
     syncing = true;
     tree->clear();
     if (auto mesh = client->mesh()) {
@@ -270,6 +342,22 @@ void MainWindow::saveLayout() {
     settings->sync();
 }
 void MainWindow::closeEvent(QCloseEvent *event) {
+    if (state().projectOpen && client->outstanding()) {
+        QMessageBox question(QMessageBox::Warning, "Operation outcome is uncertain",
+                             "Closing now stops the worker. A pending operation may already be "
+                             "durable. Recover and query its outcome on restart.",
+                             QMessageBox::Cancel, this);
+        auto *stop = question.addButton("Stop and keep recovery", QMessageBox::AcceptRole);
+        question.exec();
+        if (question.clickedButton() != stop) {
+            event->ignore();
+            return;
+        }
+    }
+    if (state().projectOpen && !confirmRecoverable("Close application")) {
+        event->ignore();
+        return;
+    }
     saveLayout();
     QMainWindow::closeEvent(event);
 }

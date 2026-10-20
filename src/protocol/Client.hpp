@@ -30,7 +30,7 @@ class Client : public QObject {
     QLocalSocket *peer = nullptr;
     wire::Frames frames;
     Transfers transfers;
-    QString executable;
+    QString executable, recoveryDirectory;
     QByteArray secret;
     bool authenticated = false, stopping = false, alive = false;
     struct Pending {
@@ -46,6 +46,9 @@ class Client : public QObject {
     int referenceInstances = 1;
     QString lastOperation;
     void receive(const QCborMap &map);
+    void installProject(const QCborMap &state);
+    bool projectReady();
+    void fileOperation(QString command, QString path, QCborMap payload);
     void pump();
     void fail(QString code, QString message);
     void stop();
@@ -53,7 +56,8 @@ class Client : public QObject {
     wire::Envelope request(QString command, QCborMap payload = {});
 
   public:
-    explicit Client(QObject *parent = nullptr, QString workerExecutable = {});
+    explicit Client(QObject *parent = nullptr, QString workerExecutable = {},
+                    QString recoveryRoot = {});
     ~Client() override;
     const WorkspaceState &state() const {
         return projection;
@@ -85,10 +89,24 @@ class Client : public QObject {
     void select(Selection selected);
     void measure();
     void queryOperation(QString operation);
+    void newProject(QString type, QString name, QString units = "mm", bool replace = false);
+    void createDocument(QString type, QString name, QString units = "mm");
+    void projectCommand(QString command, QCborMap payload = {});
+    void switchDocument(QString id);
+    void closeDocument();
+    void closeProject();
+    void openProject(QString path, QString choice = "Saved", bool replace = false);
+    void inspectProject(QString path);
+    void saveProject(QString path = {}, bool saveAs = false);
+    void listRecoveries();
+    void recoverProject(QString id);
   signals:
     void changed();
     void meshChanged(cad::MeshPtr mesh);
     void measured(QString text);
+    void recoveryOffers(QCborArray offers);
+    void projectInspection(QCborMap inspection);
+    void projectChanged();
     void operationOutcome(QString operation, QString outcome);
 };
 } // namespace cad

@@ -1,0 +1,1 @@
+FAIL: Resolve the current project before replacing it
