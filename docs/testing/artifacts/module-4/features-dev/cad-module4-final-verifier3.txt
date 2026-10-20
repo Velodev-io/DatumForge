@@ -3,3 +3,24 @@ Running build
 Running ctest
 Running format
 Running static-analysis
+Running ownership
+Running research-isolation
+Running native-features-100
+Running native-workspace-100
+Running native-module3-100
+Running native-features-125
+Running native-workspace-125
+Running native-module3-125
+Running native-features-150
+Running native-workspace-150
+Running native-module3-150
+Running native-features-175
+Running native-workspace-175
+Running native-module3-175
+Running native-features-200
+Running native-workspace-200
+Running native-module3-200
+Running native-module1-regression
+Running native-module2-regression
+Running clean-reproduction
+Pass: requested Module 4 available-Mac checks; stop before Module 5

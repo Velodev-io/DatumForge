@@ -712,5 +712,103 @@
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json",
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/visual-review.json"
     ]
+  },
+  "4.1a": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: typed SI Extrude/Revolve NewBody/Add/Cut, closed line/arc/circle profiles and holes, axis/direction/extent, preview/discard and durable acceptance; analytic and dispatcher/persistence tests pass.",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/decisions/module-4-features.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/ctest.txt",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ]
+  },
+  "4.1b": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: finite/unit/range, closure/self-intersection, in-plane axis, solid count/closure, tolerance ceiling and kernel failures are checked; rejected commands retain revision and accepted definitions.",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/decisions/module-4-features.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/ctest.txt",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ]
+  },
+  "4.2a": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: constant fillet, equal chamfer, blind/through cylindrical hole, linear/circular exact patterns and planar mirror; all eight feature families have valid/invalid preview, discard, durable commit/dedup, undo/redo and save/reopen coverage.",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/decisions/module-4-features.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/ctest.txt",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ]
+  },
+  "4.2b": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: actual OCCT Generated/Modified/IsDeleted maps, explicit semantic source/target IDs and geometric tokens with ambiguity refusal. Mirrored body edge dressing and copy IDs independent of unrelated body count are regressed. General reference repair remains Module 5.",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/decisions/module-4-features.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/ctest.txt",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ]
+  },
+  "4.3a": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: explicit-revision exact edge length/straight-edge angle/circular radius, face area/cylindrical radius, body area/volume/optimal bounds and positive SI density mass. Stale/invalid selections fail; analytic values pass.",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/decisions/module-4-features.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/ctest.txt",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ]
+  },
+  "4.3b": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: contextual left feature PropertyManager, preview/accept/cancel, input invalidation, real feature parameter edit, worker timings, bounded semantic history and atomic ordered replay after sketch edits. UI has no kernel/database dependency.",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/decisions/module-4-features.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/ctest.txt",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ]
+  },
+  "4.4a": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: boxes, circles/cylinders, annular/partial/add/cut revolves, arcs, B1 four-hole bracket and fillet volume, chamfer, mirror and exact pattern results; all supported families pass analytic/invalid/transaction/persistence checks.",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/decisions/module-4-features.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/ctest.txt",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ]
+  },
+  "4.4b": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: identical exact measurements after coarse/fine meshes and display changes; 0.001/1/1000 SI scale corpus, analytic tolerances, invalid radii/profiles/axes plus preserved mm/in sketch UI regressions. Full platform/resource acceptance remains Blocked.",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/decisions/module-4-features.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/ctest.txt",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ]
+  },
+  "4.4c": {
+    "status": "Blocked",
+    "scope": "Available-Mac B1 native workflow Pass at 100/125/150/175/200%: actual sketch and feature controls, preview/discard, failed preview preservation, feature and parent-width edits, undo/redo, material density, save/reopen, face picking, SIGKILL and recovery. Full native platform/device completion remains Blocked; Windows/Linux, physical mouse/trackpad and controlled OS-network-disabled checks are unavailable.",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/visual-review.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ]
   }
 }

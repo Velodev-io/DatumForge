@@ -8,7 +8,9 @@
       "docs/testing/module-3-input-repair.md",
       "docs/testing/module-4.md",
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
-      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
     "reason": "Available-Mac reference plus planar-sketch navigation, shared command tabs, left PropertyManager and editing/persistence subsets pass at five scales; physical-device, other-platform and later exact-feature acceptance remain Blocked."
@@ -32,7 +34,9 @@
       "docs/testing/module-3-input-repair.md",
       "docs/testing/module-4.md",
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
-      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
     "reason": "Available-Mac reference plus planar-sketch navigation, shared command tabs, left PropertyManager and editing/persistence subsets pass at five scales; physical-device, other-platform and later exact-feature acceptance remain Blocked."
@@ -47,7 +51,9 @@
       "docs/testing/module-3-input-repair.md",
       "docs/testing/module-4.md",
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
-      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
     "reason": "Available-Mac reference plus planar-sketch navigation, shared command tabs, left PropertyManager and editing/persistence subsets pass at five scales; physical-device, other-platform and later exact-feature acceptance remain Blocked."
@@ -59,7 +65,9 @@
       "docs/testing/module-3-input-repair.md",
       "docs/testing/module-4.md",
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
-      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
     "reason": "Available-Mac shared actions, contextual properties and familiar layout subset pass; simplified layout, cross-document consistency, accessibility and other native platforms remain for Module 9."
@@ -196,15 +204,25 @@
   },
   "FR-017": {
     "test": "T-17",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Module 4 available-Mac exact-feature/analytic/measurement and native B1 subsets pass, including failed-operation preservation and mesh invariance. Full requirement acceptance remains Blocked for unavailable native platforms/devices and later workload/release gates."
   },
   "FR-018": {
     "test": "T-18",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Module 4 available-Mac exact-feature/analytic/measurement and native B1 subsets pass, including failed-operation preservation and mesh invariance. Full requirement acceptance remains Blocked for unavailable native platforms/devices and later workload/release gates."
   },
   "FR-019": {
     "test": "T-19",
@@ -226,9 +244,14 @@
   },
   "FR-022": {
     "test": "T-22",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Module 4 available-Mac exact-feature/analytic/measurement and native B1 subsets pass, including failed-operation preservation and mesh invariance. Full requirement acceptance remains Blocked for unavailable native platforms/devices and later workload/release gates."
   },
   "FR-023": {
     "test": "T-23",
@@ -244,9 +267,14 @@
   },
   "FR-025": {
     "test": "T-25",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Module 4 available-Mac exact-feature/analytic/measurement and native B1 subsets pass, including failed-operation preservation and mesh invariance. Full requirement acceptance remains Blocked for unavailable native platforms/devices and later workload/release gates."
   },
   "FR-026": {
     "test": "T-26",
@@ -388,15 +416,25 @@
   },
   "NFR-007": {
     "test": "T-47",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Module 4 available-Mac exact-feature/analytic/measurement and native B1 subsets pass, including failed-operation preservation and mesh invariance. Full requirement acceptance remains Blocked for unavailable native platforms/devices and later workload/release gates."
   },
   "NFR-008": {
     "test": "T-48",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Module 4 available-Mac exact-feature/analytic/measurement and native B1 subsets pass, including failed-operation preservation and mesh invariance. Full requirement acceptance remains Blocked for unavailable native platforms/devices and later workload/release gates."
   },
   "NFR-009": {
     "test": "T-49",
@@ -431,7 +469,10 @@
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-1.md",
-      "docs/testing/artifacts/module-1/verification.json"
+      "docs/testing/artifacts/module-1/verification.json",
+      "docs/testing/module-4.md",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
     "reason": "Mac reference process/source/link ownership checked; production project DB writes, durable revisions and other native targets remain pending."

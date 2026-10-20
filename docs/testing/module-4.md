@@ -1,6 +1,6 @@
 # Module 4 exact part features and measurement
 
-Date: 20 October 2026. **Status: final available-Mac verification in progress.**
+Date: 20 October 2026. **Status: all feasible available-Mac implementation and verification complete; full platform/device completion Blocked.**
 The user explicitly authorized remaining Module 4 tasks starting at 4.1a.
 Stop before **Module 5 / 5.1a** and ask before proceeding.
 [Authorization](../decisions/implementation-scope.json).
@@ -17,17 +17,17 @@ publication or existing user app session were used.
 schemas, supported cases, profile/tolerance checks, admission, topology provenance,
 measurement, material density and the Module 5 boundary.
 
-| Task | Implemented scope; verification must complete before checking |
+| Task | Verified available-Mac scope |
 |---|---|
-| 4.1a | Exact extrusion and revolve; NewBody/Add/Cut, closed profile/holes/arcs/circles, direction/extent/axis, disposable preview and durable acceptance. |
-| 4.1b | Finite/unit/type/range, closure/self-intersection, solid count, shell validity and tolerance checks. Failed operations retain the committed model. |
-| 4.2a | Constant fillet, equal-distance chamfer, blind/through cylindrical holes, linear/circular exact patterns and planar mirror. |
-| 4.2b | Actual generated/modified/deleted OCCT maps, source/target IDs and explicit missing/ambiguous tokens. Copied-body edges resolve inside their source result. |
-| 4.3a | Revision-bound exact edge length/angle/radius, face area/radius, body area/volume/bounds; valid assigned density produces mass. |
-| 4.3b | Left contextual feature fields, Preview/Accept/Cancel, feature tree and parameter editing, timings, initial semantic history and full ordered replay after sketch edits. |
-| 4.4a | Analytic and production-dispatcher corpus for all eight families, including valid/invalid, discard, commit/dedup, undo/redo and save/reopen. |
-| 4.4b | Exact measurements unchanged by mesh deflection/display mode; SI scale corpus and mm/in sketch regression, invalid sizes/profiles/axes. |
-| 4.4c | Native B1 sketch → extrusion → cut/hole/pattern → fillet → dimension/feature edit → undo/redo → save/reopen → SIGKILL/recovery. Full platform/device completion remains Blocked. |
+| 4.1a — Pass | Exact extrusion and revolve; NewBody/Add/Cut, closed profile/holes/arcs/circles, direction/extent/axis, disposable preview and durable acceptance. |
+| 4.1b — Pass | Finite/unit/type/range, closure/self-intersection, solid count, shell validity and tolerance checks. Failed operations retain the committed model. |
+| 4.2a — Pass | Constant fillet, equal-distance chamfer, blind/through cylindrical holes, linear/circular exact patterns and planar mirror. |
+| 4.2b — Pass | Actual generated/modified/deleted OCCT maps, source/target IDs and explicit missing/ambiguous tokens. Copied-body edges resolve inside their source result. |
+| 4.3a — Pass | Revision-bound exact edge length/angle/radius, face area/radius, body area/volume/bounds; valid assigned density produces mass. |
+| 4.3b — Pass | Left contextual feature fields, Preview/Accept/Cancel, feature tree and parameter editing, timings, initial semantic history and full ordered replay after sketch edits. |
+| 4.4a — Pass | Analytic and production-dispatcher corpus for all eight families, including valid/invalid, discard, commit/dedup, undo/redo and save/reopen. |
+| 4.4b — Pass | Exact measurements unchanged by mesh deflection/display mode; SI scale corpus and mm/in sketch regression, invalid sizes/profiles/axes. |
+| 4.4c — Blocked (Mac subset Pass) | Native B1 sketch → extrusion → cut/hole/pattern → fillet → dimension/feature edit → undo/redo → save/reopen → SIGKILL/recovery. Full platform/device completion remains Blocked. |
 
 Only the serial worker owns exact shapes, numerical solving and project writes.
 The UI holds typed semantic/display projections and meshes. Versioned semantic
@@ -56,6 +56,42 @@ The clean-source procedure exports to a temporary directory and verifies cached
 archives, then uses the existing pinned dependency binaries. It does not certify
 a second from-scratch dependency build, installed package or another platform.
 
+## Actual final verification
+
+Final run: `features-runs/20261020T113302.472224Z` on macOS 26.6.2 arm64,
+Apple M2, **8,589,934,592 physical bytes (8 GiB)**. Cocoa reports OpenGL 4.1.
+The repository remains uncommitted, with no remote, on `historical/module-4`.
+Individual source hashes identify the tested checkout; the tested aggregate is
+`2047d1d8d3dc99a8f16953f023c1368631b21641cf072d4cd4b48f3ffbcafdd3`.
+[Source consistency](artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json)
+verifies every listed input plus unchanged dependency/tool/Qt-patch and frozen B1 pins.
+
+| Verification | Actual result and evidence |
+|---|---|
+| Configure/build | Pass: [configure](artifacts/module-4/features-runs/20261020T113302.472224Z/configure.txt), [build](artifacts/module-4/features-runs/20261020T113302.472224Z/build.txt). |
+| Full enabled CTest | [31 passed, zero failures](artifacts/module-4/features-runs/20261020T113302.472224Z/ctest.txt), 35.08 seconds. The deliberate failure remains Disabled by design; the harness failure-reporting checks pass. |
+| Formatter / analyzer | [Pinned format Pass](artifacts/module-4/features-runs/20261020T113302.472224Z/format.txt); [Clang analyzer Pass](artifacts/module-4/features-runs/20261020T113302.472224Z/static-analysis.txt), no reported warnings. |
+| Ownership / preservation | [Actual linked desktop/worker and packaged-worker check Pass](artifacts/module-4/features-runs/20261020T113302.472224Z/architecture.json); [97 research files unchanged, no remote](artifacts/module-4/features-runs/20261020T113302.472224Z/research-isolation.txt). |
+| Native exact-feature workflow | Pass at [100%](artifacts/module-4/features-runs/20261020T113302.472224Z/native-features-100.txt), [125%](artifacts/module-4/features-runs/20261020T113302.472224Z/native-features-125.txt), [150%](artifacts/module-4/features-runs/20261020T113302.472224Z/native-features-150.txt), [175%](artifacts/module-4/features-runs/20261020T113302.472224Z/native-features-175.txt), [200%](artifacts/module-4/features-runs/20261020T113302.472224Z/native-features-200.txt); zero failed/skipped cases. |
+| Prior native behavior | Workspace and Module 3 native workflows Pass at every scale; see [exact commands/results](artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json). [Module 1](artifacts/module-4/features-runs/20261020T113302.472224Z/native-module1-regression.txt) and [Module 2](artifacts/module-4/features-runs/20261020T113302.472224Z/native-module2-regression.txt) native regressions Pass. |
+| Clean source | [Export/configure/build and 31 enabled tests Pass](artifacts/module-4/features-runs/20261020T113302.472224Z/clean-reproduction-details.txt), with verified cached archives and existing pinned dependency binaries; clean tests take 44.41 seconds. |
+| Visual review | [Reviewed subset Pass](artifacts/module-4/features-runs/20261020T113302.472224Z/visual-review.json): [100% feature fields](artifacts/module-4/features-runs/20261020T113302.472224Z/native-100/features-editing.png), [200% feature fields](artifacts/module-4/features-runs/20261020T113302.472224Z/native-200/features-editing.png), [100% model tree](artifacts/module-4/features-runs/20261020T113302.472224Z/native-100/features-B1.png). Intermediate scales retain native interaction/visibility assertions. |
+
+The exact kernel corpus reproduces the frozen B1 final **35,488.76110196153 mm³**
+volume. The native workflow explicitly changes outer width from 80 to 90 mm and
+checks **40,488.76110196153 mm³**, including the unchanged four holes and fillet.
+The screenshots show that later edited state, not a changed frozen fixture.
+All native feature runs save revision 18, kill the isolated test worker after a
+newer recoverable revision 19, recover 19, then reopen the unchanged saved revision
+18 and verify stable definitions, geometry and volume. Native face picking,
+feature parameter editing, failed preview refusal, Escape cancellation, parent
+sketch edits, undo/redo, density-based mass and display invariance are asserted.
+
+Per-feature times are diagnostics, not SRS latency/FPS acceptance. Effective DPRs
+1/1.25/1.5/1.75/2 use one Retina display. Running these workflows on physical 8 GiB
+hardware does not close Module 11 budgets. Full 4.0c/4.4c platform/device gates stay
+Blocked; 4.1a–4.4b are checked only for the explicit available-Mac scope.
+
 ## Failures and corrections retained
 
 Development logs are retained under [features-dev](artifacts/module-4/features-dev).
@@ -67,8 +103,8 @@ state. The first Cocoa run failed the Escape assertion; the native harness now
 requires active-window and viewport focus before exercising the shortcut, and
 retains the actual cancellation assertion. Screenshot review moved diagnostics
 out of the form's available height, collapsed timings, and corrected the viewport's
-old reference-scene label. Copied-body dressing has a focused geometry regression.
-An earlier full verification attempt was explicitly interrupted after source
+old reference-scene label. Copied-body dressing and deterministic feature-local body identity have focused geometry regressions.
+Two earlier full verification attempts were explicitly interrupted after source
 review changes; it is not final source-identity evidence.
 
 ## Remaining blockers

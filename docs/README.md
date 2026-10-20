@@ -38,7 +38,7 @@ The format follows the earlier DeskCore plan: **Module 0 → Module 1 → Module
 | Document metadata, saved/recoverable revisions, semantic undo/redo | Available-Mac foundation tested; full requirement acceptance Blocked |
 | Planar sketches, constraints and expressions | Available-Mac implementation including [later input/direct-editing repair](testing/module-3-input-repair.md); see [Module 3 evidence](testing/module-3.md) |
 | Command tabs / left PropertyManager / direct sketch editing | Available-Mac [input repair](testing/module-3-input-repair.md) and [4.0 workspace evidence](testing/module-4.md); physical-device/full platform acceptance Blocked |
-| Solid features and measurement | Module 4 implementation; verification in progress in [Module 4 evidence](testing/module-4.md) |
+| Solid features and measurement | Module 4 implementation; available-Mac verification in [Module 4 evidence](testing/module-4.md) |
 | Mates, drawing content and release tests | Not run; Module 5 onward is outside current authorization |
 
 Module 0 experiments remain isolated under tests and tools. The user authorized Modules 1 and 2 on 19 October 2026. Their available-Mac implementation and tests are recorded separately. Cross-platform completion remains Blocked. The user explicitly authorized Module 3 in the subsequent instruction; its implementation and verification are recorded in [Module 3 evidence](testing/module-3.md). The subsequent instruction on 20 October authorizes Module 3 input/direct-editing repair followed by Module 4.0a–c UI and verification. The user subsequently authorized all remaining Module 4 tasks starting with 4.1a on 20 October 2026. Stop before Module 5 and ask before proceeding. Unavailable platform and hardware checks remain Blocked.

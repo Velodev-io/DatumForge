@@ -1,7 +1,7 @@
 # Technical Specification and Implementation Plan — Solidworks Clone
 
 **Version:** 0.1 · **Date:** 19 October 2026  
-**Status:** Modules 1–3 available-Mac scope implemented and scoped verification recorded; cross-platform matrix Blocked. Module 4.0 workspace UI is implemented/verified for available-Mac scope; exact features 4.1–4.4 are implemented with verification in progress; Modules 5–12 have not started; full product acceptance remains pending.
+**Status:** Modules 1–3 available-Mac scope implemented and scoped verification recorded; cross-platform matrix Blocked. Module 4.0 workspace UI is implemented/verified for available-Mac scope; exact features 4.1–4.4 have available-Mac implementation and scoped evidence; Modules 5–12 have not started; full product acceptance remains pending.
 **Constraints:** Native macOS/Windows/Linux, local core, **8 GB system RAM minimum**.  
 **Authority:** [SRS](SRS.md) → [SDD](SDD.md) → contracts below → ordered modules. [Step Zero](STEP_ZERO.md) is Module 0.
 
@@ -322,30 +322,30 @@ The user authorized the proposed implementation order on 20 October 2026: repair
 
 #### 4.1 — Implement extrusion and revolve
 
-- [ ] **4.1a:** Implement the exact R1 schemas for add/new-body/cut extrusion and revolve, profile validation, axis/direction/extent controls, and preview/commit.
-- [ ] **4.1b:** Validate units, body count, closure, self-intersection, tolerance growth, and kernel errors; preserve last committed geometry on rejected operations.
+- [x] **4.1a:** Implement the exact R1 schemas for add/new-body/cut extrusion and revolve, profile validation, axis/direction/extent controls, and preview/commit.
+- [x] **4.1b:** Validate units, body count, closure, self-intersection, tolerance growth, and kernel errors; preserve last committed geometry on rejected operations.
 
 #### 4.2 — Implement the remaining initial features
 
-- [ ] **4.2a:** Add constant-radius fillet, equal-distance chamfer, simple hole, linear/circular pattern, and mirror in the declared supported cases.
-- [ ] **4.2b:** Emit provenance/history maps for generated/modified/deleted topology as each operation is introduced. Unsupported variants stay unavailable with explanations.
+- [x] **4.2a:** Add constant-radius fillet, equal-distance chamfer, simple hole, linear/circular pattern, and mirror in the declared supported cases.
+- [x] **4.2b:** Emit provenance/history maps for generated/modified/deleted topology as each operation is introduced. Unsupported variants stay unavailable with explanations.
 
 #### 4.3 — Implement measurements and material density
 
-- [ ] **4.3a:** Query exact lengths/angles/radii/area/volume/bounds and optional density-based mass at an explicit result revision.
-- [ ] **4.3b:** Integrate feature parameter editing, previews, per-feature timing, cancel paths, and initial history transactions; retain worker ownership of exact BRep.
+- [x] **4.3a:** Query exact lengths/angles/radii/area/volume/bounds and optional density-based mass at an explicit result revision.
+- [x] **4.3b:** Integrate feature parameter editing, previews, per-feature timing, cancel paths, and initial history transactions; retain worker ownership of exact BRep.
 
 #### 4.4 — Required module tests
 
-- [ ] **4.4a — T-17–T-18, T-22, T-25:** Compare known boxes, cylinders, bracket dimensions/volume, hole counts, and supported feature outcomes to analytic expected values; verify exact output validity.
-- [ ] **4.4b — NFR-007–NFR-008 / T-47–T-48:** Change mesh detail and display mode; expect unchanged exact measurements/precise results. Test unit scales, tolerances, invalid radius and self-intersecting profiles.
+- [x] **4.4a — T-17–T-18, T-22, T-25:** Compare known boxes, cylinders, bracket dimensions/volume, hole counts, and supported feature outcomes to analytic expected values; verify exact output validity.
+- [x] **4.4b — NFR-007–NFR-008 / T-47–T-48:** Change mesh detail and display mode; expect unchanged exact measurements/precise results. Test unit scales, tolerances, invalid radius and self-intersecting profiles.
 - [ ] **4.4c — Native B1 vertical slice:** Sketch → extrude → cut/pattern → fillet → dimension edit → undo/redo → save/reopen → worker restart. Expect correct shape, parameters, and durable state.
 
 **Test pass criteria:** The 4.0 native command-tab/left-PropertyManager layout checks pass for declared targets, and every supported initial feature has valid, invalid, cancel, persistence, and analytic-invariant coverage.
 
 **Completion check:** The planned modeling layout and B1 modeling slice pass with native evidence; large history/reference mutation corpus is owned by Module 5.
 
-**Evidence:** `docs/testing/module-4.md`. **Current status:** 4.0a/4.0b Pass for available-Mac scope; 4.0c Blocked for full platform/device acceptance despite passing Cocoa workflows and screenshots at all five effective scales. 4.1–4.4 exact features implemented; verification in progress. Stop before Module 5 (5.1a).
+**Evidence:** `docs/testing/module-4.md`. **Current status:** 4.0a/4.0b Pass for available-Mac scope; 4.0c Blocked for full platform/device acceptance despite passing Cocoa workflows and screenshots at all five effective scales. 4.1a–4.4b Pass for the available-Mac scope in the task register. 4.4c has passing native B1 evidence at all five effective scales but remains Blocked for full native platform/device completion. Dependency graphs/reference repair are unstarted. Stop before Module 5 (5.1a).
 
 
 ### Module 5 — Dependencies, rebuilds, topology references, and repair
@@ -641,5 +641,5 @@ Keep test failures and unavailable environments visible. Visual screenshots, eng
 
 ## 8. Current implementation status
 
-Module 0 feasibility evidence remains in [module-0](testing/module-0.md). The user authorized Module 1 on 19 October 2026; see [Mac reference-workspace implementation and native evidence](testing/module-1.md). Its platform matrix remains Blocked. T-01/T-03/T-04/T-35/T-53 subsets have available-Mac evidence; full associated requirements remain Blocked and other product tests remain Not run. Module 2 document metadata, working/saved persistence, semantic undo/redo and recovery subsets are verified on the available Mac; see [Module 2 evidence](testing/module-2.md). Full associated requirement rows remain Blocked. Module 3 planar sketches, constraints, expressions and transactional editing have scoped available-Mac evidence in [Module 3](testing/module-3.md); full platform completion remains Blocked. Module 4.0 workspace UI is implemented/verified for available-Mac scope; exact features 4.1–4.4 and Modules 5–12 have not started. Frozen fixture recipes, reference display and small storage fixtures do not establish SRS resource budgets. Documentation checks verify structure/evidence links only.
+Module 0 feasibility evidence remains in [module-0](testing/module-0.md). The user authorized Module 1 on 19 October 2026; see [Mac reference-workspace implementation and native evidence](testing/module-1.md). Its platform matrix remains Blocked. T-01/T-03/T-04/T-35/T-53 subsets have available-Mac evidence; full associated requirements remain Blocked and other product tests remain Not run. Module 2 document metadata, working/saved persistence, semantic undo/redo and recovery subsets are verified on the available Mac; see [Module 2 evidence](testing/module-2.md). Full associated requirement rows remain Blocked. Module 3 planar sketches, constraints, expressions and transactional editing have scoped available-Mac evidence in [Module 3](testing/module-3.md); full platform completion remains Blocked. Module 4.0 workspace UI is implemented/verified for available-Mac scope; exact features 4.1–4.4 now have available-Mac implementation and verified subsets in [Module 4](testing/module-4.md), with full native platform/device completion Blocked. Modules 5–12 have not started; stop before 5.1a. Frozen fixture recipes, reference display and small storage fixtures do not establish SRS resource budgets. Documentation checks verify structure/evidence links only.
 

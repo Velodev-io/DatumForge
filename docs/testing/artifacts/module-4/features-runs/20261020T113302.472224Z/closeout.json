@@ -1,0 +1,22 @@
+{
+  "status": "Available-Mac scope complete; full native platform/device gates Blocked",
+  "tasks_passed": [
+    "4.1a",
+    "4.1b",
+    "4.2a",
+    "4.2b",
+    "4.3a",
+    "4.3b",
+    "4.4a",
+    "4.4b"
+  ],
+  "tasks_blocked": [
+    "4.0c",
+    "4.4c"
+  ],
+  "native_mac_subset": "Pass at all five effective scales",
+  "source_sha256": "2047d1d8d3dc99a8f16953f023c1368631b21641cf072d4cd4b48f3ffbcafdd3",
+  "documentation_validation": "spec-validation.json",
+  "stop_before": "5.1a",
+  "module_5_started": false
+}

@@ -11,7 +11,7 @@ expressions. See [Module 3 evidence and blockers](docs/testing/module-3.md).
 Module 3 input repairs and the authorized Module 4.0 workspace add command tabs,
 a left PropertyManager and direct shape editing. See [workspace evidence and
 blockers](docs/testing/module-4.md). Windows/Linux and full R1 acceptance remain
-Blocked or Not run. Remaining Module 4 exact features are authorized and implemented; final verification is in progress. Stop before Module 5.
+Blocked or Not run. Remaining Module 4 exact features are authorized and implemented; available-Mac verification passes; full platform/device gates remain Blocked. Stop before Module 5.
 
 Build and launch from this checkout:
 

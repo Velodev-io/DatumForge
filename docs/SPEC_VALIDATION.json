@@ -1,17 +1,17 @@
 {
   "scope": "Documentation structure only; no product acceptance tests executed",
-  "checked_at_utc": "2026-10-20T14:50:10.643949+00:00",
+  "checked_at_utc": "2026-10-20T14:50:10.710528+00:00",
   "status": "pass",
   "product_implementation": "Modules 1-4 scoped implementation on the available Mac; see task and module evidence",
   "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
   "documents": {
     "README.md": {
-      "sha256": "dc0fee3bf037f4d8d847abae5bb94dae8b2716ca771927aae4507eb3d64bb3b6",
+      "sha256": "b702400f7955c7cfb5748a39070b29a00b51fc67e1a9a85da03888a7fb84da3d",
       "lines": 52,
-      "words": 813
+      "words": 812
     },
     "SRS.md": {
-      "sha256": "65f4ce25ad055a91afe9dd7fe60cebef59bc2f398025764c7bf7e2a57b99723e",
+      "sha256": "b7abb614a9ccec1460c211d908129bf817bcc8d8f08c42f651d06eaaffd513d8",
       "lines": 203,
       "words": 3025
     },
@@ -21,9 +21,9 @@
       "words": 4119
     },
     "TECH_SPEC.md": {
-      "sha256": "98dbe7c85b5fe870e5dfa0db7a5075e0086b76ac1bd72e3772dc30832b56457c",
+      "sha256": "149bea717dddaff446e053ad4be51f34a8258e7d8e4c0dc1b0dcd609d26db728",
       "lines": 645,
-      "words": 7270
+      "words": 7307
     },
     "STEP_ZERO.md": {
       "sha256": "23b189ab422dbc1fed57aa6f171b9d794228add57bc056bf1eeeb98d6062bb8e",
@@ -31,9 +31,9 @@
       "words": 1831
     },
     "TRACEABILITY.md": {
-      "sha256": "6a39e2ca8e389ab7c59ade9601bbba24fd3ceaccf45ede29eb5c9254c96a8bf1",
-      "lines": 88,
-      "words": 1256
+      "sha256": "8a7c0b2db2595787c3d45da8bc3b80d24634d94a027c135d8760d2e2a2bbff9e",
+      "lines": 90,
+      "words": 1289
     },
     "REFERENCES.md": {
       "sha256": "9df2410a2d7dec2b39308e4058d1bcecf5ec65794bb693c8455b98230bc7f5bc",
@@ -44,7 +44,7 @@
   "requirements": 56,
   "traceability_rows": 56,
   "modules": 13,
-  "unchecked_engineering_tasks": 94,
-  "completed_engineering_tasks": 65,
+  "unchecked_engineering_tasks": 86,
+  "completed_engineering_tasks": 73,
   "errors": []
 }
