@@ -24,3 +24,7 @@ Historical branch identifiers and reviewer labels were anonymized for publicatio
 ## Validation
 
 Publication-time results are recorded in `docs/testing/artifacts/publication/checks.json` on the WIP branch. Historical module evidence is retained in its original module folders. Unavailable Windows/Linux, physical-device and full workload checks remain Blocked or Not run.
+
+Publication checks passed for all 31 enabled tests on the available Mac solid-modeling source (one intentional failure probe disabled). Configure/build, formatting, Clang static analysis (48 project-owned translation units), ownership and research-integrity checks passed. Every published branch passes the specification structure check.
+
+The frozen Module 5 snapshot is **not merge-ready**: `HistoryPanel.cpp` fails to compile because a CBOR value is passed directly as combo-box user data, and formatting fails. No Module 5 test pass is claimed. Newer live source edits were left untouched outside the frozen snapshot.

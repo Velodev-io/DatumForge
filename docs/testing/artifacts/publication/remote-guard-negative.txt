@@ -1,0 +1,1 @@
+Pass: unapproved remote destination is rejected; authorized origin is tested separately.

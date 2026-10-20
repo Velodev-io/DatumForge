@@ -1,0 +1,122 @@
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:5:21: error: code should be clang-formatted [-Wclang-format-violations]
+using namespace cad;using sketch::fields;
+                    ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:19: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                  ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:23: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                      ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:30: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                             ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:31: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                              ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:57: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                        ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:63: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                              ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:76: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                           ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:77: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                            ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:92: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                                           ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:98: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                                                 ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:99: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                                                  ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:112: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                                                               ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:148: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                                                                                                   ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:151: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                                                                                                      ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:175: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                                                                                                                              ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:177: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                                                                                                                                ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:180: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                                                                                                                                   ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:221: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                                                                                                                                                                            ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:223: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                                                                                                                                                                              ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:6:226: error: code should be clang-formatted [-Wclang-format-violations]
+int main(int argc,char**argv){QCoreApplication app(argc,argv);return run([]{fixture4::B1 b;auto a=b.features();evaluation::Plan first(b.sketches(),a);CHECK(first.nodes.size()==6);CHECK(first.descendants[b.base.id].size()==5);
+                                                                                                                                                                                                                                 ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:15: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+              ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:16: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+               ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:23: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                      ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:31: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                              ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:32: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                               ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:40: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                       ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:50: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                                 ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:51: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                                  ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:65: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                                                ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:87: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                                                                      ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:99: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                                                                                  ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:100: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                                                                                   ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:119: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                                                                                                      ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:175: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                                                                                                                                                              ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:181: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                                                                                                                                                                    ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:192: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                                                                                                                                                                               ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:193: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                                                                                                                                                                                ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:225: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                                                                                                                                                                                                                ^
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/tests/module5/plan.cpp:7:227: error: code should be clang-formatted [-Wclang-format-violations]
+    auto other=b.base;other.id=newId();other.name="Independent";a.append(other.map());auto changed=features::parse(a);changed[2].parameters.insert(QStringLiteral("diameter"),.005);auto impact=evaluation::impact(b.sketches(),a,features::encode(changed));CHECK(impact.value("affected").toArray().size()==4);CHECK(impact.value("unaffected").toArray().contains(other.id));
+                                                                                                                                                                                                                                  ^
+
+Remaining repeated formatting diagnostics omitted.
