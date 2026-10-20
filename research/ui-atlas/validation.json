@@ -1,0 +1,16 @@
+{
+  "errors": [],
+  "screen_count": 64,
+  "image_count": 80,
+  "javascript_syntax": "passed",
+  "live_behavior_test": "not performed",
+  "browser_validation": {
+    "screen_search": "passed: Hole Wizard returned two surfaces",
+    "image_modal": "passed: screenshot, review note and source visible",
+    "category_filter": "passed: PDM returned two reviewed images",
+    "empty_search": "passed: explicit no-results state",
+    "overview_layout": "visually inspected in browser",
+    "preview_saved": "preview.jpg",
+    "scope": "Atlas viewer only; SolidWorks runtime not tested"
+  }
+}

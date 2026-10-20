@@ -1,0 +1,127 @@
+{
+  "overview": {
+    "title": "User Interface Overview",
+    "release": "2025",
+    "url": "https://help.solidworks.com/2025/english/SolidWorks/sldworks/c_user_interface_overview.htm"
+  },
+  "manager": {
+    "title": "Manager Pane",
+    "release": "2026",
+    "url": "https://help.solidworks.com/2026/english/SolidWorks/sldworks/c_management_panel.htm"
+  },
+  "task": {
+    "title": "Task Pane",
+    "release": "2026",
+    "url": "https://help.solidworks.com/2026/english/SolidWorks/sldworks/r_task_pane.htm"
+  },
+  "welcome": {
+    "title": "Welcome Dialog Box",
+    "release": "2026",
+    "url": "https://help.solidworks.com/2026/english/SolidWorks/sldworks/c_welcome_dialog_box.htm"
+  },
+  "home": {
+    "title": "Home Tab",
+    "release": "2025",
+    "url": "https://help.solidworks.com/2025/English/SolidWorks/sldworks/c_home_tab.htm"
+  },
+  "new": {
+    "title": "Creating a New SOLIDWORKS Document",
+    "release": "2026",
+    "url": "https://help.solidworks.com/2026/english/SolidWorks/sldworks/c_creating_new_sw_document.htm"
+  },
+  "breadcrumbs": {
+    "title": "Selection Breadcrumbs",
+    "release": "2024",
+    "url": "https://help.solidworks.com/2024/english/solidworks/sldworks/c_selection_breadcrumbs.htm"
+  },
+  "confirm": {
+    "title": "Moving the Confirmation Corner Options to the Pointer",
+    "release": "2016; historical behavior reference",
+    "url": "https://help.solidworks.com/2016/english/whatsnew/c_command_confirmation.htm"
+  },
+  "relations": {
+    "title": "Add Relations/Properties PropertyManager",
+    "release": "2024",
+    "url": "https://help.solidworks.com/2024/English/SolidWorks/sldworks/HIDD_DVE_SKETCH_DEFAULT.htm"
+  },
+  "delete_relations": {
+    "title": "Display/Delete Relations PropertyManager",
+    "release": "2025",
+    "url": "https://help.solidworks.com/2025/english/Solidworks/sldworks/HIDD_DVE_SK_EDIT_RELATIONS.htm"
+  },
+  "modify": {
+    "title": "Modify Dimension",
+    "release": "2024",
+    "url": "https://help.solidworks.com/2024/english/solidworks/sldworks/t_modify_dimension_dialog_box.htm"
+  },
+  "dimension": {
+    "title": "Dimension PropertyManager",
+    "release": "2023",
+    "url": "https://help.solidworks.com/2023/english/SolidWorks/sldworks/HIDD_DVE_POWERASSIST_DIMCMD.htm"
+  },
+  "extrude": {
+    "title": "Extrude PropertyManager",
+    "release": "2026",
+    "url": "https://help.solidworks.com/2026/english/SolidWorks/sldworks/r_extrude_propertymanager.htm"
+  },
+  "hole_type": {
+    "title": "Hole Wizard Type PropertyManager",
+    "release": "2026",
+    "url": "https://help.solidworks.com/2026/English/SolidWorks/Sldworks/r_HIDD_DVE_HW_HOLE_SPEC.htm"
+  },
+  "hole_positions": {
+    "title": "Hole Wizard Positions PropertyManager",
+    "release": "2024",
+    "url": "https://help.solidworks.com/2024/english/SolidWorks/sldworks/HIDD_DVE_HW_INSERT_HOLE.htm"
+  },
+  "drawing_view": {
+    "title": "Model/Predefined/Empty/Drawing View PropertyManager",
+    "release": "2025",
+    "url": "https://help.solidworks.com/2025/english/SolidWorks/sldworks/HIDD_DVE_NAMED_VIEW.htm"
+  },
+  "drawing_properties": {
+    "title": "Drawing View Properties",
+    "release": "2021",
+    "url": "https://help.solidworks.com/2021/english/SolidWorks/sldworks/HIDD_DRVIEW_PROP.htm"
+  },
+  "display_states": {
+    "title": "Display State Mode",
+    "release": "2025",
+    "url": "https://help.solidworks.com/2025/english/Solidworks/sldworks/c_Display_State_Mode.htm"
+  },
+  "switch_state": {
+    "title": "Changing from One Display State to Another",
+    "release": "2026",
+    "url": "https://help.solidworks.com/2026/english/SolidWorks/sldworks/t_Changing_from_One_Display_State_to_Another.htm"
+  },
+  "interference": {
+    "title": "Interference Detection PropertyManager",
+    "release": "2025",
+    "url": "https://help.solidworks.com/2025/English/SolidWorks/sldworks/HIDD_DVE_INTERFERENCE.htm"
+  },
+  "flange": {
+    "title": "Edge-Flange PropertyManager",
+    "release": "2025",
+    "url": "https://help.solidworks.com/2025/english/SolidWorks/sldworks/HIDD_FEAT_SM_EDGE_FLANGE.htm"
+  },
+  "pdm": {
+    "title": "PDM File Explorer Interface",
+    "release": "2024",
+    "url": "https://help.solidworks.com/2024/english/EnterprisePDM/FileExplorer/c_Explorer_View.htm"
+  },
+  "pdm_detail": {
+    "title": "PDM File Detail View",
+    "release": "2025; scope may differ from Windows client",
+    "url": "https://help.solidworks.com/2025/English/EnterprisePDM/fileexplorer/r_File_Detail_View.htm"
+  },
+  "shortcuts": {
+    "title": "Shortcut Bars",
+    "release": "2026",
+    "url": "https://help.solidworks.com/2026/english/solidworks/sldworks/c_shortcut_bars.htm"
+  },
+  "orientation": {
+    "title": "Orientation",
+    "release": "2023",
+    "url": "https://help.solidworks.com/2023/english/SolidWorks/acadhelp/c_Orientation.htm"
+  }
+}

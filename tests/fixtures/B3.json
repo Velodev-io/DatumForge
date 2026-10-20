@@ -1,0 +1,1560 @@
+{
+  "actual_counts": null,
+  "evaluation": "Not run: assembly/history Module 7; underconstrained distance chain intentional",
+  "expected": {
+    "mates": 99,
+    "occurrences": 100,
+    "unique_definitions": 10,
+    "visible_triangles_max": 1000000
+  },
+  "id": "B3",
+  "kernel_length_unit": "mm",
+  "license": "CC0-1.0 for these synthetic fixture recipes only",
+  "recipe": {
+    "definitions": [
+      {
+        "source": "B1",
+        "width_mm": 80
+      },
+      {
+        "source": "B1",
+        "width_mm": 81
+      },
+      {
+        "source": "B1",
+        "width_mm": 82
+      },
+      {
+        "source": "B1",
+        "width_mm": 83
+      },
+      {
+        "source": "B1",
+        "width_mm": 84
+      },
+      {
+        "source": "B1",
+        "width_mm": 85
+      },
+      {
+        "source": "B1",
+        "width_mm": 86
+      },
+      {
+        "source": "B1",
+        "width_mm": 87
+      },
+      {
+        "source": "B1",
+        "width_mm": 88
+      },
+      {
+        "source": "B1",
+        "width_mm": 89
+      }
+    ],
+    "grounded": "occ-000",
+    "mates": [
+      {
+        "distance_mm": 100,
+        "from": "occ-000",
+        "to": "occ-001",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-001",
+        "to": "occ-002",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-002",
+        "to": "occ-003",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-003",
+        "to": "occ-004",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-004",
+        "to": "occ-005",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-005",
+        "to": "occ-006",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-006",
+        "to": "occ-007",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-007",
+        "to": "occ-008",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-008",
+        "to": "occ-009",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 903.5485598461214,
+        "from": "occ-009",
+        "to": "occ-010",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-010",
+        "to": "occ-011",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-011",
+        "to": "occ-012",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-012",
+        "to": "occ-013",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-013",
+        "to": "occ-014",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-014",
+        "to": "occ-015",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-015",
+        "to": "occ-016",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-016",
+        "to": "occ-017",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-017",
+        "to": "occ-018",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-018",
+        "to": "occ-019",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 903.5485598461214,
+        "from": "occ-019",
+        "to": "occ-020",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-020",
+        "to": "occ-021",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-021",
+        "to": "occ-022",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-022",
+        "to": "occ-023",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-023",
+        "to": "occ-024",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-024",
+        "to": "occ-025",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-025",
+        "to": "occ-026",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-026",
+        "to": "occ-027",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-027",
+        "to": "occ-028",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-028",
+        "to": "occ-029",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 903.5485598461214,
+        "from": "occ-029",
+        "to": "occ-030",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-030",
+        "to": "occ-031",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-031",
+        "to": "occ-032",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-032",
+        "to": "occ-033",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-033",
+        "to": "occ-034",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-034",
+        "to": "occ-035",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-035",
+        "to": "occ-036",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-036",
+        "to": "occ-037",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-037",
+        "to": "occ-038",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-038",
+        "to": "occ-039",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 903.5485598461214,
+        "from": "occ-039",
+        "to": "occ-040",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-040",
+        "to": "occ-041",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-041",
+        "to": "occ-042",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-042",
+        "to": "occ-043",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-043",
+        "to": "occ-044",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-044",
+        "to": "occ-045",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-045",
+        "to": "occ-046",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-046",
+        "to": "occ-047",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-047",
+        "to": "occ-048",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-048",
+        "to": "occ-049",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 903.5485598461214,
+        "from": "occ-049",
+        "to": "occ-050",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-050",
+        "to": "occ-051",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-051",
+        "to": "occ-052",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-052",
+        "to": "occ-053",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-053",
+        "to": "occ-054",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-054",
+        "to": "occ-055",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-055",
+        "to": "occ-056",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-056",
+        "to": "occ-057",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-057",
+        "to": "occ-058",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-058",
+        "to": "occ-059",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 903.5485598461214,
+        "from": "occ-059",
+        "to": "occ-060",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-060",
+        "to": "occ-061",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-061",
+        "to": "occ-062",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-062",
+        "to": "occ-063",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-063",
+        "to": "occ-064",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-064",
+        "to": "occ-065",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-065",
+        "to": "occ-066",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-066",
+        "to": "occ-067",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-067",
+        "to": "occ-068",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-068",
+        "to": "occ-069",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 903.5485598461214,
+        "from": "occ-069",
+        "to": "occ-070",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-070",
+        "to": "occ-071",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-071",
+        "to": "occ-072",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-072",
+        "to": "occ-073",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-073",
+        "to": "occ-074",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-074",
+        "to": "occ-075",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-075",
+        "to": "occ-076",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-076",
+        "to": "occ-077",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-077",
+        "to": "occ-078",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-078",
+        "to": "occ-079",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 903.5485598461214,
+        "from": "occ-079",
+        "to": "occ-080",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-080",
+        "to": "occ-081",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-081",
+        "to": "occ-082",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-082",
+        "to": "occ-083",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-083",
+        "to": "occ-084",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-084",
+        "to": "occ-085",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-085",
+        "to": "occ-086",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-086",
+        "to": "occ-087",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-087",
+        "to": "occ-088",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-088",
+        "to": "occ-089",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 903.5485598461214,
+        "from": "occ-089",
+        "to": "occ-090",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-090",
+        "to": "occ-091",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-091",
+        "to": "occ-092",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-092",
+        "to": "occ-093",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-093",
+        "to": "occ-094",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-094",
+        "to": "occ-095",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-095",
+        "to": "occ-096",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-096",
+        "to": "occ-097",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-097",
+        "to": "occ-098",
+        "type": "distance"
+      },
+      {
+        "distance_mm": 100,
+        "from": "occ-098",
+        "to": "occ-099",
+        "type": "distance"
+      }
+    ],
+    "occurrences": [
+      {
+        "definition": 0,
+        "id": "occ-000",
+        "translation_mm": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "definition": 1,
+        "id": "occ-001",
+        "translation_mm": [
+          100,
+          0,
+          0
+        ]
+      },
+      {
+        "definition": 2,
+        "id": "occ-002",
+        "translation_mm": [
+          200,
+          0,
+          0
+        ]
+      },
+      {
+        "definition": 3,
+        "id": "occ-003",
+        "translation_mm": [
+          300,
+          0,
+          0
+        ]
+      },
+      {
+        "definition": 4,
+        "id": "occ-004",
+        "translation_mm": [
+          400,
+          0,
+          0
+        ]
+      },
+      {
+        "definition": 5,
+        "id": "occ-005",
+        "translation_mm": [
+          500,
+          0,
+          0
+        ]
+      },
+      {
+        "definition": 6,
+        "id": "occ-006",
+        "translation_mm": [
+          600,
+          0,
+          0
+        ]
+      },
+      {
+        "definition": 7,
+        "id": "occ-007",
+        "translation_mm": [
+          700,
+          0,
+          0
+        ]
+      },
+      {
+        "definition": 8,
+        "id": "occ-008",
+        "translation_mm": [
+          800,
+          0,
+          0
+        ]
+      },
+      {
+        "definition": 9,
+        "id": "occ-009",
+        "translation_mm": [
+          900,
+          0,
+          0
+        ]
+      },
+      {
+        "definition": 0,
+        "id": "occ-010",
+        "translation_mm": [
+          0,
+          80,
+          0
+        ]
+      },
+      {
+        "definition": 1,
+        "id": "occ-011",
+        "translation_mm": [
+          100,
+          80,
+          0
+        ]
+      },
+      {
+        "definition": 2,
+        "id": "occ-012",
+        "translation_mm": [
+          200,
+          80,
+          0
+        ]
+      },
+      {
+        "definition": 3,
+        "id": "occ-013",
+        "translation_mm": [
+          300,
+          80,
+          0
+        ]
+      },
+      {
+        "definition": 4,
+        "id": "occ-014",
+        "translation_mm": [
+          400,
+          80,
+          0
+        ]
+      },
+      {
+        "definition": 5,
+        "id": "occ-015",
+        "translation_mm": [
+          500,
+          80,
+          0
+        ]
+      },
+      {
+        "definition": 6,
+        "id": "occ-016",
+        "translation_mm": [
+          600,
+          80,
+          0
+        ]
+      },
+      {
+        "definition": 7,
+        "id": "occ-017",
+        "translation_mm": [
+          700,
+          80,
+          0
+        ]
+      },
+      {
+        "definition": 8,
+        "id": "occ-018",
+        "translation_mm": [
+          800,
+          80,
+          0
+        ]
+      },
+      {
+        "definition": 9,
+        "id": "occ-019",
+        "translation_mm": [
+          900,
+          80,
+          0
+        ]
+      },
+      {
+        "definition": 0,
+        "id": "occ-020",
+        "translation_mm": [
+          0,
+          160,
+          0
+        ]
+      },
+      {
+        "definition": 1,
+        "id": "occ-021",
+        "translation_mm": [
+          100,
+          160,
+          0
+        ]
+      },
+      {
+        "definition": 2,
+        "id": "occ-022",
+        "translation_mm": [
+          200,
+          160,
+          0
+        ]
+      },
+      {
+        "definition": 3,
+        "id": "occ-023",
+        "translation_mm": [
+          300,
+          160,
+          0
+        ]
+      },
+      {
+        "definition": 4,
+        "id": "occ-024",
+        "translation_mm": [
+          400,
+          160,
+          0
+        ]
+      },
+      {
+        "definition": 5,
+        "id": "occ-025",
+        "translation_mm": [
+          500,
+          160,
+          0
+        ]
+      },
+      {
+        "definition": 6,
+        "id": "occ-026",
+        "translation_mm": [
+          600,
+          160,
+          0
+        ]
+      },
+      {
+        "definition": 7,
+        "id": "occ-027",
+        "translation_mm": [
+          700,
+          160,
+          0
+        ]
+      },
+      {
+        "definition": 8,
+        "id": "occ-028",
+        "translation_mm": [
+          800,
+          160,
+          0
+        ]
+      },
+      {
+        "definition": 9,
+        "id": "occ-029",
+        "translation_mm": [
+          900,
+          160,
+          0
+        ]
+      },
+      {
+        "definition": 0,
+        "id": "occ-030",
+        "translation_mm": [
+          0,
+          240,
+          0
+        ]
+      },
+      {
+        "definition": 1,
+        "id": "occ-031",
+        "translation_mm": [
+          100,
+          240,
+          0
+        ]
+      },
+      {
+        "definition": 2,
+        "id": "occ-032",
+        "translation_mm": [
+          200,
+          240,
+          0
+        ]
+      },
+      {
+        "definition": 3,
+        "id": "occ-033",
+        "translation_mm": [
+          300,
+          240,
+          0
+        ]
+      },
+      {
+        "definition": 4,
+        "id": "occ-034",
+        "translation_mm": [
+          400,
+          240,
+          0
+        ]
+      },
+      {
+        "definition": 5,
+        "id": "occ-035",
+        "translation_mm": [
+          500,
+          240,
+          0
+        ]
+      },
+      {
+        "definition": 6,
+        "id": "occ-036",
+        "translation_mm": [
+          600,
+          240,
+          0
+        ]
+      },
+      {
+        "definition": 7,
+        "id": "occ-037",
+        "translation_mm": [
+          700,
+          240,
+          0
+        ]
+      },
+      {
+        "definition": 8,
+        "id": "occ-038",
+        "translation_mm": [
+          800,
+          240,
+          0
+        ]
+      },
+      {
+        "definition": 9,
+        "id": "occ-039",
+        "translation_mm": [
+          900,
+          240,
+          0
+        ]
+      },
+      {
+        "definition": 0,
+        "id": "occ-040",
+        "translation_mm": [
+          0,
+          320,
+          0
+        ]
+      },
+      {
+        "definition": 1,
+        "id": "occ-041",
+        "translation_mm": [
+          100,
+          320,
+          0
+        ]
+      },
+      {
+        "definition": 2,
+        "id": "occ-042",
+        "translation_mm": [
+          200,
+          320,
+          0
+        ]
+      },
+      {
+        "definition": 3,
+        "id": "occ-043",
+        "translation_mm": [
+          300,
+          320,
+          0
+        ]
+      },
+      {
+        "definition": 4,
+        "id": "occ-044",
+        "translation_mm": [
+          400,
+          320,
+          0
+        ]
+      },
+      {
+        "definition": 5,
+        "id": "occ-045",
+        "translation_mm": [
+          500,
+          320,
+          0
+        ]
+      },
+      {
+        "definition": 6,
+        "id": "occ-046",
+        "translation_mm": [
+          600,
+          320,
+          0
+        ]
+      },
+      {
+        "definition": 7,
+        "id": "occ-047",
+        "translation_mm": [
+          700,
+          320,
+          0
+        ]
+      },
+      {
+        "definition": 8,
+        "id": "occ-048",
+        "translation_mm": [
+          800,
+          320,
+          0
+        ]
+      },
+      {
+        "definition": 9,
+        "id": "occ-049",
+        "translation_mm": [
+          900,
+          320,
+          0
+        ]
+      },
+      {
+        "definition": 0,
+        "id": "occ-050",
+        "translation_mm": [
+          0,
+          400,
+          0
+        ]
+      },
+      {
+        "definition": 1,
+        "id": "occ-051",
+        "translation_mm": [
+          100,
+          400,
+          0
+        ]
+      },
+      {
+        "definition": 2,
+        "id": "occ-052",
+        "translation_mm": [
+          200,
+          400,
+          0
+        ]
+      },
+      {
+        "definition": 3,
+        "id": "occ-053",
+        "translation_mm": [
+          300,
+          400,
+          0
+        ]
+      },
+      {
+        "definition": 4,
+        "id": "occ-054",
+        "translation_mm": [
+          400,
+          400,
+          0
+        ]
+      },
+      {
+        "definition": 5,
+        "id": "occ-055",
+        "translation_mm": [
+          500,
+          400,
+          0
+        ]
+      },
+      {
+        "definition": 6,
+        "id": "occ-056",
+        "translation_mm": [
+          600,
+          400,
+          0
+        ]
+      },
+      {
+        "definition": 7,
+        "id": "occ-057",
+        "translation_mm": [
+          700,
+          400,
+          0
+        ]
+      },
+      {
+        "definition": 8,
+        "id": "occ-058",
+        "translation_mm": [
+          800,
+          400,
+          0
+        ]
+      },
+      {
+        "definition": 9,
+        "id": "occ-059",
+        "translation_mm": [
+          900,
+          400,
+          0
+        ]
+      },
+      {
+        "definition": 0,
+        "id": "occ-060",
+        "translation_mm": [
+          0,
+          480,
+          0
+        ]
+      },
+      {
+        "definition": 1,
+        "id": "occ-061",
+        "translation_mm": [
+          100,
+          480,
+          0
+        ]
+      },
+      {
+        "definition": 2,
+        "id": "occ-062",
+        "translation_mm": [
+          200,
+          480,
+          0
+        ]
+      },
+      {
+        "definition": 3,
+        "id": "occ-063",
+        "translation_mm": [
+          300,
+          480,
+          0
+        ]
+      },
+      {
+        "definition": 4,
+        "id": "occ-064",
+        "translation_mm": [
+          400,
+          480,
+          0
+        ]
+      },
+      {
+        "definition": 5,
+        "id": "occ-065",
+        "translation_mm": [
+          500,
+          480,
+          0
+        ]
+      },
+      {
+        "definition": 6,
+        "id": "occ-066",
+        "translation_mm": [
+          600,
+          480,
+          0
+        ]
+      },
+      {
+        "definition": 7,
+        "id": "occ-067",
+        "translation_mm": [
+          700,
+          480,
+          0
+        ]
+      },
+      {
+        "definition": 8,
+        "id": "occ-068",
+        "translation_mm": [
+          800,
+          480,
+          0
+        ]
+      },
+      {
+        "definition": 9,
+        "id": "occ-069",
+        "translation_mm": [
+          900,
+          480,
+          0
+        ]
+      },
+      {
+        "definition": 0,
+        "id": "occ-070",
+        "translation_mm": [
+          0,
+          560,
+          0
+        ]
+      },
+      {
+        "definition": 1,
+        "id": "occ-071",
+        "translation_mm": [
+          100,
+          560,
+          0
+        ]
+      },
+      {
+        "definition": 2,
+        "id": "occ-072",
+        "translation_mm": [
+          200,
+          560,
+          0
+        ]
+      },
+      {
+        "definition": 3,
+        "id": "occ-073",
+        "translation_mm": [
+          300,
+          560,
+          0
+        ]
+      },
+      {
+        "definition": 4,
+        "id": "occ-074",
+        "translation_mm": [
+          400,
+          560,
+          0
+        ]
+      },
+      {
+        "definition": 5,
+        "id": "occ-075",
+        "translation_mm": [
+          500,
+          560,
+          0
+        ]
+      },
+      {
+        "definition": 6,
+        "id": "occ-076",
+        "translation_mm": [
+          600,
+          560,
+          0
+        ]
+      },
+      {
+        "definition": 7,
+        "id": "occ-077",
+        "translation_mm": [
+          700,
+          560,
+          0
+        ]
+      },
+      {
+        "definition": 8,
+        "id": "occ-078",
+        "translation_mm": [
+          800,
+          560,
+          0
+        ]
+      },
+      {
+        "definition": 9,
+        "id": "occ-079",
+        "translation_mm": [
+          900,
+          560,
+          0
+        ]
+      },
+      {
+        "definition": 0,
+        "id": "occ-080",
+        "translation_mm": [
+          0,
+          640,
+          0
+        ]
+      },
+      {
+        "definition": 1,
+        "id": "occ-081",
+        "translation_mm": [
+          100,
+          640,
+          0
+        ]
+      },
+      {
+        "definition": 2,
+        "id": "occ-082",
+        "translation_mm": [
+          200,
+          640,
+          0
+        ]
+      },
+      {
+        "definition": 3,
+        "id": "occ-083",
+        "translation_mm": [
+          300,
+          640,
+          0
+        ]
+      },
+      {
+        "definition": 4,
+        "id": "occ-084",
+        "translation_mm": [
+          400,
+          640,
+          0
+        ]
+      },
+      {
+        "definition": 5,
+        "id": "occ-085",
+        "translation_mm": [
+          500,
+          640,
+          0
+        ]
+      },
+      {
+        "definition": 6,
+        "id": "occ-086",
+        "translation_mm": [
+          600,
+          640,
+          0
+        ]
+      },
+      {
+        "definition": 7,
+        "id": "occ-087",
+        "translation_mm": [
+          700,
+          640,
+          0
+        ]
+      },
+      {
+        "definition": 8,
+        "id": "occ-088",
+        "translation_mm": [
+          800,
+          640,
+          0
+        ]
+      },
+      {
+        "definition": 9,
+        "id": "occ-089",
+        "translation_mm": [
+          900,
+          640,
+          0
+        ]
+      },
+      {
+        "definition": 0,
+        "id": "occ-090",
+        "translation_mm": [
+          0,
+          720,
+          0
+        ]
+      },
+      {
+        "definition": 1,
+        "id": "occ-091",
+        "translation_mm": [
+          100,
+          720,
+          0
+        ]
+      },
+      {
+        "definition": 2,
+        "id": "occ-092",
+        "translation_mm": [
+          200,
+          720,
+          0
+        ]
+      },
+      {
+        "definition": 3,
+        "id": "occ-093",
+        "translation_mm": [
+          300,
+          720,
+          0
+        ]
+      },
+      {
+        "definition": 4,
+        "id": "occ-094",
+        "translation_mm": [
+          400,
+          720,
+          0
+        ]
+      },
+      {
+        "definition": 5,
+        "id": "occ-095",
+        "translation_mm": [
+          500,
+          720,
+          0
+        ]
+      },
+      {
+        "definition": 6,
+        "id": "occ-096",
+        "translation_mm": [
+          600,
+          720,
+          0
+        ]
+      },
+      {
+        "definition": 7,
+        "id": "occ-097",
+        "translation_mm": [
+          700,
+          720,
+          0
+        ]
+      },
+      {
+        "definition": 8,
+        "id": "occ-098",
+        "translation_mm": [
+          800,
+          720,
+          0
+        ]
+      },
+      {
+        "definition": 9,
+        "id": "occ-099",
+        "translation_mm": [
+          900,
+          720,
+          0
+        ]
+      }
+    ]
+  },
+  "seed": 19002026,
+  "semantic_length_unit": "m",
+  "source": "original project synthetic definitions",
+  "version": 1
+}

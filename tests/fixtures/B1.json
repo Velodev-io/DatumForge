@@ -1,0 +1,71 @@
+{
+  "evaluation": "Recipe frozen; see cad.geometry_topology for actual kernel spike evidence; production history unexecuted",
+  "expected": {
+    "base_volume_mm3": 40000,
+    "cut_volume_mm3": 36000,
+    "final_volume_mm3": 35488.76110196153,
+    "pattern_volume_mm3": 35497.34517542563,
+    "sketch_constraints": 16,
+    "sketch_entities": 8,
+    "solids": 1
+  },
+  "id": "B1",
+  "kernel_length_unit": "mm",
+  "license": "CC0-1.0 for these synthetic fixture recipes only",
+  "recipe": {
+    "depth_mm": 10,
+    "fillet": {
+      "radius_mm": 2,
+      "role": "outer vertical edge at x=0,y=0"
+    },
+    "height_mm": 50,
+    "hole_centers_mm": [
+      [
+        10,
+        10
+      ],
+      [
+        60,
+        10
+      ],
+      [
+        10,
+        40
+      ],
+      [
+        60,
+        40
+      ]
+    ],
+    "hole_radius_mm": 2,
+    "sketches": [
+      {
+        "origin_mm": [
+          0,
+          0
+        ],
+        "size_mm": [
+          80,
+          50
+        ],
+        "type": "rectangle"
+      },
+      {
+        "origin_mm": [
+          20,
+          20
+        ],
+        "size_mm": [
+          20,
+          20
+        ],
+        "type": "rectangle"
+      }
+    ],
+    "width_mm": 80
+  },
+  "seed": 19002026,
+  "semantic_length_unit": "m",
+  "source": "original project synthetic definitions",
+  "version": 1
+}

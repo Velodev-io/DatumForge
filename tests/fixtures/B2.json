@@ -1,0 +1,921 @@
+{
+  "actual_counts": null,
+  "evaluation": "Not run: history evaluation Module 5; caps are not measured counts",
+  "expected": {
+    "bodies": 1,
+    "exact_faces_max": 20000,
+    "features": 100,
+    "visible_triangles_max": 500000,
+    "volume_mm3": 196889.82327294612
+  },
+  "id": "B2",
+  "kernel_length_unit": "mm",
+  "license": "CC0-1.0 for these synthetic fixture recipes only",
+  "recipe": {
+    "features": [
+      {
+        "depth_mm": 10,
+        "profile_mm": [
+          200,
+          100
+        ],
+        "type": "extrude"
+      },
+      {
+        "center_mm": [
+          10,
+          10
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          28,
+          10
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          46,
+          10
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          64,
+          10
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          82,
+          10
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          100,
+          10
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          118,
+          10
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          136,
+          10
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          154,
+          10
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          172,
+          10
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          190,
+          10
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          10,
+          20
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          28,
+          20
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          46,
+          20
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          64,
+          20
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          82,
+          20
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          100,
+          20
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          118,
+          20
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          136,
+          20
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          154,
+          20
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          172,
+          20
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          190,
+          20
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          10,
+          30
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          28,
+          30
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          46,
+          30
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          64,
+          30
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          82,
+          30
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          100,
+          30
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          118,
+          30
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          136,
+          30
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          154,
+          30
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          172,
+          30
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          190,
+          30
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          10,
+          40
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          28,
+          40
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          46,
+          40
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          64,
+          40
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          82,
+          40
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          100,
+          40
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          118,
+          40
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          136,
+          40
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          154,
+          40
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          172,
+          40
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          190,
+          40
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          10,
+          50
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          28,
+          50
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          46,
+          50
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          64,
+          50
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          82,
+          50
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          100,
+          50
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          118,
+          50
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          136,
+          50
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          154,
+          50
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          172,
+          50
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          190,
+          50
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          10,
+          60
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          28,
+          60
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          46,
+          60
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          64,
+          60
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          82,
+          60
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          100,
+          60
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          118,
+          60
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          136,
+          60
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          154,
+          60
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          172,
+          60
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          190,
+          60
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          10,
+          70
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          28,
+          70
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          46,
+          70
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          64,
+          70
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          82,
+          70
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          100,
+          70
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          118,
+          70
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          136,
+          70
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          154,
+          70
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          172,
+          70
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          190,
+          70
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          10,
+          80
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          28,
+          80
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          46,
+          80
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          64,
+          80
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          82,
+          80
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          100,
+          80
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          118,
+          80
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          136,
+          80
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          154,
+          80
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          172,
+          80
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          190,
+          80
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          10,
+          90
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          28,
+          90
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          46,
+          90
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          64,
+          90
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          82,
+          90
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          100,
+          90
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          118,
+          90
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          136,
+          90
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          154,
+          90
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          172,
+          90
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      },
+      {
+        "center_mm": [
+          190,
+          90
+        ],
+        "radius_mm": 1,
+        "through_all": true,
+        "type": "hole"
+      }
+    ]
+  },
+  "seed": 19002026,
+  "semantic_length_unit": "m",
+  "source": "original project synthetic definitions",
+  "version": 1
+}

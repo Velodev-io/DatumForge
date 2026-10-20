@@ -1,0 +1,284 @@
+{
+  "status": "Pass",
+  "checks": [
+    {
+      "action": "init",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "SQLite 3.50.4 WAL/FULL/FK\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "save",
+      "arguments": [
+        ""
+      ],
+      "exit": 0,
+      "stdout": "Saved revision 0\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "commit",
+      "arguments": [
+        "before_commit",
+        "a",
+        "width=80"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=0 commands=0\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=0 commands=0\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "external-kill",
+      "phase": "pause_before_commit",
+      "exit": -9,
+      "recovered_revision": 0
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=1 commands=1\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "external-kill",
+      "phase": "pause_after_commit",
+      "exit": -9,
+      "recovered_revision": 1
+    },
+    {
+      "action": "commit",
+      "arguments": [
+        "after_commit",
+        "a",
+        "width=80"
+      ],
+      "exit": 71,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "commit",
+      "arguments": [
+        "",
+        "a",
+        "width=80"
+      ],
+      "exit": 0,
+      "stdout": "Deduplicated\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "commit",
+      "arguments": [
+        "",
+        "a",
+        "width=81"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/integration/storage_spike.cpp:217: prior == hash.toStdString()"
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "save",
+      "arguments": [
+        "during_snapshot"
+      ],
+      "exit": 72,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "action": "save",
+      "arguments": [
+        "write_error"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: Injected write failure before publication"
+    },
+    {
+      "action": "save",
+      "arguments": [
+        "permission_error"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: Injected permission denial before publication"
+    },
+    {
+      "action": "save",
+      "arguments": [
+        "after_publication"
+      ],
+      "exit": 73,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "action": "inspect",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "commit",
+      "arguments": [
+        "disk_full",
+        "b",
+        "width=82"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: database or disk is full"
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "object",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "source_bytes=4194304 chunk_bytes=65536 sha256=a58789e910e5f939afc433a00fef5930702927dc192cb237fd9e7449bd6ffe1d\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "missing",
+      "arguments": [],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: FOREIGN KEY constraint failed"
+    },
+    {
+      "action": "gc",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "PASS",
+      "stderr": ""
+    },
+    {
+      "action": "save",
+      "arguments": [
+        ""
+      ],
+      "exit": 0,
+      "stdout": "Saved revision 2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "migrate_fail",
+      "arguments": [],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: Injected migration failure on copy; original untouched"
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "save",
+      "arguments": [
+        ""
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: attempt to write a readonly database"
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "lock",
+      "arguments": [
+        "alias.sqlite"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: ProjectLocked"
+    },
+    {
+      "action": "lock",
+      "arguments": [
+        "hardlink.sqlite"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: ProjectLocked"
+    },
+    {
+      "action": "commit",
+      "arguments": [
+        "",
+        "blocked-writer",
+        "must-not-commit"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: ProjectLocked"
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "inspect",
+      "arguments": [],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/integration/storage_spike.cpp:144: db.scalar(\"PRAGMA user_version\") == \"1\""
+    }
+  ],
+  "scope": "local filesystem process-crash prototype; no physical power-loss guarantee"
+}

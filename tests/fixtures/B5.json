@@ -1,0 +1,53 @@
+{
+  "evaluation": "Not run: associative drawing/PDF Module 8",
+  "expected": {
+    "annotations": 1,
+    "bom_quantity": 100,
+    "paper_dimension_mm": 40,
+    "sheets": 2,
+    "views": 5
+  },
+  "id": "B5",
+  "kernel_length_unit": "mm",
+  "license": "CC0-1.0 for these synthetic fixture recipes only",
+  "recipe": {
+    "annotations": [
+      {
+        "type": "linear",
+        "value_mm": 80
+      }
+    ],
+    "projection": "third-angle",
+    "scale": "1:2",
+    "sheets": [
+      {
+        "size_mm": [
+          297,
+          210
+        ],
+        "source": "B1",
+        "views": [
+          "front",
+          "top",
+          "isometric"
+        ]
+      },
+      {
+        "bom": true,
+        "size_mm": [
+          297,
+          210
+        ],
+        "source": "B3",
+        "views": [
+          "front",
+          "isometric"
+        ]
+      }
+    ]
+  },
+  "seed": 19002026,
+  "semantic_length_unit": "m",
+  "source": "original project synthetic definitions",
+  "version": 1
+}

@@ -1,0 +1,11 @@
+{
+  "screen_surfaces": 64,
+  "image_candidates": 80,
+  "saved_images": 69,
+  "inspected_images": 38,
+  "visually_supported_surfaces": 52,
+  "reference_sites": 19,
+  "documentation_sources": 25,
+  "generated_at": "2026-10-19",
+  "live_solidworks_sessions": 0
+}

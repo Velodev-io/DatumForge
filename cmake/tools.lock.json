@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "python_tested": "3.14.7",
+  "cmake_tested": "4.3.1",
+  "clang_format": {
+    "version": "21.1.8",
+    "package": "clang-format==21.1.8",
+    "registry": "https://pypi.org/project/clang-format/21.1.8/",
+    "available_platform": "macOS arm64",
+    "file": "clang_format-21.1.8-py2.py3-none-macosx_11_0_arm64.whl",
+    "sha256": "9a78fabba6b382866819b42a7b220d235a3baf6128a40fb7bd590c037f69879b",
+    "other_platform_wheels": "Blocked until native host selection and hash verification"
+  },
+  "llvm_static_analyzer": "Apple Clang 21.0.0 from recorded Xcode toolchain"
+}

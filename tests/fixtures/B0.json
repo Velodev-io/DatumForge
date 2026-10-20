@@ -1,0 +1,17 @@
+{
+  "evaluation": "Not run: native empty production editor belongs to Module 1",
+  "expected": {
+    "open_documents": 0
+  },
+  "id": "B0",
+  "kernel_length_unit": "mm",
+  "license": "CC0-1.0 for these synthetic fixture recipes only",
+  "recipe": {
+    "documents": [],
+    "settle_seconds": 30
+  },
+  "seed": 19002026,
+  "semantic_length_unit": "m",
+  "source": "original project synthetic definitions",
+  "version": 1
+}

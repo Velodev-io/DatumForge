@@ -1,0 +1,2 @@
+Pass: whitespace/UTF-8 check for 30 sources
+Pass: pinned clang-format 21.1.8 check

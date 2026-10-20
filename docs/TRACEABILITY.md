@@ -1,0 +1,86 @@
+# Requirements and acceptance traceability
+
+**Version:** 0.1 · **Date:** 19 October 2026 · **Status:** All product tests Not run.
+
+[SRS](SRS.md) owns each requirement and its acceptance test definition. [SDD](SDD.md) sections describe the design. [TECH_SPEC](TECH_SPEC.md) modules own implementation and evidence; earlier modules supply prerequisites, later modules complete integration. [Step Zero](STEP_ZERO.md) owns T-00 feasibility/setup tests and does not satisfy the product acceptance rows below.
+
+## Requirement coverage
+
+| Requirement | SDD sections | Primary module | Acceptance test | Current result |
+|---|---|---|---|---|
+| FR-001 | 10 | 1 | T-01 | Not run |
+| FR-002 | 3, 9 | 2 | T-02 | Not run |
+| FR-003 | 5, 10, 11 | 1 | T-03 | Not run |
+| FR-004 | 4, 10 | 1 | T-04 | Not run |
+| FR-005 | 10 | 9 | T-05 | Not run |
+| FR-006 | 3, 9 | 2 | T-06 | Not run |
+| FR-007 | 9 | 2 | T-07 | Not run |
+| FR-008 | 4, 9 | 2 | T-08 | Not run |
+| FR-009 | 9 | 2 | T-09 | Not run |
+| FR-010 | 9 | 2 | T-10 | Not run |
+| FR-011 | 9, 11 | 6 | T-11 | Not run |
+| FR-012 | 3, 7 | 3 | T-12 | Not run |
+| FR-013 | 7 | 3 | T-13 | Not run |
+| FR-014 | 7 | 3 | T-14 | Not run |
+| FR-015 | 4, 7 | 3 | T-15 | Not run |
+| FR-016 | 3, 7, 13 | 3 | T-16 | Not run |
+| FR-017 | 8 | 4 | T-17 | Not run |
+| FR-018 | 8 | 4 | T-18 | Not run |
+| FR-019 | 6 | 5 | T-19 | Not run |
+| FR-020 | 6 | 5 | T-20 | Not run |
+| FR-021 | 6 | 5 | T-21 | Not run |
+| FR-022 | 4, 8 | 4 | T-22 | Not run |
+| FR-023 | 8, 11 | 6 | T-23 | Not run |
+| FR-024 | 11 | 6 | T-24 | Not run |
+| FR-025 | 8, 11 | 4 | T-25 | Not run |
+| FR-026 | 3, 7 | 7 | T-26 | Not run |
+| FR-027 | 7 | 7 | T-27 | Not run |
+| FR-028 | 3, 12 | 7 | T-28 | Not run |
+| FR-029 | 6, 7 | 7 | T-29 | Not run |
+| FR-030 | 7, 8 | 7 | T-30 | Not run |
+| FR-031 | 11 | 8 | T-31 | Not run |
+| FR-032 | 6, 11 | 8 | T-32 | Not run |
+| FR-033 | 11 | 8 | T-33 | Not run |
+| FR-034 | 4, 9 | 10 | T-34 | Not run |
+| FR-035 | 4, 5 | 1 | T-35 | Not run |
+| FR-036 | 12, 13 | 9 | T-36 | Not run |
+| FR-037 | 1, 13 | 9 | T-37 | Not run |
+| FR-038 | 5, 13 | 9 | T-38 | Not run |
+| FR-039 | 9 | 10 | T-39 | Not run |
+| FR-040 | 13, 15 | 12 | T-40 | Not run |
+| NFR-001 | 12 | 11 | T-41 | Not run |
+| NFR-002 | 12 | 11 | T-42 | Not run |
+| NFR-003 | 12 | 11 | T-43 | Not run |
+| NFR-004 | 5, 12 | 11 | T-44 | Not run |
+| NFR-005 | 4, 7, 12 | 11 | T-45 | Not run |
+| NFR-006 | 9, 12 | 11 | T-46 | Not run |
+| NFR-007 | 8, 11 | 4 | T-47 | Not run |
+| NFR-008 | 3, 8 | 4 | T-48 | Not run |
+| NFR-009 | 9, 12 | 5 | T-49 | Not run |
+| NFR-010 | 10 | 9 | T-50 | Not run |
+| NFR-011 | 4, 9 | 10 | T-51 | Not run |
+| NFR-012 | 6, 8, 15 | 11 | T-52 | Not run |
+| NFR-013 | 2, 5 | 1 | T-53 | Not run |
+| NFR-014 | 13 | 9 | T-54 | Not run |
+| NFR-015 | 13, 15 | 12 | T-55 | Not run |
+| NFR-016 | 4, 9, 12, 13 | 10 | T-56 | Not run |
+
+## Milestone acceptance
+
+| Scenario | Primary implementation owners | Required evidence |
+|---|---|---|
+| AC-01 | Modules 1, 3, 4, 9 | Native bracket creation, constraints, preview/cancel, features, undo/redo, offline state |
+| AC-02 | Modules 2, 4, 5, 10 | Real save/reopen, IDs/parameters, dependency rebuild, reference failure and durability |
+| AC-03 | Modules 4, 6 | Real translators and tolerance-aware geometry comparison |
+| AC-04 | Modules 6, 7 | Real assembly/mate solves, update/repair, instancing, portable closure |
+| AC-05 | Modules 6, 8 | Source-edit associativity, dangling annotations, BOM, visually checked scale-correct PDF |
+| AC-06 | Modules 1, 2, 10 | Process-kill and lost-acknowledgment matrix with real SQLite/files |
+| AC-07 | Modules 9, 11, 12 | Physical 8 GB results, native accessibility, offline and installed artifacts per platform |
+
+## Evidence policy
+
+Future evidence lives in `docs/testing/module-N.md`, plus referenced logs/images/raw samples. Test rows may link multiple procedures; a row passes only when all applicable required procedures pass. A module's unit tests cannot alone close its native, physical-hardware, or installed-build gates. Preserve failures and reasons for Blocked/Not applicable outcomes.
+
+Module 0 feasibility is recorded in [module-0](testing/module-0.md), its task status register, and [the product requirement register](testing/requirements.json). T-00 results do not close any T-01–T-56 row above. Module 1 remains unstarted pending explicit user approval.
+
+The documentation checker verifies IDs, links, module/task structure, and status consistency only. It does not execute any CAD, UI, persistence, platform, or performance acceptance test.

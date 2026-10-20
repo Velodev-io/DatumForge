@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "status": "Mac arm64 compatibility build and Module 0 tests passed; Windows/Linux compiler/runtime and platform verification Blocked",
+  "strategy": "project-local source builds; C++20 application; shared Qt/OCCT; no system release dependencies",
+  "toolchain": {
+    "cmake": "4.3.1",
+    "macos_compiler": "AppleClang 21.0.0 (clang-2100.1.1.101)",
+    "ninja": "1.13.1",
+    "cxx_runtime": "libc++ on Mac; platform presets pending verification"
+  },
+  "solver_revision": "256fc7eff3379911ab5daf88e10182c509aa8052",
+  "occt_revision": "c5f20409c52bf8f658314d205a0e5d6f0be0969c",
+  "eigen_revision": "3147391d946bb4b6c68edd901f2add6ac1f31f8c",
+  "sources": {
+    "qtbase": {
+      "version": "6.10.0",
+      "url": "https://download.qt.io/official_releases/qt/6.10/6.10.0/submodules/qtbase-everywhere-src-6.10.0.tar.xz",
+      "file": "qtbase.tar.xz",
+      "sha256": "ead4623bcb54a32257c5b3e3a5aec6d16ec96f4cda58d2e003f5a0c16f72046d"
+    },
+    "occt": {
+      "version": "7.9.2",
+      "url": "https://codeload.github.com/Open-Cascade-SAS/OCCT/tar.gz/c5f20409c52bf8f658314d205a0e5d6f0be0969c",
+      "file": "occt.tar.gz",
+      "sha256": "0a3cbc106f6d2de808f4510dd55e6243a8c29aa0efa34d7be915bf327b967696"
+    },
+    "eigen": {
+      "version": "3.4.0",
+      "url": "https://gitlab.com/libeigen/eigen/-/archive/3147391d946bb4b6c68edd901f2add6ac1f31f8c/eigen-3147391d946bb4b6c68edd901f2add6ac1f31f8c.tar.gz",
+      "file": "eigen.tar.gz",
+      "sha256": "0c8c490764f9c2a793133491adca0cd073b73e0bde965c68cbe58d91b5ed4261"
+    },
+    "sqlite": {
+      "version": "3.50.4",
+      "url": "https://www.sqlite.org/2025/sqlite-amalgamation-3500400.zip",
+      "file": "sqlite.zip",
+      "sha256": "1d3049dd0f830a025a53105fc79fd2ab9431aea99e137809d064d8ee8356b032"
+    },
+    "ninja": {
+      "version": "1.13.1",
+      "url": "https://codeload.github.com/ninja-build/ninja/tar.gz/refs/tags/v1.13.1",
+      "file": "ninja.tar.gz",
+      "sha256": "f0055ad0369bf2e372955ba55128d000cfcc21777057806015b45e4accbebf23"
+    },
+    "boost": {
+      "version": "1.86.0",
+      "url": "https://archives.boost.io/release/1.86.0/source/boost_1_86_0.tar.bz2",
+      "file": "boost.tar.bz2",
+      "sha256": "1bed88e40401b2cb7a1f76d4bab499e352fa4d0c5f31c0dbae64e24d34d7513b"
+    },
+    "planegcs/Constraints.cpp": {
+      "version": "FreeCAD-1.0.2",
+      "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD/256fc7eff3379911ab5daf88e10182c509aa8052/src/Mod/Sketcher/App/planegcs/Constraints.cpp",
+      "file": "planegcs-Constraints.cpp",
+      "sha256": "3983f6c62f25382d3e23b130a3a3afe9566081345ff6b704bb2298b571a192be"
+    },
+    "planegcs/Constraints.h": {
+      "version": "FreeCAD-1.0.2",
+      "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD/256fc7eff3379911ab5daf88e10182c509aa8052/src/Mod/Sketcher/App/planegcs/Constraints.h",
+      "file": "planegcs-Constraints.h",
+      "sha256": "345d684ec5d7e6c728d2e9db061dad9f5f66cbea56725ed5987da40a82a27dd0"
+    },
+    "planegcs/GCS.cpp": {
+      "version": "FreeCAD-1.0.2",
+      "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD/256fc7eff3379911ab5daf88e10182c509aa8052/src/Mod/Sketcher/App/planegcs/GCS.cpp",
+      "file": "planegcs-GCS.cpp",
+      "sha256": "b7609b7493a8e46a3795fc86dd1174885ceada92e59b358095a4f01e8bb2f0ce"
+    },
+    "planegcs/GCS.h": {
+      "version": "FreeCAD-1.0.2",
+      "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD/256fc7eff3379911ab5daf88e10182c509aa8052/src/Mod/Sketcher/App/planegcs/GCS.h",
+      "file": "planegcs-GCS.h",
+      "sha256": "5f8bc0193d8ac13c7e24a71b8c81304e92414e140c4b06a3e36bfb11eec70a5b"
+    },
+    "planegcs/Geo.cpp": {
+      "version": "FreeCAD-1.0.2",
+      "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD/256fc7eff3379911ab5daf88e10182c509aa8052/src/Mod/Sketcher/App/planegcs/Geo.cpp",
+      "file": "planegcs-Geo.cpp",
+      "sha256": "eb56eaf4ee6911c0d0082c1e43e9155dcd11cf2c6443cfc7d3703cf2fbd8e330"
+    },
+    "planegcs/Geo.h": {
+      "version": "FreeCAD-1.0.2",
+      "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD/256fc7eff3379911ab5daf88e10182c509aa8052/src/Mod/Sketcher/App/planegcs/Geo.h",
+      "file": "planegcs-Geo.h",
+      "sha256": "a9c17170d80207d0b4df0f3ec521841a4590cf0548dfd822c4e85e558d76b093"
+    },
+    "planegcs/SubSystem.cpp": {
+      "version": "FreeCAD-1.0.2",
+      "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD/256fc7eff3379911ab5daf88e10182c509aa8052/src/Mod/Sketcher/App/planegcs/SubSystem.cpp",
+      "file": "planegcs-SubSystem.cpp",
+      "sha256": "3d400e9faa1b3262ec6ed8ff4ade4a8eddb0149644dc32f10335fa5ef6400725"
+    },
+    "planegcs/SubSystem.h": {
+      "version": "FreeCAD-1.0.2",
+      "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD/256fc7eff3379911ab5daf88e10182c509aa8052/src/Mod/Sketcher/App/planegcs/SubSystem.h",
+      "file": "planegcs-SubSystem.h",
+      "sha256": "9a601de5fc441675551cf717a21da184060eb2f95bd76a026430f053401ae758"
+    },
+    "planegcs/Util.h": {
+      "version": "FreeCAD-1.0.2",
+      "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD/256fc7eff3379911ab5daf88e10182c509aa8052/src/Mod/Sketcher/App/planegcs/Util.h",
+      "file": "planegcs-Util.h",
+      "sha256": "ff6df589332423ecb4b29e7b2f8d9f2d779f6520861b4155bb8e5a9b2f7a4eeb"
+    },
+    "planegcs/qp_eq.cpp": {
+      "version": "FreeCAD-1.0.2",
+      "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD/256fc7eff3379911ab5daf88e10182c509aa8052/src/Mod/Sketcher/App/planegcs/qp_eq.cpp",
+      "file": "planegcs-qp_eq.cpp",
+      "sha256": "2d6c544c80b08a99d6e6b26d515c36f561399cc5714ac41ce34d852ae0ed3d82"
+    },
+    "planegcs/qp_eq.h": {
+      "version": "FreeCAD-1.0.2",
+      "url": "https://raw.githubusercontent.com/FreeCAD/FreeCAD/256fc7eff3379911ab5daf88e10182c509aa8052/src/Mod/Sketcher/App/planegcs/qp_eq.h",
+      "file": "planegcs-qp_eq.h",
+      "sha256": "f77fcd9cf7e35feba3a9e990e946c8e76961943338f1245adc188f9876ab653e"
+    }
+  },
+  "patches": [
+    {
+      "file": "cmake/patches/qt-6.10.0-arm-yield.patch",
+      "sha256": "b47fd041cbcaf1c74491f17d53a54b0ebb2bb45466c3239afa72713ee7a9bf10"
+    }
+  ],
+  "build_configuration": {
+    "qt": "shared Qt base; compiler patch tracked; see build_dependencies.py",
+    "occt": "shared; exceptions enabled; -O1 -DNDEBUG; Visualization top-level disabled, exchange transitive service/view libs included",
+    "sqlite": "THREADSAFE=1; DQS=0; DEFAULT_FOREIGN_KEYS=1; OMIT_LOAD_EXTENSION=1",
+    "solver": "unchanged pinned PlaneGCS files with generated host integration shims",
+    "mac_sdk": "26.5",
+    "mac_deployment_target": "13.0 flag only; runtime 13.0 untested"
+  }
+}

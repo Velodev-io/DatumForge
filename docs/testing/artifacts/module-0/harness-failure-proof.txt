@@ -1,0 +1,14 @@
+Test project /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-step-zero-harness-06x6dgse
+    Start 1: deliberate_failure
+1/1 Test #1: deliberate_failure ...............***Failed    0.00 sec
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/unit/harness_probe.cpp:2: argc == 1
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.01 sec
+
+The following tests FAILED:
+	  1 - deliberate_failure (Failed)
+
+Pass: executable exit=1; CTest exit=8 for deliberate failure

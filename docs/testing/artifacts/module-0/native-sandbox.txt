@@ -1,0 +1,4 @@
+PasteBoard: Error creating pasteboard: com.apple.pasteboard.clipboard [-4960]
+PasteBoard: Error creating pasteboard: com.apple.pasteboard.find [-4960]
+2026-10-19 15:08:08.384 slice_desktop[52197:733742] Error received in message reply handler: Connection invalid
+2026-10-19 15:08:08.384 slice_desktop[52197:733990] Connection Invalid error for service com.apple.hiservices-xpcservice.

@@ -1,0 +1,34 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+      Start  1: harness.pass
+ 1/10 Test  #1: harness.pass .....................   Passed    0.49 sec
+      Start  2: harness.failure_reporting
+ 2/10 Test  #2: harness.failure_reporting ........   Passed    0.11 sec
+      Start  3: measurement.statistics
+ 3/10 Test  #3: measurement.statistics ...........   Passed    0.11 sec
+      Start  4: harness.deliberate_failure
+ 4/10 Test  #4: harness.deliberate_failure .......***Not Run (Disabled)   0.00 sec
+      Start  5: protocol.boundaries
+ 5/10 Test  #5: protocol.boundaries ..............   Passed    2.22 sec
+      Start  6: storage.crash_matrix
+ 6/10 Test  #6: storage.crash_matrix .............   Passed    1.35 sec
+      Start  7: cad.sketch_solver
+ 7/10 Test  #7: cad.sketch_solver ................***Failed    0.52 sec
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/support/check.hpp:9: std::abs(actual - expected) <= tolerance
+
+      Start  8: cad.rigid_mates
+ 8/10 Test  #8: cad.rigid_mates ..................   Passed    0.91 sec
+      Start  9: fixtures.determinism
+ 9/10 Test  #9: fixtures.determinism .............   Passed    0.09 sec
+      Start 10: isolation.research
+10/10 Test #10: isolation.research ...............   Passed    0.20 sec
+
+89% tests passed, 1 tests failed out of 9
+
+Total Test time (real) =   6.02 sec
+
+The following tests did not run:
+	  4 - harness.deliberate_failure (Disabled)
+
+The following tests FAILED:
+	  7 - cad.sketch_solver (Failed)
+Errors while running CTest

@@ -1,0 +1,14 @@
+[
+  {
+    "name": "build-wrapper",
+    "status": "Blocked",
+    "reason": "10-second retry timeout after prior process cleanup",
+    "output": "b''"
+  },
+  {
+    "name": "ctest-wrapper",
+    "status": "Blocked",
+    "reason": "10-second retry timeout after prior process cleanup",
+    "output": "b''"
+  }
+]

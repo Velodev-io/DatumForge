@@ -1,0 +1,27 @@
+/.deps/
+/build/
+/out/
+/dist/
+/.local/
+__pycache__/
+*.pyc
+.DS_Store
+CMakeUserPresets.json
+*.cadproj
+*.cadproj-*
+*.sqlite*
+*.db
+*.db-*
+*.step
+*.stp
+*.iges
+*.igs
+*.stl
+*.brep
+*.pem
+*.p12
+*.pfx
+.env*
+*.log
+# Research is pre-existing evidence and remains tracked, including its assets.
+!research/**

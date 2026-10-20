@@ -1,0 +1,1111 @@
+[
+  {
+    "id": "UI-001",
+    "category": "Start and files",
+    "name": "Welcome / Home",
+    "surface": "Dialog",
+    "placement": "Centered startup dialog; tabs above action and thumbnail groups.",
+    "entry": "Welcome/Home command or startup.",
+    "controls": "New Part/Assembly/Drawing, Open, recent thumbnails.",
+    "usage": "Choose a document or reuse recent work; image is a 2020 reference, not a 2026 pixel specification.",
+    "images": [
+      "IMG-002"
+    ],
+    "sources": [
+      "welcome",
+      "home"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-002",
+    "category": "Start and files",
+    "name": "Recent-document opening options",
+    "surface": "Popover",
+    "placement": "Attached to a recent-document tile.",
+    "entry": "Open dropdown or options on a recent item.",
+    "controls": "Mode and configuration fields in the captured example.",
+    "usage": "Choose how to load an existing document. Available modes depend on document type and release.",
+    "images": [
+      "IMG-002"
+    ],
+    "sources": [
+      "home"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-003",
+    "category": "Start and files",
+    "name": "New document — basic",
+    "surface": "Dialog",
+    "placement": "Centered chooser with three document types; action buttons along bottom.",
+    "entry": "File > New / New icon.",
+    "controls": "Part, Assembly, Drawing; Advanced; OK/Cancel/Help.",
+    "usage": "Select the required document category, then confirm creation.",
+    "images": [
+      "IMG-059"
+    ],
+    "sources": [
+      "new"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-004",
+    "category": "Start and files",
+    "name": "New document — advanced",
+    "surface": "Dialog",
+    "placement": "Template categories across top, list left and preview right.",
+    "entry": "New document > Advanced.",
+    "controls": "Template tabs, template list, preview, OK/Cancel/Help.",
+    "usage": "Choose a configured template rather than assuming every new file uses identical defaults.",
+    "images": [
+      "IMG-060"
+    ],
+    "sources": [
+      "new"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-005",
+    "category": "Editor shell",
+    "name": "No active document",
+    "surface": "Workspace",
+    "placement": "Top application commands, mostly empty viewport, Task Pane on right.",
+    "entry": "Launch application without an open model.",
+    "controls": "New/Open and resources.",
+    "usage": "The editor frame remains available before any part, assembly or drawing is active.",
+    "images": [
+      "IMG-059",
+      "IMG-070"
+    ],
+    "sources": [
+      "overview"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-006",
+    "category": "Editor shell",
+    "name": "Part workspace",
+    "surface": "Workspace",
+    "placement": "Horizontal command area above central model; manager dock on left.",
+    "entry": "Open or create a part.",
+    "controls": "Features/Sketch/Evaluate tabs, history tree, graphics controls.",
+    "usage": "Select model entities or tree items, launch a feature, and inspect the result.",
+    "images": [
+      "IMG-006"
+    ],
+    "sources": [
+      "overview"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-007",
+    "category": "Editor shell",
+    "name": "Assembly workspace",
+    "surface": "Workspace",
+    "placement": "Assembly tools above graphics; component hierarchy at left.",
+    "entry": "Open or create an assembly.",
+    "controls": "Insert Components, Mate and component actions in the captured toolbar.",
+    "usage": "Manage occurrences and constraints; do not reuse a part toolbar indiscriminately.",
+    "images": [
+      "IMG-008",
+      "IMG-079"
+    ],
+    "sources": [
+      "overview"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-008",
+    "category": "Editor shell",
+    "name": "Drawing workspace",
+    "surface": "Workspace",
+    "placement": "Sheet central; sheet/view tree left; annotation tools top; optional palette right.",
+    "entry": "Open or create a drawing.",
+    "controls": "Annotation commands, views, tables, sheet tabs.",
+    "usage": "Place and annotate model views within a drawing document.",
+    "images": [
+      "IMG-012"
+    ],
+    "sources": [
+      "overview"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-009",
+    "category": "Editor shell",
+    "name": "CommandManager",
+    "surface": "Toolbar",
+    "placement": "Usually below the menu/quick-access row in these references.",
+    "entry": "Select a command tab.",
+    "controls": "Grouped icons, labels, flyouts and document-dependent tabs.",
+    "usage": "Expose task-specific commands while keeping the model visible. Docking and customization alter placement.",
+    "images": [
+      "IMG-006",
+      "IMG-008",
+      "IMG-019"
+    ],
+    "sources": [
+      "overview"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-010",
+    "category": "Editor shell",
+    "name": "Heads-up View toolbar",
+    "surface": "Toolbar",
+    "placement": "Near the upper edge of the graphics area.",
+    "entry": "Visible in an active document.",
+    "controls": "View/navigation/display controls.",
+    "usage": "Operate the camera and display without switching command tabs. Exact icon set varies.",
+    "images": [
+      "IMG-012",
+      "IMG-070",
+      "IMG-079"
+    ],
+    "sources": [
+      "overview"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-011",
+    "category": "Editor shell",
+    "name": "Command search",
+    "surface": "Control",
+    "placement": "Upper-right application frame in the reviewed screenshots.",
+    "entry": "Click Search Commands.",
+    "controls": "Search field and dropdown.",
+    "usage": "Find commands when their toolbar position is unknown; exact search modes need live validation.",
+    "images": [
+      "IMG-059",
+      "IMG-080"
+    ],
+    "sources": [
+      "overview"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-012",
+    "category": "Editor shell",
+    "name": "Document/study tabs and status",
+    "surface": "Status area",
+    "placement": "Along the bottom of the document frame.",
+    "entry": "Visible while editing.",
+    "controls": "Model/study tabs; edit context, definition state and unit indicators.",
+    "usage": "Keep active task and model state visible. Do not confuse sketch definition with cloud save status.",
+    "images": [
+      "IMG-019",
+      "IMG-030",
+      "IMG-079"
+    ],
+    "sources": [
+      "overview"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-013",
+    "category": "Managers and libraries",
+    "name": "FeatureManager design tree",
+    "surface": "Dock",
+    "placement": "Left manager pane below its tabs and filter.",
+    "entry": "Select the FeatureManager tab.",
+    "controls": "Expandable nodes, feature/component icons, selection and context menus.",
+    "usage": "Navigate design structure and select model references. Labels and visible folders are customizable.",
+    "images": [
+      "IMG-006",
+      "IMG-032"
+    ],
+    "sources": [
+      "manager"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-014",
+    "category": "Managers and libraries",
+    "name": "PropertyManager common structure",
+    "surface": "Dock",
+    "placement": "Left manager pane while a command is active.",
+    "entry": "Start a supported command.",
+    "controls": "Command title, confirm/cancel controls, input groups and selections.",
+    "usage": "Collect inputs without a large modal obscuring the model; shared layout is an analytical pattern.",
+    "images": [
+      "IMG-024",
+      "IMG-028",
+      "IMG-065"
+    ],
+    "sources": [
+      "manager"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-015",
+    "category": "Managers and libraries",
+    "name": "ConfigurationManager",
+    "surface": "Dock",
+    "placement": "Left pane; configuration list above a separate display-state section.",
+    "entry": "Select the configuration tab.",
+    "controls": "Configuration rows and active-state indicator.",
+    "usage": "Choose a design variant; the reviewed GIF frame is a visual reference only.",
+    "images": [
+      "IMG-030"
+    ],
+    "sources": [
+      "manager"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-016",
+    "category": "Managers and libraries",
+    "name": "Display States list",
+    "surface": "Dock",
+    "placement": "Lower section of ConfigurationManager.",
+    "entry": "Open ConfigurationManager and choose a display state.",
+    "controls": "State entries and contextual properties.",
+    "usage": "Switch presentation state; linking to configurations is a separate option.",
+    "images": [
+      "IMG-030"
+    ],
+    "sources": [
+      "display_states",
+      "switch_state"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-017",
+    "category": "Managers and libraries",
+    "name": "DisplayManager / Appearances",
+    "surface": "Dock",
+    "placement": "Left manager pane with its own sub-tabs and sorting control.",
+    "entry": "Select the multicolor appearance-manager tab.",
+    "controls": "Appearance hierarchy, sort order, scope groups.",
+    "usage": "Inspect visual overrides at component, face, feature, body and part levels.",
+    "images": [
+      "IMG-031"
+    ],
+    "sources": [
+      "manager"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-018",
+    "category": "Managers and libraries",
+    "name": "Task Pane / Resources",
+    "surface": "Dock",
+    "placement": "Right-hand expandable pane next to a vertical tab strip.",
+    "entry": "Select Resources in the Task Pane.",
+    "controls": "Resource groups and utility links.",
+    "usage": "Keep reusable content and supporting tools separate from command parameters.",
+    "images": [
+      "IMG-059"
+    ],
+    "sources": [
+      "task"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-019",
+    "category": "Managers and libraries",
+    "name": "Design Library / Toolbox",
+    "surface": "Dock",
+    "placement": "Right Task Pane. Exact panel crop is not captured.",
+    "entry": "Select Design Library.",
+    "controls": "Library and reusable-content navigation.",
+    "usage": "Browse and drag suitable reusable design content into the document.",
+    "images": [],
+    "sources": [
+      "task"
+    ],
+    "evidence": "Documentation only",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-020",
+    "category": "Managers and libraries",
+    "name": "File Explorer task tab",
+    "surface": "Dock",
+    "placement": "Right Task Pane. Distinct from the standalone PDM window.",
+    "entry": "Select the File Explorer task tab.",
+    "controls": "Folder/document browsing.",
+    "usage": "Find files without leaving the CAD editor; integration can change its available tabs.",
+    "images": [],
+    "sources": [
+      "task"
+    ],
+    "evidence": "Documentation only",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-021",
+    "category": "Managers and libraries",
+    "name": "View Palette",
+    "surface": "Dock",
+    "placement": "Right Task Pane alongside the drawing sheet.",
+    "entry": "Open View Palette in a drawing.",
+    "controls": "Model chooser, import options and view thumbnails.",
+    "usage": "Drag a chosen model view onto a sheet; follow with projected views when appropriate.",
+    "images": [
+      "IMG-012"
+    ],
+    "sources": [
+      "task"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-022",
+    "category": "Managers and libraries",
+    "name": "DimXpertManager",
+    "surface": "Dock",
+    "placement": "Left manager-tab family; exact content screenshot not captured.",
+    "entry": "Select DimXpertManager.",
+    "controls": "Tolerance-feature list and supported dimension/tolerance commands.",
+    "usage": "Inspect manufacturing annotation structure. Availability is product-dependent.",
+    "images": [],
+    "sources": [
+      "manager"
+    ],
+    "evidence": "Documentation only",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-023",
+    "category": "Selection and overlays",
+    "name": "Selection breadcrumbs",
+    "surface": "Overlay",
+    "placement": "Upper-left graphics area by default in the cited help; optionally at pointer.",
+    "entry": "Select an eligible entity or tree node.",
+    "controls": "Hierarchical references and contextual actions.",
+    "usage": "Navigate selection context. The cited version excludes several selection/command states.",
+    "images": [],
+    "sources": [
+      "breadcrumbs"
+    ],
+    "evidence": "Documentation only",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-024",
+    "category": "Selection and overlays",
+    "name": "Confirmation Corner",
+    "surface": "Overlay",
+    "placement": "Upper-right graphics corner in the reviewed command views.",
+    "entry": "Start a command with confirmation controls.",
+    "controls": "Accept/cancel or command-specific exit controls.",
+    "usage": "Finish or abandon the active operation without returning to the left panel.",
+    "images": [
+      "IMG-066",
+      "IMG-079"
+    ],
+    "sources": [
+      "confirm"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-025",
+    "category": "Selection and overlays",
+    "name": "Feature/component context menu",
+    "surface": "Overlay",
+    "placement": "Beside the clicked tree item or selected object.",
+    "entry": "Right-click eligible selections.",
+    "controls": "Context actions and sometimes a small icon toolbar.",
+    "usage": "Expose actions appropriate to the selected entity and current mode.",
+    "images": [
+      "IMG-009",
+      "IMG-035"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-026",
+    "category": "Selection and overlays",
+    "name": "Selection filters",
+    "surface": "Toolbar",
+    "placement": "Bottom filter toolbar in the reviewed comparison.",
+    "entry": "Show or use the selection-filter toolbar.",
+    "controls": "Entity-type filter icons and filter-state controls.",
+    "usage": "Restrict selectable entity types; 2025/2026 images show different icon sets.",
+    "images": [
+      "IMG-074"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-027",
+    "category": "Selection and overlays",
+    "name": "Customize — Mouse Gestures",
+    "surface": "Dialog",
+    "placement": "Tabbed Customize dialog with command list and environment-specific mapping guide.",
+    "entry": "Tools > Customize > Mouse Gestures.",
+    "controls": "Enable checkbox, gesture count, command search and guide wheels.",
+    "usage": "Assign gestures separately for part, sketch, assembly and drawing contexts.",
+    "images": [
+      "IMG-053",
+      "IMG-055"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-028",
+    "category": "Sketching",
+    "name": "Sketch editing workspace",
+    "surface": "Workspace",
+    "placement": "Sketch toolbar above planar geometry; tree left and definition state below.",
+    "entry": "Choose a plane/face and enter sketch editing.",
+    "controls": "Sketch entities, dimensions, relations and Exit Sketch.",
+    "usage": "Create a profile and constrain intended motion before using it in a feature.",
+    "images": [
+      "IMG-019",
+      "IMG-070"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-029",
+    "category": "Sketching",
+    "name": "Line Properties",
+    "surface": "Command panel",
+    "placement": "Left PropertyManager for a selected line.",
+    "entry": "Select a sketch line.",
+    "controls": "Existing relations, construction option and parameters.",
+    "usage": "Inspect the line and its relations; direct parameters differ from dimensional design intent.",
+    "images": [
+      "IMG-020"
+    ],
+    "sources": [
+      "relations"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-030",
+    "category": "Sketching",
+    "name": "Smart Dimension launch and placement",
+    "surface": "Command",
+    "placement": "Sketch command area plus in-graphics dimension placement.",
+    "entry": "Choose Smart Dimension and relevant entities.",
+    "controls": "Entity selection and dimension placement.",
+    "usage": "Apply an appropriate dimension; panel and popup vary with the selected dimension.",
+    "images": [
+      "IMG-019",
+      "IMG-020"
+    ],
+    "sources": [
+      "modify"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-031",
+    "category": "Sketching",
+    "name": "Modify Dimension popup",
+    "surface": "Floating dialog",
+    "placement": "Near the edited dimension or remembered popup position.",
+    "entry": "Double-click an editable dimension.",
+    "controls": "Value/name, check/cross, numeric increments and command controls.",
+    "usage": "Edit the value and confirm. A 2025/2026 comparison is included; exact positioning is not universal.",
+    "images": [
+      "IMG-073",
+      "IMG-080"
+    ],
+    "sources": [
+      "modify"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-032",
+    "category": "Sketching",
+    "name": "Add Relations",
+    "surface": "Command panel",
+    "placement": "Left PropertyManager; geometry selected in viewport.",
+    "entry": "Dimensions/Relations > Add Relations.",
+    "controls": "Selected entities, existing relations and available new relations.",
+    "usage": "Select compatible entities and apply a relation appropriate to them.",
+    "images": [],
+    "sources": [
+      "relations"
+    ],
+    "evidence": "Documentation only",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-033",
+    "category": "Sketching",
+    "name": "Display/Delete Relations",
+    "surface": "Command panel",
+    "placement": "PropertyManager linked to highlighted sketch geometry.",
+    "entry": "Dimensions/Relations > Display/Delete Relations.",
+    "controls": "Relation filter, relation list and associated entities.",
+    "usage": "Inspect and remove unwanted, dangling or conflicting relations; exact panel appearance not captured.",
+    "images": [],
+    "sources": [
+      "delete_relations"
+    ],
+    "evidence": "Documentation only",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-034",
+    "category": "Features and surfaces",
+    "name": "Boss-Extrude",
+    "surface": "Command panel",
+    "placement": "Left input groups with volumetric preview in the graphics area.",
+    "entry": "Features > Extruded Boss/Base on a suitable sketch.",
+    "controls": "From, Direction 1, depth, optional second direction and thin-feature controls.",
+    "usage": "Set start/end conditions and depth, inspect preview, then accept or cancel.",
+    "images": [
+      "IMG-023",
+      "IMG-024"
+    ],
+    "sources": [
+      "extrude"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-035",
+    "category": "Features and surfaces",
+    "name": "Extruded Cut",
+    "surface": "Command panel",
+    "placement": "Uses the extrusion-command family; exact cut screenshot not captured.",
+    "entry": "Features > Extruded Cut.",
+    "controls": "End conditions, depth and applicable scope options.",
+    "usage": "Use selected contours to remove material; do not present boss-only options as universal.",
+    "images": [],
+    "sources": [
+      "extrude"
+    ],
+    "evidence": "Documentation only",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-036",
+    "category": "Features and surfaces",
+    "name": "Fillet",
+    "surface": "Command panel",
+    "placement": "Left selection/radius controls; blend preview and callouts on geometry.",
+    "entry": "Features > Fillet, then choose suitable edges/faces.",
+    "controls": "Selected items, radius, propagation and preview options.",
+    "usage": "Choose references, set size, inspect blend preview and commit.",
+    "images": [
+      "IMG-028"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-037",
+    "category": "Features and surfaces",
+    "name": "Loft",
+    "surface": "Command panel",
+    "placement": "Left PropertyManager with ordered selection groups.",
+    "entry": "Choose the appropriate Loft command.",
+    "controls": "Profiles, start/end constraints, guide curves and preview.",
+    "usage": "Organize section inputs and inspect the transition; the reference is a cropped panel comparison.",
+    "images": [
+      "IMG-065"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-038",
+    "category": "Features and surfaces",
+    "name": "Boundary",
+    "surface": "Command panel",
+    "placement": "Left PropertyManager using directional selection groups.",
+    "entry": "Choose the appropriate Boundary command.",
+    "controls": "Direction 1, Direction 2 and preview-related options.",
+    "usage": "Assign directional inputs; do not substitute a Loft panel with a changed title.",
+    "images": [
+      "IMG-065"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-039",
+    "category": "Features and surfaces",
+    "name": "Hole Wizard — Type",
+    "surface": "Command panel",
+    "placement": "Left PropertyManager, Type tab.",
+    "entry": "Features > Hole Wizard.",
+    "controls": "Hole type icons, standard/type/size, fit and end condition.",
+    "usage": "Specify the hole definition, then switch to Positions. Options depend on selected hole type.",
+    "images": [
+      "IMG-076"
+    ],
+    "sources": [
+      "hole_type"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-040",
+    "category": "Features and surfaces",
+    "name": "Hole Wizard — Positions",
+    "surface": "Command panel",
+    "placement": "Positions tab at left with placement interaction over a selected face.",
+    "entry": "Switch Hole Wizard to Positions.",
+    "controls": "Face selection prompt, position points and supported sketch tools.",
+    "usage": "Choose support geometry, place hole centers and constrain their positions.",
+    "images": [
+      "IMG-077",
+      "IMG-078"
+    ],
+    "sources": [
+      "hole_positions"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-041",
+    "category": "Assemblies",
+    "name": "Mate",
+    "surface": "Command panel",
+    "placement": "Left selection list and mate-type controls; selected faces in viewport.",
+    "entry": "Assembly > Mate.",
+    "controls": "Standard/advanced/mechanical groups, selection list, alignment and mates list.",
+    "usage": "Select compatible references, choose relation/alignment, then confirm. Connected screenshot is explicitly labeled.",
+    "images": [
+      "IMG-079"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-042",
+    "category": "Assemblies",
+    "name": "Mate Controller launch",
+    "surface": "Context action",
+    "placement": "Tree context menu beside selected mates.",
+    "entry": "Right-click appropriate mate selection.",
+    "controls": "Mate Controller menu item.",
+    "usage": "Launch reference only. The controller panel itself has not been captured or executed.",
+    "images": [
+      "IMG-009"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-043",
+    "category": "Drawings",
+    "name": "Drawing Model View",
+    "surface": "Command panel",
+    "placement": "PropertyManager linked to placement on the central sheet.",
+    "entry": "Insert or select a drawing model view.",
+    "controls": "Model choice, preview, orientation/scale and applicable import options.",
+    "usage": "Choose the referenced model and place a view. Exact open panel screenshot is not captured.",
+    "images": [],
+    "sources": [
+      "drawing_view"
+    ],
+    "evidence": "Documentation only",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-044",
+    "category": "Drawings",
+    "name": "Drawing view Properties",
+    "surface": "Dialog",
+    "placement": "Separate dialog reached from a drawing view or its PropertyManager.",
+    "entry": "Right-click view > Properties or choose More Properties.",
+    "controls": "View/model/configuration information and applicable properties.",
+    "usage": "Inspect the referenced model/configuration and update the view as required.",
+    "images": [],
+    "sources": [
+      "drawing_properties"
+    ],
+    "evidence": "Documentation only",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-045",
+    "category": "Drawings",
+    "name": "BOM table on sheet",
+    "surface": "Table",
+    "placement": "Placed within the drawing sheet; BOM node in left tree.",
+    "entry": "Insert or select a bill of materials.",
+    "controls": "Rows/columns and model-linked property values.",
+    "usage": "Document assembly/component data. The reference proves table placement, not every BOM configuration option.",
+    "images": [
+      "IMG-012"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-046",
+    "category": "Drawings",
+    "name": "Dimension PropertyManager",
+    "surface": "Command panel",
+    "placement": "Left dock when relevant dimensions are selected.",
+    "entry": "Select one or more dimensions.",
+    "controls": "Style, tolerance/precision, primary value, text and leader-related controls.",
+    "usage": "Edit annotation properties; only shared properties apply when selecting multiple dimensions.",
+    "images": [
+      "IMG-080"
+    ],
+    "sources": [
+      "dimension"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-047",
+    "category": "Manufacturing",
+    "name": "Weldments — Structural Member",
+    "surface": "Command panel",
+    "placement": "Left parameters; path/profile preview in graphics area.",
+    "entry": "Weldments > Structural Member.",
+    "controls": "Standard/type/size, groups, alignment and Locate Profile.",
+    "usage": "Select path segments and position a chosen profile before accepting.",
+    "images": [
+      "IMG-066"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-048",
+    "category": "Manufacturing",
+    "name": "Sheet Metal — Edge Flange",
+    "surface": "Command panel",
+    "placement": "PropertyManager paired with edge selection and a geometric preview.",
+    "entry": "Sheet Metal > Edge Flange in a sheet-metal part.",
+    "controls": "Edges, radius, angle, length and bend-position options.",
+    "usage": "Select edges and define flange geometry. Actual panel screenshot remains a visual gap.",
+    "images": [],
+    "sources": [
+      "flange"
+    ],
+    "evidence": "Documentation only",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-049",
+    "category": "Evaluation",
+    "name": "Interference Detection",
+    "surface": "Command panel",
+    "placement": "Left selected-components/results groups; overlap highlighted in graphics area.",
+    "entry": "Evaluate > Interference Detection.",
+    "controls": "Components, Calculate, results and exclusion options.",
+    "usage": "Calculate, select an interference and inspect its highlighted geometry. Release/load-mode options vary.",
+    "images": [
+      "IMG-063"
+    ],
+    "sources": [
+      "interference"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-050",
+    "category": "Evaluation",
+    "name": "Measure",
+    "surface": "Floating dialog",
+    "placement": "Movable window over viewport with selected entities and in-graphics readouts.",
+    "entry": "Evaluate > Measure and select suitable entities.",
+    "controls": "Selected entity list and distance/area or other applicable results.",
+    "usage": "Inspect measurements while geometry remains visible. Captured example also has a Modify popup open.",
+    "images": [
+      "IMG-080"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-051",
+    "category": "Simulation",
+    "name": "Simulation study tree",
+    "surface": "Dock",
+    "placement": "Study-specific left tree associated with an analysis tab.",
+    "entry": "Activate a Simulation study.",
+    "controls": "Parts, Connections, Fixtures, External Loads, Mesh and results-related folders.",
+    "usage": "Organize model assumptions and analysis setup; this is an add-in workspace.",
+    "images": [
+      "IMG-033",
+      "IMG-038"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-052",
+    "category": "Simulation",
+    "name": "Mesh context actions",
+    "surface": "Context menu",
+    "placement": "Popup beside the Mesh node in a Simulation study.",
+    "entry": "Right-click Mesh.",
+    "controls": "Create Mesh, Mesh and Run, Apply Mesh Control and diagnostics.",
+    "usage": "Choose a meshing action; this image does not show the numeric mesh-settings panel.",
+    "images": [
+      "IMG-035"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-053",
+    "category": "Settings and notifications",
+    "name": "System Options — General",
+    "surface": "Dialog",
+    "placement": "Category tree left, search upper right and settings in center.",
+    "entry": "Tools > Options > System Options.",
+    "controls": "Behavior checkboxes, categories and confirmation buttons.",
+    "usage": "Configure application-wide preferences separately from document-specific defaults.",
+    "images": [
+      "IMG-003"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-054",
+    "category": "Settings and notifications",
+    "name": "Document Properties tab",
+    "surface": "Settings tab",
+    "placement": "Alongside System Options in the captured Options dialog.",
+    "entry": "Tools > Options > Document Properties with appropriate context.",
+    "controls": "Document-scoped properties; full content not captured here.",
+    "usage": "Keep document-specific settings distinct from application-wide settings. Only tab placement is visually confirmed.",
+    "images": [
+      "IMG-072"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-055",
+    "category": "Settings and notifications",
+    "name": "Dismissed Messages",
+    "surface": "Settings page",
+    "placement": "Nested category under Messages/Errors/Warnings; message table in main area.",
+    "entry": "System Options > Messages/Errors/Warnings > Dismissed Messages.",
+    "controls": "Dismissed-message rows and status-icon toggle.",
+    "usage": "Review auto-dismissed messages and restore relevant prompts; source screenshot is 2026 context.",
+    "images": [
+      "IMG-072"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-056",
+    "category": "Settings and notifications",
+    "name": "Customize Manager Pane Tabs",
+    "surface": "Popup",
+    "placement": "Opened against the left manager-tab strip.",
+    "entry": "Customize manager tabs using the version-specific UI.",
+    "controls": "Checkbox list for manager tabs; required tabs disabled in screenshot.",
+    "usage": "Control optional manager-tab visibility; 2026 reference, not proof of an identical older UI.",
+    "images": [
+      "IMG-069"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-057",
+    "category": "Settings and notifications",
+    "name": "Display scaling optimization",
+    "surface": "Dialog",
+    "placement": "Prominent message dialog with three action choices.",
+    "entry": "Version-specific launch on a monitor with a different resolution.",
+    "controls": "Move to main monitor; change settings; keep layout; dismissal checkbox.",
+    "usage": "Resolve a display-layout choice. Exact triggering logic has not been tested.",
+    "images": [
+      "IMG-075"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-058",
+    "category": "Settings and notifications",
+    "name": "Import Complete notification",
+    "surface": "Notification",
+    "placement": "Compact message crop; original screen position is not visible.",
+    "entry": "After import completes in the source example.",
+    "controls": "Success indicator, file/path text, Open Model and Open Location.",
+    "usage": "Distinguish completion notice from the full import-progress/task-pane interface.",
+    "images": [
+      "IMG-071"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-059",
+    "category": "PDM — related application",
+    "name": "Vault File Explorer",
+    "surface": "External workspace",
+    "placement": "Windows navigation left, vault files upper right, file-detail area below.",
+    "entry": "Open a configured PDM vault view.",
+    "controls": "Vault commands, columns, folder navigation and detail tabs.",
+    "usage": "Browse managed files and inspect selected-file state. Windows Explorer UI is not a CAD document page.",
+    "images": [
+      "IMG-045"
+    ],
+    "sources": [
+      "pdm"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-060",
+    "category": "PDM — related application",
+    "name": "Data Card",
+    "surface": "Detail tab",
+    "placement": "Lower file-detail area in the captured Windows vault view.",
+    "entry": "Select a file and Data Card.",
+    "controls": "Configurable metadata fields, configuration tabs and document status.",
+    "usage": "Inspect/edit permitted metadata. Field names are deployment-specific examples.",
+    "images": [
+      "IMG-045"
+    ],
+    "sources": [
+      "pdm"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-061",
+    "category": "PDM — related application",
+    "name": "File Preview",
+    "surface": "Detail tab",
+    "placement": "Below vault file list; shown behind the History dialog.",
+    "entry": "Select a file and Preview.",
+    "controls": "Model preview and applicable viewing controls.",
+    "usage": "Review the chosen file without treating this as an editable CAD feature workspace.",
+    "images": [
+      "IMG-049"
+    ],
+    "sources": [
+      "pdm"
+    ],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-062",
+    "category": "PDM — related application",
+    "name": "History",
+    "surface": "Dialog",
+    "placement": "Separate window above vault file list/preview.",
+    "entry": "Select a file and History.",
+    "controls": "Event table, version/user/date and details.",
+    "usage": "Inspect stored iterations and transitions. No rollback or state mutation was executed.",
+    "images": [
+      "IMG-049"
+    ],
+    "sources": [],
+    "evidence": "Visual reference",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-063",
+    "category": "Selection and overlays",
+    "name": "Shortcut Bar",
+    "surface": "Overlay",
+    "placement": "Near the pointer; exact visual crop not captured.",
+    "entry": "Press S by default; configurable.",
+    "controls": "Mode-specific commands and command search.",
+    "usage": "Use a compact customizable command set for part, assembly, drawing or sketch mode.",
+    "images": [],
+    "sources": [
+      "shortcuts"
+    ],
+    "evidence": "Documentation only",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  },
+  {
+    "id": "UI-064",
+    "category": "Selection and overlays",
+    "name": "Orientation / View Selector",
+    "surface": "Floating control",
+    "placement": "Over the graphics area; precise dimensions depend on release and layout.",
+    "entry": "Press Spacebar or use View Orientation.",
+    "controls": "Standard orientations and custom views.",
+    "usage": "Change the view independently from model geometry.",
+    "images": [],
+    "sources": [
+      "orientation"
+    ],
+    "evidence": "Documentation only",
+    "workflow_status": "Documented or inferred sequence; not executed in a live SolidWorks session"
+  }
+]

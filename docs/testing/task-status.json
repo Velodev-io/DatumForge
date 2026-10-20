@@ -1,0 +1,387 @@
+{
+  "0.1a": {
+    "status": "Pass",
+    "scope": "Provisional identity and workspace preserved; no remote.",
+    "evidence": [
+      "docs/decisions/project-baseline.md",
+      "docs/testing/artifacts/module-0/research-baseline.json"
+    ]
+  },
+  "0.1b": {
+    "status": "Pass",
+    "scope": "Native targets, offline core, one writer, SSD, 8 GB and R1/R2 frozen.",
+    "evidence": [
+      "docs/decisions/project-baseline.md"
+    ]
+  },
+  "0.1c": {
+    "status": "Pass",
+    "scope": "OD-01–OD-08 have owners, evidence needs and open/blocking status.",
+    "evidence": [
+      "docs/decisions/project-baseline.md"
+    ]
+  },
+  "0.1d": {
+    "status": "Pass",
+    "scope": "Public/visual/installer/design provenance distinguished; 97 research files unchanged.",
+    "evidence": [
+      "docs/decisions/project-baseline.md",
+      "docs/testing/artifacts/module-0/research-baseline.json"
+    ]
+  },
+  "0.2a": {
+    "status": "Pass",
+    "scope": "No existing/nested repository; local main initialized, no remote/history rewrite.",
+    "evidence": [
+      "CONTRIBUTING.md",
+      "docs/testing/artifacts/module-0/research-baseline.json"
+    ]
+  },
+  "0.2b": {
+    "status": "Pass",
+    "scope": "Proposed source/app/adapter/test layout reserved; spikes isolated under tests.",
+    "evidence": [
+      "CMakeLists.txt",
+      "README.md"
+    ]
+  },
+  "0.2c": {
+    "status": "Pass",
+    "scope": "README, contribution/build commands and original graphify guidance retained.",
+    "evidence": [
+      "AGENTS.md",
+      "CONTRIBUTING.md",
+      "cmake/README.md"
+    ]
+  },
+  "0.2d": {
+    "status": "Pass",
+    "scope": "Builds/deps/models/recovery/secrets excluded; safe pins/manifests tracked.",
+    "evidence": [
+      ".gitignore",
+      "tools/check_isolation.py"
+    ]
+  },
+  "0.3a": {
+    "status": "Pass",
+    "scope": "Sanitized M2/8 GB/OS/GPU/compiler inventory; unavailable hosts assigned.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/environment.json",
+      "docs/decisions/deferred-gates.md"
+    ]
+  },
+  "0.3b": {
+    "status": "Blocked",
+    "scope": "Mac dependency compatibility passes; Windows/Linux compiler/runtime pins and support verification unavailable.",
+    "evidence": [
+      "cmake/dependencies.lock.json",
+      "docs/testing/artifacts/module-0/source-verification.txt",
+      "docs/decisions/deferred-gates.md"
+    ]
+  },
+  "0.3c": {
+    "status": "Pass",
+    "scope": "Content-locked project-local source strategy and explicit ABI/options established.",
+    "evidence": [
+      "cmake/dependencies.lock.json",
+      "tools/build_dependencies.py"
+    ]
+  },
+  "0.3d": {
+    "status": "Blocked",
+    "scope": "Dependency notices inventoried; product owner has not chosen product license/identity/distribution.",
+    "evidence": [
+      "docs/decisions/distribution.md",
+      "docs/testing/artifacts/module-0/source-notices.json"
+    ]
+  },
+  "0.3e": {
+    "status": "Blocked",
+    "scope": "Mac commands built/tested/formatted/analyzed/archived; final CMake/Ninja wrapper stall unresolved. Other-platform commands unverified.",
+    "evidence": [
+      "cmake/README.md",
+      "docs/testing/artifacts/module-0/source-package.txt",
+      "docs/testing/artifacts/module-0/build-issues.md"
+    ]
+  },
+  "0.4a": {
+    "status": "Pass",
+    "scope": "Marked disposable temp roots and development/test identities; production root refused.",
+    "evidence": [
+      "tests/support/test_root.hpp",
+      "docs/testing/artifacts/module-0/storage-matrix.json"
+    ]
+  },
+  "0.4b": {
+    "status": "Pass",
+    "scope": "CTest, Qt Test and native matrix configured; deliberate failure proves executable/CTest nonzero exits.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/harness-failure-proof.txt",
+      "docs/testing/artifacts/module-0/ctest.txt",
+      "tests/native/README.md"
+    ]
+  },
+  "0.4c": {
+    "status": "Pass",
+    "scope": "Real SQLite/files, external kills, write/full/permission errors and stale epochs/generations exercised.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/storage-matrix.json",
+      "docs/testing/artifacts/module-0/protocol.txt"
+    ]
+  },
+  "0.4d": {
+    "status": "Pass",
+    "scope": "Module 0–12 evidence files and all 56 product requirement rows created with honest states.",
+    "evidence": [
+      "docs/testing/requirements.json",
+      "docs/testing/module-1.md"
+    ]
+  },
+  "0.4e": {
+    "status": "Pass",
+    "scope": "Mac/Windows/X11/Wayland/accessibility/scaling/installed procedures and owners defined.",
+    "evidence": [
+      "tests/native/README.md"
+    ]
+  },
+  "0.5a": {
+    "status": "Pass",
+    "scope": "B0–B6 deterministic recipes/hashes, original source/license, invariants, bounds and corruption cases frozen; future workloads explicitly unexecuted.",
+    "evidence": [
+      "tests/fixtures/manifest.json",
+      "tests/fixtures/generate.py",
+      "docs/testing/artifacts/module-0/geometry.txt"
+    ]
+  },
+  "0.5b": {
+    "status": "Pass",
+    "scope": "Physical 8 GB Mac identified; Windows/Linux reference hardware gaps assigned, not claimed validated.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/environment.json",
+      "docs/decisions/deferred-gates.md"
+    ]
+  },
+  "0.5c": {
+    "status": "Pass",
+    "scope": "OS physical-footprint accounting, shared/GPU limitations, latency/frame/save/disk methods recorded.",
+    "evidence": [
+      "docs/testing/measurement-procedure.md",
+      "tools/sample_memory.py"
+    ]
+  },
+  "0.5d": {
+    "status": "Pass",
+    "scope": "5 cold/10 warm/30 interaction sampling procedure and p95 estimator established; production measurements Not run.",
+    "evidence": [
+      "docs/testing/measurement-procedure.md",
+      "tests/unit/measurement_test.py"
+    ]
+  },
+  "0.5e": {
+    "status": "Blocked",
+    "scope": "Caps/pressure/retained-root prototypes pass; realistic B2/B3/B4 admission/headroom calibration requires later engines/workloads.",
+    "evidence": [
+      "tests/support/limits.hpp",
+      "tests/support/admission.hpp",
+      "docs/decisions/feasibility-adrs.md"
+    ]
+  },
+  "0.6a": {
+    "status": "Pass",
+    "scope": "Available Mac: native Qt shell displays box created/meshed in OCCT worker. Other platforms unavailable.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/final-native.txt",
+      "docs/testing/artifacts/module-0/native.png"
+    ]
+  },
+  "0.6b": {
+    "status": "Pass",
+    "scope": "Mesh-only UI, face/edge picking/highlight, native label overlay and worker-side 6000 mm3 measurement demonstrated.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/final-native.txt",
+      "docs/testing/artifacts/module-0/ui-linked-libraries.txt"
+    ]
+  },
+  "0.6c": {
+    "status": "Pass",
+    "scope": "Private inherited capability, version/epoch handshake, bounded CBOR/chunk fallback, range/checksum checks, stale generations and abandoned-buffer cleanup demonstrated; lost-ack storage dedup separate.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/protocol.txt",
+      "docs/testing/artifacts/module-0/final-native.txt",
+      "docs/testing/artifacts/module-0/storage-matrix.json"
+    ]
+  },
+  "0.6d": {
+    "status": "Blocked",
+    "scope": "M2 OpenGL 4.1 native render/docking passes; all scales, minimum OS/Intel Mac, real driver failure and production renderer/Metal decision incomplete.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/final-native.txt",
+      "docs/decisions/feasibility-adrs.md"
+    ]
+  },
+  "0.6e": {
+    "status": "Blocked",
+    "scope": "Physical 8 GB slice footprint and navigation samples recorded; complete controlled/peak/GPU accounting and final-harness profile association remain incomplete.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/native-profile.txt",
+      "docs/testing/artifacts/module-0/profile-summary.json",
+      "docs/testing/artifacts/module-0/final-native.txt"
+    ]
+  },
+  "0.7a": {
+    "status": "Pass",
+    "scope": "Pinned PlaneGCS rectangle/circle/DOF/drag/residual/redundant/conflict corpus passes; extraction shims documented.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/solver.txt",
+      "cmake/PlaneGCS.cmake"
+    ]
+  },
+  "0.7b": {
+    "status": "Pass",
+    "scope": "Exact extrusion/cut/four holes/fillet: analytic volume 35488.761101962 mm3, 15 faces, one solid; invalid construction retains prior model.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/geometry.txt"
+    ]
+  },
+  "0.7c": {
+    "status": "Pass",
+    "scope": "Dimension change, Modified(top) split to two faces, IsDeleted, and symmetric ReferenceAmbiguous exercised.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/geometry.txt"
+    ]
+  },
+  "0.7d": {
+    "status": "Pass",
+    "scope": "Grounded three-body planar/axial/angle prototype: 6/2/0 DOF, cycle/conflict, near-pi/antiparallel and cancel corpus passes.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/mates.txt"
+    ]
+  },
+  "0.7e": {
+    "status": "Pass",
+    "scope": "Adapter sign and antiparallel failure resolved without R1 relaxation; larger corpora remain explicitly pending.",
+    "evidence": [
+      "docs/decisions/feasibility-adrs.md",
+      "docs/testing/artifacts/module-0/build-issues.md"
+    ]
+  },
+  "0.8a": {
+    "status": "Pass",
+    "scope": "WAL/FULL/FK working DB, validated standalone snapshots and incremental 4 MiB blob in 64 KiB chunks; imported STEP retained in real SQLite.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/storage-matrix.json",
+      "docs/testing/artifacts/module-0/geometry.txt"
+    ]
+  },
+  "0.8b": {
+    "status": "Blocked",
+    "scope": "Mac temporary sibling/backup/flush/rename preserves previous snapshot on failures; Windows/Linux filesystem semantics untested.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/storage-matrix.json",
+      "docs/decisions/deferred-gates.md"
+    ]
+  },
+  "0.8c": {
+    "status": "Pass",
+    "scope": "Mac process exits and external kills before/after commit, interrupted snapshot, publication/lost ack recover expected revisions once.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/storage-matrix.json"
+    ]
+  },
+  "0.8d": {
+    "status": "Pass",
+    "scope": "Mac alias/hardlink lock rejects actual mutation; future schema, failed-copy migration and missing references rejected. Replacement identity remains production hardening.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/storage-matrix.json",
+      "docs/decisions/feasibility-adrs.md"
+    ]
+  },
+  "0.8e": {
+    "status": "Pass",
+    "scope": "Source and display caches removed; exact STEP rebuilt from SQLite authoritative BLOB with undo/recovery/job roots, volume 6000 mm3.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/geometry.txt"
+    ]
+  },
+  "0.9a": {
+    "status": "Pass",
+    "scope": "All seven ADRs record pins, outcomes, consequences and revisit triggers; unresolved choices retained.",
+    "evidence": [
+      "docs/decisions/feasibility-adrs.md"
+    ]
+  },
+  "0.9b": {
+    "status": "Pass",
+    "scope": "Modules 1–4 first production slice frozen and mapped to FR/test IDs.",
+    "evidence": [
+      "docs/decisions/vertical-slice.md"
+    ]
+  },
+  "0.9c": {
+    "status": "Pass",
+    "scope": "Native, hardware, accessibility, advanced fixture and installed gates assigned to owners/modules.",
+    "evidence": [
+      "docs/decisions/deferred-gates.md"
+    ]
+  },
+  "0.9d": {
+    "status": "Pass",
+    "scope": "Specs/status/traceability synchronized; 8 GB/R1 budgets unchanged; product T-01–T-56 all Not run.",
+    "evidence": [
+      "docs/README.md",
+      "docs/TRACEABILITY.md",
+      "docs/testing/requirements.json"
+    ]
+  },
+  "0.10a": {
+    "status": "Blocked",
+    "scope": "Clean source export with verified dependency cache passed 11 tests before final harness edits. Final CMake/Ninja/CTest wrapper stall prevents final clean reproducibility closure.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/clean-reproduction.txt",
+      "docs/testing/artifacts/module-0/build-issues.md",
+      "docs/testing/artifacts/module-0/final-ctest.txt"
+    ]
+  },
+  "0.10b": {
+    "status": "Pass",
+    "scope": "Disposable roots/production-root refusal and unchanged 97-file research hash baseline verified.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/storage-matrix.json",
+      "tools/check_isolation.py"
+    ]
+  },
+  "0.10c": {
+    "status": "Pass",
+    "scope": "Available Mac shell/mesh/face-edge picking/exact measurement/restart tests pass; stale/transfer adversarial corpus separate; platform gaps remain Blocked.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/final-native.txt",
+      "docs/testing/artifacts/module-0/protocol.txt"
+    ]
+  },
+  "0.10d": {
+    "status": "Pass",
+    "scope": "Actual pinned OCCT/PlaneGCS/Eigen small valid/invalid CAD corpus passes; larger production CAD remains pending.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/geometry.txt",
+      "docs/testing/artifacts/module-0/solver.txt",
+      "docs/testing/artifacts/module-0/mates.txt"
+    ]
+  },
+  "0.10e": {
+    "status": "Blocked",
+    "scope": "Mac real-file storage matrix passes; cross-platform publication/durability gates remain unavailable.",
+    "evidence": [
+      "docs/testing/artifacts/module-0/storage-matrix.json",
+      "docs/decisions/deferred-gates.md"
+    ]
+  },
+  "0.10f": {
+    "status": "Pass",
+    "scope": "Reviewed pins/notices/support/evidence and unresolved OD owners; no product acceptance or untested platform presented as passed.",
+    "evidence": [
+      "docs/decisions/project-baseline.md",
+      "docs/decisions/distribution.md",
+      "docs/decisions/deferred-gates.md"
+    ]
+  }
+}

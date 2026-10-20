@@ -1,0 +1,2 @@
+grounded 3-body planar/axial/angle rank: 6/2/0 DOF; consistent cycle; conflicting distance; near-pi yaw; antiparallel seed recovery; cancel
+PASS

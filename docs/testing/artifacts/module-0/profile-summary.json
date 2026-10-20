@@ -1,0 +1,57 @@
+{
+  "scope": "Module 0 synthetic mesh slice on physical 8 GB Mac; not SRS workload acceptance",
+  "measurement_build": "profile predates final harness-only foreground/missing-callback detection changes; see build evidence history",
+  "stages": {
+    "idle": {
+      "56154": {
+        "n": 1,
+        "median_footprint_mib": 198.06341552734375,
+        "sampled_max_footprint_mib": 198.06341552734375
+      }
+    },
+    "box": {
+      "56154": {
+        "n": 30,
+        "median_footprint_mib": 214.04781341552734,
+        "sampled_max_footprint_mib": 214.07906341552734
+      },
+      "56184": {
+        "n": 30,
+        "median_footprint_mib": 3.969207763671875,
+        "sampled_max_footprint_mib": 3.969207763671875
+      }
+    },
+    "100instances": {
+      "56154": {
+        "n": 30,
+        "median_footprint_mib": 186.32906341552734,
+        "sampled_max_footprint_mib": 186.32906341552734
+      },
+      "56184": {
+        "n": 30,
+        "median_footprint_mib": 3.953582763671875,
+        "sampled_max_footprint_mib": 3.953582763671875
+      }
+    }
+  },
+  "family_accounting": "per-process footprint retained; sums may double-count shared resources; no unique GPU footprint measured",
+  "GPU": "Apple M2; OpenGL 4.1 Metal - 90.5 (driver string; no custom Metal backend)",
+  "caveats": [
+    "desktop/background/power/thermal conditions uncontrolled",
+    "polling does not establish true peak",
+    "one idle sample after 30s; box and 100-instance samples 30 per process",
+    "full B0\u2013B5 and cross-platform performance Not run"
+  ],
+  "presentation_callback_intervals_ms": {
+    "status": "Pass",
+    "n": 58,
+    "median": 21.16585,
+    "p95": 22.3684
+  },
+  "scripted_input_to_swap_ms": {
+    "status": "Pass",
+    "n": 60,
+    "median": 3.408935,
+    "p95": 5.58338
+  }
+}

@@ -1,0 +1,12 @@
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+redundant tags=1
+contradictory tags=2
+rectangle/circle residuals, redundant/conflict diagnostics, 1-DOF drag/cancel, finite/degenerate admission
+PASS

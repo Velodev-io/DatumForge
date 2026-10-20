@@ -1,0 +1,9 @@
+[1/1] cd "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug" && /opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14 /Users/binova/Documents/Projects/Suru/Solidworks\ Clone/tools/static_analysis.py /Users/binova/Documents/Projects/Suru/Solidworks\ Clone/build/macos-debug/compile_commands.json
+Analyzed harness_probe.cpp
+Analyzed protocol_spike.cpp
+Analyzed storage_spike.cpp
+Analyzed cad_spike.cpp
+Analyzed solver_spike.cpp
+Analyzed mate_spike.cpp
+Analyzed slice_worker.cpp
+Analyzed slice_desktop.cpp

@@ -1,0 +1,268 @@
+{
+  "IMG-002": {
+    "label": "Welcome / Home with recent-document options",
+    "release": "2020 article context; exact build not visible",
+    "kind": "Dialog",
+    "placement": "Tabs across the top; new-document actions above recent thumbnails; folders and resources below.",
+    "observation": "Home, Recent, Learn and Alerts tabs are visible. Hover/open options include a mode list and configuration fields."
+  },
+  "IMG-003": {
+    "label": "System Options — General",
+    "release": "Release not visible",
+    "kind": "Dialog",
+    "placement": "Category tree on the left; search at upper right; settings in the center; OK/Cancel/Help at bottom right.",
+    "observation": "General behavior checkboxes include Confirmation Corner and PropertyManager behavior. This is a settings dialog, not the modeling workspace."
+  },
+  "IMG-006": {
+    "label": "Part editor / Features CommandManager",
+    "release": "Release not visible",
+    "kind": "Editor",
+    "placement": "Menus and quick actions at top; Features tool groups below; feature tree at left; model in central graphics area.",
+    "observation": "The red arrow is an author's annotation pointing to Hole Wizard. The Hole Wizard panel itself is not open."
+  },
+  "IMG-008": {
+    "label": "Assembly workspace / Mate launch location",
+    "release": "Release not visible",
+    "kind": "Editor",
+    "placement": "Assembly tools at top; component and Mates tree on left; separated parts in graphics area.",
+    "observation": "The Mate button is highlighted. No Mate PropertyManager settings are visible; this supports launch placement only."
+  },
+  "IMG-009": {
+    "label": "Mate Controller context-menu entry",
+    "release": "Release not visible",
+    "kind": "Overlay",
+    "placement": "Context menu beside selected mate rows in left tree; assembly remains visible behind it.",
+    "observation": "Mate Controller appears in the context menu. This does not show the controller's own configuration panel."
+  },
+  "IMG-012": {
+    "label": "Drawing editor with View Palette and BOM",
+    "release": "2019 SP2.0 visible; German UI",
+    "kind": "Editor",
+    "placement": "Annotation commands at top; sheet/view tree at left; drawing sheet central; View Palette docked right; sheet tabs and status below.",
+    "observation": "View thumbnails, BOM cells, sheet border and the right-side palette are simultaneously visible."
+  },
+  "IMG-019": {
+    "label": "Sketch editing in Simplified Interface",
+    "release": "Education edition; exact release not visible",
+    "kind": "Editor",
+    "placement": "Basic Modeling Tools tab at top; tree left; dimensioned profile central; definition and edit state on bottom status bar.",
+    "observation": "The status says Under Defined and Editing Sketch1. This is a customized/simplified toolbar, not proof of a universal default."
+  },
+  "IMG-020": {
+    "label": "Sketch Line Properties with Smart Dimension launch",
+    "release": "Release not visible",
+    "kind": "Panel",
+    "placement": "Sketch command bar at top; Line Properties on left; selected rectangle in graphics area.",
+    "observation": "The visible panel is Line Properties, including Existing Relations and numeric parameters. The annotation recommends Smart Dimension; it is not a Dimension PropertyManager screenshot."
+  },
+  "IMG-023": {
+    "label": "Extrude PropertyManager crop",
+    "release": "2020 source article; German UI",
+    "kind": "Panel",
+    "placement": "Left dock with confirm/cancel icons near top; From and Direction 1 groups below.",
+    "observation": "Sketch Plane, Blind, depth and Direction 2 are visible. The crop does not establish the full editor's dimensions."
+  },
+  "IMG-024": {
+    "label": "Boss-Extrude with live preview",
+    "release": "Release not visible",
+    "kind": "Panel",
+    "placement": "Input groups at left; translucent yellow volume and direction manipulator in graphics area; green check/red cross above inputs.",
+    "observation": "Depth is 20.00 mm in this example. The image shows disabled background commands while the feature is active."
+  },
+  "IMG-028": {
+    "label": "Fillet PropertyManager — mislabeled source context",
+    "release": "Release not visible; Japanese UI",
+    "kind": "Panel",
+    "placement": "Selected-edge list and radius controls in left dock; yellow blend preview and radius callout over model.",
+    "observation": "Although discovered on a Mirror article, the visible command is Fillet1 with four selected edges and a 30.00 mm radius. Classified by visible content."
+  },
+  "IMG-030": {
+    "label": "ConfigurationManager and Display States",
+    "release": "Release not visible",
+    "kind": "Panel",
+    "placement": "Configuration list in upper left; separate Display States section below; model at right; model/study tabs at bottom.",
+    "observation": "Default is marked active; two alternative configurations are grayed. Only the displayed GIF frame is reviewed."
+  },
+  "IMG-031": {
+    "label": "DisplayManager appearance hierarchy",
+    "release": "Release not visible",
+    "kind": "Panel",
+    "placement": "Manager tabs above an Appearances pane; Sort order dropdown precedes a hierarchical list.",
+    "observation": "Components, Face, Features, Bodies and Part scopes are visible. This is the appearance manager, not ConfigurationManager."
+  },
+  "IMG-032": {
+    "label": "FeatureManager naming-density comparison",
+    "release": "Release not visible",
+    "kind": "Comparison",
+    "placement": "Two left-tree crops are placed side by side.",
+    "observation": "The image compares expanded configuration/display-state labels with compact component names. It does not show the context menu described by some search metadata."
+  },
+  "IMG-033": {
+    "label": "Simulation study tree / mixed mesh indicators",
+    "release": "Simulation 2020 article context",
+    "kind": "Panel",
+    "placement": "Study root above Parts, Connections, Fixtures, External Loads, Mesh, Result Options and Results.",
+    "observation": "Different mesh-quality icons are explicitly annotated. This is a tree crop, not an entire solver configuration screen."
+  },
+  "IMG-038": {
+    "label": "Simulation setup-tree structure",
+    "release": "Release not visible",
+    "kind": "Panel",
+    "placement": "Vertical study tree with a root study and setup folders.",
+    "observation": "Connections, Fixtures, External Loads, Mesh and Result Options are visible. The red downward arrow is tutorial annotation, not a product control."
+  },
+  "IMG-045": {
+    "label": "PDM vault Explorer with Data Card",
+    "release": "Exact PDM release not visible",
+    "kind": "External application",
+    "placement": "Windows navigation left; file list upper center; Preview/Data Card/Version/BOM/Contains/Where Used tabs above lower detail area.",
+    "observation": "Check In, Get Latest Version and History appear above the file list. Data Card contains configurable metadata fields. PDM is separate from the CAD editor."
+  },
+  "IMG-049": {
+    "label": "PDM History dialog over vault view",
+    "release": "Exact PDM release not visible",
+    "kind": "Dialog",
+    "placement": "History window overlays the file list/preview; events table at top and details below.",
+    "observation": "Checked-in events, versions and users are shown. The underlying Preview pane displays the selected part."
+  },
+  "IMG-053": {
+    "label": "Customize — Mouse Gestures with guide wheels",
+    "release": "2023 article context; German UI",
+    "kind": "Dialog",
+    "placement": "Customize tabs at top; command search/list left; gesture count center; four environment guide wheels in a separate window at right.",
+    "observation": "The guide separates Part, Sketch, Assembly and Drawing. Eight gestures are selected in this example."
+  },
+  "IMG-055": {
+    "label": "Older Customize — Mouse Gestures grid",
+    "release": "Older release; exact build not visible",
+    "kind": "Dialog",
+    "placement": "Tabbed Customize dialog with category/search controls above a grid of command assignments.",
+    "observation": "Unlike the later guide-wheel screenshot, this image uses Part/Assembly/Drawing/Sketch columns. Do not combine them as one release's layout."
+  },
+  "IMG-059": {
+    "label": "New SOLIDWORKS Document — basic chooser",
+    "release": "Release not visible; English UI",
+    "kind": "Dialog",
+    "placement": "Centered modal; Part/Assembly/Drawing choices across center; Advanced bottom left; OK/Cancel/Help bottom right. Resources task pane remains at right behind it.",
+    "observation": "Part is selected. The background has no active model and includes the right Task Pane."
+  },
+  "IMG-060": {
+    "label": "New SOLIDWORKS Document — advanced templates",
+    "release": "Release not visible",
+    "kind": "Dialog",
+    "placement": "Template category tabs at top; template list left; preview right; confirmation buttons bottom right.",
+    "observation": "Templates, MBD and Custom Templates tabs are visible. This screenshot has one Part template; it is not a promise that all installations have those exact tabs."
+  },
+  "IMG-065": {
+    "label": "Loft versus Boundary PropertyManagers",
+    "release": "Release not visible",
+    "kind": "Comparison",
+    "placement": "Two command-panel crops shown side by side.",
+    "observation": "Loft uses Profiles and Guide Curves; Boundary uses Direction 1 and Direction 2. Color-coded selection boxes, preview toggles and collapsible groups recur."
+  },
+  "IMG-066": {
+    "label": "Weldments — Structural Member",
+    "release": "Release not visible",
+    "kind": "Panel",
+    "placement": "Weldments tab top; Structural Member parameters left; selected paths and yellow profile preview in central viewport; Confirmation Corner near upper right.",
+    "observation": "Standard/type/size, Groups, path segments, alignment and Locate Profile are visible. The yellow message strip guides selection."
+  },
+  "IMG-035": {
+    "label": "Simulation Mesh context menu",
+    "release": "2025 lesson context",
+    "kind": "Overlay",
+    "placement": "Popup beside Mesh tree node.",
+    "observation": "Create Mesh, Mesh and Run, Apply Mesh Control and diagnostics are visible; no numeric settings panel is shown."
+  },
+  "IMG-063": {
+    "label": "Interference Detection",
+    "release": "2019 shown in status; low-resolution reference",
+    "kind": "Panel",
+    "placement": "Results and selections left; translucent assembly central.",
+    "observation": "An interference is red while other geometry is transparent. Text is too small for precise field transcription."
+  },
+  "IMG-069": {
+    "label": "Customize Manager Pane Tabs",
+    "release": "2026 article context",
+    "kind": "Comparison",
+    "placement": "Two crops beneath the manager-tab strip.",
+    "observation": "Checkboxes toggle optional manager tabs. FeatureManager and PropertyManager are disabled in this example; DimXpert differs between the two states."
+  },
+  "IMG-070": {
+    "label": "2026 French editor shell",
+    "release": "2026 SP1.0 appears in status; low-resolution",
+    "kind": "Editor",
+    "placement": "Top menus and tabs; tree left; collapsed task tabs right; study/status areas below.",
+    "observation": "This is an empty part with Sketch tools exposed, not proof that an actual sketch command is active."
+  },
+  "IMG-071": {
+    "label": "Import Complete message",
+    "release": "2026 article context",
+    "kind": "Notification",
+    "placement": "Message crop only; full-screen position is not established.",
+    "observation": "Green success state, imported filename/path, Open Model and Open Location are visible. This is not a screenshot of the full task pane."
+  },
+  "IMG-072": {
+    "label": "Dismissed Messages options",
+    "release": "2026 article context",
+    "kind": "Dialog",
+    "placement": "Options category tree left; message rows center; toggle below and status indicator at lower right.",
+    "observation": "System Options and Document Properties tabs coexist. The arrow and highlight are author annotations, not product controls."
+  },
+  "IMG-073": {
+    "label": "Modify dimension — 2025 versus 2026",
+    "release": "Both releases explicitly labeled in comparison",
+    "kind": "Comparison",
+    "placement": "Floating Modify popup beside edited sketch dimension.",
+    "observation": "The example compares popup placement. Controls include accept/cancel and dimension name/value. No automatic positioning algorithm was tested."
+  },
+  "IMG-074": {
+    "label": "Selection filters — 2025 versus 2026",
+    "release": "Both releases explicitly labeled",
+    "kind": "Comparison",
+    "placement": "Two bottom selection-filter toolbar crops.",
+    "observation": "New markers are editorial annotations. Icon changes are visible; individual unlabeled new filter meanings are not inferred."
+  },
+  "IMG-075": {
+    "label": "Display scaling optimization",
+    "release": "2026 article context",
+    "kind": "Dialog",
+    "placement": "Large message dialog with vertically stacked action choices.",
+    "observation": "Choices are move to main monitor, change display settings, or keep layout. A do-not-show-again box sits below."
+  },
+  "IMG-076": {
+    "label": "Hole Wizard Type tab",
+    "release": "Release not visible",
+    "kind": "Panel",
+    "placement": "Left command panel with Type/Positions tabs at top.",
+    "observation": "Favorite, hole-type grid, standard, type, size, fit and Through All end condition are visible in the example."
+  },
+  "IMG-077": {
+    "label": "Hole Wizard Positions tab",
+    "release": "Release not visible; low resolution",
+    "kind": "Panel",
+    "placement": "Left Positions tab beside face-selection viewport.",
+    "observation": "A yellow message strip guides face and point selection. The image proves the stage, not the exact complete placement behavior."
+  },
+  "IMG-078": {
+    "label": "Hole-position selection in graphics area",
+    "release": "Release not visible; low resolution",
+    "kind": "Editor",
+    "placement": "Positions pane left; selected model face central; command confirmation upper right.",
+    "observation": "Face shading and hole-position preview are visible. No legible dimension values are transcribed."
+  },
+  "IMG-079": {
+    "label": "Mate PropertyManager in SOLIDWORKS Connected",
+    "release": "Connected Premium visible; article describes 2023",
+    "kind": "Panel",
+    "placement": "Left selection list and mate controls; screw/plate selections in viewport.",
+    "observation": "Standard mate types, distance/angle fields, alignment, mates list and green check are visible. Connected task tabs differ from desktop-only examples."
+  },
+  "IMG-080": {
+    "label": "Measure dialog while editing a dimension",
+    "release": "2019 article context",
+    "kind": "Editor",
+    "placement": "Dimension panel left; floating Measure window central; Modify popup right.",
+    "observation": "Two faces are listed in Measure; distance/area/perimeter callouts overlay the model. The example shows simultaneous tools, not a modal-only measurement flow."
+  }
+}

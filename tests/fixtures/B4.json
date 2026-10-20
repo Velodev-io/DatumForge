@@ -1,0 +1,32 @@
+{
+  "byte_hash_policy": "Translator header timestamps vary; retain each output hash in actual run evidence. Semantic recipe hash is deterministic.",
+  "evaluation": "Kernel-generated translator spike; curated damaged/colored/mixed-unit corpus remains Module 6",
+  "expected": {
+    "box_volume_mm3": 6000,
+    "bytes_per_file_max": 26214400,
+    "faces_max": 50000,
+    "input_faces": 6,
+    "source_units": "mm"
+  },
+  "id": "B4",
+  "kernel_length_unit": "mm",
+  "license": "CC0-1.0 for these synthetic fixture recipes only",
+  "recipe": {
+    "formats": [
+      "STEP",
+      "IGES"
+    ],
+    "generator": "tests/integration/cad_spike.cpp",
+    "generator_kernel": "OCCT 7.9.2",
+    "geometry": "box",
+    "size_mm": [
+      10,
+      20,
+      30
+    ]
+  },
+  "seed": 19002026,
+  "semantic_length_unit": "m",
+  "source": "original project synthetic definitions",
+  "version": 1
+}

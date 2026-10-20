@@ -1,0 +1,90 @@
+[
+  {
+    "test": "harness",
+    "status": "Pass",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "stdout": "PASS\n",
+    "stderr": ""
+  },
+  {
+    "test": "deliberate_failure",
+    "status": "Pass",
+    "expected_exit": 1,
+    "actual_exit": 1,
+    "stdout": "",
+    "stderr": "FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/unit/harness_probe.cpp:3: argc == 1\n"
+  },
+  {
+    "test": "protocol",
+    "status": "Pass",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "stdout": "bounded CBOR/framing, stale epoch/revision/generation, buffer cleanup, range/checksum/index corpus\nPASS\n",
+    "stderr": ""
+  },
+  {
+    "test": "storage",
+    "status": "Pass",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "stdout": "{\n  \"status\": \"Pass\",\n  \"checks\": [\n    {\n      \"action\": \"init\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"SQLite 3.50.4 WAL/FULL/FK\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"save\",\n      \"arguments\": [\n        \"\"\n      ],\n      \"exit\": 0,\n      \"stdout\": \"Saved revision 0\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"commit\",\n      \"arguments\": [\n        \"before_commit\",\n        \"a\",\n        \"width=80\"\n      ],\n      \"exit\": 70,\n      \"stdout\": \"\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"query\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"revision=0 commands=0\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"query\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"revision=0 commands=0\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"external-kill\",\n      \"phase\": \"pause_before_commit\",\n      \"exit\": -9,\n      \"recovered_revision\": 0\n    },\n    {\n      \"action\": \"query\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"revision=1 commands=1\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"external-kill\",\n      \"phase\": \"pause_after_commit\",\n      \"exit\": -9,\n      \"recovered_revision\": 1\n    },\n    {\n      \"action\": \"commit\",\n      \"arguments\": [\n        \"after_commit\",\n        \"a\",\n        \"width=80\"\n      ],\n      \"exit\": 71,\n      \"stdout\": \"\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"query\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"revision=2 commands=2\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"commit\",\n      \"arguments\": [\n        \"\",\n        \"a\",\n        \"width=80\"\n      ],\n      \"exit\": 0,\n      \"stdout\": \"Deduplicated\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"query\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"revision=2 commands=2\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"commit\",\n      \"arguments\": [\n        \"\",\n        \"a\",\n        \"width=81\"\n      ],\n      \"exit\": 1,\n      \"stdout\": \"\",\n      \"stderr\": \"FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/integration/storage_spike.cpp:217: prior == hash.toStdString()\"\n    },\n    {\n      \"action\": \"query\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"revision=2 commands=2\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"save\",\n      \"arguments\": [\n        \"during_snapshot\"\n      ],\n      \"exit\": 72,\n      \"stdout\": \"\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"save\",\n      \"arguments\": [\n        \"write_error\"\n      ],\n      \"exit\": 1,\n      \"stdout\": \"\",\n      \"stderr\": \"FAIL: Injected write failure before publication\"\n    },\n    {\n      \"action\": \"save\",\n      \"arguments\": [\n        \"permission_error\"\n      ],\n      \"exit\": 1,\n      \"stdout\": \"\",\n      \"stderr\": \"FAIL: Injected permission denial before publication\"\n    },\n    {\n      \"action\": \"save\",\n      \"arguments\": [\n        \"after_publication\"\n      ],\n      \"exit\": 73,\n      \"stdout\": \"\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"inspect\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"revision=2\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"commit\",\n      \"arguments\": [\n        \"disk_full\",\n        \"b\",\n        \"width=82\"\n      ],\n      \"exit\": 1,\n      \"stdout\": \"\",\n      \"stderr\": \"FAIL: database or disk is full\"\n    },\n    {\n      \"action\": \"query\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"revision=2 commands=2\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"object\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"source_bytes=4194304 chunk_bytes=65536 sha256=a58789e910e5f939afc433a00fef5930702927dc192cb237fd9e7449bd6ffe1d\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"missing\",\n      \"arguments\": [],\n      \"exit\": 1,\n      \"stdout\": \"\",\n      \"stderr\": \"FAIL: FOREIGN KEY constraint failed\"\n    },\n    {\n      \"action\": \"gc\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"PASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"save\",\n      \"arguments\": [\n        \"\"\n      ],\n      \"exit\": 0,\n      \"stdout\": \"Saved revision 2\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"migrate_fail\",\n      \"arguments\": [],\n      \"exit\": 1,\n      \"stdout\": \"\",\n      \"stderr\": \"FAIL: Injected migration failure on copy; original untouched\"\n    },\n    {\n      \"action\": \"query\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"revision=2 commands=2\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"save\",\n      \"arguments\": [\n        \"\"\n      ],\n      \"exit\": 1,\n      \"stdout\": \"\",\n      \"stderr\": \"FAIL: attempt to write a readonly database\"\n    },\n    {\n      \"action\": \"query\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"revision=2 commands=2\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"lock\",\n      \"arguments\": [\n        \"alias.sqlite\"\n      ],\n      \"exit\": 1,\n      \"stdout\": \"\",\n      \"stderr\": \"FAIL: ProjectLocked\"\n    },\n    {\n      \"action\": \"lock\",\n      \"arguments\": [\n        \"hardlink.sqlite\"\n      ],\n      \"exit\": 1,\n      \"stdout\": \"\",\n      \"stderr\": \"FAIL: ProjectLocked\"\n    },\n    {\n      \"action\": \"commit\",\n      \"arguments\": [\n        \"\",\n        \"blocked-writer\",\n        \"must-not-commit\"\n      ],\n      \"exit\": 1,\n      \"stdout\": \"\",\n      \"stderr\": \"FAIL: ProjectLocked\"\n    },\n    {\n      \"action\": \"query\",\n      \"arguments\": [],\n      \"exit\": 0,\n      \"stdout\": \"revision=2 commands=2\\nPASS\",\n      \"stderr\": \"\"\n    },\n    {\n      \"action\": \"inspect\",\n      \"arguments\": [],\n      \"exit\": 1,\n      \"stdout\": \"\",\n      \"stderr\": \"FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/integration/storage_spike.cpp:144: db.scalar(\\\"PRAGMA user_version\\\") == \\\"1\\\"\"\n    }\n  ],\n  \"scope\": \"local filesystem process-crash prototype; no physical power-loss guarantee\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "test": "geometry",
+    "status": "Pass",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "stdout": "\u001b[32;1m\n*******************************************************************\n******        Statistics on Transfer (Write)                 ******\u001b[0m\n\u001b[32;1m\n*******************************************************************\n******        Transfer Mode = 0  I.E.  As Is       ******\u001b[0m\n\u001b[32;1m******        Transferring Shape, ShapeType = 2                      ******\u001b[0m\n\u001b[32;1m** WorkSession : Sending all data\u001b[0m\n\u001b[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-step-zero-b4-Khomxm/box.step(350 ents)  Write  Done\u001b[0m\nImported STEP regenerated from retained SQLite BLOB after source/cache deletion; undo/recovery/job roots preserved\n\u001b[32;1mTotal number of loaded entities 52.\n\u001b[0m\nB4 generated box.step bytes=15416 sha256=be1d13b8cc027ea47f99483bbea7c828f39812d27885c46deedf66677221c729\nB4 generated box.iges bytes=13284 sha256=6260f84772b8b50f8cabaead525503dd8db9393f4e0e931dddf712811b2c7db1\nB1 final_volume_mm3=35488.761101962 faces=15 solids=1; split history=2; ambiguity explicit\nPASS\n",
+    "stderr": ""
+  },
+  {
+    "test": "sketch",
+    "status": "Pass",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "stdout": "redundant tags=1\ncontradictory tags=2\nrectangle/circle residuals, redundant/conflict diagnostics, 1-DOF drag/cancel, finite/degenerate admission\nPASS\n",
+    "stderr": "Sketcher::RedundantSolving-DogLeg-\nSketcher Redundant solving: 1 redundants\nSketcher::RedundantSolving-DogLeg-\nSketcher Redundant solving: 1 redundants\nSketcher::RedundantSolving-DogLeg-\nSketcher Redundant solving: 0 redundants\nSketcher::RedundantSolving-DogLeg-\nSketcher Redundant solving: 0 redundants\n"
+  },
+  {
+    "test": "mates",
+    "status": "Pass",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "stdout": "grounded 3-body planar/axial/angle rank: 6/2/0 DOF; consistent cycle; conflicting distance; near-pi yaw; antiparallel seed recovery; cancel\nPASS\n",
+    "stderr": ""
+  },
+  {
+    "test": "transport",
+    "status": "Pass",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "stdout": "real QProcess/QLocalSocket handshake, inherited capability, worker mesh, exact volume, restart epoch\nPASS\n",
+    "stderr": ""
+  },
+  {
+    "test": "fixtures",
+    "status": "Pass",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "stdout": "Pass: B0\u2013B6 recipes and hashes deterministic; unexecuted future-model counts explicitly pending\n",
+    "stderr": ""
+  },
+  {
+    "test": "isolation",
+    "status": "Pass",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "stdout": "Pass: 97 research files unchanged; 224 tracked/pending paths inspected; no remote\n",
+    "stderr": ""
+  },
+  {
+    "test": "statistics",
+    "status": "Pass",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "stdout": "Pass: nearest-rank p95 and rejected missing/nonfinite samples\n",
+    "stderr": ""
+  }
+]

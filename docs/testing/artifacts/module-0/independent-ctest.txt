@@ -1,0 +1,28 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+      Start  1: harness.pass
+ 1/10 Test  #1: harness.pass .....................   Passed    0.57 sec
+      Start  2: harness.failure_reporting
+ 2/10 Test  #2: harness.failure_reporting ........   Passed    0.10 sec
+      Start  3: measurement.statistics
+ 3/10 Test  #3: measurement.statistics ...........   Passed    0.10 sec
+      Start  4: harness.deliberate_failure
+ 4/10 Test  #4: harness.deliberate_failure .......***Not Run (Disabled)   0.00 sec
+      Start  5: protocol.boundaries
+ 5/10 Test  #5: protocol.boundaries ..............   Passed    0.56 sec
+      Start  6: storage.crash_matrix
+ 6/10 Test  #6: storage.crash_matrix .............   Passed    1.36 sec
+      Start  7: cad.sketch_solver
+ 7/10 Test  #7: cad.sketch_solver ................   Passed    0.49 sec
+      Start  8: cad.rigid_mates
+ 8/10 Test  #8: cad.rigid_mates ..................   Passed    0.90 sec
+      Start  9: fixtures.determinism
+ 9/10 Test  #9: fixtures.determinism .............   Passed    0.08 sec
+      Start 10: isolation.research
+10/10 Test #10: isolation.research ...............   Passed    0.19 sec
+
+100% tests passed, 0 tests failed out of 9
+
+Total Test time (real) =   4.39 sec
+
+The following tests did not run:
+	  4 - harness.deliberate_failure (Disabled)

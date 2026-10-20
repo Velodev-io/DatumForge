@@ -1,0 +1,21 @@
+# Development and review conventions
+
+Read docs/README.md and its linked specifications before editing. Follow Module
+0 lettered order; blocked prerequisites permit only independent later work.
+Record Pass, Fail, Blocked, Not run or Not applicable with reason. Only check a
+task after verifying its whole completion condition. User approval is required
+before Module 1. Keep research unchanged and preserve evidence of failed runs.
+
+Use short topic branches from `main`; review changes with actual test evidence.
+Never rewrite shared history. This repository has no remote until supplied.
+No initial commit is required to run tests; source tree hashes identify uncommitted
+builds. All CAD spikes live under tests, not production feature implementations.
+
+Build commands and dependency options are recorded in `cmake/README.md`.
+Candidate presets are not verified-platform claims. Run the native manual matrix
+in addition to CTest; offscreen tests do not establish GPU/accessibility support.
+
+Avoid global package installation or changing unrelated projects. Do not track
+downloaded libraries, actual user models, recovery data, logs with user paths,
+credentials or signing material. Track dependency pins, notices and safe synthetic
+fixture definitions. Keep tests deterministic and verify failure exit status.

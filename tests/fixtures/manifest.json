@@ -1,0 +1,37 @@
+{
+  "B0": {
+    "file": "B0.json",
+    "sha256": "5b4dcf1b82cb09919d32ab1510affb887e9c3b05e078dc1de43e07259655aec7",
+    "version": 1
+  },
+  "B1": {
+    "file": "B1.json",
+    "sha256": "253e1a78dd30735dcdfe16fce3d1843b87123e747b1f4a31b68744cdc5811a52",
+    "version": 1
+  },
+  "B2": {
+    "file": "B2.json",
+    "sha256": "78873aabdd68715b7868b6a08c62871bb57f2fa7ec6bf82930f49df317e37fdb",
+    "version": 1
+  },
+  "B3": {
+    "file": "B3.json",
+    "sha256": "a34fcd90dc0994a6d6bf95414969a70630506cceab9a7acfdf7405cb6d8d3ecb",
+    "version": 1
+  },
+  "B4": {
+    "file": "B4.json",
+    "sha256": "644219838fbd6626d0bada2d0b5ab48f85dd774d0f0ff4dea19699466d4c00a2",
+    "version": 1
+  },
+  "B5": {
+    "file": "B5.json",
+    "sha256": "094eeeb3c3dc473e5b94d8277bb455a0ae709cd8c0d0e686c13db945eee177d9",
+    "version": 1
+  },
+  "B6": {
+    "file": "B6.json",
+    "sha256": "b900b5a3505910db70f423f144c296e520d3b18271d84bcca3e825013569669f",
+    "version": 1
+  }
+}

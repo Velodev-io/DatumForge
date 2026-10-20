@@ -1,0 +1,16 @@
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-step-zero-b4-KzHdoJ/box.step(350 ents)  Write  Done[0m
+Imported STEP regenerated from retained SQLite BLOB after source/cache deletion; undo/recovery/job roots preserved
+[32;1mTotal number of loaded entities 52.
+[0m
+B4 generated box.step bytes=15416 sha256=3b8bd6fdd97af861795b8ab50e1652de00e977beb9457f1898786cb145e3d1b6
+B4 generated box.iges bytes=13284 sha256=6260f84772b8b50f8cabaead525503dd8db9393f4e0e931dddf712811b2c7db1
+B1 final_volume_mm3=35488.761101962 faces=15 solids=1; split history=2; ambiguity explicit
+PASS

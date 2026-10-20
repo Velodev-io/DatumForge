@@ -1,0 +1,1371 @@
+{
+  "source": {
+    "path": "/Users/binova/Downloads/SolidWorksSetup.exe",
+    "bytes": 218671192,
+    "sha256": "9d28ed0b923485340f67a4f308bb449624afe4cd23c80cd7c9726f910363221e",
+    "machine": "0x14c",
+    "optional_magic": "0x10b",
+    "sections": [
+      {
+        "name": ".text",
+        "rva": 4096,
+        "virtual_size": 82455,
+        "raw_size": 86016,
+        "raw_offset": 4096
+      },
+      {
+        "name": ".rdata",
+        "rva": 90112,
+        "virtual_size": 16290,
+        "raw_size": 16384,
+        "raw_offset": 90112
+      },
+      {
+        "name": ".data",
+        "rva": 106496,
+        "virtual_size": 59620,
+        "raw_size": 8192,
+        "raw_offset": 106496
+      },
+      {
+        "name": ".rsrc",
+        "rva": 167936,
+        "virtual_size": 38824,
+        "raw_size": 40960,
+        "raw_offset": 114688
+      },
+      {
+        "name": "_winzip_",
+        "rva": 208896,
+        "virtual_size": 218505216,
+        "raw_size": 218505216,
+        "raw_offset": 155648
+      }
+    ],
+    "imported_dlls": [
+      "KERNEL32.dll",
+      "GDI32.dll",
+      "ADVAPI32.dll"
+    ],
+    "embedded_ascii_urls": [
+      "http://cacerts.digicert.com/DigiCertAssuredIDRootCA.crt0E",
+      "http://cacerts.digicert.com/DigiCertTrustedG4CodeSigningRSA4096SHA3842021CA1.crt0",
+      "http://cacerts.digicert.com/DigiCertTrustedG4TimeStampingRSA4096SHA2562025CA1.crt0_",
+      "http://cacerts.digicert.com/DigiCertTrustedRootG4.crt0C",
+      "http://crl3.digicert.com/DigiCertAssuredIDRootCA.crl0",
+      "http://crl3.digicert.com/DigiCertTrustedG4CodeSigningRSA4096SHA3842021CA1.crl0S",
+      "http://crl3.digicert.com/DigiCertTrustedG4TimeStampingRSA4096SHA2562025CA1.crl0",
+      "http://crl3.digicert.com/DigiCertTrustedRootG4.crl0",
+      "http://crl4.digicert.com/DigiCertTrustedG4CodeSigningRSA4096SHA3842021CA1.crl0",
+      "http://ocsp.digicert.com0A",
+      "http://ocsp.digicert.com0C",
+      "http://ocsp.digicert.com0\\",
+      "http://ocsp.digicert.com0]",
+      "http://schemas.microsoft.com/SMI/2005/WindowsSettings",
+      "http://www.digicert.com/CPS0"
+    ],
+    "limitation": "Static headers/imports/strings only; strings do not establish executed behavior."
+  },
+  "archive_entries": [
+    {
+      "path": "sldim/lang/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/chinese/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/chinese/eula.htm",
+      "bytes": 2192,
+      "compressed_bytes": 1102,
+      "crc32": "36208195"
+    },
+    {
+      "path": "sldim/lang/chinese/install_guide.chm",
+      "bytes": 802101,
+      "compressed_bytes": 789852,
+      "crc32": "71cd6deb"
+    },
+    {
+      "path": "sldim/lang/chinese/sldadminoptioneditorresu.dll",
+      "bytes": 593496,
+      "compressed_bytes": 96019,
+      "crc32": "4125fb8b"
+    },
+    {
+      "path": "sldim/lang/chinese/sldBgDwldresu.dll",
+      "bytes": 437848,
+      "compressed_bytes": 47266,
+      "crc32": "aa34b6d4"
+    },
+    {
+      "path": "sldim/lang/chinese/sldIMresu.dll",
+      "bytes": 899160,
+      "compressed_bytes": 103032,
+      "crc32": "b8935e7c"
+    },
+    {
+      "path": "sldim/lang/chinese/sldim_download.chm",
+      "bytes": 38719,
+      "compressed_bytes": 30987,
+      "crc32": "47c9f52f"
+    },
+    {
+      "path": "sldim/lang/chinese-simplified/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/chinese-simplified/eula.htm",
+      "bytes": 2238,
+      "compressed_bytes": 1123,
+      "crc32": "b041e65d"
+    },
+    {
+      "path": "sldim/lang/chinese-simplified/install_guide.chm",
+      "bytes": 794341,
+      "compressed_bytes": 782020,
+      "crc32": "5a1dcab1"
+    },
+    {
+      "path": "sldim/lang/chinese-simplified/sldadminoptioneditorresu.dll",
+      "bytes": 592472,
+      "compressed_bytes": 95858,
+      "crc32": "12d70315"
+    },
+    {
+      "path": "sldim/lang/chinese-simplified/sldBgDwldresu.dll",
+      "bytes": 436824,
+      "compressed_bytes": 47138,
+      "crc32": "3ac410be"
+    },
+    {
+      "path": "sldim/lang/chinese-simplified/sldIMresu.dll",
+      "bytes": 894040,
+      "compressed_bytes": 102316,
+      "crc32": "fa7093e4"
+    },
+    {
+      "path": "sldim/lang/chinese-simplified/sldim_download.chm",
+      "bytes": 38455,
+      "compressed_bytes": 30714,
+      "crc32": "cdd82d95"
+    },
+    {
+      "path": "sldim/lang/czech/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/czech/eula.htm",
+      "bytes": 2488,
+      "compressed_bytes": 1171,
+      "crc32": "41acfa5d"
+    },
+    {
+      "path": "sldim/lang/czech/install_guide.chm",
+      "bytes": 815816,
+      "compressed_bytes": 803505,
+      "crc32": "407aea89"
+    },
+    {
+      "path": "sldim/lang/czech/sldadminoptioneditorresu.dll",
+      "bytes": 609368,
+      "compressed_bytes": 98114,
+      "crc32": "98b184b4"
+    },
+    {
+      "path": "sldim/lang/czech/sldBgDwldresu.dll",
+      "bytes": 456280,
+      "compressed_bytes": 48893,
+      "crc32": "43c84df7"
+    },
+    {
+      "path": "sldim/lang/czech/sldIMresu.dll",
+      "bytes": 1094232,
+      "compressed_bytes": 118311,
+      "crc32": "c7e19b87"
+    },
+    {
+      "path": "sldim/lang/czech/sldim_download.chm",
+      "bytes": 38968,
+      "compressed_bytes": 31257,
+      "crc32": "87425a63"
+    },
+    {
+      "path": "sldim/lang/english/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/english/eula.htm",
+      "bytes": 2344,
+      "compressed_bytes": 1071,
+      "crc32": "8c5645b3"
+    },
+    {
+      "path": "sldim/lang/english/install_guide.chm",
+      "bytes": 785198,
+      "compressed_bytes": 772926,
+      "crc32": "9446e3d8"
+    },
+    {
+      "path": "sldim/lang/english/sldadminoptioneditorresu.dll",
+      "bytes": 615512,
+      "compressed_bytes": 97313,
+      "crc32": "07306c3a"
+    },
+    {
+      "path": "sldim/lang/english/sldBgDwldresu.dll",
+      "bytes": 455768,
+      "compressed_bytes": 48232,
+      "crc32": "1c8a893f"
+    },
+    {
+      "path": "sldim/lang/english/sldIMresu.dll",
+      "bytes": 1086552,
+      "compressed_bytes": 112894,
+      "crc32": "d8e92447"
+    },
+    {
+      "path": "sldim/lang/english/sldim_download.chm",
+      "bytes": 38201,
+      "compressed_bytes": 30483,
+      "crc32": "16e3327a"
+    },
+    {
+      "path": "sldim/lang/english/html/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/english/html/imfuncs.js",
+      "bytes": 40652,
+      "compressed_bytes": 7017,
+      "crc32": "62286392"
+    },
+    {
+      "path": "sldim/lang/english/html/sldimWebView2.css",
+      "bytes": 22096,
+      "compressed_bytes": 3625,
+      "crc32": "3c1a2d66"
+    },
+    {
+      "path": "sldim/lang/english/html/images/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard1.jpg",
+      "bytes": 32622,
+      "compressed_bytes": 30901,
+      "crc32": "cf4241c4"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard10.jpg",
+      "bytes": 38194,
+      "compressed_bytes": 36645,
+      "crc32": "5ed20a59"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard11.jpg",
+      "bytes": 43563,
+      "compressed_bytes": 41990,
+      "crc32": "7e42a620"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard12.jpg",
+      "bytes": 39560,
+      "compressed_bytes": 37637,
+      "crc32": "c27ee6ca"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard13.jpg",
+      "bytes": 38041,
+      "compressed_bytes": 35943,
+      "crc32": "7c9f524c"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard14.jpg",
+      "bytes": 38741,
+      "compressed_bytes": 36598,
+      "crc32": "b17f8c72"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard15.jpg",
+      "bytes": 45391,
+      "compressed_bytes": 42935,
+      "crc32": "eff59b1c"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard16.jpg",
+      "bytes": 44375,
+      "compressed_bytes": 42506,
+      "crc32": "4c09234c"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard2.jpg",
+      "bytes": 59070,
+      "compressed_bytes": 57089,
+      "crc32": "33255362"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard3.jpg",
+      "bytes": 43803,
+      "compressed_bytes": 41795,
+      "crc32": "f8486f07"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard4.jpg",
+      "bytes": 54007,
+      "compressed_bytes": 51917,
+      "crc32": "85475efd"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard5.jpg",
+      "bytes": 52155,
+      "compressed_bytes": 49941,
+      "crc32": "94246e3b"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard6.jpg",
+      "bytes": 21480,
+      "compressed_bytes": 19624,
+      "crc32": "1d5d0a66"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard7.jpg",
+      "bytes": 52042,
+      "compressed_bytes": 49627,
+      "crc32": "2c89f7e0"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard8.jpg",
+      "bytes": 54075,
+      "compressed_bytes": 51893,
+      "crc32": "55c6fe10"
+    },
+    {
+      "path": "sldim/lang/english/html/images/billboard9.jpg",
+      "bytes": 53661,
+      "compressed_bytes": 51802,
+      "crc32": "dd0f4fdb"
+    },
+    {
+      "path": "sldim/lang/english/html/images/close.png",
+      "bytes": 155,
+      "compressed_bytes": 153,
+      "crc32": "d0553cf2"
+    },
+    {
+      "path": "sldim/lang/english/html/images/collapsible.png",
+      "bytes": 132,
+      "compressed_bytes": 130,
+      "crc32": "adc59031"
+    },
+    {
+      "path": "sldim/lang/english/html/images/diag-green-check.png",
+      "bytes": 1492,
+      "compressed_bytes": 1148,
+      "crc32": "a398dad1"
+    },
+    {
+      "path": "sldim/lang/english/html/images/diag-red-x.png",
+      "bytes": 1170,
+      "compressed_bytes": 828,
+      "crc32": "9a72c256"
+    },
+    {
+      "path": "sldim/lang/english/html/images/expandable.png",
+      "bytes": 156,
+      "compressed_bytes": 155,
+      "crc32": "ca80a815"
+    },
+    {
+      "path": "sldim/lang/english/html/images/grad.gif",
+      "bytes": 1315,
+      "compressed_bytes": 1320,
+      "crc32": "b353f81a"
+    },
+    {
+      "path": "sldim/lang/english/html/images/icon_error.png",
+      "bytes": 1582,
+      "compressed_bytes": 1271,
+      "crc32": "92b8a099"
+    },
+    {
+      "path": "sldim/lang/english/html/images/icon_info.png",
+      "bytes": 2425,
+      "compressed_bytes": 2143,
+      "crc32": "37027066"
+    },
+    {
+      "path": "sldim/lang/english/html/images/icon_warning.png",
+      "bytes": 1807,
+      "compressed_bytes": 1507,
+      "crc32": "f51007b8"
+    },
+    {
+      "path": "sldim/lang/english/html/images/info.png",
+      "bytes": 338,
+      "compressed_bytes": 335,
+      "crc32": "a6a26bd6"
+    },
+    {
+      "path": "sldim/lang/english/html/images/installoptions_background.png",
+      "bytes": 77279,
+      "compressed_bytes": 74246,
+      "crc32": "2faa5ff0"
+    },
+    {
+      "path": "sldim/lang/english/html/images/i_imalert_32.png",
+      "bytes": 1186,
+      "compressed_bytes": 1191,
+      "crc32": "213764c2"
+    },
+    {
+      "path": "sldim/lang/english/html/images/minus_tree.png",
+      "bytes": 1102,
+      "compressed_bytes": 740,
+      "crc32": "a54fc4f5"
+    },
+    {
+      "path": "sldim/lang/english/html/images/not_yet_attempted.png",
+      "bytes": 277,
+      "compressed_bytes": 270,
+      "crc32": "a7537b1d"
+    },
+    {
+      "path": "sldim/lang/english/html/images/placeholder.png",
+      "bytes": 172,
+      "compressed_bytes": 154,
+      "crc32": "a1ffe841"
+    },
+    {
+      "path": "sldim/lang/english/html/images/plus_tree.png",
+      "bytes": 1087,
+      "compressed_bytes": 720,
+      "crc32": "b35c25d3"
+    },
+    {
+      "path": "sldim/lang/english/html/images/scroll_more.png",
+      "bytes": 250,
+      "compressed_bytes": 255,
+      "crc32": "b4e6d573"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/back.png",
+      "bytes": 211,
+      "compressed_bytes": 211,
+      "crc32": "859d5f80"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/cancel.png",
+      "bytes": 252,
+      "compressed_bytes": 257,
+      "crc32": "3585290e"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/download.png",
+      "bytes": 209,
+      "compressed_bytes": 209,
+      "crc32": "04a8bd5a"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/download_install.png",
+      "bytes": 288,
+      "compressed_bytes": 293,
+      "crc32": "d92e889a"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/finish.png",
+      "bytes": 218,
+      "compressed_bytes": 219,
+      "crc32": "dd824c2f"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/help.png",
+      "bytes": 409,
+      "compressed_bytes": 414,
+      "crc32": "35329bc9"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/install.png",
+      "bytes": 217,
+      "compressed_bytes": 219,
+      "crc32": "e623450b"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/next.png",
+      "bytes": 203,
+      "compressed_bytes": 203,
+      "crc32": "2a76b056"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/pencilbutton.png",
+      "bytes": 1334,
+      "compressed_bytes": 1017,
+      "crc32": "d2b58f27"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/pencilbutton_disabled.png",
+      "bytes": 1310,
+      "compressed_bytes": 988,
+      "crc32": "ccd86cc1"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/pencilbutton_rollover.png",
+      "bytes": 1297,
+      "compressed_bytes": 968,
+      "crc32": "67997cdf"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/repair.png",
+      "bytes": 601,
+      "compressed_bytes": 606,
+      "crc32": "318a8302"
+    },
+    {
+      "path": "sldim/lang/english/html/images/buttons/retry_download.png",
+      "bytes": 612,
+      "compressed_bytes": 617,
+      "crc32": "ec60537b"
+    },
+    {
+      "path": "sldim/lang/french/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/french/eula.htm",
+      "bytes": 2437,
+      "compressed_bytes": 1072,
+      "crc32": "6eaee95f"
+    },
+    {
+      "path": "sldim/lang/french/install_guide.chm",
+      "bytes": 818672,
+      "compressed_bytes": 806364,
+      "crc32": "f0ebfb7d"
+    },
+    {
+      "path": "sldim/lang/french/sldadminoptioneditorresu.dll",
+      "bytes": 615512,
+      "compressed_bytes": 98116,
+      "crc32": "2e4e64ca"
+    },
+    {
+      "path": "sldim/lang/french/sldBgDwldresu.dll",
+      "bytes": 461912,
+      "compressed_bytes": 48750,
+      "crc32": "1cb3a647"
+    },
+    {
+      "path": "sldim/lang/french/sldIMresu.dll",
+      "bytes": 1149016,
+      "compressed_bytes": 118008,
+      "crc32": "a355a121"
+    },
+    {
+      "path": "sldim/lang/french/sldim_download.chm",
+      "bytes": 39403,
+      "compressed_bytes": 31702,
+      "crc32": "2c6e5a6e"
+    },
+    {
+      "path": "sldim/lang/german/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/german/eula.htm",
+      "bytes": 2522,
+      "compressed_bytes": 1120,
+      "crc32": "e270a703"
+    },
+    {
+      "path": "sldim/lang/german/install_guide.chm",
+      "bytes": 821250,
+      "compressed_bytes": 808976,
+      "crc32": "29a89f1d"
+    },
+    {
+      "path": "sldim/lang/german/sldadminoptioneditorresu.dll",
+      "bytes": 614488,
+      "compressed_bytes": 98263,
+      "crc32": "8160c1be"
+    },
+    {
+      "path": "sldim/lang/german/sldBgDwldresu.dll",
+      "bytes": 462424,
+      "compressed_bytes": 49098,
+      "crc32": "b410139b"
+    },
+    {
+      "path": "sldim/lang/german/sldIMresu.dll",
+      "bytes": 1154136,
+      "compressed_bytes": 120281,
+      "crc32": "7aa91f3b"
+    },
+    {
+      "path": "sldim/lang/german/sldim_download.chm",
+      "bytes": 39130,
+      "compressed_bytes": 31408,
+      "crc32": "e6a8b236"
+    },
+    {
+      "path": "sldim/lang/italian/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/italian/eula.htm",
+      "bytes": 2413,
+      "compressed_bytes": 1062,
+      "crc32": "11e58154"
+    },
+    {
+      "path": "sldim/lang/italian/install_guide.chm",
+      "bytes": 803826,
+      "compressed_bytes": 791514,
+      "crc32": "b589ea0a"
+    },
+    {
+      "path": "sldim/lang/italian/sldadminoptioneditorresu.dll",
+      "bytes": 611928,
+      "compressed_bytes": 97678,
+      "crc32": "7088d856"
+    },
+    {
+      "path": "sldim/lang/italian/sldBgDwldresu.dll",
+      "bytes": 459352,
+      "compressed_bytes": 48632,
+      "crc32": "ebeb258b"
+    },
+    {
+      "path": "sldim/lang/italian/sldIMresu.dll",
+      "bytes": 1128024,
+      "compressed_bytes": 117282,
+      "crc32": "9abafc58"
+    },
+    {
+      "path": "sldim/lang/italian/sldim_download.chm",
+      "bytes": 38695,
+      "compressed_bytes": 30978,
+      "crc32": "5aaae38e"
+    },
+    {
+      "path": "sldim/lang/japanese/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/japanese/eula.htm",
+      "bytes": 2416,
+      "compressed_bytes": 1196,
+      "crc32": "6478510f"
+    },
+    {
+      "path": "sldim/lang/japanese/install_guide.chm",
+      "bytes": 920901,
+      "compressed_bytes": 908603,
+      "crc32": "f2798d3d"
+    },
+    {
+      "path": "sldim/lang/japanese/sldadminoptioneditorresu.dll",
+      "bytes": 610392,
+      "compressed_bytes": 98117,
+      "crc32": "6d0c356d"
+    },
+    {
+      "path": "sldim/lang/japanese/sldBgDwldresu.dll",
+      "bytes": 446040,
+      "compressed_bytes": 47814,
+      "crc32": "58621f07"
+    },
+    {
+      "path": "sldim/lang/japanese/sldIMresu.dll",
+      "bytes": 981592,
+      "compressed_bytes": 107882,
+      "crc32": "b6e4857c"
+    },
+    {
+      "path": "sldim/lang/japanese/sldim_download.chm",
+      "bytes": 40096,
+      "compressed_bytes": 32328,
+      "crc32": "67508b65"
+    },
+    {
+      "path": "sldim/lang/korean/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/korean/eula.htm",
+      "bytes": 2554,
+      "compressed_bytes": 1237,
+      "crc32": "66e419c4"
+    },
+    {
+      "path": "sldim/lang/korean/install_guide.chm",
+      "bytes": 816245,
+      "compressed_bytes": 803942,
+      "crc32": "ac1b3409"
+    },
+    {
+      "path": "sldim/lang/korean/sldadminoptioneditorresu.dll",
+      "bytes": 598104,
+      "compressed_bytes": 96575,
+      "crc32": "8ca1cdb9"
+    },
+    {
+      "path": "sldim/lang/korean/sldBgDwldresu.dll",
+      "bytes": 442968,
+      "compressed_bytes": 47698,
+      "crc32": "838f7f4f"
+    },
+    {
+      "path": "sldim/lang/korean/sldIMresu.dll",
+      "bytes": 946264,
+      "compressed_bytes": 105515,
+      "crc32": "ebecff70"
+    },
+    {
+      "path": "sldim/lang/korean/sldim_download.chm",
+      "bytes": 38632,
+      "compressed_bytes": 30903,
+      "crc32": "479eb16b"
+    },
+    {
+      "path": "sldim/lang/polish/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/polish/eula.htm",
+      "bytes": 2452,
+      "compressed_bytes": 1150,
+      "crc32": "c24876c8"
+    },
+    {
+      "path": "sldim/lang/polish/install_guide.chm",
+      "bytes": 829575,
+      "compressed_bytes": 817331,
+      "crc32": "6b5b7acb"
+    },
+    {
+      "path": "sldim/lang/polish/sldadminoptioneditorresu.dll",
+      "bytes": 610904,
+      "compressed_bytes": 98316,
+      "crc32": "54ca6a8a"
+    },
+    {
+      "path": "sldim/lang/polish/sldBgDwldresu.dll",
+      "bytes": 457304,
+      "compressed_bytes": 48853,
+      "crc32": "65012739"
+    },
+    {
+      "path": "sldim/lang/polish/sldIMresu.dll",
+      "bytes": 1118296,
+      "compressed_bytes": 119137,
+      "crc32": "319f4d95"
+    },
+    {
+      "path": "sldim/lang/polish/sldim_download.chm",
+      "bytes": 39467,
+      "compressed_bytes": 31763,
+      "crc32": "958e37b6"
+    },
+    {
+      "path": "sldim/lang/portuguese-brazilian/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/portuguese-brazilian/eula.htm",
+      "bytes": 2326,
+      "compressed_bytes": 1048,
+      "crc32": "44823602"
+    },
+    {
+      "path": "sldim/lang/portuguese-brazilian/install_guide.chm",
+      "bytes": 803768,
+      "compressed_bytes": 791501,
+      "crc32": "316d8317"
+    },
+    {
+      "path": "sldim/lang/portuguese-brazilian/sldadminoptioneditorresu.dll",
+      "bytes": 612440,
+      "compressed_bytes": 97839,
+      "crc32": "2885f5d2"
+    },
+    {
+      "path": "sldim/lang/portuguese-brazilian/sldBgDwldresu.dll",
+      "bytes": 459864,
+      "compressed_bytes": 48757,
+      "crc32": "4c7dc604"
+    },
+    {
+      "path": "sldim/lang/portuguese-brazilian/sldIMresu.dll",
+      "bytes": 1127512,
+      "compressed_bytes": 117857,
+      "crc32": "80bc791e"
+    },
+    {
+      "path": "sldim/lang/portuguese-brazilian/sldim_download.chm",
+      "bytes": 38974,
+      "compressed_bytes": 31259,
+      "crc32": "7017d61a"
+    },
+    {
+      "path": "sldim/lang/russian/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/russian/eula.htm",
+      "bytes": 3037,
+      "compressed_bytes": 1336,
+      "crc32": "e7ff3d25"
+    },
+    {
+      "path": "sldim/lang/russian/install_guide.chm",
+      "bytes": 820058,
+      "compressed_bytes": 807715,
+      "crc32": "5a8cdcc3"
+    },
+    {
+      "path": "sldim/lang/russian/sldadminoptioneditorresu.dll",
+      "bytes": 611416,
+      "compressed_bytes": 98457,
+      "crc32": "fa5dc82b"
+    },
+    {
+      "path": "sldim/lang/russian/sldBgDwldresu.dll",
+      "bytes": 458840,
+      "compressed_bytes": 48965,
+      "crc32": "2a9349e4"
+    },
+    {
+      "path": "sldim/lang/russian/sldIMresu.dll",
+      "bytes": 1115224,
+      "compressed_bytes": 119383,
+      "crc32": "94563050"
+    },
+    {
+      "path": "sldim/lang/russian/sldim_download.chm",
+      "bytes": 39069,
+      "compressed_bytes": 31370,
+      "crc32": "a2fdf5f6"
+    },
+    {
+      "path": "sldim/lang/spanish/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/spanish/eula.htm",
+      "bytes": 2359,
+      "compressed_bytes": 1045,
+      "crc32": "8a1d1621"
+    },
+    {
+      "path": "sldim/lang/spanish/install_guide.chm",
+      "bytes": 805501,
+      "compressed_bytes": 793157,
+      "crc32": "dcc0a367"
+    },
+    {
+      "path": "sldim/lang/spanish/sldadminoptioneditorresu.dll",
+      "bytes": 613464,
+      "compressed_bytes": 97744,
+      "crc32": "1c983033"
+    },
+    {
+      "path": "sldim/lang/spanish/sldBgDwldresu.dll",
+      "bytes": 461400,
+      "compressed_bytes": 48677,
+      "crc32": "4f17f32e"
+    },
+    {
+      "path": "sldim/lang/spanish/sldIMresu.dll",
+      "bytes": 1134168,
+      "compressed_bytes": 116741,
+      "crc32": "a8550f10"
+    },
+    {
+      "path": "sldim/lang/spanish/sldim_download.chm",
+      "bytes": 38581,
+      "compressed_bytes": 30859,
+      "crc32": "b17d1866"
+    },
+    {
+      "path": "sldim/lang/turkish/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000"
+    },
+    {
+      "path": "sldim/lang/turkish/eula.htm",
+      "bytes": 2369,
+      "compressed_bytes": 1074,
+      "crc32": "94d0024b"
+    },
+    {
+      "path": "sldim/lang/turkish/install_guide.chm",
+      "bytes": 804223,
+      "compressed_bytes": 791937,
+      "crc32": "301e2929"
+    },
+    {
+      "path": "sldim/lang/turkish/sldadminoptioneditorresu.dll",
+      "bytes": 609368,
+      "compressed_bytes": 97824,
+      "crc32": "c7df83b2"
+    },
+    {
+      "path": "sldim/lang/turkish/sldBgDwldresu.dll",
+      "bytes": 455768,
+      "compressed_bytes": 48596,
+      "crc32": "68daf46c"
+    },
+    {
+      "path": "sldim/lang/turkish/sldIMresu.dll",
+      "bytes": 1087064,
+      "compressed_bytes": 115787,
+      "crc32": "8c8b56d2"
+    },
+    {
+      "path": "sldim/lang/turkish/sldim_download.chm",
+      "bytes": 38775,
+      "compressed_bytes": 31063,
+      "crc32": "a1b12c15"
+    },
+    {
+      "path": "sldim/MicrosoftEdgeWebView2RuntimeInstallerX64.exe",
+      "bytes": 180573624,
+      "compressed_bytes": 180501161,
+      "crc32": "cf3fe219"
+    },
+    {
+      "path": "sldim/sldadminoptioneditor.exe",
+      "bytes": 11859032,
+      "compressed_bytes": 4521275,
+      "crc32": "22000064"
+    },
+    {
+      "path": "sldim/sldBgDwld.exe",
+      "bytes": 8427608,
+      "compressed_bytes": 3321904,
+      "crc32": "8b36625a"
+    },
+    {
+      "path": "sldim/sldIM.exe",
+      "bytes": 29760088,
+      "compressed_bytes": 7893024,
+      "crc32": "cc8af7df"
+    },
+    {
+      "path": "sldim/sldim.xml",
+      "bytes": 245380,
+      "compressed_bytes": 15924,
+      "crc32": "ae89358b"
+    },
+    {
+      "path": "sldim/sldps.dll",
+      "bytes": 3845720,
+      "compressed_bytes": 1722945,
+      "crc32": "3e6bbb6b"
+    },
+    {
+      "path": "sldim/sldps_libFNP.dll",
+      "bytes": 7884376,
+      "compressed_bytes": 2734037,
+      "crc32": "e29e663b"
+    },
+    {
+      "path": "sldim/startswinstall.exe",
+      "bytes": 2004568,
+      "compressed_bytes": 979388,
+      "crc32": "659aed38"
+    },
+    {
+      "path": "sldim/startswinstallhelper.exe",
+      "bytes": 318552,
+      "compressed_bytes": 161218,
+      "crc32": "60bd74d0"
+    },
+    {
+      "path": "sldim/WebView2Loader.dll",
+      "bytes": 117208,
+      "compressed_bytes": 64589,
+      "crc32": "356817f0"
+    },
+    {
+      "path": "sldim/xceedzip.dll",
+      "bytes": 689288,
+      "compressed_bytes": 321482,
+      "crc32": "6159bbcd"
+    },
+    {
+      "path": "setup.exe",
+      "bytes": 429144,
+      "compressed_bytes": 97267,
+      "crc32": "f2b455c8"
+    }
+  ],
+  "extracted": [
+    {
+      "path": "sldim/lang/english/html/imfuncs.js",
+      "bytes": 40652,
+      "sha256": "e53653710a6f6e69dce292738743a568122188641104541dc9001855de67f963",
+      "crc_verified": true
+    },
+    {
+      "path": "sldim/lang/english/html/sldimWebView2.css",
+      "bytes": 22096,
+      "sha256": "186af7fb74770431249e966297b9e633b189355943e42328842f7011ec933d11",
+      "crc_verified": true
+    },
+    {
+      "path": "sldim/sldIM.exe",
+      "bytes": 29760088,
+      "sha256": "5b4f6b9ae740efbea846b819ef56d7cc64ed87f86b3578179a859bc0fffbea05",
+      "crc_verified": true,
+      "pe": {
+        "path": "research/local-evidence/extracted/sldim/sldIM.exe",
+        "bytes": 29760088,
+        "sha256": "5b4f6b9ae740efbea846b819ef56d7cc64ed87f86b3578179a859bc0fffbea05",
+        "machine": "0x14c",
+        "optional_magic": "0x10b",
+        "sections": [
+          {
+            "name": ".text",
+            "rva": 4096,
+            "virtual_size": 19205929,
+            "raw_size": 19206144,
+            "raw_offset": 1536
+          },
+          {
+            "name": ".textidx",
+            "rva": 19210240,
+            "virtual_size": 1231544,
+            "raw_size": 1231872,
+            "raw_offset": 19207680
+          },
+          {
+            "name": ".my_text",
+            "rva": 20443136,
+            "virtual_size": 4394,
+            "raw_size": 4608,
+            "raw_offset": 20439552
+          },
+          {
+            "name": ".rdata",
+            "rva": 20451328,
+            "virtual_size": 4320916,
+            "raw_size": 4321280,
+            "raw_offset": 20444160
+          },
+          {
+            "name": ".data",
+            "rva": 24772608,
+            "virtual_size": 349940,
+            "raw_size": 242176,
+            "raw_offset": 24765440
+          },
+          {
+            "name": ".idata",
+            "rva": 25124864,
+            "virtual_size": 43635,
+            "raw_size": 44032,
+            "raw_offset": 25007616
+          },
+          {
+            "name": ".shr",
+            "rva": 25169920,
+            "virtual_size": 260,
+            "raw_size": 512,
+            "raw_offset": 25051648
+          },
+          {
+            "name": ".fnp_dir",
+            "rva": 25174016,
+            "virtual_size": 376,
+            "raw_size": 512,
+            "raw_offset": 25052160
+          },
+          {
+            "name": ".fnp_mar",
+            "rva": 25178112,
+            "virtual_size": 257,
+            "raw_size": 512,
+            "raw_offset": 25052672
+          },
+          {
+            "name": ".tls",
+            "rva": 25182208,
+            "virtual_size": 777,
+            "raw_size": 1024,
+            "raw_offset": 25053184
+          },
+          {
+            "name": ".00cfg",
+            "rva": 25186304,
+            "virtual_size": 270,
+            "raw_size": 512,
+            "raw_offset": 25054208
+          },
+          {
+            "name": ".fptable",
+            "rva": 25190400,
+            "virtual_size": 409,
+            "raw_size": 512,
+            "raw_offset": 25054720
+          },
+          {
+            "name": ".rsrc",
+            "rva": 25194496,
+            "virtual_size": 4694160,
+            "raw_size": 4694528,
+            "raw_offset": 25055232
+          }
+        ],
+        "imported_dlls": [
+          "WebView2Loader.dll",
+          "SHLWAPI.dll",
+          "WINMM.dll",
+          "VERSION.dll",
+          "msi.dll",
+          "WS2_32.dll",
+          "NETAPI32.dll",
+          "WTSAPI32.dll",
+          "Secur32.dll",
+          "MPR.dll",
+          "WINTRUST.dll",
+          "CRYPT32.dll",
+          "USERENV.dll",
+          "api-ms-win-core-libraryloader-l1-2-0.dll",
+          "api-ms-win-core-libraryloader-l1-2-1.dll",
+          "api-ms-win-core-synch-l1-1-0.dll",
+          "api-ms-win-core-registry-l1-1-0.dll",
+          "api-ms-win-core-string-l1-1-0.dll",
+          "api-ms-win-core-string-obsolete-l1-1-0.dll",
+          "api-ms-win-core-localization-l1-2-0.dll",
+          "api-ms-win-core-errorhandling-l1-1-0.dll",
+          "api-ms-win-core-synch-l1-2-0.dll",
+          "api-ms-win-core-heap-obsolete-l1-1-0.dll",
+          "OLEAUT32.dll",
+          "api-ms-win-core-file-l1-1-0.dll",
+          "api-ms-win-core-handle-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-0.dll",
+          "api-ms-win-core-com-l1-1-0.dll",
+          "api-ms-win-ntuser-sysparams-l1-1-0.dll",
+          "api-ms-win-core-heap-l2-1-0.dll",
+          "api-ms-win-security-sddl-l1-1-0.dll",
+          "api-ms-win-core-util-l1-1-0.dll",
+          "api-ms-win-core-heap-l1-1-0.dll",
+          "api-ms-win-core-processthreads-l1-1-1.dll",
+          "api-ms-win-core-toolhelp-l1-1-0.dll",
+          "api-ms-win-core-psapi-l1-1-0.dll",
+          "api-ms-win-core-profile-l1-1-0.dll",
+          "api-ms-win-core-processenvironment-l1-1-0.dll",
+          "api-ms-win-core-file-l1-2-0.dll",
+          "api-ms-win-core-namedpipe-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-1-0.dll",
+          "api-ms-win-security-base-l1-1-0.dll",
+          "api-ms-win-core-file-l2-1-2.dll",
+          "api-ms-win-security-lsalookup-l2-1-0.dll",
+          "api-ms-win-core-kernel32-legacy-l1-1-0.dll",
+          "api-ms-win-security-cpwl-l1-1-0.dll",
+          "api-ms-win-core-timezone-l1-1-0.dll",
+          "api-ms-win-core-registry-l2-1-0.dll",
+          "api-ms-win-core-com-l2-1-1.dll",
+          "api-ms-win-core-privateprofile-l1-1-0.dll",
+          "api-ms-win-core-string-l2-1-0.dll",
+          "api-ms-win-security-cryptoapi-l1-1-0.dll",
+          "RPCRT4.dll",
+          "api-ms-win-security-provider-l1-1-0.dll",
+          "api-ms-win-core-kernel32-legacy-l1-1-1.dll",
+          "api-ms-win-core-synch-l1-2-1.dll",
+          "api-ms-win-core-processtopology-obsolete-l1-1-0.dll",
+          "api-ms-win-core-synch-ansi-l1-1-0.dll",
+          "api-ms-win-core-memory-l1-1-0.dll",
+          "api-ms-win-core-file-l1-2-2.dll",
+          "api-ms-win-core-io-l1-1-0.dll",
+          "api-ms-win-core-namedpipe-ansi-l1-1-0.dll",
+          "api-ms-win-service-winsvc-l1-1-0.dll",
+          "KERNEL32.dll",
+          "USER32.dll",
+          "GDI32.dll",
+          "MSIMG32.dll",
+          "COMDLG32.dll",
+          "WINSPOOL.DRV",
+          "ADVAPI32.dll",
+          "SHELL32.dll",
+          "COMCTL32.dll",
+          "UxTheme.dll",
+          "ole32.dll",
+          "oledlg.dll",
+          "urlmon.dll",
+          "ODBC32.dll",
+          "gdiplus.dll",
+          "OLEACC.dll",
+          "WININET.dll",
+          "IMM32.dll",
+          "api-ms-win-core-debug-l1-1-0.dll",
+          "api-ms-win-core-sysinfo-l1-2-0.dll",
+          "api-ms-win-core-threadpool-l1-2-0.dll",
+          "api-ms-win-core-file-l2-1-0.dll",
+          "api-ms-win-core-rtlsupport-l1-1-0.dll",
+          "api-ms-win-core-interlocked-l1-1-0.dll",
+          "api-ms-win-core-console-l1-1-0.dll",
+          "api-ms-win-core-fibers-l1-1-0.dll",
+          "api-ms-win-core-fibers-l1-1-1.dll",
+          "api-ms-win-core-datetime-l1-1-0.dll"
+        ],
+        "embedded_ascii_urls": [
+          "http://activate-se.solidworks.com",
+          "http://activate.solidworks.com",
+          "http://backupactivate-se.solidworks.com",
+          "http://backupactivate.solidworks.com",
+          "http://cacerts.digicert.com/DigiCertAssuredIDRootCA.crt0E",
+          "http://cacerts.digicert.com/DigiCertTrustedG4CodeSigningRSA4096SHA3842021CA1.crt0",
+          "http://cacerts.digicert.com/DigiCertTrustedG4TimeStampingRSA4096SHA2562025CA1.crt0_",
+          "http://cacerts.digicert.com/DigiCertTrustedRootG4.crt0C",
+          "http://crl3.digicert.com/DigiCertAssuredIDRootCA.crl0",
+          "http://crl3.digicert.com/DigiCertTrustedG4CodeSigningRSA4096SHA3842021CA1.crl0S",
+          "http://crl3.digicert.com/DigiCertTrustedG4TimeStampingRSA4096SHA2562025CA1.crl0",
+          "http://crl3.digicert.com/DigiCertTrustedRootG4.crl0",
+          "http://crl4.digicert.com/DigiCertTrustedG4CodeSigningRSA4096SHA3842021CA1.crl0",
+          "http://localhost:8888/flexnet/services/ActivationService?wsdl",
+          "http://ocsp.digicert.com0A",
+          "http://ocsp.digicert.com0C",
+          "http://ocsp.digicert.com0\\",
+          "http://ocsp.digicert.com0]",
+          "http://schemas.microsoft.com/SMI/2005/WindowsSettings",
+          "http://www.digicert.com/CPS0",
+          "http://www.macrovision.com/fnp/2004/11/activation",
+          "http://www.macrovision.com/fnp/2004/11/activation/XML/Schemas/U4_CommsTargetSoap.xsd",
+          "http://www.w3.org/2001/XMLSchema-instance",
+          "https://activate-se.solidworks.com",
+          "https://activate.solidworks.com",
+          "https://backupactivate-se.solidworks.com",
+          "https://backupactivate.solidworks.com",
+          "https://backuponline-se.solidworks.com",
+          "https://backuponline.solidworks.com",
+          "https://online-se.solidworks.com",
+          "https://online.solidworks.com"
+        ],
+        "limitation": "Static headers/imports/strings only; strings do not establish executed behavior."
+      }
+    },
+    {
+      "path": "sldim/sldim.xml",
+      "bytes": 245380,
+      "sha256": "776f89334001b14e46dcb226274e2de32ee73f875c46bcd4f43976b4039e23fb",
+      "crc_verified": true
+    },
+    {
+      "path": "setup.exe",
+      "bytes": 429144,
+      "sha256": "81f4894e32e841e2b46a8bfceb1745dfaa69d73b09e027a329d4ebee48ff7a70",
+      "crc_verified": true,
+      "pe": {
+        "path": "research/local-evidence/extracted/setup.exe",
+        "bytes": 429144,
+        "sha256": "81f4894e32e841e2b46a8bfceb1745dfaa69d73b09e027a329d4ebee48ff7a70",
+        "machine": "0x14c",
+        "optional_magic": "0x10b",
+        "sections": [
+          {
+            "name": ".text",
+            "rva": 4096,
+            "virtual_size": 77482,
+            "raw_size": 77824,
+            "raw_offset": 1024
+          },
+          {
+            "name": ".rdata",
+            "rva": 81920,
+            "virtual_size": 37922,
+            "raw_size": 38400,
+            "raw_offset": 78848
+          },
+          {
+            "name": ".data",
+            "rva": 122880,
+            "virtual_size": 5204,
+            "raw_size": 2560,
+            "raw_offset": 117248
+          },
+          {
+            "name": ".fptable",
+            "rva": 131072,
+            "virtual_size": 128,
+            "raw_size": 512,
+            "raw_offset": 119808
+          },
+          {
+            "name": ".rsrc",
+            "rva": 135168,
+            "virtual_size": 298400,
+            "raw_size": 298496,
+            "raw_offset": 120320
+          }
+        ],
+        "imported_dlls": [
+          "SHLWAPI.dll",
+          "KERNEL32.dll",
+          "USER32.dll",
+          "SHELL32.dll"
+        ],
+        "embedded_ascii_urls": [
+          "http://cacerts.digicert.com/DigiCertAssuredIDRootCA.crt0E",
+          "http://cacerts.digicert.com/DigiCertTrustedG4CodeSigningRSA4096SHA3842021CA1.crt0",
+          "http://cacerts.digicert.com/DigiCertTrustedG4TimeStampingRSA4096SHA2562025CA1.crt0_",
+          "http://cacerts.digicert.com/DigiCertTrustedRootG4.crt0C",
+          "http://crl3.digicert.com/DigiCertAssuredIDRootCA.crl0",
+          "http://crl3.digicert.com/DigiCertTrustedG4CodeSigningRSA4096SHA3842021CA1.crl0S",
+          "http://crl3.digicert.com/DigiCertTrustedG4TimeStampingRSA4096SHA2562025CA1.crl0",
+          "http://crl3.digicert.com/DigiCertTrustedRootG4.crl0",
+          "http://crl4.digicert.com/DigiCertTrustedG4CodeSigningRSA4096SHA3842021CA1.crl0",
+          "http://ocsp.digicert.com0A",
+          "http://ocsp.digicert.com0C",
+          "http://ocsp.digicert.com0\\",
+          "http://ocsp.digicert.com0]",
+          "http://www.digicert.com/CPS0"
+        ],
+        "limitation": "Static headers/imports/strings only; strings do not establish executed behavior."
+      }
+    }
+  ],
+  "contains_sldworks_exe": false,
+  "execution_performed": false
+}

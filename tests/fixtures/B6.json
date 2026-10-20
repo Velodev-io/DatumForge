@@ -1,0 +1,37 @@
+{
+  "evaluation": "See protocol/storage/CAD spike run logs; full application failure corpus Module 10",
+  "expected": {
+    "durable_command_count_after_retry": 1,
+    "prior_snapshot_preserved_before_publication": true
+  },
+  "id": "B6",
+  "kernel_length_unit": "mm",
+  "license": "CC0-1.0 for these synthetic fixture recipes only",
+  "recipe": {
+    "corrupt_hex": {
+      "duplicate_map_key": "a2617801617802",
+      "nonfinite_cbor": "a16178fb7ff0000000000000",
+      "oversize_frame": "ffffffff",
+      "truncated_sqlite": "53514c69746520666f726d6174203300"
+    },
+    "faults": [
+      "before_commit",
+      "after_commit",
+      "during_snapshot",
+      "after_publication",
+      "disk_full",
+      "permission_error",
+      "write_error",
+      "future_schema",
+      "missing_object",
+      "old_epoch",
+      "old_generation",
+      "ambiguous_symmetric_faces",
+      "conflicting_distance"
+    ]
+  },
+  "seed": 19002026,
+  "semantic_length_unit": "m",
+  "source": "original project synthetic definitions",
+  "version": 1
+}

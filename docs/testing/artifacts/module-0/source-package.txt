@@ -1,0 +1,5 @@
+CPack: Create package using ZIP
+CPack: Install projects
+CPack: - Install directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone
+CPack: Create package
+CPack: - package: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/packages/cad-step-zero-source-0.0.1-Source.zip generated.
