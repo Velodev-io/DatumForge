@@ -1,4 +1,5 @@
 #include "FeaturePanel.hpp"
+#include "HistoryPanel.hpp"
 #include "MainWindow.hpp"
 #include "SketchPanel.hpp"
 #include "render/Viewport.hpp"
@@ -16,7 +17,7 @@ void MainWindow::refreshFeatures() {
     }
     bool idle = client->ready() && !client->outstanding(),
          part = active.value("type").toString() == "Part";
-    bool sketchEdit = sketchPanel && sketchPanel->active(), edit = featurePanel->active();
+    bool sketchEdit = sketchPanel && sketchPanel->active(), edit = featurePanel->active()||(historyPanel&&historyPanel->active());
     featurePanel->install(active, idle);
     auto available = [&](QString id, bool yes, QString reason) {
         auto *a = commands.get(id);
@@ -34,6 +35,7 @@ void MainWindow::refreshFeatures() {
                           : "Requires an accepted Part solid and no active command");
     }
     findChild<QAction *>("cancelFeatureAction")->setEnabled(edit);
+    if(commands.get("history"))available("history",part&&idle&&!edit&&!sketchEdit&&solids,"Requires an accepted Part history and no active command");
     if (!part)
         return;
     viewport->setContext(active.value("units").toString() + " · " +
@@ -49,7 +51,7 @@ void MainWindow::refreshFeatures() {
         viewport->setStale(state().stale);
     }
     if (showSolid)
-        propertyPages->setCurrentWidget(featurePanel);
+        propertyPages->setCurrentWidget(historyPanel&&historyPanel->active()?static_cast<QWidget*>(historyPanel):static_cast<QWidget*>(featurePanel));
     if (edit) {
         findChild<QTabWidget *>("managerTabs")->setCurrentIndex(1);
         commandTabs->setCurrentIndex(0);

@@ -2,7 +2,7 @@
 
 Native, offline mechanical CAD project for macOS, Windows and Linux, with an
 8 GB physical RAM baseline. Release support is provisional.
-Start with [the specification index](docs/README.md).
+Start with [the specification index](docs/README.md). See [branches and publication checks](docs/PUBLISHING.md).
 
 **Modules 1–3 are implemented on the available Mac:** native shell/reference
 viewport, one exact-geometry worker, persistent documents, semantic undo/redo,
@@ -11,7 +11,7 @@ expressions. See [Module 3 evidence and blockers](docs/testing/module-3.md).
 Module 3 input repairs and the authorized Module 4.0 workspace add command tabs,
 a left PropertyManager and direct shape editing. See [workspace evidence and
 blockers](docs/testing/module-4.md). Windows/Linux and full R1 acceptance remain
-Blocked or Not run. Remaining Module 4 exact features are authorized and implemented; available-Mac verification passes; full platform/device gates remain Blocked. Stop before Module 5.
+Blocked or Not run. Remaining Module 4 exact features are authorized and implemented; available-Mac verification passes; full platform/device gates remain Blocked. Module 5 is authorized and in progress on a separate WIP branch; stop before Module 6.
 
 Build and launch from this checkout:
 
@@ -80,7 +80,7 @@ Evaluate measures exact current geometry in the worker; display modes and mesh
 detail do not change dimensions. Assign a positive density for mass. Feature timings
 expand on demand. See [supported feature cases and limits](docs/decisions/module-4-features.md)
 and [Module 4 verification](docs/testing/module-4.md). General dependency optimization
-and topology repair start in Module 5, which is not authorized. Module 9 completes
+and topology repair are in progress in Module 5 and are not accepted product capabilities. Module 9 completes
 cross-document consistency and accessibility.
 
 ## Development

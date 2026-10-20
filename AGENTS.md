@@ -2,7 +2,7 @@
 
 Preserve docs and research. Read docs/README.md first. Follow STEP_ZERO lettered
 tasks in order; record blocked prerequisites and continue independent work.
-Modules 1, 2 and 3 were explicitly authorized on 2026-10-19. Module 3 interaction repairs and Module 4.0a-c workspace UI were authorized on 2026-10-20; Module 4 remaining tasks 4.1a onward were explicitly authorized on 2026-10-20; stop before Module 5 and ask before proceeding. Maintain native macOS/Windows/Linux
+Modules 1, 2 and 3 were explicitly authorized on 2026-10-19. Module 3 interaction repairs and Module 4.0a-c workspace UI were authorized on 2026-10-20; Module 4 remaining tasks 4.1a onward were explicitly authorized on 2026-10-20; Module 5 was authorized by the subsequent user reply on 2026-10-20; stop before Module 6 and ask before proceeding. Maintain native macOS/Windows/Linux
 architecture and the physical 8 GB baseline. Never claim unrun hardware/platform
 checks passed. UI owns display meshes; one worker owns exact geometry and writes.
 Keep Module 0 experiments under tests; no production feature shortcuts.

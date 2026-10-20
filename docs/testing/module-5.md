@@ -1,8 +1,8 @@
 # Module 5 evidence
 
-Status: Not run. No implementation or product acceptance evidence.
+Status: Work in progress. Implementation is explicitly authorized; product acceptance remains Not run.
 
-Module 0/1/2 available-Mac evidence is recorded separately. This module has not started; no implementation authorization beyond Module 2 is recorded. Follow the documented prerequisites.
+Modules 0–4 evidence is recorded separately. The publication snapshot includes draft dependency planning, result caching and history/reference work. This is incomplete work on `feature/model-evaluation-wip`; follow the documented prerequisites and stop before Module 6. See [publication checks](../PUBLISHING.md).
 
 ## Evidence fields for future execution
 

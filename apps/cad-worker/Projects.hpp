@@ -1,5 +1,6 @@
 #pragma once
 #include "geometry/occt/Part.hpp"
+#include "evaluation/Plan.hpp"
 #include "persistence/ProjectStore.hpp"
 #include "sketch/Solver.hpp"
 #include <QFile>
@@ -64,7 +65,7 @@ class Projects {
                            "CollectObjects",
                            "SetSketches",
                            "PreviewSketches",
-                           "SetFeatures",
+                           "SetFeatures", "PreviewHistory", "CommitHistory", "ReferenceCandidates", "ResolveReference", "TrimResults",
                            "PreviewFeatures",
                            "DisplayPart",
                            "MeasurePart"}
@@ -164,12 +165,15 @@ class Projects {
                              (e.command == "SaveAs" &&
                               store->outcome(e.operation).value("durable").toBool())),
                   "StaleSession", "The project session changed");
+            if(e.command=="TrimResults"){wire::keys(p,{});store->trimResults();return sketch::fields({{"cache_statistics",store->cacheStatistics()}});}
+            if(e.command=="ReferenceCandidates"){wire::keys(p,{"owner","token"});check(e.revision==store->revision(),"StaleRevision","Project changed before repair inspection");return sketch::fields({{"reference_resolution",store->referenceCandidates(e.context.document,domain::id(wire::text(p,"owner")),wire::text(p,"token"))}});}
             if (e.command == "PreviewFeatures" || e.command == "DisplayPart" ||
-                e.command == "MeasurePart") {
+                e.command == "MeasurePart" || e.command=="PreviewHistory") {
                 check(e.revision == store->revision(), "StaleRevision",
                       "Part result revision changed");
                 auto definitions = store->features(e.context.document);
-                if (e.command == "PreviewFeatures") {
+                if(e.command=="PreviewHistory"){wire::keys(p,{"features"});check(p.value("features").isArray(),"InvalidInput","Feature array required");definitions=p.value("features").toArray();}
+                else if (e.command == "PreviewFeatures") {
                     wire::keys(p, {"features", "deflection_mm"});
                     check(p.value("features").isArray(), "InvalidInput", "Feature array required");
                     definitions = p.value("features").toArray();
@@ -177,7 +181,9 @@ class Projects {
                     wire::keys(p, {"deflection_mm"});
                 else
                     wire::keys(p, {"body", "token", "second_token", "density_kg_m3"});
-                auto part = kernel::Part::build(store->sketches(e.context.document), definitions);
+                auto part = store->evaluatePart(e.context.document, e.command=="PreviewFeatures"||e.command=="PreviewHistory"?std::optional<QCborArray>(definitions):std::nullopt,e.command=="PreviewHistory");
+                auto errors=part.errors;auto diagnostics=part.diagnostics;
+                if(part.stale&&e.command=="PreviewHistory"){auto prefix=part.stages;part=store->evaluatePart(e.context.document);part.stale=true;part.errors=errors;part.diagnostics=diagnostics;part.stages=prefix;}
                 double assignedDensity = 0;
                 for (auto value : store->state().value("documents").toArray()) {
                     auto d = value.toMap();
@@ -200,12 +206,16 @@ class Projects {
                                                    : assignedDensity),
                                               wire::text(p, "second_token")));
                 } else {
-                    auto packed = pack(part.mesh(features::number(p, "deflection_mm", .01, 5)));
+                    bool stale=part.stale;
+                    if(part.bodies.empty())return sketch::fields({{"part_empty",true},{"part_stale",stale},{"errors",part.errors},{"history_impact",evaluation::impact(store->profileSketches(e.context.document,definitions),store->features(e.context.document),definitions)}});
+                    auto packed = pack(part.mesh(e.command=="PreviewHistory"?.2:features::number(p, "deflection_mm", .01, 5)));
                     reply.insert(QStringLiteral("display_manifest"), packed.manifest);
                     // The host streams and removes this private value before sending control data.
                     reply.insert(QStringLiteral("_display_bytes"), packed.bytes);
-                    reply.insert(QStringLiteral("part_measurement"),
-                                 part.measure(e.revision, {}, {}, assignedDensity));
+                    reply.insert(QStringLiteral("part_stale"),stale);reply.insert(QStringLiteral("errors"),part.errors);
+                    reply.insert(QStringLiteral("cache_statistics"),store->cacheStatistics());
+                    if(e.command=="PreviewHistory")reply.insert(QStringLiteral("history_impact"),evaluation::impact(store->profileSketches(e.context.document,definitions),store->features(e.context.document),definitions));
+                    reply.insert(QStringLiteral("part_measurement"),stale?sketch::fields({{"revision",e.revision},{"valid",false},{"reason","STALE: last valid display; measurement refused"}}):part.measure(e.revision, {}, {}, assignedDensity));
                     reply.insert(QStringLiteral("feature_diagnostics"), part.diagnostics);
                     reply.insert(QStringLiteral("topology_history"), part.history);
                     reply.insert(QStringLiteral("topology"), part.topology());

@@ -4,7 +4,8 @@
     1,
     2,
     3,
-    4
+    4,
+    5
   ],
   "module_1_authorization": {
     "source": "Direct user instruction in this chat",
@@ -12,7 +13,7 @@
     "quote": "proceed with module 1",
     "scope": "Implement and verify feasible Module 1 work on the verified Mac. Preserve native macOS/Windows/Linux architecture and physical 8 GB baseline. Unavailable checks remain Blocked."
   },
-  "stop_before_module": 5,
+  "stop_before_module": 6,
   "module_0_gaps": "Cross-platform, renderer longevity, physical-power-loss, release identity/licensing, accessibility and full workload budgets remain open. STEP_ZERO explicitly permits independent work on verified targets.",
   "module_2_authorization": {
     "source": "Direct user instruction in this chat",
@@ -43,11 +44,17 @@
       "4.0c"
     ]
   },
-  "stop_before_task": "5.1a",
+  "stop_before_task": "6.1a",
   "module_4_authorization": {
     "source": "Direct user instruction in this chat",
     "date": "2026-10-20",
     "quote": "Module 4 is explicitly authorized. Start with 4.1a and follow the remaining lettered tasks in order.",
     "scope": "Complete all feasible remaining Module 4 implementation and verification; preserve existing Module 3 repairs, Module 4.0 UI, research, user changes and historical evidence. Keep unavailable hardware/platform checks Blocked. Stop before Module 5 and ask before proceeding."
+  },
+  "module_5_authorization": {
+    "source": "Direct user reply to the assistant question: May I proceed with Module 5?",
+    "date": "2026-10-20",
+    "quote": "yes",
+    "scope": "Implement and verify feasible Module 5 tasks starting with 5.1a in lettered order. Preserve existing work and evidence, keep unavailable native/device checks Blocked, stop before Module 6."
   }
 }

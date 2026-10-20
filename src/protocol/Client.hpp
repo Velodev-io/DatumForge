@@ -113,6 +113,7 @@ class Client : public QObject {
     void projectChanged();
     void sketchPreview(QCborArray sketches);
     void partResult(QCborMap result);
+    void referenceResolution(QCborMap result);
     void sketchDiagnosed(QCborArray diagnostics);
     void operationOutcome(QString operation, QString outcome);
 };

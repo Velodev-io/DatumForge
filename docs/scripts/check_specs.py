@@ -111,8 +111,10 @@ def main() -> int:
         permitted_tasks = set(partial.get("authorized_tasks", []))
         if permitted_tasks and (not partial.get("quote") or permitted_tasks != {"4.0a", "4.0b", "4.0c"} or (4 not in authorized and authorization.get("stop_before_task") != "4.1a")):
             errors.append("Partial Module 4 authorization must explicitly permit only 4.0a-c and stop before 4.1a")
-        if 4 in authorized and (not authorization.get("module_4_authorization", {}).get("quote") or authorization.get("stop_before_task") != "5.1a"):
+        if 4 in authorized and (not authorization.get("module_4_authorization", {}).get("quote") or (5 not in authorized and authorization.get("stop_before_task") != "5.1a")):
             errors.append("Full Module 4 requires explicit user authorization and a stop before 5.1a")
+        if 5 in authorized and (not authorization.get("module_5_authorization", {}).get("quote") or authorization.get("stop_before_task") != "6.1a"):
+            errors.append("Module 5 requires explicit user authorization and a stop before 6.1a")
         if any(int(task.split(".")[0]) not in authorized and task not in permitted_tasks for task in checked):
             errors.append("Checked task is outside the explicitly authorized module/task scope")
     if len(set(task_ids)) != len(task_ids):

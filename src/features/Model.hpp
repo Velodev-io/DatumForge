@@ -4,6 +4,8 @@ namespace cad::features {
 struct Feature {
     QString id = newId(), name = "Feature", kind = "Extrude";
     QCborMap parameters;
+    bool suppressed=false;
+    QMap<QString,QString> expressions;
     QCborMap map() const;
     static Feature parse(const QCborMap &map);
 };

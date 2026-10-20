@@ -1,14 +1,14 @@
 {
   "scope": "Documentation structure only; no product acceptance tests executed",
-  "checked_at_utc": "2026-10-20T14:50:10.710528+00:00",
+  "checked_at_utc": "2026-10-20T14:50:10.788663+00:00",
   "status": "pass",
   "product_implementation": "Modules 1-4 scoped implementation on the available Mac; see task and module evidence",
   "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
   "documents": {
     "README.md": {
-      "sha256": "b702400f7955c7cfb5748a39070b29a00b51fc67e1a9a85da03888a7fb84da3d",
+      "sha256": "b2db42246dbdbe9f447544a53d33026143f293f69028beadd07e9a5c8ee8c7e2",
       "lines": 52,
-      "words": 812
+      "words": 841
     },
     "SRS.md": {
       "sha256": "b7abb614a9ccec1460c211d908129bf817bcc8d8f08c42f651d06eaaffd513d8",

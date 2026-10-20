@@ -1,4 +1,6 @@
 #include "Part.hpp"
+#include "evaluation/Plan.hpp"
+#include <BRepBuilderAPI_Copy.hxx>
 #include <BRepAdaptor_Curve.hxx>
 #include <BRepAdaptor_Surface.hxx>
 #include <BRepAlgoAPI_Check.hxx>
@@ -27,6 +29,7 @@
 #include <QElapsedTimer>
 #include <Standard_Failure.hxx>
 #include <TopExp.hxx>
+#include <TopTools_IndexedDataMapOfShapeListOfShape.hxx>
 #include <TopExp_Explorer.hxx>
 #include <TopTools_IndexedMapOfShape.hxx>
 #include <TopoDS.hxx>
@@ -148,6 +151,7 @@ void recordHistory(Part &part, QString id, BRepBuilderAPI_MakeShape &op,
         for (auto it = shapes.cbegin(); it != shapes.cend(); ++it) {
             auto gen = tokens(op.Generated(it.value())), mod = tokens(op.Modified(it.value()));
             bool deleted = op.IsDeleted(it.value());
+            if(gen.empty() && !deleted && mod.size()==1 && mod[0].toString()==it.key())continue;
             if (!gen.empty() || !mod.empty() || deleted)
                 part.history.append(fields({{"feature", id},
                                             {"input", it.key()},
@@ -276,10 +280,11 @@ TopoDS_Shape profiles(const sketch::Sketch &s) {
     return result.size() == 1 ? result[0] : compound(result);
 }
 } // namespace
-Part Part::build(const QCborArray &sketches, const QCborArray &definitions) {
+Part Part::build(const QCborArray &sketches, const QCborArray &definitions, ResultCache *cache, bool allowFailure) {
     Part out;
     auto all = sketch::parse(sketches);
-    auto features = features::parse(definitions);
+    evaluation::Plan plan(sketches,definitions);
+    QSet<QString> failed;
     QMap<QString, sketch::Sketch> sketchesById;
     for (auto &s : all)
         sketchesById.insert(s.id, s);
@@ -290,7 +295,20 @@ Part Part::build(const QCborArray &sketches, const QCborArray &definitions) {
         throw domain::Error("ReferenceMissing", "Target body is missing: " + id);
     };
     try {
-        for (auto &f : features) {
+        for (auto &node : plan.nodes) {
+            auto f=node.feature;
+            if(f.suppressed){out.diagnostics.append(fields({{"id",f.id},{"status","Suppressed"},{"valid",true},{"reused",false},{"milliseconds",0.}}));continue;}
+            bool blocked=false;for(auto dep:node.dependencies)blocked=blocked||failed.contains(dep);
+            auto before=out;
+            try {
+            check(!blocked,"ReferenceMissing","An upstream result is unavailable");
+            Effect cached;
+            if(cache && cache->get(node.fingerprint,cached)) {
+                for(auto &replacement:cached.bodies){auto found=std::find_if(out.bodies.begin(),out.bodies.end(),[&](auto &b){return b.id==replacement.id;});if(found==out.bodies.end())out.bodies.push_back(replacement);else *found=replacement;}
+                if(!cached.stage.IsNull())out.stages[f.id]=cached.stage;if(!cached.tool.IsNull())out.tools[f.id]=cached.tool;for(auto row:cached.history)out.history.append(row);
+                out.diagnostics.append(fields({{"id",f.id},{"status","Current"},{"valid",true},{"reused",true},{"milliseconds",0.}}));continue;
+            }
+            if(cache)++cache->computations;
             QElapsedTimer clock;
             clock.start();
             auto &p = f.parameters;
@@ -503,11 +521,20 @@ Part Part::build(const QCborArray &sketches, const QCborArray &definitions) {
                 out.stages.insert(f.id, tool);
             else if (!target.isEmpty())
                 out.stages.insert(f.id, body(target).shape);
+            Effect effect;effect.stage=out.stages.value(f.id);effect.tool=out.tools.value(f.id);
+            for(auto &b:out.bodies){auto old=std::find_if(before.bodies.begin(),before.bodies.end(),[&](auto &v){return v.id==b.id;});if(old==before.bodies.end()||!old->shape.IsSame(b.shape))effect.bodies.push_back(b);}
+            for(qsizetype i=before.history.size();i<out.history.size();++i)effect.history.append(out.history[i]);
+            if(cache)cache->put(node.fingerprint,effect);
             out.diagnostics.append(fields({{"id", f.id},
                                            {"valid", true},
                                            {"milliseconds", clock.nsecsElapsed() / 1e6},
                                            {"solids", solids},
-                                           {"tolerance_mm", 1e-4}}));
+                                           {"tolerance_mm", 1e-4},{"reused",false},{"status","Current"}}));
+            } catch(const Standard_Failure &e) {
+                if(!allowFailure)throw;out=before;out.stale=true;failed.insert(f.id);out.errors.append(fields({{"owner",f.id},{"code","InvalidGeometry"},{"message",QString::fromUtf8(e.GetMessageString())}}));
+            } catch(const domain::Error &e) {
+                if(!allowFailure)throw;out=before;out.stale=true;failed.insert(f.id);out.errors.append(fields({{"owner",f.id},{"code",e.code},{"message",QString::fromUtf8(e.what())}}));
+            }
         }
     } catch (const Standard_Failure &e) {
         throw domain::Error("InvalidGeometry", QString::fromUtf8(e.GetMessageString()));
@@ -541,6 +568,7 @@ QCborArray Part::topology(QString body) const {
 }
 QCborMap Part::measure(qint64 revision, QString body, QString selected, double density,
                        QString second) const {
+    check(!stale,"StaleResult","Exact measurement requires a current result");
     check(revision >= 0 && std::isfinite(density) && density >= 0 && density <= 1e6, "InvalidInput",
           "Invalid measurement revision or density (kg/m³)");
     std::vector<TopoDS_Shape> shapes;
@@ -610,7 +638,8 @@ DisplayMesh Part::mesh(double deflection) const {
     for (auto &b : bodies)
         BRepBndLib::AddOptimal(b.shape, exactBounds, false, false);
     bool first = true;
-    for (auto &b : bodies) {
+    for (auto &original : bodies) {
+        Body b{original.id,BRepBuilderAPI_Copy(original.shape,true,false).Shape()};
         BRepMesh_IncrementalMesh tessellate(b.shape, deflection, false, .35, false);
         check(tessellate.IsDone(), "InvalidGeometry", "Tessellation failed");
         auto edges = subshapes(b.shape, TopAbs_EDGE);
@@ -670,4 +699,37 @@ DisplayMesh Part::mesh(double deflection) const {
     m.validate();
     return m;
 }
+QString topologyToken(const TopoDS_Shape &s){return token(s);}
+QCborMap evolution(QString original,QCborArray history,QStringList current){
+    QSet<QString> mapped;bool deleted=false;QMap<QString,QSet<QString>> reverse;
+    for(auto value:history){auto m=value.toMap();auto input=m.value("input").toString();for(auto key:{"generated","modified"})for(auto t:m.value(QString(key)).toArray())if(current.contains(t.toString())){reverse[t.toString()].insert(input);if(input==original)mapped.insert(t.toString());}if(input==original)deleted=deleted||m.value("deleted").toBool();}
+    QString state="Missing";if(current.contains(original)){state="Direct";mapped={original};}else if(mapped.size()>1)state="Split";else if(mapped.size()==1)state=reverse.value(*mapped.begin()).size()>1?"Merged":"History";else if(deleted)state="Deleted";
+    auto values=mapped.values();std::sort(values.begin(),values.end());return fields({{"state",state},{"candidates",QCborArray::fromStringList(values)}});
+}
+QCborMap Part::reference(QString source,QString original,const Part &former)const{
+    check(stages.contains(source),"ReferenceMissing","Reference source feature is unavailable");auto shape=stages.value(source);
+    auto kind=original.startsWith("edge/")?TopAbs_EDGE:TopAbs_FACE;auto current=subshapes(shape,kind);auto resolved=evolution(original,history,current.keys());auto state=resolved.value("state").toString();
+    if(state!="Missing")return resolved;
+    check(former.stages.contains(source),"ReferenceMissing","Former source is unavailable; choose a replacement explicitly");auto old=subshapes(former.stages.value(source),kind);check(old.contains(original),"ReferenceMissing","Former role is unavailable");
+    auto describe=[&](TopoDS_Shape s,TopoDS_Shape parent){GProp_GProps p;int type;double radius=0;QStringList adjacency;
+        if(kind==TopAbs_EDGE){BRepAdaptor_Curve c(TopoDS::Edge(s));type=int(c.GetType());if(c.GetType()==GeomAbs_Circle)radius=c.Circle().Radius();BRepGProp::LinearProperties(s,p);TopTools_IndexedDataMapOfShapeListOfShape map;TopExp::MapShapesAndAncestors(parent,TopAbs_EDGE,TopAbs_FACE,map);if(map.Contains(s))for(auto &face:map.FindFromKey(s)){BRepAdaptor_Surface surf(TopoDS::Face(face));adjacency.append(QString::number(int(surf.GetType())));}std::sort(adjacency.begin(),adjacency.end());}
+        else{BRepAdaptor_Surface surf(TopoDS::Face(s));type=int(surf.GetType());BRepGProp::SurfaceProperties(s,p);}
+        auto c=p.CentreOfMass();return fields({{"type",type},{"measure",p.Mass()},{"radius",radius},{"adjacency",QCborArray::fromStringList(adjacency)},{"center",QCborArray{c.X(),c.Y(),c.Z()}}});};
+    auto role=describe(old.value(original),former.stages.value(source));auto center=role.value("center").toArray();QCborArray candidates;
+    Bnd_Box box;BRepBndLib::AddOptimal(shape,box,false,false);double x,y,z,a,b,c;box.Get(x,y,z,a,b,c);double distanceLimit=std::max(10.,gp_Pnt(x,y,z).Distance(gp_Pnt(a,b,c))*.25);
+    for(auto it=current.cbegin();it!=current.cend();++it){auto d=describe(it.value(),shape);if(d.value("type")!=role.value("type")||d.value("adjacency")!=role.value("adjacency"))continue;
+        if(std::abs(d.value("radius").toDouble()-role.value("radius").toDouble())>1e-6)continue;double measure=role.value("measure").toDouble();if(std::abs(d.value("measure").toDouble()-measure)>std::max(1e-6,measure*1e-6))continue;
+        auto at=d.value("center").toArray();int equal=0;double distance=0;for(int i=0;i<3;++i){double delta=at[i].toDouble()-center[i].toDouble();if(std::abs(delta)<1e-6)++equal;distance+=delta*delta;}if(equal<2||std::sqrt(distance)>distanceLimit)continue;candidates.append(it.key());}
+    resolved.insert(QStringLiteral("state"),candidates.size()>1?"Ambiguous":candidates.size()==1?"Candidate":"Missing");resolved.insert(QStringLiteral("candidates"),candidates);resolved.insert(QStringLiteral("former_role"),role);return resolved;
+}
+bool ResultCache::get(QByteArray key,Effect &effect){if(!entries.contains(key))return false;effect=entries.value(key);order.removeAll(key);order.append(key);++hits;return true;}
+void ResultCache::put(QByteArray key,Effect effect){
+    qint64 bytes=QCborValue(effect.history).toCbor().size();
+    auto cost=[&](const TopoDS_Shape&s){if(!s.IsNull())bytes+=count(s,TopAbs_FACE)*4096LL+count(s,TopAbs_EDGE)*1024LL+count(s,TopAbs_VERTEX)*512LL;};
+    for(auto &b:effect.bodies)cost(b.shape);cost(effect.stage);cost(effect.tool);effect.bytes=bytes;
+    if(entries.contains(key)){used-=entries.take(key).bytes;order.removeAll(key);}if(bytes>budget)return;
+    while(!order.empty()&&(used+bytes>budget||entries.size()>=128)){used-=entries.take(order.takeFirst()).bytes;}
+    entries[key]=effect;order.append(key);used+=bytes;
+}
+QCborMap ResultCache::statistics()const{return fields({{"entries",entries.size()},{"estimated_bytes",used},{"budget_bytes",budget},{"hits",qint64(hits)},{"computations",qint64(computations)}});}
 } // namespace cad::kernel

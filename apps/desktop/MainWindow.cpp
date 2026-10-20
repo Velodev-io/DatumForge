@@ -1,5 +1,6 @@
 #include "MainWindow.hpp"
 #include "FeaturePanel.hpp"
+#include "HistoryPanel.hpp"
 #include "SketchPanel.hpp"
 #include "protocol/Client.hpp"
 #include "render/Viewport.hpp"
@@ -35,6 +36,10 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
     buildCommandTabs();
     featurePanel = new FeaturePanel(client);
     propertyPages->addWidget(featurePanel);
+    historyPanel=new HistoryPanel(client);propertyPages->addWidget(historyPanel);
+    auto *historyAction=commands.add(this,"history","History / repair");addAction(historyAction);findChild<QToolBar*>("commandsFeatures")->addAction(historyAction);menuBar()->actions().last()->menu()->addAction(historyAction);
+    connect(historyAction,&QAction::triggered,this,[this]{QCborMap active;for(auto v:state().documentRecords)if(v.toMap().value("id").toString()==state().activeDocument)active=v.toMap();auto*item=tree->currentItem();historyPanel->begin(active,item?item->data(0,Qt::UserRole+5).toString():QString());});
+    connect(historyPanel,&HistoryPanel::editingChanged,this,&MainWindow::refresh);
     for (auto pair :
          {std::pair{"extrude", "Extrude"}, std::pair{"revolve", "Revolve"},
           std::pair{"fillet", "Fillet"}, std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"},
@@ -54,7 +59,7 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
     cancelFeature->setShortcut(QKeySequence(Qt::Key_Escape));
     addAction(cancelFeature);
     connect(cancelFeature, &QAction::triggered, this, [this] {
-        if (featurePanel->active())
+        if(historyPanel->active())historyPanel->discard();else if (featurePanel->active())
             featurePanel->discard();
     });
     connect(sketchPanel, &SketchPanel::editingChanged, this, &MainWindow::refresh);
@@ -404,6 +409,7 @@ void MainWindow::saveLayout() {
     settings->sync();
 }
 void MainWindow::closeEvent(QCloseEvent *event) {
+    if(historyPanel&&historyPanel->active()&&!client->outstanding()){if(QMessageBox::question(this,"Discard history preview?","Discard the uncommitted history preview before closing?",QMessageBox::Discard|QMessageBox::Cancel,QMessageBox::Cancel)!=QMessageBox::Discard){event->ignore();return;}historyPanel->discard();}
     if (featurePanel && featurePanel->active() && !client->outstanding()) {
         if (QMessageBox::question(this, "Discard feature draft?",
                                   "This feature has not been accepted. Discard before closing?",

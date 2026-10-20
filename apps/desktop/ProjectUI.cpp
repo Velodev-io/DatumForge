@@ -357,7 +357,7 @@ void MainWindow::refreshProjectUI() {
                 }
                 for (auto f : d.value("features").toArray()) {
                     auto feature = f.toMap();
-                    auto *node = new QTreeWidgetItem(row, {feature.value("name").toString() + " (" +
+                    auto *node = new QTreeWidgetItem(row, {feature.value("name").toString() + (feature.value("suppressed").toBool()?" [Suppressed]":QString()) + (d.value("feature_status").toString()=="Stale"?" [STALE]":QString()) + " (" +
                                                            feature.value("kind").toString() + ")"});
                     node->setData(0, Qt::UserRole + 1, documentId);
                     node->setData(0, Qt::UserRole + 2, feature.value("id").toString());

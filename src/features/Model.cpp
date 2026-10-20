@@ -29,18 +29,21 @@ QCborArray array(sketch::Vec3 v) {
     return {v[0], v[1], v[2]};
 }
 QCborMap Feature::map() const {
-    return sketch::fields(
-        {{"id", id}, {"name", name}, {"kind", kind}, {"version", 1}, {"parameters", parameters}});
+    auto result=sketch::fields({{"id",id},{"name",name},{"kind",kind},{"version",suppressed||!expressions.empty()?2:1},{"parameters",parameters}});
+    if(suppressed||!expressions.empty()){result.insert(QStringLiteral("suppressed"),suppressed);QCborMap bindings;for(auto it=expressions.cbegin();it!=expressions.cend();++it)bindings.insert(it.key(),it.value());result.insert(QStringLiteral("expressions"),bindings);}return result;
 }
+
 Feature Feature::parse(const QCborMap &m) {
-    wire::keys(m, {"id", "name", "kind", "version", "parameters"});
-    check(wire::integer(m, "version") == 1 && m.value("parameters").isMap(), "IncompatibleSchema",
+    auto version=wire::integer(m,"version");
+    wire::keys(m,version==2?QSet<QString>{"id","name","kind","version","parameters","suppressed","expressions"}:QSet<QString>{"id","name","kind","version","parameters"});
+    check((version==1||version==2) && m.value("parameters").isMap(), "IncompatibleSchema",
           "Unsupported feature version");
     Feature f;
     f.id = domain::id(wire::text(m, "id"));
     f.name = domain::label(wire::text(m, "name"));
     f.kind = wire::text(m, "kind");
     f.parameters = m.value("parameters").toMap();
+    if(version==2){check(m.value("suppressed").isBool()&&m.value("expressions").isMap(),"InvalidInput","Invalid feature state");f.suppressed=m.value("suppressed").toBool();auto e=m.value("expressions").toMap();check(e.size()<=8,"ResourceLimit","At most eight feature expression bindings");for(auto it=e.cbegin();it!=e.cend();++it){auto key=it.key().toString();check(QStringList{"depth","angle","size","diameter","spacing","count"}.contains(key)&&f.parameters.contains(key)&&it.value().isString()&&it.value().toString().toUtf8().size()<=4096,"InvalidInput","Unsupported feature expression binding");f.expressions[key]=it.value().toString();}}
     auto &p = f.parameters;
     auto choice = [&](QString key, QStringList choices) {
         check(choices.contains(wire::text(p, key)), "UnsupportedOperation",

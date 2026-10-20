@@ -338,6 +338,7 @@ void FeaturePanel::begin(QString kind, QString editId) {
         auto m = s.toMap();
         profile->addItem(m.value("name").toString(), m.value("id").toString());
     }
+    for(auto value:client->state().documentRecords){auto d=value.toMap();if(d.value("id")==document.value("id"))continue;for(auto s:d.value("sketches").toArray()){auto m=s.toMap();profile->addItem(d.value("name").toString()+" / "+m.value("name").toString(),m.value("id").toString());}}
     for (auto f : definitions) {
         auto m = f.toMap();
         if (m.value("id").toString() == editId)

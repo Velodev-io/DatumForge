@@ -177,7 +177,7 @@ void Client::enqueue(wire::Envelope e) {
         emit changed();
         return;
     }
-    if (e.command == "PreviewReference" || e.command == "PreviewFeatures")
+    if (e.command == "PreviewReference" || (e.command == "PreviewFeatures" || e.command=="PreviewHistory"))
         preview = e;
     else {
         if (outstanding() >= limits::outstanding) {
@@ -371,7 +371,7 @@ void Client::receive(const QCborMap &m) {
     wire::require(sameRequest(e, found->request), "reply request correlation");
     auto revision = wire::integer(m, "result_revision");
     bool reference = QStringList{"LoadReference",   "PreviewReference", "Measure",
-                                 "PreviewFeatures", "DisplayPart",      "MeasurePart"}
+                                 "PreviewFeatures", "DisplayPart",      "MeasurePart", "PreviewHistory", "ReferenceCandidates"}
                          .contains(e.command);
     if ((reference && !visibleResult(projection, e, revision)) || e.epoch != projection.epoch) {
         pending.erase(found);
@@ -404,7 +404,7 @@ void Client::receive(const QCborMap &m) {
         display = std::move(mesh);
         projection.revision = revision;
         projection.stale = false;
-        projection.phase = (e.command == "PreviewReference" || e.command == "PreviewFeatures")
+        projection.phase = (e.command == "PreviewReference" || (e.command == "PreviewFeatures" || e.command=="PreviewHistory"))
                                ? Phase::PreviewReady
                                : Phase::Ready;
         projection.job = e.command == "PreviewReference" ? "Preview — no document was committed"
@@ -412,9 +412,11 @@ void Client::receive(const QCborMap &m) {
         projection.message.clear();
         pending.erase(found);
         emit meshChanged(display);
-        if (e.command == "DisplayPart" || e.command == "PreviewFeatures") {
+        if (e.command == "DisplayPart" || (e.command == "PreviewFeatures" || e.command=="PreviewHistory")) {
             projection.job = e.command == "PreviewFeatures" ? "Feature preview · not committed"
                                                             : "Exact part ready";
+            projection.stale=partReply.value("part_stale").toBool();
+            if(projection.stale){projection.job="STALE · last valid result";projection.message="Rebuild failed. Repair or edit the affected feature; current exact measurement is unavailable.";}
             emit partResult(partReply);
         }
         emit changed();
@@ -426,12 +428,15 @@ void Client::receive(const QCborMap &m) {
         wire::require((projection.projectOpen || revision == 1) &&
                           data.value("display_manifest").isMap(),
                       "display result");
-        if (e.command == "DisplayPart" || e.command == "PreviewFeatures")
+        if (e.command == "DisplayPart" || (e.command == "PreviewFeatures" || e.command=="PreviewHistory"))
             partReply = data;
         found->result = revision;
         transfers.begin(e, data.value("display_manifest").toMap());
         return;
     }
+    if(data.contains(QStringLiteral("reference_resolution"))){pending.erase(found);emit referenceResolution(data.value("reference_resolution").toMap());emit changed();pump();return;}
+    if(data.contains(QStringLiteral("cache_statistics"))&&!data.contains(QStringLiteral("display_manifest"))&&!data.contains(QStringLiteral("part_measurement"))){pending.erase(found);emit partResult(data);emit changed();pump();return;}
+    if(data.value("part_empty").toBool()){pending.erase(found);display.reset();projection.stale=data.value("part_stale").toBool();projection.phase=e.command=="PreviewHistory"?Phase::PreviewReady:Phase::Ready;partReply=data;emit meshChanged({});emit partResult(data);emit changed();pump();return;}
     if (e.command == "MeasurePart") {
         wire::require(data.value("part_measurement").isMap(), "Exact part measurement required");
         pending.erase(found);
@@ -578,7 +583,7 @@ void Client::installProject(const QCborMap &m) {
         wire::require(item.isMap(), "document record map");
         auto d = item.toMap();
         wire::keys(d, {"id", "type", "name", "units", "revision", "properties_entity", "parameters",
-                       "sketches", "sketch_diagnostics", "features"});
+                       "sketches", "sketch_diagnostics", "features", "feature_status"});
         auto id = domain::id(wire::text(d, "id"));
         wire::require(!seen.contains(id), "duplicate document identity");
         seen.insert(id);
@@ -679,7 +684,7 @@ void Client::projectCommand(QString command, QCborMap payload) {
     if (!projectReady())
         return;
     projection.job = "Running " + command;
-    if (command == "PreviewFeatures") {
+    if (command == "PreviewFeatures" || command=="PreviewHistory") {
         ++projection.generation;
         projection.phase = Phase::PreviewPending;
     }

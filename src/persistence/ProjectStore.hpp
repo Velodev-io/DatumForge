@@ -1,5 +1,7 @@
 #pragma once
 #include "Files.hpp"
+#include "geometry/occt/Part.hpp"
+#include <optional>
 #include <QIODevice>
 #include <QSet>
 namespace cad::storage {
@@ -16,6 +18,7 @@ class ProjectStore {
     std::unique_ptr<DestinationLocks> destination;
     std::unique_ptr<Database> db;
     StoreOptions options;
+    mutable kernel::ResultCache resultCache;
     void point(QString stage) const;
     void createWorkspace();
     void activate();
@@ -56,6 +59,12 @@ class ProjectStore {
     QCborMap state() const;
     QCborArray sketches(QString document) const;
     QCborArray features(QString document) const;
+    QCborMap featureState(QString document) const;
+    QCborArray profileSketches(QString document,QCborArray definitions) const;
+    kernel::Part evaluatePart(QString document,std::optional<QCborArray> candidate=std::nullopt,bool allowFailure=false) const;
+    QCborMap referenceCandidates(QString document,QString feature,QString token)const;
+    QCborMap cacheStatistics()const{return resultCache.statistics();}
+    void trimResults(){resultCache.trim();}
     QCborMap execute(const wire::Envelope &e);
     QCborMap outcome(QString operation) const;
     QCborArray recoveryOffers() const;

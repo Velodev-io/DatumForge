@@ -17,6 +17,7 @@ class Client;
 class Viewport;
 class SketchPanel;
 class FeaturePanel;
+class HistoryPanel;
 class MainWindow : public QMainWindow {
     Q_OBJECT
     CommandRegistry commands;
@@ -25,6 +26,7 @@ class MainWindow : public QMainWindow {
     Viewport *viewport = nullptr;
     SketchPanel *sketchPanel = nullptr;
     FeaturePanel *featurePanel = nullptr;
+    HistoryPanel *historyPanel=nullptr;
     void refreshFeatures();
     QTreeWidget *tree = nullptr;
     QTabWidget *commandTabs = nullptr;
