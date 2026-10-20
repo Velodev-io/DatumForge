@@ -594,11 +594,13 @@
   },
   "3.1b": {
     "status": "Pass",
-    "scope": "Available-Mac scope: Native planar selection and dimension overlays, generation-bound previews/cancel and real durable sketch transactions.",
+    "scope": "Available-Mac scope: Native selection/dimension overlays, live circle press/drag/release, first-Escape primitive cancellation, line/polyline/rectangle rubber-band previews, contextual fields and truthful empty state; generation-bound worker previews and real durable sketch transactions.",
     "evidence": [
       "docs/testing/module-3.md",
       "docs/testing/artifacts/module-3/verification.json",
-      "docs/decisions/module-3-sketches.md"
+      "docs/decisions/module-3-sketches.md",
+      "docs/testing/module-3-interaction-followup.md",
+      "docs/testing/artifacts/module-3/runs/20261020T035603.673933Z/evidence-consistency.json"
     ]
   },
   "3.2a": {
@@ -634,7 +636,9 @@
     "evidence": [
       "docs/testing/module-3.md",
       "docs/testing/artifacts/module-3/verification.json",
-      "docs/decisions/module-3-sketches.md"
+      "docs/decisions/module-3-sketches.md",
+      "docs/testing/module-3-interaction-followup.md",
+      "docs/testing/artifacts/module-3/runs/20261020T035603.673933Z/evidence-consistency.json"
     ]
   },
   "3.4a": {
@@ -657,10 +661,39 @@
   },
   "3.4c": {
     "status": "Blocked",
-    "scope": "Mac Cocoa B1 editing/scaling/focus/persistence checks recorded; Windows/Linux native sessions/runners and OS-network-disabled workflow unavailable.",
+    "scope": "Mac Cocoa B1 editing/focus/persistence/recovery plus circle/line/rectangle pointer workflows in mm/in at 100/125/150/175/200% recorded; Windows/Linux native sessions/runners and controlled OS-network-disabled workflow unavailable.",
     "evidence": [
       "docs/testing/module-3.md",
-      "docs/testing/artifacts/module-3/verification.json"
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/testing/module-3-interaction-followup.md",
+      "docs/testing/artifacts/module-3/runs/20261020T035603.673933Z/evidence-consistency.json"
+    ]
+  },
+  "4.0a": {
+    "status": "Not run",
+    "scope": "Planned only: Features/Sketch/Evaluate command tabs via shared action registry. No Module 4 implementation authorization.",
+    "evidence": [
+      "docs/TECH_SPEC.md",
+      "docs/testing/module-4.md",
+      "docs/decisions/implementation-scope.json"
+    ]
+  },
+  "4.0b": {
+    "status": "Not run",
+    "scope": "Planned only: Left PropertyManager/tree and native modeling layout. No Module 4 implementation authorization.",
+    "evidence": [
+      "docs/TECH_SPEC.md",
+      "docs/testing/module-4.md",
+      "docs/decisions/implementation-scope.json"
+    ]
+  },
+  "4.0c": {
+    "status": "Not run",
+    "scope": "Planned only: Native layout/workflow/scaling acceptance before exact-feature UI. No Module 4 implementation authorization.",
+    "evidence": [
+      "docs/TECH_SPEC.md",
+      "docs/testing/module-4.md",
+      "docs/decisions/implementation-scope.json"
     ]
   }
 }

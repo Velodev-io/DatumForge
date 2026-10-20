@@ -60,13 +60,184 @@ class Contracts : public QObject {
     void drafts() {
         exercise(false);
     }
+    void pointerGestures() {
+        gestures(false, "mm");
+        gestures(false, "in");
+    }
     void nativeSketches() {
         if (!qEnvironmentVariableIsSet("CAD_NATIVE_TESTS"))
             QSKIP("Blocked: native session required");
         exercise(true);
+        gestures(true, "mm");
+        gestures(true, "in");
     }
 
   private:
+    void gestures(bool native, QString units) {
+        qInfo() << "Pointer gesture workflow in" << units;
+        QTemporaryDir root(QDir::tempPath() + "/cad-module3-gesture-XXXXXX"),
+            files(QDir::tempPath() + "/cad-module3-files-XXXXXX");
+        QVERIFY(root.isValid() && files.isValid());
+        mark(root.path());
+        mark(files.path());
+        auto prefs = files.filePath("settings.ini");
+        QSettings settings(prefs, QSettings::IniFormat);
+        settings.setValue("startup/offerRecovery", false);
+        settings.sync();
+        MainWindow window(prefs, nullptr, root.path());
+        QSignalSpy graphics(window.sceneView(), &Viewport::graphicsFailed);
+        window.show();
+        if (native) {
+            QVERIFY(QTest::qWaitForWindowExposed(&window));
+            window.raise();
+            window.activateWindow();
+            QVERIFY(QTest::qWaitForWindowActive(&window));
+        }
+        auto *c = window.workerClient();
+        QVERIFY(wait([&] { return c->ready(); }));
+        if (native)
+            QVERIFY2(graphics.empty(), "Native renderer initialization failed");
+        c->newProject("Part", "Pointer gestures", units);
+        QVERIFY(wait([&] { return ready(*c); }));
+        QVERIFY(window.findChild<SketchView *>()->accessibleDescription().startsWith("No sketch"));
+        auto rev = c->state().revision;
+        window.command("sketch")->trigger();
+        auto *tool = window.findChild<QComboBox *>("sketchTool");
+        auto *view = window.findChild<SketchView *>();
+        auto *entities = window.findChild<QListWidget *>("sketchEntities");
+        QVERIFY(window.findChild<QLineEdit *>("sketchRadius")->isHidden());
+        QVERIFY(window.findChild<QLineEdit *>("sketchStart")->isHidden());
+        tool->setCurrentText("Circle");
+        QVERIFY(!window.findChild<QLineEdit *>("sketchRadius")->isHidden());
+        QVERIFY(window.findChild<QLineEdit *>("sketchStart")->isHidden());
+        QTest::qWait(30); // Let the contextual form finish its layout before locating model points.
+        QPoint center = view->screen({.02, .02}).toPoint();
+        QTest::mousePress(view, Qt::LeftButton, Qt::NoModifier, center);
+        QCOMPARE(entities->count(), 0); // Press must not add a fixed-radius circle.
+        auto move = [&](QPoint at, Qt::MouseButtons held = Qt::LeftButton) {
+            QMouseEvent event(QEvent::MouseMove, at, view->mapToGlobal(at), Qt::NoButton, held,
+                              Qt::NoModifier);
+            QApplication::sendEvent(view, &event);
+            QTest::qWait(15);
+        };
+        auto ink = [&](QPoint at) {
+            auto image = view->grab().toImage();
+            auto ratio = image.devicePixelRatio();
+            for (int dy = -3; dy <= 3; ++dy)
+                for (int dx = -3; dx <= 3; ++dx) {
+                    auto color = image.pixelColor(qRound((at.x() + dx) * ratio),
+                                                  qRound((at.y() + dy) * ratio));
+                    if (color.green() > 150 && (color.blue() > 150 || color.red() > 200))
+                        return true;
+                }
+            return false;
+        };
+        move(center + QPoint(30, 0));
+        QVERIFY2(ink(center + QPoint(30, 0)), "5 mm radius must be visible while held");
+        move(center + QPoint(60, 0));
+        QVERIFY2(ink(center + QPoint(60, 0)), "10 mm radius must be visible while held");
+        QVERIFY2(!ink(center + QPoint(30, 0)), "Previous radius must be replaced");
+        if (native) {
+            auto folder = qEnvironmentVariable("CAD_ARTIFACT_DIR");
+            QVERIFY(!folder.isEmpty());
+            QVERIFY(window.grab().save(folder + "/circle-drag-" + units + ".png"));
+        }
+        QCOMPARE(entities->count(), 0);
+        QCOMPARE(c->state().revision, rev);
+        QVERIFY(part(*c).value("sketches").toArray().empty());
+        QTest::mouseRelease(view, Qt::LeftButton, Qt::NoModifier, center + QPoint(60, 0));
+        QCOMPARE(entities->count(), 2);
+        // Zero-radius release, Escape, and a tool switch must create no orphan points.
+        QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, center);
+        QCOMPARE(entities->count(), 2);
+        QTest::mousePress(view, Qt::LeftButton, Qt::NoModifier, center);
+        move(center + QPoint(90, 0));
+        QTest::keyClick(view, Qt::Key_Escape);
+        QVERIFY(window.findChild<SketchPanel *>()->active());
+        QTest::mouseRelease(view, Qt::LeftButton, Qt::NoModifier, center + QPoint(90, 0));
+        QCOMPARE(entities->count(), 2);
+        QTest::mousePress(view, Qt::LeftButton, Qt::NoModifier, center);
+        move(center + QPoint(120, 0));
+        tool->setCurrentText("Point");
+        QTest::mouseRelease(view, Qt::LeftButton, Qt::NoModifier, center + QPoint(120, 0));
+        QCOMPARE(entities->count(), 2);
+        QSignalSpy solved(c, &Client::sketchPreview);
+        click(window, "previewSketchButton");
+        QVERIFY2(wait([&] { return ready(*c) && solved.size() == 1; }),
+                 qPrintable(c->state().message));
+        auto result = sketch::parse(solved.last()[0].value<QCborArray>());
+        QCOMPARE(result[0].entities[1].kind, QString("Circle"));
+        QVERIFY(std::abs(result[0].entities[1].radius - .01) < 1e-12);
+        QCOMPARE(c->state().revision, rev);
+        click(window, "acceptSketchButton");
+        QVERIFY(wait([&] { return ready(*c) && c->state().revision == rev + 1; }));
+        auto accepted = part(*c).value("sketches").toArray();
+        window.command("undo")->trigger();
+        QVERIFY(wait([&] { return ready(*c) && part(*c).value("sketches").toArray().empty(); }));
+        window.command("redo")->trigger();
+        QVERIFY(
+            wait([&] { return ready(*c) && part(*c).value("sketches").toArray() == accepted; }));
+        auto path = files.filePath("circles.cadproj");
+        c->saveProject(path);
+        QVERIFY(wait([&] { return ready(*c) && c->state().savedRevision == c->state().revision; }));
+        c->closeProject();
+        QVERIFY(wait([&] { return !c->state().projectOpen && !c->outstanding(); }));
+        c->openProject(path);
+        QVERIFY(wait([&] { return ready(*c); }));
+        QCOMPARE(part(*c).value("sketches").toArray(), accepted);
+        click(window, "editSketchButton");
+        // Two-click primitives show a rubber-band preview and Escape only cancels that input.
+        for (auto type : {QString("Line"), QString("Polyline"), QString("Rectangle")}) {
+            tool->setCurrentText(type);
+            QTest::qWait(30);
+            QPoint a = view->screen({.04, .03}).toPoint(), b = a + QPoint(60, -30);
+            QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, a);
+            move(b, Qt::NoButton);
+            QVERIFY2(ink(b), qPrintable(type + " must preview its pending endpoint/corner"));
+            QCOMPARE(entities->count(), 2);
+            QTest::keyClick(view, Qt::Key_Escape);
+            QVERIFY(window.findChild<SketchPanel *>()->active());
+            QCOMPARE(entities->count(), 2);
+        }
+        // A complete pointer line/rectangle remains local until sketch acceptance.
+        tool->setCurrentText("Line");
+        QTest::qWait(30);
+        auto first = view->screen({.04, .03}).toPoint();
+        QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, first);
+        QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, first + QPoint(60, 0));
+        QCOMPARE(entities->count(), 5);
+        tool->setCurrentText("Rectangle");
+        QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, first + QPoint(0, -60));
+        QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, first + QPoint(60, -120));
+        QCOMPARE(entities->count(), 13);
+        QCOMPARE(part(*c).value("sketches").toArray(), accepted);
+        click(window, "cancelSketchButton");
+        click(window, "editSketchButton");
+        tool->setCurrentText("Circle");
+        window.findChild<QLineEdit *>("sketchRadius")->setText("3.25");
+        coordinate(window, .5, .75);
+        QCOMPARE(entities->count(), 4);
+        tool->setCurrentText("Arc");
+        QVERIFY(!window.findChild<QLineEdit *>("sketchStart")->isHidden());
+        QVERIFY(!window.findChild<QLineEdit *>("sketchSweep")->isHidden());
+        coordinate(window, 1.5, .75);
+        QCOMPARE(entities->count(), 6);
+        solved.clear();
+        click(window, "previewSketchButton");
+        QVERIFY2(wait([&] { return ready(*c) && solved.size() == 1; }),
+                 qPrintable(c->state().message));
+        result = sketch::parse(solved.last()[0].value<QCborArray>());
+        double expectedRadius = domain::toSI(3.25, "length", units);
+        QCOMPARE(result[0].entities[3].radius, expectedRadius);
+        QCOMPARE(result[0].entities[5].radius, expectedRadius);
+        QCOMPARE(result[0].entities[5].kind, QString("Arc"));
+        // Escape without a pending primitive cancels the complete edit.
+        view->setFocus();
+        QTest::keyClick(view, Qt::Key_Escape);
+        QVERIFY(!window.findChild<SketchPanel *>()->active());
+        QCOMPARE(part(*c).value("sketches").toArray(), accepted);
+        window.close();
+    }
     void exercise(bool native) {
         QTemporaryDir root(QDir::tempPath() + "/cad-module3-ipc-XXXXXX"),
             files(QDir::tempPath() + "/cad-module3-files-XXXXXX");

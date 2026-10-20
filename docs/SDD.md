@@ -230,6 +230,8 @@ Use `QMainWindow`, dock widgets, actions, model/view trees, and reusable propert
 | Right task pane | Libraries/materials/view resources | Optional, lazy-loaded, collapsible |
 | Bottom | Documents, edit mode, units, save/rebuild/job status | Text labels and icons; color is supplementary |
 
+Implementation staging: [TECH_SPEC 4.0](TECH_SPEC.md#40--align-the-native-modeling-workspace-before-adding-solid-tools) owns the early SolidWorks-style Features/Sketch/Evaluate command tabs, left PropertyManager/tree switch, and overall modeling layout, before exact feature UI is added. Module 9 completes consistency, familiar/simplified modes and accessibility across document types. Module 3 closes primitive input and cancellation behavior; it does not certify the current development shell as matching the reference layout. These are planned tasks, not implemented UI claims.
+
 Property panels share title/help, accept/cancel, selection roles, collapsible sections, unit-aware values, and preview feedback. Their actual inputs differ by command. Some measurement and dimension tools are nonmodal; do not make every tool a blocking dialog. Confirmation behavior, keyboard focus, and Escape semantics are specified in TECH_SPEC.
 
 Familiar and simplified layouts expose the same engine operations and document format. Simplification hides advanced presentation, not precision or data. Icons/assets are original; atlas screenshots guide spatial/interaction decisions rather than serving as application artwork. Selection/tree/parameter updates are joined by stable IDs, not independent mutable copies.

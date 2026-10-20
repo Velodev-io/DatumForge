@@ -2,7 +2,7 @@
   "scope": "Available-Mac Module 3; no installed-build or full SRS performance acceptance",
   "status": "Pass: requested available-Mac checks",
   "native_requested": true,
-  "artifacts": "docs/testing/artifacts/module-3/runs/20261020T033018.714107Z",
+  "artifacts": "docs/testing/artifacts/module-3/runs/20261020T035603.673933Z",
   "steps": [
     {
       "name": "configure",
@@ -12,7 +12,7 @@
         "macos-debug"
       ],
       "exit_code": 0,
-      "seconds": 0.7277649160096189
+      "seconds": 0.515277332990081
     },
     {
       "name": "build",
@@ -23,7 +23,7 @@
         "macos-debug"
       ],
       "exit_code": 0,
-      "seconds": 12.22879649999959
+      "seconds": 41.75456108398794
     },
     {
       "name": "ctest",
@@ -34,7 +34,7 @@
         "--output-on-failure"
       ],
       "exit_code": 0,
-      "seconds": 19.12766191699484
+      "seconds": 28.01826104200154
     },
     {
       "name": "format",
@@ -43,7 +43,7 @@
         "tools/format_sources.py"
       ],
       "exit_code": 0,
-      "seconds": 0.4019212920102291
+      "seconds": 0.4013987499929499
     },
     {
       "name": "static-analysis",
@@ -54,7 +54,7 @@
         "build/macos-debug/compile_commands.json"
       ],
       "exit_code": 0,
-      "seconds": 127.95872108399635
+      "seconds": 128.76491637500294
     },
     {
       "name": "ownership",
@@ -63,10 +63,10 @@
         "tools/check_architecture.py",
         "build/macos-debug",
         "--output",
-        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-3/runs/20261020T033018.714107Z/architecture.json"
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-3/runs/20261020T035603.673933Z/architecture.json"
       ],
       "exit_code": 0,
-      "seconds": 0.12720391699986067
+      "seconds": 0.13314791599987075
     },
     {
       "name": "research-isolation",
@@ -75,7 +75,7 @@
         "tools/check_isolation.py"
       ],
       "exit_code": 0,
-      "seconds": 0.18727566600136925
+      "seconds": 0.2649094999942463
     },
     {
       "name": "native-module3-100",
@@ -84,7 +84,7 @@
         "nativeSketches"
       ],
       "exit_code": 0,
-      "seconds": 3.831098374997964
+      "seconds": 6.363679415997467
     },
     {
       "name": "native-module3-125",
@@ -93,7 +93,7 @@
         "nativeSketches"
       ],
       "exit_code": 0,
-      "seconds": 2.90760904099443
+      "seconds": 5.272145499999169
     },
     {
       "name": "native-module3-150",
@@ -102,7 +102,7 @@
         "nativeSketches"
       ],
       "exit_code": 0,
-      "seconds": 3.6530104590056
+      "seconds": 5.568681207994814
     },
     {
       "name": "native-module3-175",
@@ -111,7 +111,7 @@
         "nativeSketches"
       ],
       "exit_code": 0,
-      "seconds": 3.597514416993363
+      "seconds": 5.952174999998533
     },
     {
       "name": "native-module3-200",
@@ -120,7 +120,7 @@
         "nativeSketches"
       ],
       "exit_code": 0,
-      "seconds": 3.454816541998298
+      "seconds": 6.174454624997452
     },
     {
       "name": "native-module2-regression",
@@ -129,7 +129,7 @@
         "nativeDocuments"
       ],
       "exit_code": 0,
-      "seconds": 2.9181574159883894
+      "seconds": 3.0472983340005158
     },
     {
       "name": "native-module1-regression",
@@ -138,7 +138,7 @@
         "nativeInteraction"
       ],
       "exit_code": 0,
-      "seconds": 2.42956208299438
+      "seconds": 2.406364124995889
     }
   ],
   "blocked": [

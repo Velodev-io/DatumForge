@@ -48,7 +48,16 @@ and a 1 mm grid, and provides pan/zoom. Typed coordinate input bypasses the disp
 snap grid and retains its parsed SI value. The current snap tolerance is 0.15 mm in
 model coordinates; a screen-distance snapping preference remains a UX follow-up.
 Polyline input shares endpoints and is finished by changing tools or accepting the
-edit. Rectangle construction creates shared corner points; horizontal/vertical and
+edit. Line/polyline/rectangle pointer input shows a local rubber-band preview after
+the first vertex. Circle input presses at the snapped center, sizes a transient
+radius while held, and releases one circle into the sketch draft. No point, curve,
+solver request or durable operation is created per mouse movement; a zero-radius
+release adds nothing. The explicit numeric button still creates a circle using
+X/Y and Radius in display units without pointer grid rounding. Arc centers remain
+click/coordinate inputs with numeric radius/start/sweep; a three-point arc gesture
+is not implemented. Tool changes discard incomplete input while retaining
+completed draft geometry. Radius fields appear only for circle/arc and angle fields
+only for arc; the empty viewport identifies that no sketch exists. Rectangle construction creates shared corner points; horizontal/vertical and
 dimensional constraints are explicit user choices, not hidden inferred constraints.
 
 ## Supported constraint combinations
@@ -110,7 +119,9 @@ preview generation, so a late reply cannot restore a canceled draft. Unrelated
 project operations are disabled while editing; application close explicitly asks
 to discard a draft. A pending commit cannot be described as canceled. Enter accepts
 only a solved preview with viewport focus; Enter in a value editor does not commit.
-Escape cancels an editable draft. Every accepted dimension edit, constraint deletion,
+Escape first cancels pending circle/vertex input and retains completed draft
+geometry; when no input is pending it cancels the editable sketch draft. The
+explicit Cancel sketch edit button always discards the whole edit. Every accepted dimension edit, constraint deletion,
 undo and redo is one durable semantic operation.
 
 ## Remaining decisions and gates

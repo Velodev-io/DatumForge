@@ -36,10 +36,14 @@ The format follows the earlier DeskCore plan: **Module 0 → Module 1 → Module
 | Windows, Linux, or Mac product builds | Mac development build tested; Windows/Linux Blocked; installed release builds Not run |
 | Real 8 GB workload validation | Not run |
 | Document metadata, saved/recoverable revisions, semantic undo/redo | Available-Mac foundation tested; full requirement acceptance Blocked |
-| Planar sketches, constraints and expressions | Available-Mac implementation; see [Module 3 evidence](testing/module-3.md) |
+| Planar sketches, constraints and expressions | Available-Mac implementation including [circle drag/preview follow-up](testing/module-3-interaction-followup.md); see [Module 3 evidence](testing/module-3.md) |
 | Solid features, mates, drawing content, and release tests | Not run |
 
 Module 0 experiments remain isolated under tests and tools. The user authorized Modules 1 and 2 on 19 October 2026. Their available-Mac implementation and tests are recorded separately. Cross-platform completion remains Blocked. The user explicitly authorized Module 3 in the subsequent instruction; its implementation and verification are recorded in [Module 3 evidence](testing/module-3.md). Stop before Module 4 and ask the user before proceeding. Unavailable platform and hardware checks remain Blocked.
+
+## Upcoming UI work
+
+The user requested explicit UI scheduling on 20 October 2026. [Module 4.0a–c](TECH_SPEC.md#40--align-the-native-modeling-workspace-before-adding-solid-tools) will add Features/Sketch/Evaluate command tabs, a left PropertyManager shared with the model tree, and the overall modeling layout before solid-feature controls. Module 9 completes consistency and accessibility across document types. These tasks remain unimplemented and require Module 4 authorization; the stop boundary remains unchanged.
 
 ## Checking the specification set
 

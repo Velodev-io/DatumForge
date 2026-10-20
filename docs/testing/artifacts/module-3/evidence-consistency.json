@@ -1,16 +1,16 @@
 {
   "status": "Pass",
-  "run": "docs/testing/artifacts/module-3/runs/20261020T033018.714107Z",
+  "run": "docs/testing/artifacts/module-3/runs/20261020T035603.673933Z",
   "current_source_matches_tested_inputs": true,
-  "source_aggregate_sha256": "b3f50dcd9731763694a958cef3f6f0d391035bbd5f0181927a850740ebf0775d",
+  "source_aggregate_sha256": "adf06e6ed1920cc4e790ae9ed48a2c0f7b99cfa86ef2d7e03c62a4f5e9b68b9b",
   "fixture_B1_sha256": "253e1a78dd30735dcdfe16fce3d1843b87123e747b1f4a31b68744cdc5811a52",
   "pinned_dependencies_unchanged_from_module_2": {
     "cmake/dependencies.lock.json": "f8bef677dd2d82978d1be6666ff9ae5535b151b1f9fce9ccdd2325134ef2c336",
     "cmake/tools.lock.json": "dfd04751f6b7d7991125c8cb66135150b863d67ef4dee266384403bc2b6cc612",
     "cmake/patches/qt-6.10.0-arm-yield.patch": "b47fd041cbcaf1c74491f17d53a54b0ebb2bb45466c3239afa72713ee7a9bf10"
   },
-  "enabled_ctest_entries": 23,
-  "fresh_source_enabled_ctest_entries": 23,
+  "enabled_ctest_entries": 24,
+  "fresh_source_enabled_ctest_entries": 24,
   "native": [
     {
       "effective_scale_percent": 100,
@@ -19,7 +19,11 @@
       "keyboard_cancel": true,
       "platform": "cocoa",
       "revision": 12,
-      "sketches": 2
+      "sketches": 2,
+      "pointer_gesture_units": [
+        "mm",
+        "in"
+      ]
     },
     {
       "effective_scale_percent": 125,
@@ -28,7 +32,11 @@
       "keyboard_cancel": true,
       "platform": "cocoa",
       "revision": 12,
-      "sketches": 2
+      "sketches": 2,
+      "pointer_gesture_units": [
+        "mm",
+        "in"
+      ]
     },
     {
       "effective_scale_percent": 150,
@@ -37,7 +45,11 @@
       "keyboard_cancel": true,
       "platform": "cocoa",
       "revision": 12,
-      "sketches": 2
+      "sketches": 2,
+      "pointer_gesture_units": [
+        "mm",
+        "in"
+      ]
     },
     {
       "effective_scale_percent": 175,
@@ -46,7 +58,11 @@
       "keyboard_cancel": true,
       "platform": "cocoa",
       "revision": 12,
-      "sketches": 2
+      "sketches": 2,
+      "pointer_gesture_units": [
+        "mm",
+        "in"
+      ]
     },
     {
       "effective_scale_percent": 200,
@@ -55,10 +71,15 @@
       "keyboard_cancel": true,
       "platform": "cocoa",
       "revision": 12,
-      "sketches": 2
+      "sketches": 2,
+      "pointer_gesture_units": [
+        "mm",
+        "in"
+      ]
     }
   ],
   "module_4_started": false,
+  "future_ui_tasks": "Planned only: 4.0a/4.0b/4.0c and 9.1a/9.1b; no implementation authorization",
   "full_platform_completion": "Blocked",
-  "historical_evidence": "Preserved; earlier failures and pre-fix reproduction retained"
+  "historical_evidence": "Original closeout, red regression, intermediate failure and pre-followup reproduction/consistency records preserved"
 }

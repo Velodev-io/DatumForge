@@ -1,0 +1,58 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+      Start  1: harness.pass
+ 1/25 Test  #1: harness.pass .....................   Passed    0.61 sec
+      Start  2: harness.failure_reporting
+ 2/25 Test  #2: harness.failure_reporting ........   Passed    0.07 sec
+      Start  3: measurement.statistics
+ 3/25 Test  #3: measurement.statistics ...........   Passed    0.07 sec
+      Start  4: harness.deliberate_failure
+ 4/25 Test  #4: harness.deliberate_failure .......***Not Run (Disabled)   0.00 sec
+      Start  5: protocol.boundaries
+ 5/25 Test  #5: protocol.boundaries ..............   Passed    0.54 sec
+      Start  6: storage.crash_matrix
+ 6/25 Test  #6: storage.crash_matrix .............   Passed    1.58 sec
+      Start  7: cad.geometry_topology
+ 7/25 Test  #7: cad.geometry_topology ............   Passed    0.83 sec
+      Start  8: cad.sketch_solver
+ 8/25 Test  #8: cad.sketch_solver ................   Passed    0.47 sec
+      Start  9: cad.rigid_mates
+ 9/25 Test  #9: cad.rigid_mates ..................   Passed    0.78 sec
+      Start 10: native.process_transport
+10/25 Test #10: native.process_transport .........   Passed    0.33 sec
+      Start 11: fixtures.determinism
+11/25 Test #11: fixtures.determinism .............   Passed    0.06 sec
+      Start 12: isolation.research
+12/25 Test #12: isolation.research ...............   Passed    0.18 sec
+      Start 13: module1.ownership
+13/25 Test #13: module1.ownership ................   Passed    0.17 sec
+      Start 14: module1.contracts
+14/25 Test #14: module1.contracts ................   Passed    2.36 sec
+      Start 15: module2.domain
+15/25 Test #15: module2.domain ...................   Passed    0.47 sec
+      Start 16: module2.storage
+16/25 Test #16: module2.storage ..................   Passed    1.82 sec
+      Start 17: module2.worker_lifecycle
+17/25 Test #17: module2.worker_lifecycle .........   Passed    1.15 sec
+      Start 18: module2.crash_matrix
+18/25 Test #18: module2.crash_matrix .............   Passed    7.77 sec
+      Start 19: module2.dispatch
+19/25 Test #19: module2.dispatch .................   Passed    0.86 sec
+      Start 20: module3.model
+20/25 Test #20: module3.model ....................   Passed    0.92 sec
+      Start 21: module3.persistence
+21/25 Test #21: module3.persistence ..............   Passed    1.35 sec
+      Start 22: module3.gestures
+22/25 Test #22: module3.gestures .................   Passed    2.41 sec
+      Start 23: module3.interaction
+23/25 Test #23: module3.interaction ..............   Passed    1.70 sec
+      Start 24: module3.solver
+24/25 Test #24: module3.solver ...................   Passed    0.52 sec
+      Start 25: module3.expressions
+25/25 Test #25: module3.expressions ..............   Passed    0.94 sec
+
+100% tests passed, 0 tests failed out of 24
+
+Total Test time (real) =  27.96 sec
+
+The following tests did not run:
+	  4 - harness.deliberate_failure (Disabled)

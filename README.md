@@ -28,10 +28,16 @@ content require later modules.
 For sketching, create a Part and choose **Create sketch** in Tools (or command
 search). Choose a support plane, then enter coordinates in document display units
 or click in the planar viewport. Lines/rectangles use two inputs; polylines append
-vertices; circles/arcs use the radius/angle fields. Select entities in the list to
+vertices with a moving endpoint/corner preview. For a circle, press its center,
+hold and drag to size the live radius, then release to finish it in the draft.
+A zero-radius release adds nothing. For numeric circles, enter X/Y and Radius and
+choose **Add center with numeric radius**. Arcs use the radius/start/sweep fields
+and a center input; they do not yet have a three-point pointer workflow. Select entities in the list to
 add supported constraints. Named expressions use `Width = 80 mm`; dimensions may
 refer to `Width`. **Solve preview** computes without committing; **Accept sketch
-edit** creates one recoverable operation. Escape cancels; Enter accepts a solved
+edit** creates one recoverable operation. Escape first cancels an unfinished
+primitive, retaining completed draft geometry; Escape again cancels the sketch
+edit. The Cancel sketch edit button discards the entire edit. Enter accepts a solved
 preview only with viewport focus. For dragging, choose **Select / drag**, move a
 point, and solve the draft. Save explicitly to publish the portable project.
 See [supported combinations and current limits](docs/decisions/module-3-sketches.md).
@@ -40,6 +46,8 @@ Use **Load reference box**, select a face/edge/body, and choose **Measure select
 Right drag orbits, middle drag pans, the wheel zooms, and F fits the scene.
 Property dimensions are temporary previews; Cancel restores 10 × 20 × 30 mm.
 The app uses the pinned local dependency cache; it is not an installed release.
+
+The upcoming [Module 4.0 tasks](docs/TECH_SPEC.md#40--align-the-native-modeling-workspace-before-adding-solid-tools) explicitly schedule SolidWorks-style command tabs, a left PropertyManager/tree switch, and the overall modeling layout before solid-feature tools. Module 9 completes cross-document consistency and accessibility. This layout work is planned; Module 4 implementation has not started.
 
 ## Development
 

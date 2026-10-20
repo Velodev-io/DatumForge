@@ -1,7 +1,6 @@
 # Module 3 evidence
 
-Status: **all feasible available-Mac Module 3 work verified; full platform
-completion Blocked**. The user explicitly authorized Module 3 on
+Status: **feasible available-Mac Module 3 work and interaction follow-up verified; full platform completion Blocked**. The user explicitly authorized Module 3 on
 19 October 2026 and required stopping before Module 4. Execution continued on
 20 October. [Scope record](../decisions/implementation-scope.json).
 
@@ -11,19 +10,26 @@ incremental model, storage, solver, parser and interaction evidence retained in
 [the artifact directory](artifacts/module-3). No agents were delegated work.
 Module 4 has not started.
 
+The user found a circle-creation gesture gap after the original closeout: the
+old tests covered numeric circles and point dragging but did not test circle
+press/drag/release. The earlier completion statement was too broad for that
+interaction. See the [interaction follow-up](module-3-interaction-followup.md) for
+the reproduced failure, added behavior and current validation. The original
+results below remain historical evidence of their actual coverage.
+
 ## Implementation and task scope
 
 | Task | Result and actual scope |
 |---|---|
 | 3.1a | Pass: SI support frames; points, shared-endpoint lines/polylines/rectangles, circles and arcs; construction flags; point/grid snapping; stable UUIDs and bounded typed serialization. |
-| 3.1b | Pass on available Mac: native planar viewport/entity selection, dimension labels, editable drafts, worker previews, generation-bound cancellation, durable semantic acceptance. |
+| 3.1b | Pass on available Mac: native planar viewport/entity selection, dimension labels, circle press/drag/release and transient cancellation, line/polyline/rectangle previews, contextual fields/empty state, editable drafts, worker previews, generation-bound cancellation and durable semantic acceptance. [Follow-up evidence](module-3-interaction-followup.md). |
 | 3.2a | Pass: real pinned PlaneGCS mapping with owned variables/constants, fixed anchors and the documented geometric/dimensional combinations. Unsupported selections are disabled with reasons and rejected in the worker. |
 | 3.2b | Pass: finite/degeneracy/radius checks, independent residuals, Jacobian-rank freedom, redundant/conflicting constraint IDs, line-direction and tangent-side continuity, preserved accepted state on failure. |
 | 3.3a | Pass: SI/display conversion, dimensional arithmetic/functions/names, cycle/domain/nonfinite rejection, 4 KiB / 256-node / 32-level bounds; no general code evaluation. |
 | 3.3b | Pass: accepted named/dimension edits and constraint deletion are single durable commands; canceled drags/edits, undo/redo, save/reopen retain identities and accepted values. |
 | 3.4a / T-12–T-16 | Pass on available Mac: valid, underdefined, fully defined, redundant, contradictory, unsupported, singular and degenerate sketches; analytic invariants and declared diagnostics. |
 | 3.4b | Pass: mm/inch, degrees/radians, mixed units, invalid dimensions, negative dimensions/radii, nonfinite/domain errors, cyclic/reserved names and expression bounds. |
-| 3.4c | Blocked for full native platform completion. Mac Cocoa B1 interaction/scaling/focus/persistence/recovery cases are recorded; Windows/Linux native runners and a controlled OS-network-disabled procedure are unavailable. |
+| 3.4c | Blocked for full native platform completion. Mac Cocoa B1 plus mm/in gesture interaction/scaling/focus/persistence/recovery cases are recorded; Windows/Linux native runners and a controlled OS-network-disabled procedure are unavailable. |
 
 Eight rows are checked for their explicit available-target scope in
 [TECH_SPEC](../TECH_SPEC.md); 3.4c remains unchecked. Full FR-012–FR-016 rows remain
@@ -39,7 +45,7 @@ worker. No existing saved project is rewritten on read. The supported combinatio
 representation, tolerance policy, admission limits and unresolved design choices
 are explicit in [the Module 3 ADR](../decisions/module-3-sketches.md).
 
-## Reproduction and results
+## Reproduction and original baseline results
 
 From a logged-in Mac desktop with the pinned dependencies provisioned:
 
@@ -54,7 +60,8 @@ Each verifier execution keeps a timestamped run, including failures. The
 run folder, exact commands, exit codes, durations and fresh host inventory. The
 repository is on topic branch `historical/module-3`, with no initial commit or remote.
 The successful run's `source-identity.json` records individual input hashes,
-aggregate SHA-256 and the unchanged frozen B1 fixture hash. It is a development
+aggregate SHA-256 and the unchanged frozen B1 fixture hash. The table below is
+the original baseline; the follow-up report identifies the current tested code. It is a development
 build with local dependency rpaths, not an installed release.
 
 | Check | Observed result / evidence |
@@ -71,8 +78,8 @@ build with local dependency rpaths, not an installed release.
 | Native regressions | Pass: [Module 1](artifacts/module-3/runs/20261020T033018.714107Z/native-module1-regression.txt), [Module 2](artifacts/module-3/runs/20261020T033018.714107Z/native-module2-regression.txt). |
 | Ownership / preservation | Pass: [source and actual linked libraries](artifacts/module-3/runs/20261020T033018.714107Z/architecture.json); [97 research files unchanged, no remote](artifacts/module-3/runs/20261020T033018.714107Z/research-isolation.txt). |
 | Visual review | Corrected [100% screenshot](artifacts/module-3/runs/20261020T033018.714107Z/native-100/sketches-native.png) and [200% screenshot](artifacts/module-3/runs/20261020T033018.714107Z/native-200/sketches-native.png) inspected. Wrapped labels and persistent action buttons are visible at 1280×800 logical size. Intermediate scales have native interaction and visibility assertions; this does not certify assistive technology. |
-| Evidence identity | Pass: [tested source hashes](artifacts/module-3/runs/20261020T033018.714107Z/source-identity.json) match current code; [consistency record](artifacts/module-3/evidence-consistency.json) also verifies unchanged pins, fixture hash and native DPRs. |
-| Fresh-source reproduction | [Pass](artifacts/module-3/clean-reproduction.txt): fresh source export/configure/build and all 23 enabled CTest entries, using verified cached sources and existing local dependency binaries. No second dependency compilation, installed-build or other-OS claim. |
+| Evidence identity | Pass: [tested source hashes](artifacts/module-3/runs/20261020T033018.714107Z/source-identity.json) matched the baseline code at its original closeout; [historical consistency record](artifacts/module-3/evidence-consistency-before-interaction-followup.json) also verifies unchanged pins, fixture hash and native DPRs. |
+| Fresh-source reproduction | [Historical Pass](artifacts/module-3/clean-reproduction-before-interaction-followup.txt): fresh source export/configure/build and all 23 enabled CTest entries, using verified cached sources and existing local dependency binaries. No second dependency compilation, installed-build or other-OS claim. |
 
 B1 inputs come from the unchanged frozen recipe: 80 × 50 mm outer rectangle and
 20 × 20 mm rectangle at (20,20) mm. The sketch-stage implementation has eight
@@ -85,8 +92,8 @@ support points and multi-equation constraints from the recipe's eight curves and
 features, volume, holes/pattern and fillet remain unrun until later modules; no
 frozen fixture recipe or budget was relaxed.
 
-Final tested source aggregate SHA-256: `b3f50dcd9731763694a958cef3f6f0d391035bbd5f0181927a850740ebf0775d`.
-Frozen B1 SHA-256: `253e1a78dd30735dcdfe16fce3d1843b87123e747b1f4a31b68744cdc5811a52`. The final native renderer
+Original baseline tested source aggregate SHA-256: `b3f50dcd9731763694a958cef3f6f0d391035bbd5f0181927a850740ebf0775d`.
+Frozen B1 SHA-256: `253e1a78dd30735dcdfe16fce3d1843b87123e747b1f4a31b68744cdc5811a52`. The baseline native renderer
 reports OpenGL 4.1 on Apple M2; raw driver/DPR details are retained in each native
 JSON. No SRS memory, FPS, latency or launch budget is inferred from these checks.
 

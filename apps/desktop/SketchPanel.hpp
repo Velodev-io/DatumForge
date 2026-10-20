@@ -31,6 +31,8 @@ class SketchPanel : public QWidget {
     void guard(std::function<void()> fn);
     void addRelation();
     void updateRelations();
+    void cancelInput();
+    void updateToolFields();
 
   public:
     explicit SketchPanel(Client *client, QWidget *parent = nullptr);

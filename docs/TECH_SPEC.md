@@ -281,7 +281,7 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 #### 3.1 — Create planar sketch editing
 
 - [x] **3.1a:** Implement support-plane coordinate frames, points/lines/polylines/rectangles/circles/arcs, construction flags, snapping, and persistent sketch IDs.
-- [x] **3.1b:** Integrate viewport/entity selection, dimensions, context labels, keyboard cancellation, and command previews with semantic transactions.
+- [x] **3.1b:** Integrate viewport/entity selection, dimensions, truthful empty/edit context, tool-specific fields, and command previews with semantic transactions. Circle pointer input must press at the center, resize continuously while held, and finish into the local draft on release; Escape cancels the in-progress primitive before canceling the sketch. Line/polyline/rectangle input must show the pending segment or opposite corner before completion. Numeric creation remains precise and separate from pointer snapping.
 
 #### 3.2 — Integrate constraints and diagnosis
 
@@ -297,20 +297,28 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 - [x] **3.4a — T-12–T-16:** Run valid, underdefined, fully defined, redundant, contradictory, singular, and degenerate sketches; verify geometric residuals and declared diagnostics.
 - [x] **3.4b — Unit/expression corpus:** Check mm/inch conversion, degrees/radians, mixed-unit arithmetic, invalid dimensions, negative radii, nonfinite numbers, cyclic names, and AST limits.
-- [ ] **3.4c — Native interaction and persistence:** Create B1 sketches through the UI; cancel a drag/edit, undo/redo, save/reopen, and verify identities/values. Check actual focus and keyboard behavior.
+- [ ] **3.4c — Native interaction and persistence:** Create B1 sketches through the UI; cancel a drag/edit, undo/redo, save/reopen, and verify identities/values. Check actual focus and keyboard behavior. Exercise circle press/move/release at multiple radii, transient cancellation, zero-size refusal, tool switching, numeric creation, and line/rectangle live previews; verify no project revision changes before explicit sketch acceptance.
 
 **Test pass criteria:** Supported sketches solve and edit correctly; invalid/ambiguous numerical outcomes are exposed without changing accepted geometry.
 
 **Completion check:** B1 sketch stage works natively and offline with real solver and persistence evidence.
 
-**Evidence:** `docs/testing/module-3.md`. **Current status:** 8 tasks Pass for available-Mac implementation/logic scope. 3.4c is Blocked for full native platform completion; actual Mac interaction evidence is recorded separately. Windows/Linux and OS-network-disabled acceptance remain Blocked. Stop before Module 4.
+**Evidence:** `docs/testing/module-3.md` and `docs/testing/module-3-interaction-followup.md`. **Current status:** 8 tasks Pass for available-Mac implementation/logic scope, including the separately reproduced and verified circle gesture follow-up. 3.4c is Blocked for full native platform completion; actual Mac interaction evidence is recorded separately. Windows/Linux and OS-network-disabled acceptance remain Blocked. Stop before Module 4.
 
 
 ### Module 4 — Exact part features and measurement
 
-**Purpose:** Convert design definitions into valid precise solids with useful editing and measurement.  
+**Purpose:** Align the native modeling workspace, then convert design definitions into valid precise solids with useful editing and measurement.  
 **Prerequisites:** Module 3; prototype topology/history contract from Module 0. Full repair UX arrives in Module 5.  
-**Requirement/design anchors:** FR-017–FR-018, FR-022, FR-025; SDD §§6–8, 11.
+**Requirement/design anchors:** FR-001, FR-003–FR-005, FR-017–FR-018, FR-022, FR-025; SDD §§6–8, 10–11.
+
+#### 4.0 — Align the native modeling workspace before adding solid tools
+
+These tasks are planned at the user's request on 20 October 2026. Execute 4.0a → 4.0b → 4.0c before 4.1a once Module 4 is authorized. This scheduling does not authorize Module 4 implementation or renumber existing feature tasks.
+
+- [ ] **4.0a:** Introduce SolidWorks-style **Features / Sketch / Evaluate command tabs** using the existing shared action registry, menus, search, shortcuts and real command availability. Group discoverable sketch tools and contextual commands with original icons and text. Unimplemented operations must remain unavailable with reasons; no decorative functioning controls. Preserve native macOS global menus and native Windows/Linux behavior.
+- [ ] **4.0b:** Put the active **PropertyManager on the left**, sharing the manager region with the model/feature tree. Provide a command title, selection prompts, contextual fields, persistent accept/cancel and diagnostics. Show planes, origin and sketches under the active document, adding feature/history nodes as their engines arrive. Keep the central viewport dominant, the right resource Task Pane optional/collapsible, and documents/units/edit/save/job status along the bottom. Preserve stable IDs, tree state, keyboard focus and worker transaction ownership when switching panels.
+- [ ] **4.0c — T-01, T-03–T-05 layout acceptance:** Compare actual native screenshots and workflows against the preserved UI atlas and SDD §10. Verify command discovery, switching tree/PropertyManager, circle creation/edit/cancel, disabled reasons, pan/zoom/selection, document switching and save status at 1280×800 and 100/125/150/175/200% scaling. Test supported native platforms when available; mark unavailable environments Blocked. Record deliberate differences from SolidWorks and check for clipped controls, inaccessible actions and extra geometry/project writes.
 
 #### 4.1 — Implement extrusion and revolve
 
@@ -333,9 +341,9 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 - [ ] **4.4b — NFR-007–NFR-008 / T-47–T-48:** Change mesh detail and display mode; expect unchanged exact measurements/precise results. Test unit scales, tolerances, invalid radius and self-intersecting profiles.
 - [ ] **4.4c — Native B1 vertical slice:** Sketch → extrude → cut/pattern → fillet → dimension edit → undo/redo → save/reopen → worker restart. Expect correct shape, parameters, and durable state.
 
-**Test pass criteria:** Every supported initial feature has valid, invalid, cancel, persistence, and analytic-invariant coverage.
+**Test pass criteria:** The 4.0 native command-tab/left-PropertyManager layout checks pass for declared targets, and every supported initial feature has valid, invalid, cancel, persistence, and analytic-invariant coverage.
 
-**Completion check:** B1 modeling slice passes; large history/reference mutation corpus is owned by Module 5.
+**Completion check:** The planned modeling layout and B1 modeling slice pass with native evidence; large history/reference mutation corpus is owned by Module 5.
 
 **Evidence:** `docs/testing/module-4.md`. **Current status:** Not run.
 
@@ -484,8 +492,8 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 9.1 — Unify command interactions
 
-- [ ] **9.1a:** Complete shared property-panel grammar, selection-role prompts, reasons for disabled controls, command search/aliases, and shortcut configuration.
-- [ ] **9.1b:** Implement familiar/simplified layouts using identical commands and model semantics; verify Enter/Escape/focus/transient-dialog behavior with real workflows.
+- [ ] **9.1a:** Complete shared property-panel grammar, selection-role prompts, reasons for disabled controls, command search/aliases, and shortcut configuration across part, assembly and drawing commands. Build on the command tabs and left PropertyManager delivered in 4.0; do not defer the basic modeling layout until this module.
+- [ ] **9.1b:** Complete familiar/simplified layouts using identical commands and model semantics; verify Enter/Escape/focus/transient-dialog behavior with real workflows. Recheck the 4.0 layout against the UI atlas across all document types, dock restoration, keyboard traversal and accessibility; preserve native platform conventions.
 
 #### 9.2 — Verify accessibility and platform conventions
 

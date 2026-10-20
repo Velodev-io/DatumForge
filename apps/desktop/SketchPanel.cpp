@@ -129,9 +129,10 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     });
     connect(tool, &QComboBox::currentTextChanged, this, [this] {
         clicks.clear();
-        view->setProperty("drawing", tool->currentText() != "Select / drag");
+        view->setTool(tool->currentText());
+        updateToolFields();
     });
-    view->setProperty("drawing", true);
+    updateToolFields();
     connect(add, &QPushButton::clicked, this, [this] {
         guard([&] {
             bool a, b;
@@ -144,6 +145,20 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     connect(view, &SketchView::clicked, this, [this](double a, double b) {
         if (editing && tool->currentText() != "Select / drag")
             guard([&] { addAt({a, b}, true); });
+    });
+    connect(view, &SketchView::circleCreated, this, [this](double a, double b, double radius) {
+        if (editing && tool->currentText() == "Circle")
+            guard([&] {
+                auto candidate = current();
+                QString center;
+                candidate.snap({a, b}, 1e-10, 0, &center);
+                if (center.isEmpty())
+                    center = candidate.point({a, b}, construction->isChecked());
+                candidate.circle(center, radius, construction->isChecked());
+                candidate.validate();
+                current() = std::move(candidate);
+                rebuild();
+            });
     });
     connect(view, &SketchView::selected, this, [this](QString id) {
         selectedId = id;
@@ -170,6 +185,10 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     });
     connect(preview, &QPushButton::clicked, this, &SketchPanel::previewDraft);
     connect(accept, &QPushButton::clicked, this, [this] {
+        if (view->sizingCircle()) {
+            context->setText("Finish or cancel the circle before accepting");
+            return;
+        }
         if (!clicks.empty() && tool->currentText() != "Polyline") {
             context->setText("Complete the second vertex before accepting");
             return;
@@ -178,10 +197,10 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
         client->projectCommand("SetSketches", fields({{"sketches", sketch::encode(draft)}}));
     });
     connect(cancel, &QPushButton::clicked, this, &SketchPanel::discard);
-    connect(view, &SketchView::canceled, this, &SketchPanel::discard);
+    connect(view, &SketchView::canceled, this, &SketchPanel::cancelInput);
     auto *escape = new QShortcut(QKeySequence(Qt::Key_Escape), this);
     escape->setContext(Qt::WidgetWithChildrenShortcut);
-    connect(escape, &QShortcut::activated, this, &SketchPanel::discard);
+    connect(escape, &QShortcut::activated, this, &SketchPanel::cancelInput);
     connect(client, &Client::sketchPreview, this, [this](QCborArray a) {
         if (editing) {
             draft = sketch::parse(a);
@@ -281,6 +300,7 @@ sketch::Sketch &SketchPanel::current() {
 void SketchPanel::install(QCborMap d, bool idle) {
     bool changed = document != d.value("id").toString() || revision != client->state().revision;
     if (changed) {
+        view->cancelPointerInput();
         committing = false;
         document = d.value("id").toString();
         revision = client->state().revision;
@@ -335,10 +355,37 @@ void SketchPanel::discard() {
         return;
     draft = accepted;
     editing = false;
+    view->cancelPointerInput();
     clicks.clear();
     client->discardSketchPreview();
     rebuild();
     emit editingChanged();
+}
+void SketchPanel::cancelInput() {
+    if (!editing || committing)
+        return;
+    bool pending = view->cancelPointerInput() || !clicks.empty();
+    clicks.clear();
+    if (pending) {
+        rebuild();
+        context->setText("Input canceled · completed draft geometry retained. Escape again cancels "
+                         "the sketch edit.");
+    } else
+        discard();
+}
+void SketchPanel::updateToolFields() {
+    auto *form = qobject_cast<QFormLayout *>(x->parentWidget()->layout());
+    auto t = tool->currentText();
+    bool draw = t != "Select / drag";
+    for (auto *field : {x, y})
+        form->setRowVisible(field, draw);
+    form->setRowVisible(radius, t == "Circle" || t == "Arc");
+    form->setRowVisible(start, t == "Arc");
+    form->setRowVisible(sweep, t == "Arc");
+    form->setRowVisible(construction, draw);
+    form->setRowVisible(add, draw);
+    add->setText(t == "Circle" || t == "Arc" ? "Add center with numeric radius"
+                                             : "Add coordinate / next vertex");
 }
 void SketchPanel::rebuild() {
     syncing = true;
@@ -367,7 +414,8 @@ void SketchPanel::rebuild() {
                 constraints);
         view->showSketch(s, selectedId, editing);
     } else
-        view->showSketch({}, {}, false);
+        view->clearSketch();
+    view->setInputAnchor(clicks.empty() ? std::nullopt : std::optional(clicks.back()));
     syncing = false;
     updateRelations();
     for (auto *b : {add, addConstraint, setDimension, removeConstraint, setName})
@@ -380,6 +428,7 @@ void SketchPanel::rebuild() {
 }
 void SketchPanel::addAt(sketch::Vec2 p, bool snapInput) {
     auto candidate = current();
+    auto nextClicks = clicks;
     auto &s = candidate;
     if (snapInput)
         p = s.snap(p, .00015, .001);
@@ -408,9 +457,9 @@ void SketchPanel::addAt(sketch::Vec2 p, bool snapInput) {
                   domain::toSI(sweepAngle, "angle", "deg"), c);
         }
     } else {
-        clicks.push_back(p);
-        if (clicks.size() >= 2) {
-            auto a = clicks[clicks.size() - 2];
+        nextClicks.push_back(p);
+        if (nextClicks.size() >= 2) {
+            auto a = nextClicks[nextClicks.size() - 2];
             domain::check(sketch::length(a, p) > 1e-9, "InvalidGeometry",
                           "Distinct vertices required");
             if (t == "Rectangle")
@@ -418,14 +467,19 @@ void SketchPanel::addAt(sketch::Vec2 p, bool snapInput) {
             else
                 s.line(point(a), point(p), c);
             if (t != "Polyline")
-                clicks.clear();
+                nextClicks.clear();
         }
     }
     candidate.validate();
     current() = std::move(candidate);
+    clicks = std::move(nextClicks);
     rebuild();
 }
 void SketchPanel::previewDraft() {
+    if (view->sizingCircle()) {
+        context->setText("Finish or cancel the circle before solving");
+        return;
+    }
     if (!clicks.empty() && tool->currentText() != "Polyline") {
         context->setText("Complete the second vertex before previewing");
         return;

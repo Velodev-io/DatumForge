@@ -1,0 +1,15 @@
+{
+  "status": "Pass for inspected available-Mac screenshots",
+  "reviewer": "Visual inspection",
+  "files": [
+    "docs/testing/artifacts/module-3/runs/20261020T035603.673933Z/native-100/circle-drag-mm.png",
+    "docs/testing/artifacts/module-3/runs/20261020T035603.673933Z/native-200/circle-drag-in.png",
+    "docs/testing/artifacts/module-3/runs/20261020T035603.673933Z/native-100/sketches-native.png"
+  ],
+  "observations": [
+    "Live radius readout shows 10 mm and 0.3937008 in for the same physical circle.",
+    "Transient dashed circle visible; arc angle rows absent for Circle.",
+    "Persistent Solve/Accept/Cancel controls visible; accepted B1 constraints and unit labels readable."
+  ],
+  "limits": "Intermediate scales have native behavioral checks, not separate manual visual reviews; no assistive-technology or other-platform certification."
+}

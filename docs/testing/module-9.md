@@ -2,7 +2,7 @@
 
 Status: Not run. No implementation or product acceptance evidence.
 
-Module 0/1/2 available-Mac evidence is recorded separately. This module has not started; no implementation authorization beyond Module 2 is recorded. Follow the documented prerequisites.
+Modules 0–3 available-Mac evidence is recorded separately. This module has not started; authorization stops before Module 4. Basic modeling layout is explicitly scheduled in TECH_SPEC 4.0a–c; Module 9 builds on it for command consistency across part/assembly/drawing, familiar/simplified modes, dock restoration, native accessibility and offline acceptance. All such checks remain Not run or Blocked until executed in their actual environments.
 
 ## Evidence fields for future execution
 

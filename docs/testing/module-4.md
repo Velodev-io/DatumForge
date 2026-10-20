@@ -2,7 +2,7 @@
 
 Status: Not run. No implementation or product acceptance evidence.
 
-Module 0/1/2 available-Mac evidence is recorded separately. This module has not started; no implementation authorization beyond Module 2 is recorded. Follow the documented prerequisites.
+Modules 0–3 available-Mac evidence is recorded separately. Module 4 implementation is not authorized. The user requested future UI scheduling on 20 October 2026: TECH_SPEC 4.0a–c now puts command tabs, the left PropertyManager/tree and overall layout before 4.1a. These tasks are planned and unrun. Module 9 owns later cross-document consistency and accessibility. Follow the documented prerequisites and obtain Module 4 authorization before implementation.
 
 ## Evidence fields for future execution
 
