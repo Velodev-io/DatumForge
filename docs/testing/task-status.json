@@ -582,5 +582,85 @@
       "docs/testing/artifacts/module-2/ctest.txt",
       "docs/testing/artifacts/module-2/fault-matrix.json"
     ]
+  },
+  "3.1a": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: SI frames, all requested primitives, shared point and persistent IDs, construction, snapping and bounded serialization.",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/decisions/module-3-sketches.md"
+    ]
+  },
+  "3.1b": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: Native planar selection and dimension overlays, generation-bound previews/cancel and real durable sketch transactions.",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/decisions/module-3-sketches.md"
+    ]
+  },
+  "3.2a": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: Pinned PlaneGCS mappings with owned variables/constants and documented supported combinations.",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/decisions/module-3-sketches.md"
+    ]
+  },
+  "3.2b": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: Independent residual/rank validation, redundancy/conflict IDs, fixed anchors, line/tangent-side continuity, degenerate/failure preservation.",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/decisions/module-3-sketches.md"
+    ]
+  },
+  "3.3a": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: SI/display units, parsed dimensional arithmetic/functions/names, cycles and text/AST/depth bounds.",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/decisions/module-3-sketches.md"
+    ]
+  },
+  "3.3b": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: Real dimension/name edits, constraint deletion, undo/redo and save/reopen; invalid input retains accepted state.",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/decisions/module-3-sketches.md"
+    ]
+  },
+  "3.4a": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: Real solver valid/underdefined/fully-defined/redundant/conflicting/singular/degenerate and multiscale corpus.",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/decisions/module-3-sketches.md"
+    ]
+  },
+  "3.4b": {
+    "status": "Pass",
+    "scope": "Available-Mac scope: Unit/expression valid/invalid conversion, dimensions, domain/nonfinite, cycles and size/depth corpus.",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json",
+      "docs/decisions/module-3-sketches.md"
+    ]
+  },
+  "3.4c": {
+    "status": "Blocked",
+    "scope": "Mac Cocoa B1 editing/scaling/focus/persistence checks recorded; Windows/Linux native sessions/runners and OS-network-disabled workflow unavailable.",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json"
+    ]
   }
 }

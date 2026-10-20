@@ -190,6 +190,7 @@ class Contracts : public QObject {
         window.command("new")->trigger();
         QVERIFY2(wait([&] { return ready(*c); }), qPrintable(c->state().message));
         auto part = c->state().activeDocument;
+        window.findChild<QTabWidget *>("managerTabs")->setCurrentIndex(2);
         auto *name = window.findChild<QLineEdit *>("parameterNameInput");
         QVERIFY(name);
         name->setText("Depth");

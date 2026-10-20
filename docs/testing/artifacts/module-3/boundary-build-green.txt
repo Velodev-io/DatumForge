@@ -1,0 +1,20 @@
+[1/22] Building CXX object CMakeFiles/cad_expressions.dir/src/domain/Expressions.cpp.o
+[2/22] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[3/22] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[4/22] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[5/22] Linking CXX static library libcad_expressions.a
+[6/22] Linking CXX static library libcad_sketch_model.a
+[7/22] Automatic MOC for target cad_desktop_ui
+[8/21] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[9/21] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[10/21] Linking CXX static library libcad_sketch_solver.a
+[11/21] Linking CXX static library libcad_persistence.a
+[12/21] Linking CXX executable module3_solver
+[13/21] Linking CXX executable module3_persistence
+[14/21] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[15/21] Linking CXX executable cad-worker
+[16/21] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[17/21] Linking CXX static library libcad_desktop_ui.a
+[18/21] Automatic MOC for target module3_contracts
+[19/20] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[20/20] Linking CXX executable module3_contracts

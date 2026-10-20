@@ -13,12 +13,14 @@
 namespace cad {
 class Client;
 class Viewport;
+class SketchPanel;
 class MainWindow : public QMainWindow {
     Q_OBJECT
     CommandRegistry commands;
     std::unique_ptr<QSettings> settings;
     Client *client = nullptr;
     Viewport *viewport = nullptr;
+    SketchPanel *sketchPanel = nullptr;
     QTreeWidget *tree = nullptr;
     QTabBar *documents = nullptr;
     QLabel *status = nullptr;

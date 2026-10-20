@@ -1,0 +1,4 @@
+[1/4] Linking CXX static library libcad_planegcs.a
+[2/4] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[3/4] Linking CXX static library libcad_sketch_solver.a
+[4/4] Linking CXX executable module3_solver

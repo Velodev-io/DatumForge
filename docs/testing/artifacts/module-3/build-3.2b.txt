@@ -1,0 +1,9 @@
+[1/9] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[2/9] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[3/9] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[4/9] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/9] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[6/9] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[7/9] Linking CXX static library libcad_planegcs.a
+[8/9] Linking CXX static library libcad_sketch_solver.a
+[9/9] Linking CXX executable module3_solver

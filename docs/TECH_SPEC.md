@@ -1,7 +1,7 @@
 # Technical Specification and Implementation Plan — Solidworks Clone
 
 **Version:** 0.1 · **Date:** 19 October 2026  
-**Status:** Modules 1–2 available-Mac scope verified; cross-platform matrix Blocked. Modules 3–12 have not started; full product acceptance remains pending.
+**Status:** Modules 1–3 available-Mac scope implemented and scoped verification recorded; cross-platform matrix Blocked. Modules 4–12 have not started; full product acceptance remains pending.
 **Constraints:** Native macOS/Windows/Linux, local core, **8 GB system RAM minimum**.  
 **Authority:** [SRS](SRS.md) → [SDD](SDD.md) → contracts below → ordered modules. [Step Zero](STEP_ZERO.md) is Module 0.
 
@@ -269,7 +269,7 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 **Completion check:** Document/persistence tests pass; later geometry and dependency acceptance is explicitly still pending.
 
-**Evidence:** `docs/testing/module-2.md`. **Current status:** 7 lettered tasks Pass for the documented available-Mac foundation; 2.4b/2.4c Blocked for full native platform completion despite passing Mac cases. Windows/Linux and physical power-loss checks remain Blocked. Stop before Module 3 pending new authorization.
+**Evidence:** `docs/testing/module-2.md`. **Current status:** 7 lettered tasks Pass for the documented available-Mac foundation; 2.4b/2.4c Blocked for full native platform completion despite passing Mac cases. Windows/Linux and physical power-loss checks remain Blocked. Module 3 was subsequently authorized; its separate evidence follows.
 
 
 ### Module 3 — Planar sketches, constraints, and expressions
@@ -280,30 +280,30 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 3.1 — Create planar sketch editing
 
-- [ ] **3.1a:** Implement support-plane coordinate frames, points/lines/polylines/rectangles/circles/arcs, construction flags, snapping, and persistent sketch IDs.
-- [ ] **3.1b:** Integrate viewport/entity selection, dimensions, context labels, keyboard cancellation, and command previews with semantic transactions.
+- [x] **3.1a:** Implement support-plane coordinate frames, points/lines/polylines/rectangles/circles/arcs, construction flags, snapping, and persistent sketch IDs.
+- [x] **3.1b:** Integrate viewport/entity selection, dimensions, context labels, keyboard cancellation, and command previews with semantic transactions.
 
 #### 3.2 — Integrate constraints and diagnosis
 
-- [ ] **3.2a:** Map supported constraint/entity combinations to solver variables with defined ownership; implement fixed, geometric, and dimensional constraints.
-- [ ] **3.2b:** Validate finite outputs, residuals, radii, degeneracy, degrees of freedom, redundancy/conflict reports, and drag branch continuity; preserve the accepted state on failure.
+- [x] **3.2a:** Map supported constraint/entity combinations to solver variables with defined ownership; implement fixed, geometric, and dimensional constraints.
+- [x] **3.2b:** Validate finite outputs, residuals, radii, degeneracy, degrees of freedom, redundancy/conflict reports, and drag branch continuity; preserve the accepted state on failure.
 
 #### 3.3 — Implement units and expressions
 
-- [ ] **3.3a:** Implement SI semantics, display-unit parsing/formatting, dimensional arithmetic, name references, AST limits, and cycle detection without general code evaluation.
-- [ ] **3.3b:** Make dimension editing, constraint deletion, undo/redo, save/reopen, and canceled dragging coherent operations.
+- [x] **3.3a:** Implement SI semantics, display-unit parsing/formatting, dimensional arithmetic, name references, AST limits, and cycle detection without general code evaluation.
+- [x] **3.3b:** Make dimension editing, constraint deletion, undo/redo, save/reopen, and canceled dragging coherent operations.
 
 #### 3.4 — Required module tests
 
-- [ ] **3.4a — T-12–T-16:** Run valid, underdefined, fully defined, redundant, contradictory, singular, and degenerate sketches; verify geometric residuals and declared diagnostics.
-- [ ] **3.4b — Unit/expression corpus:** Check mm/inch conversion, degrees/radians, mixed-unit arithmetic, invalid dimensions, negative radii, nonfinite numbers, cyclic names, and AST limits.
+- [x] **3.4a — T-12–T-16:** Run valid, underdefined, fully defined, redundant, contradictory, singular, and degenerate sketches; verify geometric residuals and declared diagnostics.
+- [x] **3.4b — Unit/expression corpus:** Check mm/inch conversion, degrees/radians, mixed-unit arithmetic, invalid dimensions, negative radii, nonfinite numbers, cyclic names, and AST limits.
 - [ ] **3.4c — Native interaction and persistence:** Create B1 sketches through the UI; cancel a drag/edit, undo/redo, save/reopen, and verify identities/values. Check actual focus and keyboard behavior.
 
 **Test pass criteria:** Supported sketches solve and edit correctly; invalid/ambiguous numerical outcomes are exposed without changing accepted geometry.
 
 **Completion check:** B1 sketch stage works natively and offline with real solver and persistence evidence.
 
-**Evidence:** `docs/testing/module-3.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-3.md`. **Current status:** 8 tasks Pass for available-Mac implementation/logic scope. 3.4c is Blocked for full native platform completion; actual Mac interaction evidence is recorded separately. Windows/Linux and OS-network-disabled acceptance remain Blocked. Stop before Module 4.
 
 
 ### Module 4 — Exact part features and measurement
@@ -633,5 +633,5 @@ Keep test failures and unavailable environments visible. Visual screenshots, eng
 
 ## 8. Current implementation status
 
-Module 0 feasibility evidence remains in [module-0](testing/module-0.md). The user authorized Module 1 on 19 October 2026; see [Mac reference-workspace implementation and native evidence](testing/module-1.md). Its platform matrix remains Blocked. T-01/T-03/T-04/T-35/T-53 subsets have available-Mac evidence; full associated requirements remain Blocked and other product tests remain Not run. Module 2 document metadata, working/saved persistence, semantic undo/redo and recovery subsets are verified on the available Mac; see [Module 2 evidence](testing/module-2.md). Full associated requirement rows remain Blocked. Modules 3–12 have not started. Frozen fixture recipes, reference display and small storage fixtures do not establish SRS resource budgets. Documentation checks verify structure/evidence links only.
+Module 0 feasibility evidence remains in [module-0](testing/module-0.md). The user authorized Module 1 on 19 October 2026; see [Mac reference-workspace implementation and native evidence](testing/module-1.md). Its platform matrix remains Blocked. T-01/T-03/T-04/T-35/T-53 subsets have available-Mac evidence; full associated requirements remain Blocked and other product tests remain Not run. Module 2 document metadata, working/saved persistence, semantic undo/redo and recovery subsets are verified on the available Mac; see [Module 2 evidence](testing/module-2.md). Full associated requirement rows remain Blocked. Module 3 planar sketches, constraints, expressions and transactional editing have scoped available-Mac evidence in [Module 3](testing/module-3.md); full platform completion remains Blocked. Modules 4–12 have not started. Frozen fixture recipes, reference display and small storage fixtures do not establish SRS resource budgets. Documentation checks verify structure/evidence links only.
 

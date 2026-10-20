@@ -1,6 +1,6 @@
 # Requirements and acceptance traceability
 
-**Version:** 0.1 · **Date:** 19 October 2026 · **Status:** Modules 1–2 available-Mac subsets verified; full product requirements Not run or Blocked.
+**Version:** 0.1 · **Date:** 19 October 2026 · **Status:** Modules 1–3 available-Mac subsets verified; full product requirements Not run or Blocked.
 
 [SRS](SRS.md) owns each requirement and its acceptance test definition. [SDD](SDD.md) sections describe the design. [TECH_SPEC](TECH_SPEC.md) modules own implementation and evidence; earlier modules supply prerequisites, later modules complete integration. [Step Zero](STEP_ZERO.md) owns T-00 feasibility/setup tests and does not satisfy the product acceptance rows below.
 
@@ -19,11 +19,11 @@
 | FR-009 | 9 | 2 | T-09 | Blocked |
 | FR-010 | 9 | 2 | T-10 | Blocked |
 | FR-011 | 9, 11 | 6 | T-11 | Not run |
-| FR-012 | 3, 7 | 3 | T-12 | Not run |
-| FR-013 | 7 | 3 | T-13 | Not run |
-| FR-014 | 7 | 3 | T-14 | Not run |
-| FR-015 | 4, 7 | 3 | T-15 | Not run |
-| FR-016 | 3, 7, 13 | 3 | T-16 | Not run |
+| FR-012 | 3, 7 | 3 | T-12 | Blocked |
+| FR-013 | 7 | 3 | T-13 | Blocked |
+| FR-014 | 7 | 3 | T-14 | Blocked |
+| FR-015 | 4, 7 | 3 | T-15 | Blocked |
+| FR-016 | 3, 7, 13 | 3 | T-16 | Blocked |
 | FR-017 | 8 | 4 | T-17 | Not run |
 | FR-018 | 8 | 4 | T-18 | Not run |
 | FR-019 | 6 | 5 | T-19 | Not run |
@@ -81,6 +81,6 @@
 
 Future evidence lives in `docs/testing/module-N.md`, plus referenced logs/images/raw samples. Test rows may link multiple procedures; a row passes only when all applicable required procedures pass. A module's unit tests cannot alone close its native, physical-hardware, or installed-build gates. Preserve failures and reasons for Blocked/Not applicable outcomes.
 
-Module 0 feasibility is recorded in [module-0](testing/module-0.md), its task status register, and [the product requirement register](testing/requirements.json). T-00 results do not close any T-01–T-56 row above. The user authorized Module 1 on 19 October 2026. [Module 1 evidence](testing/module-1.md) covers the Mac reference-workspace subsets of T-01/T-03/T-04/T-35/T-53. The associated full requirement rows remain Blocked for platform or later-module checks. The user subsequently authorized Module 2; [its evidence](testing/module-2.md) covers Mac document/persistence subsets T-02/T-06–T-10/T-34/T-39/T-51. Those full rows remain Blocked for the documented native matrix, conversion or later CAD integration; no complete product test is closed. Module 3 requires new authorization.
+Module 0 feasibility is recorded in [module-0](testing/module-0.md), its task status register, and [the product requirement register](testing/requirements.json). T-00 results do not close any T-01–T-56 row above. The user authorized Module 1 on 19 October 2026. [Module 1 evidence](testing/module-1.md) covers the Mac reference-workspace subsets of T-01/T-03/T-04/T-35/T-53. The associated full requirement rows remain Blocked for platform or later-module checks. The user subsequently authorized Module 2; [its evidence](testing/module-2.md) covers Mac document/persistence subsets T-02/T-06–T-10/T-34/T-39/T-51. Those full rows remain Blocked for the documented native matrix, conversion or later CAD integration; no complete product test is closed. The user explicitly authorized Module 3 afterward. [Module 3 evidence](testing/module-3.md) covers the available-Mac T-12–T-16 sketch/constraint/expression and native editing subsets. Those full requirements remain Blocked for the unavailable native platform matrix and broader acceptance. Module 4 requires a new instruction.
 
 The documentation checker verifies IDs, links, module/task structure, and status consistency only. It does not execute any CAD, UI, persistence, platform, or performance acceptance test.

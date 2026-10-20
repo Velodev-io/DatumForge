@@ -1,0 +1,1 @@
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/persistence.cpp:17: store.sketches(doc)==a

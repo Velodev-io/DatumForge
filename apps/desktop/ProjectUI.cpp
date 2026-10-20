@@ -1,4 +1,5 @@
 #include "MainWindow.hpp"
+#include "SketchPanel.hpp"
 #include "domain/Documents.hpp"
 #include "protocol/Client.hpp"
 #include "render/Viewport.hpp"
@@ -328,7 +329,25 @@ void MainWindow::refreshProjectUI() {
                                   "input/display units are explicit.")
                               .arg(active.value("revision").toInteger()));
     findChild<QWidget *>("documentProperties")->setEnabled(idle && !active.isEmpty());
-    findChild<QTabWidget *>("managerTabs")->setCurrentIndex(2);
+    if (sketchPanel) {
+        bool part = active.value("type").toString() == "Part";
+        sketchPanel->install(active, idle);
+        sketchPanel->setVisible(part);
+        if (part)
+            welcome->hide();
+        bool editing = sketchPanel->active();
+        commands.get("sketch")->setEnabled(idle && part && !editing);
+        commands.get("sketch")->setProperty("unavailableReason",
+                                            part ? QString() : QString("Select a Part document"));
+        commands.get("sketch")->setToolTip(part ? "Create a planar sketch"
+                                                : "Select a Part document");
+        commands.get("restart")->setEnabled(!editing);
+        tree->setEnabled(idle && !editing);
+        if (editing) {
+            documents->setEnabled(false);
+            findChild<QWidget *>("documentProperties")->setEnabled(false);
+        }
+    }
     for (auto id : {"reference", "instances", "fit", "measure"}) {
         commands.get(id)->setEnabled(false);
         commands.get(id)->setToolTip("Close the project to inspect a temporary reference scene");
@@ -341,6 +360,12 @@ void MainWindow::refreshProjectUI() {
     commands.get("redo")->setEnabled(idle && s.canRedo);
     status->setText((s.stale ? "STALE · " : "") + s.job + " · " + s.save);
     notice->setText(s.message);
-    documents->setEnabled(idle);
+    if (sketchPanel && sketchPanel->active()) {
+        for (auto id : {"new", "open", "save", "saveAs", "document.new", "project.close", "close",
+                        "undo", "redo"})
+            commands.get(id)->setEnabled(false);
+        documents->setEnabled(false);
+    } else
+        documents->setEnabled(idle);
 }
 } // namespace cad

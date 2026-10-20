@@ -92,6 +92,7 @@ class Client : public QObject {
     void newProject(QString type, QString name, QString units = "mm", bool replace = false);
     void createDocument(QString type, QString name, QString units = "mm");
     void projectCommand(QString command, QCborMap payload = {});
+    void discardSketchPreview();
     void switchDocument(QString id);
     void closeDocument();
     void closeProject();
@@ -107,6 +108,8 @@ class Client : public QObject {
     void recoveryOffers(QCborArray offers);
     void projectInspection(QCborMap inspection);
     void projectChanged();
+    void sketchPreview(QCborArray sketches);
+    void sketchDiagnosed(QCborArray diagnostics);
     void operationOutcome(QString operation, QString outcome);
 };
 } // namespace cad

@@ -1,0 +1,9 @@
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/solver.cpp:124: !solve(otherSide,&branchResult.sketch).valid

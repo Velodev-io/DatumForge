@@ -1,7 +1,7 @@
 # Software Requirements Specification — Solidworks Clone
 
 **Version:** 0.1 · **Date:** 19 October 2026  
-**Status:** Proposed requirements; no implementation or product acceptance tests completed.  
+**Status:** Requirements baseline unchanged; Modules 1–3 have scoped available-Mac implementation evidence. Full product acceptance remains Not run or Blocked.  
 **Baseline:** Native desktop CAD, macOS + Windows + Linux, 8 GB system RAM.  
 **Companions:** [SDD](SDD.md), [TECH_SPEC](TECH_SPEC.md), [STEP_ZERO](STEP_ZERO.md), [traceability](TRACEABILITY.md).
 

@@ -1,0 +1,29 @@
+[1/30] Automatic MOC for target cad_client
+[2/29] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/29] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[4/29] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[5/29] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[6/29] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[7/29] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[8/29] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[9/29] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[10/29] Linking CXX static library libcad_client.a
+[11/29] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[12/29] Automatic MOC for target cad_desktop_ui
+[13/29] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[14/29] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[15/29] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[16/29] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[17/29] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[18/29] Linking CXX static library libcad_desktop_ui.a
+[19/29] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[20/29] Linking CXX static library libcad_planegcs.a
+[21/29] Linking CXX static library libcad_sketch_solver.a
+[22/29] Linking CXX executable module3_solver
+[23/29] Linking CXX static library libcad_persistence.a
+[24/29] Linking CXX executable module3_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_sketch_model.a'
+[25/29] Linking CXX executable cad-worker
+[26/29] Automatic MOC for target module3_contracts
+[27/28] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[28/28] Linking CXX executable module3_contracts

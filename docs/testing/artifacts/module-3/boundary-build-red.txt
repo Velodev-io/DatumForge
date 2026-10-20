@@ -1,0 +1,4 @@
+[1/4] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[2/4] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[3/4] Linking CXX executable module3_solver
+[4/4] Linking CXX executable module3_persistence

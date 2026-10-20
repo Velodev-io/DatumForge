@@ -1,5 +1,6 @@
 #pragma once
 #include "persistence/ProjectStore.hpp"
+#include "sketch/Solver.hpp"
 #include <QFile>
 #include <QFileInfo>
 #include <QStandardPaths>
@@ -45,7 +46,7 @@ class Projects {
                    "SwitchDocument", "CloseDocument",   "CloseProject",   "GrantFile",
                    "InspectProject", "OpenProject",     "SaveProject",    "SaveAs",
                    "ListRecoveries", "RecoverProject",  "AttachObject",   "DetachObject",
-                   "CollectObjects"}
+                   "CollectObjects", "SetSketches",     "PreviewSketches"}
                    .contains(command) ||
                (command == "QueryOperation" && open());
     }
@@ -142,6 +143,18 @@ class Projects {
                              (e.command == "SaveAs" &&
                               store->outcome(e.operation).value("durable").toBool())),
                   "StaleSession", "The project session changed");
+            if (e.command == "PreviewSketches") {
+                wire::keys(p, {"sketches"});
+                check(e.revision == store->revision(), "StaleRevision",
+                      "Project changed before preview");
+                check(p.value("sketches").isArray(), "InvalidInput", "Sketch array required");
+                auto candidate = sketch::evaluate(p.value("sketches").toArray(),
+                                                  store->sketches(e.context.document), false);
+                QCborMap reply;
+                reply.insert(QStringLiteral("sketch_preview"), candidate.value("sketches"));
+                reply.insert(QStringLiteral("sketch_diagnostics"), candidate.value("diagnostics"));
+                return reply;
+            }
             QCborMap result;
             if (e.command == "SaveProject" || e.command == "SaveAs") {
                 wire::keys(p, e.command == "SaveAs" ? QSet<QString>{"capability", "new_project_id"}

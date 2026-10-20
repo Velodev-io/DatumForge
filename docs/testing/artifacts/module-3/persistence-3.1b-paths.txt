@@ -1,0 +1,2 @@
+3.1b: two B1 sketch transactions, dedup, failed edit preservation, undo/redo, actual SQLite save/reopen IDs
+PASS

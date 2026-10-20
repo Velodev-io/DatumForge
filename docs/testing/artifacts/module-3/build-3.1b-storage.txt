@@ -1,0 +1,2 @@
+[1/2] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[2/2] Linking CXX executable module3_persistence

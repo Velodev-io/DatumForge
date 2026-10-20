@@ -104,33 +104,53 @@
   },
   "FR-012": {
     "test": "T-12",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked."
   },
   "FR-013": {
     "test": "T-13",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked."
   },
   "FR-014": {
     "test": "T-14",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked."
   },
   "FR-015": {
     "test": "T-15",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked."
   },
   "FR-016": {
     "test": "T-16",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-3.md",
+      "docs/testing/artifacts/module-3/verification.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked."
   },
   "FR-017": {
     "test": "T-17",

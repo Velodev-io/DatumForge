@@ -1,6 +1,6 @@
 # Source builds and commands
 
-Module 0 experiments plus the authorized Modules 1–2 native workspace and persistence foundation. `dependencies.lock.json` pins upstream source archives and extracted
+Module 0 experiments plus the authorized Modules 1–3 native workspace and persistence foundation. `dependencies.lock.json` pins upstream source archives and extracted
 PlaneGCS files by SHA-256. Qt's archive was also checked against its official
 checksum. Source commit identities for OCCT/Eigen/FreeCAD are immutable. Ninja's
 tag archive is content-locked. Builds never select floating branches or silently
@@ -84,3 +84,22 @@ no fault-control command or environment hook is shipped in the product worker.
 Native tests require a logged-in desktop. All storage tests require marked
 disposable temp roots and refuse release recovery directories. See
 [Module 2 evidence](../docs/testing/module-2.md) for limits and blocked platforms.
+
+
+Module 3 verification (each execution keeps a separate timestamped evidence folder):
+
+```sh
+python3 tools/verify_module3.py --native
+python3 tools/clean_reproduce.py --module 3
+python3 docs/scripts/check_specs.py --write-report
+```
+
+`module3_model`, `module3_solver`, `module3_expressions`, `module3_persistence`
+and `module3_contracts` test primitives/frames, the real pinned PlaneGCS adapter,
+parsed typed arithmetic, actual SQLite history, and worker/native UI workflows.
+The desktop links only the semantic/display model; the numerical solver and
+persistence stay in the single worker. Native tests require a logged-in desktop;
+headless Qt runs do not certify graphics or focus. The available Mac runs on
+physical 8 GiB hardware; full SRS resource budgets remain for Module 11. See
+[Module 3 evidence](../docs/testing/module-3.md) and
+[adapter decisions/limits](../docs/decisions/module-3-sketches.md).

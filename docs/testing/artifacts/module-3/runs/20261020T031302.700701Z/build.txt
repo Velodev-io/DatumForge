@@ -1,0 +1,23 @@
+[1/24] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/24] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/24] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/24] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[5/24] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[6/24] Linking CXX executable module3_model
+[7/24] Linking CXX executable module3_expressions
+[8/24] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[9/24] Linking CXX static library libcad_planegcs.a
+[10/24] Linking CXX executable solver_spike
+[11/24] Linking CXX static library libcad_sketch_solver.a
+[12/24] Linking CXX executable module2_storage
+[13/24] Linking CXX executable module2_fault_worker
+[14/24] Linking CXX executable cad-worker
+[15/24] Linking CXX executable module2_dispatch
+[16/24] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[17/24] Linking CXX executable module1_contracts
+[18/24] Linking CXX executable module2_contracts
+[19/24] Linking CXX executable module3_persistence
+[20/24] Linking CXX executable module3_solver
+[21/24] Automatic MOC for target module3_contracts
+[22/23] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[23/23] Linking CXX executable module3_contracts

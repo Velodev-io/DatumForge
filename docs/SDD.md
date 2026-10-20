@@ -163,6 +163,13 @@ Drawing annotations and mates consume this same reference service with occurrenc
 
 ## 7. Sketch and assembly solving
 
+The implemented Module 3 adapter, supported combinations, semantic collection
+format, tolerance/diagnostic policy and limits are recorded in
+[the sketch ADR](decisions/module-3-sketches.md), with actual results in
+[Module 3 evidence](testing/module-3.md). Those scoped results do not close the
+platform, installed-build or full workload acceptance gates.
+
+
 The sketch adapter maps our stable entity/constraint IDs to PlaneGCS-owned numerical variables. It controls variable lifetime, scale normalization, convergence settings, and diagnostic translation. Persist semantic entities and accepted values, not raw solver memory. Unsupported constraint/entity combinations must be unavailable with a reason.
 
 Validate residuals, finite values, radii, degeneracy, and intended constraint satisfaction after solve. Degrees of freedom and redundant/conflicting sets should be recomputed when needed; a raw equation count is insufficient. Dragging uses temporary objectives and a previous accepted solution to reduce branch flips. Cancel restores the pre-drag state.

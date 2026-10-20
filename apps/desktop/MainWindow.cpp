@@ -1,4 +1,5 @@
 #include "MainWindow.hpp"
+#include "SketchPanel.hpp"
 #include "protocol/Client.hpp"
 #include "render/Viewport.hpp"
 #include <QCloseEvent>
@@ -24,6 +25,13 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
     client = new Client(this, {}, recoveryRoot);
     buildFrame();
     buildProjectUI();
+    sketchPanel = new SketchPanel(client, this);
+    qobject_cast<QVBoxLayout *>(centralWidget()->layout())->insertWidget(2, sketchPanel, 1);
+    connect(commands.get("sketch"), &QAction::triggered, this, [this] {
+        sketchPanel->begin();
+        refresh();
+    });
+    connect(sketchPanel, &SketchPanel::editingChanged, this, &MainWindow::refresh);
     connect(client, &Client::changed, this, &MainWindow::refresh);
     connect(client, &Client::changed, this, [this] {
         if (!recoveryChecked && client->ready()) {
@@ -259,6 +267,11 @@ void MainWindow::refresh() {
         refreshProjectUI();
         return;
     }
+    if (sketchPanel) {
+        sketchPanel->install({}, idle);
+        sketchPanel->hide();
+    }
+    commands.get("sketch")->setEnabled(false);
     if (documents->count() != 2 || documents->tabText(0) != "Welcome") {
         syncing = true;
         while (documents->count())
@@ -342,6 +355,17 @@ void MainWindow::saveLayout() {
     settings->sync();
 }
 void MainWindow::closeEvent(QCloseEvent *event) {
+    if (sketchPanel && sketchPanel->active() && !client->outstanding()) {
+        auto choice = QMessageBox::question(
+            this, "Discard sketch draft?",
+            "This sketch draft has not been accepted. Discard it before closing?",
+            QMessageBox::Discard | QMessageBox::Cancel, QMessageBox::Cancel);
+        if (choice != QMessageBox::Discard) {
+            event->ignore();
+            return;
+        }
+        sketchPanel->discard();
+    }
     if (state().projectOpen && client->outstanding()) {
         QMessageBox question(QMessageBox::Warning, "Operation outcome is uncertain",
                              "Closing now stops the worker. A pending operation may already be "

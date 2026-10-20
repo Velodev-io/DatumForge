@@ -1,0 +1,24 @@
+[1/25] Building CXX object CMakeFiles/module3_model.dir/tests/module3/model.cpp.o
+[2/25] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[3/25] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[4/25] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[5/25] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[6/25] Linking CXX static library libcad_sketch_model.a
+[7/25] Linking CXX executable module3_model
+[8/25] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[9/25] Automatic MOC for target cad_desktop_ui
+[10/25] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[11/25] Linking CXX static library libcad_sketch_solver.a
+[12/25] Linking CXX executable module3_solver
+[13/25] Linking CXX static library libcad_persistence.a
+[14/25] Linking CXX executable module3_persistence
+[15/25] Linking CXX executable cad-worker
+[16/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[17/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[18/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[19/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[20/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[21/25] Linking CXX static library libcad_desktop_ui.a
+[22/25] Automatic MOC for target module3_contracts
+[23/24] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[24/24] Linking CXX executable module3_contracts

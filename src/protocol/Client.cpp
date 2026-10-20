@@ -401,6 +401,36 @@ void Client::receive(const QCborMap &m) {
         transfers.begin(e, data.value("display_manifest").toMap());
         return;
     }
+    if (e.command == "PreviewSketches") {
+        wire::keys(data, {"sketch_preview", "sketch_diagnostics"});
+        wire::require(data.value("sketch_preview").isArray(), "sketch preview array");
+        bool current = visibleResult(projection, e, revision);
+        pending.erase(found);
+        if (current) {
+            projection.phase = Phase::PreviewReady;
+            projection.job = "Preview · not committed";
+            projection.message.clear();
+            emit sketchPreview(data.value("sketch_preview").toArray());
+            QStringList labels;
+            bool valid = true;
+            for (auto d : data.value("sketch_diagnostics").toArray()) {
+                auto m = d.toMap();
+                valid = valid && m.value("valid").toBool();
+                labels.append(m.value("status").toString() + " · DOF " +
+                              QString::number(m.value("freedom").toInteger()) + " " +
+                              m.value("message").toString());
+            }
+            projection.message = labels.join("; ");
+            if (!valid) {
+                projection.phase = Phase::Failed;
+                projection.job = "Failed solve · accepted sketch retained";
+            }
+            emit sketchDiagnosed(data.value("sketch_diagnostics").toArray());
+        }
+        emit changed();
+        pump();
+        return;
+    }
     if (data.contains(QStringLiteral("project_state"))) {
         wire::require(data.value("project_state").isMap(), "project state map");
         installProject(data.value("project_state").toMap());
@@ -498,8 +528,8 @@ void Client::installProject(const QCborMap &m) {
     for (const auto &item : docs.toArray()) {
         wire::require(item.isMap(), "document record map");
         auto d = item.toMap();
-        wire::keys(d,
-                   {"id", "type", "name", "units", "revision", "properties_entity", "parameters"});
+        wire::keys(d, {"id", "type", "name", "units", "revision", "properties_entity", "parameters",
+                       "sketches", "sketch_diagnostics"});
         auto id = domain::id(wire::text(d, "id"));
         wire::require(!seen.contains(id), "duplicate document identity");
         seen.insert(id);
@@ -565,6 +595,12 @@ bool Client::projectReady() {
         return false;
     }
     return true;
+}
+void Client::discardSketchPreview() {
+    ++projection.generation;
+    projection.phase = Phase::Ready;
+    projection.job = "Preview canceled · accepted sketch retained";
+    emit changed();
 }
 void Client::projectCommand(QString command, QCborMap payload) {
     if (!projectReady())
