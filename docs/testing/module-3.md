@@ -152,3 +152,7 @@ they do not prove five different monitors or all Mac GPUs.
 The original closeout stopped before Module 4. The later authorization covers
 [Module 3 input repair](module-3-input-repair.md) and [4.0a–c workspace UI](module-4.md).
 Stop before 4.1a exact features; further implementation requires the user's next instruction.
+
+22 October 2026 interaction follow-up: [Centerpoint Arc pointer sizing](module-3-centerpoint-arc.md) adds the selected center → start → end workflow; historical Module 3 runs remain scoped to their original source and tests. Full platform/device acceptance remains Blocked.
+
+22 October subsequent follow-up: [all three Arc methods and EDP graph comparison](module-3-all-arcs.md) extends 3.1b/3.2a/3.2b with live creation, tangent/normal/endpoint relations and Line transition; original runs are preserved as historical.

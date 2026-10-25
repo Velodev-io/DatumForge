@@ -216,8 +216,10 @@ Quantity unit(QString name) {
     check(units.contains(name), "UnitMismatch", "Unsupported display unit");
     return units.value(name);
 }
-Environment::Environment(QMap<QString, QString> names) : definitions(std::move(names)) {
-    check(definitions.size() <= 64, "ResourceLimit", "At most 64 named expressions");
+Environment::Environment(QMap<QString, QString> names, int maximumNames)
+    : definitions(std::move(names)) {
+    check(maximumNames >= 0 && maximumNames <= 1024 && definitions.size() <= maximumNames,
+          "ResourceLimit", "Named expression admission exceeded");
     for (auto i = definitions.begin(); i != definitions.end(); ++i)
         check(identifier(i.key()) && !units.contains(i.key()) && i.key() != "pi", "InvalidInput",
               "Invalid or reserved expression name");

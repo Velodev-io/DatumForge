@@ -1,0 +1,21 @@
+{
+  "status": "Pass",
+  "scope": "Manual artifact review of saved Cocoa test windows, not physical input or assistive technology operation",
+  "reviewed": [
+    "native-100/centerpoint-arc-radius-mm.png",
+    "native-100/centerpoint-arc-live-in.png",
+    "native-200/centerpoint-arc-live-mm.png",
+    "native-200/centerpoint-arc-radius-in.png"
+  ],
+  "observations": [
+    "Radius stage shows a temporary circle/radius guide and live R 10 mm or R 0.3937008 in.",
+    "Sweep stage shows the chosen 10 mm arc and R/sweep/direction label before completion.",
+    "Canvas stage prompts remain readable at reviewed scales; bottom document context says Sketch draft.",
+    "The property message in screenshots is the intentionally exercised premature-Finish refusal; the canvas supplies current stage instructions."
+  ],
+  "limits": [
+    "One available Retina display with five effective scale settings; manual subset is 100/200.",
+    "Properties-hidden behavior is supported by canvas-local painting; screenshots reviewed here retain the Manager dock.",
+    "No installed SolidWorks/physical device/AT/other-platform/resource acceptance claim."
+  ]
+}

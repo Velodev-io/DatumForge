@@ -1,0 +1,8 @@
+Analyzed apps/desktop/WorkspaceChrome.cpp
+Analyzed apps/desktop/SketchPanel.cpp
+Analyzed src/render/SketchView.cpp
+Analyzed src/sketch/Sketch.cpp
+Analyzed tests/module3/input.cpp
+Analyzed tests/module3/contracts.cpp
+Analyzed src/sketch/Solver.cpp
+Analyzed tests/module3/solver.cpp

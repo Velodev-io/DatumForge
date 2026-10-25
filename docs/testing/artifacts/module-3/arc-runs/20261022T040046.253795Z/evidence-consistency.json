@@ -1,0 +1,14 @@
+{
+  "status": "Pass",
+  "source_hashes_match": true,
+  "deferred_records_unchanged": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "original_head_retained": true,
+  "original_user_draft_not_used_or_stopped": true,
+  "module_11_unstarted": true,
+  "documentation_updated_after_source_verification": true,
+  "documentation_structure_status": "pass"
+}

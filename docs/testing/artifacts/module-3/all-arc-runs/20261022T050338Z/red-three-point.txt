@@ -1,0 +1,11 @@
+********* Start testing of Input *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Input::initTestCase()
+QWARN  : Input::threePointArcUsesPointerBend() qt.qpa.fonts: Populating font family aliases took 38 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+FAIL!  : Input::threePointArcUsesPointerBend() Compared values are not the same
+   Actual   (created.size()): 0
+   Expected (1)             : 1
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/input.cpp(39)]
+PASS   : Input::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 261ms
+********* Finished testing of Input *********

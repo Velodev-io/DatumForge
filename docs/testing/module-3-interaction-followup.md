@@ -104,3 +104,5 @@ assistive technology and full physical 8 GB B0–B5 resource-budget acceptance r
 One Mac or headless passing tests cannot close those gates. The available host is
 an Apple M2 with 8,589,934,592 bytes physical RAM; no FPS/memory/p95/launch budget is
 inferred from these correctness checks. No Module 4 implementation was performed.
+
+Later scope note: the [22 October all-arc follow-up](module-3-all-arcs.md) supersedes this historical run's unsupported arc-mode statements; its original evidence is preserved.

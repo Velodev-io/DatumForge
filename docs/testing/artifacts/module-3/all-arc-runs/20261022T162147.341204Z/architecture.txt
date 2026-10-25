@@ -1,0 +1,1 @@
+Pass: UI has no exact-kernel/database/test dependency; worker owns OCCT; packaged worker matches

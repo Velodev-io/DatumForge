@@ -1,5 +1,7 @@
 # Module 4 exact part features and measurement
 
+Current authorization note: the following is the preserved Module 4 closeout. The subsequent user “yes” authorized Module 5; see [Module 5 evidence](module-5.md). The current boundary is **before Module 6 / 6.1a**.
+
 Date: 20 October 2026. **Status: all feasible available-Mac implementation and verification complete; full platform/device completion Blocked.**
 The user explicitly authorized remaining Module 4 tasks starting at 4.1a.
 Stop before **Module 5 / 5.1a** and ask before proceeding.

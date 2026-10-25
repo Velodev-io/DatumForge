@@ -1,0 +1,9 @@
+[1/10] Automatic MOC for target cad_desktop_ui
+[2/9] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o
+[3/9] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[4/9] Linking CXX static library libcad_persistence.a
+[5/9] Linking CXX static library libcad_desktop_ui.a
+[6/9] Linking CXX executable cad-worker
+[7/9] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[8/9] Building CXX object CMakeFiles/module5_engine.dir/tests/module5/engine.cpp.o
+[9/9] Linking CXX executable module5_engine

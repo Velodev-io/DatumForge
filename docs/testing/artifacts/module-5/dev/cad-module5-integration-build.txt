@@ -1,0 +1,22 @@
+[1/25] Automatic MOC for target cad_client
+[2/25] Building CXX object CMakeFiles/cad_geometry.dir/src/geometry/occt/ReferenceScene.cpp.o
+[3/25] Building CXX object CMakeFiles/cad_client.dir/cad_client_autogen/mocs_compilation.cpp.o
+[4/25] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[5/25] Linking CXX static library libcad_client.a
+[6/25] Linking CXX static library libcad_geometry.a
+[7/25] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[8/25] Linking CXX static library libcad_persistence.a
+[9/25] Automatic MOC for target cad_desktop_ui
+[10/25] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+FAILED: [code=1] CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/src/sqlite" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtNetwork" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o -MF CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o.d -o CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/cad-worker/main.cpp'
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/cad-worker/main.cpp:1:
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/cad-worker/Projects.hpp:209:149: error: use of undeclared identifier 'evaluation'
+  209 |                     if(part.bodies.empty())return sketch::fields({{"part_empty",true},{"part_stale",stale},{"errors",part.errors},{"history_impact",evaluation::impact(store->profileSketches(e.context.document,definitions),store->features(e.context.document),definitions)}});
+      |                                                                                                                                                     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/cad-worker/Projects.hpp:216:98: error: use of undeclared identifier 'evaluation'
+  216 |                     if(e.command=="PreviewHistory")reply.insert(QStringLiteral("history_impact"),evaluation::impact(store->profileSketches(e.context.document,definitions),store->features(e.context.document),definitions));
+      |                                                                                                  ^
+2 errors generated.
+[11/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+ninja: build stopped: subcommand failed.

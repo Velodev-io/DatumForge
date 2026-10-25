@@ -1,0 +1,66 @@
+{
+  "status": "Pass: reviewed available-Mac visual subset",
+  "review_method": "Direct image inspection of impact/stale and repair/candidate states at effective DPR 1 and 2",
+  "reviewed_images": {
+    "native-100/history-impact.png": "0dd45b5f0ef5f84fe7772cb5d249f721eab95e5105dfa410a3ca729cfffc98ba",
+    "native-100/history-repair.png": "74f829631d8fb9a8c0caee54e73fcea1cf56ce8947e6cb1205c9c4adfbee28d2",
+    "native-200/history-impact.png": "3cfce9118a30d3507f5da3736a39fd28a3972e9705a6c44dcb07d30490d4c564",
+    "native-200/history-repair.png": "352a1c1b9d8ca74d8a64432e335f35a69af1074c1c60d0e605791b0fafd2e6ee"
+  },
+  "observations": [
+    "History form remains within the existing left manager; viewport retains usable space",
+    "Stale impact lists affected features and requires explicit acknowledgment; Apply remains disabled until acknowledged",
+    "Former role and owner text wrap legibly without raw topology hashes forcing a wide dock",
+    "Candidate list and explicit undoable replacement button are visible",
+    "Selected source candidate is highlighted orange and the viewport/form label the final model stale"
+  ],
+  "native_history_scale_results": {
+    "100": {
+      "dpr": 1,
+      "physical_device": "Blocked: automated input",
+      "recovered_revision": 14,
+      "renderer": "OpenGL 4.1; DPR 1; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "saved_revision": 13,
+      "status": "Pass"
+    },
+    "125": {
+      "dpr": 1.25,
+      "physical_device": "Blocked: automated input",
+      "recovered_revision": 14,
+      "renderer": "OpenGL 4.1; DPR 1.25; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "saved_revision": 13,
+      "status": "Pass"
+    },
+    "150": {
+      "dpr": 1.5,
+      "physical_device": "Blocked: automated input",
+      "recovered_revision": 14,
+      "renderer": "OpenGL 4.1; DPR 1.5; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "saved_revision": 13,
+      "status": "Pass"
+    },
+    "175": {
+      "dpr": 1.75,
+      "physical_device": "Blocked: automated input",
+      "recovered_revision": 14,
+      "renderer": "OpenGL 4.1; DPR 1.75; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "saved_revision": 13,
+      "status": "Pass"
+    },
+    "200": {
+      "dpr": 2,
+      "physical_device": "Blocked: automated input",
+      "recovered_revision": 14,
+      "renderer": "OpenGL 4.1; DPR 2; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "saved_revision": 13,
+      "status": "Pass"
+    }
+  },
+  "intermediate_scale_scope": "125/150/175 native lifecycle and visibility assertions Pass; screenshots retained, not separately visually reviewed",
+  "blocked": [
+    "Physical input delivery/ergonomics",
+    "Native assistive technology",
+    "Alternate appearance/contrast",
+    "Additional physical displays and platforms"
+  ]
+}

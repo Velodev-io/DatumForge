@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QMenu>
 #include <QScrollArea>
 #include <QScrollBar>
 #include <QSettings>
@@ -78,6 +79,22 @@ class Contracts : public QObject {
         gestures(false, "mm");
         gestures(false, "in");
     }
+    void arcGestures() {
+        arcs(false, "mm");
+        arcs(false, "in");
+    }
+    void allArcTypes() {
+        moreArcs(false, "mm");
+        moreArcs(false, "in");
+    }
+    void nativeArcs() {
+        if (!qEnvironmentVariableIsSet("CAD_NATIVE_TESTS"))
+            QSKIP("Blocked: native session required");
+        arcs(true, "mm");
+        arcs(true, "in");
+        moreArcs(true, "mm");
+        moreArcs(true, "in");
+    }
     void shapeEditing() {
         editingWorkflow(false);
     }
@@ -91,6 +108,278 @@ class Contracts : public QObject {
     }
 
   private:
+    void moreArcs(bool native, QString units) {
+        QTemporaryDir root(QDir::tempPath() + "/cad-module3-all-arcs-XXXXXX"),
+            files(QDir::tempPath() + "/cad-module3-files-XXXXXX");
+        QVERIFY(root.isValid() && files.isValid());
+        mark(root.path());
+        mark(files.path());
+        auto prefs = files.filePath("settings.ini");
+        QSettings settings(prefs, QSettings::IniFormat);
+        settings.setValue("startup/offerRecovery", false);
+        settings.sync();
+        MainWindow window(prefs, nullptr, root.path());
+        QSignalSpy graphics(window.sceneView(), &Viewport::graphicsFailed);
+        window.show();
+        if (native) {
+            QVERIFY(QTest::qWaitForWindowExposed(&window));
+            window.raise();
+            window.activateWindow();
+            QVERIFY(QTest::qWaitForWindowActive(&window));
+        }
+        auto *c = window.workerClient();
+        QVERIFY(wait([&] { return c->ready(); }));
+        c->newProject("Part", "All arc methods", units);
+        QVERIFY(wait([&] { return ready(*c); }));
+        auto revision = c->state().revision;
+        window.command("sketch")->trigger();
+        auto *panel = window.findChild<SketchPanel *>();
+        auto *view = panel->canvas();
+        auto *method = window.findChild<QComboBox *>("sketchArcMethod");
+        auto *flyout = window.findChild<QToolButton *>("sketchArcFlyout");
+        QVERIFY(method && flyout && flyout->menu());
+        QCOMPARE(flyout->menu()->actions().size(), 3);
+        auto clickAt = [&](sketch::Vec2 p) {
+            QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, view->screen(p).toPoint());
+        };
+        auto move = [&](sketch::Vec2 p) {
+            auto at = view->screen(p).toPoint();
+            QMouseEvent e(QEvent::MouseMove, at, view->mapToGlobal(at), Qt::NoButton, Qt::NoButton,
+                          Qt::NoModifier);
+            QApplication::sendEvent(view, &e);
+        };
+        auto capture = [&](QString name) {
+            if (native) {
+                QTest::qWait(20);
+                QVERIFY(window.grab().save(qEnvironmentVariable("CAD_ARTIFACT_DIR") + "/" + name +
+                                           "-" + units + ".png"));
+            }
+        };
+        method->setCurrentIndex(1);
+        QCOMPARE(panel->toolName(), QString("3 Point Arc"));
+        QCOMPARE(flyout->defaultAction(), window.command("sketch.tool.3 Point Arc"));
+        QTest::qWait(30);
+        clickAt({.03, .02});
+        clickAt({.05, .02});
+        move({.04, .03});
+        capture("three-point-live");
+        clickAt({.04, .03});
+        window.command("sketch.tool.Line")->trigger();
+        QTest::qWait(20);
+        clickAt({-.02, 0});
+        clickAt({0, 0});
+        QTest::keyClick(view, Qt::Key_Escape);
+        window.command("sketch.tool.Tangent Arc")->trigger();
+        QTest::qWait(20);
+        clickAt({0, 0});
+        move({.003, 0});
+        move({.01, .01});
+        capture("tangent-live");
+        clickAt({.01, .01});
+        clickAt({-.02, 0});
+        move({-.02, -.003});
+        move({-.03, -.01});
+        capture("normal-live");
+        clickAt({-.03, -.01});
+        clickAt({.05, .02});
+        move({.05, .017});
+        move({.06, .01});
+        clickAt({.06, .01});
+        QSignalSpy solved(c, &Client::sketchPreview);
+        click(window, "previewSketchButton");
+        QVERIFY2(wait([&] { return ready(*c) && solved.size() == 1; }),
+                 qPrintable(c->state().message));
+        auto result = sketch::parse(solved.last()[0].value<QCborArray>());
+        int tangents = 0, normals = 0;
+        for (auto &join : result[0].constraints)
+            if (join.kind == "ArcTangent" || join.kind == "ArcNormal") {
+                join.kind == "ArcTangent" ? ++tangents : ++normals;
+                QVERIFY(sketch::length(
+                            sketch::curveEnd(result[0], result[0].entity(join.a), int(join.value)),
+                            sketch::curveEnd(result[0], result[0].entity(join.b),
+                                             int(join.second))) < 1e-8);
+            }
+        QCOMPARE(tangents, 2);
+        QCOMPARE(normals, 1);
+        QCOMPARE(c->state().revision, revision);
+        click(window, "acceptSketchButton");
+        QVERIFY(wait([&] { return ready(*c) && c->state().revision == revision + 1; }));
+        auto accepted = part(*c).value("sketches").toArray();
+        auto path = files.filePath("all-arcs.cadproj");
+        c->saveProject(path);
+        QVERIFY(wait([&] { return ready(*c) && c->state().savedRevision == c->state().revision; }));
+        c->closeProject();
+        QVERIFY(wait([&] { return !c->state().projectOpen && !c->outstanding(); }));
+        c->openProject(path);
+        QVERIFY(wait([&] { return ready(*c); }));
+        QCOMPARE(part(*c).value("sketches").toArray(), accepted);
+        c->newProject("Part", "Course normal-arc exercise", units, true);
+        QVERIFY(wait([&] { return ready(*c); }));
+        window.command("sketch")->trigger();
+        window.command("sketch.tool.Line")->trigger();
+        QTest::qWait(30);
+        for (auto p :
+             {sketch::Vec2{0, 0}, {.06, 0}, {.06, .035}, {.05, .035}, {.05, .025}, {.04, .025}})
+            clickAt(p);
+        move({.035, .025});
+        move({.04, .025});
+        QCOMPARE(panel->toolName(), QString("Tangent Arc"));
+        QVERIFY(view->sizingArc());
+        move({.04, .02});
+        move({.02, .025});
+        capture("course-normal-transition");
+        clickAt({.02, .025});
+        QCOMPARE(panel->toolName(), QString("Line"));
+        for (auto p : {sketch::Vec2{.01, .025}, {.01, .035}, {0, .035}, {0, 0}})
+            clickAt(p);
+        QTest::keyClick(view, Qt::Key_Escape);
+        solved.clear();
+        click(window, "previewSketchButton");
+        QVERIFY2(wait([&] { return ready(*c) && solved.size() == 1; }),
+                 qPrintable(c->state().message));
+        result = sketch::parse(solved.last()[0].value<QCborArray>());
+        int arcs = 0, lines = 0, links = 0;
+        for (auto &e : result[0].entities) {
+            if (e.kind == "Arc") {
+                ++arcs;
+                QVERIFY(std::abs(e.radius - .01) < 1e-8);
+                QVERIFY(std::abs(e.sweep - sketch::arcPi) < 1e-8);
+            }
+            if (e.kind == "Line")
+                ++lines;
+        }
+        for (auto &join : result[0].constraints)
+            if (join.kind == "ArcNormal" || join.kind == "ArcCoincident")
+                ++links;
+        QCOMPARE(arcs, 1);
+        QCOMPARE(lines, 9);
+        QCOMPARE(links, 2);
+        capture("course-solved");
+        click(window, "acceptSketchButton");
+        QVERIFY(wait([&] { return ready(*c) && !panel->active(); }));
+        accepted = part(*c).value("sketches").toArray();
+        c->saveProject(files.filePath("course.cadproj"));
+        QVERIFY(wait([&] { return ready(*c) && c->state().savedRevision == c->state().revision; }));
+        if (native)
+            QVERIFY2(graphics.empty(), "Native graphics failure");
+        window.close();
+    }
+    void arcs(bool native, QString units) {
+        QTemporaryDir root(QDir::tempPath() + "/cad-module3-arcs-XXXXXX"),
+            files(QDir::tempPath() + "/cad-module3-files-XXXXXX");
+        QVERIFY(root.isValid() && files.isValid());
+        mark(root.path());
+        mark(files.path());
+        auto prefs = files.filePath("settings.ini");
+        QSettings settings(prefs, QSettings::IniFormat);
+        settings.setValue("startup/offerRecovery", false);
+        settings.sync();
+        MainWindow window(prefs, nullptr, root.path());
+        QSignalSpy graphics(window.sceneView(), &Viewport::graphicsFailed);
+        window.show();
+        if (native) {
+            QVERIFY(QTest::qWaitForWindowExposed(&window));
+            window.raise();
+            window.activateWindow();
+            QVERIFY(QTest::qWaitForWindowActive(&window));
+        }
+        auto *c = window.workerClient();
+        QVERIFY(wait([&] { return c->ready(); }));
+        c->newProject("Part", "Centerpoint arc", units);
+        QVERIFY(wait([&] { return ready(*c); }));
+        auto rev = c->state().revision;
+        window.command("sketch")->trigger();
+        window.command("sketch.tool.Arc")->trigger();
+        auto *panel = window.findChild<SketchPanel *>();
+        auto *view = panel->canvas();
+        auto *entities = window.findChild<QListWidget *>("sketchEntities");
+        auto clickAt = [&](sketch::Vec2 p) {
+            QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, view->screen(p).toPoint());
+        };
+        auto move = [&](sketch::Vec2 p) {
+            auto at = view->screen(p).toPoint();
+            QMouseEvent event(QEvent::MouseMove, at, view->mapToGlobal(at), Qt::NoButton,
+                              Qt::NoButton, Qt::NoModifier);
+            QApplication::sendEvent(view, &event);
+        };
+        QTest::qWait(30);
+        clickAt({0, 0});
+        QCOMPARE(entities->count(), 0);
+        click(window, "previewSketchButton");
+        click(window, "acceptSketchButton");
+        QVERIFY(view->sizingArc());
+        QVERIFY(panel->active());
+        QCOMPARE(c->outstanding(), 0);
+        QCOMPARE(c->state().revision, rev);
+        move({.005, 0});
+        move({.01, 0});
+        if (native) {
+            QTest::qWait(30);
+            auto folder = qEnvironmentVariable("CAD_ARTIFACT_DIR");
+            QVERIFY(!folder.isEmpty());
+            QVERIFY(window.grab().save(folder + "/centerpoint-arc-radius-" + units + ".png"));
+        }
+        clickAt({.01, 0});
+        QSignalSpy rows(entities->model(), &QAbstractItemModel::rowsInserted);
+        for (int i = 1; i <= 60; ++i) {
+            double theta = i * 3.141592653589793 / 120;
+            move({.01 * std::cos(theta), .01 * std::sin(theta)});
+        }
+        QCOMPARE(rows.size(), 0);
+        QCOMPARE(c->outstanding(), 0);
+        QCOMPARE(entities->count(), 0);
+        if (native) {
+            QTest::qWait(30);
+            auto folder = qEnvironmentVariable("CAD_ARTIFACT_DIR");
+            QVERIFY(!folder.isEmpty());
+            QVERIFY(window.grab().save(folder + "/centerpoint-arc-live-" + units + ".png"));
+            QVERIFY2(graphics.empty(), "Native renderer failed");
+        }
+        clickAt({0, .01});
+        QCOMPARE(entities->count(), 2);
+        QCOMPARE(c->state().revision, rev);
+        panel->undoDraftEdit();
+        QCOMPARE(entities->count(), 0);
+        panel->redoDraftEdit();
+        QCOMPARE(entities->count(), 2);
+        clickAt({.03, 0});
+        QTest::keyClick(view, Qt::Key_Escape);
+        QVERIFY(!view->sizingArc());
+        QCOMPARE(entities->count(), 2);
+        QCOMPARE(panel->toolName(), QString("Arc"));
+        clickAt({.03, 0});
+        window.command("sketch.tool.Line")->trigger();
+        QVERIFY(!view->sizingArc());
+        QCOMPARE(entities->count(), 2);
+        QSignalSpy solved(c, &Client::sketchPreview);
+        click(window, "previewSketchButton");
+        QVERIFY2(wait([&] { return ready(*c) && solved.size() == 1; }),
+                 qPrintable(c->state().message));
+        auto result = sketch::parse(solved.last()[0].value<QCborArray>());
+        QCOMPARE(result[0].entities.size(), size_t(2));
+        auto arc = result[0].entities[1];
+        QCOMPARE(arc.kind, QString("Arc"));
+        QVERIFY(std::abs(arc.radius - .01) < 1e-10);
+        QVERIFY(std::abs(arc.start) < 1e-10);
+        QVERIFY(std::abs(arc.sweep - 3.141592653589793 / 2) < 1e-10);
+        click(window, "acceptSketchButton");
+        QVERIFY(wait([&] { return ready(*c) && c->state().revision == rev + 1; }));
+        auto accepted = part(*c).value("sketches").toArray();
+        window.command("undo")->trigger();
+        QVERIFY(wait([&] { return ready(*c) && part(*c).value("sketches").toArray().empty(); }));
+        window.command("redo")->trigger();
+        QVERIFY(
+            wait([&] { return ready(*c) && part(*c).value("sketches").toArray() == accepted; }));
+        auto path = files.filePath("arc.cadproj");
+        c->saveProject(path);
+        QVERIFY(wait([&] { return ready(*c) && c->state().savedRevision == c->state().revision; }));
+        c->closeProject();
+        QVERIFY(wait([&] { return !c->state().projectOpen && !c->outstanding(); }));
+        c->openProject(path);
+        QVERIFY(wait([&] { return ready(*c); }));
+        QCOMPARE(part(*c).value("sketches").toArray(), accepted);
+        window.close();
+    }
     void editingWorkflow(bool native) {
         QTemporaryDir root(QDir::tempPath() + "/cad-module3-edit-XXXXXX"),
             files(QDir::tempPath() + "/cad-module3-files-XXXXXX");
@@ -476,6 +765,8 @@ class Contracts : public QObject {
         QVERIFY(!window.findChild<SketchPanel *>()->active());
         QVERIFY(wait([&] { return !c->outstanding(); }));
         QVERIFY(c->state().phase != Phase::PreviewReady);
+        QVERIFY2(window.command("sketch")->isEnabled(),
+                 "Canceled preview completed but idle sketch actions did not refresh");
         QVERIFY(part(*c).value("sketches").toArray().empty());
         for (auto box :
              {std::array<double, 4>{0, 0, 80, 50}, std::array<double, 4>{20, 20, 40, 40}}) {

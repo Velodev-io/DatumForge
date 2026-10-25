@@ -14,7 +14,7 @@ class Environment {
     QSet<QString> visiting;
 
   public:
-    explicit Environment(QMap<QString, QString> names = {});
+    explicit Environment(QMap<QString, QString> names = {}, int maximumNames = 64);
     Quantity name(QString name);
     Quantity evaluate(QString text);
     void validateAll();

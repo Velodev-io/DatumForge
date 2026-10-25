@@ -1,0 +1,11 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 22: module3.input
+1/3 Test #22: module3.input ....................   Passed    1.44 sec
+    Start 26: module3.all_arcs
+2/3 Test #26: module3.all_arcs .................   Passed    2.80 sec
+    Start 28: module3.solver
+3/3 Test #28: module3.solver ...................   Passed    0.52 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Total Test time (real) =   4.77 sec

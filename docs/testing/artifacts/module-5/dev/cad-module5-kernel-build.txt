@@ -1,0 +1,6 @@
+[1/6] Building CXX object CMakeFiles/cad_protocol.dir/src/protocol/Mesh.cpp.o
+[2/6] Linking CXX static library libcad_protocol.a
+[3/6] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[4/6] Linking CXX static library libcad_part.a
+[5/6] Building CXX object CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o
+[6/6] Linking CXX executable module4_geometry

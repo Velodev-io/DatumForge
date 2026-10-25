@@ -1,0 +1,310 @@
+{
+  "scope": "Module 5 dependency/history/reference/cache and frozen B2/native regressions on available Mac; stop before Module 6",
+  "status": "Pass: requested available-Mac checks; full module platform/device acceptance Blocked",
+  "native_requested": true,
+  "clean_requested": true,
+  "artifacts": "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.5657217089901678
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 65.29381937501603
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 137.23533370898804
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.5697824170056265
+    },
+    {
+      "name": "static-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "build/macos-debug/compile_commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 203.5799105830083
+    },
+    {
+      "name": "ownership",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.12889583298237994
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1870839579787571
+    },
+    {
+      "name": "native-history-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module5_contracts",
+        "nativeHistory"
+      ],
+      "exit_code": 0,
+      "seconds": 4.739084375003586
+    },
+    {
+      "name": "native-features-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_contracts",
+        "nativeFeatures"
+      ],
+      "exit_code": 0,
+      "seconds": 10.279813458007993
+    },
+    {
+      "name": "native-workspace-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_workspace",
+        "nativeWorkspace"
+      ],
+      "exit_code": 0,
+      "seconds": 1.5255970419966616
+    },
+    {
+      "name": "native-module3-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "exit_code": 0,
+      "seconds": 6.401051000022562
+    },
+    {
+      "name": "native-history-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module5_contracts",
+        "nativeHistory"
+      ],
+      "exit_code": 0,
+      "seconds": 4.0823145839967765
+    },
+    {
+      "name": "native-features-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_contracts",
+        "nativeFeatures"
+      ],
+      "exit_code": 0,
+      "seconds": 10.453993916977197
+    },
+    {
+      "name": "native-workspace-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_workspace",
+        "nativeWorkspace"
+      ],
+      "exit_code": 0,
+      "seconds": 1.7597591249796096
+    },
+    {
+      "name": "native-module3-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "exit_code": 0,
+      "seconds": 6.774179458006984
+    },
+    {
+      "name": "native-history-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module5_contracts",
+        "nativeHistory"
+      ],
+      "exit_code": 0,
+      "seconds": 4.25591833301587
+    },
+    {
+      "name": "native-features-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_contracts",
+        "nativeFeatures"
+      ],
+      "exit_code": 0,
+      "seconds": 10.320744791009929
+    },
+    {
+      "name": "native-workspace-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_workspace",
+        "nativeWorkspace"
+      ],
+      "exit_code": 0,
+      "seconds": 2.0084832920110784
+    },
+    {
+      "name": "native-module3-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "exit_code": 0,
+      "seconds": 7.206383957993239
+    },
+    {
+      "name": "native-history-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module5_contracts",
+        "nativeHistory"
+      ],
+      "exit_code": 0,
+      "seconds": 4.4215243329817895
+    },
+    {
+      "name": "native-features-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_contracts",
+        "nativeFeatures"
+      ],
+      "exit_code": 0,
+      "seconds": 11.050888083002064
+    },
+    {
+      "name": "native-workspace-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_workspace",
+        "nativeWorkspace"
+      ],
+      "exit_code": 0,
+      "seconds": 2.240020375000313
+    },
+    {
+      "name": "native-module3-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "exit_code": 0,
+      "seconds": 7.654477957985364
+    },
+    {
+      "name": "native-history-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module5_contracts",
+        "nativeHistory"
+      ],
+      "exit_code": 0,
+      "seconds": 4.605635666986927
+    },
+    {
+      "name": "native-features-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_contracts",
+        "nativeFeatures"
+      ],
+      "exit_code": 0,
+      "seconds": 11.723267791996477
+    },
+    {
+      "name": "native-workspace-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_workspace",
+        "nativeWorkspace"
+      ],
+      "exit_code": 0,
+      "seconds": 2.027708540990716
+    },
+    {
+      "name": "native-module3-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "exit_code": 0,
+      "seconds": 8.093309458985459
+    },
+    {
+      "name": "native-module1-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction"
+      ],
+      "exit_code": 0,
+      "seconds": 2.5751700839900877
+    },
+    {
+      "name": "native-module2-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module2_contracts",
+        "nativeDocuments"
+      ],
+      "exit_code": 0,
+      "seconds": 2.798170875001233
+    },
+    {
+      "name": "clean-reproduction",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/clean_reproduce.py",
+        "--module",
+        "5",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/clean-reproduction-details.txt"
+      ],
+      "exit_code": 0,
+      "seconds": 201.33522458400694
+    }
+  ],
+  "blocked": [
+    "Physical mouse/trackpad ergonomics",
+    "Windows/Linux/X11/Wayland native builds",
+    "Intel/minimum macOS/additional GPUs",
+    "Native assistive technology/alternate appearance",
+    "Installed builds/signing/upgrades",
+    "Controlled OS-network-disabled workflow",
+    "Full physical 8 GB B0\u2013B5 resource budgets",
+    "Physical power loss/full-volume storage"
+  ],
+  "host": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "physical_ram_bytes": 8589934592,
+    "cpu": "Apple M2",
+    "os_version": "ProductName:\t\tmacOS\nProductVersion:\t\t26.6.2\nBuildVersion:\t\t25G83"
+  }
+}

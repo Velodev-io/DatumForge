@@ -1,0 +1,30 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.4s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/21] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/21] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/21] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/21] Automatic MOC for target cad_client
+[5/20] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[6/20] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[7/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[8/20] Linking CXX static library libcad_client.a
+[9/20] Linking CXX static library libcad_planegcs.a
+[10/20] Linking CXX static library libcad_sketch_solver.a
+[11/20] Automatic MOC for target cad_desktop_ui
+[12/19] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o
+FAILED: [code=1] CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cad_desktop_ui_autogen/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtNetwork" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGLWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGL" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o -MF CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o.d -o CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop/HistoryPanel.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop/HistoryPanel.cpp:21:190: error: no matching member function for call to 'addItem'
+   21 |     connect(client,&Client::referenceResolution,this,[this](QCborMap r){if(!editing)return;resolution=r;candidateList->clear();for(auto token:r.value("candidates").toArray())candidateList->addItem(token.toString(),token);diagnostic->setText("Reference: "+r.value("state").toString()+"\nOwner: "+feature->currentText()+"\nFormer edge: "+r.value("token").toString()+"\nAffected dependents: "+QString::number(r.value("affected").toArray().size())+"\nPreview and select a replacement explicitly; no candidate is committed automatically.");repair->setEnabled(candidateList->count()>0);});
+      |                                                                                                                                                                               ~~~~~~~~~~~~~~~^~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qcombobox.h:219:24: note: candidate function not viable: no known conversion from 'QCborValueRef' to 'const QVariant' for 2nd argument
+  219 | inline void QComboBox::addItem(const QString &atext, const QVariant &auserData)
+      |                        ^                             ~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qcombobox.h:221:24: note: candidate function not viable: no known conversion from 'QString' to 'const QIcon' for 1st argument
+  221 | inline void QComboBox::addItem(const QIcon &aicon, const QString &atext,
+      |                        ^       ~~~~~~~~~~~~~~~~~~
+1 error generated.
+[13/19] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+ninja: build stopped: subcommand failed.

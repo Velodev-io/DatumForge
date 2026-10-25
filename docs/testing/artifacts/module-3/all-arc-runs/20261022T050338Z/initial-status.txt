@@ -1,0 +1,119 @@
+ M AGENTS.md
+ M CMakeLists.txt
+ M README.md
+ M apps/cad-worker/Projects.hpp
+ M apps/cad-worker/main.cpp
+ M apps/desktop/CommandRegistry.hpp
+ M apps/desktop/FeaturePanel.cpp
+ M apps/desktop/FeatureUI.cpp
+ M apps/desktop/HistoryPanel.cpp
+ M apps/desktop/HistoryPanel.hpp
+ M apps/desktop/MainWindow.cpp
+ M apps/desktop/MainWindow.hpp
+ M apps/desktop/ProjectUI.cpp
+ M apps/desktop/SketchPanel.cpp
+ M apps/desktop/WorkspaceChrome.cpp
+ M cmake/README.md
+ M docs/README.md
+ M docs/SDD.md
+ M docs/SPEC_VALIDATION.json
+ M docs/SRS.md
+ M docs/STEP_ZERO.md
+ M docs/TECH_SPEC.md
+ M docs/TRACEABILITY.md
+ M docs/decisions/implementation-scope.json
+ M docs/decisions/module-3-sketches.md
+ M docs/scripts/check_specs.py
+ M docs/testing/module-10.md
+ M docs/testing/module-3-input-repair.md
+ M docs/testing/module-3.md
+ M docs/testing/module-4.md
+ M docs/testing/module-5.md
+ M docs/testing/module-6.md
+ M docs/testing/module-7.md
+ M docs/testing/module-8.md
+ M docs/testing/module-9.md
+ M docs/testing/requirements.json
+ M docs/testing/task-status.json
+ M src/domain/Expressions.cpp
+ M src/domain/Expressions.hpp
+ M src/evaluation/Plan.cpp
+ M src/evaluation/Plan.hpp
+ M src/features/Model.cpp
+ M src/features/Model.hpp
+ M src/geometry/occt/Part.cpp
+ M src/geometry/occt/Part.hpp
+ M src/persistence/Database.cpp
+ M src/persistence/Files.cpp
+ M src/persistence/Files.hpp
+ M src/persistence/ProjectStore.cpp
+ M src/persistence/ProjectStore.hpp
+ M src/protocol/Client.cpp
+ M src/protocol/Client.hpp
+ M src/protocol/Mesh.cpp
+ M src/protocol/Mesh.hpp
+ M src/render/SketchView.cpp
+ M src/render/SketchView.hpp
+ M src/render/Viewport.cpp
+ M src/render/Viewport.hpp
+ M tests/module3/contracts.cpp
+ M tests/module3/input.cpp
+ M tests/module4/workspace.cpp
+ M tests/module5/plan.cpp
+ M tests/native/README.md
+ M tools/clean_reproduce.py
+?? apps/desktop/AssemblyPanel.cpp
+?? apps/desktop/AssemblyPanel.hpp
+?? apps/desktop/AssemblyUI.cpp
+?? apps/desktop/DrawingPanel.cpp
+?? apps/desktop/DrawingPanel.hpp
+?? apps/desktop/DrawingUI.cpp
+?? apps/desktop/ExchangeUI.cpp
+?? apps/desktop/InteractionUI.cpp
+?? docs/decisions/module-10-recovery.md
+?? docs/decisions/module-5-evaluation.md
+?? docs/decisions/module-6-exchange.md
+?? docs/decisions/module-7-assemblies.md
+?? docs/decisions/module-8-drawings.md
+?? docs/decisions/module-9-interaction.md
+?? docs/testing/artifacts/module-10/
+?? docs/testing/artifacts/module-3/arc-runs/
+?? docs/testing/artifacts/module-5/
+?? docs/testing/artifacts/module-6/
+?? docs/testing/artifacts/module-7/
+?? docs/testing/artifacts/module-8/
+?? docs/testing/artifacts/module-9/
+?? docs/testing/module-3-centerpoint-arc.md
+?? module6-b4.json
+?? src/assembly/Geometry.cpp
+?? src/assembly/Geometry.hpp
+?? src/assembly/Model.cpp
+?? src/assembly/Model.hpp
+?? src/assembly/Solver.cpp
+?? src/diagnostics/
+?? src/drawing/Geometry.cpp
+?? src/drawing/Geometry.hpp
+?? src/drawing/Model.cpp
+?? src/drawing/Model.hpp
+?? src/drawing/Paint.cpp
+?? src/drawing/Paint.hpp
+?? src/drawing/Paths.hpp
+?? src/exchange/Exchange.cpp
+?? src/exchange/Exchange.hpp
+?? tests/fixtures/B5-layout-v2.json
+?? tests/module10/
+?? tests/module5/b2.cpp
+?? tests/module5/contracts.cpp
+?? tests/module5/engine.cpp
+?? tests/module5/persistence.cpp
+?? tests/module6/
+?? tests/module7/
+?? tests/module8/
+?? tests/module9/
+?? tools/inspect_drawing_pdf.swift
+?? tools/offline_workflows.py
+?? tools/verify_arc_interaction.py
+?? tools/verify_module5.py
+?? tools/verify_module6.py
+?? tools/verify_module7.py
+?? tools/verify_modules8_10.py

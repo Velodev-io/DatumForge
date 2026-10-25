@@ -1,0 +1,19 @@
+{
+  "status": "Pass: development app launched and left running",
+  "command": "QT_QPA_PLATFORM=cocoa build/macos-debug/cad-desktop.app/Contents/MacOS/cad-desktop",
+  "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+  "session_id": 85810,
+  "desktop_pid": 23616,
+  "worker_pid": 23623,
+  "readiness": [
+    "Visible CAD Workbench window inspected using native accessibility API",
+    "New/Open actions enabled; no startup error dialog",
+    "Packaged worker process is a child of the launched app"
+  ],
+  "recovery_root": "/Users/binova/Library/Application Support/local.solidworks-clone.dev/Solidworks Clone/recovery-v1",
+  "recovery_marker": "local.solidworks-clone.dev/recovery-v1",
+  "data_actions": "No existing project/recovery selected, changed or removed; normal development startup only",
+  "prior_app": "Not stopped by this task; no CAD process remained at the prelaunch check",
+  "limits": "Development launch only; does not establish installed-build acceptance",
+  "stop": "Quit this CAD Workbench window normally; no broad process termination needed"
+}

@@ -1,0 +1,20 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.4s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/21] Automatic MOC for target cad_client
+[2/19] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/19] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/19] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/19] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[6/19] Automatic MOC for target cad_desktop_ui
+[7/17] Building CXX object CMakeFiles/module5_b2.dir/tests/module5/b2.cpp.o
+[8/17] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[9/17] Linking CXX static library libcad_planegcs.a
+[10/17] Linking CXX static library libcad_sketch_solver.a
+[11/17] Linking CXX executable module5_b2
+[12/17] Linking CXX executable cad-worker
+[13/17] Automatic MOC for target module5_contracts
+[14/17] Building CXX object CMakeFiles/module5_contracts.dir/module5_contracts_autogen/mocs_compilation.cpp.o
+[15/17] Building CXX object CMakeFiles/module5_contracts.dir/tests/module5/contracts.cpp.o
+[16/17] Linking CXX executable module5_contracts

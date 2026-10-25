@@ -246,7 +246,11 @@ class Contracts : public QObject {
         auto *view = sketch->canvas();
         view->fit();
         QTest::qWait(20);
+        auto operation = c->latestOperation();
         QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, view->screen({.08, .05}).toPoint());
+        QVERIFY(!c->outstanding());
+        QCOMPARE(c->latestOperation(), operation);
+        QVERIFY(!sketch->canUndoDraft());
         auto *width = w.findChild<QLineEdit *>("selectedWidth");
         QVERIFY(width->isVisible());
         width->setText("90");

@@ -1,0 +1,8 @@
+[1/8] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[2/8] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[3/8] Linking CXX static library libcad_part.a
+[4/8] Linking CXX static library libcad_persistence.a
+[5/8] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[6/8] Linking CXX executable cad-worker
+[7/8] Building CXX object CMakeFiles/module5_engine.dir/tests/module5/engine.cpp.o
+[8/8] Linking CXX executable module5_engine

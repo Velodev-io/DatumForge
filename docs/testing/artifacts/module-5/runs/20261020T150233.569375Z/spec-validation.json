@@ -1,0 +1,50 @@
+{
+  "scope": "Documentation structure only; no product acceptance tests executed",
+  "checked_at_utc": "2026-10-20T15:15:05.456402+00:00",
+  "status": "pass",
+  "product_implementation": "Modules 1-5 scoped implementation on the available Mac; see task and module evidence",
+  "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
+  "documents": {
+    "README.md": {
+      "sha256": "3642d6a996d7b9f6cad5c3f80b4d9ffef52949d73d34d3a3da1f440c6eeee5d6",
+      "lines": 53,
+      "words": 870
+    },
+    "SRS.md": {
+      "sha256": "b7abb614a9ccec1460c211d908129bf817bcc8d8f08c42f651d06eaaffd513d8",
+      "lines": 203,
+      "words": 3025
+    },
+    "SDD.md": {
+      "sha256": "bea0b8acc0843e21a6917ac0bdf2134bfde9fe2e7c3bd7eb57d99010dfafcd63",
+      "lines": 297,
+      "words": 4119
+    },
+    "TECH_SPEC.md": {
+      "sha256": "e7a29a893b13e6e6356c6bf16a54049d10dec3ff8d4d428ca28f4e704274cbbb",
+      "lines": 645,
+      "words": 7326
+    },
+    "STEP_ZERO.md": {
+      "sha256": "23b189ab422dbc1fed57aa6f171b9d794228add57bc056bf1eeeb98d6062bb8e",
+      "lines": 93,
+      "words": 1831
+    },
+    "TRACEABILITY.md": {
+      "sha256": "f20a4dee151138996a63f43d27e0d52cf9e0bb16f344150c319dd21abb153921",
+      "lines": 92,
+      "words": 1356
+    },
+    "REFERENCES.md": {
+      "sha256": "9df2410a2d7dec2b39308e4058d1bcecf5ec65794bb693c8455b98230bc7f5bc",
+      "lines": 45,
+      "words": 550
+    }
+  },
+  "requirements": 56,
+  "traceability_rows": 56,
+  "modules": 13,
+  "unchecked_engineering_tasks": 78,
+  "completed_engineering_tasks": 81,
+  "errors": []
+}

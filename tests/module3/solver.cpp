@@ -1,4 +1,5 @@
 #include "sketch/Solver.hpp"
+#include "sketch/ArcGeometry.hpp"
 #include "support/check.hpp"
 using namespace cad::sketch;
 Constraint add(Sketch &s, QString kind, QString a, QString b = {}, double value = 0,
@@ -50,6 +51,81 @@ int main() {
         r = solve(free);
         CHECK(r.valid);
         CHECK(r.freedom == 5);
+        Sketch joined;
+        auto joinLine = joined.line(joined.point({-.02, 0}), joined.point({0, 0}));
+        auto ja = joined.arc(joined.point({0, .01}), .01, -1.5707963267948966, 1.5707963267948966);
+        add(joined, "ArcTangent", ja, joinLine, 0, 1);
+        add(joined, "Radius", ja, {}, .01);
+        r = solve(joined);
+        CHECK(r.valid);
+        Sketch storedJoin;
+        auto support = storedJoin.line(storedJoin.point({-.02, 0}), storedJoin.point({0, 0}));
+        auto storedCenter = storedJoin.point({0, .01});
+        auto storedArc = storedJoin.arc(storedCenter, .01, -arcPi / 2, arcPi / 2);
+        add(storedJoin, "Fixed", storedJoin.entity(support).a, {}, -.02, 0);
+        add(storedJoin, "Fixed", storedJoin.entity(support).b);
+        add(storedJoin, "Fixed", storedCenter, {}, 0, .01);
+        add(storedJoin, "Radius", storedArc, {}, .01);
+        add(storedJoin, "ArcTangent", storedArc, support, 0, 1);
+        auto storedResult = solve(storedJoin);
+        CHECK(storedResult.valid);
+        storedJoin = storedResult.sketch;
+        validateAccepted(encode({storedJoin}));
+        storedJoin.entity(storedArc).start += .1;
+        rejects([&] { validateAccepted(encode({storedJoin})); });
+        auto switchedJoin = joined;
+        switchedJoin.entity(switchedJoin.entity(ja).a).point = {0, -.01};
+        switchedJoin.entity(ja).start = arcPi / 2;
+        CHECK(!solve(switchedJoin, &joined).valid);
+        for (double factor : {.001, 1., 1000.})
+            for (bool sourceArc : {false, true})
+                for (bool normal : {false, true})
+                    for (bool clockwise : {false, true}) {
+                        Sketch g;
+                        QString source;
+                        if (sourceArc)
+                            source = g.arc(g.point({0, 0}), .01 * factor, 0, arcPi / 2);
+                        else
+                            source = g.line(g.point({-.02 * factor, 0}), g.point({0, 0}));
+                        auto point = curveEnd(g, g.entity(source), 1);
+                        auto direction = outgoing(g, g.entity(source), 1);
+                        if (normal)
+                            direction = {-direction.y, direction.x};
+                        double side = clockwise ? -1 : 1;
+                        Vec2 end{point.x + .01 * factor * (direction.x - side * direction.y),
+                                 point.y + .01 * factor * (direction.y + side * direction.x)};
+                        auto construction = tangentArc(point, direction, end);
+                        CHECK(construction.has_value());
+                        auto arc = g.arc(g.point(construction->center), construction->radius,
+                                         construction->start, construction->sweep);
+                        auto relation = add(g, normal ? "ArcNormal" : "ArcTangent", arc, source,
+                                            construction->originalStart, 1);
+                        auto rr = solve(Sketch::parse(g.map()));
+                        CHECK(rr.valid);
+                        near(length(curveEnd(rr.sketch, rr.sketch.entity(arc), int(relation.value)),
+                                    curveEnd(rr.sketch, rr.sketch.entity(source), 1)),
+                             0, 1e-8 * factor);
+                        auto a = outgoing(rr.sketch, rr.sketch.entity(arc), int(relation.value)),
+                             b = outgoing(rr.sketch, rr.sketch.entity(source), 1);
+                        near(normal ? a.x * b.x + a.y * b.y : a.x * b.y - a.y * b.x, 0, 1e-7);
+                        // Geometry changes still resolve through the stored endpoint graph.
+                        add(g, "Radius", arc, {}, construction->radius * 1.1);
+                        rr = solve(g);
+                        CHECK(rr.valid);
+                        near(rr.sketch.entity(arc).radius, construction->radius * 1.1,
+                             1e-8 * factor);
+                        g.constraints[0].value = 2;
+                        CHECK(!solve(g).valid);
+                    }
+        Sketch endpointLimit;
+        QStringList manyArcs;
+        for (int i = 0; i < 40; ++i)
+            manyArcs.append(endpointLimit.arc(endpointLimit.point({0, 0}), .001, 0, arcPi));
+        for (int i = 0; i < 40; ++i)
+            add(endpointLimit, "ArcCoincident", manyArcs[i], manyArcs[(i + 1) % 40], 0, 0);
+        auto limited = solve(endpointLimit);
+        CHECK(!limited.valid);
+        CHECK(limited.message.contains("ResourceLimit"));
         auto duplicate = s;
         duplicate.constraints.push_back(s.constraints.back());
         duplicate.constraints.back().id = cad::newId();

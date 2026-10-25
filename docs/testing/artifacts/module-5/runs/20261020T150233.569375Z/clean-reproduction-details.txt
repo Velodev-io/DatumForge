@@ -1,0 +1,237 @@
+$ git init -b validation
+Initialized empty Git repository in /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-clean-source-1grkesks/.git/
+$ cmake --preset macos-debug
+-- The C compiler identification is AppleClang 21.0.0.21000101
+-- The CXX compiler identification is AppleClang 21.0.0.21000101
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found Python3: /opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14 (found version "3.14.7") found components: Interpreter
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Performing Test HAVE_STDATOMIC
+-- Performing Test HAVE_STDATOMIC - Success
+-- Found WrapAtomic: TRUE
+-- Found OpenGL: /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework
+-- Found WrapOpenGL: TRUE
+-- Configuring done (2.0s)
+-- Generating done (0.1s)
+-- Build files have been written to: /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-clean-source-1grkesks/build/macos-debug
+$ cmake --build --preset macos-debug
+[1/125] Building CXX object CMakeFiles/cad_protocol.dir/src/protocol/Mesh.cpp.o
+[2/125] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[3/125] Linking CXX static library libcad_protocol.a
+[4/125] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Editing.cpp.o
+[5/125] Linking CXX static library libcad_sketch_model.a
+[6/125] Building CXX object CMakeFiles/cad_expressions.dir/src/domain/Expressions.cpp.o
+[7/125] Automatic MOC for target cad_client
+[8/125] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/Model.cpp.o
+[9/125] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[10/125] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[11/125] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[12/125] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[13/125] Linking CXX static library libcad_expressions.a
+[14/125] Linking CXX static library libcad_feature_model.a
+[15/125] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/qp_eq.cpp.o
+[16/125] Building CXX object CMakeFiles/cad_client.dir/cad_client_autogen/mocs_compilation.cpp.o
+[17/125] Building CXX object CMakeFiles/cad_evaluation_plan.dir/src/evaluation/Plan.cpp.o
+[18/125] Building C object CMakeFiles/cad_sqlite.dir/.deps/src/sqlite/sqlite3.c.o
+[19/125] Linking CXX static library libcad_planegcs.a
+[20/125] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[21/125] Linking CXX static library libcad_client.a
+[22/125] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[23/125] Linking CXX static library libcad_evaluation_plan.a
+[24/125] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[25/125] Linking C static library libcad_sqlite.a
+[26/125] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Database.cpp.o
+[27/125] Building CXX object CMakeFiles/cad_geometry.dir/src/geometry/occt/ReferenceScene.cpp.o
+[28/125] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[29/125] Linking CXX static library libcad_sketch_solver.a
+[30/125] Linking CXX static library libcad_part.a
+[31/125] Automatic MOC for target cad_desktop_ui
+[32/125] Linking CXX static library libcad_geometry.a
+[33/125] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[34/125] Building CXX object CMakeFiles/module1_adversary.dir/tests/module1/adversary.cpp.o
+[35/125] Linking CXX static library libcad_persistence.a
+[36/125] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[37/125] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[38/125] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[39/125] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[40/125] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+[41/125] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[42/125] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[43/125] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[44/125] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[45/125] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+[46/125] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o
+[47/125] Linking CXX static library libcad_desktop_ui.a
+[48/125] Linking CXX executable cad-worker
+[49/125] Linking CXX executable module1_adversary
+[50/125] Building CXX object CMakeFiles/slice_worker.dir/tests/native/slice_worker.cpp.o
+[51/125] Linking CXX executable slice_worker
+[52/125] Automatic MOC for target module1_contracts
+[53/125] Automatic MOC for target module2_contracts
+[54/125] Automatic MOC for target module3_input
+[55/125] Automatic MOC for target module3_contracts
+[56/125] Automatic MOC for target module4_workspace
+[57/125] Automatic MOC for target module4_contracts
+[58/125] Automatic MOC for target module5_contracts
+[59/125] Building CXX object CMakeFiles/harness_probe.dir/tests/unit/harness_probe.cpp.o
+[60/125] Building CXX object CMakeFiles/protocol_spike.dir/tests/integration/protocol_spike.cpp.o
+[61/125] Building CXX object CMakeFiles/storage_spike.dir/tests/integration/storage_spike.cpp.o
+[62/125] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[63/125] Building CXX object CMakeFiles/cad_spike.dir/tests/integration/cad_spike.cpp.o
+[64/125] Building CXX object CMakeFiles/slice_desktop.dir/tests/native/slice_desktop.cpp.o
+[65/125] Building CXX object CMakeFiles/mate_spike.dir/tests/integration/mate_spike.cpp.o
+[66/125] Building CXX object CMakeFiles/cad-desktop.dir/apps/desktop/main.cpp.o
+[67/125] Building CXX object CMakeFiles/module2_domain.dir/tests/module2/domain.cpp.o
+[68/125] Building CXX object CMakeFiles/module2_storage.dir/tests/module2/storage.cpp.o
+[69/125] Building CXX object CMakeFiles/module2_fault_worker.dir/tests/module2/fault_worker.cpp.o
+[70/125] Building CXX object CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o
+[71/125] Building CXX object CMakeFiles/module3_model.dir/tests/module3/model.cpp.o
+[72/125] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[73/125] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[74/125] Building CXX object CMakeFiles/module3_expressions.dir/tests/module3/expressions.cpp.o
+[75/125] Building CXX object CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o
+[76/125] Building CXX object CMakeFiles/module4_persistence.dir/tests/module4/persistence.cpp.o
+[77/125] Building CXX object CMakeFiles/module4_variants.dir/tests/module4/variants.cpp.o
+[78/125] Building CXX object CMakeFiles/module5_plan.dir/tests/module5/plan.cpp.o
+[79/125] Building CXX object CMakeFiles/module5_engine.dir/tests/module5/engine.cpp.o
+[80/125] Building CXX object CMakeFiles/module5_persistence.dir/tests/module5/persistence.cpp.o
+[81/125] Building CXX object CMakeFiles/module1_contracts.dir/module1_contracts_autogen/mocs_compilation.cpp.o
+[82/125] Building CXX object CMakeFiles/module5_b2.dir/tests/module5/b2.cpp.o
+[83/125] Building CXX object CMakeFiles/module2_contracts.dir/module2_contracts_autogen/mocs_compilation.cpp.o
+[84/125] Building CXX object CMakeFiles/module1_contracts.dir/tests/module1/contracts.cpp.o
+[85/125] Building CXX object CMakeFiles/module3_input.dir/module3_input_autogen/mocs_compilation.cpp.o
+[86/125] Building CXX object CMakeFiles/module2_contracts.dir/tests/module2/contracts.cpp.o
+[87/125] Building CXX object CMakeFiles/module3_contracts.dir/module3_contracts_autogen/mocs_compilation.cpp.o
+[88/125] Building CXX object CMakeFiles/module3_input.dir/tests/module3/input.cpp.o
+[89/125] Building CXX object CMakeFiles/module4_workspace.dir/module4_workspace_autogen/mocs_compilation.cpp.o
+[90/125] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[91/125] Building CXX object CMakeFiles/module4_contracts.dir/module4_contracts_autogen/mocs_compilation.cpp.o
+[92/125] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[93/125] Building CXX object CMakeFiles/module5_contracts.dir/module5_contracts_autogen/mocs_compilation.cpp.o
+[94/125] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[95/125] Linking CXX executable harness_probe
+[96/125] Linking CXX executable protocol_spike
+[97/125] Linking CXX executable storage_spike
+[98/125] Building CXX object CMakeFiles/module5_contracts.dir/tests/module5/contracts.cpp.o
+[99/125] Linking CXX executable solver_spike
+[100/125] Linking CXX executable cad_spike
+[101/125] Linking CXX executable mate_spike
+[102/125] Linking CXX executable slice_desktop.app/Contents/MacOS/slice_desktop
+[103/125] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[104/125] Linking CXX executable module1_contracts
+[105/125] Linking CXX executable module2_domain
+[106/125] Linking CXX executable module2_contracts
+[107/125] Linking CXX executable module2_storage
+[108/125] Linking CXX executable module2_fault_worker
+[109/125] Linking CXX executable module2_dispatch
+[110/125] Linking CXX executable module3_model
+[111/125] Linking CXX executable module3_persistence
+[112/125] Linking CXX executable module3_input
+[113/125] Linking CXX executable module3_solver
+[114/125] Linking CXX executable module3_expressions
+[115/125] Linking CXX executable module3_contracts
+[116/125] Linking CXX executable module4_workspace
+[117/125] Linking CXX executable module4_geometry
+[118/125] Linking CXX executable module4_persistence
+[119/125] Linking CXX executable module4_contracts
+[120/125] Linking CXX executable module5_plan
+[121/125] Linking CXX executable module4_variants
+[122/125] Linking CXX executable module5_engine
+[123/125] Linking CXX executable module5_persistence
+[124/125] Linking CXX executable module5_b2
+[125/125] Linking CXX executable module5_contracts
+$ ctest --preset macos-debug --output-on-failure
+Test project /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-clean-source-1grkesks/build/macos-debug
+      Start  1: harness.pass
+ 1/37 Test  #1: harness.pass .....................   Passed    0.84 sec
+      Start  2: harness.failure_reporting
+ 2/37 Test  #2: harness.failure_reporting ........   Passed    0.08 sec
+      Start  3: measurement.statistics
+ 3/37 Test  #3: measurement.statistics ...........   Passed    0.06 sec
+      Start  4: harness.deliberate_failure
+ 4/37 Test  #4: harness.deliberate_failure .......***Not Run (Disabled)   0.00 sec
+      Start  5: protocol.boundaries
+ 5/37 Test  #5: protocol.boundaries ..............   Passed    0.62 sec
+      Start  6: storage.crash_matrix
+ 6/37 Test  #6: storage.crash_matrix .............   Passed    0.98 sec
+      Start  7: cad.geometry_topology
+ 7/37 Test  #7: cad.geometry_topology ............   Passed    0.85 sec
+      Start  8: cad.sketch_solver
+ 8/37 Test  #8: cad.sketch_solver ................   Passed    0.51 sec
+      Start  9: cad.rigid_mates
+ 9/37 Test  #9: cad.rigid_mates ..................   Passed    0.81 sec
+      Start 10: native.process_transport
+10/37 Test #10: native.process_transport .........   Passed    0.76 sec
+      Start 11: fixtures.determinism
+11/37 Test #11: fixtures.determinism .............   Passed    0.27 sec
+      Start 12: isolation.research
+12/37 Test #12: isolation.research ...............   Passed    0.25 sec
+      Start 13: module1.ownership
+13/37 Test #13: module1.ownership ................   Passed    0.27 sec
+      Start 14: module1.contracts
+14/37 Test #14: module1.contracts ................   Passed    2.64 sec
+      Start 15: module2.domain
+15/37 Test #15: module2.domain ...................   Passed    0.49 sec
+      Start 16: module2.storage
+16/37 Test #16: module2.storage ..................   Passed    1.87 sec
+      Start 17: module2.worker_lifecycle
+17/37 Test #17: module2.worker_lifecycle .........   Passed    1.27 sec
+      Start 18: module2.crash_matrix
+18/37 Test #18: module2.crash_matrix .............   Passed   12.45 sec
+      Start 19: module2.dispatch
+19/37 Test #19: module2.dispatch .................   Passed    0.80 sec
+      Start 20: module3.model
+20/37 Test #20: module3.model ....................   Passed    0.48 sec
+      Start 21: module3.persistence
+21/37 Test #21: module3.persistence ..............   Passed    0.93 sec
+      Start 22: module3.input
+22/37 Test #22: module3.input ....................   Passed    1.01 sec
+      Start 23: module3.shapeEditing
+23/37 Test #23: module3.shapeEditing .............   Passed    1.51 sec
+      Start 24: module3.gestures
+24/37 Test #24: module3.gestures .................   Passed    1.62 sec
+      Start 25: module3.interaction
+25/37 Test #25: module3.interaction ..............   Passed    1.73 sec
+      Start 26: module3.solver
+26/37 Test #26: module3.solver ...................   Passed    0.55 sec
+      Start 27: module3.expressions
+27/37 Test #27: module3.expressions ..............   Passed    0.50 sec
+      Start 28: module4.workspace
+28/37 Test #28: module4.workspace ................   Passed    1.38 sec
+      Start 29: module4.geometry
+29/37 Test #29: module4.geometry .................   Passed    0.97 sec
+      Start 30: module4.persistence
+30/37 Test #30: module4.persistence ..............   Passed    1.71 sec
+      Start 31: module4.lifecycle
+31/37 Test #31: module4.lifecycle ................   Passed    3.50 sec
+      Start 32: module4.variants
+32/37 Test #32: module4.variants .................   Passed    1.74 sec
+      Start 33: module5.plan
+33/37 Test #33: module5.plan .....................   Passed    0.58 sec
+      Start 34: module5.engine
+34/37 Test #34: module5.engine ...................   Passed    0.70 sec
+      Start 35: module5.persistence
+35/37 Test #35: module5.persistence ..............   Passed    1.03 sec
+      Start 36: module5.b2
+36/37 Test #36: module5.b2 .......................   Passed   91.54 sec
+      Start 37: module5.lifecycle
+37/37 Test #37: module5.lifecycle ................   Passed    2.20 sec
+
+100% tests passed, 0 tests failed out of 36
+
+Total Test time (real) = 139.53 sec
+
+The following tests did not run:
+	  4 - harness.deliberate_failure (Disabled)
+Pass: fresh application source export/build/tests with SHA-256 verified source archives and existing local built libraries; no second dependency compilation and no installed-build claim.

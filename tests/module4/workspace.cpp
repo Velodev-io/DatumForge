@@ -92,10 +92,12 @@ class Workspace : public QObject {
             QVERIFY2(graphics.empty(), "Native renderer initialization failed");
         auto *tabs = w.findChild<QTabWidget *>("commandTabs");
         QVERIFY(tabs);
-        QCOMPARE(tabs->count(), 3);
+        QCOMPARE(tabs->count(), 5);
         QCOMPARE(tabs->tabText(0), QString("Features"));
         QCOMPARE(tabs->tabText(1), QString("Sketch"));
         QCOMPARE(tabs->tabText(2), QString("Evaluate"));
+        QCOMPARE(tabs->tabText(3), QString("Assembly"));
+        QVERIFY(!tabs->isTabEnabled(3));
         for (auto *bar : {tabs->tabBar(), w.findChild<QTabWidget *>("managerTabs")->tabBar()})
             for (int i = 0; i < bar->count(); ++i) {
                 QVERIFY(bar->tabRect(i).width() >=
@@ -233,6 +235,8 @@ class Workspace : public QObject {
         QVERIFY(wait([&] { return !c->outstanding() && c->state().documentRecords.size() == 2; }));
         QVERIFY(!w.command("sketch.tool.Circle")->isEnabled());
         QVERIFY(!w.command("sketch")->isEnabled());
+        QVERIFY(tabs->isTabEnabled(3));
+        QVERIFY(w.command("assembly")->isEnabled());
         c->switchDocument(partId);
         QVERIFY(wait([&] { return !c->outstanding() && c->state().activeDocument == partId; }));
         if (native) {

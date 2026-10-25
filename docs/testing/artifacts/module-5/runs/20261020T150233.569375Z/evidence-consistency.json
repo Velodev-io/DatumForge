@@ -1,0 +1,38 @@
+{
+  "status": "Pass",
+  "scope": "Final tested source and pins; documentation checks recorded separately",
+  "tested_source_aggregate_sha256": "cd38923bb162df567e027b7beb8a86d2dd0ef30c75fcb643140514869398ba25",
+  "verified_source_inputs": 127,
+  "changed_inputs": [],
+  "unchanged_module4_pins": {
+    "cmake/dependencies.lock.json": "f8bef677dd2d82978d1be6666ff9ae5535b151b1f9fce9ccdd2325134ef2c336",
+    "cmake/tools.lock.json": "dfd04751f6b7d7991125c8cb66135150b863d67ef4dee266384403bc2b6cc612",
+    "cmake/patches/qt-6.10.0-arm-yield.patch": "b47fd041cbcaf1c74491f17d53a54b0ebb2bb45466c3239afa72713ee7a9bf10",
+    "tests/fixtures/B1.json": "253e1a78dd30735dcdfe16fce3d1843b87123e747b1f4a31b68744cdc5811a52",
+    "tests/fixtures/B2.json": "78873aabdd68715b7868b6a08c62871bb57f2fa7ec6bf82930f49df317e37fdb"
+  },
+  "git_commit": "d1fce435b1e9e4f05b7f36fab6392f870fedd8d7",
+  "branch": "feature/model-evaluation-wip",
+  "preservation": "Concurrent user commits/branch/remote retained; no reset, history rewrite or push by verification",
+  "source_ownership": "Desktop semantic/display and mesh only; serial worker exact geometry and project writes; architecture.json Pass",
+  "research": "97 baseline files unchanged",
+  "clean_enabled_tests": 36,
+  "ctest_enabled_tests": 36,
+  "native": "All 22 requested native runs exit 0; scale/history and reviewed-image facts in visual-review.json",
+  "blocked": "Full platform/device/AT/installed/offline/physical-memory and live-object acceptance remain Blocked; stop before Module 6 / 6.1a",
+  "documentation_sha256": {
+    "AGENTS.md": "de7f07747ba6320a997a2df078803da622382faf662431fd92659ad236b5ed69",
+    "README.md": "dfc69415d159e9e5cd244b9fe97f8d76ea6d29a70a4a7745a4769b61ffbee30d",
+    "cmake/README.md": "d50debfb0544309f60d7d51fafd71bfb9fdd6715627bbd6a0c135b277892310a",
+    "docs/README.md": "3642d6a996d7b9f6cad5c3f80b4d9ffef52949d73d34d3a3da1f440c6eeee5d6",
+    "docs/TECH_SPEC.md": "e7a29a893b13e6e6356c6bf16a54049d10dec3ff8d4d428ca28f4e704274cbbb",
+    "docs/TRACEABILITY.md": "f20a4dee151138996a63f43d27e0d52cf9e0bb16f344150c319dd21abb153921",
+    "docs/testing/task-status.json": "5252f06d7e81dc73071ffd23613ddd6f76cff8450510a29f323625b3d44cbfb1",
+    "docs/testing/requirements.json": "cfe35f12f1555f77ba4e9e9a81a0a46c20edcd4bbdfc648d6814fa09f9cd708e",
+    "docs/testing/module-5.md": "8c7380ffd6046fa2973dc111569d8b41b72b800cfbeb84415286fcea5147497e",
+    "docs/decisions/implementation-scope.json": "611ac5d662a9b8aac59421011d86493857ac3121fc82c059f2f679992f680323",
+    "docs/decisions/module-5-evaluation.md": "38c873967d484b88f6b00df3fa8533c462b70bcdf2254a17a3a529630315345b",
+    "docs/scripts/check_specs.py": "3bb75a097b3ed238917e1098bc7c9edec7ec4e7b60c12f6e8363cab3d8abd31e",
+    "docs/SPEC_VALIDATION.json": "d91b6eb437b48750228bf6acef60b86b093af98b0e17eed56e4dc98a1baad3d4"
+  }
+}

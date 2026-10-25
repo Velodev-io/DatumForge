@@ -1,0 +1,19 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 22: module3.input
+1/7 Test #22: module3.input ....................   Passed    1.63 sec
+    Start 23: module3.shapeEditing
+2/7 Test #23: module3.shapeEditing .............   Passed    2.15 sec
+    Start 24: module3.gestures
+3/7 Test #24: module3.gestures .................   Passed    1.78 sec
+    Start 25: module3.arcs
+4/7 Test #25: module3.arcs .....................   Passed    1.11 sec
+    Start 26: module3.interaction
+5/7 Test #26: module3.interaction ..............   Passed    1.85 sec
+    Start 27: module3.solver
+6/7 Test #27: module3.solver ...................   Passed    0.55 sec
+    Start 29: module4.workspace
+7/7 Test #29: module4.workspace ................   Passed    1.55 sec
+
+100% tests passed, 0 tests failed out of 7
+
+Total Test time (real) =  10.61 sec

@@ -1,6 +1,6 @@
 # Module 3 — sketch and expression adapter decisions
 
-Current scope note: the later explicit Module 4 instruction supersedes the historical 4.1a stop boundary below. See [authorization](implementation-scope.json). Stop before Module 5; earlier evidence remains scoped to its original run.
+Current scope note: subsequent explicit authorization covers Modules 8–10 and all three Arc methods. See [authorization](implementation-scope.json). Stop before Module 11; earlier evidence remains scoped to its original run.
 
 Date: 20 October 2026. Authorized scope: Module 3 and subsequent input repairs; workspace UI 4.0a–c
 was authorized separately. Stop before 4.1a exact features.
@@ -60,9 +60,20 @@ live unit readout. Zero-radius completion adds no entity. Pointer movement holds
 only transient coordinates or updates the local semantic projection; no worker
 request or project write is queued per movement. Worker solve/preview occurs at a
 completed direct-edit gesture, property apply or explicit preview. Circle/arc
-numeric creation remains precise. Arcs use numeric radius/start/positive-sweep;
-a three-point arc gesture remains unavailable. Tool switches drop unfinished
-input and retain completed geometry.
+numeric creation remains precise. Centerpoint Arc input now uses center → start/radius → end clicks with continuous
+preview, radius/angle/direction readout, and clockwise/counterclockwise pointer
+sweeps. First/second clicks are transient; only the final valid endpoint adds an
+undoable local arc. A clockwise construction is stored by reversing its endpoints
+into the existing positive-sweep model, without a schema change. Zero-radius,
+zero/full-turn sweeps stay pending; Escape or a tool switch drops the construction.
+Resize/pan/zoom preserve world anchors. Numeric input cancels any unfinished pointer
+construction and remains an independent precise path. The later all-arc follow-up
+adds start/end/bend 3 Point Arc and endpoint-based Tangent Arc with four
+intent directions, two curvature sides, and normal intent. Returning to the
+source endpoint resets intent. Sources are Line/Arc only; ambiguous shared
+endpoints require selecting the source curve. Chained Line moves away/returns to
+enter Arc, then resumes Line after completion. Tool switches drop unfinished
+input and retain completed geometry. The shared flyout remembers the method.
 
 Select mode exposes rectangle corners and circle radial handles. An isolated,
 axis-aligned four-line loop is recognized semantically without changing persistent
@@ -94,6 +105,8 @@ the existing storage bounds and does not copy BReps.
 | Horizontal / Vertical | One line; equal endpoint Y / X |
 | Parallel / Perpendicular | Two distinct lines; normalized cross / dot residual |
 | Tangent | Line followed by circle; infinite supporting line tangent to circumference |
+| ArcTangent / ArcNormal | Arc endpoint coincident with a Line/Arc endpoint; outgoing tangent directions parallel / perpendicular |
+| ArcCoincident | Arc endpoint equal to a Line/Arc endpoint or Point; no angular relation |
 | Equal | Two lines (length) or two circles (radius) |
 | Length | One line; positive endpoint distance |
 | Distance | Two distinct points; positive Euclidean distance |
@@ -102,9 +115,16 @@ the existing storage bounds and does not copy BReps.
 
 Unsupported combinations are disabled with a reason in the selection form and
 rejected independently by the worker. Fixed lines/circles use fixed endpoints or
-centers plus dimensions. Arc endpoint/coincidence/tangency and general curve
-constraints are unavailable; free arc start/sweep variables remain visible in the
-freedom count and cannot produce a false fully-defined result.
+centers plus dimensions. Joined endpoint selectors are zero/one in the existing
+constraint `value`/`second` fields, with stable curve references and separate
+relation IDs. Point targets require selector zero. These new constraint kinds
+require the current reader; old projects are not migrated. The worker adds
+solver-only endpoint variables and ArcRules, counts them in the existing cap,
+then restores canonical start/sweep before residual/rank and persisted-geometry
+checks. Independent residuals include endpoint equality and tangent cross or
+normal dot products. Stored angles must agree with solved geometry; arc join
+branch flips are refused. General ellipse/spline constraints remain unavailable;
+free arc start/sweep variables remain visible in freedom counts.
 
 All variables and constants outlive the local PlaneGCS system. Coordinates are
 translated and normalized by the current sketch extent/radius (minimum scale
@@ -159,4 +179,6 @@ network service, but an OS-network-disabled run is separately Blocked until a
 controlled procedure is available. Additional snapping preferences, advanced arc
 constraints, reference-plane attachment to future solids, indexed feature history,
 and broad resource/performance acceptance remain explicit later work. Workspace UI 4.0a–c is authorized separately; 4.1a exact features
-requires another user instruction.
+was subsequently authorized; the current stop is before Module 11.
+
+Current arc comparison and test scope: [all-arc evidence](../testing/module-3-all-arcs.md). Original adapter/repair evidence remains historical and cannot certify this later source.
