@@ -357,8 +357,12 @@ void MainWindow::refreshProjectUI() {
                 }
                 for (auto f : d.value("features").toArray()) {
                     auto feature = f.toMap();
-                    auto *node = new QTreeWidgetItem(row, {feature.value("name").toString() + (feature.value("suppressed").toBool()?" [Suppressed]":QString()) + (d.value("feature_status").toString()=="Stale"?" [STALE]":QString()) + " (" +
-                                                           feature.value("kind").toString() + ")"});
+                    auto *node = new QTreeWidgetItem(
+                        row, {feature.value("name").toString() +
+                              (feature.value("suppressed").toBool() ? " [Suppressed]" : QString()) +
+                              (d.value("feature_status").toString() == "Stale" ? " [STALE]"
+                                                                               : QString()) +
+                              " (" + feature.value("kind").toString() + ")"});
                     node->setData(0, Qt::UserRole + 1, documentId);
                     node->setData(0, Qt::UserRole + 2, feature.value("id").toString());
                     node->setData(0, Qt::UserRole + 5, feature.value("id").toString());
@@ -373,6 +377,19 @@ void MainWindow::refreshProjectUI() {
                     node->setData(0, Qt::UserRole + 2, sketchPanel->sketchId());
                 }
             }
+            if (d.value("type").toString() == "Assembly")
+                for (auto v : d.value("assembly").toMap().value("occurrences").toArray()) {
+                    auto o = v.toMap();
+                    auto *node = new QTreeWidgetItem(
+                        row, {o.value("name").toString() +
+                              (o.value("grounded").toBool() ? " [Grounded]" : "") +
+                              (o.value("suppressed").toBool() ? " [Suppressed]"
+                               : o.value("unloaded").toBool() ? " [Unloaded]"
+                               : o.value("hidden").toBool()   ? " [Hidden]"
+                                                              : "")});
+                    node->setData(0, Qt::UserRole + 1, documentId);
+                    node->setData(0, Qt::UserRole + 2, o.value("id").toString());
+                }
             for (auto parameter : d.value("parameters").toArray()) {
                 auto p = parameter.toMap();
                 auto unit = p.value("dimension").toString() == "length"

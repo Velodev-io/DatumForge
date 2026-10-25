@@ -1,7 +1,18 @@
 #include "Editing.hpp"
+#include "Constructions.hpp"
+#include "Curves.hpp"
+#include "Slots.hpp"
 #include <QSet>
 namespace cad::sketch {
 std::optional<Rectangle> rectangleOf(const Sketch &s, QString id) {
+    if (auto g = constructionOf(s, id); g && g->kind == "Rectangle") {
+        Rectangle r;
+        for (int i = 0; i < 4; ++i) {
+            r.points[i] = g->vertices[i];
+            r.lines[i] = g->edges[i];
+        }
+        return r;
+    }
     auto &selected = s.entity(id);
     QString first = selected.kind == "Point"  ? id
                     : selected.kind == "Line" ? selected.a
@@ -42,15 +53,21 @@ namespace {
 void movable(const Sketch &s, const QSet<QString> &ids) {
     for (auto &c : s.constraints)
         if (c.kind != "Horizontal" && c.kind != "Vertical" &&
-            (ids.contains(c.a) || ids.contains(c.b)))
+            (ids.contains(c.a) || ids.contains(c.b) || ids.contains(c.third)))
             throw domain::Error("ConstrainedGeometry",
                                 "Controlled by " + c.kind +
                                     ". Edit its dimension or relation in Properties.");
 }
 } // namespace
 Sketch dragEntity(const Sketch &s, QString id, Vec2 from, Vec2 to) {
-    auto result = s;
     auto &e = s.entity(id);
+    // A selection click must not reconstruct geometry or evaluate drag controls.
+    if (from.x == to.x && from.y == to.y)
+        return s;
+    if (auto g = constructionOf(s, id))
+        return g->kind == "Slot" ? dragSlot(s, *g, {to.x - from.x, to.y - from.y})
+                                 : dragConstruction(s, *g, id, {to.x - from.x, to.y - from.y});
+    auto result = s;
     Vec2 delta{to.x - from.x, to.y - from.y};
     QSet<QString> affected{id};
     if (auto rect = rectangleOf(s, id)) {
@@ -81,6 +98,15 @@ Sketch dragEntity(const Sketch &s, QString id, Vec2 from, Vec2 to) {
                 auto q = s.entity(p).point;
                 result.entity(p).point = {q.x + delta.x, q.y + delta.y};
             }
+    } else if (advancedCurve(e.kind)) {
+        auto controls = controlPoints(e);
+        QSet<QString> points(controls.begin(), controls.end());
+        affected.unite(points);
+        movable(s, affected);
+        for (auto id : points) {
+            auto p = s.entity(id).point;
+            result.entity(id).point = {p.x + delta.x, p.y + delta.y};
+        }
     } else if (e.kind == "Circle" || e.kind == "Arc") {
         movable(s, affected);
         auto p = s.entity(e.a).point;
@@ -94,8 +120,9 @@ Sketch dragEntity(const Sketch &s, QString id, Vec2 from, Vec2 to) {
             points.insert(e.b);
         }
         for (auto &curve : s.entities)
-            if (points.contains(curve.a) || points.contains(curve.b))
-                affected.insert(curve.id);
+            for (auto point : controlPoints(curve))
+                if (points.contains(point))
+                    affected.insert(curve.id);
         affected.unite(points);
         movable(s, affected);
         for (auto &p : points) {
@@ -107,7 +134,15 @@ Sketch dragEntity(const Sketch &s, QString id, Vec2 from, Vec2 to) {
     return result;
 }
 Sketch eraseEntity(const Sketch &s, QString id) {
+    if (auto g = constructionOf(s, id))
+        return eraseConstruction(s, *g);
     auto result = s;
+    if (s.entity(id).kind == "Point")
+        for (auto &curve : s.entities)
+            if (advancedCurve(curve.kind) && controlPoints(curve).contains(id))
+                throw domain::Error("ReferenceMissing",
+                                    "This point controls an exact curve; edit its control geometry "
+                                    "or delete the curve explicitly");
     QSet<QString> removed{id}, support;
     if (auto r = rectangleOf(s, id))
         for (auto &l : r->lines)
@@ -117,6 +152,9 @@ Sketch eraseEntity(const Sketch &s, QString id) {
             removed.insert(e.id);
     for (auto &e : s.entities)
         if (removed.contains(e.id)) {
+            if (advancedCurve(e.kind))
+                for (auto id : controlPoints(e))
+                    support.insert(id);
             if (!e.a.isEmpty())
                 support.insert(e.a);
             if (!e.b.isEmpty())
@@ -124,13 +162,17 @@ Sketch eraseEntity(const Sketch &s, QString id) {
         }
     for (auto &e : s.entities)
         if (!removed.contains(e.id)) {
+            if (advancedCurve(e.kind))
+                for (auto id : controlPoints(e))
+                    support.remove(id);
             support.remove(e.a);
             support.remove(e.b);
         }
     removed.unite(support);
     std::erase_if(result.entities, [&](auto &e) { return removed.contains(e.id); });
-    std::erase_if(result.constraints,
-                  [&](auto &c) { return removed.contains(c.a) || removed.contains(c.b); });
+    std::erase_if(result.constraints, [&](auto &c) {
+        return removed.contains(c.a) || removed.contains(c.b) || removed.contains(c.third);
+    });
     result.validate();
     return result;
 }

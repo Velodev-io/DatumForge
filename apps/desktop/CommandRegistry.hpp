@@ -105,6 +105,18 @@ class CommandRegistry {
         actions.insert(id, a);
         return a;
     }
+    bool matches(QAction *action, QString query) const {
+        QString aliases = action->objectName() + " " + action->property("aliases").toString();
+        if (action->objectName() == "saveAs")
+            aliases += " duplicate copy";
+        if (action->objectName() == "extrude")
+            aliases += " boss pad protrusion";
+        if (action->objectName() == "assembly")
+            aliases += " component mate constraint";
+        if (action->objectName() == "drawing.pdf")
+            aliases += " print drawing export";
+        return (action->text() + " " + aliases).contains(query.trimmed(), Qt::CaseInsensitive);
+    }
     QAction *get(const QString &id) const {
         return actions.value(id);
     }

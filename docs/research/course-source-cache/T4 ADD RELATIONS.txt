@@ -1,0 +1,797 @@
+
+=== PDF PAGE 1 ===
+Tutorial 4
+Adding Relations and Dimensions to
+Sketches
+
+=== PDF PAGE 2 ===
+Learning Objectives
+After completing this tutorial, student will be able to:
+• Add geometric relations to sketches
+• Dimension the sketches
+• Modify the dimensions of sketches
+• Understand the concept of fully defined sketches
+• View and examine the relations applied to sketches
+• Open an existing file
+TUTORIALS
+Tutorial Exercise 1
+In this tutorial, you will draw the sketch of the model shown in Figure 4-1. You will draw
+the sketch using the mirror line and then add the required relations and dimensions to it.
+The sketch is shown in Figure 4-2. The solid model is given for your reference only.
+(Expected time: 30 min)
+Figure 4-1 Solid model for Tutorial 1
+
+=== PDF PAGE 3 ===
+Figure 4-2 Sketch of the model
+The following steps are required to complete this tutorial:
+a. Start SOLIDWORKS and then start a new part document.
+b. Create a mirror line using the Centerline tool.
+c. Invoke the Dynamic Mirror tool.
+d. Draw the sketch of the model on one side of the mirror line so that it is automatically
+drawn on the other side, refer to Figures 4-3 through 4-8.
+e. Add relations to the sketch, refer to Figure 4-16.
+f. Add dimensions to the sketch and fully define the sketch, refer to Figures 4-20 through
+4-22.
+g. Save the sketch and then close the document.
+Starting SOLIDWORKS and a New Part Document
+1. Start SOLIDWORKS and then invoke the Part environment by choosing the Part
+button from the New SOLIDWORKS Document dialog box.
+Next, you need to invoke the sketching environment.
+2. Choose the Sketch tab from the CommandManager. Next, choose the Sketch
+button from the Sketch CommandManager; the Edit Sketch PropertyManager is
+invoked and you are prompted to select the plane to create the sketch.
+3. Select the Front Plane as the sketching plane to invoke the sketching environment.
+
+=== PDF PAGE 4 ===
+In the previous tutorials, you used the grid and snap settings to create sketches. From this
+tutorial onward, you are recommended not to use those settings. Now, you can draw the
+sketches at arbitrary locations and then apply dimensions and relations to them.
+4. If the grid is displayed, invoke the Document Properties - Grid/Snap dialog box by
+choosing Tools > Options from the SOLIDWORKS menus and then clear the Display
+grid check box from the Grid area to hide the grids. Also, clear the Grid check box from
+the Sketch snaps area in the System Options - Relations/Snaps dialog box.
+5. Invoke the Document Properties - Units dialog box and set the units to millimeters
+and degree for measuring linear and angular dimensions, respectively. However, if you
+have selected millimeters as unit while installing SOLIDWORKS, you can skip this step.
+Drawing the Mirror Line
+In this section, you will draw the sketch of the given model with the help of the Dynamic
+Mirror tool. So, when you draw an entity on one side of the centerline, the same entity
+will be drawn automatically on its other side. Also, the symmetric relation will be applied
+to the entities on both sides of the centerline. Therefore, if you modify an entity on one
+side of the centerline, the same modification will be reflected in the mirrored entity on
+the other side and vice versa.
+The origin of the sketching environment is placed at the center of the drawing area and as
+is evident from Figure 4-2, you need to create the sketch in the first quadrant. Therefore,
+it is recommended that you modify the drawing area such that the area in the first
+quadrant is increased. This can be done by using the Pan tool.
+1. Press the CTRL key and the middle mouse button to invoke the Pan tool and then drag
+the cursor toward the bottom left corner of the drawing area to increase the drawing area
+in the first quadrant. While dragging the cursor, you will notice that the origin is also
+moving toward the bottom left corner of the drawing area. Next, release the CTRL key
+and the middle mouse button.
+The Pan tool is used to drag the view in the current display. You can also invoke the Pan
+tool by choosing View > Modify > Pan from the SOLIDWORKS menus.
+
+=== PDF PAGE 5 ===
+2. Choose the Centerline button from the Line flyout in the Sketch
+CommandManager; the Insert Line PropertyManager is displayed.
+3. Move the line cursor to a location whose coordinates are close to 45 mm, 70 mm, and 0
+mm. Now, specify the start point of the centerline at this location.
+4. Move the line cursor vertically downward to draw a line of length close to 80 mm. As
+soon as you specify the endpoint of the centerline, a rubber-band line is attached to the
+line cursor.
+5. Right-click to display the shortcut menu and then choose the Select option from the
+shortcut menu to exit the Centerline tool.
+6. Press the F key; the sketch is zoomed and fits the screen.
+7. Select the centerline and choose Tools > Sketch Tools > Dynamic Mirror from the
+SOLIDWORKS menus; the centerline is converted into a mirror line.
+Drawing the Sketch
+You will draw the sketch on the right of the mirror line and the same sketch will
+automatically be drawn on the other side of the mirror line.
+1. Choose the Line button from the Sketch CommandManager; the arrow cursor is
+replaced by the line cursor.
+2. Move the line cursor towards the centerline. Next, specify the start point of the line when
+the cursor snaps to the centerline; a coincident symbol is displayed below the cursor, and
+coordinate values are displayed close to 45 mm, 10 mm, and 0 mm.
+Note
+If the cursor does not snap to the centerline at the location whose coordinates are 45 mm,
+10 mm, and 0 mm, you need to enable the snapping for the nearest point. To do so, invoke
+the System Options - Relations/Snaps dialog box and then select the Nearest check box
+from it.
+
+=== PDF PAGE 6 ===
+3. Move the cursor horizontally toward the right and specify the endpoint of the line when
+its length above the line cursor shows a value close to 15. As soon as you press the left
+mouse button to specify the endpoint of the line, a line of the same length is drawn
+automatically on the other side of the mirror line, refer to Figure 4-3.
+In Figure 4-3, the display of relations has been turned off by choosing the View Sketch
+Relations button in the Hide/Show Items flyout in the View (Heads-Up) toolbar.
+Note
+The mirrored entity that is automatically created on the left of the mirror line gets merged
+with the line drawn on the right. Therefore, the entire line becomes a single entity. The
+mirror image of the line will merge with the line that you draw only if one of the endpoints
+of the line is coincident with the mirror line.
+4. Move the cursor vertically upward. Specify the endpoint of the line when the length of
+the line on the line cursor displays a value close to 10. Figure 4-4 shows the sketch after
+drawing the vertical lines.
+Figure 4-3 Line drawn automatically on the other side of the mirror line
+
+=== PDF PAGE 7 ===
+Figure 4-4 Left line drawn by mirroring
+5. Move the line cursor horizontally toward the right. Specify the endpoint of the line
+when the length of the line on the line cursor displays a value close to 10.
+6. Move the line cursor vertically downward. Specify the endpoint when the length of the
+line on the line cursor displays a value close to 10.
+7. Move the line cursor horizontally toward the right. Specify the endpoint when the
+length of the line on the line cursor displays a value close to 10.
+8. Move the line cursor vertically upward. Specify the endpoint when the length of the line
+on the line cursor displays a value close to 40.
+9. Move the line cursor at an angle close to 135-degree from the horizontal reference and
+specify the endpoint of the line when length of the line above the line cursor displays a
+value close to 14. For angle value refer to the Angle spinner in the Parameters rollout
+of the PropertyManager. Figure 4-5 shows the sketch after drawing the inclined line.
+10. Move the line cursor horizontally toward the left. Specify the endpoint when the
+cursor snaps to the mirror line and the mirror line is highlighted. Double-click anywhere
+in the drawing area to end the creation of line. The sketch after completing the outer
+profile is shown in Figure 4-6.
+Figure 4-5 Sketch after drawing the inclined line
+
+=== PDF PAGE 8 ===
+Figure 4-6 Sketch after completing the outer profile of the sketch
+Next, you will draw the sketch of the inner cavity. To draw the sketch of the inner cavity,
+you need to start with the lower horizontal line.
+11. Specify the start point of the line when the coordinates display as 45, 25, 0 in the status
+bar. Next, move the cursor horizontally toward the right. Specify the endpoint when the
+length of the line above the line cursor displays a value close to 15.
+12. Move the line cursor vertically upward. Specify the endpoint when the length of the
+line on the line cursor displays a value close to 10.
+13. Move the line cursor horizontally toward the left. Specify the endpoint when the
+length of the line on the line cursor displays a value close to 10.
+14. Move the line cursor vertically downward. Specify the endpoint when the length of the
+line on the line cursor displays a value close to 5.
+15. Move the line cursor horizontally toward the left. Specify the endpoint when the line
+cursor snaps to the mirror line.
+16. Double-click anywhere in the drawing area to end the creation of the line. The sketch
+after completing the inner cavity is shown in Figure 4-7.
+17. Choose the Circle button from the Sketch CommandManager to invoke the Circle
+tool.
+
+=== PDF PAGE 9 ===
+18. Move the circle cursor to the point where the inferencing lines that are originating
+from the endpoints of the right inclined line are intersecting.
+19. Specify the center of the circle when the coordinates display as 70, 50, 0 in the status
+bar. Next, move the circle cursor toward the left to define the radius of the circle. Press
+the left mouse button when the radius of the circle above the circle cursor displays a
+value close to 5.
+The circle is automatically mirrored on the other side of the mirror line, refer to Figure 4-
+8.
+20. Exit the Dynamic Mirror tool by choosing Tools > Sketch Tools > Dynamic Mirror
+from the SOLIDWORKS menus.
+21. As the circles created previously are still selected, press the ESC key to remove the
+circles from the selection set. The sketch after drawing the circle is shown in Figure 4-8.
+Figure 4-7 Sketch after drawing the inner cavity
+
+=== PDF PAGE 10 ===
+Figure 4-8 Sketch after drawing the circles
+Adding Geometric Relations to the Sketch
+After drawing the sketch, you need to add geometric relations to it by using the Add
+Relations PropertyManager. Relations are applied to a sketch to constrain its degree
+of freedom, reduce the number of dimensions in the sketch, and capture the design
+intent of the sketch.
+1. Choose the Add Relation button from the Display/Delete Relations flyout in the
+Sketch CommandManager, refer to Figure 4-9; the Add Relations PropertyManager
+is displayed, as shown in Figure 4-10. Also, the confirmation corner is displayed at the
+upper right corner of the drawing area.
+Figure 4-9 The Add Relation button in the Display/Delete Relations flyout
+
+=== PDF PAGE 11 ===
+Figure 4-10 The Add Relations PropertyManager
+Geometric relations are logical operations that are performed to add relationships (such as
+tangent or perpendicular) between the sketched entities, planes, axes, edges, or vertices.
+The relations applied to the sketched entities are used to capture the design intent.
+Geometric relations constrain the degree of freedom of the sketched entities. You can
+apply relations to a sketch by using the Add Relations PropertyManager.
+The Add Relations PropertyManager is widely used to apply relations to a sketch in the
+sketching environment of SOLIDWORKS.
+In SOLIDWORKS, some of the relations are applied automatically to the sketch entities
+while drawing. For example, when you specify the start point of a line and move the
+cursor horizontally toward the right or left, you will notice that the horizontal line symbol
+is displayed below the line cursor. This is the symbol of the Horizontal relation that is
+applied to the line while drawing. If you move the cursor vertically downward or upward,
+the vertical line symbol for the Vertical relation will be displayed below the line cursor. If
+you move the cursor to the intersection of two or more sketched entities, the intersection
+symbol will appear below the cursor. Similarly, other relations are also applied
+automatically to the sketch when you draw it. These automatically applied relations are
+called Automatic Relations.
+Tip
+You can activate or deactivate the Automatic Relations option. To do so, choose the
+Options button from the Menu Bar; the System Options - General dialog box will be
+displayed. Select the Relations/Snaps option from the area on the left and select the
+Automatic relations check box from this dialog box. Next, choose the OK button.
+Alternatively, choose Tools > Sketch Settings > Automatic Relations from the
+SOLIDWORKS menu. This is a toggle button.
+The relations that can be applied automatically are listed next:
+
+=== PDF PAGE 12 ===
+Horizontal Vertical Coincident Midpoint
+Intersection Tangent Perpendicular
+Tip
+While drawing a sketch, you will observe that two types of inferencing lines are displayed:
+blue and yellow. The yellow inferencing line indicates that a relation has been applied
+automatically to the sketch, whereas the blue inferencing line indicates that no automatic
+relation has been applied.
+2. Select the center point of the circle on the right and then the lower endpoint of the right
+inclined line; the Add Relations PropertyManager is modified and the names of the
+selected entities are displayed in the Selected Entities rollout of the PropertyManager,
+refer to Figure 4-11. Also, the relations that can be applied to the two selected entities
+are displayed in the Add Relations rollout of the PropertyManager, refer to Figure 4-11.
+Note that the Horizontal button is highlighted, suggesting that the horizontal relation is
+the most appropriate relation for the selectedentities.
+Figure 4-11 The Add Relations PropertyManager displayed after selecting the entities
+
+=== PDF PAGE 13 ===
+Note
+The names of the entities displayed in the Selected Entities rollout of the Add Relations
+PropertyManager may be different from those displayed on your computer screen.
+The Selected Entities rollout of the PropertyManager is used to display the name of the
+entities selected to apply relations. In case you have selected the wrong entity to apply
+relation, you can remove it from the selection set of the Selected Entities rollout by
+selecting it again from the drawing area. Alternatively, select the entity from the Selected
+Entities rollout and then right-click to display the shortcut menu. Next, choose the Delete
+option from the shortcut menu. If you choose the Clear Selections option from the shortcut
+menu, all the entities will be removed from the selection set.
+The Add Relations rollout of the PropertyManager is used to display the list of all the
+relations that can be applied to a selected entity or entities. Also, it displays the most
+appropriate relation for the selected entities in bold letters.
+The relations that can be applied to the sketches using the Add Relations rollout are
+discussed next.
+Horizontal
+The Horizontal relation forces one or more selected lines or centerlines to become
+horizontal. You can also select an external entity such as an edge, plane, axis, or sketch
+curve on an external sketch that will act as a line to apply this relation. You can also force
+two or more points to become horizontal using the Horizontal relation. The point can be
+a sketch point, a center point, an endpoint, a control point of a spline, or an external entity
+such as origin, vertex, axis, or point in an external sketch. To apply this relation, invoke
+the Add Relations PropertyManager. Select the entity or entities and then choose the
+Horizontal button from the Add Relations rollout in the Add Relations
+PropertyManager. You will notice that the name of the horizontal relation will be
+displayed in the Existing Relations rollout.
+Vertical
+The Vertical relation forces one or more selected lines or centerlines to become vertical.
+You can force two or more points to become vertical using the Vertical relation. To apply
+this relation, invoke the Add Relations PropertyManager and then select the entity or
+entities on which relation has to be applied. Next, choose the Vertical button from the
+Add Relations rollout. You will notice that the name of the vertical relation is displayed
+in the Existing Relations rollout.
+
+=== PDF PAGE 14 ===
+Collinear
+The Collinear relation forces the selected lines to lie on the same infinite line. To apply
+this relation, select the lines on which the Collinear relation has to be applied. Next,
+choose the Collinear button from the Add Relations rollout.
+Coradial
+The Coradial relation forces the selected arcs or circles to share the same radius and
+center point. You can also select an external entity that projects as an arc or a circle in
+the sketch to apply this relation. To apply this relation, invoke the Add Relations
+PropertyManager and select two arcs or circles, or an arc and a circle. Next, choose
+the Coradial button from the Add Relations rollout.
+Perpendicular
+The Perpendicular relation forces the selected lines to become perpendicular to each
+other. To apply this relation, invoke the Add Relations PropertyManager. Then, select
+two lines and choose the Perpendicular button from the Add Relations rollout. Figure
+4-12 shows two lines before and after applying the Perpendicular relation.
+Parallel
+The Parallel relation forces the selected lines to become parallel to each other. To apply
+this relation, invoke the Add Relations PropertyManager. Then, select two lines and
+choose the Parallel button from the Add Relations rollout. Figure 4-13 shows two lines
+before and after applying this relation.
+ParallelYZ
+The ParallelYZ relation forces a line in the three-dimensional (3D) sketch to become
+parallel to the YZ plane with respect to the selected plane. To apply this relation, invoke
+the Add Relations PropertyManager. Next, select a line in the 3D sketch and then
+select a plane. Next, choose the ParallelYZ button from the Add Relations rollout.
+Note
+You will learn more about the 3D sketch in the later tutorials.
+
+=== PDF PAGE 15 ===
+Figure 4-12 Entities before and after applying the Perpendicular relation
+Figure 4-13 Entities before and after applying the Parallel relation
+ParallelZX
+The ParallelZX relation forces a line in the 3D sketch to become parallel to the ZX
+plane with respect to the selected plane. To apply this relation, invoke the Add Relations
+PropertyManager. Select a line in the 3D sketch and then select a plane. Next, choose
+the ParallelZX button from the Add Relations rollout.
+AlongZ
+The AlongZ relation forces a line in the 3D sketch to become normal to a selected
+plane. To apply this relation, invoke the Add Relations PropertyManager. Select a
+line in the 3D sketch and then select a plane. Next, choose the AlongZ button from the
+Add Relations rollout.
+Tangent
+
+=== PDF PAGE 16 ===
+The Tangent relation forces a selected arc, circle, spline, or ellipse to become tangent to
+the other arc, circle, spline, ellipse, line, or edge. To apply this relation, invoke the Add
+Relations PropertyManager. Select the two entities and choose the Tangent button
+from the Add Relations rollout. Figure 4-14 shows a line and a circle before and after
+applying the Tangent relation. Figure 4-15 shows two arcs after applying the Tangent
+relation.
+Figure 4-14 Applying the Tangent relation to a line and a circle
+Figure 4-15 Applying the Tangent relation to two arcs
+Concentric
+The Concentric relation forces a selected arc or circle to share the same center point
+with the other arc, circle, point, vertex, or circular edge. To apply this relation, invoke
+the Add Relations PropertyManager. Next, select the required entity and then choose
+the Concentric button from the Add Relations rollout.
+Equal
+
+=== PDF PAGE 17 ===
+The Equal relation forces the selected lines to have equal length and the selected arcs,
+circles, or arc and circle to have equal radii. To apply this relation, invoke the Add
+Relations PropertyManager. Next, select the required entity and choose the Equal
+button.
+Intersection
+The Intersection relation forces a selected point to move at the intersection of two
+selected lines. To apply this relation, invoke the Add Relations PropertyManager.
+Next, select the required entity and then choose the Intersection button from the Add
+Relations rollout.
+Coincident
+The Coincident relation forces a selected point to be coincident with a selected line,
+arc, circle, or ellipse. To apply this relation, invoke the Add Relations
+PropertyManager. Select the required entity and then choose the Coincident button
+from the Add Relations rollout.
+Midpoint
+The Midpoint relation forces a selected point to move to the midpoint of a selected line.
+To apply this relation, invoke the Add Relations PropertyManager. Select the point
+and the line. Next, choose the Midpoint button from the Add Relations rollout.
+Symmetric
+The Symmetric relation forces two selected lines, arcs, points, and ellipses to remain
+equidistant from the centerline. This relation also forces the entities to have the same
+orientation. To apply this relation, invoke the Add Relations PropertyManager. Select
+the required entity and then select a centerline. Choose the Symmetric button from the
+Add Relations rollout.
+Fix
+The Fix relation forces the selected entity to be fixed at the specified position. If you
+apply this relation to a line or an arc, its location will be fixed but you can change its size
+by dragging the endpoints. To apply this relation, invoke the Add Relations
+PropertyManager. Next, select the required entity and choose the Fix button.
+Merge
+The Merge relation forces two sketch points or endpoints to merge at a single point. To
+
+=== PDF PAGE 18 ===
+apply this relation, invoke the Add Relations PropertyManager. Next, select the
+required entities and choose the Merge button from the Add Relations rollout.
+Pierce
+The Pierce relation forces a sketch point or the endpoint of an entity to be coincident
+with an entity of another sketch. To apply this relation, invoke the Add Relations
+PropertyManager. Next, select the required entities and choose the Pierce button from
+the Add Relations rollout.
+Tip
+You can also apply the relations using the Properties PropertyManager. This
+PropertyManager is automatically invoked, if you select more than one entity from the
+drawing area. The possible relations for the selected geometry will be displayed in the
+Add Relations rollout. Choose the relation you need to apply to the selected geometry.
+Alternatively, select the entity or entities to which you need to apply the relation and do
+not move the mouse for a while; a pop-up toolbar will be displayed with possible
+relations. Select the required relation from the pop-up toolbar. You can also select the entity
+or entities and invoke the shortcut menu to display these relations.
+3. Choose the Horizontal button from the Add Relations rollout; the Horizontal relation
+is applied to the selected set of entities. Also, the name of the entities are displayed in
+the Existing Relations rollout of the PropertyManager.
+The Existing Relations rollout of the PropertyManager displays the relations that are
+already applied to the selected sketched entities. It also shows the status of the sketched
+entities. You can delete the existing relation from this rollout. To do so, select the existing
+relation from the selection box and right-click to display the shortcut menu. Choose the
+Delete option from this shortcut menu to delete the selected relation. If you choose the
+Delete All option, all relations displayed in the selection box of the Existing Relations
+rollout will be deleted.
+4. After applying the Horizontal relation, move the cursor to the drawing area and right-
+click to display a shortcut menu. Choose the Clear Selections option from the shortcut
+menu to remove the selected entities from the selection set.
+5. Select the center point of the circle on the right and then the upper endpoint of the right
+
+=== PDF PAGE 19 ===
+inclined line.
+The relations that can be applied to the selected entities are displayed and the Vertical
+button is highlighted in the Add Relations rollout.
+6. Choose the Vertical button from the Add Relations PropertyManager to apply the
+Vertical relation to the selected entities. Next, right-click in the drawing area and
+choose the Clear Selections option.
+7. Select the entities, as shown in Figure 4-16. Choose the Equal button from the Add
+Relations rollout in the Add Relations PropertyManager to apply the Equal relation
+between them.
+Figure 4-16 Entities to be selected to apply the Equal relation
+8. Choose the OK button from the Add Relations PropertyManager or choose OK from
+the confirmation corner to close the PropertyManager. Click anywhere in the drawing
+area to clear the selected entities.
+Applying Dimensions to the Sketch
+Next, you will apply dimensions to the sketch and fully define it. After drawing the sketch
+and adding relations, the most important step in creating a design is dimensioning.
+1. Choose Options from the Menu Bar; the System Options - General dialog box is
+displayed. Select the Input dimension value check box, if it is cleared, and then choose
+OK from the System Options - General dialog box. This check box is selected to
+
+=== PDF PAGE 20 ===
+invoke the Modify dialog box.
+The Modify dialog box is used to enter a new dimension value. SOLIDWORKS being a
+parametric software, the entity on dimensioning is driven by the specified value,
+irrespective of the original size. Therefore, when you apply and modify the dimension of
+an entity, it is forced to change its size in accordance with the specified dimension value.
+2. Choose the Smart Dimension button from the Sketch CommandManager to
+apply dimensions. You can also right-click in the drawing area and choose the Smart
+Dimension option from the shortcut menu or use the Mouse Gesture to invoke this tool.
+As soon as you invoke the Smart Dimension tool, the select cursor is replaced by the
+dimension cursor.
+In SOLIDWORKS, you can dimension any kind of entity by using the Smart Dimension
+tool, which is available in the Sketch CommandManager. If you use the Smart
+Dimension tool, the type of dimension to be applied will depend on the type of entity
+selected. For example, if you select a line, then a horizontal, vertical, or aligned dimension
+will be applied. If you select a circle; a diametric dimension will be applied. Similarly, if
+you select an arc, a radius dimension will be applied. However, if you want to apply a
+particular dimension, then you need to choose the required tool from the Smart Dimension
+flyout in the Sketch CommandManager, refer to Figure 4-17.
+Figure 4-17 Tools in the Smart Dimension flyout
+The tools in the Smart Dimension flyout are discussed next.
+Horizontal Dimension
+
+=== PDF PAGE 21 ===
+The Horizontal Dimension tool is used to apply the horizontal dimension on a selected
+line or between two points. The points can be the endpoints of lines or arcs, or the center
+points of circles, arcs, ellipses, or parabolas.
+Vertical Dimension
+The Vertical Dimension tool is used to apply the vertical dimension on a selected line
+or between two points. The points can be the endpoints of lines or arcs, or the center
+points of circles, arcs, ellipses, or parabolas.
+Ordinate Dimension
+The Ordinate Dimension tool is used to dimension a sketch with respect to a specified
+datum. Depending on the requirement of the design, the datum can be an entity in the
+sketch or the origin. The ordinate dimensions are of two types, horizontal and vertical.
+Horizontal Ordinate Dimension
+The Horizontal Ordinate Dimension tool is used to dimension the horizontal distances
+of the selected entities from the specified datum, refer to Figure 4-18. Note that when
+you apply the ordinate dimensions, the Modify dialog box will not be displayed to
+modify the dimension values. After placing all the ordinate dimensions, you need to exit
+the ordinate dimensioning tool and then double-click on the dimensions to modify their
+values.
+Figure 4-18 Horizontal ordinate dimensions
+Vertical Ordinate Dimension
+The Vertical Ordinate Dimension tool is used to dimension the vertical distances of
+the selected entities from the specified datum, refer to Figure 4-19.
+
+=== PDF PAGE 22 ===
+Figure 4-19 Vertical ordinate dimensions
+Path Length Dimension
+The Path Length Dimension tool is used to dimension a chain of sketch entities which
+are coincident. You can set the dimension as a driving dimension, so that when you drag
+the entities, the shape of the path changes but its length remains same.
+After invoking the Smart Dimension tool, you need to apply dimensions.
+3. Move the cursor to the origin and click when an orange circle is displayed.
+4. Select the outer left vertical line (Figure 4-20, line 1); a horizontal dimension is attached
+to the cursor.
+5. Place it at a suitable location; the Modify dialog box is displayed, refer to Figure 4-21.
+Enter 10 in the edit box of this dialog box and press ENTER.
+Tip
+If the Modify dialog box is not displayed on placing the dimension, you need to set its
+preference manually. To do so, invoke the System Options - General dialog box and select
+the Input dimension value check box.
+
+=== PDF PAGE 23 ===
+Figure 4-20 The lines to be dimensioned are numbered for your reference
+Figure 4-21 The Modify dialog box
+You can modify the default dimension value by using the spinner or by entering a new
+value in the edit box available in the Modify dialog box. You can also drag the thumbwheel
+provided below the spinner, to the right and left to increase and decrease the dimension
+value.
+The buttons in the Modify dialog box are discussed next.
+The Save the current value and exit the dialog button is used to accept the current value
+and exit the dialog box. The Restore the original value and exit the dialog button is used
+to restore the last dimensional value applied to the sketch and exit the dialog box. The
+Regenerate the model with the current value button is used to preview the geometry of
+the sketch with the modified dimensional value. The Reverse the sense of the dimension
+button is used to flip the dimension value of an entity. This button will be available in the
+Modify dialog box when the selected dimension is a linear dimension. The Reset spin
+increment value button is used to modify the increment value of the spinner. If you
+
+=== PDF PAGE 24 ===
+choose this button, the Increment dialog box will be displayed. Enter a value and press
+ENTER. This new value will be added to or subtracted from the current value when you
+click on the spinner arrow. The Mark dimensions to be imported into a drawing button
+is chosen to make sure that the selected dimension is generated as a model annotation in
+the drawing views. If this button is not chosen, the selected dimension will not be
+generated in the drafting environment.
+Tip
+You can also enter the arithmetic symbols directly in the edit box of the Modify dialog box
+to calculate the dimension. For example, if you need to enter a dimension after solving a
+complex arithmetic function such as (220*12.5)-3+150, which is equal to 2897, there is no
+need to calculate this function using the calculator. Just enter the statement in the edit box
+and press ENTER; SolidWorks will automatically solve the mathematical expression to get
+the value of the dimension.
+Next, you need to create a vertical dimension between the origin and the left horizontal
+line.
+6. Select the origin and the left horizontal line with the dimension cursor (Figure 4-20, line
+2); a vertical dimension is attached to the cursor.
+7. Place the dimension at a suitable location; the Modify dialog box is displayed. Enter 10
+in the edit box of this dialog box and press ENTER.
+8. Move the dimension cursor to the lower right horizontal line (Figure 4-20, line 3); the
+line is highlighted.
+9. Select the line; a horizontal dimension is attached to the cursor.
+10. Move the cursor downward and click to place the dimension below the line, refer to
+Figure 4-22. As you place the dimension, the Modify dialog box is displayed.
+11. Enter 10 as the value of dimension in this dialog box and press ENTER; the dimension
+is placed and the length of line is modified to 10.
+12. Select the lower-middle horizontal line (Figure 4-20, line 4) by using the dimension
+
+=== PDF PAGE 25 ===
+cursor; a dimension is attached to the cursor.
+13. Move the cursor downward and click to place the dimension. Enter 30 in the Modify
+dialog box and press ENTER.
+14. Select the left vertical line (Figure 4-20, line 1) by using the dimension cursor; a
+dimension is attached to the cursor.
+15. Move the cursor to the left and then click to place the dimension. Enter 40 in the
+Modify dialog box and press ENTER.
+16. Select the right inclined line; a dimension is attached to the cursor. Move the cursor
+vertically upward to apply the horizontal dimension to the selected line. Click to place
+the dimension at an appropriate place, refer to Figure 4-22.
+17. Enter 10 in the Modify dialog box and press ENTER.
+18. Again, select the right inclined line; a dimension is attached to the cursor. Move the
+cursor horizontally toward the right to apply the vertical dimension to the selected line.
+Click to place the dimension at an appropriate place, refer to Figure 4-22.
+19. Enter 10 in the Modify dialog box and press ENTER.
+20. Move the cursor towards the left circle, and when the circle is highlighted, select it; a
+diameter dimension is attached to the cursor. Next, move the cursor outside the sketch.
+21. Place the diameter dimension. Next, enter 10 in the Modify dialog box and press
+ENTER.
+22. Select the lower horizontal line (Figure 4-20, line 5) of the inner cavity; a horizontal
+dimension is attached to the cursor. Next, select the lower middle horizontal line (Figure
+4-20, line 4) of the outer loop; a vertical dimension is attached to the cursor between the
+lower horizontal line of the inner cavity and the lower right horizontal line of the outer
+sketch.
+
+=== PDF PAGE 26 ===
+23. Move the cursor horizontally toward the right and place the dimension. Enter 15 in the
+Modify dialog box and press ENTER.
+24. Select the inner right vertical line (Figure 4-20, line 6) of the inner cavity and place the
+dimension outside the sketch. Enter 5 in the Modify dialog box and press ENTER.
+25. Select the upper-middle horizontal line (Figure 4-20, line 11) of the inner cavity and
+place the dimension above the slot. Enter 10 in the Modify dialog box and press ENTER.
+Note that the color of all theentities is changed from blue to black, which indicates that the
+sketch is fully defined. If the sketch is not fully defined, you may need to apply
+collinear relation between lines 7 and 8, or between lines 9 and 10, or between lines 2,
+3, and 4. The fully defined sketch after applying all required relations and dimensions is
+shown in Figure 4-22.
+It is important for you to understand the concept of fully defined sketches. A fully defined
+sketch is the one in which all entities of the sketch and their positions are completely
+defined by the relations or dimensions, or both. Also, all degrees of freedom of a sketch
+are constrained. Therefore, the sketched entities cannot move or change their size and
+location unexpectedly. If a sketch is not fully defined, it can change its size or position at
+any time during the design because all degrees of freedom are not constrained. All entities
+in a fully defined sketch are displayed in black.
+Tip
+In SOLIDWORKS, it is not necessary to fully dimension or define the sketches before you
+use them to create the features of a model. However, it is recommended that you fully
+define the sketches before you proceed further to create the feature.
+If you always want to use fully defined sketches before proceeding further, you can do so
+by choosing Tools > Options from the SOLIDWORKS menus to display the System
+Options - General dialog box. Select the Sketch option from the area on the left. Next,
+select the Use fully defined sketches check box and choose OK from this dialog box.
+Note
+You can also dimension the sketch while creating it. To do so, choose Tools > Options
+from the SOLIDWORKS menus to display the System Options- General dialog box. Select
+the Sketch option from the area on the left. Select the Enable on screen numeric input on
+
+=== PDF PAGE 27 ===
+entity creation check box and then the Create dimension only when value is entered
+check box. Next,choose the OK button from the dialog box.
+Figure 4-22 Fully defined sketch after applying all the required relations and dimensions
+Saving the Sketch
+1. Choose the Save button from the Menu Bar to invoke the Save As dialog box. Browse
+to the \Documents\SOLIDWORKS Tutorials folder. Next, create a new folder with the
+name c04.
+2. Enter c04_tut01 as the name of the document in the File name edit box and choose the
+Save button. The document will be saved at the location \Documents\SOLIDWORKS
+Tutorials\c04.
+3. Close the document by choosing File > Close from the SOLIDWORKS menus.
+Tutorial Exercise 2
+In this tutorial, you will draw the sketch of the revolved model shown in Figure 4-23. The
+sketch to be drawn is shown in Figure 4-24. The solid model is given for your reference
+
+=== PDF PAGE 28 ===
+only.
+(Expected time: 30 min)
+Figure 4-23 Solid model for Tutorial 2
+Figure 4-24 Sketch of the model
+The following steps are required to complete this tutorial:
+a. Start a new part document and then invoke the sketching environment.
+b. Draw a centerline to add the linear diameter dimensions to the sketch of the model.
+c. Create the sketch by using various sketching tools, refer to Figures 4-25 and 4-26.
+d. Add relations to the sketch.
+e. Add dimensions to the sketch to fully define it, refer to Figure 4-29.
+
+=== PDF PAGE 29 ===
+Starting a New Part Document
+1. Choose the New button from the Menu Bar; the New SOLIDWORKS Document
+dialog box is displayed with the Part button chosen by default.
+2. Choose the OK button from this dialog box; a new SOLIDWORKS part document is
+started.
+3. Choose the Sketch button from the Sketch CommandManager and select the Front
+Plane as the sketching plane; the sketching environment is invoked and the selected
+plane is oriented normal to the view.
+4. If the grid is displayed, invoke the Document Properties - Grid/Snap dialog box and
+then clear the Display grip check box from the Grid area to hide the grids. Next,
+invoke the System Options - Relations/Snaps dialog box and clear the Grid check box
+from the Sketch snaps area.
+5. Invoke the Document Properties - Units dialog box and set the units to millimeters
+and degree for measuring linear and angular dimensions, respectively. However, if you
+have selected millimeters as unit while installing SOLIDWORKS, you can skip this step.
+Drawing the Sketch
+To draw the sketch of the revolved model, you need to draw a centerline around which the
+sketch of the base feature will be revolved.
+1. Invoke the Centerline tool from the Sketch CommandManager.
+2. Draw a vertical centerline of length close to 325 mm starting from the origin.
+Next, you need to draw the sketch of the model.
+3. Right-click in the drawing area, and then choose the Line tool from the shortcut menu.
+Move the cursor to a location whose coordinates are close to 50 mm, 0 mm, and 0 mm.
+Click at this point to specify the start point of the line.
+
+=== PDF PAGE 30 ===
+4. Move the cursor vertically upward and left-click when the length of the line displayed
+above the cursor is close to 135 mm, refer to Line 1 in Figure 4-25.
+5. Move the cursor horizontally toward the right and draw a horizontal line of length close
+to 17.5 mm, refer to Line 2 in Figure 4-25.
+6. Move the cursor vertically upward and draw a vertical line of length close to 15, refer to
+Line 3 in Figure 4-25.
+7. Move the cursor horizontally toward the right and draw a horizontal line of length close
+to 14.5 mm, refer to Line 4 in Figure 4-25.
+8. Move the line cursor vertically upward and draw a vertical line of length close to 67
+mm, refer to Line 5 in Figure 4-25.
+9. Move the line cursor horizontally towards the left and draw a horizontal line of length
+close to 7 mm, refer to Line 6 in Figure 4-25.
+10. Move the line cursor vertically upward and draw a vertical line of length close to 101
+mm, refer to Line 7 in Figure 4-25.
+11. Similarly, draw the other entities of the sketch. For dimensions, refer to Figure 4-24.
+The sketch after drawing all the entities is shown in Figure 4-26.
+Figure 4-25 Solid model for Tutorial 2
+
+=== PDF PAGE 31 ===
+Figure 4-26 Sketch of the model
+Figure 4-27 Points and lines to be selected
+Adding Relations to the Sketch
+Next, you will add the required relations to the sketched entities.
+1. Right-click in the drawing area and then choose the Select option from the shortcut menu
+displayed. Next, press and hold the CTRL key and select the start point of the Line 1
+and then select the origin for applying the horizontal relation, refer to Figure 4-
+27. Release the CTRL key after the selection; a pop-up toolbar is displayed, refer to
+Figure 4-28. Choose the Make Horizontal button from the pop-up toolbar; the horizontal
+relation is applied to the selected entities. Click anywhere in the drawing area to clear the
+selection set.
+
+=== PDF PAGE 32 ===
+Figure 4-28 The pop-up toolbar displayed after selecting two points
+If you select an entity, group of entities, or feature and do not move the cursor, a pop-up
+toolbar will be displayed. Remember that this toolbar will disappear, if you move the cursor
+away from the selected entity or feature.
+2. Press and hold the CTRL key and then select the horizontal lines one by one, refer to
+Figure 4-27. Next, release the CTRL key after selecting the lines; a pop-up toolbar is
+displayed. Choose the Make Collinear button from it to apply the collinear relation.
+3. Press and hold the CTRL key and select the intersection point of the lines 2 and 3, refer
+to Figure 4-25. Next, select the center point of the arc and then release the CTRL key; a
+pop-up toolbar is displayed.
+4. Choose the Merge Points button from the pop-up toolbar; the selected points are
+merged together.
+As discussed earlier, some of the relations such as horizontal, vertical, tangent, and so on
+are automatic relations and are therefore applied automatically to a sketch while drawing.
+This means, you need not to apply horizontal relation to the horizontal lines and vertical
+relation to the vertical lines of the sketch. However, if it is not applied automatically, you
+need to apply them manually by using the pop-up toolbar or the Add Relations
+PropertyManager.
+Adding Dimensions to the Sketch
+After drawing and applying relations to the sketch, you need to add dimensions to fully
+define the sketch. As is evident from Figures 4-23 and 4-24 that this is a sketch of revolve
+model, therefore, you need to apply the linear diameter dimensioning to it.
+1. Invoke the Smart Dimension tool by using the Mouse Gesture. Next, select the inner
+vertical line of length 135 mm (refer to Line 1 in Figure 4-25).
+2. Select the vertical centerline and move the cursor to the other side of the centerline; the
+preview of linear diameter dimensioning is attached to the cursor. Next, click to place
+the dimension below the sketch, refer to Figure 4-29 for the placement of dimension. As
+soon as you click the left mouse button to place the dimension, the Modify dialog box is
+displayed.
+
+=== PDF PAGE 33 ===
+3. Enter 100 in the Modify dialog box and press ENTER; the linear diameter dimension is
+applied between the selected entities. Also, note that the symbol of centerline is displayed
+above the cursor. It indicates that the centerline is still selected and you can directly select
+the other entities of the sketch to apply linear diameter dimension with respect to the
+selected centerline.
+The linear diameter dimensioning is used to dimension the sketch of a revolved component.
+If you dimension the sketch of the base feature of the given model using the linear
+dimensioning method, the same dimensions will be generated in the drawing views. This
+may be confusing because in the shop floor drawing, you need the diameter dimension of
+a revolved model. To overcome this problem, it is recommended that you apply the linear
+diameter dimension to the revolved components.
+4. Select the inner vertical line of length 15 mm, refer to Line 3 in Figure 4-25. As soon as
+you select the vertical line, the preview of the linear diameter dimension between the
+selected vertical line and the centerline is attached to the cursor. Next, click to place the
+dimension below the sketch, refer to Figure 4-29 for the placement of dimension. On
+doing so, the Modify dialog box is displayed.
+5. Enter the value 135 in the Modify dialog box and press ENTER.
+6. Similarly, apply linear diameter dimensioning and linear dimensioning to the remaining
+entities of the sketch, respectively. The final sketch after applying all the dimensions is
+shown in Figure 4-29.
+
+=== PDF PAGE 34 ===
+Figure 4-29 Final sketch for Tutorial 2
+Note
+You can also dimension the sketch while creating it as discussed in Tutorial 1.
+Saving the Sketch
+1. Choose the Save button from the Menu Bar and save the sketch with the name
+c04_tut02 at the location \Documents\SOLIDWORKS Tutorials\c04\
+2. Choose File > Close from the SOLIDWORKS menus to close the document.
+Answer the following questions and then compare them to those given at the end of
+this tutorial:
+1. The relation forces the selected arcs or circles to share the same radius and
+the same center point.
+2. The PropertyManager is displayed on invoking the Dynamic Mirror
+Entities tool.
+
+=== PDF PAGE 35 ===
+3. The to the X or Y axes.
+dimension is used to dimension a line that is at an angle with respect
+4. A sketch is the one in which all entities and their positions are described by
+relations or dimensions, or both.
+5. Some relations are automatically applied to a sketch while it is being drawn. (T/F)
+6. When you choose the Add Relation button, the Apply Relations PropertyManager is
+displayed. (T/F)
+7. In SOLIDWORKS, you can dimension any entity by using the Smart Dimension tool.
+(T/F)
+8. In SOLIDWORKS, you cannot enter the arithmetic symbols directly in the edit box of
+the Modify dialog box to calculate the dimension. (T/F)
+Answer the following questions:
+1. Which of the following relation forces a selected arc to share the same center point with
+another arc or point?
+(a) Concentric (b) Coradial
+(c) Merge points (d) Equal
+2. Which of the following types of dimension changes the color of entities to red?
+(a) Underdefined (b) Overdefined
+(c) Dangling (d) None of these
+
+=== PDF PAGE 36 ===
+3. Which of the following dialog boxes is displayed when you modify a dimension?
+(a) Modify Dimensional Value (c) Modify (b) Insert a value
+(d) None of these
+4. Which of the following dialog boxes is displayed when you add an extra dimension or
+an extra relation that overdefines the sketch?
+(a) Over defining (c) Make Dimension Driven? (b) Delete relation
+(d) Add Geometric Relations
+5. You can invoke the Display/Delete Relations PropertyManager by using the
+Display/Delete Relations button from the CommandManager.
+6. The linear diameter dimensions are applied to the sketches of features.
+7. The sketch geometry is constrained by too many dimensions and/or
+relations. Therefore, you must delete the extra and conflicting relations or dimensions.
+8. The relation forces two selected lines, arcs, points, or ellipses to remain
+equidistant from a centerline.
+EXERCISES
+Exercise 1
+Create the sketch of the model shown in Figure 4-30. Apply the required relations and
+dimensions to the sketch and fully define it. The sketch of the model is shown in Figure 4-
+31. The solid model is given for your reference only. (Expected time: 30 min)
+
+=== PDF PAGE 37 ===
+Figure 4-30 Solid model for Exercise 1
+Figure 4-31 Sketch for Exercise 1
+Exercise 2
+Create the sketch of the model shown in Figure 4-32. Apply the rquired relations and dimensions to the sketch and
+fully define it. The sketch of the model is shown in Figure 4-33. The solid model is given for your reference only.
+(EXPECTED TIME: 30 MIN)
+
+=== PDF PAGE 38 ===
+Figure 4-32 Solid model for Exercise 2
+Figure 4-33 Sketch for Exercise 2
+Exercise 3
+Create the sketch of the model shown in Figure 4-34. Apply the rquired relations and dimensions to the sketch and
+fully define it. The sketch of the model is shown in Figure 4-35. The solid model is given for your reference only.
+(EXPECTED TIME: 30 MIN)
+
+=== PDF PAGE 39 ===
+Figure 4-34 Solid model for Exercise 3
+Figure 4-35 Sketch for Exercise 3
+Answers to Self-Evaluation Test
+1. CORADIAL, 2. MIRROR, 3. ALIGNED, 4. FULLY DEFINED 5. T, 6. T, 7. T, 8. F

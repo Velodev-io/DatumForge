@@ -77,7 +77,13 @@ QString recoveryRoot(QString path, bool initializeDevelopment) {
         check(path.startsWith(temp + '/') &&
                   (QFileInfo(path).fileName().startsWith("cad-module2-") ||
                    QFileInfo(path).fileName().startsWith("cad-module3-") ||
-                   QFileInfo(path).fileName().startsWith("cad-module4-")),
+                   QFileInfo(path).fileName().startsWith("cad-module4-") ||
+                   QFileInfo(path).fileName().startsWith("cad-module5-") ||
+                   QFileInfo(path).fileName().startsWith("cad-module6-") ||
+                   QFileInfo(path).fileName().startsWith("cad-module7-") ||
+                   QFileInfo(path).fileName().startsWith("cad-module8-") ||
+                   QFileInfo(path).fileName().startsWith("cad-module9-") ||
+                   QFileInfo(path).fileName().startsWith("cad-module10-")),
               "PermissionDenied", "Refused unmarked/non-disposable test root");
     } else {
         QFile marker(path + "/.cad-development-root");
@@ -150,6 +156,18 @@ void publish(QString source, QString destination) {
 #else
     check(::rename(source.toUtf8(), destination.toUtf8()) == 0, "StorageError",
           "Atomic snapshot replacement failed");
+    flushFile(QFileInfo(destination).absolutePath(), true);
+#endif
+}
+void publishNew(QString source, QString destination) {
+#ifdef Q_OS_WIN
+    check(MoveFileExW(reinterpret_cast<LPCWSTR>(source.utf16()),
+                      reinterpret_cast<LPCWSTR>(destination.utf16()), MOVEFILE_WRITE_THROUGH),
+          "StorageError", "Cannot publish migration to a new destination");
+#else
+    check(::link(source.toUtf8(), destination.toUtf8()) == 0, "StorageError",
+          "Migration destination appeared or cannot be published");
+    check(QFile::remove(source), "StorageError", "Cannot release migration staging name");
     flushFile(QFileInfo(destination).absolutePath(), true);
 #endif
 }

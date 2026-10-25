@@ -1,0 +1,102 @@
+[
+  {
+    "page" : 1,
+    "text" : "4. Insert the Piston Ring in the assembly environment and assemble the Piston Ring at the\nuppermost groove of the Piston using the assembly mates, refer to Figure 9-56.\nNote\nIn this assembly, the color of the Piston Ring is changed. To change the color, select the\nPiston Ring; a pop-up toolbar is displayed. Choose the Appearances button from the pop•\nup toolbar; a flyout is displayed. Choose the name of the component; the color\nPropertyManager is displayed. Set the color using the option available in this\nPropertyManager.\nNext, you need to create the local linear pattern of the Piston Ring.\n5. Choose the Linear Component Pattern button from the Assembly\nCommandManager; the Linear Pattern PropertyManager is displayed.\n6. Select any one of the horizontal edges of the Articulated Rod to define the direction of\npattern creation.\n7. Click once in the Components to Pattern selection box and select the Piston Ring\nfrom the graphics area; the preview of the linear pattern with the default settings is\ndisplayed in the graphics area.\n8. Choose the Reverse Direction button to reverse the direction of the pattern creation, if\nrequired.\n9. Set 5 in the Spacing spinner and 4 in the Number of Instances spinner.\n10. Choose the OK button from the Linear Pattern PropertyManager; the sub-assembly\nafter patterning the Piston Ring is shown in Figure 9-57.\n11. Save and close the assembly document."
+  },
+  {
+    "page" : 2,
+    "text" : "Figure 9-56 First instance of the Piston Ring assembled with the Piston\nFigure 9-57 Sub-assembly after patterning the Piston Ring\nCreating the Main Assembly\nNext, you need to create the main assembly and then assemble the sub-assembly with it.\n1. Start a new SOLIDWORKS assembly document and exit the Begin Assembly\nPropertyManager. Now, save it with the name Radial Engine assembly in the same\nfolder in which the parts are saved.\n2. First, place the Master Rod at the origin of the assembly and then place the Piston,\nPiston Pin, Piston Pin Plug, Piston Ring, Rod Bush Upper, and Master Rod Bearing in\nthe current assembly document.\n3. Assemble all components of the main assembly using the assembly mates. Note that\nyou need to create a linear pattern of the Piston Ring. Also, you need to assemble two\ninstances of the Piston Pin Plug in the assembly. Figure 9-58 shows the main assembly"
+  },
+  {
+    "page" : 3,
+    "text" : "after assembling all the components.\nAssembling the Sub-assembly with the Main Assembly\nNext, you need to place the sub-assembly in the main assembly and then assemble them\ntogether.\n1. Choose the Insert Components button from the Assembly CommandManager; the\nInsert Component PropertyManager is displayed.\n2. If the sub-assembly document is not opened, choose the Browse button in the\nPart\/Assembly to Insert rollout; the Open dialog box is displayed.\n3. Select Assembly (*.asm, *.sldasm) from the Files of type drop-down list.\n4. Double-dick on the Piston Articulated Rod Sub-assembly sub-assembly and place it\nin the main assembly. Figure 9-59 shows the sub-assembly and the main assembly\nplaced together.\nFigure 9-58 Components assembled in the main assembly"
+  },
+  {
+    "page" : 4,
+    "text" : ")\n..\n0 ~\nlair\nFigure 9-59 Sub-assembly and the main assembly placed together\n5. Assemble the sub-assembly with the main assembly using the assembly mates. Figure\n9-60 shows the assembly structure that will help you in assembling the instances of the\nsub-assembly.\nFigure 9-61 shows all instances of the sub-assembly assembled with the main assembly.\nFigure 9-60 Components assembled in the main assembly"
+  },
+  {
+    "page" : 5,
+    "text" : "Figure 9-61 Sub-assembly assembled with the main assembly\nTip\nYou can create more than one instance of the sub-assembly. To do so, press and hold the\nCTRL key, select and drag the sub-assembly from the FeatureManager Design Tree, and\nthen release the left mouse button.\nAssembling the Link Pin\nAfter assembling the sub-assembly with the main assembly, you need to assemble the\nLink Pin with the main assembly.\n1. Place the Link Pin in the current assembly environment. Assemble the Link Pin with the\nmain assembly using the assembly mates. Figure 9-62 shows the first instance of the\nLink Pin assembled with the main assembly.\nFigure 9-62 The first instance of the Link Pin assembled with the main assembly"
+  },
+  {
+    "page" : 6,
+    "text" : "As discussed earlier, the other instances of the Link Pin will be assembled using the\npattern-driven pattern feature of the holes created on the left of the master rod.\n2. Choose the Pattern Driven Component Pattern button from the Linear Component\nPattern flyout of the Assembly CommandManager, refer to Figure 9-63; the Pattern\nDriven PropertyManager is displayed.\nDC2 I\n(» I\nLL (4 @\nLinear Move A\nComponent Smart Component Show F\n~ 4.\nFasteners Hidden\nL\n... w Components\nDL Linear Component Pattern\nLL\nCi ~ Circular Component Pattern\nDC Pattern Drive Component Pattern\n[\n.\n° Sketch Driver'omponent Pattern\n2 ·\n& Curve Driven Component Pattern\n@ Chain Component Pattern\n[kl Mirror Components\nFigure 9-63 The Pattern Driven Component Pattern button\nThe Pattern Driven Component Pattern tool is used to pattern the instances of the\ncomponents to be used in an existing pattern feature created while creating the component\nin the Part environment.\n3. Select the Link Pin from the main assembly; its name is displayed in the Components\nto Pattern selection box.\n4. Click once in the Driving Feature or Component selection box to activate the\nselection mode.\n5. Select any one of the hole instances from the master rod; the name of the sketch pattern\nfeature is displayed in the Driving Feature or Component selection box and the\npreview of the resulting pattern is also displayed.\n6. If the instances are not placed properly, choose the Select Seed Position button and\nselect the correct seed feature."
+  },
+  {
+    "page" : 7,
+    "text" : "7. Choose the OK button from the Pattern Driven PropertyManager.\nFigure 9-64 shows the final assembly.\nFigure 9-64 The final assembly\nNote\nThe number of instances of the component pattern is automatically modified when you\nchange the number of instances of the pattern feature that were used to derive the\ncomponent pattern. This indicates the associative nature of the derived component\npattern.\nExploding the Assembly\nAfter creating the assembly, you need to explode it using the Exploded View tool. You\ncan explode the subassembly and it is reflected in the main assembly.\n1. Open the Piston Articulate Rod Sub-assembly in the separate graphics window. To do\nso, select a Piston Articulation Rod Sub-assembly from the FeatureManager Design\nTree; a pop-up toolbar is displayed. Next, choose the Open Subassembly button from\nthe pop-up toolbar to open the selected sub-assembly in a separate graphics window.\n2. Choose the Exploded View button from the Assembly CommandManager; the\nExplode PropertyManager is displayed. Ensure that all check boxes available in the\nPropertyManager are cleared.\nThe Exploded View tool is used to create an exploded state of the assembly."
+  },
+  {
+    "page" : 8,
+    "text" : "3. Select the top face of the Piston Pin Plug; the triad is displayed, refer to Figure 9-65.\n4. Select the arrow of the triad that is normal to the selected plane.\n5. Set the value of the Explode Distance spinner to 170, and then choose the Apply\nbutton; the selected instances of the Piston Pin Plug are exploded and the components\nare removed from the selection set. Also, the sequence of explosion is displayed as\nExplode Stepl in the Existing explode steps list box of the Explode Steps rollout of\nthe PropertyManager.\n6. If the Piston Pin Plug is moved downward, choose the Reverse direction button on the\nleft of the Explode Direction edit box in the Settings rollout and then choose Done.\nThe Figure 9-66 shows the sub-assembly after exploding the Piston Pin Plug.\nFigure 9-65 Triad displayed after selecting the top face of the Piston Pin Plug"
+  },
+  {
+    "page" : 9,
+    "text" : "Figure 9-66 Sub-assembly after exploding the Piston Pin Plug\nNow, you need to explode the Piston Pin of the assembly.\n7. Select the top planar face of the Piston Pin from the graphics area; the triad is displayed.\n8. Select the arrow of the triad that is normal to the selected plane.\n9. Set the value of the Explode Distance spinner to 150 and then choose the Apply\nbutton; the selected instances of the Piston Pin are exploded and the components are\nremoved from the selection set. Also, the sequence of explosion is displayed as Explode\nStep2 in the Existing explode steps list box of the Explode Steps rollout.\n10. If the Piston Pin is moved downward, choose the Reverse direction button on the left\nof the Explode Direction edit box in the Settings rollout and then choose Done.\nTip\nWhen the triad is displayed on selecting the face, you can select an arrow to specify the\ndirection and drag the arrow to relocate the component.\n11. Similarly, explode other components of the sub-assembly, refer to Figure 9-67.\n12. Save the sub-assembly and open the main assembly document; the SOLIDWORKS\nmessage box is displayed stating that the models in the assembly have changed and\nwould you like to rebuild them. Choose Yes to save and rebuild the sub-assembly.\n13. Choose the Exploded View button from the Assembly CommandManager; the Explode\nPropertyManager is displayed. Ensure that all check boxes of the PropertyManager are\ncleared.\n14. Explode the components of the main assembly, refer to Figure 9-68."
+  },
+  {
+    "page" : 10,
+    "text" : "Figure 9-67 Sub-assembly after exploding the components\nFigure 9-68 View after exploding the components of the main assembly\nNext, you need to explode the parts of the remaining sub-assemblies in the main assembly\ndocument.\n15. Select all sub-assemblies from the drawing area and then choose the Reuse Sub•\nassembly Explode button in the Explode PropertyManager; all sub-assemblies are\nexploded.\nThe Re-use Sub-assembly Explode button is chosen to reuse the exploding steps of a\nsub-assembly in the current assembly.\n16. Choose OK to exit the Explode PropertyManager. The assembly after exploding the\ncomponents is shown in Figure 9-69."
+  },
+  {
+    "page" : 11,
+    "text" : "I I\nFigure 9-69 Final exploded assembly\nCreating the Explode Line Sketch\nAfter exploding the assembly, you need to create the explode line sketch of the exploded\nstate of the assembly.\n1. Choose the Explode Line Sketch button from the Assembly CommandManager;the\nRoute Line PropertyManager is displayed and you are prompted to select a cylindrical face, planar face, vertex,\npoint, arc, or line entities.\nThe Explode Line Sketch tool is used to create exploded lines. The explode lines are the\nparametric axes that display the direction of explosion of the components in an exploded\nstate.\n2. Choose the Keep Visible button, if not chosen automatically, from the Route Line PropertyManager to\nkeep the PropertyManager visible on the screen.\n3. Select the cylindrical face of a Piston Pin Plug, refer to Figure 9-70, as the first\nselection; the name of the selected face is displayed in the Items To Connect selection\nbox. Also, the preview of the explode line sketch is displayed at the center of the\nselected face.\n4. Select the other cylindrical faces to create the explode line sketch, refer to Figure 9-70."
+  },
+  {
+    "page" : 12,
+    "text" : "First selection\nThird selection\nSecond selection\nFourth selection\nFifth selection\nS ixt h select ion~\nFigure 9-70 Faces to be selected to create the explode line sketch\n5. Next, choose the OK button; an exploded line is created.\n6. Similarly, create exploded lines between the other parts of the exploded assembly.\nFigure 9-71 shows the assembly after creating the explode line sketch.\nI\nI\ni...-f\n_\ner· . . . .\n.A\n•••-,,il!I\nd+++i\nd\n•\nFigure 9-71 Explode line sketch created for the exploded state of the assembly"
+  },
+  {
+    "page" : 13,
+    "text" : "Now, you will animate the exploded view of the assembly.\n7. Select the name of the main assembly from the FeatureManager Design Tree and\nright-click; a shortcut menu is displayed.\n8. Choose the Animate collapse option from the shortcut menu to view the animation of\nthe exploded view.\n9. Save and close the assembly document.\nAnswer the following questions and then compare them to those given at the end of\nthis chapter:\n1. Choose the Rotate Component PropertyManager.\nbutton from the Assembly CommandManager to invoke the\n2. The component patterns created using an existing pattern feature are known as\npatterns.\n3. To create the explode line sketch, choose the CommandManager.\nbutton from the Assembly\n4. The bottom-up assembly design approach is the traditional and the most widely\npreferred approach used for assembly design. (T\/F)\n5. In the top-down assembly design approach, all components are created in the same\nassembly document. (T\/F)\n6. The Coincident mate is generally applied to make two planar faces coplanar. (T\/F)"
+  },
+  {
+    "page" : 14,
+    "text" : "7. The most suitable mates that can be applied to the current selection set are displayed in\nthe Mate pop-up toolbar. (TIF)\n8. You cannot create sub-assemblies in the assembly environment of SOLIDWORKS.\n(T\/F)\nAnswer the following questions:\n1. Which of the following options is used to open a sub-assembly separately in the\nseparate assembly document?\n(a) Modify\n(c) Open Part\n(b) Edit\n(d) Open Assembly\n2. Which of the following methods is widely used for adding mates to the components in\nan assembly?\n(a) Smart Mates\n(c) By dragging from part document\n(b) Mate PropertyManager\n(d) None of these\n3. Which of the following buttons is used to make the Mate Component\nPropertyManager available after applying a mate to selected entities?\n(a) Help\n(c) Keep Visible\n(b) OK\n(d) Cancel\n4. The names of the selected entities are displayed in the Mate Component PropertyManager.\nselection box of the\n5. The exploded state of an assembly is created using the tool."
+  },
+  {
+    "page" : 15,
+    "text" : "6. The button is chosen in the Explode PropertyManager to reuse the\nexploded steps of a sub-assembly in the current assembly.\n7. The component.\nbutton of the pop-up toolbar is used to change the appearance of a\n8. The option is used to change the state of a component from fix to floating.\nEXERCISES\nExercise 1\nCreate all components of the Fixture assembly and assemble them. The Fixture assembly\nis shown in Figure 9-72. After creating the assembly, explode it and create the explode\nline sketch, refer to Figure 9-73. The dimensions of various components of this assembly\nare given in Figures 9-74 through 9-78. Note that all dimensions are in inches. (Expected\ntime: 1 hr)\nFigure 9-72 Fixture assembly"
+  },
+  {
+    "page" : 16,
+    "text" : "•I\nFigure 9-73 Exploded view of the assembly"
+  },
+  {
+    "page" : 17,
+    "text" : "4\n3\n4X 0.26\n4X .19\nSECTION A-A\nFigure 9-74 Dimensions of the End Plate\n\/ \"sos\n1\nR.125\n--+.--\nI\n1\n'\n-\nFigure 9-75 Dimensions of the Disk"
+  },
+  {
+    "page" : 18,
+    "text" : "Support Pin\n025~\n.19\nt\n-\n.s--\n,\n----1.s2s j\n.03.03\nCHAM\n\/i}\"ml\nBolt\n.04x.04 ,- - - - - - - - - - - - - 0:JD\nCHAM.\nL\nFigure 9-76 Dimensions of the Support Pin and the Bolt\nSpacer\n1.5\n1.0\n0.63\n- sis•\nNu;- ~\n•\nI=,\n.20 I\nI\n0\n.26\n03x 03\nCHAM\n.06x45\nCHAM Center Pin\nFigure 9-77 Dimensions of the Spacer, Center Pin, and Nut"
+  },
+  {
+    "page" : 19,
+    "text" : "SCALE 0.750\nFigure 9-78 Drawing views of the Fixture assembly\nExercise 2\nCreate all components of the Blower assembly and assemble them. The Blower assembly\nis shown in Figure 9-79. The exploded view of the assembly is given in Figure 9-80 for\nreference. The dimensions of various components of this assembly are given in Figures 9•\n81 through 9-86. Note that all dimensions are in inches. (Expected time: 1 hr)"
+  },
+  {
+    "page" : 20,
+    "text" : "Figure 9-79 Dimensions of the Blower\nUpper\nHousing\nBlower\nMotor\nMotor\nShaft"
+  },
+  {
+    "page" : 21,
+    "text" : "Figure 9-80 Exploded view of the Blower assembly\n11\n08\n01.5\n25,2°\n·\n.15\nEQUISPACED\n6 BLADES\n6.5\n'+el i'\n.1 2.5\nvhhha\n-lo•\nSECTION A-A\nFigure 9-81 Dimensions of the Blower"
+  },
+  {
+    "page" : 22,
+    "text" : "3X 0.75\nEQUISPACED\n2XR\n(7 Slots)\n!\nA\nI\nI 3X R 0.75 8.5\no\n' 02.5\n01.5\nr\n4\ni ~\n-\n.35 ------- --- 1---- ----\n. 6\n-l 1 l- Section A-A\nR1\nFigure 9-82 Dimensions of the Cover\n--------15------------i\np}\nI I\np}\nI I b} I I\nbe '\n8X 0.41\nI\nI I\nI I }d\nI I 2\n'\nI dI\n'd\n;\n6.5\n.25 .75 --\nA JR1.50 SECTION A-A\n.J\n5\nI.\na .25"
+  },
+  {
+    "page" : 23,
+    "text" : "Figure 9-83 Dimensions of the Lower Housing\n.4\n.9\n2.43\n,\nDETAIL A l 6b6)\nSCALE 1.5: 1 DETAIL A )\n-\n8.25--]\ni-------\n.5 R3.50\n6\nsll-\nI\n!\nI\nI-\nI\nI\n'\nl\n,......\n_______ .J\n--\n-\n- Q- .,\n-\n6.75 _\n01.5\n.. .\nl---12---1\n3X 0.75\nEQUI SPACED\nFigure 9-84 Dimensions of the Motor\nDETAIL A\n~\n~ 4 5------------+--~\n.\n-----------24--------i\nI\n01.2\n+\nDETAIL A\nSCALE 4:1\n."
+  },
+  {
+    "page" : 24,
+    "text" : "Figure 9-85 Dimensions of the Motors haft"
+  },
+  {
+    "page" : 25,
+    "text" : "R1.5 8X 0.41\n7.25\n!\n5.25\nA\n15.75---r--8.15\n(R3.9)\nR10\n4.2\n~\nIl .[5\n, -\n__\nR4.875\nR.5\nR1.5\nSECTION A-A\nTl\nFigure 9-86 Dimensions of the Blower Upper Housing\nAnswers to Self-Evaluation Test\n1. Rotate Component, 2. Feature Driven, 3. Explode Line Sketch 4. T, 5. T, 6. T, 7. T, 8.\nF"
+  }
+]

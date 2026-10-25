@@ -1,0 +1,21 @@
+{
+  "status": "Pass",
+  "scope": "Selected available-Mac native screenshots only; no blanket font/device/platform certification",
+  "reviewed": [
+    "native-100/cm1-slot-3-Point-Arc-mm.png",
+    "native-100/cm1-pierce-circle.png",
+    "native-200/cm1-slot-3-Point-Arc-mm.png",
+    "native-200/cm1-curve-Spline-mm.png"
+  ],
+  "observations": [
+    "Full curved-slot boundary and construction path visible; radius/sweep/diameter labels separated with no duplicate numeric literal annotations",
+    "Spline control polygon, curve, weights, knots and degree controls visible; weights use shortest round-trip text",
+    "Pierce source selector, interval and explicit repair controls visible; valid preview clears unresolved intersection choices",
+    "PropertyManager scrolls; narrow numeric/parameter fields retain full text and may scroll horizontally"
+  ],
+  "previous_failed_review": "../20261025T063157.053441Z/verification/visual-review.json",
+  "limits": [
+    "Screenshots do not prove physical-pointer, accessibility or other-platform behavior",
+    "Dense arbitrary dimension layouts and persistent dimension placement remain broader CM3 work"
+  ]
+}

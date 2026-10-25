@@ -5,7 +5,12 @@
     2,
     3,
     4,
-    5
+    5,
+    6,
+    7,
+    8,
+    9,
+    10
   ],
   "module_1_authorization": {
     "source": "Direct user instruction in this chat",
@@ -13,7 +18,7 @@
     "quote": "proceed with module 1",
     "scope": "Implement and verify feasible Module 1 work on the verified Mac. Preserve native macOS/Windows/Linux architecture and physical 8 GB baseline. Unavailable checks remain Blocked."
   },
-  "stop_before_module": 6,
+  "stop_before_module": 11,
   "module_0_gaps": "Cross-platform, renderer longevity, physical-power-loss, release identity/licensing, accessibility and full workload budgets remain open. STEP_ZERO explicitly permits independent work on verified targets.",
   "module_2_authorization": {
     "source": "Direct user instruction in this chat",
@@ -44,7 +49,7 @@
       "4.0c"
     ]
   },
-  "stop_before_task": "6.1a",
+  "stop_before_task": "11.1a",
   "module_4_authorization": {
     "source": "Direct user instruction in this chat",
     "date": "2026-10-20",
@@ -56,5 +61,54 @@
     "date": "2026-10-20",
     "quote": "yes",
     "scope": "Implement and verify feasible Module 5 tasks starting with 5.1a in lettered order. Preserve existing work and evidence, keep unavailable native/device checks Blocked, stop before Module 6."
+  },
+  "module_6_authorization": {
+    "source": "Direct user instruction in this chat",
+    "date": "2026-10-21",
+    "quote": "can you continue with module 6",
+    "scope": "Implement and verify feasible Module 6 lettered tasks in order. Preserve existing Module 5 work and evidence; unavailable hardware/platform gates remain Blocked; stop before Module 7."
+  },
+  "module_7_authorization": {
+    "source": "Direct user instruction in this chat",
+    "date": "2026-10-21",
+    "quote": "okk we will see these later for now go ahead with module 7",
+    "scope": "Implement and verify feasible Module 7 tasks in lettered order. Leave Module 6.1b/6.4c gates recorded for later, preserve existing work and native/8 GB architecture, stop before Module 8."
+  },
+  "modules_8_10_authorization": {
+    "date": "2026-10-22",
+    "source": "Direct user instruction in this chat",
+    "quote": "I authorize you to implement and verify Modules 8, 9, and 10 in order",
+    "scope": "Follow lettered tasks; preserve all existing changes, 6.1b/6.4c/7.4c Blocked; stop before Module 11; no commit or push."
+  },
+  "module_3_centerpoint_arc_authorization": {
+    "date": "2026-10-22",
+    "source": "Direct user instruction and arc-method preference in this chat",
+    "quote": "check how arc behaves in the solidworks i want in that same way",
+    "selected_method": "Centerpoint: center \u2192 start \u2192 end",
+    "scope": "Repair Centerpoint Arc pointer sizing with radius/start/end live preview, direction, cancel and durable sketch verification. Preserve active user draft and all prior changes. Modules 11\u201312 unstarted; deferred gates and no commit/push unchanged."
+  },
+  "module_3_all_arcs_authorization": {
+    "date": "2026-10-22",
+    "source": "Direct user instruction in this chat",
+    "quote": "i am able to resize it after the edit but while drawing am unable to do it and add all types of arc available",
+    "scope": "Implement and verify Centerpoint, 3 Point and Tangent/Normal Arc live creation, compare EDP Exam attachment and semantic constraint graph, preserve original running unsaved draft and all prior work. Stop before Module 11; deferred gates and no commit/push unchanged."
+  },
+  "core_modeling_authorization": {
+    "date": "2026-10-22",
+    "source": "Direct user instruction in this chat",
+    "quote": "PLEASE IMPLEMENT THIS PLAN: DatumForge core-modeling expansion: T2\u2013T8",
+    "milestones": [
+      "CM0",
+      "CM1",
+      "CM2",
+      "CM3",
+      "CM4",
+      "CM5",
+      "CM6",
+      "CM7",
+      "CM8",
+      "CM9"
+    ],
+    "scope": "Implement CM0-CM9 in order, all described variants and broad redistributable catalogs, before final Module 11 acceptance. No assembly/drawing expansion. Preserve 6.1b/6.4c/7.4c and no commit/push. Module 11/12 implementation remains unstarted."
   }
 }

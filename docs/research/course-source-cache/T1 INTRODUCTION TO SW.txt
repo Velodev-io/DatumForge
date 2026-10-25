@@ -1,0 +1,712 @@
+
+=== PDF PAGE 1 ===
+Tutorial 1
+Introduction to SOLIDWORKS
+
+=== PDF PAGE 2 ===
+Learning Objectives
+After completing this tutorial, Student will be able to:
+• Understand how to start SOLIDWORKS
+• Understand the system requirements to run SOLIDWORKS
+• Understand various modes of SOLIDWORKS
+• Work with various Command Managers of SOLIDWORKS
+• Understand various important terms in SOLIDWORKS
+• Save files automatically in SOLIDWORKS
+• Change the color schemes in SOLIDWORKS
+INTRODUCTION TO SOLIDWORKS 2016
+Welcome to the world of Computer Aided Design (CAD) with SOLIDWORKS. If you are
+a new user of this software package, you will be joining hands with thousands of users of
+this parametric, feature-based, and one of the most user-friendly software packages. If you
+are familiar with the previous releases of this software, you will be able to upgrade your
+designing skills with this improved release of SOLIDWORKS.
+SOLIDWORKS, developed by the SOLIDWORKS Corporation, USA, is a feature-based,
+parametric solid-modeling mechanical design and automation software. SOLIDWORKS is
+the first CAD package to use the Microsoft Windows graphic user interface. The use of
+the drag and drop (DD) functionality of Windows makes this CAD package extremely
+easy to learn. The Windows graphic user interface makes it possible for the mechanical
+design engineers to innovate their ideas and implement them in the form of virtual
+prototypes or solid models, large assemblies, subassemblies, and detailing and drafting.
+SOLIDWORKS is one of the products of SOLIDWORKS Corporation, which is a part of
+Dassault Systemes. SOLIDWORKS also works as platform software for a number of
+software. This implies that you can also use other compatible software within the
+SOLIDWORKS window. There are a number of software provided by the
+SOLIDWORKS Corporation, which can be used as add-ins with SOLIDWORKS. Some
+of the software that can be used on SOLIDWORKS’s work platform are listed below:
+
+=== PDF PAGE 3 ===
+SOLIDWORKS Motion SOLIDWORKS Routing ScanTo3D eDrawings
+SOLIDWORKS Simulation SOLIDWORKS Toolbox PhotoView 360 CircuitWorks
+SOLIDWORKS Plastics SOLIDWORKS Inspection TolAnalyst
+As mentioned earlier, SOLIDWORKS is a parametric, feature-based, and easy-to-use
+mechanical design automation software. It enables you to convert the basic 2D sketch into
+a solid model by using simple but highly effective modeling tools. It also enables you to
+create the virtual prototype of a sheet metal component and the flat pattern of the
+component. This helps you in the complete process planning for designing and creating a
+press tool. SOLIDWORKS helps you to extract the core and the cavity of a model that has
+to be molded or cast. With SOLIDWORKS, you can also create complex parametric shapes
+in the form of surfaces. Some of the important modes of SOLIDWORKS are discussed
+next.
+Part Mode
+The Part mode of SOLIDWORKS is a feature-based parametric environment in which
+you can create solid models. In this mode, you are provided with three default planes named
+as Front Plane, Top Plane, and Right Plane. First, you need to select a sketching plane to
+create a sketch for the base feature. On selecting a sketching plane, you enter the sketching
+environment. The sketches for the model are drawn in the sketching environment using
+easy-to-use tools. After drawing the sketches, you can dimension them and apply the
+required relations in the same sketching environment. The design intent is captured easily
+by adding relations and equations and using the design table in the design. You are provided
+with the standard hole library known as the Hole Wizard in the Part mode. You can create
+simple holes, tapped holes, counterbore holes, countersink holes, and so on by using this
+wizard. The holes can be of any standard such as ISO, ANSI, JIS, and so on. You can also
+create complicated surfaces by using the surface modeling tools available in the Part
+mode. Annotations such as weld symbols, geometric tolerance, datum references, and
+surface finish symbols can be added to the model within the Part mode. The standard
+features that are used frequently can be saved as library features and retrieved when needed.
+The palette feature library of SOLIDWORKS contains a number of standard mechanical
+parts and features. You can also create the sheet metal components in this mode of
+SOLIDWORKS by using the related tools. Besides this, you can also analyze the part
+model for various stresses applied to it in the real physical conditions by using an easy and
+user-friendly tool called SimulationXpress. It helps you reduce the cost and time in
+physically testing your design in real testing conditions (destructive tests). You can also
+analyze the component during modeling in the SOLIDWORKS windows. In addition, you
+can work with the weld modeling within the Part mode of SOLIDWORKS by creating
+steel structures and adding weld beads. All standard weld types and welding conditions are
+available for your reference. You can extract the core and the cavity in the
+
+=== PDF PAGE 4 ===
+Part mode by using the mold design tools.
+Assembly Mode
+In the Assembly mode, you can assemble components of the assembly with the help of the
+required tools. There are two methods of assembling the components:
+1. Bottom-up assembly
+2. Top-down assembly
+In the bottom-up assembly method, the assembly is created by assembling the components
+created earlier and maintaining their design intent. In the top-down method, the components
+are created in the assembly mode. You may begin with some ready-made parts and then
+create other components in the context of the assembly. You can refer to the features of some
+components of the assembly to drive the dimensions of other components. You can
+assemble all components of an assembly by using a single tool, the Mate tool. While
+assembling the components of an assembly, you can also animate the assembly by dragging.
+Besides this, you can also check the working of your assembly. Collision detection is one
+of the important features in this mode. Using this feature, you can rotate and move
+components as well as detect the interference and collision between the assembled
+components. You can see the realistic motion of the assembly by using physical dynamics.
+Physical simulation is used to simulate the assembly with the effects of motors, springs, and
+gravity on the assemblies.
+Drawing Mode
+The Drawing mode is used for the documentation of the parts or the assemblies created
+earlier in the form of drawing views. The procedure for creating drawing views is called
+drafting. There are two types of drafting done in SOLIDWORKS:
+1. Generative drafting
+2. Interactive drafting
+Generative drafting is a process of generating drawing views of a part or an assembly
+created earlier. The parametric dimensions and the annotations added to the component in
+the Part mode can be generated in the drawing views. Generative drafting is bidirectionally
+associative in nature. Automatic BOMs and balloons can be added to an assembly while
+generating the drawing views of it.
+
+=== PDF PAGE 5 ===
+In interactive drafting, you have to create the drawing views by sketching them using
+normal sketching tools and then add dimensions to them.
+SYSTEM REQUIREMENTS
+The system requirements to ensure the smooth functioning of SOLIDWORKS on your
+system are as follows:
+• Microsoft Windows 10, Windows 8.1 or Windows 8 (64 bit only) or Windows 7 (SP1
+required).
+• Intel or AMD Processor with SSE2 support.
+• 2 GB RAM minimum (8 GB recommended).
+• Hard disk space 5 GB minimum (10 GB recommended).
+• A certified graphics card and driver.
+• Microsoft Office 2007 or later.
+• Adobe Acrobat higher than 8.0.7.
+• DVD drive and Mouse or any other compatible pointing device.
+• Internet Explorer version 8 or higher.
+GETTING STARTED WITH SOLIDWORKS
+Install SOLIDWORKS 2016 on your system; the shortcut icon of SOLIDWORKS 2016
+will automatically be created on the desktop. Double-click on this icon; the system will
+prepare to start SOLIDWORKS and after sometime, the SOLIDWORKS window will be
+displayed on the screen. On opening SOLIDWORKS for the first time, the
+SOLIDWORKS License Agreement dialog box will be displayed, as shown in Figure 1-
+1. Choose the Accept button in this dialog box; the SOLIDWORKS 2016 interface
+window will open and the SOLIDWORKS Resources task pane will be displayed on the
+right, as shown in Figure 1-2. This window can be used to open a new file or an existing
+file.
+
+=== PDF PAGE 6 ===
+Figure 1-1 The SOLIDWORKS License Agreement dialog box
+Figure 1-2 The SOLIDWORKS 2016 window and the SOLIDWORKS Resources task
+pane
+If the SOLIDWORKS Resources task pane is not displayed or expanded, choose the
+SOLIDWORKS Resources button located on the right side of the window to display it.
+This task pane can be used to open online tutorials and to visit the website of
+
+=== PDF PAGE 7 ===
+SOLIDWORKS partners. Choose the New Document button from the Getting Started
+group in the SOLIDWORKS Resources task pane or the New button from the Menu Bar
+to create a new document. On doing so, the New SOLIDWORKS Document dialog box
+will be displayed, as shown in Figure 1-3.
+Note
+If you are starting SOLIDWORKS 2016 for the first time, then on invoking the New
+SOLIDWORKS Document dialog box, the Units and Dimension Standard dialog
+box will be displayed, as shown in Figure 1-4. Using this dialog box, you can specify
+the default units and dimension standards for SOLIDWORKS. In this book, the unit
+system used is MMGS (millimeter, gram, second) and the dimension standard used is
+ISO.
+Figure 1-3 The New SOLIDWORKS Document dialog box
+
+=== PDF PAGE 8 ===
+Figure 1-4 The Units and Dimension Standard dialog box
+Choose the Part button to create a part model and then choose OK from the New
+SOLIDWORKS Document dialog box to enter the Part mode of SOLIDWORKS. Move
+the cursor to the arrow on the right of the SOLIDWORKS logo; the SOLIDWORKS menus
+will be displayed. Note that the task pane is automatically closed once you start a new file
+and click in the drawing area. The initial screen display on starting a new part file of
+SOLIDWORKS using the New button in the Menu Bar is shown in Figure 1-5.
+Tip
+In SOLIDWORKS, the tip of the day is displayed at the bottom of the task pane. You can
+choose Next Tip to view additional tips. These tips help you use SOLIDWORKS efficiently.
+It is recommended that you view at least 2 or 3 tips every time you start a new session of
+SOLIDWORKS 2016.
+
+=== PDF PAGE 9 ===
+Figure 1-5 The interface of a new part document
+It is evident from the screen that SOLIDWORKS is a very user-friendly solid modeling
+software. Apart from the default CommandManager shown in Figure 1-5, you can also
+invoke other CommandManagers. To do so, move the cursor on a CommandManager tab
+and right-click; a shortcut menu will be displayed. Choose the required
+CommandManager from the shortcut menu; it will be added. Besides the existing
+CommandManager, you can also create a new CommandManager.
+MENU BAR AND SOLIDWORKS MENUS
+In SOLIDWORKS, the display area of the screen has been increased by grouping the tools
+that have similar functions or purposes. The tools that are in the Standard toolbar are also
+available in the Menu Bar, as shown in Figure 1-6. This toolbar is available above the
+drawing area. When you move the cursor to the arrow on the right of the SOLIDWORKS
+logo, the SOLIDWORKS menus will be displayed, as shown in Figure 1-7. You can also
+fix them by choosing the push-pin button.
+Figure 1-6 The Menu Bar
+Figure 1-7 The SOLIDWORKS menus
+COMMAND MANAGER
+You can invoke a tool in SOLIDWORKS from four locations, Command Manager,
+SOLIDWORKS menus on top of the screen, toolbar, and shortcut menu. The
+CommandManagers are docked above the drawing area. While working with
+CommandManager, you will realize that invoking a tool from the CommandManager is
+the most convenient method to invoke a tool. Different types of CommandManagers are
+used for different design environments. These CommandManagers are discussed next.
+Part Mode CommandManagers
+A number of CommandManagers can be invoked in the Part mode. The
+
+=== PDF PAGE 10 ===
+Command Managers that are extensively used during the designing process in this
+environment are described next.
+Sketch CommandManager
+This CommandManager is used to enter and exit the 2D and 3D sketching environments.
+The tools available in this CommandManager are used to draw sketches for features. This
+CommandManager is also used to add relations and smart dimensions to the sketched
+entities. The Sketch CommandManager is shown in Figure 1-8.
+Figure 1-8 The Sketch CommandManager
+Features CommandManager
+This is one of the most important CommandManagers provided in the Part mode. Once
+the sketch has been drawn, you need to convert the sketch into a feature by using the
+modeling tools. This CommandManager contains all the modeling tools that are used for
+feature-based solid modeling. The Features CommandManager is shown in Figure 1-9.
+Figure 1-9 The Features CommandManager
+DimXpert CommandManager
+This CommandManager is used to add dimensions and tolerances to the features of a part.
+The DimXpert CommandManager is shown in Figure 1-10.
+Figure 1-10 The DimXpert CommandManager
+Sheet Metal CommandManager
+
+=== PDF PAGE 11 ===
+This CommandManager provides you the tools that are used to create the sheet metal
+parts. In SOLIDWORKS, you can also create sheet metal parts while working in the Part
+mode. This is done with the help of the Sheet Metal CommandManager shown in Figure
+1-11.
+Figure 1-11 The Sheet Metal CommandManager
+Mold Tools CommandManager
+The tools in this CommandManager are used to design a mold and to extract its core and
+cavity. The Mold Tools CommandManager is shown in Figure 1-12.
+Figure 1-12 The Mold Tools CommandManager
+Evaluate CommandManager
+This CommandManager is used to measure the distance between two entities, add
+equations in the design, calculate the mass properties of a solid model, and so on. The
+Evaluate CommandManager is shown in Figure 1-13.
+Figure 1-13 The Evaluate CommandManager
+Surfaces CommandManager
+This CommandManager is used to create complicated surface features. These surface
+features can be converted into solid features. The Surfaces CommandManager is shown
+in Figure 1-14.
+
+=== PDF PAGE 12 ===
+Figure 1-14 The Surfaces CommandManager
+Direct Editing CommandManager
+This CommandManager consists of tools (Figure 1-15) that are used for editing a feature.
+Figure 1-15 The Direct Editing CommandManager
+Data Migration CommandManager
+This CommandManager consists of tools (Figure 1-16) that are used to work with the
+models created in other packages or in different environments.
+Figure 1-16 The Data Migration CommandManager
+Assembly Mode CommandManagers
+The CommandManagers in the Assembly mode are used to assemble the components,
+create an explode line sketch, and simulate the assembly. The CommandManagers in the
+Assembly mode are discussed next.
+Assembly CommandManager
+This CommandManager is used to insert a component and apply various types of mates to
+the assembly. Mates are the constraints that can be applied to components to restrict their
+degrees of freedom. You can also move and rotate a component in the assembly, change
+the hidden and suppression states of the assembly and individual components, edit the
+component of an assembly, and so on. The Assembly CommandManager is shown in
+Figure 1-17.
+
+=== PDF PAGE 13 ===
+Figure 1-17 The Assembly CommandManager
+Layout CommandManager
+The tools in this CommandManager (Figure 1-18) are used to create and edit blocks.
+Figure 1-18 The Layout CommandManager
+Drawing Mode CommandManagers
+You can invoke a number of CommandManagers in the Drawing mode. The
+CommandManagers that are extensively used during the designing process in this mode
+are discussed next.
+View Layout CommandManager
+This CommandManager is used to generate the drawing views of an existing model or an
+assembly. The views that can be generated using this CommandManager are model view,
+three standard views, projected view, section view, aligned section view, detail view, crop
+view, relative view, auxiliary view, and so on. The View Layout CommandManager is
+shown in Figure 1-19.
+Figure 1-19 The View Layout CommandManager
+Annotation CommandManager
+The Annotation CommandManager is used to generate the model items and to add
+notes, balloons, geometric tolerance, surface finish symbols, and so on to the drawing
+
+=== PDF PAGE 14 ===
+views. The Annotation CommandManager is shown in Figure 1-20.
+Figure 1-20 The Annotation CommandManager
+Customized CommandManager
+If you often work on a particular set of tools, you can create a customized
+CommandManager to cater to your needs. To do so, right-click on a tab in the
+CommandManager; a shortcut menu will be displayed. Choose the Customize
+CommandManager option from the shortcut menu; the Customize dialog box will be
+displayed. Also, a new tab will be added to the CommandManager. Click on this tab; a
+flyout will be displayed with Empty Tab as the first option and followed by the list of
+toolbars. Choose the Empty Tab option; another tab named New Tab will be added to the
+CommandManager. Rename the new tab. Next, choose the Commands tab from the
+Customize dialog box. Select a command from the Categories list box; the tools of the
+corresponding command will be displayed in the Buttons area. Select a tool, press and
+hold the left mouse button, and drag the tool to the customized CommandManager; the
+tool will be added to the customized CommandManager. Choose OK from the Customize
+dialog box.
+To add all the tools of a toolbar to the new CommandManager, invoke the Customize
+dialog box and click on the new tab; a flyout will be displayed with Empty Tab as the
+first option followed by the list of toolbars. Choose a toolbar from the flyout; all tools in
+the toolbar will be added to the New Tab and its name will be changed to that of the toolbar.
+To delete a customized CommandManager, invoke the Customize dialog box as discussed
+earlier. Next, choose the CommandManager tab to be deleted and right-click; a shortcut
+menu will be displayed. Choose the Delete option from the shortcut menu; the
+CommandManager will be deleted.
+TOOLBAR
+In SOLIDWORKS, you can choose most of the tools from the CommandManager or from
+the SOLIDWORKS menus. However, if you hide the CommandManager to increase the
+drawing area, you can use the toolbars to invoke a tool. To display a toolbar, right-click on
+
+=== PDF PAGE 15 ===
+a CommandManager; the list of toolbars available in SOLIDWORKS will be displayed.
+Select the required toolbar.
+Pop-up Toolbar
+A pop-up toolbar will be displayed when you select a feature or an entity and do not move
+the mouse. Figure 1-21 shows a pop-up toolbar displayed on selecting a feature. Remember
+that this toolbar will disappear if you move the cursor away from the selected feature or
+entity.
+Figure 1-21 The pop-up toolbar
+You can switch off the display of the pop-up toolbar. To do so, invoke the Customize
+dialog box. In the Context toolbar Settings area in the Toolbars tab, the Show on
+selection check box will be selected by default. It means that the display of the pop-up
+toolbar is on, by default. To turn off the display of the pop-up toolbar, clear this check box
+and choose the OK button.
+View (Heads-Up) Toolbar
+In SOLIDWORKS, some of the display tools have been grouped together and are
+displayed in the drawing area in a toolbar, as shown in Figure 1-22. This toolbar is known
+as View (Heads-Up) toolbar.
+Figure 1-22 The View (Heads-Up) toolbar
+Customizing the CommandManagers and Toolbars
+In SOLIDWORKS, all buttons are not displayed by default in toolbars or
+CommandManagers. You need to customize and add buttons to them according to your
+need and specifications. Follow the procedure given below to customize the
+CommandManagers and toolbars:
+
+=== PDF PAGE 16 ===
+1. Choose Tools > Customize from the SOLIDWORKS menus or right-click on a
+CommandManager and choose the Customize option to display the Customize dialog
+box.
+2. Choose the Commands tab from the Customize dialog box.
+3. Select a name of the toolbar from the Categories area of the Customize dialog box; the
+tools available in the toolbars will be displayed in the Buttons area.
+4. Click on a button in the Buttons area; the description of the selected button will be
+displayed in the Description area.
+5. Press and hold the left mouse button on a button in the Buttons area of the Customize
+dialog box.
+6. Drag the mouse to a CommandManager or a toolbar and then release the left mouse
+button to place the button on that CommandManager or toolbar. Next, choose OK.
+To remove a tool from the CommandManager or toolbar, invoke the Customize dialog
+box and drag the tool that you need to remove from the CommandManager to the graphics
+area.
+Shortcut Bar
+On pressing the S key on the keyboard, some of the tools that can be used in the current
+mode will be displayed near the cursor. This is called as shortcut bar. To customize the
+tools in the shortcut bar, right-click on it, and choose the Customize option. Then, follow
+the procedure discussed earlier.
+Mouse Gestures
+In SOLIDWORKS, when you press the right mouse button and drag the cursor in any
+direction, a set of tools that are arranged radially will be displayed. This is called as
+Mouse Gesture. After displaying the tools by using the Mouse Gesture, move the cursor
+over a particular tool to invoke it. By default, four tools will be displayed in a Mouse
+Gesture. However, you can customize the Mouse Gesture and display eight tools. To
+customize a Mouse Gesture, invoke the Customize dialog box and choose the Mouse
+Gestures tab. Next, specify the options in the appropriate field and choose the OK button.
+Figure 1-23 shows the tools that are displayed by using the Mouse Gesture (after
+customizing) in different environments.
+
+=== PDF PAGE 17 ===
+Figure 1-23 Tools displayed by using Mouse Gesture in different environment
+Tip
+You can display some of the tools by pressing a key on the keyboard. To assign a shortcut
+key to a tool, invoke the Customize toolbar and choose the Keyboard tab. Enter the key in
+the Shortcut column for the corresponding tool and choose OK.
+DIMENSIONING STANDARDS AND UNITS
+While installing SOLIDWORKS on your system, you can specify the units and
+dimensioning standards for dimensioning the model. There are various dimensioning
+standards such as ANSI, ISO, DIN, JIS, BSI, and GOST that can be specified for
+dimensioning a model and units such as millimeters, centimeters, inches, and so on. This
+book follows millimeters as the unit for dimensioning and ISO as the dimension standard.
+Therefore, it is recommended that you install SOLIDWORKS with ISO as the
+dimensioning standard and millimeter as units.
+IMPORTANT TERMS AND THEIR DEFINITIONS
+Before you proceed, it is very important to understand the following terms as they have
+been widely used in this book.
+Feature-based Modeling
+A feature is defined as the smallest building block that can be modified individually. In
+SOLIDWORKS, the solid models are created by integrating a number of these building
+blocks. A model created in SOLIDWORKS is a combination of a number of individual
+
+=== PDF PAGE 18 ===
+features that are related to one another, directly or indirectly. These features understand
+their fits and functions properly and therefore can be modified at any time during the design
+process. If proper design intent is maintained while creating the model, these features
+automatically adjust their values to any change in their surrounding. This provides greater
+flexibility to the design.
+Parametric Modeling
+The parametric nature of a software package is defined as its ability to use the standard
+properties or parameters in defining the shape and size of a geometry. The main function
+of this property is to drive the selected geometry to a new size or shape without considering
+its original dimensions. You can change or modify the shape and size of any feature at any
+stage of the design process. This property makes the designing process very easy.
+For example, consider the design of the body of a pipe housing shown in Figure 1-24. In
+order to change the design by modifying the diameter of the holes and the number of holes
+on the front, top, and bottom faces, you need to select the feature and change the diameter
+and the number of instances in the pattern. The modified design is shown in Figure 1-25.
+Figure 1-24 Body of pipe housing
+
+=== PDF PAGE 19 ===
+Figure 1-25 Design after modifications
+Bidirectional Associativity
+As mentioned earlier, SOLIDWORKS has different modes such as Part, Assembly, and
+Drawing. There exists bidirectional associativity among all these modes. This associativity
+ensures that any modification made in the model in any one of these modes of
+SOLIDWORKS is automatically reflected in the other modes immediately. For example,
+if you modify the dimension of a part in the Part mode, the change will reflect in the
+Assembly and Drawing modes as well. Similarly, if you modify the dimensions of a part
+in the drawing views generated in the Drawing mode, the changes will reflect in the Part
+and Assembly modes. Consider the drawing views shown in Figure 1-26 of the body of the
+pipe housing shown in Figure 1-24. Now, when you modify the model of the body of the
+pipe housing in the Part mode, the changes will reflect in the Drawing mode automatically.
+Figure 1-27 shows the drawing views of the pipe housing after increasing the diameter and
+the number of holes.
+
+=== PDF PAGE 20 ===
+Figure 1-26 Drawing views of the body part
+Figure 1-27 Drawing views after modifications
+Windows Functionality
+SOLIDWORKS is a Windows-based 3D CAD package. It uses Window’s graphical user
+interface and the functionalities such as drag and drop, copy paste, and so on. For
+example, consider that you have created a hole feature on the front planar surface of a
+model. Now, to create another hole feature on the top planar surface of the same model,
+select the hole feature and press CTRL+C (copy) on the keyboard. Next, select the top
+
+=== PDF PAGE 21 ===
+planar surface of the base feature and press CTRL+V (paste); the copied hole feature will
+be pasted on the selected face. You can also drag and drop the standard features from the
+Design Library task pane to the face of the model on which the feature is to be added.
+SWIFT Technology
+SWIFT is the acronym for SOLIDWORKS Intelligent Feature Technology. This
+technology makes SOLIDWORKS more user-friendly. This technology helps the user think
+more about the design rather than the tools in the software. Therefore, even the novice users
+find it very easy to use SOLIDWORKS for their design. The tools that use SWIFT
+Technology are called as Xperts. The different Xperts in SOLIDWORKS are SketchXpert,
+FeatureXpert, DimXpert, AssemblyXpert, FilletXpert, DraftXpert, and MateXpert.
+The SketchXpert in the sketching environment is used to resolve the conflicts that
+arise while applying relations to a sketch. Similarly, the FeatureXpert in the Part mode is
+used when the fillet and draft features fail. You will learn about these tools in the later
+chapters.
+Geometric Relations
+Geometric relations are the logical operations that are performed to add a relationship (like
+tangent or perpendicular) between the sketched entities, planes, axes, edges, or vertices.
+When adding relations, one entity can be a sketched entity and the other entity can be a
+sketched entity, or an edge, face, vertex, origin, plane, and so on. There are two methods
+to create the geometric relations: Automatic Relations and Add Relations.
+Automatic Relations
+The sketching environment of SOLIDWORKS has been provided with the facility of
+applying auto relations. This facility ensures that the geometric relations are applied to the
+sketch automatically while creating it. Automatic relations are also applied in the
+Drawing mode while working with interactive drafting.
+Add Relations
+Add relations is used to add geometric relations manually to the sketch. The sixteen types
+of geometric relations that can be manually applied to the sketch are as follows:
+Horizontal
+This relation forces the selected line segment to become a horizontal line. You can also
+select two points and force them to be aligned horizontally.
+
+=== PDF PAGE 22 ===
+Vertical
+This relation forces the selected line segment to become a vertical line. You can also
+select two points and force them to be aligned vertically.
+Collinear
+This relation forces the two selected entities to be placed in the same line.
+Coradial
+This relation is applied to any two selected arcs, two circles, or an arc and a circle to
+force them to become equi-radius and also to share the same center point.
+Perpendicular
+segment.
+This relation is used to make selected line segment perpendicular to another selected
+Parallel
+segment.
+This relation is used to make the selected line segment parallel to another selected
+Tangent
+This relation is used to make the selected line segment, arc, spline, circle, or ellipse
+tangent to another arc, circle, spline, or ellipse.
+Note
+In case of splines, relations are applied to their control points.
+Concentric
+This relation forces two selected arcs, circles, a point and an arc, a point and a circle, or
+an arc and a circle to share the same center point.
+Midpoint
+This relation forces a selected point to be placed on the mid point of a line.
+
+=== PDF PAGE 23 ===
+Intersection
+This relation forces a selected point to be placed at the intersection of two selected
+entities.
+Coincident
+This relation is used to make two points, a point and a line, or a point and an arc
+coincident.
+Equal
+The equal relation forces the two selected lines to become equal in length. This relation
+is also used to force two arcs, two circles, or an arc and a circle to have equal radii.
+Symmetric
+The symmetric relation is used to force the selected entities to become symmetrical
+about a selected center line, so that they remain equidistant from the center line.
+Fix
+This relation is used to fix the selected entity to a particular location with respect to the
+coordinate system. The endpoints of the fixed line, arc, spline, or elliptical segment are
+free to move along the line.
+Pierce
+This relation forces the sketched point to be coincident to the selected axis, edge, or
+curve where it pierces the sketch plane. The sketched point in this relation can be the
+end point of the sketched entity.
+Merge
+This relation is used to merge two sketched points or end points of entities.
+Blocks
+A block is a set of entities grouped together to act as a single entity. Blocks are used to
+create complex mechanisms as sketches and check their functioning before developing
+them into complex 3D models.
+
+=== PDF PAGE 24 ===
+Library Feature
+Generally, in a mechanical design, some features are used frequently. In most of the other
+solid modeling tools, you need to create these features whenever you need them. However,
+SOLIDWORKS allows you to save these features in a library so that you can retrieve
+them whenever you want. This saves a lot of designing time and effort of a designer.
+Design Table
+Design tables are used to create a multi-instance parametric component. For example, some
+components in your organization may have the same geometry but different dimensions.
+Instead of creating each component of the same geometry with a different size, you can
+create one component and then using the design table, create different instances of the
+component by changing the dimension as per your requirement. You can access all these
+components in a single part file.
+Equations
+Equations are the analytical and numerical formulae applied to the dimensions during the
+sketching of the feature sketch or after sketching the feature sketch. The equations can
+also be applied to the placed features.
+Collision Detection
+Collision detection is used to detect interference and collision between the parts of an
+assembly when the assembly is in motion. While creating the assembly in SOLIDWORKS,
+you can detect collision between parts by moving and rotating them.
+What’s Wrong Functionality
+While creating a feature of the model or after editing a feature, if the geometry of the
+feature is not compatible and the system is not able to construct that feature, then the
+What’s Wrong functionality is used to detect the possible error that may have occurred
+while creating the feature.
+2D Command Line Emulator
+The 2D command line emulator is an add-in of SOLIDWORKS. You can activate this by
+
+=== PDF PAGE 25 ===
+choosing Tools > Add-Ins from the SOLIDWORKS menus. On doing so, the Add-Ins
+dialog box will be displayed. Select the SOLIDWORKS 2D Emulator check box and
+choose OK from the Add-Ins dialog box; a command section will be displayed at the
+bottom of the graphics area. This 2D Command line emulator is useful for invoking the
+commands by typing them. You can type the commands in the 2D Command line
+emulator.
+SimulationXpress
+In SOLIDWORKS, you are provided with an analysis tool named as SimulationXpress,
+which is used to execute the static or stress analysis. In SimulationXpress, you can only
+execute the linear static analysis. Using the linear static analysis, you can calculate the
+displacement, strain, and stresses applied on a component with the effect of material,
+various loading conditions, and restraint conditions applied on a model. A component fails
+when the stress applied on it reaches beyond a certain permissible limit. The Static Nodal
+stress plot of the crane hook designed in SOLIDWORKS and analyzed using
+SimulationXpress is shown in Figure 1-28.
+Figure 1-28 The crane hook analyzed using SimulationXpress
+Physical Dynamics
+The Physical Dynamics is used to observe the motion of the assembly. With this option
+selected, the component dragged in the assembly applies a force to the component that it
+touches. As a result, the other component moves or rotates within its allowable degrees of
+freedom.
+
+=== PDF PAGE 26 ===
+Physical Simulation
+The Physical Simulation is used to simulate the assemblies created in the assembly
+environment of SOLIDWORKS. You can assign and simulate the effect of different
+simulation elements such as linear, rotary motors, and gravity to the assemblies. After
+creating a simulating assembly, you can record and replay the simulation.
+Seed Feature
+The original feature that is used as the parent feature to create any type of pattern or mirror
+feature is known as the seed feature. You can edit or modify only a seed feature. You cannot
+edit the instances of the pattern feature.
+FeatureManager Design Tree
+The FeatureManager Design Tree is one the most important components of
+SOLIDWORKS screen. It contains information about default planes, materials, lights, and
+all the features that are added to the model. When you add features to the model using
+various modeling tools, the same are also displayed in the FeatureManager Design Tree.
+You can easily select and edit the features using the FeatureManager Design Tree. When
+you invoke any tool to create a feature, the FeatureManager Design Tree is replaced by
+the respective PropertyManager. At this stage, the FeatureManager Design Tree is
+displayed in the drawing area.
+Absorbed Features
+Features that are directly involved in creating other features are known as absorbed features.
+For example, the sketch of an extruded feature is an absorbed feature of the extruded
+feature.
+Child Features
+The features that are dependent on their parent feature and cannot exist without their parent
+features are known as child features. For example, consider a model with extrude feature
+and filleted edges. If you delete the extrude feature, the fillet feature will also get deleted
+because its existence is not possible without its parent feature.
+
+=== PDF PAGE 27 ===
+Dependent Features
+Dependent features are those features that depend on their parent feature but can still exist
+without the parent feature with some minor modifications. If the parent feature is deleted,
+then by specifying other references and modifying the feature, you can retain the dependent
+features.
+AUTO-BACKUP OPTION
+SOLIDWORKS also allows you to set the option to save the SOLIDWORKS document
+automatically after a regular interval of time. While working on a design project, if the
+system crashes, you may lose the unsaved design data. If the auto-backup option is turned
+on, your data will be saved automatically after regular intervals. To turn this option on,
+choose Tools > Options from the SOLIDWORKS menus; the System Options - General
+dialog box will be displayed. Select the Backup/Recover option from the display area
+provided on the left of this dialog box. Next, choose the Save auto-recover information
+every check box in the Auto-recover area, if it is not chosen by default. On doing so, the
+spinner and the drop-down list provided on the right of the check box will be enabled. Use
+the spinner and the drop-down list to set the number of changes or minutes after which the
+document will be saved automatically. By default, the backup files are saved at the location
+X:\Users\<name of your machine>AppData\Local\TempSWBackupDirectory\swxauto
+(where X is the drive in which you have installed SOLIDWORKS 2016 and the AppData
+folder is a hidden folder). You can also change the path of this location. To change this
+path, choose the button provided on the right of the edit box; the Browse For Folder dialog
+box will be displayed. You can specify the location of the folder to save the backup files
+using this dialog box. If you need to save the backup files in the current folder, select the
+Number of backup copies per document check box and then select the Save backup files
+in the same location as the original radio button. You can set the number of backup files
+that you need to save using the Number of backup copies per document spinner. After
+setting all options, choose the OK button from the System Options - Backup/Recover
+dialog box.
+SELECTING HIDDEN ENTITIES
+Sometimes, while working on a model, you need to select an entity that is either hidden
+behind another entity or is not displayed in the current orientation of the view.
+SOLIDWORKS allows you to select these entities using the Select Other option. For
+example, consider that you need to select the back face of a model, which is not displayed
+in the current orientation. In such a case, you need to move the cursor over the visible face
+such that the cursor is also in line with the back face of the model. Now, click on the front
+
+=== PDF PAGE 28 ===
+face and choose the Select Other button from the pop-up toolbar; the cursor changes to
+the select other cursor and the Select Other list box will be displayed. This list box displays
+all entities that can be selected. The item on which you move the cursor in the list box will
+be highlighted in the drawing area. You can select the hidden face using this box.
+HOT KEYS
+SOLIDWORKS is more popularly known for its mouse gesture functionality. However,
+you can also use the keys of the keyboard to invoke some tools, windows, dialog boxes,
+and so on. These keys are known as hot keys. Some hot keys along with their functions are
+given next.
+Hot Key Function
+F11 Full screen
+S Invokes the shortcut bar
+R Invokes the recent documents
+F Fits the object in the drawing over the screen
+Z Zooms out
+SPACE BAR Invokes the Orientation menu
+CTRL+1 Changes the current view to the Front View
+CTRL+2 Changes the current view to the Back View
+CTRL+3 Changes the current view to the Left View
+CTRL+V Pastes the selected feature
+
+=== PDF PAGE 29 ===
+CTRL+4 Changes the current view to the Right View
+CTRL+V Pastes the selected feature
+
+=== PDF PAGE 30 ===
+CTRL+5 Changes the current view to the Top View
+CTRL+6 Changes the current view to the Bottom View
+CTRL+7 Changes the current view to the Isometric View
+CTRL+8 Changes the current view to the Normal View
+CTRL+SHIFT+Z Changes the current view to the Previous View
+CTRL+Arrows Moves the feature along the arrows direction
+SHIFT+Arrows Rotates the feature along the arrows direction
+CTRL+B Rebuilds the model
+CTRL+Z Invokes the Undo tool
+CTRL+N Invokes the New SOLIDWORKS Document dialog box
+CTRL+O Invokes the Open window
+CTRL+S Saves the document
+CTRL+P Prints the document
+CTRL+A Selects all the parts in the document
+CTRL+C Copies the selected feature
+CTRL+V Pastes the selected feature
+
+=== PDF PAGE 31 ===
+CTRL+X Cuts the selected feature
+ALT+F Opens the File menu
+ALT+E Opens the Edit menu
+ALT+V Opens the View menu
+ALT+I Opens the Insert menu
+ALT+T Opens the Tool menu
+ALT+W Opens the Window menu
+ALT+H Opens the Help menu
+CTRL+W Closes the current document
+COLOR SCHEME
+SOLIDWORKS allows you to use various color schemes as the background color of the
+screen, color and display style of FeatureManager Design Tree, and for displaying the
+entities on the screen. Note that the color scheme used in this book is neither the default
+color scheme nor the predefined color scheme. To set the color scheme, choose Tools >
+Options from the SOLIDWORKS menus; the System Options - General dialog box will
+be displayed. Select the Colors option from the left of this dialog box; the option related
+to the color scheme will be displayed in the dialog box and the name of the dialog box will
+change to System Options - Colors. In the list box available in the Color scheme settings
+area, the Viewport Background option is available. Select this option and choose the
+Edit button from the preview area on the right. Select white color from the Color dialog
+box and choose the OK button. After setting the color scheme, you need to save it so that
+next time if you need to set this color scheme, you do not need to configure all the
+settings. You just need to select the name of the saved color scheme from the Current color
+scheme drop-down list. To save the color scheme, choose the Save As Scheme button; the
+Color Scheme Name dialog box will be displayed. Enter the name of the color
+
+=== PDF PAGE 32 ===
+scheme as SOLIDWORKS 2016 in the edit box in the Color Scheme Name dialog box
+and choose the OK button. Now, choose the OK button from the System Options - Colors
+dialog box.

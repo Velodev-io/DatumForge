@@ -1,0 +1,2 @@
+Rectangle corpus Corner scale 0.001
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/rectangles.cpp:47: unchanged.map() == s.map()

@@ -1,0 +1,55 @@
+[1/53] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/53] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/53] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/53] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[5/53] Automatic MOC for target cad_desktop_ui
+[6/52] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[7/52] Linking CXX static library libcad_planegcs.a
+[8/52] Linking CXX static library libcad_sketch_solver.a
+[9/52] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[10/52] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[11/52] Linking CXX static library libcad_desktop_ui.a
+[12/52] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[13/52] Automatic MOC for target cm1_contracts
+[14/51] Building CXX object CMakeFiles/cm0_feasibility.dir/tests/core_modeling/feasibility.cpp.o
+[15/51] Linking CXX executable solver_spike
+[16/51] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[17/51] Linking CXX executable module1_contracts
+[18/51] Linking CXX executable module2_storage
+[19/51] Linking CXX executable module2_contracts
+[20/51] Linking CXX executable module2_fault_worker
+[21/51] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[22/51] Linking CXX executable module3_persistence
+[23/51] Building CXX object CMakeFiles/cm1_contracts.dir/tests/core_modeling/contracts.cpp.o
+[24/51] Linking CXX executable module3_input
+[25/51] Linking CXX executable module3_solver
+[26/51] Linking CXX executable module3_contracts
+[27/51] Linking CXX executable module4_workspace
+[28/51] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[29/51] Linking CXX executable module4_contracts
+[30/51] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[31/51] Linking CXX executable module5_persistence
+[32/51] Linking CXX executable module5_b2
+[33/51] Linking CXX executable module5_contracts
+[34/51] Linking CXX executable module6_persistence
+[35/51] Linking CXX executable module6_contracts
+[36/51] Linking CXX executable module7_persistence
+[37/51] Linking CXX executable module7_b3
+[38/51] Linking CXX executable module7_contracts
+[39/51] Linking CXX executable module8_drawing
+[40/51] Linking CXX executable module8_contracts
+[41/51] Linking CXX executable module9_interaction
+[42/51] Linking CXX executable module10_fault_worker
+[43/51] Linking CXX executable cm0_feasibility
+[44/51] Linking CXX executable module10_hardening
+[45/51] Linking CXX executable cm1_contracts
+[46/51] Linking CXX executable cm1_relations
+[47/51] Linking CXX executable cm1_rectangles
+[48/51] Linking CXX executable cm1_slots
+[49/51] Linking CXX executable cm1_curves
+[50/51] Linking CXX executable cm1_pierce
+[51/51] Linking CXX executable cm1_intent

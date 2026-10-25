@@ -1,6 +1,7 @@
 #pragma once
 #include "domain/Documents.hpp"
 #include <array>
+#include <optional>
 #include <vector>
 namespace cad::sketch {
 using Vec3 = std::array<double, 3>;
@@ -19,16 +20,42 @@ struct Entity {
     Vec2 point;
     QString a, b; // line endpoints, or circle/arc center in a
     double radius = .005, start = 0, sweep = 1.5707963267948966;
+    QStringList poles;
+    std::vector<double> weights, knots;
+    std::vector<int> multiplicities;
+    int degree = 3;
+};
+struct CurveReference {
+    QString document = "Self", sketch, entity, role;
+    double lower = 0, upper = 1, parameter = 0;
+    void validate() const;
+    QCborMap map() const;
+    static CurveReference parse(const QCborMap &map);
 };
 struct Constraint {
     QString id = newId(), kind, a, b, expression;
     double value = 0, second = 0;
+    QString third;
+    bool reversed = false;
+    std::optional<CurveReference> reference;
+};
+struct ConstructionGroup {
+    QString id = newId(), method;
+    QString kind = "Rectangle", lengthMode = "Center to Center";
+    bool dimensions = false;
+    QStringList vertices, edges, diagonals, relations;
+    QStringList supports;
+    QString center;
+    QCborMap map() const;
+    static ConstructionGroup parse(const QCborMap &map);
 };
 struct Sketch {
     QString id = newId(), name = "Sketch";
     Frame frame;
     std::vector<Entity> entities;
     std::vector<Constraint> constraints;
+    std::vector<ConstructionGroup> groups;
+    QCborArray edits; // schema-5 bounded historical edit provenance
     QMap<QString, QString> names;
     Entity &entity(QString id);
     const Entity &entity(QString id) const;
@@ -41,6 +68,8 @@ struct Sketch {
     QStringList rectangle(Vec2 first, Vec2 second, bool construction = false);
     Vec2 snap(Vec2 p, double tolerance, double grid, QString *pointId = nullptr) const;
     void validate() const;
+    bool extendedRelations() const;
+    bool primitiveSemantics() const;
     QCborMap map() const;
     static Sketch parse(const QCborMap &map);
 };
@@ -48,5 +77,6 @@ QCborMap fields(std::initializer_list<std::pair<QString, QCborValue>> list);
 QCborArray encode(const std::vector<Sketch> &sketches);
 std::vector<Sketch> parse(const QCborArray &sketches);
 double length(Vec2 a, Vec2 b);
-QString constraintReason(const Sketch &sketch, QString kind, QString first, QString second);
+QString constraintReason(const Sketch &sketch, QString kind, QString first, QString second,
+                         QString third = {});
 } // namespace cad::sketch

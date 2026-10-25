@@ -1,0 +1,9 @@
+********* Start testing of EditingContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : EditingContracts::initTestCase()
+QINFO  : EditingContracts::native() Line edit workflow "Trim to closest" "mm"
+FAIL!  : EditingContracts::native() 'wait([&] { return w.sceneView()->graphicsDescription().contains( "initialized 1"); })' returned FALSE. (Unavailable)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/editing_contracts.cpp(96)]
+PASS   : EditingContracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 12765ms
+********* Finished testing of EditingContracts *********

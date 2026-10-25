@@ -72,11 +72,12 @@ QMatrix4x4 Viewport::matrix() const {
     return m;
 }
 void Viewport::draw(const QVector<QVector3D> &vertices, GLenum primitive, const QVector4D &color,
-                    const QVector3D &translation) {
+                    const Instance &instance) {
     if (vertices.empty())
         return;
     auto m = matrix();
-    m.translate(translation);
+    m.translate(instance.translation);
+    m.rotate(instance.rotation);
     shader.setUniformValue("matrix", m);
     shader.setUniformValue("color", color);
     buffer.bind();
@@ -99,33 +100,40 @@ void Viewport::paintGL() {
         triangles.append(mesh->vertices[i]);
     const QVector4D base = stale ? QVector4D(.42, .46, .5, 1) : QVector4D(.3, .64, .83, 1);
     for (const auto &instance : mesh->instances) {
+        auto first = instance.firstTriangle;
+        auto count =
+            instance.triangleCount < 0 ? mesh->triangleRoles.size() : instance.triangleCount;
+        auto firstEdge = instance.firstEdge;
+        auto edgeCount = instance.edgeCount < 0 ? mesh->edgeIds.size() : instance.edgeCount;
+        auto localTriangles = triangles.mid(first * 3, count * 3),
+             localEdges = mesh->edges.mid(firstEdge * 2, edgeCount * 2);
         if (mode != "Wireframe") {
             glEnable(GL_POLYGON_OFFSET_FILL);
             glPolygonOffset(1, 1);
-            draw(triangles, GL_TRIANGLES,
-                 mode == "Hidden edges" ? QVector4D(.09, .12, .16, 1) : base, instance.translation);
+            draw(localTriangles, GL_TRIANGLES,
+                 mode == "Hidden edges" ? QVector4D(.09, .12, .16, 1) : base, instance);
             glDisable(GL_POLYGON_OFFSET_FILL);
         }
         if (mode != "Shaded")
-            draw(mesh->edges, GL_LINES, QVector4D(.85, .9, .95, 1), instance.translation);
+            draw(localEdges, GL_LINES, QVector4D(.85, .9, .95, 1), instance);
         if (selection.occurrence != instance.id)
             continue;
         QVector<QVector3D> highlight;
         if (selection.kind == "Face") {
             int role = mesh->faceIds.indexOf(selection.entity);
-            for (int t = 0; t < mesh->triangleRoles.size(); ++t)
+            for (int t = first; t < first + count; ++t)
                 if (mesh->triangleRoles[t] == quint32(role))
                     for (int j = 0; j < 3; ++j)
                         highlight.append(mesh->vertices[mesh->indices[t * 3 + j]]);
-            draw(highlight, GL_TRIANGLES, QVector4D(1, .65, .15, 1), instance.translation);
+            draw(highlight, GL_TRIANGLES, QVector4D(1, .65, .15, 1), instance);
         } else if (selection.kind == "Edge") {
             int role = mesh->edgeIds.indexOf(selection.entity);
             if (role >= 0) {
                 highlight = {mesh->edges[role * 2], mesh->edges[role * 2 + 1]};
-                draw(highlight, GL_LINES, QVector4D(1, .65, .15, 1), instance.translation);
+                draw(highlight, GL_LINES, QVector4D(1, .65, .15, 1), instance);
             }
         } else
-            draw(mesh->edges, GL_LINES, QVector4D(1, .65, .15, 1), instance.translation);
+            draw(localEdges, GL_LINES, QVector4D(1, .65, .15, 1), instance);
     }
     shader.release();
     buffer.release();
@@ -165,14 +173,24 @@ void Viewport::setMode(QString value) {
 void Viewport::fit() {
     if (!mesh)
         return;
-    QVector3D low = mesh->minimum, high = mesh->maximum;
-    for (const auto &instance : mesh->instances) {
-        auto a = mesh->minimum + instance.translation, b = mesh->maximum + instance.translation;
-        for (int i = 0; i < 3; ++i) {
-            low[i] = qMin(low[i], a[i]);
-            high[i] = qMax(high[i], b[i]);
-        }
-    }
+    QVector3D low, high;
+    bool first = true;
+    for (auto &instance : mesh->instances)
+        for (int t = instance.firstTriangle;
+             t < (instance.triangleCount < 0 ? mesh->triangleRoles.size()
+                                             : instance.firstTriangle + instance.triangleCount);
+             ++t)
+            for (int k = 0; k < 3; ++k) {
+                auto v = instance.map(mesh->vertices[mesh->indices[t * 3 + k]]);
+                if (first) {
+                    low = high = v;
+                    first = false;
+                } else
+                    for (int j = 0; j < 3; ++j) {
+                        low[j] = qMin(low[j], v[j]);
+                        high[j] = qMax(high[j], v[j]);
+                    }
+            }
     center = (low + high) / 2;
     float radius = qMax((high - low).length() / 2, 1.f);
     float aspect = float(qMax(width(), 1)) / qMax(height(), 1);
@@ -223,10 +241,13 @@ Selection Viewport::pick(QPointF pos) const {
         return QVector3D::dotProduct(e2, q) * inv;
     };
     for (const auto &instance : mesh->instances)
-        for (int t = 0; t < mesh->triangleRoles.size(); ++t) {
-            auto a = mesh->vertices[mesh->indices[t * 3]] + instance.translation,
-                 b = mesh->vertices[mesh->indices[t * 3 + 1]] + instance.translation,
-                 c = mesh->vertices[mesh->indices[t * 3 + 2]] + instance.translation;
+        for (int t = instance.firstTriangle;
+             t < (instance.triangleCount < 0 ? mesh->triangleRoles.size()
+                                             : instance.firstTriangle + instance.triangleCount);
+             ++t) {
+            auto a = instance.map(mesh->vertices[mesh->indices[t * 3]]),
+                 b = instance.map(mesh->vertices[mesh->indices[t * 3 + 1]]),
+                 c = instance.map(mesh->vertices[mesh->indices[t * 3 + 2]]);
             float d = intersect(a, b, c);
             if (d >= 0 && d < closest) {
                 closest = d;
@@ -236,7 +257,8 @@ Selection Viewport::pick(QPointF pos) const {
     if (filter == "Body" || filter == "Component") {
         if (!hit.empty())
             return {filter,
-                    hit.occurrence == "part" ? hit.entity.left(36) : QString("body/reference-box"),
+                    wire::uuid(hit.entity.left(36)) ? hit.entity.left(36)
+                                                    : QString("body/reference-box"),
                     hit.occurrence};
         return {};
     }
@@ -246,9 +268,11 @@ Selection Viewport::pick(QPointF pos) const {
     double best = 8;
     float depth = std::numeric_limits<float>::max();
     for (const auto &instance : mesh->instances)
-        for (int e = 0; e < mesh->edgeIds.size(); ++e) {
-            auto a = mesh->edges[e * 2] + instance.translation,
-                 b = mesh->edges[e * 2 + 1] + instance.translation;
+        for (int e = instance.firstEdge;
+             e < (instance.edgeCount < 0 ? mesh->edgeIds.size()
+                                         : instance.firstEdge + instance.edgeCount);
+             ++e) {
+            auto a = instance.map(mesh->edges[e * 2]), b = instance.map(mesh->edges[e * 2 + 1]);
             auto pa = project(a), pb = project(b), ab = pb - pa;
             double length = QPointF::dotProduct(ab, ab);
             double u = length > 0 ? qBound(0., QPointF::dotProduct(pos - pa, ab) / length, 1.) : 0;
@@ -268,6 +292,8 @@ Selection Viewport::pick(QPointF pos) const {
 }
 void Viewport::mousePressEvent(QMouseEvent *e) {
     previous = press = e->position().toPoint();
+    draggedOccurrence =
+        componentDrag && e->button() == Qt::LeftButton ? pick(e->position()).occurrence : QString();
     setFocus();
 }
 void Viewport::mouseMoveEvent(QMouseEvent *e) {
@@ -282,6 +308,18 @@ void Viewport::mouseMoveEvent(QMouseEvent *e) {
     update();
 }
 void Viewport::mouseReleaseEvent(QMouseEvent *e) {
+    if (componentDrag && e->button() == Qt::LeftButton && !draggedOccurrence.isEmpty() &&
+        (e->position().toPoint() - press).manhattanLength() >= 4) {
+        auto delta = e->position() - press;
+        QMatrix4x4 rotation;
+        rotation.rotate(pitch, 1, 0, 0);
+        rotation.rotate(yaw, 0, 1, 0);
+        auto world = rotation.inverted().mapVector(
+            QVector3D(float(delta.x()), float(-delta.y()), 0) * (2 * span / qMax(height(), 1)));
+        emit componentDragged(draggedOccurrence, world);
+        draggedOccurrence.clear();
+        return;
+    }
     if (e->button() == Qt::LeftButton && (e->position().toPoint() - press).manhattanLength() < 4)
         emit selected(pick(e->position()));
 }

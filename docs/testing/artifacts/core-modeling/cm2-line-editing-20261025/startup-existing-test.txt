@@ -1,0 +1,15 @@
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::pointRelations() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::pointRelations() qt.qpa.fonts: Populating font family aliases took 43 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::pointRelations() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::pointRelations() 'wait([&] { return c->ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/contracts.cpp(1027)]
+QWARN  : Contracts::pointRelations() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::pointRelations() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::pointRelations() 'wait([&] { return c->ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/contracts.cpp(867)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 24558ms
+********* Finished testing of Contracts *********

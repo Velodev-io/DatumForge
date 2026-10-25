@@ -1,0 +1,73 @@
+[1/72] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/EditHistory.cpp.o
+[2/72] Automatic MOC for target cad_client
+[3/71] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[4/71] Linking CXX static library libcad_sketch_model.a
+[5/71] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/LineEditing.cpp.o
+[6/71] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[7/71] Linking CXX static library libcad_client.a
+[8/71] Linking CXX static library libcad_sketch_solver.a
+[9/71] Automatic MOC for target cad_desktop_ui
+[10/70] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[11/70] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[12/70] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[13/70] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[14/70] Linking CXX static library libcad_persistence.a
+[15/70] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[16/70] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchEditingUI.cpp.o
+[17/70] Linking CXX static library libcad_desktop_ui.a
+[18/70] Building CXX object CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o
+[19/70] Automatic MOC for target cm2_contracts
+[20/69] Building CXX object CMakeFiles/module4_variants.dir/tests/module4/variants.cpp.o
+[21/69] Building CXX object CMakeFiles/module5_persistence.dir/tests/module5/persistence.cpp.o
+[22/69] Building CXX object CMakeFiles/cm2_editing.dir/tests/core_modeling/editing.cpp.o
+[23/69] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[24/69] Linking CXX executable module1_contracts
+[25/69] Linking CXX executable module2_storage
+[26/69] Linking CXX executable module2_contracts
+[27/69] Linking CXX executable module2_fault_worker
+[28/69] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[29/69] Linking CXX executable module3_model
+[30/69] Linking CXX executable module3_persistence
+[31/69] Building CXX object CMakeFiles/cm2_contracts.dir/tests/core_modeling/editing_contracts.cpp.o
+[32/69] Linking CXX executable module3_input
+[33/69] Linking CXX executable module3_contracts
+[34/69] Linking CXX executable module3_solver
+[35/69] Linking CXX executable module4_workspace
+[36/69] Linking CXX executable module4_geometry
+[37/69] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[38/69] Linking CXX executable module4_contracts
+[39/69] Linking CXX executable module5_plan
+[40/69] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[41/69] Linking CXX executable module5_engine
+[42/69] Linking CXX executable module5_persistence
+[43/69] Linking CXX executable module5_b2
+[44/69] Linking CXX executable module6_exchange
+[45/69] Linking CXX executable module5_contracts
+[46/69] Linking CXX executable module6_persistence
+[47/69] Linking CXX executable module6_contracts
+[48/69] Linking CXX executable module7_model
+[49/69] Linking CXX executable module7_geometry
+[50/69] Linking CXX executable module7_persistence
+[51/69] Linking CXX executable module7_contracts
+[52/69] Linking CXX executable module7_b3
+[53/69] Linking CXX executable module8_contracts
+[54/69] Linking CXX executable module8_drawing
+[55/69] Linking CXX executable module8_geometry
+[56/69] Linking CXX executable module9_privacy
+[57/69] Linking CXX executable module9_interaction
+[58/69] Linking CXX executable module10_fault_worker
+[59/69] Linking CXX executable module10_hardening
+[60/69] Linking CXX executable module10_contracts
+[61/69] Linking CXX executable cm1_contracts
+[62/69] Linking CXX executable cm1_relations
+[63/69] Linking CXX executable cm1_rectangles
+[64/69] Linking CXX executable cm1_slots
+[65/69] Linking CXX executable cm1_curves
+[66/69] Linking CXX executable cm1_pierce
+[67/69] Linking CXX executable cm1_intent
+[68/69] Linking CXX executable cm2_editing
+[69/69] Linking CXX executable cm2_contracts

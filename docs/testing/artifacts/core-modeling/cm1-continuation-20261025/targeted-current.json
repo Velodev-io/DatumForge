@@ -1,0 +1,56 @@
+{
+  "scope": "Targeted development checks only; full CM1 acceptance pending",
+  "checks": [
+    {
+      "name": "curve-ui-after-undo-fix",
+      "command": [
+        "build/macos-debug/cm1_contracts",
+        "curveTools"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "slot-ui-current",
+      "command": [
+        "build/macos-debug/cm1_contracts",
+        "slotTools"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "intent-current",
+      "command": [
+        "build/macos-debug/cm1_intent"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "curve-engine-current",
+      "command": [
+        "build/macos-debug/cm1_curves"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "slot-engine-current",
+      "command": [
+        "build/macos-debug/cm1_slots"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "rectangle-regression",
+      "command": [
+        "build/macos-debug/cm1_rectangles"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "relation-regression",
+      "command": [
+        "build/macos-debug/cm1_relations"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

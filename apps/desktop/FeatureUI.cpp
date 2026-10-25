@@ -1,3 +1,4 @@
+#include "AssemblyPanel.hpp"
 #include "FeaturePanel.hpp"
 #include "HistoryPanel.hpp"
 #include "MainWindow.hpp"
@@ -17,7 +18,8 @@ void MainWindow::refreshFeatures() {
     }
     bool idle = client->ready() && !client->outstanding(),
          part = active.value("type").toString() == "Part";
-    bool sketchEdit = sketchPanel && sketchPanel->active(), edit = featurePanel->active()||(historyPanel&&historyPanel->active());
+    bool sketchEdit = sketchPanel && sketchPanel->active(),
+         edit = featurePanel->active() || (historyPanel && historyPanel->active());
     featurePanel->install(active, idle);
     auto available = [&](QString id, bool yes, QString reason) {
         auto *a = commands.get(id);
@@ -34,8 +36,11 @@ void MainWindow::refreshFeatures() {
                   profile ? "Accept a closed Part sketch first"
                           : "Requires an accepted Part solid and no active command");
     }
-    findChild<QAction *>("cancelFeatureAction")->setEnabled(edit);
-    if(commands.get("history"))available("history",part&&idle&&!edit&&!sketchEdit&&solids,"Requires an accepted Part history and no active command");
+    findChild<QAction *>("cancelFeatureAction")
+        ->setEnabled(edit || (assemblyPanel && assemblyPanel->active()));
+    if (commands.get("history"))
+        available("history", part && idle && !edit && !sketchEdit && solids,
+                  "Requires an accepted Part history and no active command");
     if (!part)
         return;
     viewport->setContext(active.value("units").toString() + " · " +
@@ -50,8 +55,14 @@ void MainWindow::refreshFeatures() {
         viewport->setSelection(state().selection);
         viewport->setStale(state().stale);
     }
-    if (showSolid)
-        propertyPages->setCurrentWidget(historyPanel&&historyPanel->active()?static_cast<QWidget*>(historyPanel):static_cast<QWidget*>(featurePanel));
+    if (edit || sketchEdit)
+        exchangeShown = false;
+    if (exchangeShown && !edit && !sketchEdit)
+        propertyPages->setCurrentWidget(findChild<QWidget *>("exchangeProperties"));
+    else if (showSolid)
+        propertyPages->setCurrentWidget(historyPanel && historyPanel->active()
+                                            ? static_cast<QWidget *>(historyPanel)
+                                            : static_cast<QWidget *>(featurePanel));
     if (edit) {
         findChild<QTabWidget *>("managerTabs")->setCurrentIndex(1);
         commandTabs->setCurrentIndex(0);

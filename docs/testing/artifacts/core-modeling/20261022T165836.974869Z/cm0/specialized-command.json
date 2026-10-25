@@ -1,0 +1,7 @@
+{
+  "command": [
+    "/tmp/datumforge-cm-probes/build/cm0"
+  ],
+  "exit_code": 1,
+  "source_sha256": "83cd9888a917c78b4829bf68c8df3aa497faeb2e6c85e504c756787c4b91bfda"
+}

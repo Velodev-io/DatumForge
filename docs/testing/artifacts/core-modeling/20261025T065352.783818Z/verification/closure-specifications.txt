@@ -1,0 +1,15 @@
+{
+  "scope": "Documentation structure only; no product acceptance tests executed",
+  "checked_at_utc": "2026-10-25T07:14:37.228552+00:00",
+  "status": "pass",
+  "product_implementation": "Modules 1-10 scoped implementation on the available Mac; CM0-CM9 authorized and incomplete, with selected CM1 relation and rectangle slices; full acceptance remains Blocked",
+  "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
+  "requirements": 56,
+  "traceability_rows": 56,
+  "modules": 13,
+  "unchecked_engineering_tasks": 39,
+  "completed_engineering_tasks": 120,
+  "core_modeling_tasks": 50,
+  "completed_core_modeling_tasks": 3,
+  "errors": []
+}

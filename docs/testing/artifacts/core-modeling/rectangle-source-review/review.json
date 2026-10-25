@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-24",
+  "scope": "T2 page 34 rectangle diagram review only; not full course reconciliation",
+  "source_file": "T2 PART IN 2D.pdf",
+  "source_sha256": "6a854c645805cbae32d0c62555c0d7312f7f30c9954f793054d850609a27eca6",
+  "pdf_page_1_based": 34,
+  "render": "T2-p34.png",
+  "render_sha256": "25ed11aaba36c6465a0bf19b439ba054e00654d302dd2951f5de35b6021ee4c4",
+  "renderer": "Native PDFKit fallback; Poppler unavailable",
+  "reviewed_modes": [
+    "Corner",
+    "Center",
+    "3 Point Corner",
+    "3 Point Center",
+    "Parallelogram"
+  ],
+  "supplementary_primary_sources": [
+    "https://help.solidworks.com/2026/English/SolidWorks/Sldworks/c_Rectangles.htm",
+    "https://help.solidworks.com/2023/english/SolidWorks/sldworks/t_Sketching_3_Point_Center_Rectangles.htm",
+    "https://www.solidworks.com/sites/default/files/2023-04/Fundamentals3DDesign_SIM_ENG_SV.pdf"
+  ],
+  "distribution": "Private review evidence; not bundled with product"
+}

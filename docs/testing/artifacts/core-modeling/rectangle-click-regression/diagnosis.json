@@ -1,0 +1,17 @@
+{
+  "status": "Pass: targeted repro and regression checks; full final run recorded separately",
+  "scope": "Stationary group selection must not mutate drafts or queue exact previews",
+  "failed_full_run": "../20261024T044126.578193Z/verification/verification.json",
+  "observations": [
+    "Original module4.lifecycle failed in full suite and isolated reproduction",
+    "Press/release had identical coordinates and no pre-existing outstanding worker operation",
+    "Stationary release called group resize and queued a preview",
+    "Exact no-op map-equality regression failed for Corner at scale 0.001 before the fix",
+    "Early identity-preserving return for equal drag endpoints makes analytical/group and original UI scenarios pass"
+  ],
+  "cause": "Zero-displacement group drag reconstructed coordinates through trigonometric arithmetic; floating-point changes created a false draft edit",
+  "fix": "Validate selected entity, then preserve exact sketch bytes for equal drag endpoints before control checks or reconstruction",
+  "green": "green.json",
+  "cleanup": "Tagged instrumentation removed; original test assertions retained and extended; temporary probe directory removed",
+  "prevention": "No-op model edits need identity-preserving behavior at shared edit boundaries, with tests at both model and UI call sites"
+}

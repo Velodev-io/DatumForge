@@ -1,0 +1,80 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.4s)
+-- Generating done (0.2s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/89] Automatic MOC for target cad_client
+[2/88] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/88] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/88] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/88] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[6/88] Linking CXX static library libcad_client.a
+[7/88] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[8/88] Linking CXX static library libcad_planegcs.a
+[9/88] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[10/88] Linking CXX static library libcad_sketch_solver.a
+[11/88] Automatic MOC for target cad_desktop_ui
+[12/86] Automatic MOC for target module3_input
+[13/85] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[14/85] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[15/85] Linking CXX static library libcad_persistence.a
+[16/85] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[17/85] Automatic MOC for target module1_contracts
+[18/84] Automatic MOC for target module2_contracts
+[19/83] Automatic MOC for target module3_contracts
+[20/82] Automatic MOC for target module4_workspace
+[21/81] Automatic MOC for target module4_contracts
+[22/80] Automatic MOC for target module5_contracts
+[23/79] Automatic MOC for target module6_contracts
+[24/78] Automatic MOC for target module7_contracts
+[25/77] Automatic MOC for target module8_contracts
+[26/76] Automatic MOC for target module9_interaction
+[27/75] Automatic MOC for target module10_contracts
+[28/74] Automatic MOC for target cm1_contracts
+[29/73] Building CXX object CMakeFiles/cm0_feasibility.dir/tests/core_modeling/feasibility.cpp.o
+[30/73] Automatic MOC for target cm2_contracts
+[31/73] Building CXX object CMakeFiles/cm2_contracts.dir/cm2_contracts_autogen/mocs_compilation.cpp.o
+[32/73] Building CXX object CMakeFiles/cm2_editing.dir/tests/core_modeling/editing.cpp.o
+[33/73] Linking CXX executable solver_spike
+[34/73] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[35/73] Linking CXX executable module1_contracts
+[36/73] Linking CXX executable module2_storage
+[37/73] Linking CXX executable module2_contracts
+[38/73] Linking CXX executable module2_fault_worker
+[39/73] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[40/73] Linking CXX executable module3_persistence
+[41/73] Linking CXX executable module3_input
+[42/73] Linking CXX executable module3_contracts
+[43/73] Building CXX object CMakeFiles/cm2_contracts.dir/tests/core_modeling/editing_contracts.cpp.o
+[44/73] Linking CXX executable module3_solver
+[45/73] Linking CXX executable module4_workspace
+[46/73] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[47/73] Linking CXX executable module4_contracts
+[48/73] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[49/73] Linking CXX executable module5_persistence
+[50/73] Linking CXX executable module5_b2
+[51/73] Linking CXX executable module5_contracts
+[52/73] Linking CXX executable module6_persistence
+[53/73] Linking CXX executable module6_contracts
+[54/73] Linking CXX executable module7_persistence
+[55/73] Linking CXX executable module7_b3
+[56/73] Linking CXX executable module7_contracts
+[57/73] Linking CXX executable module8_drawing
+[58/73] Linking CXX executable module8_contracts
+[59/73] Linking CXX executable module9_interaction
+[60/73] Linking CXX executable module10_fault_worker
+[61/73] Linking CXX executable module10_hardening
+[62/73] Linking CXX executable cm0_feasibility
+[63/73] Linking CXX executable module10_contracts
+[64/73] Linking CXX executable cm1_contracts
+[65/73] Linking CXX executable cm1_relations
+[66/73] Linking CXX executable cm1_rectangles
+[67/73] Linking CXX executable cm1_slots
+[68/73] Linking CXX executable cm1_curves
+[69/73] Linking CXX executable cm1_pierce
+[70/73] Linking CXX executable cm1_intent
+[71/73] Linking CXX executable cm2_editing
+[72/73] Linking CXX executable cm2_contracts

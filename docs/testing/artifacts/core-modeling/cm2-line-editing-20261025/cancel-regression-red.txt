@@ -1,0 +1,46 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 27: module3.interaction
+1/1 Test #27: module3.interaction ..............***Failed    1.57 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::drafts() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::drafts() qt.qpa.fonts: Populating font family aliases took 100 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::drafts() 'window.command("sketch")->isEnabled()' returned FALSE. (Canceled preview completed but idle sketch actions did not refresh)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(769)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 773ms
+********* Finished testing of Contracts *********
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   1.57 sec
+
+The following tests FAILED:
+	 27 - module3.interaction (Failed)
+Errors while running CTest

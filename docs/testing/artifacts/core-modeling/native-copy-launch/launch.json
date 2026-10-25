@@ -1,0 +1,27 @@
+{
+  "command": [
+    "/usr/bin/open",
+    "-W",
+    "-n",
+    "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/native-checks/cm1_contracts.app",
+    "--env",
+    "CAD_NATIVE_TESTS=1",
+    "--env",
+    "CAD_EXPECTED_DPR=1",
+    "--env",
+    "QT_SCALE_FACTOR=.5",
+    "--env",
+    "QT_QPA_PLATFORM",
+    "--env",
+    "CAD_ARTIFACT_DIR=/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/native-copy-launch",
+    "--args",
+    "nativeRelations",
+    "-o",
+    "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/native-copy-launch/result.xml,xml",
+    "-o",
+    "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/native-copy-launch/result.txt,txt"
+  ],
+  "launcher_exit": 0,
+  "scope": "Real copied Mach-O inside temporary app; unchanged activation/DPR assertions. Launcher exit alone is not a test pass.",
+  "binary_sha256": "5b92bd217d9f04a84811e8f34acbd2a0028bc40965254e6af7325f5fcffce88e"
+}

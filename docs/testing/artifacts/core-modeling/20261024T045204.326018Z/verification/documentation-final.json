@@ -1,0 +1,32 @@
+{
+  "status": "Pass",
+  "scope": "Final documentation/coverage reconciliation after passing frozen-source verification",
+  "checks": [
+    {
+      "command": [
+        "python3",
+        "docs/scripts/check_specs.py",
+        "--write-report"
+      ],
+      "exit_code": 0,
+      "output": "specifications-final.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/check_core_modeling.py"
+      ],
+      "exit_code": 0,
+      "output": "coverage-final.txt"
+    }
+  ],
+  "frozen_source_inputs_revalidated": 186,
+  "aggregate_sha256": "a743c5b0492ff9b921e76c5807f96e7d6cb35914faeb2ab5ee8721153c5d0927",
+  "head_unchanged": true,
+  "branch_unchanged": true,
+  "exact_deferred_gates_unchanged": true,
+  "temporary_probes_removed": true,
+  "whole_CM1_complete": false,
+  "module_11_started": false,
+  "commit_or_push_performed": false
+}

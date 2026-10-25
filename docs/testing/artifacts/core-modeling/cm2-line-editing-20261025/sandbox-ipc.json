@@ -1,0 +1,6 @@
+{
+  "status": "Blocked",
+  "scope": "Sandbox local IPC bind probe",
+  "errno": 1,
+  "error": "[Errno 1] Operation not permitted"
+}

@@ -1,0 +1,2 @@
+[1/2] Building CXX object CMakeFiles/cm2_editing.dir/tests/core_modeling/editing.cpp.o
+[2/2] Linking CXX executable cm2_editing

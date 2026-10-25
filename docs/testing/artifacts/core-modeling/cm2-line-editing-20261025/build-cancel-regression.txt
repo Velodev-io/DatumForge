@@ -1,0 +1,3 @@
+[1/4] Automatic MOC for target module3_contracts
+[2/3] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[3/3] Linking CXX executable module3_contracts

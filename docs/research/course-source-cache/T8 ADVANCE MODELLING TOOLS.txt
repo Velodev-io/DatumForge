@@ -1,0 +1,777 @@
+
+=== PDF PAGE 1 ===
+Tutorial 8
+Advanced Modeling Tools-II
+
+=== PDF PAGE 2 ===
+Learning Objectives
+After completing this tutorial, you will be able to:
+• Create sweep features
+• Create loft features
+• Create 3D sketches
+• Edit 3D sketches
+• Create various types of curves
+ADVANCED MODELING TOOLS
+In the earlier tutorials, some of the advanced modeling tools were discussed. In this tutorial,
+you will learn about some more advanced modeling tools such as shell, sweep, loft, draft,
+curves, 3D sketches, and so on.
+TUTORIALS
+Tutorial Exercise 1
+In this tutorial, you will create the model shown in Figure 8-1. The dimensions of the
+model are shown in the same figure. (Expected time: 45 min)
+
+=== PDF PAGE 3 ===
+Figure 8-1 Views and dimensions of the model for Tutorial 1
+The following steps are required to complete this tutorial:
+a. Create the base feature of the model, refer to Figure 8-3.
+
+=== PDF PAGE 4 ===
+b. Create second, third, fourth, and fifth features of the model, refer to Figures 8-4 through
+8-7.
+c. Create the hole feature, refer to Figures 8-8 and 8-9.
+d. Create the circular pattern of the hole feature, refer to Figure 8-10.
+e. Create the fillet feature, refer to Figure 8-11.
+f. Create the shell feature, refer to Figure 8-12.
+g. Save the model.
+Creating the Base Feature
+The base feature of the model is an extrude feature and the sketch of this feature is created
+on the Front Plane.
+1. Start a new SOLIDWORKS part document using the New SOLIDWORKS Document
+dialog box.
+2. Invoke the sketching environment by selecting the Front Plane as the sketching plane
+and draw the circle of diameter 10 mm, as shown in Figure 8-2. Next, exit the sketching
+environment and change the view to isometric.
+3. Invoke the Extruded Boss/Base tool and extrude the sketch upto a depth of 5 mm. The
+model after creating the base feature is shown in Figure 8-3.
+Figure 8-2 Sketch of the base feature
+
+=== PDF PAGE 5 ===
+Figure 8-3 Base feature of the model
+Creating the Second, Third, Fourth, and Fifth Features
+Now, you need to create the second, third, fourth, and fifth features of the model.
+1. Invoke the sketching environment by selecting the front planar face of the base feature
+as the sketching plane.
+2. Draw a circle of diameter 20 mm. Next, invoke the Extruded Boss/Base tool and
+extrude the sketch upto a depth of 10 mm. The model after creating the second feature is
+shown in Figure 8-4.
+After creating the second feature, you need to create the third feature of the model.
+3. Create the third feature of the model which is a cut feature. The sketch of this feature is
+created on the back planar face of the base feature. Figure 8-5 shows the rotated view of
+the model after creating the third feature. For dimensions, refer to Figure 8-1.
+
+=== PDF PAGE 6 ===
+Figure 8-4 Model after creating the second feature
+Figure 8-5 Model after creating the third feature
+Next, you will create the fourth feature of the model.
+4. Create the fourth feature of the model which is an extrude feature. The rotated view of
+the model after creating the fourth feature is shown in Figure 8-6. For dimensions, refer
+to Figure 8-1.
+Next, you will create the fifth feature of the model.
+5. Create the fifth feature of the model which is a cut feature. The rotated view of the model
+after creating the cut feature is shown in Figure 8-7. For dimensions, refer to Figure 8-1.
+
+=== PDF PAGE 7 ===
+Figure 8-6 Model after creating the fourth feature
+Figure 8-7 Model after creating the fifth feature
+Creating the Hole Feature
+The sixth feature of the model is a hole feature which is created by using the Simple Hole
+tool. You can also create this feature by using the Extruded Cut tool.
+1. Choose Insert > Features > Simple from the SOLIDWORKS menus; the Hole
+PropertyManager is displayed.
+2. Change the view orientation of the model to isometric and select the front planar face of
+the model as the placement face for the hole feature; the preview of the hole feature is
+displayed.
+3. Set the value of the Hole Diameter spinner to 1.75 mm. Next, select the Through All
+
+=== PDF PAGE 8 ===
+option from the End Condition drop-down list of the PropertyManager.
+4. Choose the OK button from the PropertyManager; the hole feature is created arbitrarily
+on the selected face.
+Now, you need to position the hole feature.
+5. Select the hole feature from the FeatureManager Design Tree; a pop-up toolbar is
+displayed.
+6. Choose the Edit Sketch button from the pop-up toolbar; the sketching environment is
+invoked. Next, apply the required relation and dimension to position the center point of
+the hole feature, refer to Figure 8-8.
+7. Exit from the sketching environment. The isometric view of the model after creating the
+hole feature is shown in Figure 8-9.
+Figure 8-8 The sketch of the hole feature
+
+=== PDF PAGE 9 ===
+Figure 8-9 Model after creating the hole feature
+Creating the Circular Pattern of the Hole Feature
+After creating the hole feature, you need to create its other instances by using the Circular
+Pattern tool.
+1. Choose the Circular Pattern tool from the Linear Pattern flyout in the Features
+CommandManager; the Circular Pattern PropertyManager is displayed.
+2. Select the previously created hole feature from the FeatureManager Design Tree.
+3. Click on the Pattern Axis selection area of the Parameters rollout of the
+PropertyManager to activate it and then select the circular edge of the model; the
+preview of the circular pattern of the hole feature is displayed.
+4. Set the value of the Number of Instances spinner to 4 and make sure the Equal
+spacing check box is selected.
+5. Choose the OK button from the PropertyManager; the hole feature is patterned, as
+shown in Figure 8-10.
+Creating the Fillet Feature
+Now, you need to create the fillet feature by using the Fillet tool.
+1. Invoke the Fillet Property Manager and create the fillet feature of radius 2.25 mm.
+
+=== PDF PAGE 10 ===
+The model after creating the fillet feature is shown in Figure 8-11.
+Figure 8-10 Model after patterning the feature
+Figure 8-11 Model after creating the fillet feature
+Creating the Shell Feature
+It is evident from Figure 8-2 that you need to create a thin-walled structure. This will be
+created using the Shell tool.
+1. Choose the Shell button from the Features CommandManager; the
+Shell1 PropertyManager is displayed and you are prompted to select the faces to be
+removed.
+The Shell tool is used to scoop out the material from the model, leaving behind a thin-
+walled hollow model with walls of a specified thickness and cavity inside. Also, the
+
+=== PDF PAGE 11 ===
+selected face or the faces of the model are removed in this operation. If you do not select a
+face to remove, a closed hollow model will be created. You can also specify multiple
+thicknesses to the walls.
+2. Select the front planar face of the model as the face to be removed; the name of the
+selected face is displayed in the Faces to Remove selection box of the Shell1
+PropertyManager. Also, this face is highlighted in blue in the graphic area.
+3. Set the value of the Thickness spinner to 0.25.
+Note
+If the thickness of the shell feature is more than the radius of the fillet feature, the fillet will
+not be included in the shell feature. As a result, sharp edges are created after adding the
+fillet. The same is true in case of chamfer feature. The face selected to be removed in the
+shell feature can be a planar face or a curved face.
+4. Select the Show preview check box, if it is not selected by default to view the preview
+of shell feature.
+5. Make sure that the Shell outward check box is cleared in the Parameters rollout of the
+PropertyManager to create the shell feature on the inner side of the model.
+Note
+If the Shell outward check box is selected, the shell feature will be created on the outer
+side of the model.
+6. Choose the OK button from the PropertyManager; the shell feature of uniform wall
+thickness is created, as shown in Figure 8-12.
+
+=== PDF PAGE 12 ===
+Figure 8-12 Final model after creating the shell feature
+Tip
+You can also create a shell feature with different wall thickness. To do so, after selecting
+the faces to be removed and specifying the thickness value in the Thickness spinner of the
+Parameters rollout, click once in the Multi-thickness Faces selection box to activate the
+selection mode. Next, select the faces for which you want to specify different thicknesses.
+Set the thickness value using the Multi-thickness(es) spinner and choose the OK button.
+Saving the Model
+1. Save the model with the name c08_tut01 at the location given next.
+\Documents\SOLIDWORKS Tutorials\c08\
+2. Choose File > Close from the SOLIDWORKS menus to close the file.
+Tutorial Exercise 2
+In this tutorial, you will create the model shown in Figure 8-13. The dimensions of the
+model are shown in the same figure. (Expected time: 45 min)
+
+=== PDF PAGE 13 ===
+Figure 8-13 Views and dimensions of the model for Tutorial 2
+The following steps are required to complete this tutorial:
+
+=== PDF PAGE 14 ===
+a. Create the path for the sweep feature, refer to Figure 8-14.
+b. Create the profile for the sweep feature.
+c. Sweep the profile along the path, refer to Figure 8-16.
+d. Save the model.
+Creating the Path for the Sweep Feature
+It is evident from the Figure 8-13 that the model is created by using a sweep feature. In
+SOLIDWORKS, you can create a sweep feature by using the Swept Boss/Base tool. To
+create the sweep feature, you first need to create its path and profile. A profile is a section
+for the sweep feature and a path is the course taken by the profile while creating the sweep
+feature.
+1. Start a new SOLIDWORKS part document using the New SOLIDWORKS Document
+dialog box.
+2. Invoke the sketching environment by selecting the Front Plane as the sketching plane.
+Next, draw the sketch of the path for the sweep feature, as shown in Figure 8-14.
+3. Exit from the sketching environment and change the view to isometric.
+Figure 8-14 Sketch of the path
+Creating the Profile for the Sweep Feature
+After creating the path for the sweep feature, you need to create its profile. To create the
+profile, first you need to create a reference plane normal to the path and then select it as
+
+=== PDF PAGE 15 ===
+the sketching plane. However, in this tutorial, you can create the profile of the sweep
+feature on the Top Plane, as it is normal to the path created for the sweep feature.
+Tip
+It is not necessary that the sketch drawn for the profile of a sweep feature should intersect
+the path. However, a plane on which the profile is drawn should lie at one of the endpoints
+of the path.
+1. Invoke the sketching environment by selecting the Top Plane as the sketching plane
+and draw a circle of diameter 10 mm. Note that the center point of the circle is at the
+origin of the plane.
+2. Exit from the sketching environment after drawing the profile of the sweep feature.
+Creating the Sweep Feature
+After drawing the path and profile, you can create a sweep feature by using the Swept
+Boss/Base tool.
+1. Change the current view of the model to isometric.
+2. Choose the Swept Boss/Base button from the Features CommandManager; the
+Sweep PropertyManager is displayed, refer to Figure 8-15. Note that the Profile
+selection area is activated in the Profile and Path rollout of the PropertyManager. As a
+result, you are prompted to select the profile for the sweep feature.
+The Swept Boss/Base tool is one of the most important advanced modeling tools.
+This tool is used to extrude a closed profile along an open or a closed path. Therefore, you
+need a profile and a path to create a sweep feature. A profile is a section for the sweep
+feature and a path is the course taken by the profile while creating the sweep feature. The
+profile has to be a sketch, but the path can be a sketch, curve, or an edge.
+
+=== PDF PAGE 16 ===
+Figure 8-15 The Sweep PropertyManager
+3. Select the circle as the profile for the sweep feature; the circle is highlighted and the
+Profile callout is attached with the circle in the graphic area. Also, its name is displayed
+in the Profile selection area and the Path selection area is activated automatically in the
+PropertyManager. As a result, you are prompted to select the sweep path after selecting
+the profile.
+4. Select the path for the sweep feature; the selected path is highlighted and the Path callout
+is also displayed. Also, the preview of the sweep feature is displayed in the graphic area.
+The Start/End Tangency rollout in the Sweep PropertyManager is used to define the
+tangency conditions at the start and end of a feature.
+5. Accept all the default options available in the Sweep PropertyManager and then
+choose the OK button; the final model is created, as shown in Figure 8-16.
+
+=== PDF PAGE 17 ===
+Figure 8-16 Model after creating the sweep feature
+Tip
+You can also create a thin sweep feature by specifying the thickness of the sweep feature in
+the Thin Feature rollout of the Sweep PropertyManager. The options in this rollout are
+the same as those discussed in the earlier tutorials, where the process of extruding and
+revolving the thin features was discussed.
+Saving the Model
+1. Save the model with the name c8_tut02 at the location given next.
+\Documents\SOLIDWORKS Tutorials\c8\
+2. Choose File > Close from the SOLIDWORKS menus to close the file.
+Tutorial Exercise 3
+In this tutorial, you will create the model shown in Figure 8-17. The dimensions of the
+model are also shown in the same figure. (Expected time: 30 min)
+The following steps are required to complete this tutorial:
+a. Create the path for the sweep feature by using the Project Curve tool, refer to Figures
+8-18 through 8-22.
+
+=== PDF PAGE 18 ===
+b. Create the profile for the sweep feature.
+c. Sweep the profile along the path, refer to Figure 8-24.
+d. Save the model.
+Figure 8-17 Views and dimensions of the model for Tutorial 3
+Creating the Path for the Sweep Feature
+It is evident from Figure 8-17 that the model needs to be created by sweeping a profile
+along the 3D path. In this tutorial, you will create the 3D path of the sweep feature by
+projecting a sketched entity on another sketched entity using the Sketch on sketch
+projection type of the Project Curve tool. However, you can also create 3D path by
+using the tools available in the 3D sketcher environment of SOLIDWORKS. You will
+learn more about the 3D sketcher environment later in this tutorial.
+1. Start a new SOLIDWORKS part document using the New SOLIDWORKS Document
+dialog box.
+
+=== PDF PAGE 19 ===
+Now, you need to create two sketches on different planes to project onto one another.
+2. Invoke the sketching environment by selecting the Top Plane as the sketching plane for
+creating the first sketch to be projected.
+3. Draw the sketch, as shown in Figure 8-18. Next, exit from the sketcher environment.
+After creating the first sketch, you need to create another sketch to be projected.
+4. Invoke the sketcher environment by selecting the Front Plane as the sketching plane
+and draw the sketch, as shown in Figure 8-19. Next, exit from the sketching environment
+and change the view to isometric.
+Figure 8-18 The sketch created on the Top Plane
+Figure 8-19 The sketch created on the Front Plane
+Now, you need to create the 3D path for the sweep feature by projecting the previously
+
+=== PDF PAGE 20 ===
+created sketched entities onto one another by using the Project Curve tool.
+5. Choose the Project Curve button from the Curves flyout of the Features
+CommandManager, refer to Figure 8-20; the Projected Curve PropertyManager is
+displayed, refer to Figure 8-21.
+Figure 8-20 The Curves flyout
+Figure 8-21 The Projected Curve PropertyManager
+You can create various types of curves in SOLIDWORKS. These curves are mostly used
+to create complex shapes using the Swept Boss/Base and Lofted Boss/Base tools. In
+SOLIDWORKS, you can create curves by using different tools and these tools are
+grouped in the Curves flyout in the Features CommandManager, as shown in Figure 8-
+20.
+The Project Curve tool is used to project a closed/open sketched entity on one or more
+than one planar or curved faces. You can also project a sketched entity on another
+sketched entity to create a 3D curve. To create a projected curve, draw at least two sketches
+or a single sketch and at least one feature that do not lie on the same plane.
+
+=== PDF PAGE 21 ===
+6. Make sure that the Sketch on sketch radio button in the Project Type area of the
+Selections rollout in the PropertyManager is selected. You are prompted to select two
+sketches to project onto another.
+The Sketch on sketch radio button is used to project a sketched entity on another sketched
+entity to create a 3D curve. However, the Sketch on faces radio button of the Projection
+Type area is used to project a sketch on a planar or curved face.
+7. Select both the previously created sketches from the graphic area one by one; the names
+of the selected sketches are displayed in the Sketches to Project selection area of the
+PropertyManager. Also, the preview of the 3D curve is displayed in the graphic area.
+8. Choose the OK button from the PropertyManager; the 3D curve is created, as shown in
+Figure 8-22.
+Creating the Profile for the Sweep Feature
+After creating the path for the sweep feature, you need to create its profile. As discussed
+earlier, a profile is a section for the sweep feature and a path is the course taken by the
+profile while creating the sweep feature. To create the profile, first you need to create a
+reference plane normal to the path and then select this plane as the sketching plane for
+creating the profile for the sweep feature.
+1. Invoke the Plane PropertyManager and create a plane normal to the path and
+coincident to the endpoint of a curve, as shown in Figure 8-23.
+Figure 8-22 The 3D curve created by projecting the sketches
+
+=== PDF PAGE 22 ===
+Figure 8-23 Plane created normal to the path
+2. Invoke the sketching environment by selecting the newly created plane as the sketching
+plane.
+3. Draw the sketch of the profile of the sweep feature using the Circle tool. The center of
+the circle is at the origin of the new plane and the diameter of the circle is 14 mm.
+4. Exit from the sketcher environment after drawing the profile of the sweep feature.
+Creating the Sweep Feature
+After drawing the path and profile, you can create a sweep feature by using the Swept
+Boss/Base tool.
+1. Change the current view of the model to isometric.
+2. Choose the Swept Boss/Base button from the Features CommandManager;
+the Sweep PropertyManager is displayed. Also, you are prompted to select the profile
+for the sweep feature.
+3. Select the circle as the profile for the sweep feature; the circle is highlighted and the
+Profile callout is attached to the circle in the graphic area. Also, its name is displayed in
+the Profile selection area and the Path selection area is activated automatically in the
+PropertyManager. As a result, you are prompted to select the sweep path after selecting
+the profile.
+4. Select the path for the sweep feature; the selected path is highlighted and the Path
+
+=== PDF PAGE 23 ===
+callout is also displayed in the graphic area. Also, the preview of the sweep feature is
+displayed in the graphic area.
+5. Accept all default options available in the Sweep PropertyManager and then choose
+the OK button; the sweep feature is created. Figure 8-24 shows the final model after
+hiding the reference plane.
+Figure 8-24 Final model of Tutorial 3
+Saving the Model
+1. Save the model with the name c8_tut03 at the location given next:
+\Documents\SOLIDWORKS Tutorials\c8\
+2. Choose File > Close from the SOLIDWORKS menus to close the file.
+Tutorial Exercise 4
+In this tutorial, you will create the chair frame shown in Figure 8-25. The dimensions of
+the chair frame are also shown in the same figure. (Expected time: 30 min)
+
+=== PDF PAGE 24 ===
+Figure 8-25 Views and dimensions of the model for Tutorial 4
+The following steps are required to complete this tutorial:
+
+=== PDF PAGE 25 ===
+a. Invoke the 3D sketching environment and then draw the sketch of a 3D path. Create
+only the left half of the 3D path in the 3D sketching environment, refer to Figure 8-27.
+b. Select the Front Plane as the sketching plane and draw the sketch of the profile.
+c. Sweep the profile along the 3D path using the Thin Feature option, refer to Figure 8-
+28.
+d. Mirror the sweep feature using the Front Plane, refer to Figure 8-29.
+e. Save the model.
+Creating the Path for the Sweep Feature Using the 3D Sketching
+Environment
+It is evident from Figure 8-25 that the model needs to be created by sweeping a profile
+along the 3D path. Therefore, you need to create a path for the sweep feature in the 3D
+sketching environment.
+1. Start a new SOLIDWORKS part document.
+2. Create a plane at an offset distance of 40 mm from the Front Plane.
+3. Change the current view to isometric.
+4. Choose the 3D Sketch button from the Sketch flyout of the
+Sketch CommandManager, refer to Figure 8-26 or choose Insert > 3D Sketch from
+the SOLIDWORKS menus; the 3D sketching environment is invoked. Also, the origin
+is displayed in red and the confirmation corner is displayed on the top right corner of the
+drawing area. The sketching tools that can be used in the 3D sketching environment are
+also highlighted.
+Figure 8-26 The Sketch flyout
+
+=== PDF PAGE 26 ===
+You need to draw the left half of the sketch as the path of the sweep profile.
+5. Invoke the Line tool from the Sketch CommandManager; the Insert Line
+PropertyManager is displayed. Also, the select cursor is replaced by the line cursor
+with XY displayed at its bottom.
+The XY symbol displayed below the line cursor indicates that the line will be sketched in
+the XY plane. You can toggle between the default planes using the TAB key. On doing
+so, the orientation of the coordinate system also modifies with respect to the current
+plane. Move the cursor to the location from where you want to start sketching.
+You need to draw the first line in the ZX plane. Therefore, you need to toggle the plane
+before you start creating the sketch.
+6. Press the TAB key twice to switch to the ZX plane.
+7. Move the line cursor to the origin. When a red dot is displayed, click to specify the start
+point of the line.
+Tip
+You can also toggle the plane after specifying the start point of the line.
+8. Move the cursor in the positive Z direction of the triad; a small triad with Z appears
+below the cursor indicating that you are drawing the line along the Z direction. Click to
+specify the endpoint of the line, when a value close to 40 is displayed above the cursor;
+a rubber-band line is attached to the cursor.
+9. Move the cursor toward the right along the infinite line, indicating the X axis. Click to
+specify the endpoint of the line when a value close to 100 is displayed above the cursor.
+10. Press the TAB key to switch over to the XY plane. Move the cursor vertically upward.
+11. Click to specify the endpoint of the line when the value above the cursor is close to 85.
+
+=== PDF PAGE 27 ===
+12. Similarly, draw the remaining part of the sketch, and then add the required relations
+and dimensions to it.
+13. Apply the On Plane relation between the upper endpoint of the 3D sketch and Plane1.
+The final sketch is displayed in Figure 8-27.
+14. Exit the 3D sketching environment by using the confirmation corner.
+Figure 8-27 Sketch of the 3D path
+Sweeping the Profile along the 3D Path Using the Circular Profile
+As discussed earlier, a sweep feature is created by sweeping the profile along the 3D path.
+In SOLIDWORKS 2016, you can directly create a Circular profile.
+1. Choose the Swept Boss/Base button from the Features CommandManager; the Sweep
+PropertyManager is displayed.
+2. Select Circular Profile radio button under Profile and Path in Sweep PropertyManager.
+3. Select the 3D sketch as the path for the sweep feature; the name of the path is displayed
+in the selection box and set value in Diameter Spinner to 5mm. The Path callout and the
+preview of the sweep feature are also displayed in the graphic area. As is evident from
+
+=== PDF PAGE 28 ===
+Figure 8-28, the frame of the chair is made up of a hollow pipe. Therefore, you need to
+create a thin sweep feature to create a hollow chair frame.
+4. Choose the Thin Feature option rollout and set the value in the Thickness spinner to
+1mm.
+By default, the thickness is provided in the outer direction of the sketch. You can also make
+a thin feature inside the sketch. To do so, you need to choose the Reverse Direction
+button.
+5. Choose the Reverse Direction button from the Thin Features rollout to reverse the
+direction of the thin feature creation in the inside direction of the sketch.
+6. Choose the OK button from the Sweep PropertyManager to end the creation of the
+feature.
+The model after creating the sweep feature is displayed in Figure 8-28.
+7. Mirror the sweep feature about the Front Plane by using the Mirror tool. The model
+after mirroring is shown in Figure 8-29.
+Figure 8-28 Sweep feature created by sweeping a profile along a 3D path
+
+=== PDF PAGE 29 ===
+Figure 8-29 The final model
+Saving the Model
+1. Save the model with the name c8_tut04 at the location given next.
+\Documents\SOLIDWORKS Tutorials\c8\
+2. Close the document.
+Tutorial Exercise 5
+In this tutorial, you will create the model shown in Figure 8-30. The dimensions of the
+model are shown in Figure 8-31. (Expected time: 30 min)
+
+=== PDF PAGE 30 ===
+Figure 8-30 Model for Tutorial 5
+Figure 8-31 Views and dimensions of the model for Tutorial 5
+The following steps are required to complete this tutorial:
+a. Create a revolve feature as the base feature of the model, refer to Figures 8-32 and 8-33.
+b. Create the loft feature by blending two sections along a specified path, refer to Figures
+8-34 through 8-41.
+
+=== PDF PAGE 31 ===
+c. Create the circular pattern of the loft feature, refer to Figure 8-42.
+d. Save the model.
+Creating the Base Feature
+You will create the base feature of the model which is a revolve feature.
+1. Start a new SOLIDWORKS part document and invoke the sketching environment by
+selecting the Front Plane as the sketching plane.
+2. Draw the sketch of the revolve feature, as shown in Figure 8-32.
+Figure 8-32 Sketch of the revolve feature
+3. Choose the Revolved Boss/Base button from the Features CommandManager; the
+sketch is automatically oriented in the trimetric view and the Revolve PropertyManager
+is displayed.
+As the sketch shown in Figure 8-32 has two center lines, SOLIDWORKS cannot determine
+which one of them should be used as the axis of revolution. As a result, you are prompted
+to select the axis of revolution.
+4. Select the vertical center line as the axis of revolution; the preview of the revolve
+feature is displayed in the graphic area with the default option.
+
+=== PDF PAGE 32 ===
+5. Make sure the Blind option is selected in the Revolve Type drop-down list and the
+value of the Direction 1 Angle edit box is set to 360 degrees.
+6. Choose the OK button from the PropertyManager; the revolve feature is created, as
+shown in Figure 8-33.
+Creating the Loft Feature
+The second feature of the model is the loft feature created by using the Lofted Boss/Base
+tool. The loft features are created by blending more than one similar or dissimilar sections
+together to get a free-form shape. These similar or dissimilar sections may or may not be
+parallel to each other. In this tutorial, you will create a loft feature by blending two
+sections along a specified path. Therefore, first you need to create a path and then
+sections for creating the loft feature.
+1. Invoke the sketching environment by selecting the Front Plane as the sketching plane
+for creating the path that will specify the transition of the sections.
+2. Change the current display style of the model to hidden lines visible by choosing Display
+Style > Hidden Lines Visible from the View (Heads-Up) toolbar. Next, change the
+current orientation of the model normal to the view.
+3. Create the sketch of the path, as shown in Figure 8-34.
+
+=== PDF PAGE 33 ===
+Figure 8-33 Model after creating the revolve feature
+Figure 8-34 The sketch of the path
+After creating the path, you need to create sections for creating the loft feature. In this
+tutorial, you need to create reference planes normal to the path at its both ends for creating
+the loft sections.
+4. Change the current display style of the model to shaded with edges.
+5. Invoke the Plane PropertyManager and then select the path that was created previously
+as the first reference for creating the plane. Next, select one of its end point as the second
+reference; the preview of the reference plane is created. Next, choose the OK button from
+the PropertyManager.
+6. Similarly, create another reference plane normal to the path and coincident to the other
+endpoint of the path. Figure 8-35 shows the isometric view of the model after creating
+the reference planes.
+After creating the reference planes, you need to create loft sections on it.
+7. Select the reference plane, refer to Figure 8-36, to invoke the sketching environment
+and then create the elliptical section, as shown in Figure 8-37. Then, exit from the
+sketching environment.
+
+=== PDF PAGE 34 ===
+Figure 8-35 The reference planes created on the endpoints of the path
+Figure 8-36 The reference plane to be selected
+8. Again, invoke the sketching environment by selecting the second reference plane that
+was created previously as the sketching plane and then draw the second section of the
+loft feature, as shown in Figure 8-38. Next, exit from the sketching environment.
+
+=== PDF PAGE 35 ===
+Figure 8-37 The first section created for the loft feature
+Figure 8-38 The second section created for the loft feature
+Now, you will create the loft feature by blending the previously created sections along the
+path by using the Lofted Boss/Base tool.
+9. Choose the Lofted Boss/Base button from the Features CommandManager; the Loft
+PropertyManager is displayed. Also, you are prompted to select at least two profiles.
+As discussed earlier, the Lofted Boss/Base tool is used to create a loft feature by blending
+more than one similar or dissimilar sections together to get a free-form shape. These similar
+or dissimilar sections may or may not be parallel to each other. Note that the sections for
+the solid lofts should be closed sketches.
+10. Select both the sections from the graphic area one by one; the preview of the loft feature
+along with a connector is displayed in the graphic area, as shown in Figure 8-39. Also,
+the names of the selected sections or profiles are displayed in the Profile selection area of
+the Profiles rollout in the Loft PropertyManager.
+Note
+By default, a mesh is displayed in the preview of the loft feature. You can turn off this mesh
+by right-clicking in the graphic area and then choosing Mesh Preview > Clear All
+Meshed Faces from the shortcut menu displayed.
+If the start and end loft sections are circular, elliptical, or closed spline sections, then only
+one controller will be displayed with the preview of the loft feature. You can also add more
+
+=== PDF PAGE 36 ===
+connectors to manipulate the loft feature. Connectors can be added to the straight profiles
+or curved profiles. To add a connector, right-click on the sketch at a location where you
+want to add the connector; a shortcut menu is displayed. Now, choose the Add Connector
+option from the shortcut menu; a connector will be added to the loft feature.
+Figure 8-39 The preview of the loft feature
+11. Click on the down arrow displayed at the right of the Centerline Parameters rollout
+in the Loft PropertyManager to expand it.
+The Centerline Parameters rollout is used to create a loft feature by blending two or
+more than two sections along a specified path.
+12. Select the path created earlier from the graphic area for specifying the transition of loft
+feature; the preview of the loft feature is modified accordingly, as shown in Figure 8-40.
+13. Accept the other default parameters and then choose the OK button from the
+PropertyManager; the loft feature is created. Next, hide the reference planes for clarity.
+Figure 8-41 shows the model after hiding the reference planes and creating the loft
+feature.
+Tip
+The loft feature can be reshaped using the handles of the connector that appear as filled
+circles in the preview. To do so, press and hold the left mouse button on a handle, drag the
+cursor to specify a new location, and then release the left mouse button to place the
+
+=== PDF PAGE 37 ===
+connector. The process of controlling the loft shape using the connectors is known as Loft
+Synchronization.
+Figure 8-40 The preview of the loft feature after selecting the path
+Figure 8-41 Model after creating the loft feature
+Patterning the Loft Feature
+After creating the loft feature, you need to pattern it using the Circular Pattern tool.
+1. Choose the Circular Pattern button from the Linear Pattern flyout in the Features
+CommandManager; the Circular Pattern PropertyManager is displayed.
+2. Select the loft feature from the graphic area as the feature to pattern or from the
+FeatureManager Design Tree; the name of the loft feature is displayed in the Features
+to Pattern selection area of the Features to Pattern rollout of the PropertyManager.
+
+=== PDF PAGE 38 ===
+3. Click on the Pattern Axis selection area of the Parameters rollout in the
+PropertyManager to activate it and then select the circular edge of the base feature; the
+preview of the circular pattern of the loft feature is displayed in the graphic area.
+4. Set the value of the Number of Instances spinner to 3 and make sure that the Equal
+spacing check box is selected in the Parameters rollout of the PropertyManager.
+5. Choose the OK button from the PropertyManager; the loft feature is patterned in circular
+manner. Figure 8-42 shows the isometric view of the final model after creating the loft
+feature.
+Saving the Model
+1. Save the model with the name c8_tut05 at the location given next.
+\Documents\SOLIDWORKS Tutorials\c8\
+2. Close the document.
+Figure 8-42 Final model for Tutorial 5
+Tutorial Exercise 6
+In this tutorial, you will create the model shown in Figure 8-43. The dimensions of the
+model are shown in Figure 8-44. (Expected time: 30 min)
+
+=== PDF PAGE 39 ===
+Figure 8-43 Model for Tutorial 6
+Figure 8-44 Views and dimensions of the model for Tutorial 6
+
+=== PDF PAGE 40 ===
+The following steps are required to complete this tutorial:
+a. Create a revolve feature as the base feature of the model, refer to Figures 8-45 and 8-46.
+b. Create the extrude cut feature, refer to Figure 8-49.
+c. Create the circular pattern of the extruded cut feature, refer to Figure 8-50.
+d. Create the loft feature, refer to Figures 8-51 through 8-57.
+e. Save the model.
+Creating the Base Feature
+You will create the base feature of the model, which is a revolve feature.
+1. Start a new SOLIDWORKS part document and invoke the sketching environment by
+selecting the Front Plane as the sketching plane.
+2. Draw the sketch of the revolve feature, as shown in Figure 8-45.
+3. Choose the Revolved Boss/Base button from the Features CommandManager; the
+sketch is automatically oriented in the trimetric view and the Revolve PropertyManager
+is displayed. Also, the preview of the revolve feature is displayed in the graphic area. As
+the sketch has only one centerline, SOLIDWORKS automatically selects the centerline
+as the axis of revolution. As a result, the preview of the feature is displayed in the drawing
+area.
+Figure 8-45 Sketch of the revolve feature
+4. Make sure that the Blind option is selected from the Revolve Type drop-down list and
+
+=== PDF PAGE 41 ===
+the value of the Direction 1 Angle edit box is set to 360-degree.
+5. Choose the OK button from the PropertyManager; the revolve feature is created, as
+shown in Figure 8-46.
+Creating the Cut Feature
+The second feature of the model is a cut feature created by using the Extruded Cut tool.
+1. Invoke the sketching environment by selecting the face of the model as the sketching
+plane, refer to Figure 8-47.
+Figure 8-46 Model after creating the revolve feature
+Figure 8-47 The face to be selected as the sketching plane
+2. Draw the sketch of the cut feature, as shown in Figure 8-48, and then exit from the
+sketcher environment.
+
+=== PDF PAGE 42 ===
+Figure 8-48 Sketch of the cut feature
+3. Invoke the Extruded Cut tool and extrude the sketch up to the next surface that
+intersects the feature by using the Up To Next option. The isometric view of the model
+after creating the cut feature is shown in Figure 8-49.
+After creating the cut feature, you need to pattern it using the Circular Pattern tool.
+4. Invoke the Circular Pattern tool and pattern the cut feature in a circular manner to
+create its 10 instances. The model after creating the circular pattern is shown in Figure
+8-50.
+Figure 8-49 Model after creating the cut feature
+
+=== PDF PAGE 43 ===
+Figure 8-50 Model after patterning the cut feature in circular manner
+Creating the Loft Feature
+The next feature of the model is the loft feature created by using the Lofted Boss/Base
+tool. As discussed earlier, the loft features are created by blending more than one similar
+or dissimilar sections together to get a free-form shape. In this tutorial, you will create a
+loft feature by blending three sections.
+1. Invoke the sketching environment by selecting the back planar face of the base feature
+as the sketching plane, refer to Figure 8-51.
+2. Draw the sketch of the first section of the loft feature, as shown in Figure 8-52. Next,
+exit from the sketcher environment.
+It is evident from Figure 8-44 that the distance between first and second section of the loft
+feature is 30 mm. Therefore, for creating the second section of the loft feature, first you
+need to create a reference plane at an offset distance of 30 mm from the back planar face
+of the base feature.
+3. Create a reference plane at an offset distance of 30 mm from the back planar face of the
+base feature. Figure 8-53 shows the model after creating the reference plane.
+4. Invoke the sketcher environment by selecting the newly created plane as the sketching
+plane and draw the sketch of the second section of the loft feature, as shown in Figure 8-
+54.
+
+=== PDF PAGE 44 ===
+Tip
+You can use the Convert Entities, Rotate and Scale tools to create the sketch. The scale
+value for the sketch will be 0.75. After creating the sketch, you need to provide the
+required dimensions and relations to make the sketch fully-defined.
+Figure 8-51 Face to be selected
+Figure 8-52 First section of the loft feature
+
+=== PDF PAGE 45 ===
+Figure 8-53 Reference plane created at an offset distance
+Figure 8-54 Second section of the loft feature
+Now, you need to create a reference plane at an offset distance of 60 mm from the back
+planar face of the base feature for creating the third section of the loft feature.
+5. Create a reference plane at an offset distance of 60 mm from the back planar face of the
+base feature.
+6. Invoke the sketcher environment by selecting the newly created plane as the sketching
+plane and draw the sketch of the third loft feature, as shown in Figure 8-55.
+After creating the sections, you need to create the loft feature by blending all the sections
+using the Lofted Boss/Base tool.
+
+=== PDF PAGE 46 ===
+7. Choose the Lofted Boss/Base button from the Features CommandManager; the Loft
+PropertyManager is displayed. Also, you are prompted to select at least two profiles.
+As discussed earlier, the Lofted Boss/Base tool is used to create loft features by blending
+more than one similar or dissimilar sections together to get a free-form shape. These similar
+or dissimilar sections may or may not be parallel to each other. Note that the sections for
+the solid lofts should be closed sketches.
+8. Select the sections from the graphic area one by one; the preview of the loft feature along
+with a connector is displayed in the graphic area, as shown in Figure 8-56. Also, the
+name of the selected sections or profiles are displayed in the Profile selection area of
+the Profiles rollout in the Loft PropertyManager.
+Figure 8-55 Third section of the loft feature
+
+=== PDF PAGE 47 ===
+Figure 8-56 Preview of the loft feature
+You can also create a thin loft feature by defining the thin parameters in the Thin Feature
+rollout of the PropertyManager.
+9. Accept the other default parameters and then choose the OK button from the
+PropertyManager; the loft feature is created. Figure 8-57 shows the model after hiding
+the reference planes and creating the loft feature.
+Figure 8-57 Final model of Tutorial 6
+Saving the Model
+1. Save the model with the name c8_tut06 at the location given next.
+\Documents\SOLIDWORKS Tutorials\c8\
+2. Close the document.
+Answer the following questions and then compare them to those given at the end of
+this tutorial:
+
+=== PDF PAGE 48 ===
+1. The PropertyManager is used to create a loft feature.
+2. You need to apply the relation between a sketch and a guide curve for
+sweeping a profile along a path using guide curves.
+3. The tool is used to project a closed/open sketched entity on one or more
+than one planar or curved faces.
+4. You need a profile and a path to create a sweep feature. (T/F)
+5. At least two sections are required to create a loft feature. (T/F)
+6. You cannot sweep a closed profile along a closed path. (T/F)
+7. You cannot create a thin sweep feature. (T/F)
+8. You can create a loft feature by using open sections. (T/F)
+Answer the following questions:
+1. Which of the following buttons is used to invoke the 3D sketching environment?
+(a) 2D Sketch (c) 3D Sketch (d) Sketch
+(b) 3D Sketching Environment
+2. Which of the following rollouts in the Sweep PropertyManager is used to define the
+tangency?
+(a) Start/End Tangency (b) Tangency
+
+=== PDF PAGE 49 ===
+(c) Options (d) None of these
+3. Which of the following buttons in the Guide Curves rollout is used to display sections
+while creating the sweep feature with guide curves?
+(a) Preview Sections (b) Show Sections
+(c) Sections (d) Preview
+4. In the the sweep feature.
+rollout, you can define the tangency at the start and end sections of
+5. The rollout is used to create a thin loft feature.
+6. You need to invoke the dialog box to create a spiral curve.
+7. The PropertyManager is used to project a curve on a surface.
+8. The radio button of the Projected Curve PropertyManager is used to
+project a sketched entity on another sketched entity to create a 3D curve.
+EXERCISES
+Exercise 1
+Create the model of the Upper Housing, as shown in Figure 8-58. The dimensions of the
+model are shown in Figure 8-59. (Expected time: 1 hr)
+
+=== PDF PAGE 50 ===
+Figure 8-58 Model of the Upper Housing
+Tip
+This model is divided into three major parts. The first part is the base and is created by
+extruding the sketch to a distance of 80 mm using the Mid Plane option.
+The second part of this model is the right portion of the discharge venturi and is created
+using the sweep feature.
+The third part of this model is the left portion of the discharge venturi created using the
+loft feature. You need to create the first section of the loft feature on the planar face of the
+sweep feature created earlier. The second section will be created on a plane at an offset
+distance of the planar face of the sweep feature created earlier. Create a loft feature using
+the two sections created earlier. The other features needed to complete the model are fillets,
+hole, pattern, and so on.
+
+=== PDF PAGE 51 ===
+Figure 8-59 Dimensions of the Upper Housing
+Exercise 2
+In this tutorial, you will create the model shown in Figure 8-60. The dimensions of the
+model are shown in the same figure. The hidden lines in the top and side views are
+suppressed for clarity. (Expected time: 45 min)
+
+=== PDF PAGE 52 ===
+Figure 8-60 Views and dimensions of the model for Exercise 2
+Answers to Self-Evaluation Test
+1. Loft, 2. Coincident, 3. Project Curve, 4. T, 5. T, 6. F, 7. F, 8. T

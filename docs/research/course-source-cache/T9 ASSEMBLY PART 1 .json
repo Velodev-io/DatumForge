@@ -1,0 +1,86 @@
+[
+  {
+    "page" : 1,
+    "text" : "Tutorial 9\nAssembly Modeling"
+  },
+  {
+    "page" : 2,
+    "text" : "Learning Objectives\nAfter completing this tutorial, Student will be able to:\n• Understand the bottom-up assembly design approach\n• Understand the top-down assembly design approach\n• Create bottom-up assemblies\n• Add mates to assemblies\n• Move individual components in an assembly\n• Create sub-assemblies\n• Create patterns of components in an assembly\n• Create the exploded state of an assembly\nASSEMBLY MODELING\nAn assembly design consists of two or more components assembled together at their\nrespective work positions by using parametric relations. In SOLIDWORKS, these\nrelations are called mates. Mates allow you to constrain the degrees of freedom of\ncomponents at their respective work positions. To start the Assembly mode of\nSOLIDWORKS, invoke the New SOLIDWORKS Document dialog box and then\nchoose the Assembly button, refer to Figure 9-1. Next, choose the OK button to create a\nnew assembly document. On doing so, a new SOLIDWORKS document will open in the\nAssembly mode and the Begin Assembly PropertyManager will be invoked, as shown\nin Figure 9-2."
+  },
+  {
+    "page" : 3,
+    "text" : "Figure 9-1 The Assembly button chosen in the New SOLIDWORKS Document\ndialog box\nTypes of Assembly Design Approach\nIn SOLIDWORKS, assemblies are created using two types of design approaches: bottom•\nup approach and top-down approach. These approaches are discussed next.\nBottom-up Assembly Design Approach\nThe bottom-up assembly design approach is the traditional and the most widely preferred\napproach of assembly design. In this approach, all components are created as separate part\ndocuments, and then they are placed and referred in the assembly as external components."
+  },
+  {
+    "page" : 4,
+    "text" : "In this type of approach, components are created in the Part mode and saved as the .sldprt\ndocuments. After creating and saving all components of the assembly, start a new\nassembly document (.sldasm) and insert the components in it using the tools provided in\nthe Assembly mode. After inserting the components, assemble them using the assembly\nmates.\nFigure 9-2 The Assembly mode with the Begin Assembly PropertyManager\nThe main advantage of using this approaches is that the view of the part is not restricted\nbecause there is only a single part in the current file. Therefore, this approach allows you\nto concentrate on the complex individual features. It is also preferred while handling large\nassemblies or assemblies with complex parts.\nTop-down Assembly Design Approach\nIn the top-down assembly design approach, the components are created in the same\nassembly document, but they are saved as separate part files. Therefore, the top-down\nassembly design approach is entirely different from the bottom-up design approach. In this\napproach, you will start your work in the assembly document and the geometry of one part\nwill help in defining the geometry of the other part.\nNote\nYou can also create an assembly with the combination of bottom-up and top-down\nassembly approaches."
+  },
+  {
+    "page" : 5,
+    "text" : "Tutorial 2\nIn this tutorial, you will create all components of the Pipe Vice assembly and then\nassemble them. The Pipe Vice assembly is shown in Figure 9-41. The dimensions of\nvarious components of this assembly are shown in Figures 9-42 and 9-43. (Expected\ntime: 2 hr 45 min)\nFigure 9-41 Pipe Vice assembly"
+  },
+  {
+    "page" : 6,
+    "text" : "Figure -Views and dimensions of the base"
+  },
+  {
+    "page" : 7,
+    "text" : "Figure.-Views and dimensions of the Screw, Handle, Moveable Jaw, and\nHandle Screw\nYou will create all components of the Pipe Vice assembly as separate part documents.\nAfter creating the parts, you will assemble them in the assembly document. In this\ntutorial, you need to use the bottom-up approach for creating the assembly.\nThe following steps are required to complete this tutorial:"
+  },
+  {
+    "page" : 8,
+    "text" : "a. Create all components as separate part documents and then save them. The part\ndocuments will be saved at \\Documents\\SOLIDWORKS Tutorials\\c09\\Pipe Vice.\nb. Place the Base at the origin of the assembly\nBase at the origin of the assembly."
+  },
+  {
+    "page" : 9,
+    "text" : "c. Place the Moveable Jaw and the Screw in the assembly. Apply mates between the\nMoveable Jaw and the Screw, refer to Figure 9-45.\nd. Assemble the Moveable Jaw and the Screw with the Base, refer to Figures 9-46 and 9-\n47.\ne. Save the assembly.\nCreating Components\n1. Create all components of the Pipe Vice assembly as separate part documents. Specify\nthe names of the files as used in Figures 9-42 and 9-43. Save the documents at the\nlocation \\Documents\\SOLIDWORKS Tutorials\\c09\\Pipe Vice.\nInserting First Component into the Assembly\nAfter creating all components of the Pipe Vice assembly, you need to start a new\nSOLIDWORKS assembly document.\n1. Start a new SOLIDWORKS assembly document; the Begin Assembly\nPropertyManager is displayed by default.\n2. Choose the Browse button from the Part\/Assembly to Insert rollout to display the\nOpen dialog box. Next, open the Pipe Vice folder and double-click on the Base\ncomponent.\n3. Choose the OK button from the Begin Assembly PropertyManager to place the Base\norigin coincident to the origin of the assembly document.\n4. Change the view orientation to isometric.\nInserting and Assembling the Components\nAfter placing the first component in the assembly environment, you need to place the\nMoveable Jaw and the Screw in the assembly environment. After placing these\ncomponents, you need to apply the required mates.\n1. Choose the Insert Components button from the Assembly CommandManager. Then,\nchoose the Keep Visible button from the PropertyManager to keep it visible. Next,\ninvoke the Open dialog box by choosing the Browse button from the Part\/Assembly to\nInsert rollout."
+  },
+  {
+    "page" : 10,
+    "text" : "2. Double-click on the Moveable Jaw. Place the component in the assembly environment\nsuch that it does not interfere with the existing component.\n3. Similarly, place the Screw in the assembly environment and choose the OK button from\nthe Insert Component PropertyManager. Figure 9-44 shows the Moveable Jaw,\nScrew, and Base placed in the assembly environment.\nNow, you need to assemble the Screw with the Moveable Jaw. Therefore, you need to fix\nthe Moveable Jaw.\n4. Select the Moveable Jaw from the drawing area or from the FeatureManager Design\nTree and then right-click to invoke the shortcut menu.\n5. Choose the Fix option from the shortcut menu; the Moveable Jaw becomes fixed and\nyou cannot move or rotate it.\nFigure 9-44 The Moveable Jaw, Screw, and Base placed in the assembly environment\nNow, you will assemble the Screw with the Moveable Jaw by using the Smart Mates\noption."
+  },
+  {
+    "page" : 11,
+    "text" : "6. Choose the Move Component button from the Assembly CommandManager; the"
+  },
+  {
+    "page" : 12,
+    "text" : "Move Component PropertyManager is displayed.\nThe Move Component tool is used to move the individual unconstrained component in\nthe assembly document without affecting the position and location of the other\ncomponents.\nTip\nIn the Assembly environment of SOLIDWORKS, you can also move the component placed\nin an assembly without invoking any tool. To move an individual component, press and\nhold the left mouse button on the component and drag the cursor. Release the left mouse\nbutton to place the component at the desired location.\n7. Choose the SmartMates button from the Move rollout of the Move\nComponentPropertyManager; the current PropertyManager is changed to SmartMates PropertyManager.\nThe SmartMates PropertyManager is used to apply Smart Mates to the components in\norder to assemble them in the Assembly environment. Smart Mates are the most attractive\nfeature of the assembly design environment in SOLIDWORKS. Smart Mates technology\nspeeds up the design process in the Assembly environment of SOLIDWORKS.\n8. Double-click on the lowermost cylindrical face of the Screw; the Screw appears\ntransparent.\n9. Drag the cursor to the hole located on the top of the Moveable Jaw by pressing the left\nmouse button. Next, release the left mouse button as soon as the concentric symbol is\ndisplayed below the cursor; the Mate pop-up toolbar is displayed with the Concentric\nbutton chosen.\n10. Choose the Add\/Finish Mate button from the Mate pop-up toolbar. Next, select the\nScrew and move it up, so that it is not inside the Moveable Jaw.\n11. Right-click in the drawing area and then choose the Clear Selections option from the\nshortcut menu to clear the current selection.\n12. Rotate the assembly and double-click on the lower flat face of the Screw; the Screw\nappears transparent."
+  },
+  {
+    "page" : 13,
+    "text" : "13. Rotate the model again and drag the cursor toward the top planar face of the Moveable\nJaw by pressing the left mouse button. Next, release the left mouse button as soon as the\ncoincident symbol is displayed below the cursor; the Mate pop-up toolbar is displayed\nwith Coincident button chosen.\n14. Choose the Add\/Finish Mate button from the Mate pop-up toolbar. The coincident\nmate is applied between the selected faces.\n15. Choose the OK button from the SmartMates PropertyManager. Next, change\nthe current view of the assembly to isometric view. Figure 9-45 shows the Screw after\napplying mates.\nFigure 9-45 The Screw assembled with the Moveable Jaw\nNext, you need to assemble the Screw and the Moveable Jaw with the Base.\n16. Select the Moveable Jaw, invoke the shortcut menu, and then choose the Float option\nfrom it. Now, you can move the Moveable Jaw and the Screw assembled to it.\n17. With the ALT key pressed, select the cylindrical face of the Screw and move the Screw\ntoward the hole created on the top face of the Base. Now add the concentric mate\nbetween them.\n18. Invoke the Mate PropertyManager and then select the front planar face of the\nMoveable Jaw and the front planar face of the Base."
+  },
+  {
+    "page" : 14,
+    "text" : "19. Choose the Parallel button from the Mate pop-up toolbar and then choose the\nAdd\/Finish Mate button to add the Parallel mate between the selected faces.\n20. Select the faces, as shown in Figure 9-46.\n21. Choose the Parallel button from the Mate pop-up toolbar. Next, expand the\nAdvanced Mates rollout of the Parallel1 PropertyManager displayed at the left of the\ngraphics area.\n22. Choose the Distance button from Advanced Mates rollout of the\nPropertyManager; the Distance, Maximum Value, and Minimum Value edit boxes are\nenabled.\nThe Distance button available in the Advanced Mates rollout of the Mate\nPropertyManager is used to create to and fro motion between the components.\nNote\nThe maximum distance by which the two selected faces can be moved apart is specified in\nthe Distance spinner and the same values will be displayed in the Maximum Value edit\nbox as well. To move the selected faces in to and fro motion, you need to specify the\nminimum distance in the Minimum Value edit box.\n23. Enter 65 and 5 in the Maximum Value and Minimum Value edit boxes, respectively.\nNext, choose the OK button twice to exit the PropertyManager. Figure 9-47 shows the\nassembly document after assembling the Moveable Jaw and Screw with the Base\ncomponent of the assembly.\n24. Similarly, assemble the other components of the Pipe Vice assembly. Figure 9-47\nshows the final Pipe Vice assembly."
+  },
+  {
+    "page" : 15,
+    "text" : "Faces to be select ed\nFigure 9-46 Faces to be selected\nFigure 9-47 Final Pipe Vice assembly\n25. Save the assembly document at the location \\Documents\\SOLIDWORKS\\c09\\Pipe\nVice.\nAnswer the following questions and then compare them to those given at the end of\nthis tutorial:\n1. Choose the _____ button from the Assembly Command Manager to invoke the\nRotate Component Property Manager.\n2. The component patterns created using an existing pattern feature are known as\npatterns.\n3. To create the explode line sketch, choose the CommandManager.\nbutton from the Assembly"
+  },
+  {
+    "page" : 16,
+    "text" : "4. The bottom-up assembly design approach is the traditional and the most widely\npreferred approach used for assembly design. (T\/F)\n5. In the top-down assembly design approach, all components are created in the same\nassembly document. (T\/F)\n6. The Coincident mate is generally applied to make two planar faces coplanar. (T\/F)"
+  },
+  {
+    "page" : 17,
+    "text" : "7. The most suitable mates that can be applied to the current selection set are displayed in\nthe Mate pop-up toolbar. (TIF)\n8. You cannot create sub-assemblies in the assembly environment of SOLIDWORKS.\n(T\/F)\nAnswer the following questions:\n1. Which of the following options is used to open a sub-assembly separately in the\nseparate assembly document?\n(a) Modify\n(c) Open Part\n(b) Edit\n(d) Open Assembly\n2. Which of the following methods is widely used for adding mates to the components in\nan assembly?\n(a) Smart Mates\n(c) By dragging from part document\n(b) Mate PropertyManager\n(d) None of these\n3. Which of the following buttons is used to make the Mate Component\nPropertyManager available after applying a mate to selected entities?\n(a) Help\n(c) Keep Visible\n(b) OK\n(d) Cancel\n4. The names of the selected entities are displayed in the Mate Component PropertyManager.\nselection box of the\n5. The exploded state of an assembly is created using the tool."
+  },
+  {
+    "page" : 18,
+    "text" : "6. The button is chosen in the Explode PropertyManager to reuse the\nexploded steps of a sub-assembly in the current assembly.\n7. The component.\nbutton of the pop-up toolbar is used to change the appearance of a\n8. The option is used to change the state of a component from fix to floating.\nEXERCISES\nExercise 1\nCreate all components of the Fixture assembly and assemble them. The Fixture assembly\nis shown in Figure 9-72. After creating the assembly, explode it and create the explode\nline sketch, refer to Figure 9-73. The dimensions of various components of this assembly\nare given in Figures 9-74 through 9-78. Note that all dimensions are in inches. (Expected\ntime: 1 hr)\nFigure 9-72 Fixture assembly"
+  },
+  {
+    "page" : 19,
+    "text" : "•I\nFigure 9-73 Exploded view of the assembly"
+  },
+  {
+    "page" : 20,
+    "text" : ""
+  },
+  {
+    "page" : 21,
+    "text" : "Answers to Self-Evaluation Test\n1. Rotate Component, 2. Feature Driven, 3. Explode Line Sketch 4. T, 5. T, 6. T, 7. T, 8.\nF"
+  }
+]

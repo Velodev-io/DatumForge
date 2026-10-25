@@ -1,7 +1,7 @@
 # Software Requirements Specification — Solidworks Clone
 
 **Version:** 0.1 · **Date:** 19 October 2026  
-**Status:** Requirements baseline unchanged; Modules 1–4 have scoped available-Mac implementation evidence. Full product acceptance remains Not run or Blocked.  
+**Status:** Requirements baseline unchanged; Modules 1–7 have scoped available-Mac implementation evidence; Modules 8–10 are implemented and verified for documented available-Mac scope. Full product acceptance remains Not run or Blocked.
 **Baseline:** Native desktop CAD, macOS + Windows + Linux, 8 GB system RAM.  
 **Companions:** [SDD](SDD.md), [TECH_SPEC](TECH_SPEC.md), [STEP_ZERO](STEP_ZERO.md), [traceability](TRACEABILITY.md).
 
@@ -201,3 +201,25 @@ OD-01: final product/application identity and distribution license. OD-02: exact
 Step Zero records resolution or an explicit later owner for each decision. Blocking feasibility failures require redesign before dependent production work. No decision is considered resolved by writing these specifications.
 
 Implementation note (19 October 2026): the [decision register](decisions/project-baseline.md), [deferred gates](decisions/deferred-gates.md), and [Module 0 evidence](testing/module-0.md) now track these decisions. Native targets, physical 8 GB baseline, R1/R2 scope and all numerical acceptance budgets above are unchanged. Module 0 experiments do not satisfy product acceptance requirements.
+
+
+Module 8–10 scope records: [drawings](decisions/module-8-drawings.md),
+[interaction/privacy](decisions/module-9-interaction.md),
+[recovery](decisions/module-10-recovery.md). These implement available-Mac subsets
+of FR-005/FR-007–FR-011/FR-031–FR-039. R1 acceptance, the native support matrix,
+physical 8 GB budgets, and deferred 6.1b/6.4c/7.4c gates are unchanged. The additive
+B5 layout variant preserves the old fixture and uses a smaller scale for the full
+B3 assembly; B1's measured 80 mm -> 40 mm at 1:2 check remains required.
+
+FR-012 Centerpoint Arc interaction evidence is recorded separately in [the 22 October repair](testing/module-3-centerpoint-arc.md). Pointer sizing supplements numeric arc creation; its run does not establish other arc modes or automatic tangency. The later [all-arc follow-up](testing/module-3-all-arcs.md) adds Centerpoint/3 Point/Tangent, tangent/normal line-or-arc endpoint relations (FR-013), and the EDP connected-line transition. Physical-device and full platform acceptance remain Blocked.
+
+## 11. Authorized core-modeling extension
+
+Version 0.1 extension, authorized 22 October 2026: [CM0–CM9](CORE_MODELING.md) adds
+the T2–T8 modeling modes, including bounded 3D sketches and surface outputs needed
+by loft/sweep. Those specific capabilities supersede their earlier R2 placement;
+general surfacing, assembly/drawing expansion and simulation remain outside this
+extension. [Coverage requirements](research/core-modeling-coverage.json) retain
+individual CM IDs, acceptance fixtures and evidence. Full described-variant and
+broad redistributable-catalog coverage is required; incomplete entries stay open.
+The physical 8 GB baseline, numerical budgets and FR/NFR identities are unchanged.

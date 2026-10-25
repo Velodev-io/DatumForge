@@ -37,6 +37,8 @@ class Client : public QObject {
         wire::Envelope request;
         qint64 deadline;
         qint64 result = 0;
+        qint64 started = 0;
+        bool timed = false;
     };
     QMap<QString, Pending> pending;
     QQueue<wire::Envelope> ordinary;
@@ -95,6 +97,9 @@ class Client : public QObject {
     void projectCommand(QString command, QCborMap payload = {});
     void discardSketchPreview();
     void displayPart();
+    void displayAssembly();
+    void exportDrawing(QString path, bool overwrite = false);
+    void migrateProject(QString source, QString destination);
     void cancelPartPreview();
     void switchDocument(QString id);
     void closeDocument();
@@ -102,9 +107,16 @@ class Client : public QObject {
     void openProject(QString path, QString choice = "Saved", bool replace = false);
     void inspectProject(QString path);
     void saveProject(QString path = {}, bool saveAs = false);
+    void importGeometry(QString path, QString format, QString units, QString healing,
+                        QString expectedSha256);
+    void exportGeometry(QString path, QString format, QString units, double deflectionMM,
+                        QString body = {}, bool overwrite = false);
+    void portableCopy(QString path);
+    void cancelExchange();
     void listRecoveries();
     void recoverProject(QString id);
   signals:
+    void jobFinished(QString command, QString status, qint64 milliseconds, qint64 transferBytes);
     void changed();
     void meshChanged(cad::MeshPtr mesh);
     void measured(QString text);
@@ -112,8 +124,14 @@ class Client : public QObject {
     void projectInspection(QCborMap inspection);
     void projectChanged();
     void sketchPreview(QCborArray sketches);
+    void sketchEditPreview(QCborArray sketches, QCborArray affectedConstraints);
     void partResult(QCborMap result);
     void referenceResolution(QCborMap result);
+    void exchangeProgress(QString stage, int percent);
+    void exchangeReport(QCborMap result);
+    void drawingInformation(QCborMap result);
+    void drawingAnchors(QCborArray anchors);
+    void assemblyInformation(QCborMap result);
     void sketchDiagnosed(QCborArray diagnostics);
     void operationOutcome(QString operation, QString outcome);
 };

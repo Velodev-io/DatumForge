@@ -1,14 +1,29 @@
 #include "Projects.hpp"
 #include "geometry/occt/ReferenceScene.hpp"
 #include <QCoreApplication>
+#include <QEvent>
 #include <QFile>
+#include <QGuiApplication>
 #include <QLocalSocket>
 #include <QQueue>
 #include <QTimer>
 #include <Standard_Failure.hxx>
+#include <atomic>
 #include <iostream>
 #include <optional>
+#include <thread>
 namespace {
+constexpr QEvent::Type progressEvent = QEvent::Type(QEvent::User + 31),
+                       finishedEvent = QEvent::Type(QEvent::User + 32);
+struct JobEvent : QEvent {
+    cad::wire::Envelope request;
+    QCborMap data;
+    QString code, message;
+    JobEvent(QEvent::Type type, cad::wire::Envelope e, QCborMap result = {}, QString error = {},
+             QString detail = {})
+        : QEvent(type), request(std::move(e)), data(std::move(result)), code(std::move(error)),
+          message(std::move(detail)) {}
+};
 class Worker : public QObject {
     cad::worker::Projects projects;
     QLocalSocket socket;
@@ -35,6 +50,70 @@ class Worker : public QObject {
     qint64 generation = -1;
     int instanceCount = 1;
     bool scheduled = false;
+    std::unique_ptr<std::jthread> job;
+    std::optional<cad::wire::Envelope> activeJob;
+    std::atomic_bool cancelJob{false};
+    void finishProject(const cad::wire::Envelope &e, QCborMap data) {
+        auto bytes = data.take(QStringLiteral("_display_bytes")).toByteArray();
+        auto answer = cad::wire::reply(e, "Succeeded", data);
+        answer.insert(QStringLiteral("result_revision"), projects.revision());
+        send(answer);
+        if (!bytes.isEmpty())
+            chunks(e, {data.value("display_manifest").toMap(), bytes}, projects.revision());
+    }
+    void startExchange(cad::wire::Envelope e) {
+        activeJob = e;
+        cancelJob = false;
+        job = std::make_unique<std::jthread>([this, e] {
+            QCborMap data;
+            QString code, message;
+            int last = -1;
+            cad::exchange::Control control;
+            control.canceled = [this] { return cancelJob.load(); };
+            control.progress = [this, e, &last](QString stage, int percent) {
+                if (percent <= last)
+                    return;
+                last = percent;
+                QCoreApplication::postEvent(
+                    this,
+                    new JobEvent(progressEvent, e,
+                                 cad::sketch::fields({{"stage", stage}, {"percent", percent}})));
+            };
+            try {
+                data = projects.run(e, control);
+            } catch (const cad::domain::Error &error) {
+                code = error.code;
+                message = QString::fromUtf8(error.what());
+            } catch (const Standard_Failure &error) {
+                code = "InvalidGeometry";
+                message = QString::fromUtf8(error.GetMessageString());
+            } catch (const std::exception &error) {
+                code = "InvalidInput";
+                message = QString::fromUtf8(error.what());
+            }
+            QCoreApplication::postEvent(this, new JobEvent(finishedEvent, e, data, code, message));
+        });
+    }
+    bool event(QEvent *event) override {
+        if (event->type() != progressEvent && event->type() != finishedEvent)
+            return QObject::event(event);
+        auto &result = *static_cast<JobEvent *>(event);
+        if (event->type() == progressEvent)
+            send(cad::wire::reply(result.request, "Progress", result.data));
+        else {
+            job.reset();
+            activeJob.reset();
+            if (result.code.isEmpty())
+                finishProject(result.request, result.data);
+            else
+                failure(result.request, result.code, result.message);
+            if (!queue.empty()) {
+                scheduled = true;
+                QTimer::singleShot(0, this, [this] { next(); });
+            }
+        }
+        return true;
+    }
     void send(const QCborMap &map) {
         cad::wire::require(socket.bytesToWrite() <
                                qint64(cad::limits::segment + cad::limits::control),
@@ -42,11 +121,40 @@ class Worker : public QObject {
         socket.write(cad::wire::frame(map));
     }
     void failure(const cad::wire::Envelope &e, QString code, QString message) {
-        send(cad::wire::reply(e, "Failed", {}, code, message));
+        send(cad::wire::reply(e, code == "Canceled" ? "Canceled" : "Failed", {}, code, message));
     }
     void enqueue(cad::wire::Envelope e) {
         if (e.epoch != epoch) {
             failure(e, "StaleSession", "Worker session has changed");
+            return;
+        }
+        if (e.command == "CancelJob") {
+            try {
+                cad::wire::keys(e.payload, {"operation"});
+                auto target = cad::wire::text(e.payload, "operation");
+                for (int i = 0; i < queue.size(); ++i)
+                    if (queue[i].operation == target && queue[i].context == e.context) {
+                        auto old = queue.takeAt(i);
+                        send(cad::wire::reply(old, "Canceled", {}, "Canceled",
+                                              "Queued operation canceled before compute"));
+                        send(cad::wire::reply(e, "Succeeded",
+                                              cad::sketch::fields({{"cancel_requested", true}})));
+                        return;
+                    }
+                cad::domain::check(
+                    activeJob && activeJob->operation == cad::wire::text(e.payload, "operation") &&
+                        activeJob->context == e.context,
+                    "StaleSession", "No matching job in this session");
+                cancelJob = true;
+                send(cad::wire::reply(e, "Succeeded",
+                                      cad::sketch::fields({{"cancel_requested", true}})));
+            } catch (const cad::domain::Error &error) {
+                failure(e, error.code, QString::fromUtf8(error.what()));
+            }
+            return;
+        }
+        if (job) {
+            failure(e, "ResourceLimit", "One computation owns the worker; wait or cancel it");
             return;
         }
         if (e.command == "PreviewReference")
@@ -79,7 +187,7 @@ class Worker : public QObject {
         } catch (const std::exception &error) {
             failure(e, "InvalidInput", QString::fromUtf8(error.what()));
         }
-        if (!queue.empty()) {
+        if (!job && !queue.empty()) {
             scheduled = true;
             QTimer::singleShot(0, this, [this] { next(); });
         }
@@ -88,13 +196,15 @@ class Worker : public QObject {
         using namespace cad;
         using wire::require;
         if (projects.handles(e.command)) {
-            auto data = projects.run(e);
-            auto bytes = data.take(QStringLiteral("_display_bytes")).toByteArray();
-            auto answer = wire::reply(e, "Succeeded", data);
-            answer.insert(QStringLiteral("result_revision"), projects.revision());
-            send(answer);
-            if (!bytes.isEmpty())
-                chunks(e, {data.value("display_manifest").toMap(), bytes}, projects.revision());
+            if (e.command == "ImportGeometry" || e.command == "ExportGeometry" ||
+                QStringList{"SetSketches", "SetFeatures", "CommitHistory", "ResolveReference",
+                            "SetAssembly", "PreviewAssembly", "DisplayAssembly", "SetDrawing",
+                            "UpdateDrawing", "PreviewDrawing", "DisplayDrawing", "ExportDrawing",
+                            "Undo", "Redo"}
+                    .contains(e.command))
+                startExchange(e);
+            else
+                finishProject(e, projects.run(e));
             return;
         }
         cad::domain::check(!projects.open(), "InvalidInput",
@@ -204,6 +314,10 @@ class Worker : public QObject {
     }
 
   public:
+    ~Worker() override {
+        cancelJob = true;
+        job.reset();
+    }
     Worker(QString address, QByteArray secret, QString workerEpoch, QString recovery)
         : projects(recovery), epoch(workerEpoch), capability(secret) {
         socket.setReadBufferSize(cad::limits::control + 4);
@@ -232,7 +346,8 @@ class Worker : public QObject {
 };
 } // namespace
 int main(int argc, char **argv) {
-    QCoreApplication app(argc, argv);
+    qputenv("QT_QPA_PLATFORM", "offscreen");
+    QGuiApplication app(argc, argv);
     app.setOrganizationName("local.solidworks-clone.dev");
     app.setApplicationName("Solidworks Clone");
     try {

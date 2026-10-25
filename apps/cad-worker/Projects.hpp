@@ -1,7 +1,8 @@
 #pragma once
-#include "geometry/occt/Part.hpp"
 #include "evaluation/Plan.hpp"
+#include "geometry/occt/Part.hpp"
 #include "persistence/ProjectStore.hpp"
+#include "sketch/LineEditing.hpp"
 #include "sketch/Solver.hpp"
 #include <QFile>
 #include <QFileInfo>
@@ -42,7 +43,8 @@ class Projects {
         return open() ? store->revision() : 0;
     }
     bool handles(QString command) const {
-        return QStringList{"NewProject",
+        return QStringList{"MigrateProject",
+                           "NewProject",
                            "CreateDocument",
                            "RenameDocument",
                            "SetDocumentUnits",
@@ -65,14 +67,35 @@ class Projects {
                            "CollectObjects",
                            "SetSketches",
                            "PreviewSketches",
-                           "SetFeatures", "PreviewHistory", "CommitHistory", "ReferenceCandidates", "ResolveReference", "TrimResults",
+                           "PreviewSketchEdit",
+                           "SetFeatures",
+                           "PreviewHistory",
+                           "CommitHistory",
+                           "ReferenceCandidates",
+                           "ResolveReference",
+                           "TrimResults",
                            "PreviewFeatures",
                            "DisplayPart",
-                           "MeasurePart"}
+                           "MeasurePart",
+                           "ImportGeometry",
+                           "ExportGeometry",
+                           "PortableCopy",
+                           "InspectClosure",
+                           "SetDrawing",
+                           "PreviewDrawing",
+                           "UpdateDrawing",
+                           "DisplayDrawing",
+                           "DrawingAnchors",
+                           "ExportDrawing",
+                           "SetAssembly",
+                           "PreviewAssembly",
+                           "DisplayAssembly",
+                           "AssemblyReferences",
+                           "AssemblyInterference"}
                    .contains(command) ||
                (command == "QueryOperation" && open());
     }
-    QCborMap run(const wire::Envelope &e) {
+    QCborMap run(const wire::Envelope &e, const exchange::Control &control = {}) {
         using domain::check;
         initialize();
         auto p = e.payload;
@@ -104,6 +127,13 @@ class Projects {
                           store->inspect(take(wire::text(p, "capability"), "read")));
             return result;
         }
+        if (e.command == "MigrateProject") {
+            wire::keys(p, {"source_capability", "destination_capability"});
+            auto source = take(wire::text(p, "source_capability"), "read"),
+                 target = take(wire::text(p, "destination_capability"), "save");
+            storage::ProjectStore::migrationCopy(source, target);
+            return sketch::fields({{"migration_report", store->inspect(target)}});
+        }
         if (e.command == "NewProject") {
             check(p.value("replace").isBool(), "InvalidInput",
                   "Project replacement choice required");
@@ -116,7 +146,7 @@ class Projects {
             domain::label(wire::text(p, "name"));
             domain::units(wire::text(p, "units"));
             if (open() && store->project() == e.context.project) {
-                auto result = store->execute(semantic);
+                auto result = store->execute(semantic, control);
                 QCborMap reply;
                 reply.insert(QStringLiteral("operation"), result);
                 reply.insert(QStringLiteral("project_state"), store->state());
@@ -126,7 +156,7 @@ class Projects {
                   "Resolve the current project before replacing it");
             auto candidate = std::make_unique<storage::ProjectStore>(root);
             candidate->create(e.context.project);
-            candidate->execute(semantic);
+            candidate->execute(semantic, control);
             store = std::move(candidate);
         } else if (e.command == "OpenProject") {
             wire::keys(p, {"capability", "choice", "replace"});
@@ -165,15 +195,138 @@ class Projects {
                              (e.command == "SaveAs" &&
                               store->outcome(e.operation).value("durable").toBool())),
                   "StaleSession", "The project session changed");
-            if(e.command=="TrimResults"){wire::keys(p,{});store->trimResults();return sketch::fields({{"cache_statistics",store->cacheStatistics()}});}
-            if(e.command=="ReferenceCandidates"){wire::keys(p,{"owner","token"});check(e.revision==store->revision(),"StaleRevision","Project changed before repair inspection");return sketch::fields({{"reference_resolution",store->referenceCandidates(e.context.document,domain::id(wire::text(p,"owner")),wire::text(p,"token"))}});}
+            if (e.command == "PreviewDrawing" || e.command == "DisplayDrawing" ||
+                e.command == "DrawingAnchors" || e.command == "ExportDrawing") {
+                check(e.revision == store->revision(), "StaleRevision", "Drawing revision changed");
+                if (e.command == "DrawingAnchors") {
+                    wire::keys(p, {"source"});
+                    return sketch::fields(
+                        {{"drawing_anchors", drawing::anchors(domain::id(wire::text(p, "source")),
+                                                              store->assemblyLoader())}});
+                }
+                if (e.command == "ExportDrawing") {
+                    wire::keys(p, {"capability", "overwrite"});
+                    auto path = take(wire::text(p, "capability"), "save");
+                    auto semantic = e;
+                    semantic.payload.remove(QStringLiteral("capability"));
+                    return sketch::fields(
+                        {{"exchange_report", store->exportDrawing(semantic, path, control)}});
+                }
+                wire::keys(p, e.command == "PreviewDrawing" ? QSet<QString>{"drawing"}
+                                                            : QSet<QString>{});
+                return sketch::fields(
+                    {{"drawing_result",
+                      store->drawingResult(e.context.document,
+                                           e.command == "PreviewDrawing"
+                                               ? std::optional<QCborMap>(p.value("drawing").toMap())
+                                               : std::nullopt)}});
+            }
+            if (e.command == "DisplayAssembly" || e.command == "PreviewAssembly" ||
+                e.command == "AssemblyReferences" || e.command == "AssemblyInterference") {
+                check(e.revision == store->revision(), "StaleRevision",
+                      "Assembly revision changed");
+                if (e.command == "AssemblyReferences") {
+                    wire::keys(p, {"occurrence"});
+                    return sketch::fields({{"assembly_references",
+                                            store->assemblyReferences(
+                                                e.context.document, wire::text(p, "occurrence"))}});
+                }
+                if (e.command == "AssemblyInterference") {
+                    wire::keys(p, {});
+                    return sketch::fields(
+                        {{"interference", store->assemblyInterference(e.context.document)}});
+                }
+                wire::keys(p, e.command == "PreviewAssembly" ? QSet<QString>{"assembly"}
+                                                             : QSet<QString>{});
+                return store->assemblyResult(
+                    e.context.document, e.command == "PreviewAssembly"
+                                            ? std::optional<QCborMap>(p.value("assembly").toMap())
+                                            : std::nullopt);
+            }
+            if (e.command == "InspectClosure") {
+                wire::keys(p, {});
+                check(e.revision == store->revision(), "StaleRevision",
+                      "Project changed before closure inspection");
+                return sketch::fields({{"closure_manifest", store->closure()}});
+            }
+            if (e.command == "ImportGeometry") {
+                wire::keys(p, {"capability", "format", "units", "healing", "feature_id", "name",
+                               "expected_sha256"});
+                auto path = take(wire::text(p, "capability"), "read");
+                auto semantic = e;
+                semantic.payload.remove(QStringLiteral("capability"));
+                auto outcome = store->importGeometry(semantic, path, control);
+                return sketch::fields({{"project_state", store->state()}, {"operation", outcome}});
+            }
+            if (e.command == "ExportGeometry") {
+                wire::keys(p,
+                           {"capability", "format", "units", "deflection_mm", "body", "overwrite"});
+                auto path = take(wire::text(p, "capability"), "save");
+                auto semantic = e;
+                semantic.payload.remove(QStringLiteral("capability"));
+                return sketch::fields(
+                    {{"exchange_report", store->exportGeometry(semantic, path, control)}});
+            }
+            if (e.command == "PortableCopy") {
+                wire::keys(p, {"capability", "new_project_id", "policy"});
+                check(wire::text(p, "policy") == "Copied", "UnsupportedOperation",
+                      "Portable copies embed sources; external links are unsupported");
+                auto path = take(wire::text(p, "capability"), "save");
+                auto semantic = e;
+                semantic.payload.remove(QStringLiteral("capability"));
+                auto manifest = store->closure();
+                auto result = store->save(semantic, path, true);
+                return sketch::fields({{"project_state", store->state()},
+                                       {"operation", result},
+                                       {"exchange_report", manifest}});
+            }
+            if (e.command == "TrimResults") {
+                wire::keys(p, {});
+                store->trimResults();
+                return sketch::fields({{"cache_statistics", store->cacheStatistics()}});
+            }
+            if (e.command == "ReferenceCandidates") {
+                wire::keys(p, {"owner", "token"});
+                check(e.revision == store->revision(), "StaleRevision",
+                      "Project changed before repair inspection");
+                auto resolution = store->referenceCandidates(
+                    e.context.document, domain::id(wire::text(p, "owner")), wire::text(p, "token"));
+                auto preview = store->evaluatePart(e.context.document,
+                                                   store->features(e.context.document), true);
+                auto reply =
+                    sketch::fields({{"reference_resolution", resolution}, {"part_stale", true}});
+                if (!preview.bodies.empty()) {
+                    auto packed = pack(preview.mesh());
+                    reply.insert(QStringLiteral("display_manifest"), packed.manifest);
+                    reply.insert(QStringLiteral("_display_bytes"), packed.bytes);
+                }
+                return reply;
+            }
             if (e.command == "PreviewFeatures" || e.command == "DisplayPart" ||
-                e.command == "MeasurePart" || e.command=="PreviewHistory") {
+                e.command == "MeasurePart" || e.command == "PreviewHistory") {
                 check(e.revision == store->revision(), "StaleRevision",
                       "Part result revision changed");
                 auto definitions = store->features(e.context.document);
-                if(e.command=="PreviewHistory"){wire::keys(p,{"features"});check(p.value("features").isArray(),"InvalidInput","Feature array required");definitions=p.value("features").toArray();}
-                else if (e.command == "PreviewFeatures") {
+                auto beforeDefinitions = definitions;
+                auto impactProfiles = [&](QCborArray after) {
+                    auto profiles = store->profileSketches(e.context.document, beforeDefinitions);
+                    QSet<QString> seen;
+                    for (auto value : profiles)
+                        seen.insert(value.toMap().value("id").toString());
+                    for (auto value : store->profileSketches(e.context.document, after)) {
+                        auto id = value.toMap().value("id").toString();
+                        if (!seen.contains(id)) {
+                            profiles.append(value);
+                            seen.insert(id);
+                        }
+                    }
+                    return profiles;
+                };
+                if (e.command == "PreviewHistory") {
+                    wire::keys(p, {"features"});
+                    check(p.value("features").isArray(), "InvalidInput", "Feature array required");
+                    definitions = p.value("features").toArray();
+                } else if (e.command == "PreviewFeatures") {
                     wire::keys(p, {"features", "deflection_mm"});
                     check(p.value("features").isArray(), "InvalidInput", "Feature array required");
                     definitions = p.value("features").toArray();
@@ -181,9 +334,22 @@ class Projects {
                     wire::keys(p, {"deflection_mm"});
                 else
                     wire::keys(p, {"body", "token", "second_token", "density_kg_m3"});
-                auto part = store->evaluatePart(e.context.document, e.command=="PreviewFeatures"||e.command=="PreviewHistory"?std::optional<QCborArray>(definitions):std::nullopt,e.command=="PreviewHistory");
-                auto errors=part.errors;auto diagnostics=part.diagnostics;
-                if(part.stale&&e.command=="PreviewHistory"){auto prefix=part.stages;part=store->evaluatePart(e.context.document);part.stale=true;part.errors=errors;part.diagnostics=diagnostics;part.stages=prefix;}
+                auto part = store->evaluatePart(e.context.document,
+                                                e.command == "PreviewFeatures" ||
+                                                        e.command == "PreviewHistory"
+                                                    ? std::optional<QCborArray>(definitions)
+                                                    : std::nullopt,
+                                                e.command == "PreviewHistory");
+                auto errors = part.errors;
+                auto diagnostics = part.diagnostics;
+                if (part.stale && e.command == "PreviewHistory") {
+                    auto prefix = part.stages;
+                    part = store->evaluatePart(e.context.document);
+                    part.stale = true;
+                    part.errors = errors;
+                    part.diagnostics = diagnostics;
+                    part.stages = prefix;
+                }
                 double assignedDensity = 0;
                 for (auto value : store->state().value("documents").toArray()) {
                     auto d = value.toMap();
@@ -206,16 +372,36 @@ class Projects {
                                                    : assignedDensity),
                                               wire::text(p, "second_token")));
                 } else {
-                    bool stale=part.stale;
-                    if(part.bodies.empty())return sketch::fields({{"part_empty",true},{"part_stale",stale},{"errors",part.errors},{"history_impact",evaluation::impact(store->profileSketches(e.context.document,definitions),store->features(e.context.document),definitions)}});
-                    auto packed = pack(part.mesh(e.command=="PreviewHistory"?.2:features::number(p, "deflection_mm", .01, 5)));
+                    bool stale = part.stale;
+                    if (part.bodies.empty())
+                        return sketch::fields(
+                            {{"part_empty", true},
+                             {"part_stale", stale},
+                             {"errors", part.errors},
+                             {"history_impact",
+                              evaluation::impact(impactProfiles(definitions), beforeDefinitions,
+                                                 definitions)}});
+                    auto packed =
+                        pack(part.mesh(e.command == "PreviewHistory"
+                                           ? .2
+                                           : features::number(p, "deflection_mm", .01, 5)));
                     reply.insert(QStringLiteral("display_manifest"), packed.manifest);
                     // The host streams and removes this private value before sending control data.
                     reply.insert(QStringLiteral("_display_bytes"), packed.bytes);
-                    reply.insert(QStringLiteral("part_stale"),stale);reply.insert(QStringLiteral("errors"),part.errors);
-                    reply.insert(QStringLiteral("cache_statistics"),store->cacheStatistics());
-                    if(e.command=="PreviewHistory")reply.insert(QStringLiteral("history_impact"),evaluation::impact(store->profileSketches(e.context.document,definitions),store->features(e.context.document),definitions));
-                    reply.insert(QStringLiteral("part_measurement"),stale?sketch::fields({{"revision",e.revision},{"valid",false},{"reason","STALE: last valid display; measurement refused"}}):part.measure(e.revision, {}, {}, assignedDensity));
+                    reply.insert(QStringLiteral("part_stale"), stale);
+                    reply.insert(QStringLiteral("errors"), part.errors);
+                    reply.insert(QStringLiteral("cache_statistics"), store->cacheStatistics());
+                    if (e.command == "PreviewHistory")
+                        reply.insert(QStringLiteral("history_impact"),
+                                     evaluation::impact(impactProfiles(definitions),
+                                                        beforeDefinitions, definitions));
+                    reply.insert(
+                        QStringLiteral("part_measurement"),
+                        stale ? sketch::fields(
+                                    {{"revision", e.revision},
+                                     {"valid", false},
+                                     {"reason", "STALE: last valid display; measurement refused"}})
+                              : part.measure(e.revision, {}, {}, assignedDensity));
                     reply.insert(QStringLiteral("feature_diagnostics"), part.diagnostics);
                     reply.insert(QStringLiteral("topology_history"), part.history);
                     reply.insert(QStringLiteral("topology"), part.topology());
@@ -225,6 +411,25 @@ class Projects {
                     reply.insert(QStringLiteral("bodies"), bodies);
                 }
                 return reply;
+            }
+            if (e.command == "PreviewSketchEdit") {
+                wire::keys(p, {"sketches", "sketch", "edit"});
+                check(e.revision == store->revision(), "StaleRevision",
+                      "Project changed before edit preview");
+                check(p.value("sketches").isArray() && p.value("edit").isMap(), "InvalidInput",
+                      "Sketch draft and edit request required");
+                auto all = sketch::parse(p.value("sketches").toArray());
+                auto id = wire::text(p, "sketch");
+                auto it = std::find_if(all.begin(), all.end(), [&](auto &s) { return s.id == id; });
+                check(it != all.end(), "ReferenceMissing", "Edit source sketch missing");
+                auto result = sketch::previewLineEdit(*it, p.value("edit").toMap());
+                *it = sketch::Sketch::parse(result.value("candidate").toMap());
+                // Strict evaluation refuses conflicts and downstream ambiguous/missing references.
+                auto evaluated = sketch::evaluate(sketch::encode(all),
+                                                  store->sketches(e.context.document), true);
+                return sketch::fields(
+                    {{"sketch_edit_preview", evaluated.value("sketches")},
+                     {"affected_constraints", result.value("affected_constraints")}});
             }
             if (e.command == "PreviewSketches") {
                 wire::keys(p, {"sketches"});
@@ -262,7 +467,7 @@ class Projects {
                 wire::keys(p, {});
                 store->collect();
             } else
-                result = store->execute(e);
+                result = store->execute(e, control);
             QCborMap reply;
             reply.insert(QStringLiteral("project_state"), store->state());
             reply.insert(QStringLiteral("operation"), result);

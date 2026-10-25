@@ -1,0 +1,15 @@
+{
+  "status": "Pass",
+  "scope": "Research hashes, exact deferred-gate records and branch/HEAD preservation only",
+  "cache_files_verified": 52,
+  "preserved_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "head": "d1fce435b1e9e4f05b7f36fab6392f870fedd8d7",
+  "branch": "feature/core-modeling-expansion",
+  "commit_or_push_performed": false,
+  "module_11_started": false,
+  "module_12_started": false
+}

@@ -9,7 +9,9 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QListWidget>
+#include <QPlainTextEdit>
 #include <QPushButton>
+#include <QSpinBox>
 namespace cad {
 class SketchPanel : public QWidget {
     Q_OBJECT
@@ -18,6 +20,21 @@ class SketchPanel : public QWidget {
     QFormLayout *rootForm;
     SketchView *view;
     QComboBox *sketches, *plane, *tool, *relation;
+    QComboBox *arcMethod;
+    QComboBox *rectangleMethod;
+    QComboBox *slotMethod, *slotLengthMode;
+    QCheckBox *slotAddDimensions;
+    QSpinBox *splineDegree, *selectedCurveDegree;
+    QCheckBox *splineClosed;
+    QPushButton *finishSpline;
+    QLineEdit *selectedWeights, *selectedKnots, *selectedMultiplicities;
+    QLineEdit *contactParameterA, *contactParameterB;
+    QComboBox *pierceSource, *pierceBranch;
+    QLineEdit *pierceLower, *pierceUpper;
+    QPushButton *repairPierce;
+    void refreshPierceSources();
+    sketch::CurveReference pierceReference() const;
+    QPlainTextEdit *selectedControls;
     QLineEdit *x, *y, *radius, *start, *sweep, *value, *nameExpression;
     QCheckBox *construction;
     QListWidget *entities, *constraints;
@@ -25,7 +42,18 @@ class SketchPanel : public QWidget {
     QGroupBox *selectionGroup;
     QLineEdit *selectedX, *selectedY, *selectedRadius, *selectedWidth, *selectedHeight,
         *selectedStart, *selectedSweep;
+    QLineEdit *selectedRotation, *selectedSideAngle;
     QPushButton *applySelection, *removeEntity;
+    QGroupBox *lineEditGroup;
+    QComboBox *lineEditMode, *lineEditSource;
+    QListWidget *lineEditBoundaries, *lineEditDisclosure;
+    QLineEdit *lineEditX, *lineEditY;
+    QCheckBox *lineEditConsent;
+    QPushButton *lineEditPreview, *lineEditApply, *lineEditCancel;
+    QCborArray lineEditBefore, lineEditCandidate;
+    void clearLineEdit();
+    void requestLineEdit();
+    void refreshLineEdit();
     std::optional<sketch::Sketch> gestureBefore;
     sketch::Vec2 gestureOrigin;
     QString gestureError;
@@ -34,6 +62,10 @@ class SketchPanel : public QWidget {
         *setDimension, *setName;
     std::vector<sketch::Sketch> accepted, draft;
     QString document, selectedId;
+    QStringList relationSelectionOrder;
+    QString resumeLineTool;
+    std::optional<std::pair<QString, int>> pendingArcJoin;
+    bool lineContinuationAnchor = false;
     qint64 revision = -1;
     bool editing = false, syncing = false, committing = false;
     std::vector<sketch::Vec2> clicks;
@@ -41,6 +73,7 @@ class SketchPanel : public QWidget {
     void rebuild();
     void addAt(sketch::Vec2 p, bool snapInput = false);
     void previewDraft();
+    void finishSplineInput();
     void guard(std::function<void()> fn);
     void addRelation();
     void updateRelations();

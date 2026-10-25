@@ -1,0 +1,7350 @@
+{
+  "version": 1,
+  "scope": "Authorized CM0-CM9 core modeling; all described T2-T8 variants; future assembly/drawing expansion excluded Relation operand matrices are explicit closure requirements; this register remains in review until all source modes and restrictions have been reconciled.",
+  "sources": {
+    "T2": {
+      "file": "T2 PART IN 2D.pdf",
+      "sha256": "6a854c645805cbae32d0c62555c0d7312f7f30c9954f793054d850609a27eca6",
+      "pages": 44
+    },
+    "T3": {
+      "file": "T3 EDITING PART.pdf",
+      "sha256": "348d7b7fc9992a7d6093d880a177124deb0c9f9a06481a7dca406de4fb6859e6",
+      "pages": 40
+    },
+    "T4": {
+      "file": "T4 ADD RELATIONS.pdf",
+      "sha256": "845d2d09a293a91c9f0d72772cb68eee94bdb5bcb654b9366ef8d696548e3c6d",
+      "pages": 39
+    },
+    "T5": {
+      "file": "T5 ADD PART FEATURES.pdf",
+      "sha256": "cc5b2dae95fe306255d57935dcdd09faf7e548f56711fbac26f1b157b6cd44d9",
+      "pages": 49
+    },
+    "T6": {
+      "file": "T6 REFERENCE GEOMETRY.pdf",
+      "sha256": "04dfe23a4fca9b4e053c0c31e13e8efadb52fe6e2e2b3ddc4ec2b3d87335f7f2",
+      "pages": 55
+    },
+    "T7": {
+      "file": "T7 MODELLING TOOLS.pdf",
+      "sha256": "9679118a4e43832af5ca6c435fc079ced6bf1dd3b4e5a7b0482631f908e6aaaf",
+      "pages": 53
+    },
+    "T8": {
+      "file": "T8 ADVANCE MODELLING TOOLS.pdf",
+      "sha256": "f9e1c7ba43af615cbec623c755f44aead2b8a62cd545959492a24dff255e429a",
+      "pages": 52
+    }
+  },
+  "entries": [
+    {
+      "id": "CM-001",
+      "milestone": "CM1",
+      "source": "T2",
+      "pages": [
+        34
+      ],
+      "category": "Rectangle",
+      "variant": "Corner",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-001-geometry",
+      "native_workflow": "cm-001-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-rectangles.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/rectangle-source-review/review.json",
+        "docs/testing/artifacts/core-modeling/20261023-rectangles-ui/engine-persistence.txt",
+        "docs/testing/artifacts/core-modeling/20261023-rectangles-ui/offscreen-workflows.txt",
+        "docs/testing/artifacts/core-modeling/native-unlocked-retry/result.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/source-identity.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/visual-review.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases.",
+      "executable_checks": {
+        "geometry_persistence": "cm1.rectangles (tests/core_modeling/rectangles.cpp), method = Corner",
+        "qt_workflow": "cm1.rectangle_contracts (tests/core_modeling/contracts.cpp::rectangles)",
+        "native_workflow": "cm1_contracts nativeRectangles; passed at DPR 1/1.25/1.5/1.75/2 with exposed/active windows and actual DPR assertions"
+      },
+      "source_review": "Original T2 page 34 rendered and visually reviewed; center/midpoint/corner sequence supplemented by primary help sources in the rectangle contract.",
+      "component_results": {
+        "analytical_geometry_and_freedom": "Pass: five methods at scales 0.001/1/1000",
+        "persistence_and_compatibility": "Pass: tested undo/reopen/copy, sticky and forged manifests, failed acceptance with unchanged state",
+        "qt_and_native_workflows": "Pass: mm/in entry/property/restart and click/staged-drag cases; native DPR 1-2",
+        "complete_variant_acceptance": "In progress: broader matrix remains open"
+      },
+      "remaining_gates": [
+        "Complete per-method upstream solid rebuild and failure matrix, beyond current Corner lifecycle and independent profile fixtures",
+        "All interrupted acceptance and cache/resource stress variants",
+        "Broader platform, device, assistive technology and installed-build acceptance"
+      ]
+    },
+    {
+      "id": "CM-002",
+      "milestone": "CM1",
+      "source": "T2",
+      "pages": [
+        34
+      ],
+      "category": "Rectangle",
+      "variant": "Center",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-002-geometry",
+      "native_workflow": "cm-002-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-rectangles.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/rectangle-source-review/review.json",
+        "docs/testing/artifacts/core-modeling/20261023-rectangles-ui/engine-persistence.txt",
+        "docs/testing/artifacts/core-modeling/20261023-rectangles-ui/offscreen-workflows.txt",
+        "docs/testing/artifacts/core-modeling/native-unlocked-retry/result.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/source-identity.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/visual-review.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases.",
+      "executable_checks": {
+        "geometry_persistence": "cm1.rectangles (tests/core_modeling/rectangles.cpp), method = Center",
+        "qt_workflow": "cm1.rectangle_contracts (tests/core_modeling/contracts.cpp::rectangles)",
+        "native_workflow": "cm1_contracts nativeRectangles; passed at DPR 1/1.25/1.5/1.75/2 with exposed/active windows and actual DPR assertions"
+      },
+      "source_review": "Original T2 page 34 rendered and visually reviewed; center/midpoint/corner sequence supplemented by primary help sources in the rectangle contract.",
+      "component_results": {
+        "analytical_geometry_and_freedom": "Pass: five methods at scales 0.001/1/1000",
+        "persistence_and_compatibility": "Pass: tested undo/reopen/copy, sticky and forged manifests, failed acceptance with unchanged state",
+        "qt_and_native_workflows": "Pass: mm/in entry/property/restart and click/staged-drag cases; native DPR 1-2",
+        "complete_variant_acceptance": "In progress: broader matrix remains open"
+      },
+      "remaining_gates": [
+        "Complete per-method upstream solid rebuild and failure matrix, beyond current Corner lifecycle and independent profile fixtures",
+        "All interrupted acceptance and cache/resource stress variants",
+        "Broader platform, device, assistive technology and installed-build acceptance"
+      ]
+    },
+    {
+      "id": "CM-003",
+      "milestone": "CM1",
+      "source": "T2",
+      "pages": [
+        34
+      ],
+      "category": "Rectangle",
+      "variant": "3 Point Corner",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-003-geometry",
+      "native_workflow": "cm-003-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-rectangles.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/rectangle-source-review/review.json",
+        "docs/testing/artifacts/core-modeling/20261023-rectangles-ui/engine-persistence.txt",
+        "docs/testing/artifacts/core-modeling/20261023-rectangles-ui/offscreen-workflows.txt",
+        "docs/testing/artifacts/core-modeling/native-unlocked-retry/result.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/source-identity.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/visual-review.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases.",
+      "executable_checks": {
+        "geometry_persistence": "cm1.rectangles (tests/core_modeling/rectangles.cpp), method = 3 Point Corner",
+        "qt_workflow": "cm1.rectangle_contracts (tests/core_modeling/contracts.cpp::rectangles)",
+        "native_workflow": "cm1_contracts nativeRectangles; passed at DPR 1/1.25/1.5/1.75/2 with exposed/active windows and actual DPR assertions"
+      },
+      "source_review": "Original T2 page 34 rendered and visually reviewed; center/midpoint/corner sequence supplemented by primary help sources in the rectangle contract.",
+      "component_results": {
+        "analytical_geometry_and_freedom": "Pass: five methods at scales 0.001/1/1000",
+        "persistence_and_compatibility": "Pass: tested undo/reopen/copy, sticky and forged manifests, failed acceptance with unchanged state",
+        "qt_and_native_workflows": "Pass: mm/in entry/property/restart and click/staged-drag cases; native DPR 1-2",
+        "complete_variant_acceptance": "In progress: broader matrix remains open"
+      },
+      "remaining_gates": [
+        "Complete per-method upstream solid rebuild and failure matrix, beyond current Corner lifecycle and independent profile fixtures",
+        "All interrupted acceptance and cache/resource stress variants",
+        "Broader platform, device, assistive technology and installed-build acceptance"
+      ]
+    },
+    {
+      "id": "CM-004",
+      "milestone": "CM1",
+      "source": "T2",
+      "pages": [
+        34
+      ],
+      "category": "Rectangle",
+      "variant": "3 Point Center",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-004-geometry",
+      "native_workflow": "cm-004-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-rectangles.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/rectangle-source-review/review.json",
+        "docs/testing/artifacts/core-modeling/20261023-rectangles-ui/engine-persistence.txt",
+        "docs/testing/artifacts/core-modeling/20261023-rectangles-ui/offscreen-workflows.txt",
+        "docs/testing/artifacts/core-modeling/native-unlocked-retry/result.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/source-identity.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/visual-review.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases.",
+      "executable_checks": {
+        "geometry_persistence": "cm1.rectangles (tests/core_modeling/rectangles.cpp), method = 3 Point Center",
+        "qt_workflow": "cm1.rectangle_contracts (tests/core_modeling/contracts.cpp::rectangles)",
+        "native_workflow": "cm1_contracts nativeRectangles; passed at DPR 1/1.25/1.5/1.75/2 with exposed/active windows and actual DPR assertions"
+      },
+      "source_review": "Original T2 page 34 rendered and visually reviewed; center/midpoint/corner sequence supplemented by primary help sources in the rectangle contract.",
+      "component_results": {
+        "analytical_geometry_and_freedom": "Pass: five methods at scales 0.001/1/1000",
+        "persistence_and_compatibility": "Pass: tested undo/reopen/copy, sticky and forged manifests, failed acceptance with unchanged state",
+        "qt_and_native_workflows": "Pass: mm/in entry/property/restart and click/staged-drag cases; native DPR 1-2",
+        "complete_variant_acceptance": "In progress: broader matrix remains open"
+      },
+      "remaining_gates": [
+        "Complete per-method upstream solid rebuild and failure matrix, beyond current Corner lifecycle and independent profile fixtures",
+        "All interrupted acceptance and cache/resource stress variants",
+        "Broader platform, device, assistive technology and installed-build acceptance"
+      ]
+    },
+    {
+      "id": "CM-005",
+      "milestone": "CM1",
+      "source": "T2",
+      "pages": [
+        34
+      ],
+      "category": "Rectangle",
+      "variant": "Parallelogram",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-005-geometry",
+      "native_workflow": "cm-005-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-rectangles.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/rectangle-source-review/review.json",
+        "docs/testing/artifacts/core-modeling/20261023-rectangles-ui/engine-persistence.txt",
+        "docs/testing/artifacts/core-modeling/20261023-rectangles-ui/offscreen-workflows.txt",
+        "docs/testing/artifacts/core-modeling/native-unlocked-retry/result.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/source-identity.json",
+        "docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/visual-review.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases.",
+      "executable_checks": {
+        "geometry_persistence": "cm1.rectangles (tests/core_modeling/rectangles.cpp), method = Parallelogram",
+        "qt_workflow": "cm1.rectangle_contracts (tests/core_modeling/contracts.cpp::rectangles)",
+        "native_workflow": "cm1_contracts nativeRectangles; passed at DPR 1/1.25/1.5/1.75/2 with exposed/active windows and actual DPR assertions"
+      },
+      "source_review": "Original T2 page 34 rendered and visually reviewed; center/midpoint/corner sequence supplemented by primary help sources in the rectangle contract.",
+      "component_results": {
+        "analytical_geometry_and_freedom": "Pass: five methods at scales 0.001/1/1000",
+        "persistence_and_compatibility": "Pass: tested undo/reopen/copy, sticky and forged manifests, failed acceptance with unchanged state",
+        "qt_and_native_workflows": "Pass: mm/in entry/property/restart and click/staged-drag cases; native DPR 1-2",
+        "complete_variant_acceptance": "In progress: broader matrix remains open"
+      },
+      "remaining_gates": [
+        "Complete per-method upstream solid rebuild and failure matrix, beyond current Corner lifecycle and independent profile fixtures",
+        "All interrupted acceptance and cache/resource stress variants",
+        "Broader platform, device, assistive technology and installed-build acceptance"
+      ]
+    },
+    {
+      "id": "CM-006",
+      "milestone": "CM1",
+      "source": "T2",
+      "pages": [
+        35,
+        36,
+        37
+      ],
+      "category": "Slot",
+      "variant": "Straight",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-006-geometry",
+      "native_workflow": "cm-006-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-007",
+      "milestone": "CM1",
+      "source": "T2",
+      "pages": [
+        35,
+        36,
+        37
+      ],
+      "category": "Slot",
+      "variant": "Centerpoint Straight",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-007-geometry",
+      "native_workflow": "cm-007-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-008",
+      "milestone": "CM1",
+      "source": "T2",
+      "pages": [
+        35,
+        36,
+        37
+      ],
+      "category": "Slot",
+      "variant": "3 Point Arc",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-008-geometry",
+      "native_workflow": "cm-008-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-009",
+      "milestone": "CM1",
+      "source": "T2",
+      "pages": [
+        35,
+        36,
+        37
+      ],
+      "category": "Slot",
+      "variant": "Centerpoint Arc",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-009-geometry",
+      "native_workflow": "cm-009-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-010",
+      "milestone": "CM1",
+      "source": "T2",
+      "pages": [
+        35,
+        36,
+        37
+      ],
+      "category": "Slot",
+      "variant": "Center-to-center length",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-010-geometry",
+      "native_workflow": "cm-010-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-011",
+      "milestone": "CM1",
+      "source": "T2",
+      "pages": [
+        35,
+        36,
+        37
+      ],
+      "category": "Slot",
+      "variant": "Overall length",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-011-geometry",
+      "native_workflow": "cm-011-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-012",
+      "milestone": "CM1",
+      "source": "T2",
+      "pages": [
+        35,
+        36,
+        37
+      ],
+      "category": "Slot",
+      "variant": "Automatic dimensions",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-012-geometry",
+      "native_workflow": "cm-012-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-013",
+      "milestone": "CM1",
+      "source": "T3",
+      "pages": [
+        10,
+        11,
+        24
+      ],
+      "category": "Curve",
+      "variant": "Ellipse",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-013-geometry",
+      "native_workflow": "cm-013-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "source_role": "Curve family referenced by course operations; complete exact editable semantics are a roadmap prerequisite, not a claim that these pages describe all creation methods.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-014",
+      "milestone": "CM1",
+      "source": "T3",
+      "pages": [
+        10,
+        11,
+        24
+      ],
+      "category": "Curve",
+      "variant": "Elliptical arc",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-014-geometry",
+      "native_workflow": "cm-014-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "source_role": "Curve family referenced by course operations; complete exact editable semantics are a roadmap prerequisite, not a claim that these pages describe all creation methods.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-015",
+      "milestone": "CM1",
+      "source": "T3",
+      "pages": [
+        10,
+        11,
+        24
+      ],
+      "category": "Curve",
+      "variant": "Parabola",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-015-geometry",
+      "native_workflow": "cm-015-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "source_role": "Curve family referenced by course operations; complete exact editable semantics are a roadmap prerequisite, not a claim that these pages describe all creation methods.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-016",
+      "milestone": "CM1",
+      "source": "T3",
+      "pages": [
+        10,
+        11,
+        24
+      ],
+      "category": "Curve",
+      "variant": "Editable spline",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-016-geometry",
+      "native_workflow": "cm-016-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "source_role": "Curve family referenced by course operations; complete exact editable semantics are a roadmap prerequisite, not a claim that these pages describe all creation methods.",
+      "feasibility": {
+        "scope": "Narrow isolated seed only; see per-probe limits. No production/native/persistence completion implied.",
+        "evidence": "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
+      },
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-017",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        12,
+        13,
+        18
+      ],
+      "category": "Relations",
+      "variant": "Point-pair Horizontal",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-017-geometry",
+      "native_workflow": "cm-017-native",
+      "status": "Blocked",
+      "evidence": [
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/ctest.txt",
+        "docs/decisions/core-modeling-relations.md",
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Point/Point (explicit sketch points, including referenced curve centers/endpoints)",
+        "Multi-point selection",
+        "External projected points/vertices and spline controls"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "implementation_scope": "Selected explicit planar operands implemented through worker solving, independent residuals, versioned persistence and native relation UI. Whole-row closure remains open for all required operand cases and upstream/edit/failure gates.",
+      "implemented_fixture": "tests/core_modeling/relations.cpp:solverCorpus and persistence",
+      "implemented_native_workflow": "cm1_contracts pointRelations/nativeRelations; four mm/in point-alignment cases and seven additional relation cases",
+      "implementation_dependencies": [
+        "CM4.b",
+        "CM4.c"
+      ],
+      "dependency_note": "Projected model-edge and external-vertex operand cases need associative CM4 source/repair adapters; internal sketch cases do not close these cases.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-018",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        13
+      ],
+      "category": "Relations",
+      "variant": "Point-pair Vertical",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-018-geometry",
+      "native_workflow": "cm-018-native",
+      "status": "Blocked",
+      "evidence": [
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/ctest.txt",
+        "docs/decisions/core-modeling-relations.md",
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Point/Point (explicit sketch points, including referenced curve centers/endpoints)",
+        "Multi-point selection",
+        "External projected points/vertices and spline controls"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "implementation_scope": "Selected explicit planar operands implemented through worker solving, independent residuals, versioned persistence and native relation UI. Whole-row closure remains open for all required operand cases and upstream/edit/failure gates.",
+      "implemented_fixture": "tests/core_modeling/relations.cpp:solverCorpus and persistence",
+      "implemented_native_workflow": "cm1_contracts pointRelations/nativeRelations; four mm/in point-alignment cases and seven additional relation cases",
+      "implementation_dependencies": [
+        "CM4.b",
+        "CM4.c"
+      ],
+      "dependency_note": "Projected model-edge and external-vertex operand cases need associative CM4 source/repair adapters; internal sketch cases do not close these cases.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-019",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        17
+      ],
+      "category": "Relations",
+      "variant": "Point-on-line Coincident",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-019-geometry",
+      "native_workflow": "cm-019-native",
+      "status": "Blocked",
+      "evidence": [
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/ctest.txt",
+        "docs/decisions/core-modeling-relations.md",
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Point/Line (infinite support)",
+        "Point/ProjectedEdge"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "implementation_scope": "Selected explicit planar operands implemented through worker solving, independent residuals, versioned persistence and native relation UI. Whole-row closure remains open for all required operand cases and upstream/edit/failure gates.",
+      "implemented_fixture": "tests/core_modeling/relations.cpp:solverCorpus and persistence",
+      "implemented_native_workflow": "cm1_contracts pointRelations/nativeRelations; four mm/in point-alignment cases and seven additional relation cases",
+      "implementation_dependencies": [
+        "CM4.b",
+        "CM4.c"
+      ],
+      "dependency_note": "Projected model-edge and external-vertex operand cases need associative CM4 source/repair adapters; internal sketch cases do not close these cases.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-020",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        17
+      ],
+      "category": "Relations",
+      "variant": "Point-on-circle/arc Coincident",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-020-geometry",
+      "native_workflow": "cm-020-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/ctest.txt",
+        "docs/decisions/core-modeling-relations.md",
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Point/Circle",
+        "Point/Arc (trimmed-domain behavior)",
+        "Point/Ellipse"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "implementation_scope": "Selected explicit planar operands implemented through worker solving, independent residuals, versioned persistence and native relation UI. Whole-row closure remains open for all required operand cases and upstream/edit/failure gates.",
+      "implemented_fixture": "tests/core_modeling/relations.cpp:solverCorpus and persistence",
+      "implemented_native_workflow": "cm1_contracts pointRelations/nativeRelations; four mm/in point-alignment cases and seven additional relation cases",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-021",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        14
+      ],
+      "category": "Relations",
+      "variant": "Collinear",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-021-geometry",
+      "native_workflow": "cm-021-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/ctest.txt",
+        "docs/decisions/core-modeling-relations.md",
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Line/Line",
+        "Multiple selected lines"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "implementation_scope": "Selected explicit planar operands implemented through worker solving, independent residuals, versioned persistence and native relation UI. Whole-row closure remains open for all required operand cases and upstream/edit/failure gates.",
+      "implemented_fixture": "tests/core_modeling/relations.cpp:solverCorpus and persistence",
+      "implemented_native_workflow": "cm1_contracts pointRelations/nativeRelations; four mm/in point-alignment cases and seven additional relation cases",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-022",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        16
+      ],
+      "category": "Relations",
+      "variant": "Concentric",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-022-geometry",
+      "native_workflow": "cm-022-native",
+      "status": "Blocked",
+      "evidence": [
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/ctest.txt",
+        "docs/decisions/core-modeling-relations.md",
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Circle/Circle",
+        "Circle/Arc",
+        "Arc/Arc",
+        "Circle/Point",
+        "Arc/Point",
+        "Circle/Vertex",
+        "Arc/Vertex",
+        "Circle/CircularEdge",
+        "Arc/CircularEdge"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "implementation_scope": "Selected explicit planar operands implemented through worker solving, independent residuals, versioned persistence and native relation UI. Whole-row closure remains open for all required operand cases and upstream/edit/failure gates.",
+      "implemented_fixture": "tests/core_modeling/relations.cpp:solverCorpus and persistence",
+      "implemented_native_workflow": "cm1_contracts pointRelations/nativeRelations; four mm/in point-alignment cases and seven additional relation cases",
+      "implementation_dependencies": [
+        "CM4.b",
+        "CM4.c"
+      ],
+      "dependency_note": "Projected model-edge and external-vertex operand cases need associative CM4 source/repair adapters; internal sketch cases do not close these cases.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-023",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        14
+      ],
+      "category": "Relations",
+      "variant": "Coradial",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-023-geometry",
+      "native_workflow": "cm-023-native",
+      "status": "Blocked",
+      "evidence": [
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/ctest.txt",
+        "docs/decisions/core-modeling-relations.md",
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Circle/Circle",
+        "Circle/Arc",
+        "Arc/Arc",
+        "External projected circular geometry"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "implementation_scope": "Selected explicit planar operands implemented through worker solving, independent residuals, versioned persistence and native relation UI. Whole-row closure remains open for all required operand cases and upstream/edit/failure gates.",
+      "implemented_fixture": "tests/core_modeling/relations.cpp:solverCorpus and persistence",
+      "implemented_native_workflow": "cm1_contracts pointRelations/nativeRelations; four mm/in point-alignment cases and seven additional relation cases",
+      "implementation_dependencies": [
+        "CM4.b",
+        "CM4.c"
+      ],
+      "dependency_note": "Projected model-edge and external-vertex operand cases need associative CM4 source/repair adapters; internal sketch cases do not close these cases.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-024",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        17
+      ],
+      "category": "Relations",
+      "variant": "Midpoint",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-024-geometry",
+      "native_workflow": "cm-024-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/ctest.txt",
+        "docs/decisions/core-modeling-relations.md",
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Point/Line"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "implementation_scope": "Selected explicit planar operands implemented through worker solving, independent residuals, versioned persistence and native relation UI. Whole-row closure remains open for all required operand cases and upstream/edit/failure gates.",
+      "implemented_fixture": "tests/core_modeling/relations.cpp:solverCorpus and persistence",
+      "implemented_native_workflow": "cm1_contracts pointRelations/nativeRelations; four mm/in point-alignment cases and seven additional relation cases",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-025",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        17
+      ],
+      "category": "Relations",
+      "variant": "Symmetric",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-025-geometry",
+      "native_workflow": "cm-025-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Point/Point + centerline",
+        "Line/Line + centerline",
+        "Arc/Arc + centerline",
+        "Ellipse/Ellipse + centerline"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-026",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        17
+      ],
+      "category": "Relations",
+      "variant": "Intersection",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-026-geometry",
+      "native_workflow": "cm-026-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Point + Line/Line (unique intersection)",
+        "Parallel or coincident lines (diagnostic)"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-027",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        17,
+        18
+      ],
+      "category": "Relations",
+      "variant": "Merge Points",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-027-geometry",
+      "native_workflow": "cm-027-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "SketchPoint/SketchPoint",
+        "Endpoint/Endpoint",
+        "Endpoint/SketchPoint"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-028",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        18
+      ],
+      "category": "Relations",
+      "variant": "Pierce",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-028-geometry",
+      "native_workflow": "cm-028-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "SketchPoint/other-sketch curve",
+        "Endpoint/other-sketch curve"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-029",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        15,
+        16
+      ],
+      "category": "Relations",
+      "variant": "Line/arc tangent",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-029-geometry",
+      "native_workflow": "cm-029-native",
+      "status": "Blocked",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Line/Arc",
+        "ProjectedEdge/Arc"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "implementation_dependencies": [
+        "CM4.b",
+        "CM4.c"
+      ],
+      "dependency_note": "Projected model-edge and external-vertex operand cases need associative CM4 source/repair adapters; internal sketch cases do not close these cases.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-030",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        16
+      ],
+      "category": "Relations",
+      "variant": "Arc/arc tangent",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-030-geometry",
+      "native_workflow": "cm-030-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Arc/Arc (external tangent)",
+        "Arc/Arc (internal tangent)"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-031",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        16
+      ],
+      "category": "Relations",
+      "variant": "Circle/arc tangent",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-031-geometry",
+      "native_workflow": "cm-031-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Circle/Arc (external tangent)",
+        "Circle/Arc (internal tangent)"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-032",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        16
+      ],
+      "category": "Relations",
+      "variant": "Circle/circle tangent",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-032-geometry",
+      "native_workflow": "cm-032-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Circle/Circle (external tangent)",
+        "Circle/Circle (internal tangent)"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-033",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        16
+      ],
+      "category": "Relations",
+      "variant": "Spline tangent",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-033-geometry",
+      "native_workflow": "cm-033-native",
+      "status": "Blocked",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Spline/Line",
+        "Spline/Arc",
+        "Spline/Circle",
+        "Spline/Spline",
+        "Spline/Ellipse",
+        "Spline/ProjectedEdge"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "implementation_dependencies": [
+        "CM4.b",
+        "CM4.c"
+      ],
+      "dependency_note": "Projected model-edge and external-vertex operand cases need associative CM4 source/repair adapters; internal sketch cases do not close these cases.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-034",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        16
+      ],
+      "category": "Relations",
+      "variant": "Ellipse tangent",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-034-geometry",
+      "native_workflow": "cm-034-native",
+      "status": "Blocked",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Ellipse/Line",
+        "Ellipse/Arc",
+        "Ellipse/Circle",
+        "Ellipse/Ellipse",
+        "Ellipse/Spline",
+        "Ellipse/ProjectedEdge"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "implementation_dependencies": [
+        "CM4.b",
+        "CM4.c"
+      ],
+      "dependency_note": "Projected model-edge and external-vertex operand cases need associative CM4 source/repair adapters; internal sketch cases do not close these cases.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-035",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        17
+      ],
+      "category": "Relations",
+      "variant": "Equal arc radii",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-035-geometry",
+      "native_workflow": "cm-035-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/ctest.txt",
+        "docs/decisions/core-modeling-relations.md",
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Arc/Arc (radii only, independent sweeps)"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "implementation_scope": "Selected explicit planar operands implemented through worker solving, independent residuals, versioned persistence and native relation UI. Whole-row closure remains open for all required operand cases and upstream/edit/failure gates.",
+      "implemented_fixture": "tests/core_modeling/relations.cpp:solverCorpus and persistence",
+      "implemented_native_workflow": "cm1_contracts pointRelations/nativeRelations; four mm/in point-alignment cases and seven additional relation cases",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-036",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        17
+      ],
+      "category": "Relations",
+      "variant": "Equal circle/arc radii",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-036-geometry",
+      "native_workflow": "cm-036-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/ctest.txt",
+        "docs/decisions/core-modeling-relations.md",
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "Circle/Arc (radii only, independent sweep)"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "implementation_scope": "Selected explicit planar operands implemented through worker solving, independent residuals, versioned persistence and native relation UI. Whole-row closure remains open for all required operand cases and upstream/edit/failure gates.",
+      "implemented_fixture": "tests/core_modeling/relations.cpp:solverCorpus and persistence",
+      "implemented_native_workflow": "cm1_contracts pointRelations/nativeRelations; four mm/in point-alignment cases and seven additional relation cases",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-037",
+      "milestone": "CM1",
+      "source": "T4",
+      "pages": [
+        17
+      ],
+      "category": "Relations",
+      "variant": "Fix selected geometry",
+      "restriction": "",
+      "tasks": [
+        "CM1.a",
+        "CM1.b",
+        "CM1.c",
+        "CM1.d",
+        "CM1.e"
+      ],
+      "analytical_fixture": "cm-037-geometry",
+      "native_workflow": "cm-037-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm1-primitives.md",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T065352.783818Z/verification/source-identity.json"
+      ],
+      "required_operand_cases": [
+        "SketchPoint",
+        "Line (course location-vs-size behavior)",
+        "Arc (course location-vs-size behavior)"
+      ],
+      "closure_note": "All listed operand cases and the row workflow need passing evidence; a supported pair does not close the entire relation.",
+      "acceptance_scope": "Implemented internal-sketch available-Mac slice verified; this row is not blanket completion of all operand/upstream/failure/resource/platform cases."
+    },
+    {
+      "id": "CM-038",
+      "milestone": "CM7",
+      "source": "T4",
+      "pages": [
+        14
+      ],
+      "category": "Spatial relations",
+      "variant": "ParallelYZ",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-038-geometry",
+      "native_workflow": "cm-038-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-039",
+      "milestone": "CM7",
+      "source": "T4",
+      "pages": [
+        15
+      ],
+      "category": "Spatial relations",
+      "variant": "ParallelZX",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-039-geometry",
+      "native_workflow": "cm-039-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-040",
+      "milestone": "CM7",
+      "source": "T4",
+      "pages": [
+        15
+      ],
+      "category": "Spatial relations",
+      "variant": "AlongZ",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-040-geometry",
+      "native_workflow": "cm-040-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-041",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "category": "Trim/extend",
+      "variant": "Power trim",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-041-geometry",
+      "native_workflow": "cm-041-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-042",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "category": "Trim/extend",
+      "variant": "Corner",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-042-geometry",
+      "native_workflow": "cm-042-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-043",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "category": "Trim/extend",
+      "variant": "Trim away inside",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-043-geometry",
+      "native_workflow": "cm-043-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/source-identity.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/visual-review.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/preservation.json"
+      ],
+      "implementation_scope": "Available-Mac straight-line trim/extend slice verified: five methods and explicit constraint-loss decision; finite line/circle/arc boundaries and one apparent-line support. Whole per-row course gate remains open for other curve operands, complete failure/native/resource/platform coverage and broader workflows."
+    },
+    {
+      "id": "CM-044",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "category": "Trim/extend",
+      "variant": "Trim away outside",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-044-geometry",
+      "native_workflow": "cm-044-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/source-identity.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/visual-review.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/preservation.json"
+      ],
+      "implementation_scope": "Available-Mac straight-line trim/extend slice verified: five methods and explicit constraint-loss decision; finite line/circle/arc boundaries and one apparent-line support. Whole per-row course gate remains open for other curve operands, complete failure/native/resource/platform coverage and broader workflows."
+    },
+    {
+      "id": "CM-045",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "category": "Trim/extend",
+      "variant": "Trim to closest",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-045-geometry",
+      "native_workflow": "cm-045-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/source-identity.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/visual-review.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/preservation.json"
+      ],
+      "implementation_scope": "Available-Mac straight-line trim/extend slice verified: five methods and explicit constraint-loss decision; finite line/circle/arc boundaries and one apparent-line support. Whole per-row course gate remains open for other curve operands, complete failure/native/resource/platform coverage and broader workflows."
+    },
+    {
+      "id": "CM-046",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "category": "Trim/extend",
+      "variant": "Dynamic extend",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-046-geometry",
+      "native_workflow": "cm-046-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/source-identity.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/visual-review.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/preservation.json"
+      ],
+      "implementation_scope": "Available-Mac straight-line trim/extend slice verified: five methods and explicit constraint-loss decision; finite line/circle/arc boundaries and one apparent-line support. Whole per-row course gate remains open for other curve operands, complete failure/native/resource/platform coverage and broader workflows."
+    },
+    {
+      "id": "CM-047",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        10,
+        11,
+        12,
+        13
+      ],
+      "category": "Trim/extend",
+      "variant": "Extend to apparent intersection",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-047-geometry",
+      "native_workflow": "cm-047-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/source-identity.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/visual-review.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/preservation.json"
+      ],
+      "implementation_scope": "Available-Mac straight-line trim/extend slice verified: five methods and explicit constraint-loss decision; finite line/circle/arc boundaries and one apparent-line support. Whole per-row course gate remains open for other curve operands, complete failure/native/resource/platform coverage and broader workflows."
+    },
+    {
+      "id": "CM-048",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        24,
+        25
+      ],
+      "category": "Sketch treatments",
+      "variant": "Shared-radius fillet",
+      "restriction": "Fillet trims or extends compatible geometry; nonparallel line pairs only. Selection may use two entities or their intersection vertex. Shared radii use equal relations; individual radii retain independent dimensions.",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-048-geometry",
+      "native_workflow": "cm-048-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-049",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        24,
+        25
+      ],
+      "category": "Sketch treatments",
+      "variant": "Individual-radius fillet",
+      "restriction": "Fillet trims or extends compatible geometry; nonparallel line pairs only. Selection may use two entities or their intersection vertex. Shared radii use equal relations; individual radii retain independent dimensions.",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-049-geometry",
+      "native_workflow": "cm-049-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-050",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        24,
+        25
+      ],
+      "category": "Sketch treatments",
+      "variant": "Line/line fillet",
+      "restriction": "Fillet trims or extends compatible geometry; nonparallel line pairs only. Selection may use two entities or their intersection vertex. Shared radii use equal relations; individual radii retain independent dimensions.",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-050-geometry",
+      "native_workflow": "cm-050-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-051",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        24,
+        25
+      ],
+      "category": "Sketch treatments",
+      "variant": "Arc/arc fillet",
+      "restriction": "Fillet trims or extends compatible geometry; nonparallel line pairs only. Selection may use two entities or their intersection vertex. Shared radii use equal relations; individual radii retain independent dimensions.",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-051-geometry",
+      "native_workflow": "cm-051-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-052",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        24,
+        25
+      ],
+      "category": "Sketch treatments",
+      "variant": "Line/arc fillet",
+      "restriction": "Fillet trims or extends compatible geometry; nonparallel line pairs only. Selection may use two entities or their intersection vertex. Shared radii use equal relations; individual radii retain independent dimensions.",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-052-geometry",
+      "native_workflow": "cm-052-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-053",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        24,
+        25
+      ],
+      "category": "Sketch treatments",
+      "variant": "Spline fillet combinations",
+      "restriction": "Fillet trims or extends compatible geometry; nonparallel line pairs only. Selection may use two entities or their intersection vertex. Shared radii use equal relations; individual radii retain independent dimensions.",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-053-geometry",
+      "native_workflow": "cm-053-native",
+      "status": "Not run",
+      "evidence": [],
+      "required_operand_cases": [
+        "Spline/Spline",
+        "Spline/Line",
+        "Spline/Arc"
+      ]
+    },
+    {
+      "id": "CM-054",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        26,
+        27
+      ],
+      "category": "Sketch treatments",
+      "variant": "Equal-distance chamfer",
+      "restriction": "Two nonparallel lines, intersecting or nonintersecting when lengths/distances permit. Preview affected constraints and require an explicit decision before replacement.",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-054-geometry",
+      "native_workflow": "cm-054-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-055",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        26,
+        27
+      ],
+      "category": "Sketch treatments",
+      "variant": "Unequal-distance chamfer",
+      "restriction": "Two nonparallel lines, intersecting or nonintersecting when lengths/distances permit. Preview affected constraints and require an explicit decision before replacement.",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-055-geometry",
+      "native_workflow": "cm-055-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-056",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        26,
+        27
+      ],
+      "category": "Sketch treatments",
+      "variant": "Angle-distance chamfer",
+      "restriction": "Two nonparallel lines, intersecting or nonintersecting when lengths/distances permit. Preview affected constraints and require an explicit decision before replacement.",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-056-geometry",
+      "native_workflow": "cm-056-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-057",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        27
+      ],
+      "category": "Sketch treatments",
+      "variant": "Constraint-loss disclosure",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-057-geometry",
+      "native_workflow": "cm-057-native",
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/verification.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/source-identity.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/visual-review.json",
+        "docs/testing/artifacts/core-modeling/20261025T080645.353363Z/verification/preservation.json"
+      ],
+      "implementation_scope": "Available-Mac straight-line trim/extend slice verified: five methods and explicit constraint-loss decision; finite line/circle/arc boundaries and one apparent-line support. Whole per-row course gate remains open for other curve operands, complete failure/native/resource/platform coverage and broader workflows."
+    },
+    {
+      "id": "CM-058",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        32,
+        33,
+        34
+      ],
+      "category": "Offset",
+      "variant": "Single entity",
+      "restriction": "Refuse fit splines, already-offset splines and self-intersecting offset results as documented",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-058-geometry",
+      "native_workflow": "cm-058-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-059",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        32,
+        33,
+        34
+      ],
+      "category": "Offset",
+      "variant": "Selected chain",
+      "restriction": "Refuse fit splines, already-offset splines and self-intersecting offset results as documented; chain selection follows continuous contacting curves and can be disabled (p33)",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-059-geometry",
+      "native_workflow": "cm-059-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-060",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        32,
+        33,
+        34
+      ],
+      "category": "Offset",
+      "variant": "Reverse",
+      "restriction": "Refuse fit splines, already-offset splines and self-intersecting offset results as documented; course hides Reverse in bidirectional mode (p33)",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-060-geometry",
+      "native_workflow": "cm-060-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-061",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        32,
+        33,
+        34
+      ],
+      "category": "Offset",
+      "variant": "Bidirectional",
+      "restriction": "Refuse fit splines, already-offset splines and self-intersecting offset results as documented",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-061-geometry",
+      "native_workflow": "cm-061-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-062",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        32,
+        33,
+        34
+      ],
+      "category": "Offset",
+      "variant": "Line end caps",
+      "restriction": "Refuse fit splines, already-offset splines and self-intersecting offset results as documented; cap ends available only for bidirectional offsets (p33)",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-062-geometry",
+      "native_workflow": "cm-062-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-063",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        32,
+        33,
+        34
+      ],
+      "category": "Offset",
+      "variant": "Arc end caps",
+      "restriction": "Refuse fit splines, already-offset splines and self-intersecting offset results as documented; cap ends available only for bidirectional offsets (p33)",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-063-geometry",
+      "native_workflow": "cm-063-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-064",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        32,
+        33,
+        34
+      ],
+      "category": "Offset",
+      "variant": "Base construction geometry",
+      "restriction": "Refuse fit splines, already-offset splines and self-intersecting offset results as documented",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-064-geometry",
+      "native_workflow": "cm-064-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-065",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        32,
+        33,
+        34
+      ],
+      "category": "Offset",
+      "variant": "Projected edges/faces",
+      "restriction": "Refuse fit splines, already-offset splines and self-intersecting offset results as documented",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-065-geometry",
+      "native_workflow": "cm-065-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-066",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        32
+      ],
+      "category": "Sketch transforms",
+      "variant": "Linear two-direction pattern",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-066-geometry",
+      "native_workflow": "cm-066-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-067",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        32
+      ],
+      "category": "Sketch transforms",
+      "variant": "Circular sketch pattern",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-067-geometry",
+      "native_workflow": "cm-067-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-068",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        32
+      ],
+      "category": "Sketch transforms",
+      "variant": "Equal spacing",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-068-geometry",
+      "native_workflow": "cm-068-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-069",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        32
+      ],
+      "category": "Sketch transforms",
+      "variant": "Editable center/count/spacing",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-069-geometry",
+      "native_workflow": "cm-069-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-070",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        32
+      ],
+      "category": "Sketch transforms",
+      "variant": "Copy",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-070-geometry",
+      "native_workflow": "cm-070-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-071",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        32
+      ],
+      "category": "Sketch transforms",
+      "variant": "Move",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-071-geometry",
+      "native_workflow": "cm-071-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-072",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        32
+      ],
+      "category": "Sketch transforms",
+      "variant": "Rotate",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-072-geometry",
+      "native_workflow": "cm-072-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-073",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        32
+      ],
+      "category": "Sketch transforms",
+      "variant": "Scale",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-073-geometry",
+      "native_workflow": "cm-073-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-074",
+      "milestone": "CM2",
+      "source": "T3",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        32
+      ],
+      "category": "Sketch transforms",
+      "variant": "Mirror",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-074-geometry",
+      "native_workflow": "cm-074-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-075",
+      "milestone": "CM2",
+      "source": "T5",
+      "pages": [
+        6,
+        7
+      ],
+      "category": "Sketch transforms",
+      "variant": "Dynamic mirror",
+      "restriction": "",
+      "tasks": [
+        "CM2.a",
+        "CM2.b",
+        "CM2.c",
+        "CM2.d",
+        "CM2.e"
+      ],
+      "analytical_fixture": "cm-075-geometry",
+      "native_workflow": "cm-075-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-076",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Aligned linear",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-076-geometry",
+      "native_workflow": "cm-076-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-077",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Horizontal",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-077-geometry",
+      "native_workflow": "cm-077-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-078",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Vertical",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-078-geometry",
+      "native_workflow": "cm-078-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-079",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Angular",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-079-geometry",
+      "native_workflow": "cm-079-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-080",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Radius",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-080-geometry",
+      "native_workflow": "cm-080-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-081",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Diameter",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-081-geometry",
+      "native_workflow": "cm-081-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-082",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Linear diameter about centerline",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-082-geometry",
+      "native_workflow": "cm-082-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-083",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Horizontal ordinate",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-083-geometry",
+      "native_workflow": "cm-083-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-084",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Vertical ordinate",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-084-geometry",
+      "native_workflow": "cm-084-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-085",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Driving path length",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-085-geometry",
+      "native_workflow": "cm-085-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-086",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Reference dimension",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-086-geometry",
+      "native_workflow": "cm-086-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-087",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Dimension placement",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-087-geometry",
+      "native_workflow": "cm-087-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-088",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Unit/expression editor",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-088-geometry",
+      "native_workflow": "cm-088-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-089",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Preview/restore",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-089-geometry",
+      "native_workflow": "cm-089-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-090",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Reverse dimension direction",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-090-geometry",
+      "native_workflow": "cm-090-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-091",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Increment settings",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-091-geometry",
+      "native_workflow": "cm-091-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-092",
+      "milestone": "CM3",
+      "source": "T4",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        32,
+        33
+      ],
+      "category": "Dimension",
+      "variant": "Mark model dimension for future drawing import",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-092-geometry",
+      "native_workflow": "cm-092-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-093",
+      "milestone": "CM3",
+      "source": "T5",
+      "pages": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "category": "Dimension/inference",
+      "variant": "True arc length",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-093-geometry",
+      "native_workflow": "cm-093-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-094",
+      "milestone": "CM3",
+      "source": "T5",
+      "pages": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "category": "Dimension/inference",
+      "variant": "Fully Define Sketch",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-094-geometry",
+      "native_workflow": "cm-094-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-095",
+      "milestone": "CM3",
+      "source": "T5",
+      "pages": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "category": "Dimension/inference",
+      "variant": "Selected-entity fully define",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-095-geometry",
+      "native_workflow": "cm-095-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-096",
+      "milestone": "CM3",
+      "source": "T5",
+      "pages": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "category": "Dimension/inference",
+      "variant": "Automatic inference guides",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-096-geometry",
+      "native_workflow": "cm-096-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-097",
+      "milestone": "CM3",
+      "source": "T5",
+      "pages": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "category": "Dimension/inference",
+      "variant": "Constraint-preserving drag",
+      "restriction": "",
+      "tasks": [
+        "CM3.a",
+        "CM3.b",
+        "CM3.c",
+        "CM3.d",
+        "CM3.e"
+      ],
+      "analytical_fixture": "cm-097-geometry",
+      "native_workflow": "cm-097-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-098",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        15,
+        16
+      ],
+      "category": "Datum plane",
+      "variant": "Offset",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-098-geometry",
+      "native_workflow": "cm-098-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-099",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        15,
+        16
+      ],
+      "category": "Datum plane",
+      "variant": "Parallel through point",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-099-geometry",
+      "native_workflow": "cm-099-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-100",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        15,
+        16,
+        32,
+        33
+      ],
+      "category": "Datum plane",
+      "variant": "Angled about line/edge",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-100-geometry",
+      "native_workflow": "cm-100-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-101",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        15,
+        16
+      ],
+      "category": "Datum plane",
+      "variant": "Through points/lines",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-101-geometry",
+      "native_workflow": "cm-101-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-102",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        15,
+        16
+      ],
+      "category": "Datum plane",
+      "variant": "Normal to curve",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-102-geometry",
+      "native_workflow": "cm-102-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-103",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        15,
+        16
+      ],
+      "category": "Datum plane",
+      "variant": "Tangent to nonplanar surface",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-103-geometry",
+      "native_workflow": "cm-103-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-104",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        15,
+        16
+      ],
+      "category": "Datum plane",
+      "variant": "Midplane",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-104-geometry",
+      "native_workflow": "cm-104-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-105",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        15,
+        16
+      ],
+      "category": "Datum plane",
+      "variant": "Multiple offset planes",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-105-geometry",
+      "native_workflow": "cm-105-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-106",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        15,
+        16
+      ],
+      "category": "Datum plane",
+      "variant": "Reverse orientation",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-106-geometry",
+      "native_workflow": "cm-106-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-107",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        35
+      ],
+      "category": "Datum axis",
+      "variant": "Cylindrical/conical face",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-107-geometry",
+      "native_workflow": "cm-107-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-108",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        35
+      ],
+      "category": "Datum axis",
+      "variant": "Line/edge/axis",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-108-geometry",
+      "native_workflow": "cm-108-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-109",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        35
+      ],
+      "category": "Datum axis",
+      "variant": "Two planes",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-109-geometry",
+      "native_workflow": "cm-109-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-110",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        35
+      ],
+      "category": "Datum axis",
+      "variant": "Two points/vertices",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-110-geometry",
+      "native_workflow": "cm-110-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-111",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        35
+      ],
+      "category": "Datum axis",
+      "variant": "Point and normal face/plane",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-111-geometry",
+      "native_workflow": "cm-111-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-112",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        7,
+        15,
+        16,
+        33
+      ],
+      "category": "Sketch support",
+      "variant": "Planar face attachment",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-112-geometry",
+      "native_workflow": "cm-112-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-113",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        7,
+        15,
+        16,
+        33
+      ],
+      "category": "Sketch support",
+      "variant": "Datum plane attachment",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-113-geometry",
+      "native_workflow": "cm-113-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-114",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        7,
+        15,
+        16,
+        33
+      ],
+      "category": "Sketch support",
+      "variant": "Associative upstream update",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-114-geometry",
+      "native_workflow": "cm-114-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-115",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        7,
+        15,
+        16,
+        33
+      ],
+      "category": "Sketch support",
+      "variant": "Normal To navigation",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-115-geometry",
+      "native_workflow": "cm-115-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-116",
+      "milestone": "CM4",
+      "source": "T6",
+      "pages": [
+        7,
+        15,
+        16,
+        33
+      ],
+      "category": "Sketch support",
+      "variant": "Plane/axis visibility",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-116-geometry",
+      "native_workflow": "cm-116-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-117",
+      "milestone": "CM4",
+      "source": "T8",
+      "pages": [
+        43,
+        44,
+        45
+      ],
+      "category": "Derived sketch",
+      "variant": "Convert Entities",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-117-geometry",
+      "native_workflow": "cm-117-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-118",
+      "milestone": "CM4",
+      "source": "T8",
+      "pages": [
+        43,
+        44,
+        45
+      ],
+      "category": "Derived sketch",
+      "variant": "External sketch references",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-118-geometry",
+      "native_workflow": "cm-118-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-119",
+      "milestone": "CM4",
+      "source": "T8",
+      "pages": [
+        43,
+        44,
+        45
+      ],
+      "category": "Derived sketch",
+      "variant": "Associative rotate/scale construction",
+      "restriction": "",
+      "tasks": [
+        "CM4.a",
+        "CM4.b",
+        "CM4.c",
+        "CM4.d",
+        "CM4.e"
+      ],
+      "analytical_fixture": "cm-119-geometry",
+      "native_workflow": "cm-119-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-120",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        17,
+        18,
+        19
+      ],
+      "category": "Extrude start",
+      "variant": "Sketch plane",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-120-geometry",
+      "native_workflow": "cm-120-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-121",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        17,
+        18,
+        19
+      ],
+      "category": "Extrude start",
+      "variant": "Surface/face/plane",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-121-geometry",
+      "native_workflow": "cm-121-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-122",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        17,
+        18,
+        19
+      ],
+      "category": "Extrude start",
+      "variant": "Vertex",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-122-geometry",
+      "native_workflow": "cm-122-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-123",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        17,
+        18,
+        19
+      ],
+      "category": "Extrude start",
+      "variant": "Offset",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-123-geometry",
+      "native_workflow": "cm-123-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-124",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "category": "Extrude end",
+      "variant": "Blind",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-124-geometry",
+      "native_workflow": "cm-124-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-125",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "category": "Extrude end",
+      "variant": "Midplane total depth",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-125-geometry",
+      "native_workflow": "cm-125-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-126",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "category": "Extrude end",
+      "variant": "Up To Vertex",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-126-geometry",
+      "native_workflow": "cm-126-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-127",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "category": "Extrude end",
+      "variant": "Up To Surface",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-127-geometry",
+      "native_workflow": "cm-127-native",
+      "status": "Not run",
+      "evidence": [],
+      "feasibility": {
+        "scope": "Narrow isolated seed only; see per-probe limits. No production/native/persistence completion implied.",
+        "evidence": "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
+      }
+    },
+    {
+      "id": "CM-128",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "category": "Extrude end",
+      "variant": "Offset From Surface",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-128-geometry",
+      "native_workflow": "cm-128-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-129",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "category": "Extrude end",
+      "variant": "Up To Body",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-129-geometry",
+      "native_workflow": "cm-129-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-130",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "category": "Extrude end",
+      "variant": "Up To Next",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-130-geometry",
+      "native_workflow": "cm-130-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-131",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "category": "Extrude end",
+      "variant": "Through All",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-131-geometry",
+      "native_workflow": "cm-131-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-132",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "category": "Extrude end",
+      "variant": "Independent Direction 2",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-132-geometry",
+      "native_workflow": "cm-132-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-133",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "category": "Extrude end",
+      "variant": "Reverse direction",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-133-geometry",
+      "native_workflow": "cm-133-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-134",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "category": "Extrude end",
+      "variant": "Draft inward/outward",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-134-geometry",
+      "native_workflow": "cm-134-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-135",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25
+      ],
+      "category": "Extrude end",
+      "variant": "Live depth/draft manipulator",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-135-geometry",
+      "native_workflow": "cm-135-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-136",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        36,
+        37,
+        39,
+        40,
+        41
+      ],
+      "category": "Thin/revolve",
+      "variant": "Solid revolve",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-136-geometry",
+      "native_workflow": "cm-136-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-137",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        36,
+        37,
+        39,
+        40,
+        41
+      ],
+      "category": "Thin/revolve",
+      "variant": "Revolve cut",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-137-geometry",
+      "native_workflow": "cm-137-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-138",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        36,
+        37,
+        39,
+        40,
+        41
+      ],
+      "category": "Thin/revolve",
+      "variant": "One-direction thin thickness",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-138-geometry",
+      "native_workflow": "cm-138-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-139",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        36,
+        37,
+        39,
+        40,
+        41
+      ],
+      "category": "Thin/revolve",
+      "variant": "Midplane thin thickness",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-139-geometry",
+      "native_workflow": "cm-139-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-140",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        36,
+        37,
+        39,
+        40,
+        41
+      ],
+      "category": "Thin/revolve",
+      "variant": "Independent two-direction thin thickness",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-140-geometry",
+      "native_workflow": "cm-140-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-141",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        36,
+        37,
+        39,
+        40,
+        41
+      ],
+      "category": "Thin/revolve",
+      "variant": "Closed thin profile",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-141-geometry",
+      "native_workflow": "cm-141-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-142",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        36,
+        37,
+        39,
+        40,
+        41
+      ],
+      "category": "Thin/revolve",
+      "variant": "Open thin profile",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-142-geometry",
+      "native_workflow": "cm-142-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-143",
+      "milestone": "CM5",
+      "source": "T5",
+      "pages": [
+        36,
+        37,
+        39,
+        40,
+        41
+      ],
+      "category": "Thin/revolve",
+      "variant": "Thin revolve",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-143-geometry",
+      "native_workflow": "cm-143-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-144",
+      "milestone": "CM5",
+      "source": "T6",
+      "pages": [
+        9,
+        10,
+        11,
+        27,
+        28
+      ],
+      "category": "Profile regions",
+      "variant": "Selected contours",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-144-geometry",
+      "native_workflow": "cm-144-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-145",
+      "milestone": "CM5",
+      "source": "T6",
+      "pages": [
+        9,
+        10,
+        11,
+        27,
+        28
+      ],
+      "category": "Profile regions",
+      "variant": "Reuse sketch regions",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-145-geometry",
+      "native_workflow": "cm-145-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-146",
+      "milestone": "CM5",
+      "source": "T6",
+      "pages": [
+        9,
+        10,
+        11,
+        27,
+        28
+      ],
+      "category": "Profile regions",
+      "variant": "Open-profile cut",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-146-geometry",
+      "native_workflow": "cm-146-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-147",
+      "milestone": "CM5",
+      "source": "T6",
+      "pages": [
+        9,
+        10,
+        11,
+        27,
+        28
+      ],
+      "category": "Profile regions",
+      "variant": "Flip side to cut",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-147-geometry",
+      "native_workflow": "cm-147-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-148",
+      "milestone": "CM5",
+      "source": "T8",
+      "pages": [
+        2
+      ],
+      "category": "Draft",
+      "variant": "Standalone draft",
+      "restriction": "",
+      "tasks": [
+        "CM5.a",
+        "CM5.b",
+        "CM5.c",
+        "CM5.d",
+        "CM5.e"
+      ],
+      "analytical_fixture": "cm-148-geometry",
+      "native_workflow": "cm-148-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-149",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        11,
+        12,
+        13
+      ],
+      "category": "Rib",
+      "variant": "Open/closed profile",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-149-geometry",
+      "native_workflow": "cm-149-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-150",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        11,
+        12,
+        13
+      ],
+      "category": "Rib",
+      "variant": "Both sides",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-150-geometry",
+      "native_workflow": "cm-150-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-151",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        11,
+        12,
+        13
+      ],
+      "category": "Rib",
+      "variant": "First side",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-151-geometry",
+      "native_workflow": "cm-151-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-152",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        11,
+        12,
+        13
+      ],
+      "category": "Rib",
+      "variant": "Second side",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-152-geometry",
+      "native_workflow": "cm-152-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-153",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        11,
+        12,
+        13
+      ],
+      "category": "Rib",
+      "variant": "Parallel to sketch",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-153-geometry",
+      "native_workflow": "cm-153-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-154",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        11,
+        12,
+        13
+      ],
+      "category": "Rib",
+      "variant": "Normal to sketch",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-154-geometry",
+      "native_workflow": "cm-154-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-155",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        11,
+        12,
+        13
+      ],
+      "category": "Rib",
+      "variant": "Flip material side",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-155-geometry",
+      "native_workflow": "cm-155-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-156",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22,
+        23,
+        43,
+        44
+      ],
+      "category": "Hole Wizard",
+      "variant": "Simple cylindrical hole",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-156-geometry",
+      "native_workflow": "cm-156-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-157",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22,
+        23,
+        43,
+        44
+      ],
+      "category": "Hole Wizard",
+      "variant": "Counterbore",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-157-geometry",
+      "native_workflow": "cm-157-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-158",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22,
+        23,
+        43,
+        44
+      ],
+      "category": "Hole Wizard",
+      "variant": "Countersink",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-158-geometry",
+      "native_workflow": "cm-158-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-159",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22,
+        23,
+        43,
+        44
+      ],
+      "category": "Hole Wizard",
+      "variant": "Drilled",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-159-geometry",
+      "native_workflow": "cm-159-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-160",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22,
+        23,
+        43,
+        44
+      ],
+      "category": "Hole Wizard",
+      "variant": "Tapped",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-160-geometry",
+      "native_workflow": "cm-160-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-161",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22,
+        23,
+        43,
+        44
+      ],
+      "category": "Hole Wizard",
+      "variant": "Pipe tap",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-161-geometry",
+      "native_workflow": "cm-161-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-162",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22,
+        23,
+        43,
+        44
+      ],
+      "category": "Hole Wizard",
+      "variant": "Legacy custom profile",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-162-geometry",
+      "native_workflow": "cm-162-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-163",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22,
+        23,
+        43,
+        44
+      ],
+      "category": "Hole Wizard",
+      "variant": "Tapered hole",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-163-geometry",
+      "native_workflow": "cm-163-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-164",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22,
+        23,
+        43,
+        44
+      ],
+      "category": "Hole Wizard",
+      "variant": "Standard/type/size selection",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-164-geometry",
+      "native_workflow": "cm-164-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-165",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22,
+        23,
+        43,
+        44
+      ],
+      "category": "Hole Wizard",
+      "variant": "Custom sizing",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-165-geometry",
+      "native_workflow": "cm-165-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-166",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22,
+        23,
+        43,
+        44
+      ],
+      "category": "Hole Wizard",
+      "variant": "Placement sketch",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-166-geometry",
+      "native_workflow": "cm-166-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-167",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22,
+        23,
+        43,
+        44
+      ],
+      "category": "Hole Wizard",
+      "variant": "Multiple positions",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-167-geometry",
+      "native_workflow": "cm-167-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-168",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        14,
+        15,
+        16,
+        20,
+        21,
+        22,
+        23,
+        43,
+        44
+      ],
+      "category": "Hole Wizard",
+      "variant": "Termination conditions",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-168-geometry",
+      "native_workflow": "cm-168-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-169",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        28,
+        29,
+        30,
+        31
+      ],
+      "category": "Thread",
+      "variant": "Cosmetic thread designation",
+      "restriction": "Cosmetic annotations do not add helical solid geometry",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-169-geometry",
+      "native_workflow": "cm-169-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-170",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        28,
+        29,
+        30,
+        31
+      ],
+      "category": "Thread",
+      "variant": "Cosmetic thread depth/end condition",
+      "restriction": "Cosmetic annotations do not add helical solid geometry",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-170-geometry",
+      "native_workflow": "cm-170-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-171",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        28,
+        29,
+        30,
+        31
+      ],
+      "category": "Thread",
+      "variant": "Shaded cosmetic display",
+      "restriction": "Cosmetic annotations do not add helical solid geometry",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-171-geometry",
+      "native_workflow": "cm-171-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-172",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        9,
+        10,
+        17,
+        18,
+        19,
+        23,
+        45
+      ],
+      "category": "Feature repetition",
+      "variant": "Feature pattern",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-172-geometry",
+      "native_workflow": "cm-172-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-173",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        9,
+        10,
+        17,
+        18,
+        19,
+        23,
+        45
+      ],
+      "category": "Feature repetition",
+      "variant": "Face pattern",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-173-geometry",
+      "native_workflow": "cm-173-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-174",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        9,
+        10,
+        17,
+        18,
+        19,
+        23,
+        45
+      ],
+      "category": "Feature repetition",
+      "variant": "Body pattern",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-174-geometry",
+      "native_workflow": "cm-174-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-175",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        9,
+        10,
+        17,
+        18,
+        19,
+        23,
+        45
+      ],
+      "category": "Feature repetition",
+      "variant": "Two linear directions",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-175-geometry",
+      "native_workflow": "cm-175-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-176",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        9,
+        10,
+        17,
+        18,
+        19,
+        23,
+        45
+      ],
+      "category": "Feature repetition",
+      "variant": "Circular distribution",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-176-geometry",
+      "native_workflow": "cm-176-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-177",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        9,
+        10,
+        17,
+        18,
+        19,
+        23,
+        45
+      ],
+      "category": "Feature repetition",
+      "variant": "Reference direction/axis",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-177-geometry",
+      "native_workflow": "cm-177-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-178",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        9,
+        10,
+        17,
+        18,
+        19,
+        23,
+        45
+      ],
+      "category": "Feature repetition",
+      "variant": "Mirror feature/face/body",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-178-geometry",
+      "native_workflow": "cm-178-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-179",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        9,
+        10,
+        17,
+        18,
+        19,
+        23,
+        45
+      ],
+      "category": "Feature repetition",
+      "variant": "Reference face/plane mirror",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-179-geometry",
+      "native_workflow": "cm-179-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-180",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        31,
+        32,
+        33,
+        40,
+        41,
+        42,
+        46,
+        47,
+        48
+      ],
+      "category": "Solid treatments",
+      "variant": "Constant fillet",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-180-geometry",
+      "native_workflow": "cm-180-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-181",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        31,
+        32,
+        33,
+        40,
+        41,
+        42,
+        46,
+        47,
+        48
+      ],
+      "category": "Solid treatments",
+      "variant": "Multiple-radius fillet",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-181-geometry",
+      "native_workflow": "cm-181-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-182",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        31,
+        32,
+        33,
+        40,
+        41,
+        42,
+        46,
+        47,
+        48
+      ],
+      "category": "Solid treatments",
+      "variant": "Variable-radius fillet",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-182-geometry",
+      "native_workflow": "cm-182-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-183",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        31,
+        32,
+        33,
+        40,
+        41,
+        42,
+        46,
+        47,
+        48
+      ],
+      "category": "Solid treatments",
+      "variant": "Face fillet",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-183-geometry",
+      "native_workflow": "cm-183-native",
+      "status": "Blocked",
+      "evidence": [
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
+      ],
+      "blocker": "General face-set/full-round production adapter not established; edge-seeded full-round feasibility builder failed. No approximate or reduced-radius substitute closes this requirement."
+    },
+    {
+      "id": "CM-184",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        31,
+        32,
+        33,
+        40,
+        41,
+        42,
+        46,
+        47,
+        48
+      ],
+      "category": "Solid treatments",
+      "variant": "Full-round fillet",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-184-geometry",
+      "native_workflow": "cm-184-native",
+      "status": "Blocked",
+      "evidence": [
+        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
+      ],
+      "blocker": "General face-set/full-round production adapter not established; edge-seeded full-round feasibility builder failed. No approximate or reduced-radius substitute closes this requirement."
+    },
+    {
+      "id": "CM-185",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        31,
+        32,
+        33,
+        40,
+        41,
+        42,
+        46,
+        47,
+        48
+      ],
+      "category": "Solid treatments",
+      "variant": "Equal chamfer",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-185-geometry",
+      "native_workflow": "cm-185-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-186",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        31,
+        32,
+        33,
+        40,
+        41,
+        42,
+        46,
+        47,
+        48
+      ],
+      "category": "Solid treatments",
+      "variant": "Unequal chamfer",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-186-geometry",
+      "native_workflow": "cm-186-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-187",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        31,
+        32,
+        33,
+        40,
+        41,
+        42,
+        46,
+        47,
+        48
+      ],
+      "category": "Solid treatments",
+      "variant": "Angle-distance chamfer",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-187-geometry",
+      "native_workflow": "cm-187-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-188",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        31,
+        32,
+        33,
+        40,
+        41,
+        42,
+        46,
+        47,
+        48
+      ],
+      "category": "Solid treatments",
+      "variant": "Flip direction",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-188-geometry",
+      "native_workflow": "cm-188-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-189",
+      "milestone": "CM6",
+      "source": "T7",
+      "pages": [
+        31,
+        32,
+        33,
+        40,
+        41,
+        42,
+        46,
+        47,
+        48
+      ],
+      "category": "Solid treatments",
+      "variant": "Tangent propagation",
+      "restriction": "",
+      "tasks": [
+        "CM6.a",
+        "CM6.b",
+        "CM6.c",
+        "CM6.d",
+        "CM6.e"
+      ],
+      "analytical_fixture": "cm-189-geometry",
+      "native_workflow": "cm-189-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-190",
+      "milestone": "CM7",
+      "source": "T8",
+      "pages": [
+        18,
+        19,
+        20,
+        21,
+        25,
+        26,
+        27,
+        48,
+        49
+      ],
+      "category": "Spatial curves",
+      "variant": "3D sketch entities",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-190-geometry",
+      "native_workflow": "cm-190-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-191",
+      "milestone": "CM7",
+      "source": "T8",
+      "pages": [
+        18,
+        19,
+        20,
+        21,
+        25,
+        26,
+        27,
+        48,
+        49
+      ],
+      "category": "Spatial curves",
+      "variant": "3D dimensions",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-191-geometry",
+      "native_workflow": "cm-191-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-192",
+      "milestone": "CM7",
+      "source": "T8",
+      "pages": [
+        18,
+        19,
+        20,
+        21,
+        25,
+        26,
+        27,
+        48,
+        49
+      ],
+      "category": "Spatial curves",
+      "variant": "Active-plane switching",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-192-geometry",
+      "native_workflow": "cm-192-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-193",
+      "milestone": "CM7",
+      "source": "T8",
+      "pages": [
+        18,
+        19,
+        20,
+        21,
+        25,
+        26,
+        27,
+        48,
+        49
+      ],
+      "category": "Spatial curves",
+      "variant": "Axis/plane inference",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-193-geometry",
+      "native_workflow": "cm-193-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-194",
+      "milestone": "CM7",
+      "source": "T8",
+      "pages": [
+        18,
+        19,
+        20,
+        21,
+        25,
+        26,
+        27,
+        48,
+        49
+      ],
+      "category": "Spatial curves",
+      "variant": "On Plane",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-194-geometry",
+      "native_workflow": "cm-194-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-195",
+      "milestone": "CM7",
+      "source": "T8",
+      "pages": [
+        18,
+        19,
+        20,
+        21,
+        25,
+        26,
+        27,
+        48,
+        49
+      ],
+      "category": "Spatial curves",
+      "variant": "Sketch-on-sketch projection",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-195-geometry",
+      "native_workflow": "cm-195-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-196",
+      "milestone": "CM7",
+      "source": "T8",
+      "pages": [
+        18,
+        19,
+        20,
+        21,
+        25,
+        26,
+        27,
+        48,
+        49
+      ],
+      "category": "Spatial curves",
+      "variant": "Sketch-on-face projection",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-196-geometry",
+      "native_workflow": "cm-196-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-197",
+      "milestone": "CM7",
+      "source": "T8",
+      "pages": [
+        18,
+        19,
+        20,
+        21,
+        25,
+        26,
+        27,
+        48,
+        49
+      ],
+      "category": "Spatial curves",
+      "variant": "Projection branch selection",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-197-geometry",
+      "native_workflow": "cm-197-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-198",
+      "milestone": "CM7",
+      "source": "T8",
+      "pages": [
+        18,
+        19,
+        20,
+        21,
+        25,
+        26,
+        27,
+        48,
+        49
+      ],
+      "category": "Spatial curves",
+      "variant": "Composite path",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-198-geometry",
+      "native_workflow": "cm-198-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-199",
+      "milestone": "CM7",
+      "source": "T8",
+      "pages": [
+        18,
+        19,
+        20,
+        21,
+        25,
+        26,
+        27,
+        48,
+        49
+      ],
+      "category": "Spatial curves",
+      "variant": "Helix/spiral",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-199-geometry",
+      "native_workflow": "cm-199-native",
+      "status": "Not run",
+      "evidence": [],
+      "source_role": "Curve family referenced by course operations; complete exact editable semantics are a roadmap prerequisite, not a claim that these pages describe all creation methods."
+    },
+    {
+      "id": "CM-200",
+      "milestone": "CM7",
+      "source": "T8",
+      "pages": [
+        18,
+        19,
+        20,
+        21,
+        25,
+        26,
+        27,
+        48,
+        49
+      ],
+      "category": "Spatial curves",
+      "variant": "Stable endpoint/tangent frames",
+      "restriction": "",
+      "tasks": [
+        "CM7.a",
+        "CM7.b",
+        "CM7.c",
+        "CM7.d",
+        "CM7.e"
+      ],
+      "analytical_fixture": "cm-200-geometry",
+      "native_workflow": "cm-200-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-201",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        10,
+        11,
+        12
+      ],
+      "category": "Shell",
+      "variant": "Removed faces",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-201-geometry",
+      "native_workflow": "cm-201-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-202",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        10,
+        11,
+        12
+      ],
+      "category": "Shell",
+      "variant": "Closed cavity",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-202-geometry",
+      "native_workflow": "cm-202-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-203",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        10,
+        11,
+        12
+      ],
+      "category": "Shell",
+      "variant": "Inward",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-203-geometry",
+      "native_workflow": "cm-203-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-204",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        10,
+        11,
+        12
+      ],
+      "category": "Shell",
+      "variant": "Outward",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-204-geometry",
+      "native_workflow": "cm-204-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-205",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        10,
+        11,
+        12
+      ],
+      "category": "Shell",
+      "variant": "Multiple thicknesses",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-205-geometry",
+      "native_workflow": "cm-205-native",
+      "status": "Not run",
+      "evidence": [],
+      "feasibility": {
+        "scope": "Narrow isolated seed only; see per-probe limits. No production/native/persistence completion implied.",
+        "evidence": "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
+      }
+    },
+    {
+      "id": "CM-206",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        27,
+        28,
+        48,
+        49
+      ],
+      "category": "Sweep",
+      "variant": "Sketch profile",
+      "restriction": "T8 p15: profile plane lies at a path endpoint; profile itself need not intersect the path. Closed profile may follow an open or closed sketch/curve/edge path. Check exact continuity and explicit corner handling.",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-206-geometry",
+      "native_workflow": "cm-206-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-207",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        27,
+        28,
+        48,
+        49
+      ],
+      "category": "Sweep",
+      "variant": "Circular profile",
+      "restriction": "T8 p15: profile plane lies at a path endpoint; profile itself need not intersect the path. Closed profile may follow an open or closed sketch/curve/edge path. Check exact continuity and explicit corner handling.",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-207-geometry",
+      "native_workflow": "cm-207-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-208",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        27,
+        28,
+        48,
+        49
+      ],
+      "category": "Sweep",
+      "variant": "Open path",
+      "restriction": "T8 p15: profile plane lies at a path endpoint; profile itself need not intersect the path. Closed profile may follow an open or closed sketch/curve/edge path. Check exact continuity and explicit corner handling.",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-208-geometry",
+      "native_workflow": "cm-208-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-209",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        27,
+        28,
+        48,
+        49
+      ],
+      "category": "Sweep",
+      "variant": "Closed path",
+      "restriction": "T8 p15: profile plane lies at a path endpoint; profile itself need not intersect the path. Closed profile may follow an open or closed sketch/curve/edge path. Check exact continuity and explicit corner handling.",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-209-geometry",
+      "native_workflow": "cm-209-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-210",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        27,
+        28,
+        48,
+        49
+      ],
+      "category": "Sweep",
+      "variant": "3D path",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-210-geometry",
+      "native_workflow": "cm-210-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-211",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        27,
+        28,
+        48,
+        49
+      ],
+      "category": "Sweep",
+      "variant": "One-sided thin",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-211-geometry",
+      "native_workflow": "cm-211-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-212",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        27,
+        28,
+        48,
+        49
+      ],
+      "category": "Sweep",
+      "variant": "Midplane thin",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-212-geometry",
+      "native_workflow": "cm-212-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-213",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        27,
+        28,
+        48,
+        49
+      ],
+      "category": "Sweep",
+      "variant": "Two-sided thin",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-213-geometry",
+      "native_workflow": "cm-213-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-214",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        27,
+        28,
+        48,
+        49
+      ],
+      "category": "Sweep",
+      "variant": "Reverse thickness",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-214-geometry",
+      "native_workflow": "cm-214-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-215",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        48,
+        49,
+        52
+      ],
+      "category": "Sweep",
+      "variant": "Guide curves",
+      "restriction": "Course quiz p48/p52 names Coincident between sketch and guide. Explicitly validate guide/profile intersection and branch behavior; the text alone does not establish arbitrary guide conditions.",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-215-geometry",
+      "native_workflow": "cm-215-native",
+      "status": "Not run",
+      "evidence": [],
+      "feasibility": {
+        "scope": "Narrow isolated seed only; see per-probe limits. No production/native/persistence completion implied.",
+        "evidence": "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
+      }
+    },
+    {
+      "id": "CM-216",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        27,
+        28,
+        48,
+        49
+      ],
+      "category": "Sweep",
+      "variant": "Start/end tangency",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-216-geometry",
+      "native_workflow": "cm-216-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-217",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        27,
+        28,
+        48,
+        49
+      ],
+      "category": "Sweep",
+      "variant": "Corner transition",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-217-geometry",
+      "native_workflow": "cm-217-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-218",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        14,
+        15,
+        16,
+        17,
+        22,
+        23,
+        27,
+        28,
+        48,
+        49
+      ],
+      "category": "Sweep",
+      "variant": "Preview sections",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-218-geometry",
+      "native_workflow": "cm-218-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-219",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "category": "Loft",
+      "variant": "Ordered sections",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-219-geometry",
+      "native_workflow": "cm-219-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-220",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "category": "Loft",
+      "variant": "Ellipse sections",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-220-geometry",
+      "native_workflow": "cm-220-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-221",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "category": "Loft",
+      "variant": "Open sections/surface result",
+      "restriction": "At least two ordered sections; solid lofts require closed sections (p35/p46). Open-section surface behavior is supported by quiz p48/p52 and needs explicit result type.",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-221-geometry",
+      "native_workflow": "cm-221-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-222",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "category": "Loft",
+      "variant": "Closed sections/solid result",
+      "restriction": "At least two ordered sections; solid lofts require closed sections (p35/p46). Open-section surface behavior is supported by quiz p48/p52 and needs explicit result type.",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-222-geometry",
+      "native_workflow": "cm-222-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-223",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        47,
+        49
+      ],
+      "category": "Loft",
+      "variant": "Thin loft",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-223-geometry",
+      "native_workflow": "cm-223-native",
+      "status": "Not run",
+      "evidence": [],
+      "required_option_cases": [
+        "One-sided thickness",
+        "Symmetric thickness",
+        "Independent two-sided thickness",
+        "Thickness reversal",
+        "Open/closed section compatibility and exact validity"
+      ],
+      "source_role": "Course references thin-loft parameters; full thickness semantics are required by the approved roadmap, not described exhaustively in these pages."
+    },
+    {
+      "id": "CM-224",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "category": "Loft",
+      "variant": "Centerline path",
+      "restriction": "",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-224-geometry",
+      "native_workflow": "cm-224-native",
+      "status": "Not run",
+      "evidence": [],
+      "feasibility": {
+        "scope": "Narrow isolated seed only; see per-probe limits. No production/native/persistence completion implied.",
+        "evidence": "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
+      }
+    },
+    {
+      "id": "CM-225",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        35,
+        36,
+        37
+      ],
+      "category": "Loft",
+      "variant": "Correspondence connectors",
+      "restriction": "Circular/elliptical/closed-spline start/end sections initially show one connector; additional connectors may be added on straight or curved profiles. Persist connector handles and correspondence; do not infer by display index.",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-225-geometry",
+      "native_workflow": "cm-225-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-226",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        35,
+        36,
+        37
+      ],
+      "category": "Loft",
+      "variant": "Connector handles",
+      "restriction": "Circular/elliptical/closed-spline start/end sections initially show one connector; additional connectors may be added on straight or curved profiles. Persist connector handles and correspondence; do not infer by display index.",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-226-geometry",
+      "native_workflow": "cm-226-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-227",
+      "milestone": "CM8",
+      "source": "T8",
+      "pages": [
+        35,
+        36,
+        37
+      ],
+      "category": "Loft",
+      "variant": "Loft synchronization",
+      "restriction": "Circular/elliptical/closed-spline start/end sections initially show one connector; additional connectors may be added on straight or curved profiles. Persist connector handles and correspondence; do not infer by display index.",
+      "tasks": [
+        "CM8.a",
+        "CM8.b",
+        "CM8.c",
+        "CM8.d",
+        "CM8.e"
+      ],
+      "analytical_fixture": "cm-227-geometry",
+      "native_workflow": "cm-227-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-228",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        27,
+        28,
+        29,
+        41,
+        42
+      ],
+      "category": "Materials/appearance",
+      "variant": "Offline material families",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-228-geometry",
+      "native_workflow": "cm-228-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-229",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        27,
+        28,
+        29,
+        41,
+        42
+      ],
+      "category": "Materials/appearance",
+      "variant": "Search/favorites/custom libraries",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-229-geometry",
+      "native_workflow": "cm-229-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-230",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        27,
+        28,
+        29,
+        41,
+        42
+      ],
+      "category": "Materials/appearance",
+      "variant": "Physical properties",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-230-geometry",
+      "native_workflow": "cm-230-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-231",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        27,
+        28,
+        29,
+        41,
+        42
+      ],
+      "category": "Materials/appearance",
+      "variant": "Part appearance",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-231-geometry",
+      "native_workflow": "cm-231-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-232",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        27,
+        28,
+        29,
+        41,
+        42
+      ],
+      "category": "Materials/appearance",
+      "variant": "Body appearance",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-232-geometry",
+      "native_workflow": "cm-232-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-233",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        27,
+        28,
+        29,
+        41,
+        42
+      ],
+      "category": "Materials/appearance",
+      "variant": "Feature appearance",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-233-geometry",
+      "native_workflow": "cm-233-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-234",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        27,
+        28,
+        29,
+        41,
+        42
+      ],
+      "category": "Materials/appearance",
+      "variant": "Face/surface appearance",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-234-geometry",
+      "native_workflow": "cm-234-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-235",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        27,
+        28,
+        29,
+        41,
+        42
+      ],
+      "category": "Materials/appearance",
+      "variant": "Shadows",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-235-geometry",
+      "native_workflow": "cm-235-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-236",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        28,
+        34,
+        35
+      ],
+      "category": "Evaluation",
+      "variant": "Density/mass",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-236-geometry",
+      "native_workflow": "cm-236-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-237",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        28,
+        34,
+        35
+      ],
+      "category": "Evaluation",
+      "variant": "Volume/surface area",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-237-geometry",
+      "native_workflow": "cm-237-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-238",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        28,
+        34,
+        35
+      ],
+      "category": "Evaluation",
+      "variant": "Center of mass",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-238-geometry",
+      "native_workflow": "cm-238-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-239",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        28,
+        34,
+        35
+      ],
+      "category": "Evaluation",
+      "variant": "Principal axes/moments",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-239-geometry",
+      "native_workflow": "cm-239-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-240",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        28,
+        34,
+        35
+      ],
+      "category": "Evaluation",
+      "variant": "Inertia tensor",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-240-geometry",
+      "native_workflow": "cm-240-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-241",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        28,
+        34,
+        35
+      ],
+      "category": "Evaluation",
+      "variant": "Sketch section area",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-241-geometry",
+      "native_workflow": "cm-241-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-242",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        28,
+        34,
+        35
+      ],
+      "category": "Evaluation",
+      "variant": "Section centroid local/part",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-242-geometry",
+      "native_workflow": "cm-242-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-243",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        28,
+        34,
+        35
+      ],
+      "category": "Evaluation",
+      "variant": "Section inertia/polar/principal moments",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-243-geometry",
+      "native_workflow": "cm-243-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-244",
+      "milestone": "CM9",
+      "source": "T5",
+      "pages": [
+        28,
+        34,
+        35
+      ],
+      "category": "Evaluation",
+      "variant": "Planar-face section properties",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-244-geometry",
+      "native_workflow": "cm-244-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-245",
+      "milestone": "CM9",
+      "source": "T7",
+      "pages": [
+        7,
+        8,
+        33,
+        34
+      ],
+      "category": "Model display",
+      "variant": "Hidden lines visible",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-245-geometry",
+      "native_workflow": "cm-245-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-246",
+      "milestone": "CM9",
+      "source": "T7",
+      "pages": [
+        7,
+        8,
+        33,
+        34
+      ],
+      "category": "Model display",
+      "variant": "Shaded with edges",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-246-geometry",
+      "native_workflow": "cm-246-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-247",
+      "milestone": "CM9",
+      "source": "T7",
+      "pages": [
+        7,
+        8,
+        33,
+        34
+      ],
+      "category": "Model display",
+      "variant": "Named section view",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-247-geometry",
+      "native_workflow": "cm-247-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-248",
+      "milestone": "CM9",
+      "source": "T7",
+      "pages": [
+        7,
+        8,
+        33,
+        34
+      ],
+      "category": "Model display",
+      "variant": "Section plane/face selection",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-248-geometry",
+      "native_workflow": "cm-248-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-249",
+      "milestone": "CM9",
+      "source": "T7",
+      "pages": [
+        7,
+        8,
+        33,
+        34
+      ],
+      "category": "Model display",
+      "variant": "Section offset manipulator",
+      "restriction": "",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-249-geometry",
+      "native_workflow": "cm-249-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-250",
+      "milestone": "CM9",
+      "source": "T7",
+      "pages": [
+        21,
+        29
+      ],
+      "category": "Catalog",
+      "variant": "ANSI inch",
+      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-250-geometry",
+      "native_workflow": "cm-250-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-251",
+      "milestone": "CM9",
+      "source": "T7",
+      "pages": [
+        21,
+        29
+      ],
+      "category": "Catalog",
+      "variant": "ANSI metric",
+      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-251-geometry",
+      "native_workflow": "cm-251-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-252",
+      "milestone": "CM9",
+      "source": "T7",
+      "pages": [
+        21,
+        29
+      ],
+      "category": "Catalog",
+      "variant": "ISO",
+      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-252-geometry",
+      "native_workflow": "cm-252-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-253",
+      "milestone": "CM9",
+      "source": "T7",
+      "pages": [
+        21,
+        29
+      ],
+      "category": "Catalog",
+      "variant": "DIN",
+      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-253-geometry",
+      "native_workflow": "cm-253-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-254",
+      "milestone": "CM9",
+      "source": "T7",
+      "pages": [
+        21,
+        29
+      ],
+      "category": "Catalog",
+      "variant": "BSI",
+      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-254-geometry",
+      "native_workflow": "cm-254-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-255",
+      "milestone": "CM9",
+      "source": "T7",
+      "pages": [
+        21,
+        29
+      ],
+      "category": "Catalog",
+      "variant": "JIS",
+      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-255-geometry",
+      "native_workflow": "cm-255-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-256",
+      "milestone": "CM9",
+      "source": "T7",
+      "pages": [
+        21,
+        29
+      ],
+      "category": "Catalog",
+      "variant": "GB",
+      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-256-geometry",
+      "native_workflow": "cm-256-native",
+      "status": "Not run",
+      "evidence": []
+    },
+    {
+      "id": "CM-257",
+      "milestone": "CM9",
+      "source": "T7",
+      "pages": [
+        21,
+        29
+      ],
+      "category": "Catalog",
+      "variant": "GOST",
+      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "tasks": [
+        "CM9.a",
+        "CM9.b",
+        "CM9.c",
+        "CM9.d",
+        "CM9.e"
+      ],
+      "analytical_fixture": "cm-257-geometry",
+      "native_workflow": "cm-257-native",
+      "status": "Not run",
+      "evidence": []
+    }
+  ],
+  "source_verification": {
+    "status": "Pass",
+    "date": "2026-10-23",
+    "scope": "Restored T2-T8 PDF byte identity matches the original review; all eleven course PDFs independently matched. Coverage completeness and geometry acceptance remain separate.",
+    "source_folder": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY",
+    "evidence": "docs/testing/artifacts/core-modeling/source-restoration-2026-10-23.json",
+    "retained_evidence": "docs/research/course-source-cache/cache-manifest.json",
+    "original_hashes": "docs/research/solidworks-training-sources.json"
+  }
+}

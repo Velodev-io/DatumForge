@@ -29,21 +29,49 @@ QCborArray array(sketch::Vec3 v) {
     return {v[0], v[1], v[2]};
 }
 QCborMap Feature::map() const {
-    auto result=sketch::fields({{"id",id},{"name",name},{"kind",kind},{"version",suppressed||!expressions.empty()?2:1},{"parameters",parameters}});
-    if(suppressed||!expressions.empty()){result.insert(QStringLiteral("suppressed"),suppressed);QCborMap bindings;for(auto it=expressions.cbegin();it!=expressions.cend();++it)bindings.insert(it.key(),it.value());result.insert(QStringLiteral("expressions"),bindings);}return result;
+    auto result = sketch::fields({{"id", id},
+                                  {"name", name},
+                                  {"kind", kind},
+                                  {"version", suppressed || !expressions.empty() ? 2 : 1},
+                                  {"parameters", parameters}});
+    if (suppressed || !expressions.empty()) {
+        result.insert(QStringLiteral("suppressed"), suppressed);
+        QCborMap bindings;
+        for (auto it = expressions.cbegin(); it != expressions.cend(); ++it)
+            bindings.insert(it.key(), it.value());
+        result.insert(QStringLiteral("expressions"), bindings);
+    }
+    return result;
 }
 
 Feature Feature::parse(const QCborMap &m) {
-    auto version=wire::integer(m,"version");
-    wire::keys(m,version==2?QSet<QString>{"id","name","kind","version","parameters","suppressed","expressions"}:QSet<QString>{"id","name","kind","version","parameters"});
-    check((version==1||version==2) && m.value("parameters").isMap(), "IncompatibleSchema",
+    auto version = wire::integer(m, "version");
+    wire::keys(m, version == 2 ? QSet<QString>{"id", "name", "kind", "version", "parameters",
+                                               "suppressed", "expressions"}
+                               : QSet<QString>{"id", "name", "kind", "version", "parameters"});
+    check((version == 1 || version == 2) && m.value("parameters").isMap(), "IncompatibleSchema",
           "Unsupported feature version");
     Feature f;
     f.id = domain::id(wire::text(m, "id"));
     f.name = domain::label(wire::text(m, "name"));
     f.kind = wire::text(m, "kind");
     f.parameters = m.value("parameters").toMap();
-    if(version==2){check(m.value("suppressed").isBool()&&m.value("expressions").isMap(),"InvalidInput","Invalid feature state");f.suppressed=m.value("suppressed").toBool();auto e=m.value("expressions").toMap();check(e.size()<=8,"ResourceLimit","At most eight feature expression bindings");for(auto it=e.cbegin();it!=e.cend();++it){auto key=it.key().toString();check(QStringList{"depth","angle","size","diameter","spacing","count"}.contains(key)&&f.parameters.contains(key)&&it.value().isString()&&it.value().toString().toUtf8().size()<=4096,"InvalidInput","Unsupported feature expression binding");f.expressions[key]=it.value().toString();}}
+    if (version == 2) {
+        check(m.value("suppressed").isBool() && m.value("expressions").isMap(), "InvalidInput",
+              "Invalid feature state");
+        f.suppressed = m.value("suppressed").toBool();
+        auto e = m.value("expressions").toMap();
+        check(e.size() <= 8, "ResourceLimit", "At most eight feature expression bindings");
+        for (auto it = e.cbegin(); it != e.cend(); ++it) {
+            auto key = it.key().toString();
+            check(QStringList{"depth", "angle", "size", "diameter", "spacing", "count"}.contains(
+                      key) &&
+                      f.parameters.contains(key) && it.value().isString() &&
+                      it.value().toString().toUtf8().size() <= 4096,
+                  "InvalidInput", "Unsupported feature expression binding");
+            f.expressions[key] = it.value().toString();
+        }
+    }
     auto &p = f.parameters;
     auto choice = [&](QString key, QStringList choices) {
         check(choices.contains(wire::text(p, key)), "UnsupportedOperation",
@@ -54,7 +82,21 @@ Feature Feature::parse(const QCborMap &m) {
         if (!optional || !v.isEmpty())
             domain::id(v);
     };
-    if (f.kind == "Extrude" || f.kind == "Revolve") {
+    if (f.kind == "Imported") {
+        wire::keys(p, {"source_sha256", "format", "units", "healing", "source_name", "report",
+                       "operation"});
+        check(QRegularExpression("^[0-9a-f]{64}$").match(wire::text(p, "source_sha256")).hasMatch(),
+              "InvalidInput", "Invalid imported source identity");
+        choice("format", {"STEP", "IGES"});
+        choice("units", {"File", "mm", "cm", "m", "in"});
+        choice("healing", {"None", "Fix"});
+        choice("operation", {"NewBody"});
+        domain::label(wire::text(p, "source_name"));
+        check(p.value("report").isMap() && QCborValue(p.value("report")).toCbor().size() <= 8192,
+              "InvalidInput", "Bounded import report required");
+        check(f.expressions.empty(), "InvalidInput",
+              "Imported sources have no editable feature parameters");
+    } else if (f.kind == "Extrude" || f.kind == "Revolve") {
         bool revolve = f.kind == "Revolve";
         wire::keys(p, revolve ? QSet<QString>{"sketch", "operation", "target", "angle", "direction",
                                               "axis_origin", "axis_direction"}

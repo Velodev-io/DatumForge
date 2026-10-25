@@ -1,4 +1,6 @@
 #include "MainWindow.hpp"
+#include "AssemblyPanel.hpp"
+#include "DrawingPanel.hpp"
 #include "FeaturePanel.hpp"
 #include "HistoryPanel.hpp"
 #include "SketchPanel.hpp"
@@ -36,10 +38,24 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
     buildCommandTabs();
     featurePanel = new FeaturePanel(client);
     propertyPages->addWidget(featurePanel);
-    historyPanel=new HistoryPanel(client);propertyPages->addWidget(historyPanel);
-    auto *historyAction=commands.add(this,"history","History / repair");addAction(historyAction);findChild<QToolBar*>("commandsFeatures")->addAction(historyAction);menuBar()->actions().last()->menu()->addAction(historyAction);
-    connect(historyAction,&QAction::triggered,this,[this]{QCborMap active;for(auto v:state().documentRecords)if(v.toMap().value("id").toString()==state().activeDocument)active=v.toMap();auto*item=tree->currentItem();historyPanel->begin(active,item?item->data(0,Qt::UserRole+5).toString():QString());});
-    connect(historyPanel,&HistoryPanel::editingChanged,this,&MainWindow::refresh);
+    historyPanel = new HistoryPanel(client);
+    propertyPages->addWidget(historyPanel);
+    buildExchangeUI();
+    buildAssemblyUI();
+    buildDrawingUI();
+    auto *historyAction = commands.add(this, "history", "History / repair");
+    addAction(historyAction);
+    findChild<QToolBar *>("commandsFeatures")->addAction(historyAction);
+    menuBar()->actions().last()->menu()->addAction(historyAction);
+    connect(historyAction, &QAction::triggered, this, [this] {
+        QCborMap active;
+        for (auto v : state().documentRecords)
+            if (v.toMap().value("id").toString() == state().activeDocument)
+                active = v.toMap();
+        auto *item = tree->currentItem();
+        historyPanel->begin(active, item ? item->data(0, Qt::UserRole + 5).toString() : QString());
+    });
+    connect(historyPanel, &HistoryPanel::editingChanged, this, &MainWindow::refresh);
     for (auto pair :
          {std::pair{"extrude", "Extrude"}, std::pair{"revolve", "Revolve"},
           std::pair{"fillet", "Fillet"}, std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"},
@@ -50,8 +66,16 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
     connect(featurePanel, &FeaturePanel::editingChanged, this, &MainWindow::refresh);
     connect(tree, &QTreeWidget::itemDoubleClicked, this, [this](QTreeWidgetItem *item, int) {
         auto id = item->data(0, Qt::UserRole + 5).toString();
-        if (!id.isEmpty() && !sketchPanel->active())
+        if (!id.isEmpty() && !sketchPanel->active()) {
+            for (auto d : state().documentRecords)
+                for (auto f : d.toMap().value("features").toArray())
+                    if (f.toMap().value("id").toString() == id &&
+                        f.toMap().value("kind").toString() == "Imported") {
+                        commands.get("exchange")->trigger();
+                        return;
+                    }
             featurePanel->begin({}, id);
+        }
     });
     auto *cancelFeature = new QAction(this);
     cancelFeature->setObjectName("cancelFeatureAction");
@@ -59,12 +83,19 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
     cancelFeature->setShortcut(QKeySequence(Qt::Key_Escape));
     addAction(cancelFeature);
     connect(cancelFeature, &QAction::triggered, this, [this] {
-        if(historyPanel->active())historyPanel->discard();else if (featurePanel->active())
+        if (drawingPanel->active())
+            drawingPanel->discard();
+        else if (assemblyPanel->active())
+            assemblyPanel->discard();
+        else if (historyPanel->active())
+            historyPanel->discard();
+        else if (featurePanel->active())
             featurePanel->discard();
     });
     connect(sketchPanel, &SketchPanel::editingChanged, this, &MainWindow::refresh);
     connect(sketchPanel, &SketchPanel::toolChanged, this, [this] { refreshCommandTabs(); });
     connect(sketchPanel, &SketchPanel::selectionChanged, this, [this] { refreshCommandTabs(); });
+    buildInteractionUI(settingsFile);
     connect(client, &Client::changed, this, &MainWindow::refresh);
     connect(client, &Client::changed, this, [this] {
         if (!recoveryChecked && client->ready()) {
@@ -164,7 +195,7 @@ void MainWindow::buildFrame() {
             return;
         }
         for (auto *action : commands.all())
-            if (action->text().contains(query, Qt::CaseInsensitive))
+            if (commands.matches(action, query))
                 results->addAction(action);
         if (!results->isEmpty())
             results->popup(search->mapToGlobal(QPoint(0, search->height())));
@@ -409,7 +440,39 @@ void MainWindow::saveLayout() {
     settings->sync();
 }
 void MainWindow::closeEvent(QCloseEvent *event) {
-    if(historyPanel&&historyPanel->active()&&!client->outstanding()){if(QMessageBox::question(this,"Discard history preview?","Discard the uncommitted history preview before closing?",QMessageBox::Discard|QMessageBox::Cancel,QMessageBox::Cancel)!=QMessageBox::Discard){event->ignore();return;}historyPanel->discard();}
+    if (drawingPanel && drawingPanel->active()) {
+        if (client->outstanding() ||
+            QMessageBox::question(this, "Discard drawing draft?",
+                                  "Discard uncommitted sheet/view/annotation changes?",
+                                  QMessageBox::Discard | QMessageBox::Cancel,
+                                  QMessageBox::Cancel) != QMessageBox::Discard) {
+            event->ignore();
+            return;
+        }
+        drawingPanel->discard();
+        event->ignore();
+        return;
+    }
+    if (assemblyPanel && assemblyPanel->active() && !client->outstanding()) {
+        if (QMessageBox::question(this, "Discard assembly draft?",
+                                  "Discard uncommitted occurrence/mate changes?",
+                                  QMessageBox::Discard | QMessageBox::Cancel,
+                                  QMessageBox::Cancel) != QMessageBox::Discard) {
+            event->ignore();
+            return;
+        }
+        assemblyPanel->discard();
+    }
+    if (historyPanel && historyPanel->active() && !client->outstanding()) {
+        if (QMessageBox::question(this, "Discard history preview?",
+                                  "Discard the uncommitted history preview before closing?",
+                                  QMessageBox::Discard | QMessageBox::Cancel,
+                                  QMessageBox::Cancel) != QMessageBox::Discard) {
+            event->ignore();
+            return;
+        }
+        historyPanel->discard();
+    }
     if (featurePanel && featurePanel->active() && !client->outstanding()) {
         if (QMessageBox::question(this, "Discard feature draft?",
                                   "This feature has not been accepted. Discard before closing?",

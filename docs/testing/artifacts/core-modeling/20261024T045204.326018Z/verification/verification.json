@@ -1,0 +1,301 @@
+{
+  "scope": "CM0 recorded feasibility and CM1 planar-relation/rectangle slices; entire expansion remains incomplete",
+  "status": "Pass: recorded CM0 feasibility and selected CM1 checks; whole expansion incomplete; blockers retained",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.6706620000186376
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 13.070339415979106
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 286.48622795799747
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.8411637080134824
+    },
+    {
+      "name": "static-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "build/macos-debug/compile_commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 346.5579139170004
+    },
+    {
+      "name": "architecture",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/20261024T045204.326018Z/verification/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.13243591599166393
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.18733808299293742
+    },
+    {
+      "name": "coverage",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_core_modeling.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07708633301081136
+    },
+    {
+      "name": "specifications",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "docs/scripts/check_specs.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1322937500081025
+    },
+    {
+      "name": "native-relations-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRelations"
+      ],
+      "exit_code": 0,
+      "seconds": 12.053340125014074
+    },
+    {
+      "name": "native-rectangles-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRectangles"
+      ],
+      "exit_code": 0,
+      "seconds": 15.487760542018805
+    },
+    {
+      "name": "native-arcs-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "exit_code": 0,
+      "seconds": 4.842846624960657
+    },
+    {
+      "name": "native-relations-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRelations"
+      ],
+      "exit_code": 0,
+      "seconds": 11.047112959029619
+    },
+    {
+      "name": "native-rectangles-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRectangles"
+      ],
+      "exit_code": 0,
+      "seconds": 15.192369040974882
+    },
+    {
+      "name": "native-relations-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRelations"
+      ],
+      "exit_code": 0,
+      "seconds": 11.726513291010633
+    },
+    {
+      "name": "native-rectangles-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRectangles"
+      ],
+      "exit_code": 0,
+      "seconds": 15.871323208033573
+    },
+    {
+      "name": "native-relations-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRelations"
+      ],
+      "exit_code": 0,
+      "seconds": 12.494768875010777
+    },
+    {
+      "name": "native-rectangles-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRectangles"
+      ],
+      "exit_code": 0,
+      "seconds": 16.857050582999364
+    },
+    {
+      "name": "native-relations-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRelations"
+      ],
+      "exit_code": 0,
+      "seconds": 13.368740000005346
+    },
+    {
+      "name": "native-rectangles-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRectangles"
+      ],
+      "exit_code": 0,
+      "seconds": 18.115555833035614
+    },
+    {
+      "name": "native-arcs-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "exit_code": 0,
+      "seconds": 6.06469799997285
+    }
+  ],
+  "host": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "physical_ram_bytes": 8589934592,
+    "cpu": "Apple M2"
+  },
+  "native_requested": true,
+  "blocked": [
+    "Full-round/general face blending not established",
+    "Other CM1 primitives/relations and CM2-CM9 production work incomplete",
+    "Full physical 8 GB, installed, other-platform, physical-device and assistive-technology acceptance not run"
+  ],
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false,
+  "original_source_revalidation": {
+    "status": "Pass",
+    "scope": "Optional original T2-T8 PDF hash validation; unavailable originals do not stop independent CAD checks",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "tools/check_core_modeling.py",
+      "--sources",
+      "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY"
+    ],
+    "exit_code": 0
+  },
+  "feasibility": {
+    "command": [
+      "build/macos-debug/cm0_feasibility"
+    ],
+    "exit_code": 1,
+    "results": {
+      "blocked_count": 1,
+      "experiments": [
+        {
+          "probe": "full_round_seed",
+          "reason": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/feasibility.cpp:75: f.IsDone()",
+          "status": "Blocked"
+        },
+        {
+          "measurements": {
+            "expected_mm3": 1626,
+            "limit": "Planar asymmetric walls; curved multi-thickness requires further fixtures",
+            "volume_mm3": 1626
+          },
+          "probe": "multi_thickness",
+          "status": "Pass"
+        },
+        {
+          "measurements": {
+            "limit": "Full rectangular profile to changed inclined plane, not arbitrary curved surfaces or all end conditions",
+            "volumes_mm3": [
+              4799.999999999999,
+              5599.999999999999
+            ]
+          },
+          "probe": "surface_termination",
+          "status": "Pass"
+        },
+        {
+          "measurements": {
+            "limit": "Linear centerline with two circular sections; this seed does not establish curved guides or connector correspondence",
+            "volume_mm3": 5497.787143782139
+          },
+          "probe": "guided_loft_seed",
+          "status": "Pass"
+        },
+        {
+          "measurements": {
+            "changed_control_y": 2.3333333333333344,
+            "limit": "Clamped cubic point constraint; arbitrary rational/trim/tangent combinations not certified",
+            "point_x": 4.25,
+            "point_y": 2
+          },
+          "probe": "constrained_spline",
+          "status": "Pass"
+        },
+        {
+          "measurements": {
+            "limit": "Quarter-circle centerline and auxiliary guide with two circular sections; feasibility tolerance only, not SRS acceptance or arbitrary connectors",
+            "probe_tolerance_mm3": 0.1,
+            "reference_mm3": 937.6124181034891,
+            "volume_mm3": 937.6128380301338
+          },
+          "probe": "curved_guided_loft",
+          "status": "Pass"
+        }
+      ],
+      "general_face_blend": "Blocked: face-set blend is not established by edge-seeded fillet API/probe",
+      "scope": "CM0 isolated feasibility, not production acceptance"
+    },
+    "meaning": "Probe failures remain Blocked; successful seeds are not production feature acceptance"
+  }
+}

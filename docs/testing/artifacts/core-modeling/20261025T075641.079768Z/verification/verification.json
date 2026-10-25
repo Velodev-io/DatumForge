@@ -1,0 +1,134 @@
+{
+  "scope": "CM0 recorded feasibility and implemented CM1 rectangles/slots/conics/splines/relations/Pierce and CM2 straight-line trim/extend on the available Mac; other CM2 methods, external-geometry operands and full milestone acceptance remain open",
+  "status": "Fail",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.6715136250131764
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 96.69313008297468
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 8,
+      "seconds": 346.2613237089827
+    }
+  ],
+  "host": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "physical_ram_bytes": 8589934592,
+    "cpu": "Apple M2"
+  },
+  "native_requested": true,
+  "blocked": [
+    "Full-round/general face blending not established",
+    "Projected-edge/external-vertex CM1 operands depend on CM4; broader per-variant failure/resource acceptance, remaining CM2 editing modes and CM3-CM9 remain open",
+    "Full physical 8 GB, installed, other-platform, physical-device and assistive-technology acceptance not run"
+  ],
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false,
+  "original_source_revalidation": {
+    "status": "Pass",
+    "scope": "Optional original T2-T8 PDF hash validation; unavailable originals do not stop independent CAD checks",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "tools/check_core_modeling.py",
+      "--sources",
+      "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY"
+    ],
+    "exit_code": 0
+  },
+  "feasibility": {
+    "command": [
+      "build/macos-debug/cm0_feasibility"
+    ],
+    "exit_code": 1,
+    "results": {
+      "blocked_count": 1,
+      "experiments": [
+        {
+          "probe": "full_round_seed",
+          "reason": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/feasibility.cpp:75: f.IsDone()",
+          "status": "Blocked"
+        },
+        {
+          "measurements": {
+            "expected_mm3": 1626,
+            "limit": "Planar asymmetric walls; curved multi-thickness requires further fixtures",
+            "volume_mm3": 1626
+          },
+          "probe": "multi_thickness",
+          "status": "Pass"
+        },
+        {
+          "measurements": {
+            "limit": "Full rectangular profile to changed inclined plane, not arbitrary curved surfaces or all end conditions",
+            "volumes_mm3": [
+              4799.999999999999,
+              5599.999999999999
+            ]
+          },
+          "probe": "surface_termination",
+          "status": "Pass"
+        },
+        {
+          "measurements": {
+            "limit": "Linear centerline with two circular sections; this seed does not establish curved guides or connector correspondence",
+            "volume_mm3": 5497.787143782139
+          },
+          "probe": "guided_loft_seed",
+          "status": "Pass"
+        },
+        {
+          "measurements": {
+            "changed_control_y": 2.3333333333333344,
+            "limit": "Clamped cubic point constraint; arbitrary rational/trim/tangent combinations not certified",
+            "point_x": 4.25,
+            "point_y": 2
+          },
+          "probe": "constrained_spline",
+          "status": "Pass"
+        },
+        {
+          "measurements": {
+            "limit": "Quarter-circle centerline and auxiliary guide with two circular sections; feasibility tolerance only, not SRS acceptance or arbitrary connectors",
+            "probe_tolerance_mm3": 0.1,
+            "reference_mm3": 937.6124181034891,
+            "volume_mm3": 937.6128380301338
+          },
+          "probe": "curved_guided_loft",
+          "status": "Pass"
+        }
+      ],
+      "general_face_blend": "Blocked: face-set blend is not established by edge-seeded fillet API/probe",
+      "scope": "CM0 isolated feasibility, not production acceptance"
+    },
+    "meaning": "Probe failures remain Blocked; successful seeds are not production feature acceptance"
+  }
+}

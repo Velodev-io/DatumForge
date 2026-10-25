@@ -8,6 +8,7 @@ QString canonicalDestination(QString path);
 QString recoveryRoot(QString path, bool initializeDevelopment = false);
 void flushFile(QString path, bool directory = false);
 void publish(QString source, QString destination);
+void publishNew(QString source, QString destination);
 void spaceFor(QString directory, qint64 bytes);
 class Lock {
     struct Impl;

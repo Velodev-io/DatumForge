@@ -1,5 +1,6 @@
 #include "Client.hpp"
 #include "domain/Documents.hpp"
+#include "drawing/Paths.hpp"
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
@@ -34,13 +35,23 @@ Client::Client(QObject *parent, QString workerExecutable, QString recoveryRoot)
         }
         peer = server.nextPendingConnection();
         peer->setReadBufferSize(limits::control + 4);
-        connect(peer, &QLocalSocket::readyRead, this, [this] {
+        connect(peer, &QLocalSocket::readyRead, this, [this, source = peer] {
+            if (peer != source)
+                return;
+            const auto receivingEpoch = projection.epoch;
             try {
-                while (peer && peer->bytesAvailable())
-                    for (const auto &map : frames.feed(peer->read(16384)))
+                while (peer == source && projection.epoch == receivingEpoch &&
+                       source->bytesAvailable()) {
+                    auto batch = frames.feed(source->read(16384));
+                    for (const auto &map : batch) {
+                        if (peer != source || projection.epoch != receivingEpoch)
+                            return;
                         receive(map);
+                    }
+                }
             } catch (const std::exception &e) {
-                fail("ProtocolViolation", QString::fromUtf8(e.what()));
+                if (peer == source && projection.epoch == receivingEpoch)
+                    fail("ProtocolViolation", QString::fromUtf8(e.what()));
             }
         });
         connect(peer, &QLocalSocket::disconnected, this, [this] {
@@ -177,7 +188,11 @@ void Client::enqueue(wire::Envelope e) {
         emit changed();
         return;
     }
-    if (e.command == "PreviewReference" || (e.command == "PreviewFeatures" || e.command=="PreviewHistory"))
+    if (e.command == "PreviewReference" || e.command == "PreviewSketchEdit" ||
+        e.command == "PreviewSketches" ||
+        (e.command == "PreviewFeatures" || e.command == "PreviewHistory" ||
+         (e.command == "ReferenceCandidates" || e.command == "PreviewAssembly" ||
+          e.command == "DisplayAssembly")))
         preview = e;
     else {
         if (outstanding() >= limits::outstanding) {
@@ -207,10 +222,17 @@ void Client::pump() {
                                            ? 120000
                                            : 10000),
                     0});
+    if (e.command == "ImportGeometry" || e.command == "ExportGeometry" ||
+        e.command == "PortableCopy" || e.command == "ExportDrawing" ||
+        QStringList{"SetFeatures", "CommitHistory", "SetAssembly", "SetDrawing", "UpdateDrawing",
+                    "DisplayDrawing", "PreviewDrawing", "DisplayAssembly", "PreviewAssembly"}
+            .contains(e.command))
+        pending[e.request].deadline = clock.elapsed() + 120000;
     if (!QStringList{"QueryOperation", "GrantFile", "RecoverProject", "ListRecoveries",
                      "InspectProject"}
              .contains(e.command))
         lastOperation = e.operation;
+    pending[e.request].started = clock.elapsed();
     deadlines.start();
     peer->write(wire::frame(e.map()));
 }
@@ -296,7 +318,9 @@ void Client::cancelPreview() {
     emit changed();
 }
 void Client::select(Selection s) {
-    if (!projection.current() || !display)
+    if ((!projection.current() && !(projection.projectOpen && projection.stale &&
+                                    projection.phase == Phase::PreviewReady)) ||
+        !display)
         return;
     bool instance = false;
     for (const auto &i : display->instances)
@@ -370,18 +394,51 @@ void Client::receive(const QCborMap &m) {
         return;
     wire::require(sameRequest(e, found->request), "reply request correlation");
     auto revision = wire::integer(m, "result_revision");
-    bool reference = QStringList{"LoadReference",   "PreviewReference", "Measure",
-                                 "PreviewFeatures", "DisplayPart",      "MeasurePart", "PreviewHistory", "ReferenceCandidates"}
+    bool reference = QStringList{"LoadReference",     "PreviewReference",    "Measure",
+                                 "PreviewFeatures",   "DisplayPart",         "MeasurePart",
+                                 "PreviewHistory",    "ReferenceCandidates", "PreviewAssembly",
+                                 "DisplayAssembly",   "DisplayDrawing",      "PreviewDrawing",
+                                 "PreviewSketchEdit", "PreviewSketches"}
                          .contains(e.command);
     if ((reference && !visibleResult(projection, e, revision)) || e.epoch != projection.epoch) {
         pending.erase(found);
         transfers.clear();
+        // Retiring a canceled/stale request changes the idle state even though
+        // its model result must not be installed.
+        emit changed();
         pump();
         return;
     }
     auto status = wire::text(m, "status");
+    if (!found->timed && (status == "Failed" || status == "Canceled" || status == "Succeeded")) {
+        found->timed = true;
+        emit jobFinished(e.command, status, clock.elapsed() - found->started,
+                         transfers.bytesReserved());
+    }
     auto data = m.value("data").toMap();
     auto diagnostics = m.value("diagnostics").toMap();
+    if (status == "Progress") {
+        wire::keys(data, {"stage", "percent"});
+        auto percent = wire::integer(data, "percent", 100);
+        projection.job = wire::text(data, "stage") + QString(" · %1%").arg(percent);
+        emit exchangeProgress(wire::text(data, "stage"), int(percent));
+        emit changed();
+        return;
+    }
+    if (data.value("cancel_requested").toBool()) {
+        pending.erase(found);
+        projection.job = "Cancellation requested; waiting for the worker outcome";
+        emit changed();
+        return;
+    }
+    if (e.command == "CancelJob" && status == "Failed" &&
+        diagnostics.value("code") == "StaleSession") {
+        pending.erase(found);
+        projection.message = "The computation already ended; its terminal outcome is retained";
+        emit changed();
+        pump();
+        return;
+    }
     if (status == "Failed" || status == "Canceled") {
         projection.message =
             wire::text(diagnostics, "code") + ": " + wire::text(diagnostics, "message");
@@ -404,7 +461,10 @@ void Client::receive(const QCborMap &m) {
         display = std::move(mesh);
         projection.revision = revision;
         projection.stale = false;
-        projection.phase = (e.command == "PreviewReference" || (e.command == "PreviewFeatures" || e.command=="PreviewHistory"))
+        projection.phase = (e.command == "PreviewReference" ||
+                            (e.command == "PreviewFeatures" || e.command == "PreviewHistory" ||
+                             (e.command == "ReferenceCandidates" ||
+                              e.command == "PreviewAssembly" || e.command == "DisplayAssembly")))
                                ? Phase::PreviewReady
                                : Phase::Ready;
         projection.job = e.command == "PreviewReference" ? "Preview — no document was committed"
@@ -412,11 +472,33 @@ void Client::receive(const QCborMap &m) {
         projection.message.clear();
         pending.erase(found);
         emit meshChanged(display);
-        if (e.command == "DisplayPart" || (e.command == "PreviewFeatures" || e.command=="PreviewHistory")) {
-            projection.job = e.command == "PreviewFeatures" ? "Feature preview · not committed"
-                                                            : "Exact part ready";
-            projection.stale=partReply.value("part_stale").toBool();
-            if(projection.stale){projection.job="STALE · last valid result";projection.message="Rebuild failed. Repair or edit the affected feature; current exact measurement is unavailable.";}
+        if (e.command == "DisplayPart" ||
+            (e.command == "PreviewFeatures" || e.command == "PreviewHistory" ||
+             (e.command == "ReferenceCandidates" || e.command == "PreviewAssembly" ||
+              e.command == "DisplayAssembly"))) {
+            bool assembly = e.command == "PreviewAssembly" || e.command == "DisplayAssembly";
+            projection.job =
+                assembly ? (e.command == "PreviewAssembly" ? "Assembly preview · not committed"
+                                                           : "Assembly ready")
+                : e.command == "PreviewFeatures" ? "Feature preview · not committed"
+                                                 : "Exact part ready";
+            projection.stale = partReply.value("part_stale").toBool();
+            if (projection.stale) {
+                projection.job = assembly ? "Assembly unresolved / stale"
+                                 : e.command == "ReferenceCandidates"
+                                     ? "Reference source preview · final model STALE"
+                                     : "STALE · last valid result";
+                projection.message =
+                    assembly
+                        ? "Resolve components or repair mate references before exact evaluation."
+                    : e.command == "ReferenceCandidates"
+                        ? "Repair preview of upstream source geometry; final-model measurement is "
+                          "unavailable."
+                        : "Rebuild failed. Repair or edit the affected feature; current exact "
+                          "measurement is unavailable.";
+            }
+            if (partReply.contains(QStringLiteral("reference_resolution")))
+                emit referenceResolution(partReply.value("reference_resolution").toMap());
             emit partResult(partReply);
         }
         emit changed();
@@ -428,21 +510,75 @@ void Client::receive(const QCborMap &m) {
         wire::require((projection.projectOpen || revision == 1) &&
                           data.value("display_manifest").isMap(),
                       "display result");
-        if (e.command == "DisplayPart" || (e.command == "PreviewFeatures" || e.command=="PreviewHistory"))
+        if (e.command == "DisplayPart" ||
+            (e.command == "PreviewFeatures" || e.command == "PreviewHistory" ||
+             (e.command == "ReferenceCandidates" || e.command == "PreviewAssembly" ||
+              e.command == "DisplayAssembly")))
             partReply = data;
         found->result = revision;
         transfers.begin(e, data.value("display_manifest").toMap());
         return;
     }
-    if(data.contains(QStringLiteral("reference_resolution"))){pending.erase(found);emit referenceResolution(data.value("reference_resolution").toMap());emit changed();pump();return;}
-    if(data.contains(QStringLiteral("cache_statistics"))&&!data.contains(QStringLiteral("display_manifest"))&&!data.contains(QStringLiteral("part_measurement"))){pending.erase(found);emit partResult(data);emit changed();pump();return;}
-    if(data.value("part_empty").toBool()){pending.erase(found);display.reset();projection.stale=data.value("part_stale").toBool();projection.phase=e.command=="PreviewHistory"?Phase::PreviewReady:Phase::Ready;partReply=data;emit meshChanged({});emit partResult(data);emit changed();pump();return;}
+    if (data.contains(QStringLiteral("assembly_references")) ||
+        data.contains(QStringLiteral("interference"))) {
+        pending.erase(found);
+        emit assemblyInformation(data);
+        emit changed();
+        pump();
+        return;
+    }
+    if (data.contains(QStringLiteral("reference_resolution"))) {
+        pending.erase(found);
+        emit referenceResolution(data.value("reference_resolution").toMap());
+        emit changed();
+        pump();
+        return;
+    }
+    if (data.contains(QStringLiteral("cache_statistics")) &&
+        !data.contains(QStringLiteral("display_manifest")) &&
+        !data.contains(QStringLiteral("part_measurement"))) {
+        pending.erase(found);
+        emit partResult(data);
+        emit changed();
+        pump();
+        return;
+    }
+    if (data.value("part_empty").toBool()) {
+        pending.erase(found);
+        display.reset();
+        projection.stale = data.value("part_stale").toBool();
+        projection.phase = e.command == "PreviewHistory" ? Phase::PreviewReady : Phase::Ready;
+        partReply = data;
+        emit meshChanged({});
+        emit partResult(data);
+        emit changed();
+        pump();
+        return;
+    }
     if (e.command == "MeasurePart") {
         wire::require(data.value("part_measurement").isMap(), "Exact part measurement required");
         pending.erase(found);
         projection.phase = Phase::Ready;
         projection.job = "Exact measurement ready";
         emit partResult(data);
+        emit changed();
+        pump();
+        return;
+    }
+    if (e.command == "PreviewSketchEdit") {
+        wire::keys(data, {"sketch_edit_preview", "affected_constraints"});
+        wire::require(data.value("sketch_edit_preview").isArray() &&
+                          data.value("affected_constraints").isArray(),
+                      "Sketch edit preview collections required");
+        bool current = visibleResult(projection, e, revision);
+        pending.erase(found);
+        if (current) {
+            projection.phase = Phase::PreviewReady;
+            projection.job = "Edit preview · review affected constraints";
+            projection.message.clear();
+            emit sketchEditPreview(data.value("sketch_edit_preview").toArray(),
+                                   data.value("affected_constraints").toArray());
+        }
         emit changed();
         pump();
         return;
@@ -477,12 +613,62 @@ void Client::receive(const QCborMap &m) {
         pump();
         return;
     }
+    if (data.contains(QStringLiteral("migration_report"))) {
+        pending.erase(found);
+        projection.job = "Validated upgraded project copy published; original preserved";
+        emit exchangeReport(data.value("migration_report").toMap());
+        emit changed();
+        pump();
+        return;
+    }
+    if (data.contains(QStringLiteral("exchange_report"))) {
+        emit exchangeReport(data.value("exchange_report").toMap());
+        if (!data.contains(QStringLiteral("project_state"))) {
+            pending.erase(found);
+            projection.job = "Export published";
+            emit changed();
+            pump();
+            return;
+        }
+    }
+    if (data.contains(QStringLiteral("closure_manifest"))) {
+        pending.erase(found);
+        emit exchangeReport(data.value("closure_manifest").toMap());
+        emit changed();
+        pump();
+        return;
+    }
+    if (data.contains(QStringLiteral("drawing_result")) ||
+        data.contains(QStringLiteral("drawing_anchors"))) {
+        pending.erase(found);
+        if (data.contains(QStringLiteral("drawing_result"))) {
+            drawing::validateDisplay(data.value("drawing_result").toMap());
+            projection.stale = !data.value("drawing_result").toMap().value("current").toBool();
+            projection.job = projection.stale ? "Drawing stale or dangling - update/repair required"
+                                              : "Drawing current";
+            emit drawingInformation(data.value("drawing_result").toMap());
+        } else
+            emit drawingAnchors(data.value("drawing_anchors").toArray());
+        emit changed();
+        pump();
+        return;
+    }
     if (data.contains(QStringLiteral("project_state"))) {
         wire::require(data.value("project_state").isMap(), "project state map");
         installProject(data.value("project_state").toMap());
         pending.erase(found);
         for (auto value : projection.documentRecords) {
             auto d = value.toMap();
+            if (d.value("id").toString() == projection.activeDocument &&
+                d.value("type") == "Drawing") {
+                enqueue(request("DisplayDrawing"));
+                break;
+            }
+            if (d.value("id").toString() == projection.activeDocument &&
+                d.value("type").toString() == "Assembly") {
+                displayAssembly();
+                break;
+            }
             if (d.value("id").toString() == projection.activeDocument &&
                 !d.value("features").toArray().empty()) {
                 displayPart();
@@ -582,8 +768,15 @@ void Client::installProject(const QCborMap &m) {
     for (const auto &item : docs.toArray()) {
         wire::require(item.isMap(), "document record map");
         auto d = item.toMap();
-        wire::keys(d, {"id", "type", "name", "units", "revision", "properties_entity", "parameters",
-                       "sketches", "sketch_diagnostics", "features", "feature_status"});
+        auto documentKeys = QSet<QString>{"id",         "type",          "name",
+                                          "units",      "revision",      "properties_entity",
+                                          "parameters", "sketches",      "sketch_diagnostics",
+                                          "features",   "feature_status"};
+        if (d.contains(QStringLiteral("drawing")))
+            documentKeys.insert("drawing");
+        if (d.contains(QStringLiteral("assembly")))
+            documentKeys.insert("assembly");
+        wire::keys(d, documentKeys);
         auto id = domain::id(wire::text(d, "id"));
         wire::require(!seen.contains(id), "duplicate document identity");
         seen.insert(id);
@@ -652,6 +845,9 @@ bool Client::projectReady() {
 }
 void Client::discardSketchPreview() {
     ++projection.generation;
+    if (preview &&
+        (preview->command == "PreviewSketchEdit" || preview->command == "PreviewSketches"))
+        preview.reset();
     projection.phase = Phase::Ready;
     projection.job = "Preview canceled · accepted sketch retained";
     emit changed();
@@ -681,10 +877,25 @@ void Client::cancelPartPreview() {
     emit changed();
 }
 void Client::projectCommand(QString command, QCborMap payload) {
-    if (!projectReady())
+    bool sketchPreview = command == "PreviewSketchEdit" || command == "PreviewSketches";
+    if (sketchPreview && alive && projection.projectOpen) {
+        // Permit one running and one replaceable pending sketch preview, while
+        // preserving serialization with commits, file operations and other jobs.
+        bool busy = !ordinary.empty();
+        for (const auto &entry : pending)
+            busy = busy || (entry.request.command != "PreviewSketchEdit" &&
+                            entry.request.command != "PreviewSketches");
+        if (busy) {
+            projection.message = "Wait for the active operation before previewing a sketch";
+            emit changed();
+            return;
+        }
+    } else if (!projectReady())
         return;
     projection.job = "Running " + command;
-    if (command == "PreviewFeatures" || command=="PreviewHistory") {
+    if (command == "PreviewFeatures" || command == "PreviewHistory" ||
+        command == "PreviewAssembly" || command == "PreviewDrawing" ||
+        command == "PreviewSketchEdit" || command == "PreviewSketches") {
         ++projection.generation;
         projection.phase = Phase::PreviewPending;
     }
@@ -741,7 +952,10 @@ void Client::fileOperation(QString command, QString path, QCborMap payload) {
     grant.insert(QStringLiteral("token"), token);
     grant.insert(QStringLiteral("path"), path);
     grant.insert(QStringLiteral("access"),
-                 (command == "SaveProject" || command == "SaveAs") ? "save" : "read");
+                 (command == "SaveProject" || command == "SaveAs" || command == "ExportGeometry" ||
+                  command == "PortableCopy" || command == "ExportDrawing")
+                     ? "save"
+                     : "read");
     enqueue(request("GrantFile", grant));
     payload.insert(QStringLiteral("capability"), token);
     enqueue(request(command, payload));
@@ -784,5 +998,77 @@ void Client::recoverProject(QString id) {
     QCborMap p;
     p.insert(QStringLiteral("project_id"), id);
     enqueue(request("RecoverProject", p));
+}
+
+void Client::importGeometry(QString path, QString format, QString units, QString healing,
+                            QString sha) {
+    if (!projectReady())
+        return;
+    QCborMap p{{QStringLiteral("format"), format},
+               {QStringLiteral("units"), units},
+               {QStringLiteral("healing"), healing},
+               {QStringLiteral("feature_id"), newId()},
+               {QStringLiteral("name"), QString("Imported body")},
+               {QStringLiteral("expected_sha256"), sha}};
+    fileOperation("ImportGeometry", path, p);
+}
+void Client::exportGeometry(QString path, QString format, QString units, double detail,
+                            QString body, bool overwrite) {
+    if (!projectReady())
+        return;
+    QCborMap p{{QStringLiteral("format"), format},
+               {QStringLiteral("units"), units},
+               {QStringLiteral("deflection_mm"), detail},
+               {QStringLiteral("body"), body},
+               {QStringLiteral("overwrite"), overwrite}};
+    fileOperation("ExportGeometry", path, p);
+}
+void Client::portableCopy(QString path) {
+    if (!projectReady())
+        return;
+    fileOperation("PortableCopy", path,
+                  QCborMap{{QStringLiteral("new_project_id"), newId()},
+                           {QStringLiteral("policy"), QString("Copied")}});
+}
+void Client::cancelExchange() {
+    if (!peer || !authenticated)
+        return;
+    for (const auto &value : pending)
+        if (value.request.command == "CancelJob")
+            return;
+    for (auto value : pending)
+        if (value.request.command == "ImportGeometry" ||
+            value.request.command == "ExportGeometry" ||
+            QStringList{"SetSketches", "SetFeatures", "CommitHistory", "ResolveReference",
+                        "SetAssembly", "PreviewAssembly", "DisplayAssembly", "SetDrawing",
+                        "UpdateDrawing", "PreviewDrawing", "DisplayDrawing", "ExportDrawing",
+                        "Undo", "Redo"}
+                .contains(value.request.command)) {
+            auto e = request("CancelJob",
+                             QCborMap{{QStringLiteral("operation"), value.request.operation}});
+            pending.insert(e.request, {e, clock.elapsed() + 10000, 0});
+            peer->write(wire::frame(e.map()));
+            return;
+        }
+}
+void Client::displayAssembly() {
+    if (projection.projectOpen && !projection.activeDocument.isEmpty())
+        enqueue(request("DisplayAssembly"));
+}
+void Client::migrateProject(QString source, QString destination) {
+    if (!alive || outstanding())
+        return;
+    auto read = newId(), save = newId();
+    enqueue(request("GrantFile", QCborMap{{QStringLiteral("token"), read},
+                                          {QStringLiteral("path"), source},
+                                          {QStringLiteral("access"), QStringLiteral("read")}}));
+    enqueue(request("GrantFile", QCborMap{{QStringLiteral("token"), save},
+                                          {QStringLiteral("path"), destination},
+                                          {QStringLiteral("access"), QStringLiteral("save")}}));
+    enqueue(request("MigrateProject", QCborMap{{QStringLiteral("source_capability"), read},
+                                               {QStringLiteral("destination_capability"), save}}));
+}
+void Client::exportDrawing(QString path, bool overwrite) {
+    fileOperation("ExportDrawing", path, QCborMap{{QStringLiteral("overwrite"), overwrite}});
 }
 } // namespace cad

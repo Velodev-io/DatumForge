@@ -1,0 +1,242 @@
+{
+  "review_date": "2026-10-22",
+  "source_folder": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY",
+  "method": "Native macOS PDFKit text extraction for all pages, full contact-sheet overview, selected detailed text and rendered-page review; static implementation comparison; no fresh product tests or installed SolidWorks session.",
+  "total_pages": 448,
+  "pdfs": [
+    {
+      "characters": 42230,
+      "empty_pages": 0,
+      "file": "T1 INTRODUCTION TO SW.pdf",
+      "pages": 32,
+      "sha256": "c8e92773d3b4bb556ef60becb995ef7641bdae0ae86fba65d088942b569cbf09",
+      "path": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY/T1 INTRODUCTION TO SW.pdf",
+      "bytes": 1722429
+    },
+    {
+      "characters": 49070,
+      "empty_pages": 1,
+      "file": "T2 PART IN 2D.pdf",
+      "pages": 44,
+      "sha256": "6a854c645805cbae32d0c62555c0d7312f7f30c9954f793054d850609a27eca6",
+      "path": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY/T2 PART IN 2D.pdf",
+      "bytes": 1998993
+    },
+    {
+      "characters": 47198,
+      "empty_pages": 0,
+      "file": "T3 EDITING PART.pdf",
+      "pages": 40,
+      "sha256": "348d7b7fc9992a7d6093d880a177124deb0c9f9a06481a7dca406de4fb6859e6",
+      "path": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY/T3 EDITING PART.pdf",
+      "bytes": 1361702
+    },
+    {
+      "characters": 49147,
+      "empty_pages": 0,
+      "file": "T4 ADD RELATIONS.pdf",
+      "pages": 39,
+      "sha256": "845d2d09a293a91c9f0d72772cb68eee94bdb5bcb654b9366ef8d696548e3c6d",
+      "path": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY/T4 ADD RELATIONS.pdf",
+      "bytes": 1373660
+    },
+    {
+      "characters": 48535,
+      "empty_pages": 0,
+      "file": "T5 ADD PART FEATURES.pdf",
+      "pages": 49,
+      "sha256": "cc5b2dae95fe306255d57935dcdd09faf7e548f56711fbac26f1b157b6cd44d9",
+      "path": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY/T5 ADD PART FEATURES.pdf",
+      "bytes": 2391386
+    },
+    {
+      "characters": 49888,
+      "empty_pages": 0,
+      "file": "T6 REFERENCE GEOMETRY.pdf",
+      "pages": 55,
+      "sha256": "04dfe23a4fca9b4e053c0c31e13e8efadb52fe6e2e2b3ddc4ec2b3d87335f7f2",
+      "path": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY/T6 REFERENCE GEOMETRY.pdf",
+      "bytes": 2608307
+    },
+    {
+      "characters": 48661,
+      "empty_pages": 0,
+      "file": "T7 MODELLING TOOLS.pdf",
+      "pages": 53,
+      "sha256": "9679118a4e43832af5ca6c435fc079ced6bf1dd3b4e5a7b0482631f908e6aaaf",
+      "path": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY/T7 MODELLING TOOLS.pdf",
+      "bytes": 2409858
+    },
+    {
+      "characters": 43838,
+      "empty_pages": 0,
+      "file": "T8 ADVANCE MODELLING TOOLS.pdf",
+      "pages": 52,
+      "sha256": "f9e1c7ba43af615cbec623c755f44aead2b8a62cd545959492a24dff255e429a",
+      "path": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY/T8 ADVANCE MODELLING TOOLS.pdf",
+      "bytes": 2805514
+    },
+    {
+      "characters": 14027,
+      "empty_pages": 1,
+      "file": "T9 ASSEMBLY PART 1 .pdf",
+      "pages": 21,
+      "sha256": "a232c8c69bd5bf3fd890c063fbd3dc0d518ba81fbcd325e2cf774bd5b323e16a",
+      "path": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY/T9 ASSEMBLY PART 1 .pdf",
+      "bytes": 4332588
+    },
+    {
+      "characters": 16807,
+      "empty_pages": 0,
+      "file": "T9 ASSEMBLY PART 2.pdf",
+      "pages": 25,
+      "sha256": "97cf6019da04fa8f7f30af8b31ca69b9bb00fdabbd272faaec69443d86f90a5c",
+      "path": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY/T9 ASSEMBLY PART 2.pdf",
+      "bytes": 8219616
+    },
+    {
+      "characters": 41851,
+      "empty_pages": 0,
+      "file": "T10 DRAWING.pdf",
+      "pages": 38,
+      "sha256": "7769963671e6ebeda72a047b0adca5a518962502cb2ca6cf7da2fb789226d999",
+      "path": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY/T10 DRAWING.pdf",
+      "bytes": 2728282
+    }
+  ],
+  "repository": {
+    "branch": "feature/modules-8-10-drawings-hardening",
+    "head": "d1fce435b1e9e4f05b7f36fab6392f870fedd8d7",
+    "working_tree": "Pre-existing tracked edits and untracked implementations preserved. Hashes describe inspected files, not a new passing test run.",
+    "files": [
+      {
+        "path": "CMakeLists.txt",
+        "sha256": "4727dffc1c5d2bf490bbdf214300f1f86552bf40191751f037d02a6138effe96"
+      },
+      {
+        "path": "apps/cad-worker/Projects.hpp",
+        "sha256": "943f90254ad14ca243e4c2d035fa742342002ecfa104e5bae6982830f777a332"
+      },
+      {
+        "path": "apps/desktop/AssemblyPanel.cpp",
+        "sha256": "cab1115aec284aaf34b6d748af2b13bcf0fe233f4469d40362c3140bdf066ea6"
+      },
+      {
+        "path": "apps/desktop/DrawingPanel.cpp",
+        "sha256": "569af4af4d1fce11d3fd85f773d51c4e6f07be1383b8b15a49193631813b6d53"
+      },
+      {
+        "path": "apps/desktop/FeaturePanel.cpp",
+        "sha256": "abbed97cb1c3d52fb28350afee7c34c739bf795d102c4c504ba0b5de3ca3b162"
+      },
+      {
+        "path": "apps/desktop/SketchPanel.cpp",
+        "sha256": "8d21c11c6550266464515dd80e0ac001fb2bf8fe45702e9d2b51db90f14e72e9"
+      },
+      {
+        "path": "apps/desktop/WorkspaceChrome.cpp",
+        "sha256": "5ffe8e45276aabef0a73b9fad8b7f5a69b1f16649cf325fd54d6b5938e0e1ec2"
+      },
+      {
+        "path": "docs/SRS.md",
+        "sha256": "70ecb564a32a45344c0847c1599a29bc16527a9124129505a213062242c736c2"
+      },
+      {
+        "path": "docs/decisions/module-4-features.md",
+        "sha256": "62279c7ef5e85f0ef21d707207964c90b84eaa5314ab8727282eeedf7fc4659c"
+      },
+      {
+        "path": "docs/decisions/module-5-evaluation.md",
+        "sha256": "38c873967d484b88f6b00df3fa8533c462b70bcdf2254a17a3a529630315345b"
+      },
+      {
+        "path": "docs/decisions/module-7-assemblies.md",
+        "sha256": "74ee9626d78c62cf09a7f5a0268b8a2cc9347fa143d155b3e1663806f3c03e77"
+      },
+      {
+        "path": "docs/decisions/module-8-drawings.md",
+        "sha256": "cf965fcba729b371c8fdbce5f8c01a55cd23a9c1e565f079d7e12f1687567e2d"
+      },
+      {
+        "path": "docs/testing/module-10.md",
+        "sha256": "2283106b5fe8708540f89cf144e337d841c47dd315efb8191d6af593ff41bebb"
+      },
+      {
+        "path": "docs/testing/module-3-all-arcs.md",
+        "sha256": "e8adf9096a9224ad7898118510409e4e176bfd3c9dde4c05006430c673f82582"
+      },
+      {
+        "path": "docs/testing/module-4.md",
+        "sha256": "b048315e347a55824e225a5fbaf3f55f1da0cd65f0420b26252fa126231ba990"
+      },
+      {
+        "path": "docs/testing/module-5.md",
+        "sha256": "8669d155bb0e85d8182a358584d98b893d7e574e38d41d09e0c4ab6cad9c9b53"
+      },
+      {
+        "path": "docs/testing/module-6.md",
+        "sha256": "88fefe530b6966649b8a02acbaba14faefb41d2a9c3e415a0cac8889f70fe54b"
+      },
+      {
+        "path": "docs/testing/module-7.md",
+        "sha256": "9536a23247dba42a7d0699121cddb8996dd2067527d4fc652ee7989746afabbd"
+      },
+      {
+        "path": "docs/testing/module-8.md",
+        "sha256": "a608ddd33e3db2385c3cbd608b1aee4d76dae7bd99b54c2830812ef39067b8b0"
+      },
+      {
+        "path": "docs/testing/module-9.md",
+        "sha256": "fe8f913a6b0ae706673078728835d8da58997f8312dc6e3d78f3131368f7f5e1"
+      },
+      {
+        "path": "src/assembly/Model.cpp",
+        "sha256": "e2b8cbb29f538de16ebb6944a9287e58b5fd8ec61511177172da17357e65102e"
+      },
+      {
+        "path": "src/assembly/Model.hpp",
+        "sha256": "f73a68e9f178ad38a28c91a475ca093159dc04aa6c10979a54e69dffc80e02d2"
+      },
+      {
+        "path": "src/drawing/Geometry.cpp",
+        "sha256": "8ccff7693c77aa8dac26f7aa46a33de46286f126cb238ea0f863e7923f1f28ad"
+      },
+      {
+        "path": "src/drawing/Model.cpp",
+        "sha256": "d76fc22fe569e91db92b1770de5349f210d292770acd43bc63be0f3194a35bcd"
+      },
+      {
+        "path": "src/drawing/Paint.cpp",
+        "sha256": "67372dbc4c988061bda41fbb0fff2ae415ea63091547d4a955a2683e7be6f665"
+      },
+      {
+        "path": "src/evaluation/Plan.cpp",
+        "sha256": "4619e2e672280171e0cb6a47b266451c6cb69d2a554f2e072fae7268f05c88c6"
+      },
+      {
+        "path": "src/features/Model.cpp",
+        "sha256": "612f78d7eee84b5b85e5b41810237bbe45d1900f4a7eb137bafc8deeafbb9e9b"
+      },
+      {
+        "path": "src/geometry/occt/Part.cpp",
+        "sha256": "d315ab953d29f9694d86ca0142a8f39254f1b3a714417605fe1780daf2722173"
+      },
+      {
+        "path": "src/persistence/ProjectStore.cpp",
+        "sha256": "66bb827814bb32f6e4b5e3dbf3d559bc7dd44a339283b81a5cc279d1821dc003"
+      },
+      {
+        "path": "src/sketch/Editing.cpp",
+        "sha256": "47a74dec962400632eff05d2a36fcd837d8f4a470c8e1f01d24163ecadb0ca4d"
+      },
+      {
+        "path": "src/sketch/Sketch.cpp",
+        "sha256": "4307f8eb60a13d563310d156ceacfeda1775a968486c8e30014ec6314ebffafd"
+      },
+      {
+        "path": "src/sketch/Solver.cpp",
+        "sha256": "68d37d46fc1d7fdf0dfca78d042ba20d01ca5d1d009fe4733188c202bcd2c679"
+      }
+    ]
+  }
+}

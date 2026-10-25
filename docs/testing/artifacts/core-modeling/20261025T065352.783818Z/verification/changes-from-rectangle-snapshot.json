@@ -1,0 +1,121 @@
+{
+  "scope": "Input hash differences from the 24 October snapshot; not a commit diff",
+  "changes": {
+    "CMakeLists.txt": {
+      "before": "d971c69707e973d61df5d33e9d55a3c6feb56065b1b80305810e28dafb1acaaf",
+      "current": "94a62633a7c4c0fe0060fc5468eb37fa1cc2554886aeab2a48bb9b4957788292"
+    },
+    "apps/desktop/SketchPanel.cpp": {
+      "before": "2685b73d5eee4b70c3f0e94c4d014373c3e1b972d4898537fcdb1ee7049eb7cc",
+      "current": "00e8e108e91e9a50107f339942135244eec705e81d4777f455e709004dca98ed"
+    },
+    "apps/desktop/SketchPanel.hpp": {
+      "before": "49cbd7699b77851ca4a37230f6918a633ad8a7cc4aacb0e18903beb0708d9ea9",
+      "current": "493053c4431025833333d634203745e6b1111ce471c45dff6e4a41ad29ede94b"
+    },
+    "apps/desktop/WorkspaceChrome.cpp": {
+      "before": "5ffe8e45276aabef0a73b9fad8b7f5a69b1f16649cf325fd54d6b5938e0e1ec2",
+      "current": "a875edd81fb498400d6a8bcba2a9f5314c98f2ec1b43001932d5d90c9b446e4d"
+    },
+    "src/geometry/occt/Part.cpp": {
+      "before": "d315ab953d29f9694d86ca0142a8f39254f1b3a714417605fe1780daf2722173",
+      "current": "f5f9be26a68128c747eb37b9b16c86c296710f689e063f23826ae55ce025f463"
+    },
+    "src/geometry/occt/SketchCurve.cpp": {
+      "before": null,
+      "current": "e21d94bb6f071038964fc1056bbe94e81f360b9711d919c90418ca3e9ec75707"
+    },
+    "src/geometry/occt/SketchCurve.hpp": {
+      "before": null,
+      "current": "014bc32ebe9f50a998a1c543bf1980379b960e8d78b8b2158782aedf5faf621e"
+    },
+    "src/persistence/ProjectStore.cpp": {
+      "before": "4ba97454b0cad39f8fc62784f9c91af4ff468cce09626a475c53a0e9966d2227",
+      "current": "d4c27cca81dcc0a12ca1dc803449f0d6553181627556a23056959f1b717a4108"
+    },
+    "src/render/SketchView.cpp": {
+      "before": "99404e0d251b21e8bdc40fe624cd1bf5b0bfd010fde4795e2dbe81073776095f",
+      "current": "7e63742bbe9c5c60e8e66fc9b6e0c5a943f66da44b134d6f36ba17c7f71bf0a8"
+    },
+    "src/render/SketchView.hpp": {
+      "before": "20fd80efa14e4315ac4dad1450a3a803fb321aace2fcf643c6744e02698c50ed",
+      "current": "da6dad94fe733d081d517b826684e3015640c877e53bbcf19ac226a626740639"
+    },
+    "src/sketch/Constructions.cpp": {
+      "before": "41b549bd29f6ed21e17f078ccf9eca2951bc3eb2660171cb810f70cfe8159df1",
+      "current": "374ebcf549e8101aa2a1eeb77cfd9a6158a9c6af44c58497d8cca5ba1ee4ee0c"
+    },
+    "src/sketch/CurveConstraint.hpp": {
+      "before": null,
+      "current": "2f78a95f964a80f288055084d196f8ef7c6872e573a9c13f263619a09e7de6ee"
+    },
+    "src/sketch/Curves.cpp": {
+      "before": null,
+      "current": "9fd8dee7404865fbd00e589ec62354ba7a8d1fd9ca546e7b95ef467a8ba2e683"
+    },
+    "src/sketch/Curves.hpp": {
+      "before": null,
+      "current": "6cd5f5f2be7a32c3e1c80b8aacb0d89f396117b86e7da204b370f5f4c77c8f2d"
+    },
+    "src/sketch/Editing.cpp": {
+      "before": "78d2162403bbfc381e3b42be49c0f8432c41f3781ba213da1d25b5ced1926afc",
+      "current": "2ad09a88dc6055af2d11154b34dd976fb4cd1642bc61bd0b9602826654143fda"
+    },
+    "src/sketch/References.cpp": {
+      "before": null,
+      "current": "77fc53f39603c86dff821a1e1578e24c49ee327e34a7ca6ea75698339a5367b0"
+    },
+    "src/sketch/References.hpp": {
+      "before": null,
+      "current": "6a038db66acb8ac47266dd0e32ad347ad53cad3d08e3468d8efa67b69e63c042"
+    },
+    "src/sketch/Sketch.cpp": {
+      "before": "0f4c00ba02ea2cbca1dff24cfce4f61582c54dd9d40d49c4678e462d7223b647",
+      "current": "94fa7e545cb88c838ac5cd05efa56491599b3469e2d35b14362f81d3902c8603"
+    },
+    "src/sketch/Sketch.hpp": {
+      "before": "db30f72469be653d51c0321aadfc796504297681d7998a713e7ea40933c25721",
+      "current": "676696dcd234b5c8589d4d2981d5500c226f956f775a50f74e9ab72c483229ad"
+    },
+    "src/sketch/Slots.cpp": {
+      "before": null,
+      "current": "5ac6be407f9fe66768eb14cbc0df307cd32aa63acd56b70b5322b69993b31633"
+    },
+    "src/sketch/Slots.hpp": {
+      "before": null,
+      "current": "8639ebae7d279e1a1463913793cc258e9adcde7f1c22d869089a5d35abb75a77"
+    },
+    "src/sketch/Solver.cpp": {
+      "before": "f9fbd034692ecc854207cf3b6057d40754c772f67f5d9098097cc9201e031cd4",
+      "current": "bf7192711f8faf463a2aa59952b473bca6bf065d7f4e6911f199bf2174328530"
+    },
+    "src/sketch/Solver.hpp": {
+      "before": "409cfcd19ff65b8c0e1d419bd00b89f659de5bec094993bb2ad0f1602c9b8f27",
+      "current": "10ae1eaedebfe560e6be9b386f6042f77853b999154605d43f772a7f7ea7133d"
+    },
+    "tests/core_modeling/contracts.cpp": {
+      "before": "366ed732c6bcd6f763cfa96d16cdbacd983fc504091e2395b4b774f2e0458fe7",
+      "current": "b2a2157d3a2a3dba9c88c3970d64e8d4c44883118b856ff7fb871c1063da3436"
+    },
+    "tests/core_modeling/curves.cpp": {
+      "before": null,
+      "current": "89506e83c1f19de7e9af1f524f796e14c9ff08d8e55661ca1dd7a0e949532a2b"
+    },
+    "tests/core_modeling/intent.cpp": {
+      "before": null,
+      "current": "7f2c86257f7c912e264af9cfc380a530f4d435c73c7d4f51314dd5ebccc22b66"
+    },
+    "tests/core_modeling/pierce.cpp": {
+      "before": null,
+      "current": "804b684e8de2954a70f6ccf190fcac9291123280c905ea6fd0756a5dd63d2321"
+    },
+    "tests/core_modeling/slots.cpp": {
+      "before": null,
+      "current": "49f29805b448bf9de6ec8de9091066e9c3462aa9b0502458591ecb2acd672be9"
+    },
+    "tools/verify_core_modeling.py": {
+      "before": "c7d8974b0afe015573e1d878d73e4cc0342bcc0f19266c5aa5a05577e7de57a9",
+      "current": "1c0da07df5a790d0cb227fb4a8cfd1a12ae32b3689fac5487ddb4ca55fe3566b"
+    }
+  }
+}

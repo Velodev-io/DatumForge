@@ -22,12 +22,14 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     float yaw = 35, pitch = -25, distance = 100, span = 50;
     QVector2D pan;
     QPoint previous, press;
+    bool componentDrag = false;
+    QString draggedOccurrence;
     bool initialized = false, failed = false, stale = false, orthographic = false;
     QList<double> frameTimes;
     QElapsedTimer frameClock;
     QMatrix4x4 matrix() const;
     void draw(const QVector<QVector3D> &vertices, GLenum primitive, const QVector4D &color,
-              const QVector3D &translation);
+              const Instance &instance);
     void cleanup();
 
   protected:
@@ -43,6 +45,9 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     explicit Viewport(QWidget *parent = nullptr);
     ~Viewport() override;
     void setMesh(MeshPtr value);
+    void setComponentDrag(bool enabled) {
+        componentDrag = enabled;
+    }
     void setSelection(Selection value);
     void setStale(bool value);
     void setContext(QString value) {
@@ -69,6 +74,7 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     }
   signals:
     void selected(cad::Selection selection);
+    void componentDragged(QString occurrence, QVector3D deltaMM);
     void graphicsFailed(QString reason);
 };
 } // namespace cad

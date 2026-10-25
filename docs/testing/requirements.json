@@ -67,40 +67,72 @@
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json",
       "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
-      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json",
+      "docs/testing/module-3-centerpoint-arc.md",
+      "docs/testing/artifacts/module-3/arc-runs/20261022T040046.253795Z/verification.json",
+      "docs/testing/artifacts/module-3/arc-runs/20261022T040046.253795Z/visual-review.json",
+      "docs/testing/module-3-all-arcs.md",
+      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/verification.json",
+      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/source-identity.json",
+      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/visual-review.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Available-Mac shared actions, contextual properties and familiar layout subset pass; simplified layout, cross-document consistency, accessibility and other native platforms remain for Module 9."
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks. Selected Centerpoint Arc pointer sizing is verified separately on available Mac; full platform/device/AT acceptance remains Blocked. Subsequent all-arc follow-up: Centerpoint/3 Point/Tangent live creation, eight tangent/normal intent results, line/arc endpoint solver relations, Line transition and EDP normal-arc mm/in exercise pass on available Mac with 54 enabled tests and five effective native scales. Full platform/device/AT/resource/installed acceptance remains Blocked; see scoped report."
   },
   "FR-006": {
     "test": "T-06",
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-2.md",
-      "docs/testing/artifacts/module-2/verification.json"
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/module-5.md",
+      "docs/decisions/module-5-evaluation.md",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/verification.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/source-identity.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/evidence-consistency.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Mac stable project/document/properties entity IDs and SI parameters pass; feature/component identities need Modules 3\u20137 and other platforms."
+    "reason": "Available-Mac semantic feature identities, B2 save/reopen/recovery and cross-document sketch consumers pass; assembly/drawing identities and full platform acceptance remain Blocked."
   },
   "FR-007": {
     "test": "T-07",
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-2.md",
-      "docs/testing/artifacts/module-2/verification.json"
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Mac standalone Save/Save As/backup/failure cases pass; native Windows/Linux filesystem publication checks Blocked."
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-008": {
     "test": "T-08",
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-2.md",
-      "docs/testing/artifacts/module-2/verification.json"
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/module-5.md",
+      "docs/decisions/module-5-evaluation.md",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/verification.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/source-identity.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/evidence-consistency.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Mac reference preview and durable recoverable/saved/error/stale states pass; later computed feature-state and other-platform integration pending."
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-009": {
     "test": "T-09",
@@ -111,26 +143,63 @@
       "docs/testing/module-3-input-repair.md",
       "docs/testing/module-4.md",
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
-      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json",
+      "docs/testing/module-5.md",
+      "docs/decisions/module-5-evaluation.md",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/verification.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/source-identity.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/evidence-consistency.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Mac metadata semantic undo/redo and bounded retention pass; feature/assembly edit history and full workload retention need later modules. Later Mac input/direct-editing and draft-history regressions pass; physical-device and full platform/engine acceptance remain Blocked."
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-010": {
     "test": "T-10",
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-2.md",
-      "docs/testing/artifacts/module-2/verification.json"
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Mac live writer/alias/schema/missing object refusal pass; external CAD references and Windows/Linux locks await native/later-module checks."
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-011": {
     "test": "T-11",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-6.md",
+      "docs/decisions/module-6-exchange.md",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/verification.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/source-identity.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/b4-correctness.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/visual-review.json",
+      "docs/testing/module-7.md",
+      "docs/decisions/module-7-assemblies.md",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/verification.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/source-identity.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/b3-correctness.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/visual-review.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/memory-summary.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-012": {
     "test": "T-12",
@@ -141,10 +210,17 @@
       "docs/testing/module-3-input-repair.md",
       "docs/testing/module-4.md",
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
-      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json",
+      "docs/testing/module-3-centerpoint-arc.md",
+      "docs/testing/artifacts/module-3/arc-runs/20261022T040046.253795Z/verification.json",
+      "docs/testing/artifacts/module-3/arc-runs/20261022T040046.253795Z/visual-review.json",
+      "docs/testing/module-3-all-arcs.md",
+      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/verification.json",
+      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/source-identity.json",
+      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/visual-review.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked. Later Mac input/direct-editing and draft-history regressions pass; physical-device and full platform/engine acceptance remain Blocked."
+    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked. Later Mac input/direct-editing and draft-history regressions pass; physical-device and full platform/engine acceptance remain Blocked. Selected Centerpoint Arc pointer sizing is verified separately on available Mac; full platform/device/AT acceptance remains Blocked. Subsequent all-arc follow-up: Centerpoint/3 Point/Tangent live creation, eight tangent/normal intent results, line/arc endpoint solver relations, Line transition and EDP normal-arc mm/in exercise pass on available Mac with 54 enabled tests and five effective native scales. Full platform/device/AT/resource/installed acceptance remains Blocked; see scoped report."
   },
   "FR-013": {
     "test": "T-13",
@@ -155,10 +231,14 @@
       "docs/testing/module-3-input-repair.md",
       "docs/testing/module-4.md",
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
-      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json"
+      "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json",
+      "docs/testing/module-3-all-arcs.md",
+      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/verification.json",
+      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/source-identity.json",
+      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/visual-review.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked. Later Mac input/direct-editing and draft-history regressions pass; physical-device and full platform/engine acceptance remain Blocked."
+    "reason": "Available-Mac Module 3 sketch/constraint/expression subsets tested; full native platform and broader acceptance remain Blocked. Later Mac input/direct-editing and draft-history regressions pass; physical-device and full platform/engine acceptance remain Blocked. Subsequent all-arc follow-up: Centerpoint/3 Point/Tangent live creation, eight tangent/normal intent results, line/arc endpoint solver relations, Line transition and EDP normal-arc mm/in exercise pass on available Mac with 54 enabled tests and five effective native scales. Full platform/device/AT/resource/installed acceptance remains Blocked; see scoped report."
   },
   "FR-014": {
     "test": "T-14",
@@ -226,21 +306,42 @@
   },
   "FR-019": {
     "test": "T-19",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-5.md",
+      "docs/decisions/module-5-evaluation.md",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/verification.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/source-identity.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/evidence-consistency.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Available-Mac parameter/expression edits, rename, suppress, explicit dependent-delete impact and dependency-valid reorder pass through real worker/UI tests; full native/device acceptance remains Blocked."
   },
   "FR-020": {
     "test": "T-20",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-5.md",
+      "docs/decisions/module-5-evaluation.md",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/verification.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/source-identity.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/evidence-consistency.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Available-Mac affected rebuilds, versioned fingerprints, cycles/order rejection, unrelated reuse and conspicuous last-valid stale display pass; full support/platform acceptance remains Blocked."
   },
   "FR-021": {
     "test": "T-21",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-5.md",
+      "docs/decisions/module-5-evaluation.md",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/verification.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/source-identity.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/evidence-consistency.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Available-Mac actual OCCT split/merge/deleted, pattern count and ambiguity corpus plus explicit undoable repair pass; full topology/support/platform acceptance remains Blocked."
   },
   "FR-022": {
     "test": "T-22",
@@ -255,15 +356,33 @@
   },
   "FR-023": {
     "test": "T-23",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-6.md",
+      "docs/decisions/module-6-exchange.md",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/verification.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/source-identity.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/b4-correctness.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/visual-review.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Available-Mac STEP/IGES imported-body/source/units/healing/warnings/background cancellation pass for the B4 analytic/colored/adversarial corpus. Broader industrial, peak-resource and full platform acceptance remain Blocked."
   },
   "FR-024": {
     "test": "T-24",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-6.md",
+      "docs/decisions/module-6-exchange.md",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/verification.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/source-identity.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/b4-correctness.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/visual-review.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Available-Mac valid-revision STEP/IGES round trips and explicit-unit/detail STL export, loss warnings, safe publication and durable outcome tests pass. Full platform/industrial/resource acceptance Blocked."
   },
   "FR-025": {
     "test": "T-25",
@@ -278,99 +397,221 @@
   },
   "FR-026": {
     "test": "T-26",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-7.md",
+      "docs/decisions/module-7-assemblies.md",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/verification.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/source-identity.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/b3-correctness.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/visual-review.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/memory-summary.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": " Module 7 available-Mac rigid assembly/mate/interference/portable/recovery and B3 sharing/cache subsets pass; full native/device and physical/shared/GPU/steady/peak/FPS acceptance remain Blocked."
   },
   "FR-027": {
     "test": "T-27",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-7.md",
+      "docs/decisions/module-7-assemblies.md",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/verification.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/source-identity.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/b3-correctness.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/visual-review.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/memory-summary.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": " Module 7 available-Mac rigid assembly/mate/interference/portable/recovery and B3 sharing/cache subsets pass; full native/device and physical/shared/GPU/steady/peak/FPS acceptance remain Blocked."
   },
   "FR-028": {
     "test": "T-28",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-7.md",
+      "docs/decisions/module-7-assemblies.md",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/verification.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/source-identity.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/b3-correctness.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/visual-review.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/memory-summary.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": " Module 7 available-Mac rigid assembly/mate/interference/portable/recovery and B3 sharing/cache subsets pass; full native/device and physical/shared/GPU/steady/peak/FPS acceptance remain Blocked."
   },
   "FR-029": {
     "test": "T-29",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-7.md",
+      "docs/decisions/module-7-assemblies.md",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/verification.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/source-identity.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/b3-correctness.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/visual-review.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/memory-summary.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": " Module 7 available-Mac rigid assembly/mate/interference/portable/recovery and B3 sharing/cache subsets pass; full native/device and physical/shared/GPU/steady/peak/FPS acceptance remain Blocked."
   },
   "FR-030": {
     "test": "T-30",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-7.md",
+      "docs/decisions/module-7-assemblies.md",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/verification.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/source-identity.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/b3-correctness.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/visual-review.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/memory-summary.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": " Module 7 available-Mac rigid assembly/mate/interference/portable/recovery and B3 sharing/cache subsets pass; full native/device and physical/shared/GPU/steady/peak/FPS acceptance remain Blocked."
   },
   "FR-031": {
     "test": "T-31",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-032": {
     "test": "T-32",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-033": {
     "test": "T-33",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-034": {
     "test": "T-34",
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-2.md",
-      "docs/testing/artifacts/module-2/verification.json"
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/module-7.md",
+      "docs/decisions/module-7-assemblies.md",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/verification.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/source-identity.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/b3-correctness.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/visual-review.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/memory-summary.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Mac committed semantic recovery after worker/app restart and lost publication acknowledgment pass; full cross-platform/feature fault corpus pending Module 10."
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-035": {
     "test": "T-35",
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-1.md",
-      "docs/testing/artifacts/module-1/verification.json"
+      "docs/testing/artifacts/module-1/verification.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Real worker isolation/restart and preview coalescing checked; actual geometry-job progress/cancellation/recovery need later modules and native targets."
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-036": {
     "test": "T-36",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-037": {
     "test": "T-37",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-038": {
     "test": "T-38",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-6.md",
+      "docs/decisions/module-6-exchange.md",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/verification.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/source-identity.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/b4-correctness.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/visual-review.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-039": {
     "test": "T-39",
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-2.md",
-      "docs/testing/artifacts/module-2/verification.json"
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Newer schema refusal and failed migration-copy preservation pass on Mac; no supported prior-format converter exists yet; Module 10 and native platform checks pending."
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "FR-040": {
     "test": "T-40",
@@ -386,9 +627,19 @@
   },
   "NFR-002": {
     "test": "T-42",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-7.md",
+      "docs/decisions/module-7-assemblies.md",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/verification.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/source-identity.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/b3-correctness.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/visual-review.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/memory-summary.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": " Module 7 available-Mac rigid assembly/mate/interference/portable/recovery and B3 sharing/cache subsets pass; full native/device and physical/shared/GPU/steady/peak/FPS acceptance remain Blocked."
   },
   "NFR-003": {
     "test": "T-43",
@@ -431,38 +682,89 @@
     "evidence": [
       "docs/testing/module-4.md",
       "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
-      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json",
+      "docs/testing/module-3-all-arcs.md",
+      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/verification.json",
+      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/source-identity.json",
+      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/visual-review.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Module 4 available-Mac exact-feature/analytic/measurement and native B1 subsets pass, including failed-operation preservation and mesh invariance. Full requirement acceptance remains Blocked for unavailable native platforms/devices and later workload/release gates."
+    "reason": "Module 4 available-Mac exact-feature/analytic/measurement and native B1 subsets pass, including failed-operation preservation and mesh invariance. Full requirement acceptance remains Blocked for unavailable native platforms/devices and later workload/release gates. Subsequent all-arc follow-up: Centerpoint/3 Point/Tangent live creation, eight tangent/normal intent results, line/arc endpoint solver relations, Line transition and EDP normal-arc mm/in exercise pass on available Mac with 54 enabled tests and five effective native scales. Full platform/device/AT/resource/installed acceptance remains Blocked; see scoped report."
   },
   "NFR-009": {
     "test": "T-49",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-5.md",
+      "docs/decisions/module-5-evaluation.md",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/verification.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/source-identity.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/evidence-consistency.json",
+      "docs/testing/module-7.md",
+      "docs/decisions/module-7-assemblies.md",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/verification.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/source-identity.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/b3-correctness.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/visual-review.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/memory-summary.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "NFR-010": {
     "test": "T-50",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "NFR-011": {
     "test": "T-51",
     "status": "Blocked",
     "evidence": [
       "docs/testing/module-2.md",
-      "docs/testing/artifacts/module-2/verification.json"
+      "docs/testing/artifacts/module-2/verification.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Mac commit/snapshot/migration skeleton failure cases preserve prior valid file and uncommitted revision; import/cancel/full-volume/cross-platform corpus needs later modules."
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "NFR-012": {
     "test": "T-52",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-5.md",
+      "docs/decisions/module-5-evaluation.md",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/verification.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/source-identity.json",
+      "docs/testing/artifacts/module-5/runs/20261020T150233.569375Z/evidence-consistency.json",
+      "docs/testing/module-7.md",
+      "docs/decisions/module-7-assemblies.md",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/verification.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/source-identity.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/b3-correctness.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/visual-review.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/memory-summary.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Pinned-engine B2 analytic invariants, equivalent cache/cold regeneration, save/reopen/recovery and repeated edits pass on the current Mac; full solver/engine/workload/platform equivalence acceptance remains Blocked. Module 7 available-Mac rigid assembly/mate/interference/portable/recovery and B3 sharing/cache subsets pass; full native/device and physical/shared/GPU/steady/peak/FPS acceptance remain Blocked."
   },
   "NFR-013": {
     "test": "T-53",
@@ -472,16 +774,28 @@
       "docs/testing/artifacts/module-1/verification.json",
       "docs/testing/module-4.md",
       "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/verification.json",
-      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json"
+      "docs/testing/artifacts/module-4/features-runs/20261020T113302.472224Z/evidence-consistency.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": "Mac reference process/source/link ownership checked; production project DB writes, durable revisions and other native targets remain pending."
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "NFR-014": {
     "test": "T-54",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   },
   "NFR-015": {
     "test": "T-55",
@@ -491,8 +805,22 @@
   },
   "NFR-016": {
     "test": "T-56",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-6.md",
+      "docs/decisions/module-6-exchange.md",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/verification.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/source-identity.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/b4-correctness.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/visual-review.json",
+      "docs/testing/module-8.md",
+      "docs/testing/module-9.md",
+      "docs/testing/module-10.md",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/verification.json",
+      "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/source-identity.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Modules 8\u201310 available-Mac supported drawing/vector PDF/portable closure, keyboard/Qt accessibility metadata, verified offline corpora, privacy/input bounds, exact CAD crash/cancel/restart and known-manifest migration subsets pass. Full native/device/assistive-technology/resource/filesystem/installed acceptance remains Blocked; deferred 6.1b/6.4c/7.4c are unchanged. See module reports for supported combinations and unrun checks."
   }
 }

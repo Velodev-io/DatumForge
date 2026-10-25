@@ -28,3 +28,22 @@ Publication-time results are recorded in `docs/testing/artifacts/publication/che
 Publication checks passed for all 31 enabled tests on the available Mac solid-modeling source (one intentional failure probe disabled). Configure/build, formatting, Clang static analysis (48 project-owned translation units), ownership and research-integrity checks passed. Every published branch passes the specification structure check.
 
 The frozen Module 5 snapshot is **not merge-ready**: `HistoryPanel.cpp` fails to compile because a CBOR value is passed directly as combo-box user data, and formatting fails. No Module 5 test pass is claimed. Newer live source edits were left untouched outside the frozen snapshot.
+
+## 25 October local review branches
+
+The user subsequently authorized local feature commits. These new branches form a
+stack on top of the earlier `feature/core-modeling-expansion` head. Each row is
+reviewed against its predecessor. No branch has been merged or pushed.
+
+| Branch | Review slice | Base |
+| --- | --- | --- |
+| `review/sketch-evaluation-followups` | Module 3 arc/input followups, Module 4 checks, Module 5 evaluation and evidence | `feature/core-modeling-expansion` |
+| `review/part-exchange` | Module 6 exchange adapter, UI, tests and evidence | `review/sketch-evaluation-followups` |
+| `review/assemblies` | Module 7 assembly model, UI, tests and evidence | `review/part-exchange` |
+| `review/drawings-interaction-recovery` | Modules 8–10 drawing, interaction and recovery slices | `review/assemblies` |
+| `review/core-modeling-integration` | Shared runtime integration, CM0–CM2 work, research, tracking and verification | `review/drawings-interaction-recovery` |
+
+The pre-existing working tree mixed shared source changes from several milestones.
+The first four branches isolate files owned by a feature for review; they are not
+independent build or acceptance claims. Review and validate the complete source on
+the final stack tip. Historical Blocked gates and unrun platform checks stay open.

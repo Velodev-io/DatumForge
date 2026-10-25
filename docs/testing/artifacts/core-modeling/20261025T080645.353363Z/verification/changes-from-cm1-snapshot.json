@@ -1,0 +1,27 @@
+{
+  "scope": "Source hashes compared with the recorded CM1 snapshot; earlier uncommitted workspace code retained",
+  "modified": [
+    "CMakeLists.txt",
+    "apps/cad-worker/Projects.hpp",
+    "apps/desktop/SketchPanel.cpp",
+    "apps/desktop/SketchPanel.hpp",
+    "apps/desktop/WorkspaceChrome.cpp",
+    "docs/scripts/check_specs.py",
+    "src/persistence/ProjectStore.cpp",
+    "src/protocol/Client.cpp",
+    "src/protocol/Client.hpp",
+    "src/sketch/Sketch.cpp",
+    "src/sketch/Sketch.hpp",
+    "tests/module3/contracts.cpp",
+    "tools/verify_core_modeling.py"
+  ],
+  "added": [
+    "apps/desktop/SketchEditingUI.cpp",
+    "src/sketch/EditHistory.cpp",
+    "src/sketch/LineEditing.cpp",
+    "src/sketch/LineEditing.hpp",
+    "tests/core_modeling/editing.cpp",
+    "tests/core_modeling/editing_contracts.cpp"
+  ],
+  "removed": []
+}

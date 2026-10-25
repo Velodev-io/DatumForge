@@ -1,0 +1,59 @@
+{
+  "scope": "CM2 development-loop failures; historical logs are retained and are not final acceptance",
+  "startup": {
+    "cause": "Sandbox denies AF_UNIX socket bind with errno 1; existing CM1 and new CM2 widget startup both failed there. Disposable IPC tests run with authorized host access.",
+    "evidence": [
+      "targeted-first.txt",
+      "startup-existing-test.txt",
+      "sandbox-ipc.json",
+      "targeted-corrected.txt"
+    ]
+  },
+  "save_assertion": {
+    "cause": "Test compared the /var temporary-directory spelling against canonical /private/var. Save succeeded; assertion now checks file existence and canonical identity. Production save code unchanged.",
+    "evidence": [
+      "targeted-ipc.txt",
+      "save-path-diagnostic.txt",
+      "targeted-corrected.txt"
+    ]
+  },
+  "native_harness": {
+    "cause": "New QTEST_MAIN harness omitted the production OpenGL 3.3 CoreProfile default format. Visual inspection caught GLSL failure despite workflow assertions passing. Harness now uses the production format and requires graphics initialized, no graphics failure, window exposure/activation and actual DPR.",
+    "superseded": [
+      "native-smoke.txt",
+      "native-smoke/cm2-inside-disclosure.png",
+      "native-corrected.txt",
+      "native-corrected/cm2-inside-disclosure.png"
+    ],
+    "build_failure": "build-native-harness.txt retains missing complete Viewport include; fixed by including its real header, no assertion weakened.",
+    "assertion_timing": {
+      "evidence": [
+        "native-gl-verified.txt",
+        "native-gl-visible.txt"
+      ],
+      "cause": "The project sketch workspace intentionally hides the OpenGL viewport, so requiring it initialized there reported Unavailable. Final native harness first renders the existing disposable reference scene with the production GL format, verifies initialization/no failure, closes it, then enters sketch editing. No graphics assertion was weakened."
+    }
+  },
+  "invalid_probe": {
+    "evidence": "startup-regression-probe.txt",
+    "reason": "Attempted numericEditing test function did not exist; not counted as a product test result."
+  },
+  "temporary_debug_instrumentation": "None; startup/save assertion messages are retained diagnostics.",
+  "canceled_preview_regression": {
+    "original_full_run": "docs/testing/artifacts/core-modeling/20261025T075641.079768Z/verification/verification.json",
+    "symptom": "module3.interaction could not finish the next sketch after canceling an in-flight PreviewSketches request.",
+    "hypotheses": [
+      "Stale reply retirement missing idle notification",
+      "Finish button hidden/disabled by layout changes",
+      "Preview phase surviving cancellation"
+    ],
+    "confirmed_cause": "Adding sketch previews to the generic stale-response filter retired the pending request without emitting changed. UI actions remained disabled although outstanding reached zero.",
+    "regression": "Existing real worker/UI interaction test now explicitly asserts the sketch action re-enables after canceled preview completion; it failed before the fix.",
+    "fix": "Emit changed when retiring a stale/canceled reply before pumping the next request; stale geometry still never installs.",
+    "evidence": [
+      "cancel-regression-red.txt",
+      "cancel-regression-green.txt"
+    ],
+    "prevention": "Keep assertions for both stale-data refusal and idle-control recovery at the same real worker/UI seam."
+  }
+}

@@ -1,0 +1,21 @@
+[1/8] Automatic MOC for target cad_desktop_ui
+[2/7] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[3/7] Linking CXX static library libcad_desktop_ui.a
+[4/7] Automatic MOC for target cm2_contracts
+[5/6] Building CXX object CMakeFiles/cm2_contracts.dir/tests/core_modeling/editing_contracts.cpp.o
+FAILED: [code=1] CMakeFiles/cm2_contracts.dir/tests/core_modeling/editing_contracts.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_TESTCASE_BUILDDIR="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug\"" -DQT_TESTCASE_SOURCEDIR="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_TESTLIB_LIB -DQT_WIDGETS_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm2_contracts_autogen/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtNetwork" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGLWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGL" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cm2_contracts.dir/tests/core_modeling/editing_contracts.cpp.o -MF CMakeFiles/cm2_contracts.dir/tests/core_modeling/editing_contracts.cpp.o.d -o CMakeFiles/cm2_contracts.dir/tests/core_modeling/editing_contracts.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/editing_contracts.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/editing_contracts.cpp:76:53: error: incomplete type 'cad::Viewport' named in nested name specifier
+   76 |                 QSignalSpy graphics(w.sceneView(), &Viewport::graphicsFailed);
+      |                                                     ^~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop/MainWindow.hpp:18:7: note: forward declaration of 'cad::Viewport'
+   18 | class Viewport;
+      |       ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/editing_contracts.cpp:86:42: error: member access into incomplete type 'Viewport'
+   86 |                     QVERIFY(w.sceneView()->graphicsDescription().contains("initialized 1"));
+      |                                          ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop/MainWindow.hpp:18:7: note: forward declaration of 'cad::Viewport'
+   18 | class Viewport;
+      |       ^
+2 errors generated.
+ninja: build stopped: subcommand failed.

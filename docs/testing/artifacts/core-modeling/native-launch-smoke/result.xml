@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TestCase name="Contracts">
+  <Environment>
+    <QtVersion>6.10.0</QtVersion>
+    <QtBuild>Qt 6.10.0 (arm64&#x002D;little_endian&#x002D;lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang&#x002D;2100.1.1.101))</QtBuild>
+    <QTestVersion>6.10.0</QTestVersion>
+  </Environment>
+  <TestFunction name="initTestCase">
+    <Incident type="pass" file="" line="0" />
+    <Duration msecs="0.018625"/>
+  </TestFunction>
+  <TestFunction name="nativeRelations">
+    <Incident type="fail" file="/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/contracts.cpp" line="200">
+      <Description><![CDATA['QTest::qWaitForWindowActive(&w)' returned FALSE. ()]]></Description>
+    </Incident>
+    <Incident type="fail" file="/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/contracts.cpp" line="89">
+      <Description><![CDATA['QTest::qWaitForWindowActive(&w)' returned FALSE. ()]]></Description>
+    </Incident>
+    <Duration msecs="11239.2"/>
+  </TestFunction>
+  <TestFunction name="cleanupTestCase">
+    <Incident type="pass" file="" line="0" />
+    <Duration msecs="0.019625"/>
+  </TestFunction>
+  <Duration msecs="11240.2"/>
+</TestCase>

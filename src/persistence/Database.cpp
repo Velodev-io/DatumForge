@@ -148,7 +148,9 @@ void Database::working() {
                   "StorageError", "Required WAL/FULL/foreign-key settings unavailable");
 }
 void backup(Database &source, Database &target, const Boundary &observer) {
-    source.exec("BEGIN");
+    const bool ownRead = sqlite3_get_autocommit(source.handle) != 0;
+    if (ownRead)
+        source.exec("BEGIN");
     try {
         source.scalar("SELECT revision FROM project_meta");
         auto *copy = sqlite3_backup_init(target.handle, "main", source.handle, "main");
@@ -167,9 +169,11 @@ void backup(Database &source, Database &target, const Boundary &observer) {
         auto finish = sqlite3_backup_finish(copy);
         sqlcheck(code, target.handle);
         sqlcheck(finish, target.handle);
-        source.exec("COMMIT");
+        if (ownRead)
+            source.exec("COMMIT");
     } catch (...) {
-        sqlite3_exec(source.handle, "ROLLBACK", nullptr, nullptr, nullptr);
+        if (ownRead)
+            sqlite3_exec(source.handle, "ROLLBACK", nullptr, nullptr, nullptr);
         throw;
     }
 }

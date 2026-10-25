@@ -68,6 +68,20 @@ void DisplayMesh::validate() const {
     for (const auto &i : instances) {
         require(!i.id.isEmpty() && !seen.contains(i.id) && finite(i.translation),
                 "instance identity/transform");
+        require(std::isfinite(i.rotation.scalar()) && std::isfinite(i.rotation.x()) &&
+                    std::isfinite(i.rotation.y()) && std::isfinite(i.rotation.z()) &&
+                    std::abs(i.rotation.lengthSquared() - 1) < 1e-5,
+                "normalized instance rotation");
+        require(i.firstTriangle >= 0 && i.firstTriangle <= triangleRoles.size() &&
+                    i.triangleCount >= -1 &&
+                    (i.triangleCount < 0
+                         ? i.firstTriangle == 0
+                         : i.triangleCount <= triangleRoles.size() - i.firstTriangle),
+                "instance triangle range");
+        require(
+            i.firstEdge >= 0 && i.firstEdge <= edgeIds.size() && i.edgeCount >= -1 &&
+                (i.edgeCount < 0 ? i.firstEdge == 0 : i.edgeCount <= edgeIds.size() - i.firstEdge),
+            "instance edge range");
         seen.insert(i.id);
     }
 }
@@ -89,7 +103,10 @@ PackedMesh pack(const DisplayMesh &mesh) {
     require(out.bytes.size() <= qsizetype(limits::segment), "display segment cap");
     auto &m = out.manifest;
     m.insert(QStringLiteral("transfer_id"), newId());
-    m.insert(QStringLiteral("format"), "xyz-f32le/u32le-v1");
+    bool extended = false;
+    for (auto &i : mesh.instances)
+        extended = extended || !i.rotation.isIdentity() || i.triangleCount >= 0 || i.edgeCount >= 0;
+    m.insert(QStringLiteral("format"), extended ? "xyz-f32le/u32le-v2" : "xyz-f32le/u32le-v1");
     m.insert(QStringLiteral("bytes"), out.bytes.size());
     m.insert(QStringLiteral("vertices"), mesh.vertices.size());
     m.insert(QStringLiteral("indices"), mesh.indices.size());
@@ -111,6 +128,17 @@ PackedMesh pack(const DisplayMesh &mesh) {
         for (float x : {i.translation.x(), i.translation.y(), i.translation.z()})
             v.append(double(x));
         item.insert(QStringLiteral("translation_mm"), v);
+        if (extended) {
+            item.insert(QStringLiteral("rotation_wxyz"),
+                        QCborArray{double(i.rotation.scalar()), double(i.rotation.x()),
+                                   double(i.rotation.y()), double(i.rotation.z())});
+            item.insert(QStringLiteral("first_triangle"), i.firstTriangle);
+            item.insert(QStringLiteral("triangle_count"),
+                        i.triangleCount < 0 ? mesh.triangleRoles.size() : i.triangleCount);
+            item.insert(QStringLiteral("first_edge"), i.firstEdge);
+            item.insert(QStringLiteral("edge_count"),
+                        i.edgeCount < 0 ? mesh.edgeIds.size() : i.edgeCount);
+        }
         instances.append(item);
     }
     m.insert(QStringLiteral("instances"), instances);
@@ -121,7 +149,8 @@ void manifestCheck(const QCborMap &m) {
     wire::keys(m, {"transfer_id", "format", "bytes", "vertices", "indices", "edges", "checksum",
                    "faces", "edge_ids", "bounds", "instances"});
     require(wire::uuid(wire::text(m, "transfer_id")) &&
-                wire::text(m, "format") == "xyz-f32le/u32le-v1",
+                QStringList{"xyz-f32le/u32le-v1", "xyz-f32le/u32le-v2"}.contains(
+                    wire::text(m, "format")),
             "transfer format");
     auto size = wire::integer(m, "bytes", limits::segment),
          v = wire::integer(m, "vertices", limits::segment / 12),
@@ -167,7 +196,11 @@ std::shared_ptr<const DisplayMesh> unpack(const QCborMap &m, const QByteArray &b
     for (const auto &x : m.value("instances").toArray()) {
         require(x.isMap(), "instance map");
         auto item = x.toMap();
-        wire::keys(item, {"id", "translation_mm"});
+        bool extended = wire::text(m, "format") == "xyz-f32le/u32le-v2";
+        wire::keys(item, extended ? QSet<QString>{"id", "translation_mm", "rotation_wxyz",
+                                                  "first_triangle", "triangle_count", "first_edge",
+                                                  "edge_count"}
+                                  : QSet<QString>{"id", "translation_mm"});
         auto v = item.value("translation_mm").toArray();
         require(v.size() == 3, "translation");
         for (const auto &f : v)
@@ -176,6 +209,24 @@ std::shared_ptr<const DisplayMesh> unpack(const QCborMap &m, const QByteArray &b
         out->instances.append(
             {wire::text(item, "id"),
              {float(v[0].toDouble()), float(v[1].toDouble()), float(v[2].toDouble())}});
+    }
+    if (wire::text(m, "format") == "xyz-f32le/u32le-v2") {
+        auto entries = m.value("instances").toArray();
+        for (int i = 0; i < entries.size(); ++i) {
+            auto item = entries[i].toMap();
+            auto q = item.value("rotation_wxyz").toArray();
+            require(q.size() == 4, "rotation coordinates");
+            for (auto n : q)
+                require((n.isDouble() || n.isInteger()) && std::isfinite(n.toDouble()),
+                        "finite rotation");
+            auto &o = out->instances[i];
+            o.rotation = QQuaternion(float(q[0].toDouble()), float(q[1].toDouble()),
+                                     float(q[2].toDouble()), float(q[3].toDouble()));
+            o.firstTriangle = int(wire::integer(item, "first_triangle", out->triangleRoles.size()));
+            o.triangleCount = int(wire::integer(item, "triangle_count", out->triangleRoles.size()));
+            o.firstEdge = int(wire::integer(item, "first_edge", out->edgeIds.size()));
+            o.edgeCount = int(wire::integer(item, "edge_count", out->edgeIds.size()));
+        }
     }
     out->validate();
     return out;

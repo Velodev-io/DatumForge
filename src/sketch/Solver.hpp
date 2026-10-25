@@ -8,6 +8,7 @@ struct Result {
     int freedom = -1;
     double maximumResidual = 0, lengthScale = 1;
     bool valid = false;
+    QCborArray referenceCandidates;
     QCborMap diagnostic() const;
 };
 Result solve(Sketch candidate, const Sketch *previous = nullptr);

@@ -1,6 +1,6 @@
 # Source builds and commands
 
-Module 0 experiments plus the authorized Modules 1–4 native workspace, persistence, sketch and exact feature foundation. `dependencies.lock.json` pins upstream source archives and extracted
+Module 0 experiments plus the authorized Modules 1–10 native workspace, persistence, sketch, exact feature and dependency/history foundation. `dependencies.lock.json` pins upstream source archives and extracted
 PlaneGCS files by SHA-256. Qt's archive was also checked against its official
 checksum. Source commit identities for OCCT/Eigen/FreeCAD are immutable. Ninja's
 tag archive is content-locked. Builds never select floating branches or silently
@@ -124,3 +124,71 @@ and local IPC permission. Physical-device, other-platform and full 8 GB resource
 acceptance remain separate gates. See [workspace evidence](../docs/testing/module-4.md).
 
 Module 4 feature verification: `python3 tools/verify_module4.py --native --clean` on the logged-in available Mac. Each run preserves logs under `docs/testing/artifacts/module-4/features-runs/`; latest feature status is separate from historical workspace evidence. Tests use marked disposable roots; no existing user app session is reused. See [Module 4 evidence](../docs/testing/module-4.md).
+
+Module 5 verification: `python3 tools/verify_module5.py --native --clean` on the
+logged-in available Mac. Timestamped runs under `docs/testing/artifacts/module-5/runs/`
+record the full suite, native history/repair plus prior-module regressions at five
+effective scales, static checks and a fresh source build. `module5_plan`,
+`module5_engine`, `module5_persistence`, `module5_b2` and `module5_contracts` test
+production dependency evaluation, actual OCCT topology changes, semantic checkpoint
+persistence, the frozen 100-feature/100-cycle B2 workload and isolated worker/UI
+lifecycle. B2 cache accounting does not establish physical-memory or full SRS
+performance acceptance. See [Module 5 evidence](../docs/testing/module-5.md) and
+[evaluation decisions](../docs/decisions/module-5-evaluation.md). Modules 6 and 7 were subsequently authorized; stop before Module 8.
+
+
+Module 6 verification:
+
+```sh
+python3 tools/verify_module6.py --native --clean
+python3 docs/scripts/check_specs.py --write-report
+```
+
+Timestamped evidence is preserved under `docs/testing/artifacts/module-6/runs/`.
+`module6_exchange`, `module6_persistence` and `module6_contracts` cover the real
+pinned translators, analytic B4 unit/geometry/loss variants, atomic source/feature
+storage, retention and revision gates, failure-safe export, portable closure and
+real worker/native UI cancellation/recovery. Cocoa runs use automated Qt file
+pickers at five effective scales on the available display. OS-native picker and
+physical-device checks remain separate. Sampled process footprints do not certify
+arbitrary parser expansion or full B4 budgets. See [Module 6 evidence](../docs/testing/module-6.md).
+Stop before Module 8; Module 6.1b/6.4c gates remain deferred.
+
+Module 7 assembly verification: `python3 tools/verify_module7.py --native --clean`.
+See [assembly contracts](../docs/decisions/module-7-assemblies.md) and
+[Module 7 evidence](../docs/testing/module-7.md). Module 6.1b/6.4c gates remain
+deferred; stop before Module 8.
+
+
+Modules 8–10 verification (explicitly authorized 22 October 2026):
+
+```sh
+python3 tools/verify_modules8_10.py --native --clean
+python3 docs/scripts/check_specs.py --write-report
+```
+
+Run from the logged-in available Mac with local socket and GUI access. Timestamped
+records under `docs/testing/artifacts/module-10/runs/` include the complete enabled
+CTest suite, B5 actual vector PDF and native PDFKit rendering, exact CAD crash
+matrix, cancellation/restart, five-scale Cocoa drawing/keyboard checks, prior
+native regressions, OS-enforced offline workflows, static checks and clean source
+reproduction. This uses the existing pinned dependency binaries, not an installed
+release. The earlier Module 8 stop boundaries above are historical; stop before
+Module 11. Module 6.1b/6.4c and 7.4c remain deferred and Blocked. See
+[Module 8](../docs/testing/module-8.md), [Module 9](../docs/testing/module-9.md),
+and [Module 10](../docs/testing/module-10.md) for exact verification scope.
+
+Centerpoint Arc follow-up: `python3 tools/verify_arc_interaction.py --native` records the complete CTest suite, changed-source Clang analysis, architecture/isolation, and five-scale Cocoa Centerpoint Arc workflows in marked disposable roots. Prior sketch native workflows are regressions at the endpoint scales. See [arc evidence](../docs/testing/module-3-centerpoint-arc.md). It does not restart a user app, certify physical input/installed builds, or start Module 11.
+
+All-method Arc follow-up: `python3 tools/verify_all_arcs.py --native` runs the complete suite, changed-source analysis, ownership/isolation and five effective Cocoa scales, including the EDP normal-arc exercise in mm/in. `ctest --preset macos-debug -R "module3.(input|solver|all_arcs)$" --output-on-failure` is the focused check. See [scope and outcomes](../docs/testing/module-3-all-arcs.md). Marked disposable roots only; no user app restart or installed/device acceptance is inferred.
+
+Core modeling: `python3 tools/verify_core_modeling.py --native` records the full
+enabled CTest suite, pinned format/Clang analysis, ownership, research/coverage
+checks and native CM1 plus the CM2 straight-line editing slice at five effective
+scales. Focused CM2 checks are `ctest --preset macos-debug -R '^cm2\.'
+--output-on-failure`. Native/IPC tests require the logged-in Mac and local socket
+access. `cm2.editing` checks analytical geometry, disclosure, IDs and persistence;
+`cm2.editing_contracts` checks real worker and native widget workflows. Both use
+marked disposable roots. See [CM2 contracts](../docs/decisions/core-modeling-cm2-editing.md)
+and [scoped evidence](../docs/testing/core-modeling.md). Remaining CM2 operations,
+other platforms, installed/device/resource acceptance and Module 11 remain open.

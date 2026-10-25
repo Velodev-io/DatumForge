@@ -1,5 +1,6 @@
 #pragma once
 #include "CommandRegistry.hpp"
+#include "diagnostics/Journal.hpp"
 #include "domain/WorkspaceState.hpp"
 #include <QComboBox>
 #include <QDoubleSpinBox>
@@ -18,6 +19,9 @@ class Viewport;
 class SketchPanel;
 class FeaturePanel;
 class HistoryPanel;
+class AssemblyPanel;
+class DrawingPanel;
+class DrawingCanvas;
 class MainWindow : public QMainWindow {
     Q_OBJECT
     CommandRegistry commands;
@@ -26,7 +30,17 @@ class MainWindow : public QMainWindow {
     Viewport *viewport = nullptr;
     SketchPanel *sketchPanel = nullptr;
     FeaturePanel *featurePanel = nullptr;
-    HistoryPanel *historyPanel=nullptr;
+    HistoryPanel *historyPanel = nullptr;
+    AssemblyPanel *assemblyPanel = nullptr;
+    DrawingPanel *drawingPanel = nullptr;
+    DrawingCanvas *drawingCanvas = nullptr;
+    std::unique_ptr<diagnostics::Journal> journal;
+    void buildInteractionUI(QString settingsFile);
+    void nameAccessibleWidgets();
+    void buildDrawingUI();
+    void refreshDrawingUI();
+    void buildAssemblyUI();
+    void refreshAssemblyUI();
     void refreshFeatures();
     QTreeWidget *tree = nullptr;
     QTabWidget *commandTabs = nullptr;
@@ -35,6 +49,7 @@ class MainWindow : public QMainWindow {
     QString treeActiveDocument;
     QLabel *editContext = nullptr;
     bool wasSketchEditing = false;
+    bool exchangeShown = false;
     void buildCommandTabs();
     void refreshCommandTabs();
     QTabBar *documents = nullptr;
@@ -48,6 +63,7 @@ class MainWindow : public QMainWindow {
     QComboBox *documentUnits = nullptr, *parameterDimension = nullptr, *parameterUnit = nullptr;
     QDoubleSpinBox *parameterValue = nullptr;
     QLabel *documentInfo = nullptr;
+    void buildExchangeUI();
     void buildProjectUI();
     void refreshProjectUI();
     bool confirmRecoverable(QString action);

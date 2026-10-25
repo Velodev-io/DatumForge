@@ -18,7 +18,7 @@ def main() -> int:
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     names = ["README.md", "SRS.md", "SDD.md", "TECH_SPEC.md",
-             "STEP_ZERO.md", "TRACEABILITY.md", "REFERENCES.md"]
+             "STEP_ZERO.md", "TRACEABILITY.md", "REFERENCES.md", "CORE_MODELING.md"]
     errors: list[str] = []
     texts: dict[str, str] = {}
     for name in names:
@@ -113,12 +113,30 @@ def main() -> int:
             errors.append("Partial Module 4 authorization must explicitly permit only 4.0a-c and stop before 4.1a")
         if 4 in authorized and (not authorization.get("module_4_authorization", {}).get("quote") or (5 not in authorized and authorization.get("stop_before_task") != "5.1a")):
             errors.append("Full Module 4 requires explicit user authorization and a stop before 5.1a")
-        if 5 in authorized and (not authorization.get("module_5_authorization", {}).get("quote") or authorization.get("stop_before_task") != "6.1a"):
+        if 5 in authorized and (not authorization.get("module_5_authorization", {}).get("quote") or (6 not in authorized and authorization.get("stop_before_task") != "6.1a")):
             errors.append("Module 5 requires explicit user authorization and a stop before 6.1a")
+        if 6 in authorized and (not authorization.get("module_6_authorization", {}).get("quote") or (7 not in authorized and authorization.get("stop_before_task") != "7.1a")):
+            errors.append("Module 6 requires explicit user authorization and a stop before 7.1a")
+        if 7 in authorized and (not authorization.get("module_7_authorization", {}).get("quote") or (8 not in authorized and authorization.get("stop_before_task") != "8.1a")):
+            errors.append("Module 7 requires explicit user authorization and a stop before 8.1a")
+        if any(module in authorized for module in (8,9,10)) and (not authorization.get("modules_8_10_authorization",{}).get("quote") or not {8,9,10}.issubset(authorized) or authorization.get("stop_before_module")!=11 or authorization.get("stop_before_task")!="11.1a"):
+            errors.append("Modules 8-10 require explicit authorization and a stop before Module 11")
         if any(int(task.split(".")[0]) not in authorized and task not in permitted_tasks for task in checked):
             errors.append("Checked task is outside the explicitly authorized module/task scope")
     if len(set(task_ids)) != len(task_ids):
         errors.append("Duplicate lettered implementation task IDs")
+    cm_text = texts.get("CORE_MODELING.md", "")
+    cm_tasks = re.findall(r"^- \[[ xX]\] \*\*(CM\d+\.[a-e]):", cm_text, re.MULTILINE)
+    cm_checked = re.findall(r"^- \[[xX]\] \*\*(CM\d+\.[a-e]):", cm_text, re.MULTILINE)
+    if cm_tasks != [f"CM{i}.{letter}" for i in range(10) for letter in "abcde"]:
+        errors.append("CM0-CM9 require ordered, unique lettered contracts a-e")
+    for task in cm_checked:
+        record = evidence.get(task, {}) if evidence_path.exists() else {}
+        if record.get("status") != "Pass" or not record.get("evidence"):
+            errors.append(f"Checked core-modeling task lacks Pass evidence: {task}")
+        for artifact in record.get("evidence", []):
+            if not (root.parent / artifact).is_file():
+                errors.append(f"Missing core-modeling evidence: {task} / {artifact}")
     for text, label in ((srs, "SRS"), (tech, "TECH_SPEC"), (step, "STEP_ZERO")):
         if "8 GB" not in text:
             errors.append(f"Missing 8 GB baseline in {label}")
@@ -127,7 +145,7 @@ def main() -> int:
         "scope": "Documentation structure only; no product acceptance tests executed",
         "checked_at_utc": datetime.now(timezone.utc).isoformat(),
         "status": "pass" if not errors else "fail",
-        "product_implementation": "Modules 1-4 scoped implementation on the available Mac; see task and module evidence",
+        "product_implementation": "Modules 1-10 scoped implementation on the available Mac; CM0-CM9 authorized and incomplete, with selected CM1 primitives/relations and CM2 straight-line editing slices; full acceptance remains Blocked",
         "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
         "documents": {name: {"sha256": hashlib.sha256(text.encode()).hexdigest(),
                              "lines": len(text.splitlines()), "words": len(text.split())}
@@ -135,6 +153,8 @@ def main() -> int:
         "requirements": len(requirements), "traceability_rows": len(trace),
         "modules": len(modules), "unchecked_engineering_tasks": len(task_ids) - len(checked),
         "completed_engineering_tasks": len(checked),
+        "core_modeling_tasks": len(cm_tasks),
+        "completed_core_modeling_tasks": len(cm_checked),
         "errors": errors,
     }
     if args.write_report:

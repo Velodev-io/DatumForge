@@ -2,12 +2,18 @@
 #include "Envelope.hpp"
 #include <QMap>
 #include <QMatrix4x4>
+#include <QQuaternion>
 #include <QVector3D>
 #include <memory>
 namespace cad {
 struct Instance {
     QString id;
     QVector3D translation;
+    QQuaternion rotation;
+    int firstTriangle = 0, triangleCount = -1, firstEdge = 0, edgeCount = -1;
+    QVector3D map(QVector3D point) const {
+        return rotation.rotatedVector(point) + translation;
+    }
 };
 struct DisplayMesh {
     QVector<QVector3D> vertices, edges;

@@ -1,0 +1,24 @@
+{
+  "status": "Pass: selected available-Mac layout review",
+  "source_identity": "source-identity.json",
+  "images": [
+    {
+      "path": "native-100/cm2-inside-disclosure.png",
+      "effective_dpr": 1
+    },
+    {
+      "path": "native-200/cm2-inside-disclosure.png",
+      "effective_dpr": 2
+    }
+  ],
+  "observations": [
+    "Both split line remnants and selected construction boundaries are visible after Zoom to fit.",
+    "Length relation and its expression, explicit removal checkbox, Apply and Cancel controls are legible without overlap.",
+    "PropertyManager scrolls; full numeric fields scroll horizontally. Source/method/boundary controls are above the shown scroll position.",
+    "Production OpenGL format and visible reference-renderer initialization are asserted before entering the sketch canvas; no graphics-error overlay is present."
+  ],
+  "limits": [
+    "Qt fixture selection and programmatic field/consent setup with native button/pointer events; not a manual physical-device or complete keyboard/assistive-technology study.",
+    "Two screenshot reviews do not certify all selections, fonts, hardware or platforms."
+  ]
+}

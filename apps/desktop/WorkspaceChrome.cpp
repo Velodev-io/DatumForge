@@ -10,6 +10,7 @@
 #include <QSignalBlocker>
 #include <QStatusBar>
 #include <QToolBar>
+#include <QToolButton>
 namespace cad {
 void MainWindow::buildCommandTabs() {
     auto *manager = findChild<QTabWidget *>("managerTabs");
@@ -45,9 +46,13 @@ void MainWindow::buildCommandTabs() {
     connect(remove, &QAction::triggered, sketchPanel, &SketchPanel::removeSelection);
     auto *group = new QActionGroup(this);
     group->setExclusive(true);
-    for (auto name : {"Select / drag", "Line", "Rectangle", "Circle", "Arc", "Polyline", "Point"}) {
+    for (auto name : {"Select / drag", "Line", "Rectangle", "Circle", "Arc", "3 Point Arc",
+                      "Tangent Arc", "Slot", "Ellipse", "EllipticalArc", "Parabola", "Spline",
+                      "Polyline", "Point", "Trim / extend"}) {
         auto *action =
-            add("sketch.tool." + QString(name), QString(name) == "Select / drag" ? "Select" : name);
+            add("sketch.tool." + QString(name), QString(name) == "Select / drag" ? "Select"
+                                                : QString(name) == "Arc"         ? "Centerpoint Arc"
+                                                                                 : name);
         action->setCheckable(true);
         group->addAction(action);
         connect(action, &QAction::triggered, this, [this, name] { sketchPanel->setTool(name); });
@@ -89,10 +94,55 @@ void MainWindow::buildCommandTabs() {
     };
     page("Features", {"sketch", "sketch.edit", "", "extrude", "revolve", "", "fillet", "chamfer",
                       "hole", "pattern", "circularPattern", "mirror"});
-    page("Sketch", {"sketch", "sketch.edit", "", "sketch.tool.Select / drag", "sketch.tool.Line",
-                    "sketch.tool.Rectangle", "sketch.tool.Circle", "sketch.tool.Arc",
-                    "sketch.tool.Polyline", "sketch.tool.Point", "", "sketch.dimension",
-                    "sketch.delete", "sketch.grid", "", "sketch.finish"});
+    page("Sketch", {"sketch",
+                    "sketch.edit",
+                    "",
+                    "sketch.tool.Select / drag",
+                    "sketch.tool.Line",
+                    "sketch.tool.Rectangle",
+                    "sketch.tool.Slot",
+                    "sketch.tool.Ellipse",
+                    "sketch.tool.Spline",
+                    "sketch.tool.Trim / extend",
+                    "sketch.tool.Circle",
+                    "sketch.tool.Arc",
+                    "sketch.tool.Polyline",
+                    "sketch.tool.Point",
+                    "",
+                    "sketch.dimension",
+                    "sketch.delete",
+                    "sketch.grid",
+                    "",
+                    "sketch.finish"});
+    auto *sketchBar = commandTabs->findChild<QToolBar *>("commandsSketch");
+    auto *arcButton =
+        qobject_cast<QToolButton *>(sketchBar->widgetForAction(commands.get("sketch.tool.Arc")));
+    auto *ellipseButton = qobject_cast<QToolButton *>(
+        sketchBar->widgetForAction(commands.get("sketch.tool.Ellipse")));
+    auto *ellipseMenu = new QMenu(ellipseButton);
+    for (auto name : {"Ellipse", "EllipticalArc", "Parabola"}) {
+        auto action = commands.get("sketch.tool." + QString(name));
+        ellipseMenu->addAction(action);
+        connect(action, &QAction::triggered, ellipseButton,
+                [ellipseButton, action] { ellipseButton->setDefaultAction(action); });
+    }
+    ellipseButton->setMenu(ellipseMenu);
+    ellipseButton->setPopupMode(QToolButton::MenuButtonPopup);
+    ellipseButton->setObjectName("sketchConicFlyout");
+    auto *arcMenu = new QMenu(arcButton);
+    for (auto name : {"Arc", "3 Point Arc", "Tangent Arc"}) {
+        auto *action = commands.get("sketch.tool." + QString(name));
+        arcMenu->addAction(action);
+        connect(action, &QAction::triggered, arcButton,
+                [arcButton, action] { arcButton->setDefaultAction(action); });
+    }
+    connect(sketchPanel, &SketchPanel::toolChanged, arcButton, [this, arcButton](QString name) {
+        if (name == "Arc" || name == "3 Point Arc" || name == "Tangent Arc")
+            arcButton->setDefaultAction(commands.get("sketch.tool." + name));
+    });
+    arcButton->setObjectName("sketchArcFlyout");
+    arcButton->setMenu(arcMenu);
+    arcButton->setPopupMode(QToolButton::MenuButtonPopup);
     page("Evaluate",
          {"measure", "fit", "", "view.Isometric", "view.Front", "view.Top", "view.Right"});
     toolbar->addWidget(commandTabs);
@@ -157,9 +207,17 @@ void MainWindow::refreshCommandTabs() {
         a->setProperty("unavailableReason", enabled ? QString() : why);
         a->setToolTip(enabled ? a->text() : a->text() + " — " + why);
     };
-    for (auto name : {"Select / drag", "Line", "Rectangle", "Circle", "Arc", "Polyline", "Point"}) {
+    for (auto name : {"Select / drag", "Line", "Rectangle", "Circle", "Arc", "3 Point Arc",
+                      "Tangent Arc", "Slot", "Ellipse", "EllipticalArc", "Parabola", "Spline",
+                      "Polyline", "Point", "Trim / extend"}) {
         auto *a = commands.get("sketch.tool." + QString(name));
         available(a->objectName(), editing && idle, "Start or edit a sketch");
+        if (editing && idle && QString(name) == "3 Point Arc")
+            a->setToolTip("3 Point Arc — click start/end, move to bend, click to finish");
+        if (editing && idle && QString(name) == "Tangent Arc")
+            a->setToolTip("Tangent Arc — choose a line/arc endpoint, move or drag to size");
+        if (QString(name) == "Arc" && editing && idle)
+            a->setToolTip("Centerpoint Arc — click center, move/click start, move/click end");
         QSignalBlocker block(a);
         a->setChecked(editing && sketchPanel->toolName() == name);
     }
@@ -188,5 +246,7 @@ void MainWindow::refreshCommandTabs() {
                                          : ""));
     propertyPages->setCurrentIndex(state().projectOpen ? (part ? 1 : 2) : 0);
     refreshFeatures();
+    refreshAssemblyUI();
+    refreshDrawingUI();
 }
 } // namespace cad
