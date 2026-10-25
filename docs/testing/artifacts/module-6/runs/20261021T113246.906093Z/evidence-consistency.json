@@ -1,0 +1,15 @@
+{
+  "status": "Pass",
+  "tested_source_sha256": "65f95249614ea220ecd49d182479f0e66fdade9c954e97e711984703560213d0",
+  "all_recorded_source_inputs_unchanged": true,
+  "dependency_manifest_sha256": "f8bef677dd2d82978d1be6666ff9ae5535b151b1f9fce9ccdd2325134ef2c336",
+  "tool_manifest_sha256": "dfd04751f6b7d7991125c8cb66135150b863d67ef4dee266384403bc2b6cc612",
+  "qt_patch_sha256": "b47fd041cbcaf1c74491f17d53a54b0ebb2bb45466c3239afa72713ee7a9bf10",
+  "B4_recipe_sha256": "644219838fbd6626d0bada2d0b5ab48f85dd774d0f0ff4dea19699466d4c00a2",
+  "full_enabled_tests": 39,
+  "native_failed_or_skipped": 0,
+  "clean_enabled_tests": 39,
+  "release_acceptance": "Blocked; see module evidence",
+  "documentation_validation": "Pass: 56 requirements, 13 modules, 88 evidence-backed checked tasks",
+  "local_markdown_links": "Pass"
+}

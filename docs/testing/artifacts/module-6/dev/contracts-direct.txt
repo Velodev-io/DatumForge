@@ -1,0 +1,22 @@
+********* Start testing of ExchangeContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+INFO   : ExchangeContracts::initTestCase() entering
+PASS   : ExchangeContracts::initTestCase()
+INFO   : ExchangeContracts::lifecycle() entering
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-NYAFrl/source.step(350 ents)  Write  Done[0m
+QWARN  : ExchangeContracts::lifecycle() QOpenGLWidget is not supported on this platform.
+QWARN  : ExchangeContracts::lifecycle() qt.qpa.fonts: Populating font family aliases took 115 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : ExchangeContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : ExchangeContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : ExchangeContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : ExchangeContracts::lifecycle() This plugin does not support propagateSizeHints()
+Received signal 15 (SIGTERM)
+         lifecycle function time: 48537ms, total time: 48537ms

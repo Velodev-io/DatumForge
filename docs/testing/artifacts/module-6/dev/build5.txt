@@ -1,0 +1,44 @@
+[1/50] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[2/50] Building CXX object CMakeFiles/cad_exchange.dir/src/exchange/Exchange.cpp.o
+[3/50] Linking CXX static library libcad_exchange.a
+[4/50] Linking CXX static library libcad_persistence.a
+[5/50] Automatic MOC for target cad_desktop_ui
+[6/50] Linking CXX executable cad-worker
+[7/50] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[8/50] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[9/50] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[10/50] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[11/50] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+[12/50] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ExchangeUI.cpp.o
+[13/50] Linking CXX static library libcad_desktop_ui.a
+[14/50] Automatic MOC for target module1_contracts
+[15/49] Building CXX object CMakeFiles/cad-desktop.dir/apps/desktop/main.cpp.o
+[16/49] Automatic MOC for target module2_contracts
+[17/48] Automatic MOC for target module3_contracts
+[18/47] Automatic MOC for target module4_workspace
+[19/46] Automatic MOC for target module4_contracts
+[20/45] Automatic MOC for target module5_contracts
+[21/44] Building CXX object CMakeFiles/module2_contracts.dir/tests/module2/contracts.cpp.o
+[22/44] Building CXX object CMakeFiles/module1_contracts.dir/tests/module1/contracts.cpp.o
+[23/44] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[24/44] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[25/44] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[26/44] Building CXX object CMakeFiles/module5_contracts.dir/tests/module5/contracts.cpp.o
+[27/44] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[28/44] Linking CXX executable module1_contracts
+[29/44] Linking CXX executable module2_storage
+[30/44] Linking CXX executable module2_contracts
+[31/44] Linking CXX executable module2_fault_worker
+[32/44] Linking CXX executable module2_dispatch
+[33/44] Linking CXX executable module3_input
+[34/44] Linking CXX executable module3_persistence
+[35/44] Linking CXX executable module3_contracts
+[36/44] Linking CXX executable module4_workspace
+[37/44] Linking CXX executable module4_contracts
+[38/44] Linking CXX executable module4_persistence
+[39/44] Linking CXX executable module4_variants
+[40/44] Linking CXX executable module5_persistence
+[41/44] Linking CXX executable module5_contracts
+[42/44] Linking CXX executable module5_b2
+[43/44] Linking CXX executable module6_exchange
+[44/44] Linking CXX executable module6_persistence

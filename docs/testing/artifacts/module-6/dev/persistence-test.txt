@@ -1,0 +1,13 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 39: module6.persistence
+1/1 Test #39: module6.persistence ..............***Failed    0.67 sec
+FAIL: Refused unmarked/non-disposable test root
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.67 sec
+
+The following tests FAILED:
+	 39 - module6.persistence (Failed)
+Errors while running CTest

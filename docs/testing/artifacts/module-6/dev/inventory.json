@@ -1,0 +1,225 @@
+{
+  "scope": "Preserved development failures/results; final verification is separate",
+  "files": [
+    {
+      "path": "build.txt",
+      "bytes": 7853,
+      "sha256": "a2edc8fc178d328a6aa1a4f0a2159909101dc3bc3f5d7d50e21ff4d3be09b517"
+    },
+    {
+      "path": "build10.txt",
+      "bytes": 1074,
+      "sha256": "1a951984987c1d717c8fd5bb596c8ce0340399c528b004c6df3155badf27cd10"
+    },
+    {
+      "path": "build11.txt",
+      "bytes": 4940,
+      "sha256": "6b56a9bd1fe1066dc20c818626d7727c98e12c12f382158dc1383c774d71039d"
+    },
+    {
+      "path": "build12.txt",
+      "bytes": 965,
+      "sha256": "4fc4f6aaebef5581af1159e040531933b37cc0e4f60bfd321ec2ea26a3339e22"
+    },
+    {
+      "path": "build13.txt",
+      "bytes": 1414,
+      "sha256": "a6f82bd3a2d219c7fc0ea931c12d5e6fb5e1a74f4ce907bb8fc53c4c36cd5000"
+    },
+    {
+      "path": "build14.txt",
+      "bytes": 1595,
+      "sha256": "f890ec6be94952d50f5e80ba5fe598bd512e93afa322a51cdb673aaf89dbe667"
+    },
+    {
+      "path": "build15.txt",
+      "bytes": 644,
+      "sha256": "4c54871f0093a78c99d7dfd48e8e73a3b4933af29903f64f773631c914914de5"
+    },
+    {
+      "path": "build2.txt",
+      "bytes": 7315,
+      "sha256": "4d2c50c50420dc70f1855103e52a9ea1369ec66f3850727554c13fa8390a9412"
+    },
+    {
+      "path": "build3.txt",
+      "bytes": 3390,
+      "sha256": "593f626f6299612320a101f4fd61d19719ac7054eca69ac19ecc88ed415adab2"
+    },
+    {
+      "path": "build4.txt",
+      "bytes": 1833,
+      "sha256": "45e317b2b509b370b711f89bcb47f0eef032b25d3533d2b195b08d6da412ee9e"
+    },
+    {
+      "path": "build5.txt",
+      "bytes": 2796,
+      "sha256": "edd9c6a6f35604f26dad6713a160715b2d8cf0fe2337aaada3a3ff1a4d018203"
+    },
+    {
+      "path": "build6.txt",
+      "bytes": 2039,
+      "sha256": "54dd928a7102dc39bbfa9bc1f2483bbb74621746c6359af2a87e1609e74d9468"
+    },
+    {
+      "path": "build7.txt",
+      "bytes": 877,
+      "sha256": "77f00f6bc36344895977688ef8ff32e068ffc1c7db40a2bd45e6e97c1b0723c1"
+    },
+    {
+      "path": "build8.txt",
+      "bytes": 924,
+      "sha256": "e59018698b21253829b1040ce1ac32de810e307f8c187d50afdcfcaf999a9e64"
+    },
+    {
+      "path": "build9.txt",
+      "bytes": 318,
+      "sha256": "5a9a7f1bebe22a982134be65530711683631db92cdb929067a9f358d5e6a041d"
+    },
+    {
+      "path": "changed-analyzer.txt",
+      "bytes": 260,
+      "sha256": "72f55ea420631fe2554af64fbe849e42878c45e8c7e2f3a7fcdff84a11eb26a0"
+    },
+    {
+      "path": "configure.txt",
+      "bytes": 163,
+      "sha256": "724b79a846e28e1e1e7c6ed5afedf5118e946394495234558a82805508488c27"
+    },
+    {
+      "path": "configure2.txt",
+      "bytes": 163,
+      "sha256": "724b79a846e28e1e1e7c6ed5afedf5118e946394495234558a82805508488c27"
+    },
+    {
+      "path": "configure3.txt",
+      "bytes": 163,
+      "sha256": "724b79a846e28e1e1e7c6ed5afedf5118e946394495234558a82805508488c27"
+    },
+    {
+      "path": "configure4.txt",
+      "bytes": 163,
+      "sha256": "724b79a846e28e1e1e7c6ed5afedf5118e946394495234558a82805508488c27"
+    },
+    {
+      "path": "configure6.txt",
+      "bytes": 163,
+      "sha256": "724b79a846e28e1e1e7c6ed5afedf5118e946394495234558a82805508488c27"
+    },
+    {
+      "path": "contracts-direct.txt",
+      "bytes": 1647,
+      "sha256": "b323aa544adb7d8f295ef8d94672a17bd225f7952681d0d3170a9002e821e9f5"
+    },
+    {
+      "path": "contracts-picker.txt",
+      "bytes": 2264,
+      "sha256": "bd8929e7080002c69ffed10a46334eeef193b4a15a15c2a2ac7799289c1431e2"
+    },
+    {
+      "path": "contracts-picker2.txt",
+      "bytes": 33731,
+      "sha256": "c7ce141c4b53031bbfa948ced29c087e527576d617edc1d8b9b85efbbce81ea9"
+    },
+    {
+      "path": "exchange-test.txt",
+      "bytes": 268,
+      "sha256": "5a55d785a6de7d1a9ca2c12acb0594466402de286cb2d3f6159eeba5bebf7bce"
+    },
+    {
+      "path": "format-write.txt",
+      "bytes": 86,
+      "sha256": "b7e7e7aeafb6acd0bbde352a29ebca5b61b58d7d24a285f800022e329a14d5ea"
+    },
+    {
+      "path": "format-write2.txt",
+      "bytes": 86,
+      "sha256": "b7e7e7aeafb6acd0bbde352a29ebca5b61b58d7d24a285f800022e329a14d5ea"
+    },
+    {
+      "path": "format-write3.txt",
+      "bytes": 86,
+      "sha256": "b7e7e7aeafb6acd0bbde352a29ebca5b61b58d7d24a285f800022e329a14d5ea"
+    },
+    {
+      "path": "format-write4.txt",
+      "bytes": 86,
+      "sha256": "b7e7e7aeafb6acd0bbde352a29ebca5b61b58d7d24a285f800022e329a14d5ea"
+    },
+    {
+      "path": "format-write5.txt",
+      "bytes": 86,
+      "sha256": "b7e7e7aeafb6acd0bbde352a29ebca5b61b58d7d24a285f800022e329a14d5ea"
+    },
+    {
+      "path": "format-write6.txt",
+      "bytes": 86,
+      "sha256": "b7e7e7aeafb6acd0bbde352a29ebca5b61b58d7d24a285f800022e329a14d5ea"
+    },
+    {
+      "path": "module6-test2.txt",
+      "bytes": 512,
+      "sha256": "a19c08189c07fc907643930f55153a8dc280fcc6d28bacc2c61ed6bb60766684"
+    },
+    {
+      "path": "module6-test3.txt",
+      "bytes": 2931,
+      "sha256": "bf4b1b9e2ab58263c571688a4de93c62a6fd8aea5bdd210d24785e9d36854aa0"
+    },
+    {
+      "path": "module6-test4.txt",
+      "bytes": 2101,
+      "sha256": "9efeac6ed317f9e26e41b317c7e4dfd98e7c7697f8cd2901f44d1b4c769f439a"
+    },
+    {
+      "path": "module6-test5.txt",
+      "bytes": 2627,
+      "sha256": "7ad9eaa89a4433e3cecd6347f640e38297391e57af02ae28b89ed57344c2f242"
+    },
+    {
+      "path": "module6-test6.txt",
+      "bytes": 474,
+      "sha256": "616d32b2bc797002813b889ae77fb7edc76a1475e9133e0453f56faca89ea76a"
+    },
+    {
+      "path": "module6-test7.txt",
+      "bytes": 474,
+      "sha256": "65b89d0779f9737240a36541013cfce517bd40db3423baee39c799510522425f"
+    },
+    {
+      "path": "native-preview/exchange-native.json",
+      "bytes": 352,
+      "sha256": "24f231c69c19e1ab6122b9c6e4d3dc33a0a9181739dbca0d15be738de8624785"
+    },
+    {
+      "path": "native-preview/exchange.png",
+      "bytes": 252190,
+      "sha256": "0ae1b1b5a04f9b15d09b57571dc44c94d83ffe30da67684bc909d6abb6a161bb"
+    },
+    {
+      "path": "native-preview.txt",
+      "bytes": 2670,
+      "sha256": "6ba31833e43f8c103c3e11b391a879266db3937103c6a02e0de405b9ffeba40d"
+    },
+    {
+      "path": "persistence-test.txt",
+      "bytes": 410,
+      "sha256": "ea9eb7c74666797c0b865153bd7f66517574aa7bbb04c7374fbd7f2ec6c1173f"
+    },
+    {
+      "path": "spec-in-progress.txt",
+      "bytes": 557,
+      "sha256": "d6db6c45104036ce2ea59a5bafb702ba02cdb17fd8cc89144b374677ee9d349d"
+    },
+    {
+      "path": "spec-in-progress2.txt",
+      "bytes": 557,
+      "sha256": "ef6c7bb6c06c9abfb7184405c00a0085662486d577eaeea7e1f5d9bb5837ff6f"
+    },
+    {
+      "path": "worker-analyzer.txt",
+      "bytes": 34,
+      "sha256": "d330ccec5fa1224047071d51827634c5f52045c9cb47561afadc5e6e73bf6b6a"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "scope": "Module 6 available-Mac exchange and portable Part copies; stop before Module 7",
+  "status": "Fail",
+  "artifacts": "docs/testing/artifacts/module-6/runs/20261021T112417.181749Z",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.5246029169938993
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 57.53212579101091
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 150.4603928340075
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.632294750015717
+    },
+    {
+      "name": "static-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/static_analysis.py",
+        "build/macos-debug/compile_commands.json"
+      ],
+      "exit_code": 1,
+      "seconds": 90.63420958298957
+    }
+  ],
+  "host": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "physical_ram_bytes": 8589934592,
+    "cpu": "Apple M2"
+  },
+  "blocked": [
+    "Windows/Linux/other GPU/minimum macOS/installed builds",
+    "Physical-device and assistive-technology acceptance",
+    "Unique shared/GPU memory and arbitrary adversarial kernel peak allocation guarantees",
+    "Full B4 physical-memory budgets and large industrial corpus",
+    "Assembly/drawing closure (Modules 7\u20138)",
+    "Native OS file-picker automation (Qt pickers are exercised on Cocoa)",
+    "Physical full-volume/power-loss storage matrix"
+  ]
+}

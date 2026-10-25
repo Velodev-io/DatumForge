@@ -1,0 +1,8 @@
+{
+    "dpr": 1.75,
+    "physical_device": "Blocked: automated input",
+    "renderer": "OpenGL 4.1; DPR 1.75; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+    "revision": 2,
+    "scope": "Qt file pickers on native Cocoa widgets; source import, unit-tagged export, closure inspection, portable copy and source-independent reopen",
+    "status": "Pass"
+}

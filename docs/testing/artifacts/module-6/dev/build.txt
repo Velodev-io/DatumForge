@@ -1,0 +1,56 @@
+[1/127] Building CXX object CMakeFiles/cad_protocol.dir/src/protocol/Mesh.cpp.o
+[2/127] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[3/127] Linking CXX static library libcad_protocol.a
+[4/127] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Editing.cpp.o
+[5/127] Automatic MOC for target cad_client
+[6/127] Building CXX object CMakeFiles/cad_expressions.dir/src/domain/Expressions.cpp.o
+[7/127] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[8/127] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[9/127] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[10/127] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[11/127] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/qp_eq.cpp.o
+[12/127] Linking CXX static library libcad_sketch_model.a
+[13/127] Linking CXX static library libcad_expressions.a
+[14/127] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/Model.cpp.o
+[15/127] Building CXX object CMakeFiles/cad_evaluation_plan.dir/src/evaluation/Plan.cpp.o
+[16/127] Building CXX object CMakeFiles/cad_client.dir/cad_client_autogen/mocs_compilation.cpp.o
+[17/127] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[18/127] Linking CXX static library libcad_planegcs.a
+[19/127] Linking CXX static library libcad_client.a
+[20/127] Building C object CMakeFiles/cad_sqlite.dir/.deps/src/sqlite/sqlite3.c.o
+[21/127] Linking CXX static library libcad_feature_model.a
+[22/127] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[23/127] Linking CXX static library libcad_evaluation_plan.a
+[24/127] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[25/127] Linking C static library libcad_sqlite.a
+[26/127] Building CXX object CMakeFiles/cad_exchange.dir/src/exchange/Exchange.cpp.o
+[27/127] Building CXX object CMakeFiles/cad_geometry.dir/src/geometry/occt/ReferenceScene.cpp.o
+[28/127] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Database.cpp.o
+[29/127] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[30/127] Linking CXX static library libcad_sketch_solver.a
+[31/127] Linking CXX static library libcad_part.a
+[32/127] Linking CXX static library libcad_exchange.a
+[33/127] Automatic MOC for target cad_desktop_ui
+[34/127] Linking CXX static library libcad_geometry.a
+[35/127] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[36/127] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[37/127] Linking CXX static library libcad_persistence.a
+[38/127] Building CXX object CMakeFiles/module1_adversary.dir/tests/module1/adversary.cpp.o
+[39/127] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[40/127] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[41/127] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[42/127] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+[43/127] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[44/127] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[45/127] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[46/127] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[47/127] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+[48/127] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o
+[49/127] Linking CXX static library libcad_desktop_ui.a
+[50/127] Linking CXX executable cad-worker
+FAILED: [code=1] cad-worker 
+: && /usr/bin/c++ -g -mmacosx-version-min=13.0 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o -o cad-worker -L"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib" -Wl,-rpath,"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib"  libcad_geometry.a  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libQt6Network.6.10.0.dylib"  libcad_persistence.a  libcad_part.a  libcad_protocol.a  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libQt6Gui.6.10.0.dylib"  -framework AppKit  -framework OpenGL  -framework ImageIO  -framework Metal  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKFillet.7.9.2.dylib"  libcad_evaluation_plan.a  -lcad_features  libcad_sqlite.a  libcad_sketch_solver.a  libcad_planegcs.a  libcad_expressions.a  libcad_exchange.a  libcad_feature_model.a  libcad_sketch_model.a  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libQt6Core.6.10.0.dylib"  -framework IOKit  -framework DiskArbitration  -framework UniformTypeIdentifiers  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKDESTEP.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKDEIGES.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKBool.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKXSBase.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKDESTL.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKDE.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKXCAF.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKVCAF.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKCAF.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKBO.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKPrim.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKLCAF.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKCDF.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKV3d.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKMesh.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKShHealing.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKService.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKHLR.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKTopAlgo.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKGeomAlgo.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKBRep.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKGeomBase.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKG3d.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKG2d.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKMath.7.9.2.dylib"  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libTKernel.7.9.2.dylib" && :
+ld: library 'cad_features' not found
+clang++: error: linker command failed with exit code 1 (use -v to see invocation)
+[51/127] Building CXX object CMakeFiles/slice_worker.dir/tests/native/slice_worker.cpp.o
+ninja: build stopped: subcommand failed.

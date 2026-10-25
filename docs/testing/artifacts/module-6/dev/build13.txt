@@ -1,0 +1,26 @@
+[1/27] Automatic MOC for target cad_desktop_ui
+[2/26] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ExchangeUI.cpp.o
+[3/26] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[4/26] Linking CXX static library libcad_persistence.a
+[5/26] Linking CXX static library libcad_desktop_ui.a
+[6/26] Linking CXX executable cad-worker
+[7/26] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[8/26] Linking CXX executable module1_contracts
+[9/26] Linking CXX executable module2_storage
+[10/26] Linking CXX executable module2_contracts
+[11/26] Linking CXX executable module2_fault_worker
+[12/26] Linking CXX executable module2_dispatch
+[13/26] Linking CXX executable module3_persistence
+[14/26] Linking CXX executable module3_input
+[15/26] Linking CXX executable module3_contracts
+[16/26] Linking CXX executable module4_workspace
+[17/26] Linking CXX executable module4_persistence
+[18/26] Building CXX object CMakeFiles/module6_exchange.dir/tests/module6/exchange.cpp.o
+[19/26] Linking CXX executable module4_contracts
+[20/26] Linking CXX executable module4_variants
+[21/26] Linking CXX executable module5_persistence
+[22/26] Linking CXX executable module5_b2
+[23/26] Linking CXX executable module6_exchange
+[24/26] Linking CXX executable module5_contracts
+[25/26] Linking CXX executable module6_persistence
+[26/26] Linking CXX executable module6_contracts
