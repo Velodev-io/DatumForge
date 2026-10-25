@@ -1,0 +1,18 @@
+{
+  "status": "Pass",
+  "scope": "Manually inspected saved 100% and 200% assembly screenshots only",
+  "artifacts": [
+    "native-100/assembly.png",
+    "native-200/assembly.png"
+  ],
+  "observations": [
+    "Native Assembly command tab and left PropertyManager are legible at both reviewed scales",
+    "Position/rotation fields remain in a scrollable content pane; fixed Preview/Accept/Cancel controls remain visible",
+    "Shared overlapping geometry renders without observed graphical corruption; viewport and document tabs remain visible",
+    "Combo boxes use standard text elision; lower state and mate controls require scrolling"
+  ],
+  "limits": [
+    "Other native workflows are covered by test logs rather than full screenshot review",
+    "Physical input and assistive technology acceptance remain Blocked"
+  ]
+}

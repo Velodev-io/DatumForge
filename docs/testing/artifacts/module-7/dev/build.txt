@@ -1,0 +1,10 @@
+[1/98] Building CXX object CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o
+FAILED: [code=1] CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o -MF CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o.d -o CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/assembly/Model.cpp'
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/assembly/Model.cpp:1:
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/assembly/Model.hpp:3:10: fatal error: 'QQuaternion' file not found
+    3 | #include <QQuaternion>
+      |          ^~~~~~~~~~~~~
+1 error generated.
+[2/98] Building CXX object CMakeFiles/cad_protocol.dir/src/protocol/Mesh.cpp.o
+ninja: build stopped: subcommand failed.

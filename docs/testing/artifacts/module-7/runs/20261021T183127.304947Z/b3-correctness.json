@@ -1,0 +1,12 @@
+{
+    "definitions": 10,
+    "fixture_sha256": "a34fcd90dc0994a6d6bf95414969a70630506cceab9a7acfdf7405cb6d8d3ecb",
+    "mates": 99,
+    "occurrences": 100,
+    "remaining_freedom": 495,
+    "scope": "Frozen B3 correctness, shared geometry, unload coarse cache and recovery; not full physical memory/FPS/platform acceptance",
+    "seconds": 13.172,
+    "status": "Pass",
+    "unique_display_triangles": 6600,
+    "visible_triangles": 66000
+}

@@ -1,0 +1,11 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 28: module4.workspace
+1/3 Test #28: module4.workspace ................   Passed    2.35 sec
+    Start 39: module6.persistence
+2/3 Test #39: module6.persistence ..............   Passed    1.13 sec
+    Start 43: module7.persistence
+3/3 Test #43: module7.persistence ..............   Passed    2.13 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Total Test time (real) =   5.61 sec

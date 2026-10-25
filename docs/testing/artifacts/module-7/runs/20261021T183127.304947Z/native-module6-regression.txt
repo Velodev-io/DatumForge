@@ -1,0 +1,28 @@
+********* Start testing of ExchangeContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : ExchangeContracts::initTestCase()
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-CGiPXr/source.step(350 ents)  Write  Done[0m
+QINFO  : ExchangeContracts::nativeExchange() File workflow "exchangeImport" "/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-CGiPXr/source.step"
+QINFO  : ExchangeContracts::nativeExchange() Picker selection "/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-CGiPXr" QList("/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-CGiPXr/source.step")
+QINFO  : ExchangeContracts::nativeExchange() Picker result 1 false
+QINFO  : ExchangeContracts::nativeExchange() Workflow settled "exchangeImport" ""
+QINFO  : ExchangeContracts::nativeExchange() File workflow "exchangeExport" "/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-CGiPXr/export.step"
+QINFO  : ExchangeContracts::nativeExchange() Picker selection "/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-CGiPXr" QList("/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-CGiPXr/export.step")
+QINFO  : ExchangeContracts::nativeExchange() Picker result 1 false
+QINFO  : ExchangeContracts::nativeExchange() Workflow settled "exchangeExport" ""
+QINFO  : ExchangeContracts::nativeExchange() File workflow "exchangeCopy" "/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-CGiPXr/portable.cadproj"
+QINFO  : ExchangeContracts::nativeExchange() Picker selection "/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-CGiPXr" QList("/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-CGiPXr/portable.cadproj")
+QINFO  : ExchangeContracts::nativeExchange() Picker result 1 false
+QINFO  : ExchangeContracts::nativeExchange() Workflow settled "exchangeCopy" ""
+PASS   : ExchangeContracts::nativeExchange()
+PASS   : ExchangeContracts::cleanupTestCase()
+Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted, 4122ms
+********* Finished testing of ExchangeContracts *********

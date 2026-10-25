@@ -1,0 +1,17 @@
+[1/98] Linking CXX static library libcad_protocol.a
+[2/98] Automatic MOC for target cad_client
+[3/98] Building CXX object CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o
+FAILED: [code=1] CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o -MF CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o.d -o CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/assembly/Model.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/assembly/Model.cpp:22:69: error: call to member function 'value' is ambiguous
+   22 |  for(auto key:{"grounded","hidden","suppressed","unloaded"})check(m.value(key).isBool(),"InvalidInput","Explicit occurrence state required");
+      |                                                                   ~~^~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcbormap.h:270:16: note: candidate function
+  270 |     QCborValue value(const QString & key) const
+      |                ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcbormap.h:272:16: note: candidate function
+  272 |     QCborValue value(const QCborValue &key) const
+      |                ^
+1 error generated.
+[4/98] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+ninja: build stopped: subcommand failed.

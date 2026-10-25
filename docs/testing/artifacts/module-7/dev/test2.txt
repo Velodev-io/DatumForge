@@ -1,0 +1,21 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 41: module7.model
+1/5 Test #41: module7.model ....................   Passed    0.83 sec
+    Start 42: module7.geometry
+2/5 Test #42: module7.geometry .................   Passed    0.71 sec
+    Start 43: module7.persistence
+3/5 Test #43: module7.persistence ..............***Failed    1.40 sec
+FAIL: Hole center must be inside a planar target face, normal to its support
+
+    Start 44: module7.b3
+4/5 Test #44: module7.b3 .......................   Passed   14.71 sec
+    Start 45: module7.contracts
+5/5 Test #45: module7.contracts ................   Passed    3.49 sec
+
+80% tests passed, 1 tests failed out of 5
+
+Total Test time (real) =  21.15 sec
+
+The following tests FAILED:
+	 43 - module7.persistence (Failed)
+Errors while running CTest

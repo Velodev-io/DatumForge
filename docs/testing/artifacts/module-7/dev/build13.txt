@@ -1,0 +1,31 @@
+[1/27] Building CXX object CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o
+[2/27] Linking CXX static library libcad_assembly_model.a
+[3/27] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[4/27] Building CXX object CMakeFiles/module7_persistence.dir/tests/module7/persistence.cpp.o
+[5/27] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[6/27] Linking CXX executable module1_contracts
+[7/27] Linking CXX executable module2_storage
+[8/27] Linking CXX executable module2_contracts
+[9/27] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[10/27] Linking CXX executable module2_fault_worker
+[11/27] Linking CXX executable module3_input
+[12/27] Linking CXX executable module3_persistence
+[13/27] Linking CXX executable module3_contracts
+[14/27] Linking CXX executable module4_workspace
+[15/27] Linking CXX executable module4_contracts
+[16/27] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[17/27] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[18/27] Linking CXX executable module5_persistence
+[19/27] Linking CXX executable module5_contracts
+[20/27] Linking CXX executable module5_b2
+[21/27] Linking CXX executable module6_persistence
+[22/27] Linking CXX executable module6_contracts
+[23/27] Linking CXX executable module7_model
+[24/27] Linking CXX executable module7_geometry
+[25/27] Linking CXX executable module7_persistence
+[26/27] Linking CXX executable module7_b3
+[27/27] Linking CXX executable module7_contracts

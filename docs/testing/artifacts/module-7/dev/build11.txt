@@ -1,0 +1,85 @@
+[1/113] Building CXX object CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o
+[2/113] Building CXX object CMakeFiles/cad_protocol.dir/src/protocol/Mesh.cpp.o
+[3/113] Linking CXX static library libcad_protocol.a
+[4/113] Automatic MOC for target cad_client
+[5/113] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[6/113] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[7/113] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[8/113] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[9/113] Linking CXX static library libcad_assembly_model.a
+[10/113] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[11/113] Building CXX object CMakeFiles/cad_client.dir/cad_client_autogen/mocs_compilation.cpp.o
+[12/113] Building CXX object CMakeFiles/cad_assembly_solver.dir/src/assembly/Solver.cpp.o
+[13/113] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[14/113] Linking CXX static library libcad_client.a
+[15/113] Linking CXX static library libcad_planegcs.a
+[16/113] Linking CXX static library libcad_part.a
+[17/113] Linking CXX static library libcad_assembly_solver.a
+[18/113] Building CXX object CMakeFiles/cad_assembly_geometry.dir/src/assembly/Geometry.cpp.o
+[19/113] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[20/113] Building CXX object CMakeFiles/cad_geometry.dir/src/geometry/occt/ReferenceScene.cpp.o
+[21/113] Linking CXX static library libcad_sketch_solver.a
+[22/113] Linking CXX static library libcad_assembly_geometry.a
+[23/113] Automatic MOC for target cad_desktop_ui
+[24/113] Linking CXX static library libcad_geometry.a
+[25/113] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[26/113] Building CXX object CMakeFiles/module1_adversary.dir/tests/module1/adversary.cpp.o
+[27/113] Linking CXX static library libcad_persistence.a
+[28/113] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[29/113] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[30/113] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[31/113] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+[32/113] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[33/113] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[34/113] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[35/113] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[36/113] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+[37/113] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o
+[38/113] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ExchangeUI.cpp.o
+[39/113] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyUI.cpp.o
+[40/113] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[41/113] Linking CXX executable module1_adversary
+[42/113] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyPanel.cpp.o
+[43/113] Linking CXX static library libcad_desktop_ui.a
+[44/113] Automatic MOC for target module1_contracts
+[45/112] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[46/112] Automatic MOC for target module3_input
+[47/111] Automatic MOC for target module2_contracts
+[48/110] Automatic MOC for target module3_contracts
+[49/109] Automatic MOC for target module4_workspace
+[50/108] Automatic MOC for target module4_contracts
+[51/107] Automatic MOC for target module5_contracts
+[52/106] Automatic MOC for target module6_contracts
+[53/105] Automatic MOC for target module7_contracts
+[54/105] Building CXX object CMakeFiles/cad-desktop.dir/apps/desktop/main.cpp.o
+[55/105] Building CXX object CMakeFiles/module2_storage.dir/tests/module2/storage.cpp.o
+[56/105] Building CXX object CMakeFiles/module2_fault_worker.dir/tests/module2/fault_worker.cpp.o
+[57/105] Building CXX object CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o
+[58/105] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[59/105] Building CXX object CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o
+[60/105] Building CXX object CMakeFiles/module4_persistence.dir/tests/module4/persistence.cpp.o
+[61/105] Building CXX object CMakeFiles/module4_variants.dir/tests/module4/variants.cpp.o
+[62/105] Building CXX object CMakeFiles/module5_engine.dir/tests/module5/engine.cpp.o
+[63/105] Building CXX object CMakeFiles/module5_persistence.dir/tests/module5/persistence.cpp.o
+[64/105] Building CXX object CMakeFiles/module5_b2.dir/tests/module5/b2.cpp.o
+[65/105] Building CXX object CMakeFiles/module6_persistence.dir/tests/module6/persistence.cpp.o
+[66/105] Building CXX object CMakeFiles/module7_model.dir/tests/module7/model.cpp.o
+[67/105] Building CXX object CMakeFiles/module7_geometry.dir/tests/module7/geometry.cpp.o
+[68/105] Building CXX object CMakeFiles/module7_persistence.dir/tests/module7/persistence.cpp.o
+[69/105] Building CXX object CMakeFiles/module7_b3.dir/tests/module7/b3.cpp.o
+FAILED: [code=1] CMakeFiles/module7_b3.dir/tests/module7/b3.cpp.o 
+/usr/bin/c++ -DCAD_SOURCE_ROOT="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/src/sqlite" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/module7_b3.dir/tests/module7/b3.cpp.o -MF CMakeFiles/module7_b3.dir/tests/module7/b3.cpp.o.d -o CMakeFiles/module7_b3.dir/tests/module7/b3.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module7/b3.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module7/b3.cpp:66:29: error: no member named 'decode' in namespace 'cad::features'; did you mean 'QStringDecoder::decode'?
+   66 |             auto features = features::decode(b1.features());
+      |                             ^~~~~~~~~~~~~~~~
+      |                             QStringDecoder::decode
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qstringconverter.h:113:37: note: 'QStringDecoder::decode' declared here
+  113 |     EncodedData<const QByteArray &> decode(const QByteArray &ba)
+      |                                     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module7/b3.cpp:66:39: error: call to non-static member function without an object argument
+   66 |             auto features = features::decode(b1.features());
+      |                             ~~~~~~~~~~^~~~~~
+2 errors generated.
+[70/105] Building CXX object CMakeFiles/module1_contracts.dir/tests/module1/contracts.cpp.o
+ninja: build stopped: subcommand failed.

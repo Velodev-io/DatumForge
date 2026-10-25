@@ -1,0 +1,8 @@
+********* Start testing of AssemblyContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : AssemblyContracts::initTestCase()
+FAIL!  : AssemblyContracts::nativeAssembly() '!drag.empty()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module7/contracts.cpp(168)]
+PASS   : AssemblyContracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 6033ms
+********* Finished testing of AssemblyContracts *********
