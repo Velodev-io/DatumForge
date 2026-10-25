@@ -1,0 +1,110 @@
+{
+  "scope": "Actual available-Mac Part/sketch/history/exchange/assembly/drawing IPC workflows and frozen B1/B2/B3/B4/B5 engine/store acceptance corpora with OS-denied IPv4/IPv6 network; headless UI, not installed release",
+  "profile": "(version 1) (allow default) (deny network* (remote ip \"*:*\")) (deny network* (local ip \"*:*\"))",
+  "steps": [
+    {
+      "name": "network-denial-probe",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tools/offline_workflows.py",
+        "--probe"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "module3",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "shapeEditing"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "module4",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_contracts",
+        "lifecycle"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "module5",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module5_contracts",
+        "lifecycle"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "module6",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module6_contracts",
+        "lifecycle"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "module7",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module7_contracts",
+        "lifecycle"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "module8",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module8_contracts",
+        "lifecycle"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frozen-module3_solver",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_solver"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frozen-module4_geometry",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_geometry"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frozen-module5_b2",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module5_b2",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/offline/module5_b2.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frozen-module6_exchange",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module6_exchange"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frozen-module7_b3",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module7_b3",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/offline/module7_b3.json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "frozen-module8_drawing",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module8_drawing",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/offline/B5-portable-updated.pdf",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/offline/B5.json"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "status": "Pass"
+}

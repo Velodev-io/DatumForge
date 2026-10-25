@@ -1,0 +1,28 @@
+{
+  "status": "Pass",
+  "scope": "Manual artifact review of actual rendered B5 PDF pages and saved Cocoa UI screenshots; numerical/native workflow results are separate logs.",
+  "reviewed": [
+    "pdf/page-1.png",
+    "pdf/page-2.png",
+    "native-100/drawing.png",
+    "native-100/interaction.png",
+    "native-200/drawing.png",
+    "native-200/interaction.png"
+  ],
+  "references": [
+    "research/ui-atlas/UI_DESIGN_NOTES.md",
+    "research/ui-atlas/images/img-012.jpg",
+    "research/ui-atlas/images/img-079.webp"
+  ],
+  "observations": [
+    "Both PDF pages show complete intended projections, dimension/text and BOM; no visible page clipping or raster substitution. The Part sheet shows 80.000 mm with linear witness/tick lines; Assembly sheet shows ten stable Part identifiers at quantity ten.",
+    "Native screenshots retain top commands/search and contextual tabs, left Model/Properties, central sheet, optional right resources and bottom document/save/job context. Qualitative atlas placement only; original native design, no exact pixel-parity claim.",
+    "Drawing edit inputs and mutation buttons visibly disabled outside an active draft; sheet navigation and Edit drawing remain available. Enabled-draft/accept/cancel behavior is asserted in native tests.",
+    "Preview/Accept/Cancel footer remains visible outside the scrolling property contents; screenshots show readable current/save/recovery labels at reviewed scales."
+  ],
+  "limits": [
+    "Manual screenshot subset is 100 and 200 percent on one available Retina display. Automated Cocoa runs cover five effective scales; independent displays/devices unrun.",
+    "Actual VoiceOver/NVDA/Orca, Windows/Linux/minimum macOS/other GPU, installed build, OS-native picker automation and full physical/shared/GPU/resource acceptance remain Blocked or Not run.",
+    "PDFKit page/text/raster checks and C++ measured-versus-paper scale assertions are separate from this visual review."
+  ]
+}

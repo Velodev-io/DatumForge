@@ -1,0 +1,2 @@
+[1/2] Building CXX object CMakeFiles/module8_drawing.dir/tests/module8/drawing.cpp.o
+[2/2] Linking CXX executable module8_drawing

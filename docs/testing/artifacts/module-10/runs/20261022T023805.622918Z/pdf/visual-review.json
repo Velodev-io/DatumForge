@@ -1,0 +1,13 @@
+{
+  "status": "Pass",
+  "scope": "Manually inspected actual final post-portable/update PDF page-1.png and page-2.png",
+  "observations": [
+    "B1 front/projected/isometric geometry, visible/hidden line distinctions and 80 mm dimension/witness/tick lines are readable",
+    "B3 grid and isometric view are complete within the sheet, with ten stable-ID BOM rows each quantity 10",
+    "Footer sheet names, scales and units are legible; no observed clipping, overlapping text or raster corruption"
+  ],
+  "limits": [
+    "Two ASCII-text B5 pages on available Mac only",
+    "Numerical scale/page geometry is tested separately; arbitrary fonts, drafting standards and print devices are not certified"
+  ]
+}

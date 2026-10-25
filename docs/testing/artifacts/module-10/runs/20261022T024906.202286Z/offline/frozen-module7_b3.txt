@@ -1,0 +1,2 @@
+B3: 100 occurrences, 10 B1 exact definitions, 99 mates, 495 free dimensions, shared display, coarse unload, undo, save and recovery passed
+PASS

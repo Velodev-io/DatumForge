@@ -1,0 +1,23 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 46: module8.drawing
+1/3 Test #46: module8.drawing ..................***Failed   10.90 sec
+[DEBUG-b5] Front: Current 
+[DEBUG-b5] Top: Current 
+[DEBUG-b5] Isometric: Current 
+[DEBUG-b5] Current: 
+[DEBUG-b5] Front: Current 
+[DEBUG-b5] Isometric: Unresolved Drawing vector point admission exceeded
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module8/drawing.cpp:43: result.value("current").toBool()
+
+    Start 47: module8.contracts
+2/3 Test #47: module8.contracts ................   Passed    2.06 sec
+    Start 48: module8.geometry
+3/3 Test #48: module8.geometry .................   Passed    0.08 sec
+
+67% tests passed, 1 tests failed out of 3
+
+Total Test time (real) =  13.04 sec
+
+The following tests FAILED:
+	 46 - module8.drawing (Failed)
+Errors while running CTest

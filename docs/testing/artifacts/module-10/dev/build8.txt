@@ -1,0 +1,5 @@
+[1/6] Automatic MOC for target module10_contracts
+[2/5] Building CXX object CMakeFiles/module10_hardening.dir/tests/module10/hardening.cpp.o
+[3/5] Linking CXX executable module10_hardening
+[4/5] Building CXX object CMakeFiles/module10_contracts.dir/tests/module10/contracts.cpp.o
+[5/5] Linking CXX executable module10_contracts

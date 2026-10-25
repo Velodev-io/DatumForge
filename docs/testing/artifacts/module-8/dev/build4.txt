@@ -1,0 +1,41 @@
+[1/139] Automatic MOC for target cad_client
+[2/138] Building C object CMakeFiles/cad_sqlite.dir/.deps/src/sqlite/sqlite3.c.o
+[3/138] Linking CXX static library libcad_planegcs.a
+[4/138] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[5/138] Linking CXX static library libcad_client.a
+[6/138] Building CXX object CMakeFiles/cad_exchange.dir/src/exchange/Exchange.cpp.o
+[7/138] Linking CXX static library libcad_assembly_geometry.a
+[8/138] Linking CXX static library libcad_drawing_model.a
+[9/138] Linking CXX static library libcad_drawing_paint.a
+[10/138] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[11/138] Linking C static library libcad_sqlite.a
+[12/138] Building CXX object CMakeFiles/cad_drawing_geometry.dir/src/drawing/Geometry.cpp.o
+FAILED: [code=1] CMakeFiles/cad_drawing_geometry.dir/src/drawing/Geometry.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_drawing_geometry.dir/src/drawing/Geometry.cpp.o -MF CMakeFiles/cad_drawing_geometry.dir/src/drawing/Geometry.cpp.o.d -o CMakeFiles/cad_drawing_geometry.dir/src/drawing/Geometry.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/drawing/Geometry.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/drawing/Geometry.cpp:47:87: error: no matching member function for call to 'Project'
+   47 |         HLRAlgo_Projector projector(axes(v->orientation));Standard_Real x,y;projector.Project(point,x,y);
+      |                                                                             ~~~~~~~~~~^~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade/HLRAlgo_Projector.hxx:101:24: note: candidate function not viable: requires 2 arguments, but 3 were provided
+  101 |   Standard_EXPORT void Project(const gp_Pnt& P, gp_Pnt2d& Pout) const;
+      |                        ^       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade/HLRAlgo_Projector.hxx:104:24: note: candidate function not viable: requires 4 arguments, but 3 were provided
+  104 |   Standard_EXPORT void Project(const gp_Pnt&  P,
+      |                        ^       ~~~~~~~~~~~~~~~~~
+  105 |                                Standard_Real& X,
+      |                                ~~~~~~~~~~~~~~~~~
+  106 |                                Standard_Real& Y,
+      |                                ~~~~~~~~~~~~~~~~~
+  107 |                                Standard_Real& Z) const;
+      |                                ~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade/HLRAlgo_Projector.hxx:110:24: note: candidate function not viable: requires 4 arguments, but 3 were provided
+  110 |   Standard_EXPORT void Project(const gp_Pnt& P,
+      |                        ^       ~~~~~~~~~~~~~~~~
+  111 |                                const gp_Vec& D1,
+      |                                ~~~~~~~~~~~~~~~~~
+  112 |                                gp_Pnt2d&     Pout,
+      |                                ~~~~~~~~~~~~~~~~~~~
+  113 |                                gp_Vec2d&     D1out) const;
+      |                                ~~~~~~~~~~~~~~~~~~~
+1 error generated.
+[13/138] Building CXX object CMakeFiles/cad_geometry.dir/src/geometry/occt/ReferenceScene.cpp.o
+ninja: build stopped: subcommand failed.

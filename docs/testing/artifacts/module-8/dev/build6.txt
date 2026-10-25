@@ -1,0 +1,83 @@
+[1/64] Automatic MOC for target cad_client
+[2/62] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/62] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/62] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/62] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[6/62] Automatic MOC for target cad_desktop_ui
+[7/62] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[8/62] Linking CXX static library libcad_planegcs.a
+[9/62] Linking CXX static library libcad_sketch_solver.a
+[10/62] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[11/62] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[12/62] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DrawingUI.cpp.o
+[13/62] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[14/62] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[15/62] Linking CXX executable solver_spike
+[16/62] Linking CXX executable module2_storage
+[17/62] Linking CXX executable module2_fault_worker
+[18/62] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DrawingPanel.cpp.o
+[19/62] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[20/62] Linking CXX executable module3_persistence
+[21/62] Linking CXX static library libcad_desktop_ui.a
+[22/62] Linking CXX executable module3_solver
+[23/62] Automatic MOC for target module1_contracts
+[24/61] Automatic MOC for target module2_contracts
+[25/60] Automatic MOC for target module3_input
+[26/59] Automatic MOC for target module3_contracts
+[27/58] Automatic MOC for target module4_workspace
+[28/57] Automatic MOC for target module4_contracts
+[29/56] Automatic MOC for target module5_contracts
+[30/55] Automatic MOC for target module6_contracts
+[31/54] Automatic MOC for target module7_contracts
+[32/53] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[33/53] Linking CXX executable module1_contracts
+[34/53] Linking CXX executable module2_contracts
+[35/53] Linking CXX executable module3_input
+[36/53] Linking CXX executable module3_contracts
+[37/53] Linking CXX executable module4_workspace
+[38/53] Automatic MOC for target module8_contracts
+[39/53] Building CXX object CMakeFiles/module8_contracts.dir/module8_contracts_autogen/mocs_compilation.cpp.o
+[40/53] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[41/53] Linking CXX executable module4_contracts
+[42/53] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[43/53] Linking CXX executable module5_persistence
+[44/53] Linking CXX executable module5_b2
+[45/53] Linking CXX executable module5_contracts
+[46/53] Linking CXX executable module6_persistence
+[47/53] Linking CXX executable module6_contracts
+[48/53] Linking CXX executable module7_persistence
+[49/53] Linking CXX executable module7_b3
+[50/53] Linking CXX executable module7_contracts
+[51/53] Linking CXX executable module8_drawing
+[52/53] Building CXX object CMakeFiles/module8_contracts.dir/tests/module8/contracts.cpp.o
+FAILED: [code=1] CMakeFiles/module8_contracts.dir/tests/module8/contracts.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_TESTCASE_BUILDDIR="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug\"" -DQT_TESTCASE_SOURCEDIR="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_TESTLIB_LIB -DQT_WIDGETS_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module8_contracts_autogen/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtNetwork" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGLWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGL" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/module8_contracts.dir/tests/module8/contracts.cpp.o -MF CMakeFiles/module8_contracts.dir/tests/module8/contracts.cpp.o.d -o CMakeFiles/module8_contracts.dir/tests/module8/contracts.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module8/contracts.cpp'
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module8/contracts.cpp:1:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module8/../module4/Fixture.hpp:2:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/features/Model.hpp:2:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/sketch/Sketch.hpp:2:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/domain/Documents.hpp:2:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/protocol/Envelope.hpp:2:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/protocol/Framing.hpp:4:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/QCborArray:1:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcborarray.h:8:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcborvalue.h:11:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qdatetime.h:8:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcalendar.h:10:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qlocale.h:8:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qvariant.h:26:
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qobject.h:160:23: error: static assertion failed due to requirement 'QtPrivate::HasQ_OBJECT_Macro<cad::DrawingCanvas>::Value': No Q_OBJECT in the class passed to QObject::findChild
+  160 |         static_assert(QtPrivate::HasQ_OBJECT_Macro<ObjType>::Value,
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qobject.h:180:16: note: in instantiation of function template specialization 'QObject::findChild<cad::DrawingCanvas *>' requested here
+  180 |         return findChild<T>({}, options);
+      |                ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module8/contracts.cpp:38:232: note: in instantiation of function template specialization 'QObject::findChild<cad::DrawingCanvas *>' requested here
+   38 |         if(native){auto out=qEnvironmentVariable("CAD_ARTIFACT_DIR");QVERIFY(!out.isEmpty());QVERIFY(QDir().mkpath(out));QVERIFY(w.grab().save(out+"/drawing.png"));QVERIFY(QFile::copy(pdf,out+"/native-drawing.pdf"));auto *canvas=w.findChild<DrawingCanvas *>();QVERIFY(canvas->isVisible());QCOMPARE(w.size(),QSize(1280,800));}
+      |                                                                                                                                                                                                                                        ^
+1 error generated.
+ninja: build stopped: subcommand failed.

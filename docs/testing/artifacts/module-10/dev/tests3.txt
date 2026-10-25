@@ -1,0 +1,33 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 18: module2.crash_matrix
+1/6 Test #18: module2.crash_matrix .............   Passed   20.22 sec
+    Start 47: module8.contracts
+2/6 Test #47: module8.contracts ................   Passed    2.79 sec
+    Start 50: module9.interaction
+3/6 Test #50: module9.interaction ..............   Passed    1.46 sec
+    Start 51: module10.crash_matrix
+4/6 Test #51: module10.crash_matrix ............   Passed   19.56 sec
+    Start 52: module10.hardening
+5/6 Test #52: module10.hardening ...............***Failed    0.77 sec
+FAIL: A canonical UUID is required
+
+    Start 53: module10.contracts
+6/6 Test #53: module10.contracts ...............***Failed   30.74 sec
+********* Start testing of FaultContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : FaultContracts::initTestCase()
+FAIL!  : FaultContracts::cancellationAndRestart() 'wait([&]{return restarted&&c.ready();})' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module10/contracts.cpp(19)]
+PASS   : FaultContracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 30278ms
+********* Finished testing of FaultContracts *********
+
+
+67% tests passed, 2 tests failed out of 6
+
+Total Test time (real) =  75.56 sec
+
+The following tests FAILED:
+	 52 - module10.hardening (Failed)
+	 53 - module10.contracts (Failed)
+Errors while running CTest

@@ -1,0 +1,223 @@
+{
+  "status": "Pass",
+  "count": 27,
+  "cases": [
+    {
+      "kind": "Part",
+      "action": "edit",
+      "stage": "before_compute",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 1.2203952500130981
+    },
+    {
+      "kind": "Part",
+      "action": "edit",
+      "stage": "after_compute",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.598684124997817
+    },
+    {
+      "kind": "Part",
+      "action": "edit",
+      "stage": "before_commit",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.5964262910129037
+    },
+    {
+      "kind": "Part",
+      "action": "edit",
+      "stage": "after_commit",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.5963645840238314
+    },
+    {
+      "kind": "Part",
+      "action": "save",
+      "stage": "snapshot_chunk",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7382665839977562
+    },
+    {
+      "kind": "Part",
+      "action": "save",
+      "stage": "snapshot_validated",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7346424999996088
+    },
+    {
+      "kind": "Part",
+      "action": "save",
+      "stage": "before_publication",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7622750829905272
+    },
+    {
+      "kind": "Part",
+      "action": "save",
+      "stage": "after_publication",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7740508749848232
+    },
+    {
+      "kind": "Part",
+      "action": "save",
+      "stage": "save_recorded",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7508838750072755
+    },
+    {
+      "kind": "Assembly",
+      "action": "edit",
+      "stage": "before_compute",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.6004328329872806
+    },
+    {
+      "kind": "Assembly",
+      "action": "edit",
+      "stage": "after_compute",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.5970070000039414
+    },
+    {
+      "kind": "Assembly",
+      "action": "edit",
+      "stage": "before_commit",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.6025439999939408
+    },
+    {
+      "kind": "Assembly",
+      "action": "edit",
+      "stage": "after_commit",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.607075541978702
+    },
+    {
+      "kind": "Assembly",
+      "action": "save",
+      "stage": "snapshot_chunk",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7412638340028934
+    },
+    {
+      "kind": "Assembly",
+      "action": "save",
+      "stage": "snapshot_validated",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7415546670090407
+    },
+    {
+      "kind": "Assembly",
+      "action": "save",
+      "stage": "before_publication",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7519967920088675
+    },
+    {
+      "kind": "Assembly",
+      "action": "save",
+      "stage": "after_publication",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7467426669900306
+    },
+    {
+      "kind": "Assembly",
+      "action": "save",
+      "stage": "save_recorded",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7527343329857104
+    },
+    {
+      "kind": "Drawing",
+      "action": "edit",
+      "stage": "before_compute",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.6308597500028554
+    },
+    {
+      "kind": "Drawing",
+      "action": "edit",
+      "stage": "after_compute",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.6303087090200279
+    },
+    {
+      "kind": "Drawing",
+      "action": "edit",
+      "stage": "before_commit",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.6314198329928331
+    },
+    {
+      "kind": "Drawing",
+      "action": "edit",
+      "stage": "after_commit",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.6266710829804651
+    },
+    {
+      "kind": "Drawing",
+      "action": "save",
+      "stage": "snapshot_chunk",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7584042499947827
+    },
+    {
+      "kind": "Drawing",
+      "action": "save",
+      "stage": "snapshot_validated",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7696208750130609
+    },
+    {
+      "kind": "Drawing",
+      "action": "save",
+      "stage": "before_publication",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7917009999800939
+    },
+    {
+      "kind": "Drawing",
+      "action": "save",
+      "stage": "after_publication",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.7840229169814847
+    },
+    {
+      "kind": "Drawing",
+      "action": "save",
+      "stage": "save_recorded",
+      "termination": "SIGKILL",
+      "status": "Pass",
+      "seconds": 0.779123582993634
+    }
+  ],
+  "limits": "Actual local filesystem and process kill; physical power loss, full volume exhaustion and Windows/Linux remain Blocked"
+}

@@ -1,0 +1,7 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 53: module10.contracts
+1/1 Test #53: module10.contracts ...............   Passed    2.08 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   2.08 sec

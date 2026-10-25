@@ -1,0 +1,30 @@
+[1/26] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/26] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/26] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/26] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[5/26] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[6/26] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[7/26] Linking CXX static library libcad_planegcs.a
+[8/26] Linking CXX static library libcad_sketch_solver.a
+[9/26] Linking CXX executable solver_spike
+[10/26] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[11/26] Linking CXX executable module2_storage
+[12/26] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[13/26] Linking CXX executable module2_fault_worker
+[14/26] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[15/26] Linking CXX executable module3_solver
+[16/26] Linking CXX executable module3_persistence
+[17/26] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[18/26] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[19/26] Linking CXX executable module5_persistence
+[20/26] Linking CXX executable module5_b2
+[21/26] Linking CXX executable module6_persistence
+[22/26] Linking CXX executable module7_persistence
+[23/26] Linking CXX executable module7_b3
+[24/26] Linking CXX executable module8_drawing
+[25/26] Linking CXX executable module10_fault_worker
+[26/26] Linking CXX executable module10_hardening

@@ -1,0 +1,58 @@
+[1/56] Automatic MOC for target cad_client
+[2/55] Building CXX object CMakeFiles/cad_diagnostics.dir/src/diagnostics/Journal.cpp.o
+[3/55] Linking CXX static library libcad_diagnostics.a
+[4/55] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[5/55] Linking CXX static library libcad_client.a
+[6/55] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[7/55] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[8/55] Linking CXX static library libcad_persistence.a
+[9/55] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[10/55] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[11/55] Automatic MOC for target module10_contracts
+[12/54] Building CXX object CMakeFiles/module2_storage.dir/tests/module2/storage.cpp.o
+[13/54] Building CXX object CMakeFiles/module2_fault_worker.dir/tests/module2/fault_worker.cpp.o
+[14/54] Building CXX object CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o
+[15/54] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[16/54] Building CXX object CMakeFiles/module4_persistence.dir/tests/module4/persistence.cpp.o
+[17/54] Building CXX object CMakeFiles/module4_variants.dir/tests/module4/variants.cpp.o
+[18/54] Building CXX object CMakeFiles/module5_persistence.dir/tests/module5/persistence.cpp.o
+[19/54] Building CXX object CMakeFiles/module5_b2.dir/tests/module5/b2.cpp.o
+[20/54] Building CXX object CMakeFiles/module6_persistence.dir/tests/module6/persistence.cpp.o
+[21/54] Building CXX object CMakeFiles/module7_persistence.dir/tests/module7/persistence.cpp.o
+[22/54] Building CXX object CMakeFiles/module7_b3.dir/tests/module7/b3.cpp.o
+[23/54] Building CXX object CMakeFiles/module10_fault_worker.dir/tests/module10/fault_worker.cpp.o
+[24/54] Building CXX object CMakeFiles/module8_drawing.dir/tests/module8/drawing.cpp.o
+[25/54] Building CXX object CMakeFiles/module10_hardening.dir/tests/module10/hardening.cpp.o
+[26/54] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[27/54] Linking CXX executable module1_contracts
+[28/54] Building CXX object CMakeFiles/module10_contracts.dir/tests/module10/contracts.cpp.o
+[29/54] Linking CXX executable module2_storage
+[30/54] Linking CXX executable module2_contracts
+[31/54] Linking CXX executable module2_fault_worker
+[32/54] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[33/54] Linking CXX executable module3_persistence
+[34/54] Linking CXX executable module3_input
+[35/54] Linking CXX executable module3_contracts
+[36/54] Linking CXX executable module4_workspace
+[37/54] Linking CXX executable module4_contracts
+[38/54] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[39/54] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[40/54] Linking CXX executable module5_persistence
+[41/54] Linking CXX executable module5_contracts
+[42/54] Linking CXX executable module5_b2
+[43/54] Linking CXX executable module6_contracts
+[44/54] Linking CXX executable module6_persistence
+[45/54] Linking CXX executable module7_persistence
+[46/54] Linking CXX executable module7_b3
+[47/54] Linking CXX executable module7_contracts
+[48/54] Linking CXX executable module8_drawing
+[49/54] Linking CXX executable module8_contracts
+[50/54] Linking CXX executable module9_privacy
+[51/54] Linking CXX executable module9_interaction
+[52/54] Linking CXX executable module10_fault_worker
+[53/54] Linking CXX executable module10_hardening
+[54/54] Linking CXX executable module10_contracts

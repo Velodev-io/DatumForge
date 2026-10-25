@@ -1,0 +1,20 @@
+[1/93] Automatic MOC for target cad_client
+[2/93] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/93] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/93] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/93] Building CXX object CMakeFiles/cad_drawing_paint.dir/src/drawing/Paint.cpp.o
+[6/93] Building CXX object CMakeFiles/cad_diagnostics.dir/src/diagnostics/Journal.cpp.o
+FAILED: [code=1] CMakeFiles/cad_diagnostics.dir/src/diagnostics/Journal.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_diagnostics.dir/src/diagnostics/Journal.cpp.o -MF CMakeFiles/cad_diagnostics.dir/src/diagnostics/Journal.cpp.o.d -o CMakeFiles/cad_diagnostics.dir/src/diagnostics/Journal.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/diagnostics/Journal.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/diagnostics/Journal.cpp:15:75: error: call to 'qBound' is ambiguous
+   15 |     QJsonObject row{{"command",command},{"status",status},{"milliseconds",qBound<qint64>(0,ms,86400000)},{"transfer_bytes",qBound<qint64>(0,bytes,256LL<<20)},{"utc",QDateTime::currentDateTimeUtc().toString(Qt::ISODate)}};
+      |                                                                           ^~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qminmax.h:58:46: note: candidate function [with T = long long, U = int]
+   58 | constexpr inline QTypeTraits::Promoted<T, U> qBound(const U &min, const T &val, const T &max)
+      |                                              ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qminmax.h:51:46: note: candidate function [with T = long long, U = int]
+   51 | constexpr inline QTypeTraits::Promoted<T, U> qBound(const T &min, const T &val, const U &max)
+      |                                              ^
+1 error generated.
+[7/93] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+ninja: build stopped: subcommand failed.

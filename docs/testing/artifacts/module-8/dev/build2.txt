@@ -1,0 +1,16 @@
+[1/138] Automatic MOC for target cad_client
+[2/138] Building CXX object CMakeFiles/cad_drawing_paint.dir/src/drawing/Paint.cpp.o
+FAILED: [code=1] CMakeFiles/cad_drawing_paint.dir/src/drawing/Paint.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_drawing_paint.dir/src/drawing/Paint.cpp.o -MF CMakeFiles/cad_drawing_paint.dir/src/drawing/Paint.cpp.o.d -o CMakeFiles/cad_drawing_paint.dir/src/drawing/Paint.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/drawing/Paint.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/drawing/Paint.cpp:19:29: error: call to member function 'value' is ambiguous
+   19 |             for(auto path:v.value(key).toArray()){
+      |                           ~~^~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcbormap.h:270:16: note: candidate function
+  270 |     QCborValue value(const QString & key) const
+      |                ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcbormap.h:272:16: note: candidate function
+  272 |     QCborValue value(const QCborValue &key) const
+      |                ^
+1 error generated.
+[3/138] Building CXX object CMakeFiles/cad_client.dir/cad_client_autogen/mocs_compilation.cpp.o
+ninja: build stopped: subcommand failed.

@@ -1,0 +1,81 @@
+{
+  "scope": "Modules 8-10 ordered implementation and available-Mac verification; stop before Module 11",
+  "status": "Superseded: stopped to register recoverable PDF staging and add publication kill cases",
+  "artifacts": "docs/testing/artifacts/module-10/runs/20261022T023805.622918Z",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.5380314580106642
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 10.262794916983694
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 251.4442813330097
+    },
+    {
+      "name": "pdf-inspection",
+      "command": [
+        "swift",
+        "-module-cache-path",
+        "/private/tmp/cad-pdf-swift-cache",
+        "tools/inspect_drawing_pdf.swift",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-10/runs/20261022T023805.622918Z/module8-B5.pdf",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-10/runs/20261022T023805.622918Z/pdf"
+      ],
+      "exit_code": 0,
+      "seconds": 1.956161499983864
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.7697770000086166
+    }
+  ],
+  "host": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "physical_ram_bytes": 8589934592,
+    "cpu": "Apple M2"
+  },
+  "blocked": [
+    "Prior Module 6.1b and 6.4c deferred parser/resource/platform gates",
+    "Prior Module 7.4c full resource/platform gate",
+    "Windows/Linux/minimum macOS/other GPU/installed release builds",
+    "VoiceOver/NVDA/Orca and physical device acceptance",
+    "Full physical/shared/GPU/FPS and retention budgets (Module 11 not started)",
+    "Physical full-volume/power-loss and other native filesystem matrix"
+  ],
+  "stopped_processes": [
+    94314,
+    95196,
+    95429,
+    95430
+  ]
+}

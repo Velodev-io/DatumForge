@@ -1,0 +1,2 @@
+B5 exact HLR, 80 mm / 40 mm paper dimension, 100-leaf BOM, vector PDF, portable reopen, revisions, dangling/undo/recovery passed
+PASS

@@ -1,0 +1,90 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 28: module4.workspace
+1/6 Test #28: module4.workspace ................   Passed    2.72 sec
+    Start 39: module6.persistence
+2/6 Test #39: module6.persistence ..............   Passed    1.17 sec
+    Start 43: module7.persistence
+3/6 Test #43: module7.persistence ..............   Passed    1.80 sec
+    Start 46: module8.drawing
+4/6 Test #46: module8.drawing ..................***Failed   10.83 sec
+Front: Current 
+Top: Current 
+Isometric: Current 
+Current: 
+Front: Current 
+Isometric: Unresolved View exceeds printable sheet bounds; adjust scale or placement
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module8/drawing.cpp:43: result.value("current").toBool()
+
+    Start 47: module8.contracts
+5/6 Test #47: module8.contracts ................***Failed    1.15 sec
+********* Start testing of DrawingContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : DrawingContracts::initTestCase()
+QWARN  : DrawingContracts::lifecycle() QOpenGLWidget is not supported on this platform.
+QWARN  : DrawingContracts::lifecycle() qt.qpa.fonts: Populating font family aliases took 110 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support createPlatformOpenGLContext!
+QWARN  : DrawingContracts::lifecycle() QOpenGLWidget: Failed to create context
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support createPlatformOpenGLContext!
+QWARN  : DrawingContracts::lifecycle() QOpenGLWidget: Failed to create context
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support createPlatformOpenGLContext!
+QWARN  : DrawingContracts::lifecycle() QOpenGLWidget: Failed to create context
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support createPlatformOpenGLContext!
+QWARN  : DrawingContracts::lifecycle() QOpenGLWidget: Failed to create context
+QWARN  : DrawingContracts::lifecycle() This plugin does not support createPlatformOpenGLContext!
+QWARN  : DrawingContracts::lifecycle() QOpenGLWidget: Failed to create context
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support createPlatformOpenGLContext!
+QWARN  : DrawingContracts::lifecycle() QOpenGLWidget: Failed to create context
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support createPlatformOpenGLContext!
+QWARN  : DrawingContracts::lifecycle() QOpenGLWidget: Failed to create context
+QWARN  : DrawingContracts::lifecycle() This plugin does not support createPlatformOpenGLContext!
+QWARN  : DrawingContracts::lifecycle() QOpenGLWidget: Failed to create context
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support createPlatformOpenGLContext!
+QWARN  : DrawingContracts::lifecycle() QOpenGLWidget: Failed to create context
+QWARN  : DrawingContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : DrawingContracts::lifecycle() This plugin does not support createPlatformOpenGLContext!
+QWARN  : DrawingContracts::lifecycle() QOpenGLWidget: Failed to create context
+QWARN  : DrawingContracts::lifecycle() This plugin does not support createPlatformOpenGLContext!
+QWARN  : DrawingContracts::lifecycle() QOpenGLWidget: Failed to create context
+FAIL!  : DrawingContracts::lifecycle() 'panel && panel->isVisible()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module8/contracts.cpp(30)]
+PASS   : DrawingContracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 567ms
+********* Finished testing of DrawingContracts *********
+
+    Start 48: module8.geometry
+6/6 Test #48: module8.geometry .................   Passed    0.61 sec
+
+67% tests passed, 2 tests failed out of 6
+
+Total Test time (real) =  18.29 sec
+
+The following tests FAILED:
+	 46 - module8.drawing (Failed)
+	 47 - module8.contracts (Failed)
+Errors while running CTest
