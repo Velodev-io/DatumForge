@@ -3,6 +3,7 @@
 #include "protocol/Client.hpp"
 #include "render/SketchView.hpp"
 #include "render/Viewport.hpp"
+#include <QActionGroup>
 #include <QApplication>
 #include <QDir>
 #include <QDockWidget>
@@ -62,6 +63,102 @@ class Workspace : public QObject {
         if (!qEnvironmentVariableIsSet("CAD_NATIVE_TESTS"))
             QSKIP("Blocked: native session required");
         exercise(true);
+    }
+    void toolSelection() {
+        QTemporaryDir root(QDir::tempPath() + "/cad-module4-tools-XXXXXX");
+        QVERIFY(root.isValid());
+        mark(root.path());
+        auto prefs = root.filePath("settings.ini");
+        QSettings settings(prefs, QSettings::IniFormat);
+        settings.setValue("startup/offerRecovery", false);
+        settings.sync();
+        MainWindow w(prefs, nullptr, root.path());
+        w.show();
+        if (qEnvironmentVariableIsSet("CAD_NATIVE_TESTS")) {
+            QVERIFY(QTest::qWaitForWindowExposed(&w));
+            w.raise();
+            w.activateWindow();
+            QVERIFY(QTest::qWaitForWindowActive(&w));
+        }
+        auto *c = w.workerClient();
+        QVERIFY(wait([&] { return c->ready(); }));
+        c->newProject("Part", "Tool selection regression");
+        QVERIFY(wait([&] { return c->state().projectOpen && !c->outstanding(); }));
+        w.command("sketch")->trigger();
+        auto *panel = w.findChild<SketchPanel *>();
+        auto *view = panel->canvas();
+        auto *line = w.command("sketch.tool.Line");
+        auto *select = w.command("sketch.tool.Select / drag");
+        auto *arc = w.command("sketch.tool.Tangent Arc");
+        auto *entities = w.findChild<QListWidget *>("sketchEntities");
+        auto *tabs = w.findChild<QTabWidget *>("commandTabs");
+        tabs->setCurrentIndex(1);
+        auto expectTool = [&](QString name) {
+            auto *action = w.command("sketch.tool." + name);
+            return panel->toolName() == name && action->isChecked() &&
+                   action->actionGroup()->checkedAction() == action;
+        };
+        auto capture = [&](QString name) {
+            auto folder = qEnvironmentVariable("CAD_ARTIFACT_DIR");
+            if (!folder.isEmpty())
+                QVERIFY(w.grab().save(folder + "/" + name + ".png"));
+        };
+        QVERIFY(expectTool("Select / drag"));
+        auto *lineButton = button(w, "sketch.tool.Line");
+        QVERIFY(lineButton);
+        QTest::mouseClick(lineButton, Qt::LeftButton);
+        QVERIFY(expectTool("Line"));
+        capture("line-selected");
+        // Clicking the active drawing button must leave drawing mode.
+        QTest::mouseClick(lineButton, Qt::LeftButton);
+        QVERIFY(expectTool("Select / drag"));
+        auto click = [&](sketch::Vec2 p) {
+            QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, view->screen(p).toPoint());
+        };
+        click({-.02, 0});
+        click({0, 0});
+        QCOMPARE(entities->count(), 0);
+        line->trigger();
+        click({-.02, 0}); // Cancel a pending line using the same button.
+        line->trigger();
+        QVERIFY(expectTool("Select / drag"));
+        click({.02, .02});
+        QCOMPARE(entities->count(), 0);
+        for (QString name : {"Circle", "Rectangle", "Select / drag", "Line"}) {
+            panel->setTool(name);
+            QVERIFY2(expectTool(name), qPrintable(name));
+        }
+        click({-.02, 0});
+        click({0, 0});
+        QCOMPARE(entities->count(), 3);
+        auto move = [&](sketch::Vec2 p) {
+            auto at = view->screen(p);
+            QMouseEvent e(QEvent::MouseMove, at, view->mapToGlobal(at), Qt::NoButton, Qt::NoButton,
+                          Qt::NoModifier);
+            QApplication::sendEvent(view, &e);
+        };
+        move({.005, 0});
+        move({0, 0});
+        QVERIFY(expectTool("Tangent Arc"));
+        QVERIFY(!line->isChecked());
+        QCOMPARE(w.findChild<QToolButton *>("sketchArcFlyout")->defaultAction(), arc);
+        capture("inferred-tangent-arc");
+        arc->trigger(); // Turning off the inferred arc also stops drawing.
+        QVERIFY(expectTool("Select / drag"));
+        QVERIFY(!view->sizingArc());
+        capture("drawing-stopped");
+        click({.02, .02});
+        QCOMPARE(entities->count(), 3);
+        select->trigger();
+        QVERIFY(expectTool("Select / drag"));
+        panel->discard();
+        panel->setTool("Circle");
+        w.command("sketch")->trigger();
+        QVERIFY(expectTool("Select / drag"));
+        panel->discard();
+        c->closeProject();
+        QVERIFY(wait([&] { return !c->state().projectOpen && !c->outstanding(); }));
+        w.close();
     }
 
   private:

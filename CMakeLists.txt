@@ -233,6 +233,8 @@ if(BUILD_TESTING)
   add_dependencies(module4_workspace cad-worker)
   add_test(NAME module4.workspace COMMAND module4_workspace layout)
   set_tests_properties(module4.workspace PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 90)
+  add_test(NAME module4.tool_selection COMMAND module4_workspace toolSelection)
+  set_tests_properties(module4.tool_selection PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 90)
 endif()
 
 # Module 4 exact feature definitions are safe UI projections; OCCT stays in the worker.

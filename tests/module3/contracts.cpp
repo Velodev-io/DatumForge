@@ -771,6 +771,7 @@ class Contracts : public QObject {
         for (auto box :
              {std::array<double, 4>{0, 0, 80, 50}, std::array<double, 4>{20, 20, 40, 40}}) {
             window.command("sketch")->trigger();
+            window.findChild<QComboBox *>("sketchTool")->setCurrentText("Rectangle");
             coordinate(window, box[0], box[1]);
             coordinate(window, box[2], box[3]);
             click(window, "acceptSketchButton");

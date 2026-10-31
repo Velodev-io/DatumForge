@@ -133,6 +133,7 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     tool->addItems({"Point", "Line", "Polyline", "Rectangle", "Circle", "Arc", "3 Point Arc",
                     "Tangent Arc", "Slot", "Ellipse", "EllipticalArc", "Parabola", "Spline",
                     "Select / drag", "Trim / extend"});
+    tool->setCurrentText("Select / drag");
     form->addRow("Tool", tool);
     rectangleMethod = new QComboBox;
     rectangleMethod->setObjectName("sketchRectangleMethod");
@@ -926,6 +927,7 @@ void SketchPanel::begin() {
     draftUndo.clear();
     draftRedo.clear();
     clicks.clear();
+    tool->setCurrentText("Select / drag");
     rebuild();
     sketches->setCurrentIndex(int(draft.size() - 1));
     rebuild();

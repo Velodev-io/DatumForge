@@ -1,0 +1,56 @@
+[1/66] Automatic MOC for target module1_contracts
+[2/65] Automatic MOC for target module2_contracts
+[3/64] Automatic MOC for target module4_workspace
+[4/63] Automatic MOC for target module5_contracts
+[5/62] Automatic MOC for target module6_contracts
+[6/61] Automatic MOC for target module7_contracts
+[7/60] Automatic MOC for target module8_contracts
+[8/59] Automatic MOC for target module4_contracts
+[9/58] Automatic MOC for target module9_interaction
+[10/57] Automatic MOC for target module10_contracts
+[11/55] Automatic MOC for target cm1_contracts
+[12/54] Automatic MOC for target cm2_contracts
+[13/53] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[14/53] Building CXX object CMakeFiles/cm0_feasibility.dir/tests/core_modeling/feasibility.cpp.o
+[15/53] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[16/53] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[17/53] Building CXX object CMakeFiles/cm1_contracts.dir/tests/core_modeling/contracts.cpp.o
+[18/53] Linking CXX executable solver_spike
+[19/53] Linking CXX executable module1_contracts
+[20/53] Linking CXX executable module2_storage
+[21/53] Linking CXX executable module2_contracts
+[22/53] Linking CXX executable module2_fault_worker
+[23/53] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[24/53] Linking CXX executable module3_persistence
+[25/53] Building CXX object CMakeFiles/cm2_contracts.dir/tests/core_modeling/editing_contracts.cpp.o
+[26/53] Linking CXX executable module3_solver
+[27/53] Linking CXX executable module4_workspace
+[28/53] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[29/53] Linking CXX executable module4_contracts
+[30/53] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[31/53] Linking CXX executable module5_persistence
+[32/53] Linking CXX executable module5_b2
+[33/53] Linking CXX executable module5_contracts
+[34/53] Linking CXX executable module6_contracts
+[35/53] Linking CXX executable module6_persistence
+[36/53] Linking CXX executable module7_b3
+[37/53] Linking CXX executable module7_persistence
+[38/53] Linking CXX executable module7_contracts
+[39/53] Linking CXX executable module8_drawing
+[40/53] Linking CXX executable module8_contracts
+[41/53] Linking CXX executable module9_interaction
+[42/53] Linking CXX executable module10_fault_worker
+[43/53] Linking CXX executable module10_hardening
+[44/53] Linking CXX executable cm0_feasibility
+[45/53] Linking CXX executable cm1_contracts
+[46/53] Linking CXX executable cm1_relations
+[47/53] Linking CXX executable cm1_slots
+[48/53] Linking CXX executable cm1_rectangles
+[49/53] Linking CXX executable cm1_curves
+[50/53] Linking CXX executable cm1_pierce
+[51/53] Linking CXX executable cm1_intent
+[52/53] Linking CXX executable cm2_editing
+[53/53] Linking CXX executable cm2_contracts

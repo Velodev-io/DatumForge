@@ -13,7 +13,7 @@ class SketchView : public QWidget {
     sketch::Vec2 cameraCenter;
     bool editable = false;
     bool present = false;
-    QString tool = "Point";
+    QString tool = "Select / drag";
     QString rectangleMethod = "Corner";
     std::vector<sketch::Vec2> rectangleInputs;
     QString slotMethod = "Straight";

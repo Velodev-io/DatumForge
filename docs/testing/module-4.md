@@ -1,5 +1,9 @@
 # Module 4 exact part features and measurement
 
+[26 October sketch tool selection repair](module-4-tool-selection.md) records the
+later default-tool/toolbar fix and the retained Line-to-Arc gesture separately
+from this historical closeout.
+
 Current authorization note: the following is the preserved Module 4 closeout. The subsequent user “yes” authorized Module 5; see [Module 5 evidence](module-5.md). The current boundary is **before Module 6 / 6.1a**.
 
 Date: 20 October 2026. **Status: all feasible available-Mac implementation and verification complete; full platform/device completion Blocked.**

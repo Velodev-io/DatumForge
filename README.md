@@ -32,7 +32,9 @@ Model contains the document tree, origin, planes and saved sketches. Double-clic
 a plane to start a sketch or a sketch to edit it. Command search and native menus
 use the same actions.
 
-Choose Line, Rectangle or Circle in the Sketch tab. Lines and rectangles accept
+New sketches start in Select. Choose Line, Rectangle or Circle in the Sketch tab;
+click the active drawing tool again to return to Select. The canvas header names
+the active tool. Lines and rectangles accept
 two clicks or a press/drag/release gesture. A circle supports clicking its center,
 moving, then clicking its radius; holding and dragging also works. The camera and
 first vertex stay in model coordinates when the drawing area changes size. Two-

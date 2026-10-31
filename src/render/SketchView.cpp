@@ -496,9 +496,14 @@ void SketchView::paintEvent(QPaintEvent *) {
         }
     p.setPen(palette().color(QPalette::WindowText));
     p.drawText(QRect(14, 10, width() - 28, 30), Qt::TextWordWrap,
-               present ? drawing.name + (editable ? " · Editing" : "") : "Choose Sketch to start");
+               present ? drawing.name + (editable ? " · Editing · " + tool : "")
+                       : "Choose Sketch to start");
     if (editable && arcTool()) {
         p.drawText(QRect(14, height() - 42, width() - 28, 38), Qt::TextWordWrap, arcPrompt());
+    } else if (editable && (tool == "Line" || tool == "Polyline")) {
+        p.drawText(QRect(14, height() - 42, width() - 28, 38), Qt::TextWordWrap,
+                   "Click vertices · Move away and return to the last endpoint for Tangent Arc · "
+                   "Click the tool again to select");
     } else if (editable && drawing.entities.empty() && !circleCenter && !inputAnchor)
         p.drawText(QRect(14, height() - 32, width() - 28, 24),
                    tool == "Select / drag" ? "Choose a sketch tool above"

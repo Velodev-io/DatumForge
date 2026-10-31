@@ -7,7 +7,6 @@
 #include <QDockWidget>
 #include <QHBoxLayout>
 #include <QMenuBar>
-#include <QSignalBlocker>
 #include <QStatusBar>
 #include <QToolBar>
 #include <QToolButton>
@@ -45,7 +44,7 @@ void MainWindow::buildCommandTabs() {
     auto *remove = add("sketch.delete", "Delete");
     connect(remove, &QAction::triggered, sketchPanel, &SketchPanel::removeSelection);
     auto *group = new QActionGroup(this);
-    group->setExclusive(true);
+    group->setExclusionPolicy(QActionGroup::ExclusionPolicy::ExclusiveOptional);
     for (auto name : {"Select / drag", "Line", "Rectangle", "Circle", "Arc", "3 Point Arc",
                       "Tangent Arc", "Slot", "Ellipse", "EllipticalArc", "Parabola", "Spline",
                       "Polyline", "Point", "Trim / extend"}) {
@@ -55,7 +54,10 @@ void MainWindow::buildCommandTabs() {
                                                                                  : name);
         action->setCheckable(true);
         group->addAction(action);
-        connect(action, &QAction::triggered, this, [this, name] { sketchPanel->setTool(name); });
+        connect(action, &QAction::triggered, this, [this, name](bool checked) {
+            sketchPanel->setTool(checked ? name : "Select / drag");
+            refreshCommandTabs();
+        });
     }
     auto *grid = add("sketch.grid", "Grid snap");
     grid->setCheckable(true);
@@ -218,7 +220,9 @@ void MainWindow::refreshCommandTabs() {
             a->setToolTip("Tangent Arc — choose a line/arc endpoint, move or drag to size");
         if (QString(name) == "Arc" && editing && idle)
             a->setToolTip("Centerpoint Arc — click center, move/click start, move/click end");
-        QSignalBlocker block(a);
+        if ((QString(name) == "Line" || QString(name) == "Polyline") && editing && idle)
+            a->setToolTip(QString(name) + " — click vertices; move away and return to the last "
+                                          "endpoint for Tangent Arc; click tool again to select");
         a->setChecked(editing && sketchPanel->toolName() == name);
     }
     available("sketch.edit", part && idle && !editing && !sketchPanel->sketchId().isEmpty(),

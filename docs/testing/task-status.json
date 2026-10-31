@@ -612,7 +612,9 @@
       "docs/testing/module-3-all-arcs.md",
       "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/verification.json",
       "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/source-identity.json",
-      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/visual-review.json"
+      "docs/testing/artifacts/module-3/all-arc-runs/20261022T162147.341204Z/visual-review.json",
+      "docs/testing/module-4-tool-selection.md",
+      "docs/testing/artifacts/module-4/tool-selection-20261026/verification.json"
     ]
   },
   "3.2a": {
@@ -699,13 +701,15 @@
   },
   "4.0a": {
     "status": "Pass",
-    "scope": "Available-Mac scope: shared QAction command tabs, menu/search/shortcuts, original icons, contextual availability and disabled exact-feature reasons; Cocoa workflows pass at all five effective scales. Native Windows/Linux checks remain Blocked.",
+    "scope": "Available-Mac scope: shared QAction command tabs, menu/search/shortcuts, original icons, contextual availability and disabled exact-feature reasons; Cocoa workflows pass at all five effective scales. Native Windows/Linux checks remain Blocked. 26 October repair: new sketches start in Select; active tool deselection stops drawing; shared action/group and inferred Arc state stay synchronized, with an explicit canvas tool label. Tool regression passes at five native effective scales; full enabled suite passes.",
     "evidence": [
       "docs/testing/module-4.md",
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/verification.json",
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/evidence-consistency.json",
       "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z/visual-review.json",
-      "docs/decisions/implementation-scope.json"
+      "docs/decisions/implementation-scope.json",
+      "docs/testing/module-4-tool-selection.md",
+      "docs/testing/artifacts/module-4/tool-selection-20261026/verification.json"
     ]
   },
   "4.0b": {

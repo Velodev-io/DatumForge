@@ -1,0 +1,23 @@
+[1/26] Automatic MOC for target cad_desktop_ui
+[2/26] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[3/26] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchEditingUI.cpp.o
+[4/26] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+[5/26] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyUI.cpp.o
+[6/26] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[7/26] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ExchangeUI.cpp.o
+[8/26] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[9/26] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[10/26] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[11/26] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[12/26] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/InteractionUI.cpp.o
+[13/26] Linking CXX static library libcad_desktop_ui.a
+[14/26] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[15/26] Automatic MOC for target module4_workspace
+[16/25] Automatic MOC for target module3_contracts
+[17/24] Automatic MOC for target module3_input
+[18/23] Building CXX object CMakeFiles/module3_input.dir/tests/module3/input.cpp.o
+[19/23] Linking CXX executable module3_input
+[20/23] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[21/23] Linking CXX executable module4_workspace
+[22/23] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[23/23] Linking CXX executable module3_contracts

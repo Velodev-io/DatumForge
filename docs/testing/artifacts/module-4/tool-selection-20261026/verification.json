@@ -1,0 +1,180 @@
+{
+  "status": "Pass",
+  "scope": "Available-Mac sketch tool-state repair; no full acceptance claim",
+  "branch": "fix/sketch-tool-selection",
+  "base_commit": "13212e6fc11a4235c7220e5b24f01a0dd646efd1",
+  "host": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "source_sha256": {
+    "CMakeLists.txt": "efef1c9f457a51cf5adb32779fb76c1faa49a187dded2f49a8276ae52c323bdd",
+    "apps/desktop/SketchPanel.cpp": "025e1711ad8a168df777a42f4a22b110cb0b0323e858711e97179a6cb6c0e50c",
+    "apps/desktop/WorkspaceChrome.cpp": "3df10145b5562c2f9d5631dbc39f3138bec5639424c31bfc65a82dd0fcde0f79",
+    "src/render/SketchView.cpp": "53fb40fbc098b20b97746c4867e1cb7559c6f42abddfdb9b21b83156ec7fcd48",
+    "src/render/SketchView.hpp": "2645be1c3a6a0c81076eddee12ccc87d3b5e7c2dd0bac308ae5a6fef8bfc9845",
+    "tests/module3/contracts.cpp": "6b7f37e31da9239f6256adfbeb5ca5b6b042ae7165df812b70a3a643aee3b23d",
+    "tests/module4/workspace.cpp": "ef8f615a4c7eddee1873b8548d6475e415fd8b8e5545c9433d09b9aa9f6ba618"
+  },
+  "checks": [
+    {
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "log": "final-build.txt"
+    },
+    {
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "enabled_passed": 70,
+      "disabled": [
+        "harness.deliberate_failure"
+      ],
+      "seconds": 319.25,
+      "log": "ctest-final.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "log": "format.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/static_analysis.py",
+        "docs/testing/artifacts/module-4/tool-selection-20261026/analysis-commands.json"
+      ],
+      "exit_code": 0,
+      "units": 5,
+      "log": "static-analysis.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "docs/scripts/check_specs.py",
+        "--write-report"
+      ],
+      "exit_code": 0,
+      "log": "specifications.txt"
+    },
+    {
+      "command": [
+        "python3",
+        "tools/check_core_modeling.py"
+      ],
+      "exit_code": 0,
+      "log": "coverage.txt"
+    }
+  ],
+  "native": [
+    {
+      "command": [
+        "build/macos-debug/module4_workspace",
+        "toolSelection"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 1.811,
+      "scale": 100,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-100/tools.txt"
+    },
+    {
+      "command": [
+        "build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 6.296,
+      "scale": 100,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-100/arcs.txt"
+    },
+    {
+      "command": [
+        "build/macos-debug/module4_workspace",
+        "toolSelection"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 1.205,
+      "scale": 125,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-125/tools.txt"
+    },
+    {
+      "command": [
+        "build/macos-debug/module4_workspace",
+        "toolSelection"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 1.223,
+      "scale": 150,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-150/tools.txt"
+    },
+    {
+      "command": [
+        "build/macos-debug/module4_workspace",
+        "toolSelection"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 1.525,
+      "scale": 175,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-175/tools.txt"
+    },
+    {
+      "command": [
+        "build/macos-debug/module4_workspace",
+        "toolSelection"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 1.602,
+      "scale": 200,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-200/tools.txt"
+    },
+    {
+      "command": [
+        "build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 9.049,
+      "scale": 200,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-200/arcs.txt"
+    }
+  ],
+  "visual_review": [
+    "native-100/inferred-tangent-arc.png",
+    "native-200/drawing-stopped.png"
+  ],
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false,
+  "user_session": "Existing application and sketch draft were not restarted or modified",
+  "history": [
+    "red-test.txt preserves the pre-fix default-tool failure",
+    "green-close-prompt.txt preserves an interrupted test blocked on its own unsaved-project close dialog",
+    "ctest.txt preserves the old Rectangle fixture failure; fixture now explicitly chooses its tool"
+  ],
+  "unrun": [
+    "Windows/Linux",
+    "physical-device/assistive-technology acceptance",
+    "installed releases",
+    "full physical 8 GB resource acceptance"
+  ],
+  "working_tree_check": "Repair files pass git diff --check; pre-existing docs/TECH_SPEC.md has a blank line at EOF and was left untouched"
+}
