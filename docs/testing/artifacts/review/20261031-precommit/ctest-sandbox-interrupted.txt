@@ -1,0 +1,595 @@
+Start testing: Oct 31 16:16 IST
+----------------------------------------------------------
+1/74 Testing: harness.pass
+1/74 Test: harness.pass
+Command: "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/harness_probe"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"harness.pass" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+PASS
+<end of output>
+Test time =   0.60 sec
+----------------------------------------------------------
+Test Passed.
+"harness.pass" end time: Oct 31 16:16 IST
+"harness.pass" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/74 Testing: harness.failure_reporting
+2/74 Test: harness.failure_reporting
+Command: "/opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14" "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tools/check_harness.py" "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/harness_probe"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"harness.failure_reporting" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+Test project /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-step-zero-harness-bd04__dm
+    Start 1: deliberate_failure
+1/1 Test #1: deliberate_failure ...............***Failed    0.00 sec
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/unit/harness_probe.cpp:3: argc == 1
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.00 sec
+
+The following tests FAILED:
+	  1 - deliberate_failure (Failed)
+
+Pass: executable exit=1; CTest exit=8 for deliberate failure
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"harness.failure_reporting" end time: Oct 31 16:16 IST
+"harness.failure_reporting" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/74 Testing: measurement.statistics
+3/74 Test: measurement.statistics
+Command: "/opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14" "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/unit/measurement_test.py"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"measurement.statistics" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+Pass: nearest-rank p95 and rejected missing/nonfinite samples
+<end of output>
+Test time =   0.07 sec
+----------------------------------------------------------
+Test Passed.
+"measurement.statistics" end time: Oct 31 16:16 IST
+"measurement.statistics" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/74 Testing: harness.deliberate_failure
+4/74 Test: harness.deliberate_failure
+Command: ""
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"harness.deliberate_failure" start time: 
+Output:
+----------------------------------------------------------
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"harness.deliberate_failure" end time: Oct 31 16:16 IST
+"harness.deliberate_failure" time elapsed: 00:00:00
+----------------------------------------------------------
+
+5/74 Testing: protocol.boundaries
+5/74 Test: protocol.boundaries
+Command: "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/protocol_spike"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"protocol.boundaries" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+bounded CBOR/framing, stale epoch/revision/generation, buffer cleanup, range/checksum/index corpus
+PASS
+<end of output>
+Test time =   0.55 sec
+----------------------------------------------------------
+Test Passed.
+"protocol.boundaries" end time: Oct 31 16:16 IST
+"protocol.boundaries" time elapsed: 00:00:00
+----------------------------------------------------------
+
+6/74 Testing: storage.crash_matrix
+6/74 Test: storage.crash_matrix
+Command: "/opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14" "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/integration/storage_matrix.py" "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/storage_spike"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"storage.crash_matrix" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+{
+  "status": "Pass",
+  "checks": [
+    {
+      "action": "init",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "SQLite 3.50.4 WAL/FULL/FK\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "save",
+      "arguments": [
+        ""
+      ],
+      "exit": 0,
+      "stdout": "Saved revision 0\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "commit",
+      "arguments": [
+        "before_commit",
+        "a",
+        "width=80"
+      ],
+      "exit": 70,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=0 commands=0\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=0 commands=0\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "external-kill",
+      "phase": "pause_before_commit",
+      "exit": -9,
+      "recovered_revision": 0
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=1 commands=1\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "external-kill",
+      "phase": "pause_after_commit",
+      "exit": -9,
+      "recovered_revision": 1
+    },
+    {
+      "action": "commit",
+      "arguments": [
+        "after_commit",
+        "a",
+        "width=80"
+      ],
+      "exit": 71,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "commit",
+      "arguments": [
+        "",
+        "a",
+        "width=80"
+      ],
+      "exit": 0,
+      "stdout": "Deduplicated\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "commit",
+      "arguments": [
+        "",
+        "a",
+        "width=81"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/integration/storage_spike.cpp:217: prior == hash.toStdString()"
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "save",
+      "arguments": [
+        "during_snapshot"
+      ],
+      "exit": 72,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "action": "save",
+      "arguments": [
+        "write_error"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: Injected write failure before publication"
+    },
+    {
+      "action": "save",
+      "arguments": [
+        "permission_error"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: Injected permission denial before publication"
+    },
+    {
+      "action": "save",
+      "arguments": [
+        "after_publication"
+      ],
+      "exit": 73,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "action": "inspect",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "commit",
+      "arguments": [
+        "disk_full",
+        "b",
+        "width=82"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: database or disk is full"
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "object",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "source_bytes=4194304 chunk_bytes=65536 sha256=a58789e910e5f939afc433a00fef5930702927dc192cb237fd9e7449bd6ffe1d\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "missing",
+      "arguments": [],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: FOREIGN KEY constraint failed"
+    },
+    {
+      "action": "gc",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "PASS",
+      "stderr": ""
+    },
+    {
+      "action": "save",
+      "arguments": [
+        ""
+      ],
+      "exit": 0,
+      "stdout": "Saved revision 2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "migrate_fail",
+      "arguments": [],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: Injected migration failure on copy; original untouched"
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "save",
+      "arguments": [
+        ""
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: attempt to write a readonly database"
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "lock",
+      "arguments": [
+        "alias.sqlite"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: ProjectLocked"
+    },
+    {
+      "action": "lock",
+      "arguments": [
+        "hardlink.sqlite"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: ProjectLocked"
+    },
+    {
+      "action": "commit",
+      "arguments": [
+        "",
+        "blocked-writer",
+        "must-not-commit"
+      ],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: ProjectLocked"
+    },
+    {
+      "action": "query",
+      "arguments": [],
+      "exit": 0,
+      "stdout": "revision=2 commands=2\nPASS",
+      "stderr": ""
+    },
+    {
+      "action": "inspect",
+      "arguments": [],
+      "exit": 1,
+      "stdout": "",
+      "stderr": "FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/integration/storage_spike.cpp:144: db.scalar(\"PRAGMA user_version\") == \"1\""
+    }
+  ],
+  "scope": "local filesystem process-crash prototype; no physical power-loss guarantee"
+}
+<end of output>
+Test time =   1.07 sec
+----------------------------------------------------------
+Test Passed.
+"storage.crash_matrix" end time: Oct 31 16:16 IST
+"storage.crash_matrix" time elapsed: 00:00:01
+----------------------------------------------------------
+
+7/74 Testing: cad.geometry_topology
+7/74 Test: cad.geometry_topology
+Command: "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cad_spike"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"cad.geometry_topology" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-step-zero-b4-KQfTBX/box.step(350 ents)  Write  Done[0m
+Imported STEP regenerated from retained SQLite BLOB after source/cache deletion; undo/recovery/job roots preserved
+[32;1mTotal number of loaded entities 52.
+[0m
+B4 generated box.step bytes=15416 sha256=e5f8e5c3f8c2a4b43d2cc28c0713d5ce4815e1392e94a512a8a9b07c0b877e20
+B4 generated box.iges bytes=13284 sha256=6260f84772b8b50f8cabaead525503dd8db9393f4e0e931dddf712811b2c7db1
+B1 final_volume_mm3=35488.761101962 faces=15 solids=1; split history=2; ambiguity explicit
+PASS
+<end of output>
+Test time =   0.94 sec
+----------------------------------------------------------
+Test Passed.
+"cad.geometry_topology" end time: Oct 31 16:16 IST
+"cad.geometry_topology" time elapsed: 00:00:00
+----------------------------------------------------------
+
+8/74 Testing: cad.sketch_solver
+8/74 Test: cad.sketch_solver
+Command: "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/solver_spike"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"cad.sketch_solver" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+redundant tags=1
+contradictory tags=2
+rectangle/circle residuals, redundant/conflict diagnostics, 1-DOF drag/cancel, finite/degenerate admission
+PASS
+<end of output>
+Test time =   0.52 sec
+----------------------------------------------------------
+Test Passed.
+"cad.sketch_solver" end time: Oct 31 16:16 IST
+"cad.sketch_solver" time elapsed: 00:00:00
+----------------------------------------------------------
+
+9/74 Testing: cad.rigid_mates
+9/74 Test: cad.rigid_mates
+Command: "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/mate_spike"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"cad.rigid_mates" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+grounded 3-body planar/axial/angle rank: 6/2/0 DOF; consistent cycle; conflicting distance; near-pi yaw; antiparallel seed recovery; cancel
+PASS
+<end of output>
+Test time =   0.76 sec
+----------------------------------------------------------
+Test Passed.
+"cad.rigid_mates" end time: Oct 31 16:16 IST
+"cad.rigid_mates" time elapsed: 00:00:00
+----------------------------------------------------------
+
+10/74 Testing: native.process_transport
+10/74 Test: native.process_transport
+Command: "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/slice_desktop.app/Contents/MacOS/slice_desktop" "--transport-test"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"native.process_transport" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/native/slice_desktop.cpp:183: server.listen(path)
+<end of output>
+Test time =   0.13 sec
+----------------------------------------------------------
+Test Failed.
+"native.process_transport" end time: Oct 31 16:16 IST
+"native.process_transport" time elapsed: 00:00:00
+----------------------------------------------------------
+
+11/74 Testing: fixtures.determinism
+11/74 Test: fixtures.determinism
+Command: "/opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14" "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/fixtures/generate.py" "--check"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"fixtures.determinism" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+Pass: B0–B6 recipes and hashes deterministic; unexecuted future-model counts explicitly pending
+<end of output>
+Test time =   0.06 sec
+----------------------------------------------------------
+Test Passed.
+"fixtures.determinism" end time: Oct 31 16:16 IST
+"fixtures.determinism" time elapsed: 00:00:00
+----------------------------------------------------------
+
+12/74 Testing: isolation.research
+12/74 Test: isolation.research
+Command: "/opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14" "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tools/check_isolation.py"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"isolation.research" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+Pass: 97 research files unchanged; 4629 tracked/pending paths inspected; remote destinations checked
+<end of output>
+Test time =   0.18 sec
+----------------------------------------------------------
+Test Passed.
+"isolation.research" end time: Oct 31 16:16 IST
+"isolation.research" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/74 Testing: module1.ownership
+13/74 Test: module1.ownership
+Command: "/opt/homebrew/Frameworks/Python.framework/Versions/3.14/bin/python3.14" "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tools/check_architecture.py" "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"module1.ownership" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+Pass: UI has no exact-kernel/database/test dependency; worker owns OCCT; packaged worker matches
+<end of output>
+Test time =   0.13 sec
+----------------------------------------------------------
+Test Passed.
+"module1.ownership" end time: Oct 31 16:16 IST
+"module1.ownership" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/74 Testing: module1.contracts
+14/74 Test: module1.contracts
+Command: "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts" "frameCorpus" "transferCorpus" "workerCorpus" "clientLifecycle" "clientFailureCorpus"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"module1.contracts" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+PASS   : Contracts::frameCorpus()
+PASS   : Contracts::transferCorpus()
+FAIL!  : Contracts::workerCorpus() 'raw.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module1/contracts.cpp(223)]
+FAIL!  : Contracts::clientLifecycle() 'waitUntil([&] { return client.ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module1/contracts.cpp(296)]
+FAIL!  : Contracts::clientFailureCorpus() 'waitUntil([&] { return client.state().phase == Phase::WorkerUnavailable; })' returned FALSE. (capability)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module1/contracts.cpp(357)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 4 passed, 3 failed, 0 skipped, 0 blacklisted, 10022ms
+********* Finished testing of Contracts *********
+<end of output>
+Test time =  10.72 sec
+----------------------------------------------------------
+Test Failed.
+"module1.contracts" end time: Oct 31 16:16 IST
+"module1.contracts" time elapsed: 00:00:10
+----------------------------------------------------------
+
+15/74 Testing: module2.domain
+15/74 Test: module2.domain
+Command: "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module2_domain"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"module2.domain" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+PASS
+<end of output>
+Test time =   0.96 sec
+----------------------------------------------------------
+Test Passed.
+"module2.domain" end time: Oct 31 16:16 IST
+"module2.domain" time elapsed: 00:00:00
+----------------------------------------------------------
+
+16/74 Testing: module2.storage
+16/74 Test: module2.storage
+Command: "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module2_storage"
+Directory: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+"module2.storage" start time: Oct 31 16:16 IST
+Output:
+----------------------------------------------------------
+project/document/SI/dedup/undo/save/reopen/SaveAs/locking/stream/retention PASS
+PASS
+<end of output>
+Test time =   2.73 sec
+----------------------------------------------------------
+Test Passed.
+"module2.storage" end time: Oct 31 16:16 IST
+"module2.storage" time elapsed: 00:00:02
+----------------------------------------------------------
+

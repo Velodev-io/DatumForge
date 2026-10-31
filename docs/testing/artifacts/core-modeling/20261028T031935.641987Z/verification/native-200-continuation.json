@@ -1,0 +1,74 @@
+{
+  "scope": "Retry the existing curve-window activation failure and finish only the remaining 200% workflows; prior failure retained in verification.json",
+  "status": "Pass: remaining 200% native checks and unchanged source verified; original activation failure retained",
+  "original_run": "verification.json",
+  "started_utc": "2026-10-28T03:41:32.419585+00:00",
+  "steps": [
+    {
+      "name": "nativeCurveTools-200-retry",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeCurveTools"
+      ],
+      "exit_code": 0,
+      "seconds": 12.652129458998388
+    },
+    {
+      "name": "nativePierceTools-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativePierceTools"
+      ],
+      "exit_code": 0,
+      "seconds": 3.0035465830005705
+    },
+    {
+      "name": "nativePointerPrimitives-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativePointerPrimitives"
+      ],
+      "exit_code": 0,
+      "seconds": 9.34033158300008
+    },
+    {
+      "name": "native-dimensions-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 16.15128066699981
+    },
+    {
+      "name": "native-line-editing-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm2_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 15.686017416999675
+    },
+    {
+      "name": "native-workspace-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_workspace",
+        "nativeWorkspace"
+      ],
+      "exit_code": 0,
+      "seconds": 2.301600916995085
+    },
+    {
+      "name": "native-arcs-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "exit_code": 0,
+      "seconds": 6.408731582996552
+    }
+  ],
+  "source_identity": "source-identity.json",
+  "source_matches_before": true,
+  "source_matches_after": true
+}

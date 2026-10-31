@@ -227,7 +227,7 @@ void slotDimensions(Sketch &s, const ConstructionGroup &g) {
                 : relation("Length", g.diagonals[0], {}, p.length));
     for (auto v : values) {
         auto i = std::find_if(s.constraints.begin(), s.constraints.end(), [&](auto &c) {
-            return c.kind == v.kind && c.a == v.a && c.b == v.b;
+            return c.driving && c.kind == v.kind && c.a == v.a && c.b == v.b;
         });
         if (i == s.constraints.end())
             s.constraints.push_back(v);
@@ -240,7 +240,7 @@ void slotDimensions(Sketch &s, const ConstructionGroup &g) {
 Sketch dragSlot(const Sketch &s, const ConstructionGroup &g, Vec2 delta) {
     auto ids = constructionMembers(g);
     for (auto &c : s.constraints)
-        if (!g.relations.contains(c.id) &&
+        if (c.driving && !g.relations.contains(c.id) &&
             (ids.contains(c.a) || ids.contains(c.b) || ids.contains(c.third)))
             throw domain::Error("ConstrainedGeometry",
                                 "Slot is dimensioned; edit its parameters in Properties");

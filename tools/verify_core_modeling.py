@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Evidence for CM0 feasibility and the implemented CM1 and CM2 straight-line editing slices, never full CM0-CM9 acceptance."""
+"""Evidence for CM0 feasibility and the implemented CM1 CM2 straight-line editing and CM3 dimension slices, never full CM0-CM9 acceptance."""
 import argparse
 import datetime
 import hashlib
@@ -25,10 +25,10 @@ def inputs():
         paths += [f for f in (ROOT/top).rglob('*') if f.is_file() and f.suffix in {'.cpp','.hpp','.h','.py','.swift','.cmake','.json','.patch'}]
     return {str(f.relative_to(ROOT)): hashlib.sha256(f.read_bytes()).hexdigest() for f in sorted(set(paths))}
 frozen=inputs()
-record={'scope':'CM0 recorded feasibility and implemented CM1 rectangles/slots/conics/splines/relations/Pierce and CM2 straight-line trim/extend on the available Mac; other CM2 methods, external-geometry operands and full milestone acceptance remain open',
+record={'scope':'CM0 recorded feasibility and implemented CM1 rectangles/slots/conics/splines/relations/Pierce, CM2 straight-line trim/extend and the CM3 driving/reference/component-dimension editor slice on the available Mac; other CM2 methods, external-geometry operands and full milestone acceptance remain open',
         'status':'In progress','steps':[], 'host':{'platform':platform.platform(), 'machine':platform.machine()},
         'native_requested':a.native,'blocked':['Full-round/general face blending not established',
-            'Projected-edge/external-vertex CM1 operands depend on CM4; broader per-variant failure/resource acceptance, remaining CM2 editing modes and CM3-CM9 remain open',
+            'Projected-edge/external-vertex CM1 operands depend on CM4; broader per-variant failure/resource acceptance, remaining CM2 editing modes, other CM3 dimensions/inference/drag and CM4-CM9 remain open',
             'Full physical 8 GB, installed, other-platform, physical-device and assistive-technology acceptance not run'],
         'preserved_deferred_gates':['6.1b','6.4c','7.4c'],'module_11_started':False}
 if not a.native:
@@ -90,11 +90,13 @@ if a.native:
         run(f'native-rectangles-{percent}',[str(ROOT/'build/macos-debug/cm1_contracts'),'nativeRectangles'],env,240)
         for method in ['nativeSlotTools','nativeCurveTools','nativePierceTools','nativePointerPrimitives']:
             run(f'{method}-{percent}',[str(ROOT/'build/macos-debug/cm1_contracts'),method],env,240)
+        run(f'native-dimensions-{percent}',[str(ROOT/'build/macos-debug/cm3_dimension_contracts'),'native'],env,240)
         run(f'native-line-editing-{percent}',[str(ROOT/'build/macos-debug/cm2_contracts'),'native'],env,240)
         if percent in [100,200]:
+            run(f'native-workspace-{percent}',[str(ROOT/'build/macos-debug/module4_workspace'),'nativeWorkspace'],env,240)
             run(f'native-arcs-{percent}',[str(ROOT/'build/macos-debug/module3_contracts'),'nativeArcs'],env,180)
     env.pop('QT_SCALE_FACTOR',None)
 if inputs()!=frozen:
     record['status']='Fail: source inputs changed during verification';save();raise SystemExit(record['status'])
-record['status']='Pass: implemented CM1 and CM2 straight-line editing slice verification; remaining editing/external-geometry and full course/resource/platform gates remain open';save()
+record['status']='Pass: implemented CM1, CM2 straight-line editing and CM3 dimension slice verification; remaining editing/dimensions/inference/drag/external-geometry and full course/resource/platform gates remain open';save()
 print(record['status'],flush=True)

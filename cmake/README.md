@@ -192,3 +192,18 @@ access. `cm2.editing` checks analytical geometry, disclosure, IDs and persistenc
 marked disposable roots. See [CM2 contracts](../docs/decisions/core-modeling-cm2-editing.md)
 and [scoped evidence](../docs/testing/core-modeling.md). Remaining CM2 operations,
 other platforms, installed/device/resource acceptance and Module 11 remain open.
+
+CM3 dimension slice: `ctest --preset macos-debug -R '^cm3\.' --output-on-failure`
+checks the exact solver/persistence corpus and worker-backed editor. The common
+`python3 tools/verify_core_modeling.py --native` runner additionally checks native
+CM3 mm/in workflows and label editing at five effective scales, preserving logs
+and source identity. See [dimension contracts](../docs/decisions/core-modeling-cm3-dimensions.md)
+and [scoped evidence](../docs/testing/core-modeling.md). Other CM3 dimension,
+inference, Fully Define, drag and full platform/resource gates remain open.
+
+Associated CM3 dimensions: `python3 tools/verify_cm3_associated.py` records all
+enabled CTests, changed-source/all-CM3-test Clang analysis, ownership/research/spec
+checks and native CM3 at five scales, plus endpoint native workspace/arc regressions.
+Its scope and retained activation-only retry policy are in the
+[associated dimension contract](../docs/decisions/core-modeling-cm3-associated-dimensions.md).
+It does not certify whole CM3, other-platform or full physical 8 GB acceptance.

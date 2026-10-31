@@ -1,0 +1,81 @@
+{
+  "status": "Pass: native matrix complete; isolated legacy arc-count failure retained, cause not established",
+  "source_matches_before": true,
+  "source_identity": "source-identity-after-test-sync.json",
+  "steps": [
+    {
+      "name": "arc-100-recheck-2",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "exit_code": 0,
+      "seconds": 5.09252758299408
+    },
+    {
+      "name": "arc-100-recheck-3",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "exit_code": 0,
+      "seconds": 4.736604207995697
+    },
+    {
+      "name": "cm3-native-125-completion",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 26.553913499999908
+    },
+    {
+      "name": "cm3-native-150-completion",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 27.959730959002627
+    },
+    {
+      "name": "cm3-native-175-completion",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 29.682572333011194
+    },
+    {
+      "name": "cm3-native-200-completion",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 31.215069625002798
+    },
+    {
+      "name": "workspace-native-200-completion",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_workspace",
+        "nativeWorkspace"
+      ],
+      "exit_code": 0,
+      "seconds": 2.2359837499971036
+    },
+    {
+      "name": "arcs-native-200-completion",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "exit_code": 0,
+      "seconds": 6.1780700420058565
+    }
+  ],
+  "retained_failure": "arcs-native-100-after-test-sync.txt: one tangent instead of two; no production change; isolated rerun passed; cause unproven",
+  "source_matches_after": true
+}

@@ -1,0 +1,6 @@
+Transcript excerpt from the interrupted sandbox run; this is not a complete CTest log.
+
+native.process_transport: FAIL: tests/native/slice_desktop.cpp:183: server.listen(path)
+module1.contracts: workerCorpus raw.start() returned FALSE; clientLifecycle client.ready() timed out.
+Run interrupted with exit 130 during module2.worker_lifecycle.
+The host-permission rerun uses the same application/test sources.

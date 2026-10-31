@@ -145,7 +145,7 @@ def main() -> int:
         "scope": "Documentation structure only; no product acceptance tests executed",
         "checked_at_utc": datetime.now(timezone.utc).isoformat(),
         "status": "pass" if not errors else "fail",
-        "product_implementation": "Modules 1-10 scoped implementation on the available Mac; CM0-CM9 authorized and incomplete, with selected CM1 primitives/relations and CM2 straight-line editing slices; full acceptance remains Blocked",
+        "product_implementation": "Modules 1-10 scoped implementation on the available Mac; CM0-CM9 authorized and incomplete, with selected CM1 primitives/relations, CM2 straight-line editing and CM3 dimension slices; full acceptance remains Blocked",
         "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
         "documents": {name: {"sha256": hashlib.sha256(text.encode()).hexdigest(),
                              "lines": len(text.splitlines()), "words": len(text.split())}

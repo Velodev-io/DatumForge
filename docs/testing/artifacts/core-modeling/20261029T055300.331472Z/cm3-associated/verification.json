@@ -1,0 +1,122 @@
+{
+  "status": "Fail",
+  "scope": "CM3 CenterlineDiameter (point/parallel profile line), shared-datum per-point ordinates and circular ArcLength, plus prior dimension regressions on the available Mac",
+  "host": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "physical_ram_bytes": 8589934592,
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.6782090829947265
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 12.485865917013143
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 349.3060462499998
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.0497484999941662
+    },
+    {
+      "name": "changed-source-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/analysis-commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 75.87502395799675
+    },
+    {
+      "name": "architecture",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.12916908400075044
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.24231358300312422
+    },
+    {
+      "name": "coverage",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_core_modeling.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07441120799921919
+    },
+    {
+      "name": "specifications",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "docs/scripts/check_specs.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07698762499785516
+    },
+    {
+      "name": "cm3-native-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "native"
+      ],
+      "exit_code": 1,
+      "seconds": 3.001487667002948
+    }
+  ],
+  "static_scope": "Changed production translation units plus all CM3 test translation units; headers analyzed through their real consumers",
+  "native_scope": "All CM3 editor modes at five effective scales; native workspace/arc regressions at endpoint scales; other core-modeling native matrices retain separate historical scope",
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false,
+  "remaining": [
+    "Driving multientity path length; general direction/increment/drawing marking controls",
+    "Automatic relations/inference, Fully Define and constrained dragging",
+    "Whole-course recovery/resource/installed/physical input/accessibility and Windows/Linux acceptance"
+  ],
+  "development_regression": "axis-upstream-red.txt records the earlier unsigned-distance adapter; it is not a result for this final source identity"
+}

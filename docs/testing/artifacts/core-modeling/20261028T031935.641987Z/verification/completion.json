@@ -1,0 +1,55 @@
+{
+  "status": "Pass with one native window-activation retry",
+  "scope": "Implemented CM3 driving/reference/component-dimension slice on the available Mac; whole CM3 and full platform/resource acceptance remain open",
+  "source_identity": "source-identity.json",
+  "source_sha256": "e458caccdaf306c025ab45fa0537b4a28072432c06522db089e05dcfb4f3da8d",
+  "source_unchanged_before_and_after_native_completion": true,
+  "primary_record": "verification.json",
+  "native_completion_record": "native-200-continuation.json",
+  "ctest": {
+    "enabled_passed": 72,
+    "failed": 0,
+    "disabled": [
+      "harness.deliberate_failure"
+    ],
+    "seconds": 338.14
+  },
+  "format_static_architecture_research_coverage_specifications": "Pass",
+  "native_effective_scales_percent": [
+    100,
+    125,
+    150,
+    175,
+    200
+  ],
+  "native_units": [
+    "mm",
+    "in"
+  ],
+  "preserved_failed_attempt": {
+    "record": "nativeCurveTools-200.txt",
+    "reason": "Existing curve fixture could not activate its window for EllipticalArc in inches; failed QTest::qWaitForWindowActive before the remaining checks",
+    "retry": "nativeCurveTools-200-retry-continuation.txt",
+    "retry_exit_code": 0
+  },
+  "earlier_interrupted_run": "../../20261028T031221.942108Z/verification/verification.json",
+  "visual_review": {
+    "status": "Pass for inspected canvas snapshots",
+    "images": [
+      "native-100/cm3-dimensions-mm.png",
+      "native-200-continuation/cm3-dimensions-in.png"
+    ],
+    "limit": "Canvas/reference-label review only; not physical input or accessibility acceptance"
+  },
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false,
+  "remaining": [
+    "Other CM3 dimensions, inference, Fully Define and constrained dragging",
+    "Whole CM3 course/recovery/portable-copy and physical 8 GB resource matrix",
+    "Windows/Linux, installed builds and physical input/accessibility acceptance"
+  ]
+}

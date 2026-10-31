@@ -1,0 +1,35 @@
+********* Start testing of DimensionContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : DimensionContracts::initTestCase()
+QINFO  : DimensionContracts::native() Dimension workflow "Length" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Distance" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "HorizontalDistance" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "VerticalDistance" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Angle" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Radius" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Diameter" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Sweep" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "CenterlineDiameter" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "ArcLength" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "HorizontalOrdinate" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "VerticalOrdinate" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "CenterlineDiameter" "mm" point diameter true
+QINFO  : DimensionContracts::native() Dimension workflow "Angle" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Length" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Distance" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "HorizontalDistance" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "VerticalDistance" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Angle" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Radius" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Diameter" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Sweep" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "CenterlineDiameter" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "ArcLength" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "HorizontalOrdinate" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "VerticalOrdinate" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "CenterlineDiameter" "in" point diameter true
+QINFO  : DimensionContracts::native() Dimension workflow "Angle" "in" point diameter false
+PASS   : DimensionContracts::native()
+PASS   : DimensionContracts::cleanupTestCase()
+Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted, 25241ms
+********* Finished testing of DimensionContracts *********

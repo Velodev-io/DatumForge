@@ -1,0 +1,54 @@
+{
+  "status": "Fail",
+  "scope": "CM3 CenterlineDiameter (point/parallel profile line), shared-datum per-point ordinates and circular ArcLength, plus prior dimension regressions on the available Mac",
+  "host": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "physical_ram_bytes": 8589934592,
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.868217374998494
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 123.59468958400248
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 8,
+      "seconds": 286.29952966699784
+    }
+  ],
+  "static_scope": "Changed production translation units plus all CM3 test translation units; headers analyzed through their real consumers",
+  "native_scope": "All CM3 editor modes at five effective scales; native workspace/arc regressions at endpoint scales; other core-modeling native matrices retain separate historical scope",
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false,
+  "remaining": [
+    "Driving multientity path length; general direction/increment/drawing marking controls",
+    "Automatic relations/inference, Fully Define and constrained dragging",
+    "Whole-course recovery/resource/installed/physical input/accessibility and Windows/Linux acceptance"
+  ],
+  "development_regression": "axis-upstream-red.txt records the earlier unsigned-distance adapter; it is not a result for this final source identity"
+}

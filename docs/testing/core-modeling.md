@@ -1,6 +1,10 @@
 # Core-modeling execution evidence
 
-Updated: 25 October 2026. CM0–CM9 authorized on 22 October, after Module 10 and before Module 11.
+[26 October sketch tool selection repair](module-4-tool-selection.md) records the
+later drawing-mode fix and its regression evidence. It adds no CM2 feature or
+milestone acceptance claim.
+
+Updated: 29 October 2026. CM0–CM9 authorized on 22 October, after Module 10 and before Module 11.
 Original work branch: `feature/core-modeling-expansion`; local review commits were
 authorized on 25 October and are stacked through `review/core-modeling-integration`.
 No merge/push. Preserve all earlier
@@ -26,6 +30,10 @@ implementation slice is verified below; projected model-edge/external-vertex cas
 remain CM4 dependencies.
 CM1–CM9 remain incomplete until their production, persistence,
 native and verification tasks have actual evidence.
+
+CM3 now has a production driving/reference/component-dimension slice with
+available-Mac verification. See [CM3 scope below](#cm3--drivingreference-and-component-dimension-slice);
+the remaining dimensions, inference, Fully Define and constrained dragging stay open.
 
 The old source/specification/module reports retain their original scope. The
 extension does not certify Windows/Linux, physical device/assistive technology,
@@ -513,3 +521,177 @@ historical recovery tests do not automatically close those per-variant gates.
 Existing CM0/CM1/CM4 prerequisites and deferred 6.1b/6.4c/7.4c remain unchanged.
 The next independent CM2 work is Power trim/Corner and additional exact curve
 operands using the identity/disclosure contract. Modules 11–12 are not started.
+
+## CM3 — driving/reference and component dimension slice
+
+Work branch: `feature/cm3-dimensions`, based on the existing integration tree with
+the uncommitted sketch tool-selection repair preserved. No commit, merge or push
+was performed for this slice.
+
+[Contracts](../decisions/core-modeling-cm3-dimensions.md) define schema 6,
+the sticky semantic manifest, ordered signed horizontal/vertical distances,
+reference regeneration and saved annotation placements. Existing aligned,
+angular, radius, diameter and sweep dimensions share the reference/editor flow.
+The native editor previews an isolated candidate, requires a valid worker result
+before Apply and supports Restore/Cancel. Labels can reopen the same dimension
+identity. Reference values never enter equations or become controlling expressions
+through direct geometry property edits.
+
+**Available-Mac slice verification passed on 28 October, with one native window
+activation retry.** The [completion record](artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json)
+links the exact [source identity](artifacts/core-modeling/20261028T031935.641987Z/verification/source-identity.json),
+full-suite/static results and the separate native continuation. All **72 enabled
+CTests passed** in 338.14 s; the pre-existing deliberate failure probe stayed
+disabled. Pinned formatting, Clang analysis, architecture ownership, source and
+research preservation, coverage and specification checks passed. Native CM3
+mm/in workflows passed at 100/125/150/175/200% effective scales, including the
+actual shared Dimension action, label double-click, invalid units, canceled
+in-flight previews, Restore/Apply and driving/reference conversion. Inspected
+100% mm and 200% inch canvas captures show visible reference labels and geometry.
+
+The [primary record](artifacts/core-modeling/20261028T031935.641987Z/verification/verification.json)
+retains its **Fail** status: the existing 200% curve fixture could not activate
+its EllipticalArc/inch window (`QTest::qWaitForWindowActive`). The
+[unchanged-source continuation](artifacts/core-modeling/20261028T031935.641987Z/verification/native-200-continuation.json)
+reran that complete workflow successfully and passed all remaining 200% checks,
+including CM3, line editing, workspace and arcs. Source hashes matched before
+and after the continuation. This does not relabel the failed attempt as passing.
+
+The [earlier run](artifacts/core-modeling/20261028T031221.942108Z/verification/verification.json)
+was deliberately interrupted during CTest before fixing reference-mode branch
+continuity. Its subsequent [focused failing regression](artifacts/core-modeling/20261028T031221.942108Z/verification/reference-continuity-red.txt)
+was added after that run's initial source snapshot. The final source tests both
+readout-only motion and preservation of driving branch guards. Editor regression
+testing also exposed and repaired stale multi-selection identities. These earlier
+records remain separate from the final passing slice evidence.
+
+Remaining CM3 work includes linear diameter about a centerline, ordinate groups,
+driving path and true arc length, general direction/increment/drawing-mark options,
+inference guides and confirmed automatic relations, deterministic Fully Define,
+temporary drag targets and last-valid constrained-drag previews. The broader
+per-variant recovery/resource/platform gates remain open. CM3.a–e and all touched
+coverage rows remain In progress. CM2's remaining work and deferred gates
+6.1b/6.4c/7.4c are unchanged. Module 11 is not started.
+
+
+## CM3 — associated dimensions
+
+The [associated-dimension contracts](../decisions/core-modeling-cm3-associated-dimensions.md)
+cover centerline diameter for profile points/lines, shared-datum per-point X/Y
+ordinates, and true circular ArcLength. Schema 7 and the sticky associated-dimension
+manifest preserve axis/origin identities, side, expressions, placements and
+compatibility across undo/reopen and portable copies. The worker owns exact signed
+axis and radius-times-sweep equations; UI controls reuse the earlier dimension
+editor and show diameter/X/Y/arc-length labels.
+
+**28 October outcome: production implementation present; verification incomplete.** The
+[completion record](artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json)
+links the [source identity](artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/source-identity.json).
+Configure/build passed. `cm3.associated_dimensions` and `cm3.dimensions` passed in
+the full run, including rotated/translated/free axes, the signed axis-crossing
+regression, independent residual/rank, real OCCT revolve volumes, radius/arc-length
+changes, schemas 6/7, undo/reopen and portable copy. The
+[focused pre-full run](artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/focused-pre-full.txt)
+passed all three CM3 tests. The
+[earlier failing axis regression](artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/axis-upstream-red.txt)
+records the unsigned-distance seed failure before the signed adapter.
+
+The [full run](artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/verification.json)
+remains **Fail**: 64 of 73 enabled tests passed, eight existing-module tests timed
+out, and `cm3.dimension_contracts` failed its Dimension-action enabled assertion
+after preview cancellation. The pre-existing deliberate failure probe was disabled.
+The [power log](artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/power-events.txt)
+confirms repeated Sleep/DarkWake events during verification. A process-scoped
+keep-awake [widget repeat](artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/awake-widget-repeat.txt)
+also timed out. The [diagnosis](artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/diagnosis.json)
+does not assume that the action failure is solely environmental: pending-request,
+selection and post-modal action readiness still need an awake-session reproduction.
+No assertion, timeout or admission limit was weakened.
+
+An [unchanged-source static continuation](artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/static-continuation.json)
+passed formatting, Clang analysis of changed production/all CM3 test translation
+units, architecture, research preservation, coverage and specifications. The
+full/native run is not passing. New native activation/scaling checks were not
+reached and remain Blocked on an awake, unlocked, logged-in Mac. Prior schema-6
+native captures do not certify these additions. Once the host is ready, rerun
+`python3 tools/verify_cm3_associated.py`. A temporary `caffeinate -di` wrapper may
+prevent idle sleep, but did not prevent the observed sleep during the repeat.
+
+Whole CM3 remains In progress. Multientity driving path length, grouped ordinate
+placement, broader dimension controls, inference, Fully Define, constrained
+dragging and the full course/recovery/resource/platform gates remain open.
+This preserves the earlier evidence, tool-selection repair and deferred
+6.1b/6.4c/7.4c gates. No commit, merge, push or Module 11 work.
+
+
+### 29 October — awake-session verification
+
+The user confirmed an awake, unlocked host. The
+[completion record](artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json)
+records **73 enabled CTests passing** in 349.22 s, with the existing deliberate
+failure probe still disabled. The earlier Dimension-action failure did not
+reproduce in four [awake preflight repeats](artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/awake-widget-preflight.json)
+or the full suite; no production change was made for it. This does not prove that
+sleep was its sole cause. Earlier failed/suspended records retain their statuses.
+
+The native run exposed a separate harness synchronization error: the test queried
+an empty hit rectangle before paintEvent published the label. The original
+[failure](artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/cm3-native-100.txt)
+is retained. The only source change after the passing full suite was
+`tests/core_modeling/dimension_contracts.cpp`: wait for the actual painted label,
+then arm the modal driver immediately before the click. All original functional
+assertions remain. Production inputs exactly match the passing full-suite build.
+The [post-correction source identity](artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/source-identity-after-test-sync.json)
+records that one-file delta. The updated widget test passed four more repeats,
+formatting and Clang reanalysis; see the
+[followup record](artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/verification-after-test-sync.json).
+The full suite preceded this test-only change; its results were not relabeled as
+a second full-suite run.
+
+Native CM3 mm/in workflows passed at **100/125/150/175/200% effective scales**.
+The [native matrix completion](artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/native-matrix-completion.json)
+checks source identity before/after and includes workspace/arc regressions at the
+endpoint scales. Changed-production/all-CM3-test Clang analysis, formatting,
+ownership, research preservation, coverage and specification checks passed.
+Visual inspection of 200% mm diameter and 125% inch arc-length captures confirmed
+visible reference symbols/values and geometry; this is not physical-input testing.
+
+One [legacy native arc-count failure](artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/arcs-native-100-after-test-sync.txt)
+was retained: one tangent relation was observed instead of two. No production
+change was made. A complete isolated rerun, two further consecutive 100% reruns,
+and the 200% endpoint run passed. Its cause remains unproven, and broader native
+interaction repeatability stays open. The successful finite workflows do not
+close that broader gate or claim every attempt passed.
+
+This closes the selected available-Mac dimension-slice verification, not CM3.a–e
+or full course/resource/platform acceptance. Remaining CM3 tasks and deferred
+6.1b/6.4c/7.4c are unchanged. No commit, merge, push or Module 11 work.
+
+### 31 October — local commit review
+
+The user requested review and local commits of the pending changes. The tool
+selection repair is isolated on `review/sketch-tool-selection-20261031`; the CM3
+dimension changes are on the stacked `review/cm3-dimensions-20261031` branch.
+No merge or push is authorized. Earlier no-commit statements above describe their
+historical verification runs.
+
+Review found a pending `TECH_SPEC.md` reset that removed the core-modeling
+extension and incorrectly marked Modules 7–10 as unstarted. The retained
+specification text was restored; the original diff is preserved in the
+[review artifacts](artifacts/review/20261031-precommit/tech-spec-rejected-reset.patch).
+The CM3 application/test inputs match the 29 October post-synchronization native
+source identity. All seven staged tool-selection code/build files also matched
+their 26 October passing record. No production code changed during this review.
+
+The [review ledger](artifacts/review/20261031-precommit/review.json) records fresh
+build, CTest, changed-source Clang analysis and structural checks, including the
+interrupted sandbox IPC attempt separately from the host-permission run. Native
+scale/device/platform/resource checks were not rerun; earlier failures and
+deferred gates remain open. CM3 as a whole remains In progress; Module 11 is not
+started.
+
+Fresh review checks passed: **73 enabled CTests in 345.59 s**, with the deliberate
+failure probe disabled; development configure/build; pinned formatting; Clang
+analysis of all 16 changed C++ translation units; architecture, research isolation,
+coverage and specifications. The sandbox attempt was interrupted after local IPC
+denials; the complete passing suite ran with host permissions on identical sources.

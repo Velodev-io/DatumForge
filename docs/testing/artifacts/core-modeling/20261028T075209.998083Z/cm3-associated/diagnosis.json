@@ -1,0 +1,21 @@
+{
+  "status": "Verification incomplete",
+  "observed": [
+    "Full CTest failed: eight timeouts in existing modules and a CM3 action-enabled failure",
+    "A keep-awake widget repeat also timed out",
+    "pmset power-events show repeated Maintenance Sleep/DarkWake during the run window"
+  ],
+  "evidence": [
+    "ctest.txt",
+    "awake-widget-repeat.txt",
+    "power-events.txt"
+  ],
+  "interpretation": "Host suspension is an observed verification problem. The disabled-action failure is not yet proved to be solely environmental or a separate UI race.",
+  "next": "Complete non-GUI static checks; repeat failed/full/native tests with an awake unlocked host. No test timeout or assertion is weakened.",
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false
+}

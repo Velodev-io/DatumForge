@@ -9,6 +9,7 @@ class SketchView : public QWidget {
     sketch::Sketch drawing;
     QMap<QString, std::vector<sketch::Vec2>> curveDisplay;
     QString selectedId, dragging;
+    QMap<QString, QRectF> dimensionHits;
     double scale = 6000;
     sketch::Vec2 cameraCenter;
     bool editable = false;
@@ -80,6 +81,9 @@ class SketchView : public QWidget {
     QPointF screen(sketch::Vec2 p) const;
     sketch::Vec2 local(QPointF p) const;
     QString pick(QPointF p) const;
+    QRectF dimensionLabelRect(QString id) const {
+        return dimensionHits.value(id);
+    }
     void fit();
     sketch::Vec2 snapPoint(sketch::Vec2 point) const;
   signals:
@@ -96,6 +100,7 @@ class SketchView : public QWidget {
     void dragFinished();
     void dragCanceled();
     void editRequested(QString entity);
+    void dimensionEditRequested(QString constraint);
     void deleteRequested();
     void canceled();
 };

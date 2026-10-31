@@ -1,7 +1,10 @@
 #include "Solver.hpp"
 #include "ArcGeometry.hpp"
+#include "ArcLengthConstraint.hpp"
+#include "AxisDistanceConstraint.hpp"
 #include "CurveConstraint.hpp"
 #include "Curves.hpp"
+#include "Dimensions.hpp"
 #include "References.hpp"
 #include "Slots.hpp"
 #include "domain/Expressions.hpp"
@@ -21,6 +24,11 @@ void combinations(const Sketch &s, const Constraint &c) {
     check(reason.isEmpty(), "UnsupportedOperation", reason);
     check(c.third.isEmpty() == !(c.kind == "Intersection" || c.kind == "Symmetric"), "InvalidInput",
           "Relation has the wrong third-operand contract");
+    if (!c.driving)
+        return;
+    if (componentDimension(c.kind))
+        check(std::abs(c.value) <= 1e3, "InvalidGeometry",
+              "Component distance must be within ±1 km");
     if (c.kind == "Symmetric")
         check(c.value == 0 || c.value == 1, "InvalidInput",
               "Symmetry correspondence must be zero or one");
@@ -36,7 +44,9 @@ void combinations(const Sketch &s, const Constraint &c) {
         check((c.value == 0 || c.value == 1) && (c.second == 0 || c.second == 1) &&
                   (s.entity(c.b).kind != "Point" || c.second == 0),
               "InvalidInput", "Endpoint selectors must be zero or one");
-    if (QStringList{"Length", "Distance", "Radius", "Diameter", "SlotLength"}.contains(c.kind))
+    if (QStringList{"Length", "Distance", "Radius", "Diameter", "SlotLength", "CenterlineDiameter",
+                    "ArcLength"}
+            .contains(c.kind))
         check(c.value > 1e-9 && c.value <= 1e3, "InvalidGeometry",
               "Dimension must exceed 1 nm and be at most 1 km");
     if (c.kind == "SlotGeometry") {
@@ -54,6 +64,8 @@ void combinations(const Sketch &s, const Constraint &c) {
 std::vector<double> residuals(const Sketch &s) {
     std::vector<double> out;
     for (auto &c : s.constraints) {
+        if (!c.driving)
+            continue;
         auto &a = s.entity(c.a);
         auto p = a.kind == "Point" ? a.point : s.entity(a.a).point;
         auto push = [&](double n) { out.push_back(n); };
@@ -189,7 +201,16 @@ std::vector<double> residuals(const Sketch &s) {
             double l = std::hypot(v.x, v.y), m = std::hypot(w.x, w.y);
             push((v.x * w.y - v.y * w.x) / (l * m));
             push(((q.x - p.x) * v.y - (q.y - p.y) * v.x) / l);
-        } else if (c.kind == "Distance")
+        } else if (c.kind == "CenterlineDiameter") {
+            double side = c.reversed ? -1 : 1;
+            push(2 * side * axisDistance(s, c) - c.value);
+            if (a.kind == "Line")
+                push(2 * side * axisDistance(s, c, true) - c.value);
+        } else if (c.kind == "ArcLength")
+            push(a.radius * a.sweep - c.value);
+        else if (componentDimension(c.kind))
+            push(measureDimension(s, c) - c.value);
+        else if (c.kind == "Distance")
             push(length(p, s.entity(c.b).point) - c.value);
         else if (c.kind == "Radius")
             push(a.radius - c.value);
@@ -330,10 +351,7 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
         expression::Environment names(candidate.names);
         names.validateAll();
         for (auto &c : candidate.constraints) {
-            bool dimensional = QStringList{"Length",   "Distance",   "Angle", "Radius",
-                                           "Diameter", "SlotLength", "Sweep"}
-                                   .contains(c.kind);
-            check(dimensional || c.expression.isEmpty(), "InvalidInput",
+            check(dimensional(c.kind) || c.expression.isEmpty(), "InvalidInput",
                   "Expressions apply only to dimensional constraints");
             if (!c.expression.isEmpty()) {
                 auto q = names.evaluate(c.expression);
@@ -346,9 +364,13 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
             combinations(candidate, c);
         }
         result.sketch = candidate;
-        if (candidate.constraints.empty()) {
+        if (std::none_of(candidate.constraints.begin(), candidate.constraints.end(),
+                         [](auto &c) { return c.driving; })) {
             auto count = variables(candidate).size();
             check(count <= 256, "ResourceLimit", "At most 256 numerical sketch variables");
+            for (auto &c : candidate.constraints)
+                c.value = measureDimension(candidate, c);
+            result.sketch = candidate;
             result.valid = true;
             result.freedom = int(count);
             result.status = count ? "Underdefined" : "FullyDefined";
@@ -391,7 +413,9 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
                     c.value /= scale;
                 if (candidate.entity(c.b).kind == "Parabola")
                     c.second /= scale;
-            } else if (QStringList{"Length", "Distance", "Radius", "Diameter", "SlotLength"}
+            } else if (componentDimension(c.kind) ||
+                       QStringList{"Length", "Distance", "Radius", "Diameter", "SlotLength",
+                                   "CenterlineDiameter", "ArcLength"}
                            .contains(c.kind))
                 c.value /= scale;
         }
@@ -522,6 +546,8 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
         int tag = 0;
         for (auto &c : candidate.constraints) {
             ++tag;
+            if (!c.driving)
+                continue;
             auto a = c.a, b = c.b;
             if (c.kind == "CurveTangent") {
                 auto p = curveValue(candidate, candidate.entity(a), c.value),
@@ -563,6 +589,22 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
                 // Express diameter - radius = radius without that reduction path.
                 system.addConstraintDifference(circles[b].rad, diameter, circles[b].rad, tag);
                 system.addConstraintDifference(distance, constant(c.value), diameter, tag);
+            } else if (c.kind == "CenterlineDiameter") {
+                auto target = constant((c.reversed ? -1 : 1) * c.value / 2);
+                if (candidate.entity(a).kind == "Point")
+                    system.addConstraint(
+                        new AxisDistanceConstraint(points[a], lines[b], target, tag));
+                else {
+                    system.addConstraint(
+                        new AxisDistanceConstraint(lines[a].p1, lines[b], target, tag));
+                    system.addConstraint(
+                        new AxisDistanceConstraint(lines[a].p2, lines[b], target, tag));
+                }
+            } else if (c.kind == "ArcLength") {
+                auto &arc = candidate.entity(a);
+                system.addConstraint(new ArcLengthConstraint(
+                    &arc.radius, joinedArcs.contains(a) ? &arc.start : constant(0), &arc.sweep,
+                    constant(c.value), tag));
             } else if (c.kind == "Diameter")
                 system.addConstraintCircleRadius(circles[a], constant(c.value / 2), tag);
             else if (c.kind == "Sweep") {
@@ -669,7 +711,13 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
                 system.addConstraintPerpendicular(lines[a], lines[b], tag);
             else if (c.kind == "Angle")
                 system.addConstraintL2LAngle(lines[a], lines[b], constant(c.value), tag);
-            else if (c.kind == "Length")
+            else if (componentDimension(c.kind)) {
+                auto p = candidate.entity(a).kind == "Line" ? lines[a].p1 : points[a];
+                auto q = candidate.entity(a).kind == "Line" ? lines[a].p2 : points[b];
+                system.addConstraintDifference(horizontalDimension(c.kind) ? p.x : p.y,
+                                               horizontalDimension(c.kind) ? q.x : q.y,
+                                               constant(c.value), tag);
+            } else if (c.kind == "Length")
                 system.addConstraintP2PDistance(lines[a].p1, lines[a].p2, constant(c.value), tag);
             else if (c.kind == "Distance")
                 system.addConstraintP2PDistance(points[a], points[b], constant(c.value), tag);
@@ -763,6 +811,9 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
                 candidate.entity(resolved[i].b).kind == "Spline")
                 resolved[i].second = candidate.constraints[i].second;
         candidate.constraints = std::move(resolved);
+        for (auto &c : candidate.constraints)
+            if (!c.driving)
+                c.value = measureDimension(candidate, c);
         for (auto &c : candidate.constraints)
             if (c.kind == "Coincident") {
                 auto &curve = candidate.entity(c.b);
@@ -859,14 +910,20 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
                 checkTrim(b, contact);
             }
         candidate.validate();
-        if (previous && previous->constraints.size() == candidate.constraints.size()) {
-            bool same = true;
-            for (size_t i = 0; i < candidate.constraints.size(); ++i) {
-                const auto &a = previous->constraints[i];
-                const auto &b = candidate.constraints[i];
-                if (a.id != b.id || a.value != b.value || a.second != b.second ||
-                    a.expression != b.expression || a.kind != b.kind || a.a != b.a || a.b != b.b ||
-                    a.third != b.third || a.reversed != b.reversed)
+        if (previous) {
+            auto drivers = [](const Sketch &s) {
+                return std::count_if(s.constraints.begin(), s.constraints.end(),
+                                     [](auto &c) { return c.driving; });
+            };
+            bool same = drivers(candidate) > 0 && drivers(candidate) == drivers(*previous);
+            for (auto &b : candidate.constraints) {
+                if (!b.driving)
+                    continue;
+                auto i = std::find_if(previous->constraints.begin(), previous->constraints.end(),
+                                      [&](auto &a) { return a.driving && a.id == b.id; });
+                if (i == previous->constraints.end() || i->value != b.value ||
+                    i->second != b.second || i->expression != b.expression || i->kind != b.kind ||
+                    i->a != b.a || i->b != b.b || i->third != b.third || i->reversed != b.reversed)
                     same = false;
             }
             if (same)

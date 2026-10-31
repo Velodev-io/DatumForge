@@ -1707,48 +1707,88 @@
     ]
   },
   "CM3.a": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "In progress",
+    "scope": "Selected driving/reference/component, centerline diameter, per-point ordinate and circular ArcLength implementation has available-Mac engine/persistence and scoped native verification. 73 enabled CTests passed; one test-only repaint synchronization correction then passed four widget repeats, Clang reanalysis and native 100\u2013200% mm/in. A legacy arc-count failure is retained; three isolated 100% reruns and the 200% endpoint passed without production change, cause unproven. Full interaction repeatability, remaining dimensions/inference/Fully Define/drag and whole-task/resource/platform acceptance remain open.",
     "evidence": [
       "docs/CORE_MODELING.md",
       "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/research/core-modeling-coverage.json",
+      "docs/decisions/core-modeling-cm3-dimensions.md",
+      "tests/core_modeling/dimensions.cpp",
+      "tests/core_modeling/dimension_contracts.cpp",
+      "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+      "docs/decisions/core-modeling-cm3-associated-dimensions.md",
+      "tests/core_modeling/associated_dimensions.cpp",
+      "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
+      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
     ]
   },
   "CM3.b": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "In progress",
+    "scope": "Selected driving/reference/component, centerline diameter, per-point ordinate and circular ArcLength implementation has available-Mac engine/persistence and scoped native verification. 73 enabled CTests passed; one test-only repaint synchronization correction then passed four widget repeats, Clang reanalysis and native 100\u2013200% mm/in. A legacy arc-count failure is retained; three isolated 100% reruns and the 200% endpoint passed without production change, cause unproven. Full interaction repeatability, remaining dimensions/inference/Fully Define/drag and whole-task/resource/platform acceptance remain open.",
     "evidence": [
       "docs/CORE_MODELING.md",
       "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/research/core-modeling-coverage.json",
+      "docs/decisions/core-modeling-cm3-dimensions.md",
+      "tests/core_modeling/dimensions.cpp",
+      "tests/core_modeling/dimension_contracts.cpp",
+      "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+      "docs/decisions/core-modeling-cm3-associated-dimensions.md",
+      "tests/core_modeling/associated_dimensions.cpp",
+      "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
+      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
     ]
   },
   "CM3.c": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "In progress",
+    "scope": "Selected driving/reference/component, centerline diameter, per-point ordinate and circular ArcLength implementation has available-Mac engine/persistence and scoped native verification. 73 enabled CTests passed; one test-only repaint synchronization correction then passed four widget repeats, Clang reanalysis and native 100\u2013200% mm/in. A legacy arc-count failure is retained; three isolated 100% reruns and the 200% endpoint passed without production change, cause unproven. Full interaction repeatability, remaining dimensions/inference/Fully Define/drag and whole-task/resource/platform acceptance remain open.",
     "evidence": [
       "docs/CORE_MODELING.md",
       "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/research/core-modeling-coverage.json",
+      "docs/decisions/core-modeling-cm3-dimensions.md",
+      "tests/core_modeling/dimensions.cpp",
+      "tests/core_modeling/dimension_contracts.cpp",
+      "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+      "docs/decisions/core-modeling-cm3-associated-dimensions.md",
+      "tests/core_modeling/associated_dimensions.cpp",
+      "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
+      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
     ]
   },
   "CM3.d": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "In progress",
+    "scope": "Selected driving/reference/component, centerline diameter, per-point ordinate and circular ArcLength implementation has available-Mac engine/persistence and scoped native verification. 73 enabled CTests passed; one test-only repaint synchronization correction then passed four widget repeats, Clang reanalysis and native 100\u2013200% mm/in. A legacy arc-count failure is retained; three isolated 100% reruns and the 200% endpoint passed without production change, cause unproven. Full interaction repeatability, remaining dimensions/inference/Fully Define/drag and whole-task/resource/platform acceptance remain open.",
     "evidence": [
       "docs/CORE_MODELING.md",
       "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/research/core-modeling-coverage.json",
+      "docs/decisions/core-modeling-cm3-dimensions.md",
+      "tests/core_modeling/dimensions.cpp",
+      "tests/core_modeling/dimension_contracts.cpp",
+      "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+      "docs/decisions/core-modeling-cm3-associated-dimensions.md",
+      "tests/core_modeling/associated_dimensions.cpp",
+      "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
+      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
     ]
   },
   "CM3.e": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "In progress",
+    "scope": "Selected driving/reference/component, centerline diameter, per-point ordinate and circular ArcLength implementation has available-Mac engine/persistence and scoped native verification. 73 enabled CTests passed; one test-only repaint synchronization correction then passed four widget repeats, Clang reanalysis and native 100\u2013200% mm/in. A legacy arc-count failure is retained; three isolated 100% reruns and the 200% endpoint passed without production change, cause unproven. Full interaction repeatability, remaining dimensions/inference/Fully Define/drag and whole-task/resource/platform acceptance remain open.",
     "evidence": [
       "docs/CORE_MODELING.md",
       "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/research/core-modeling-coverage.json",
+      "docs/decisions/core-modeling-cm3-dimensions.md",
+      "tests/core_modeling/dimensions.cpp",
+      "tests/core_modeling/dimension_contracts.cpp",
+      "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+      "docs/decisions/core-modeling-cm3-associated-dimensions.md",
+      "tests/core_modeling/associated_dimensions.cpp",
+      "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
+      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
     ]
   },
   "CM4.a": {

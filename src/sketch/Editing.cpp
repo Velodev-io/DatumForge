@@ -52,7 +52,7 @@ std::optional<Rectangle> rectangleOf(const Sketch &s, QString id) {
 namespace {
 void movable(const Sketch &s, const QSet<QString> &ids) {
     for (auto &c : s.constraints)
-        if (c.kind != "Horizontal" && c.kind != "Vertical" &&
+        if (c.driving && c.kind != "Horizontal" && c.kind != "Vertical" &&
             (ids.contains(c.a) || ids.contains(c.b) || ids.contains(c.third)))
             throw domain::Error("ConstrainedGeometry",
                                 "Controlled by " + c.kind +

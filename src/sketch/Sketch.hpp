@@ -38,6 +38,8 @@ struct Constraint {
     QString third;
     bool reversed = false;
     std::optional<CurveReference> reference;
+    bool driving = true;
+    std::optional<Vec2> placement; // sketch-plane SI annotation anchor
 };
 struct ConstructionGroup {
     QString id = newId(), method;
@@ -70,6 +72,8 @@ struct Sketch {
     void validate() const;
     bool extendedRelations() const;
     bool primitiveSemantics() const;
+    bool dimensionSemantics() const;
+    bool associatedDimensionSemantics() const;
     QCborMap map() const;
     static Sketch parse(const QCborMap &map);
 };

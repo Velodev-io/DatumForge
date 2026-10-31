@@ -74,6 +74,17 @@ CM2.a–e remain **In progress**. The [straight-line editing slice](testing/core
 - [ ] **CM3.d:** Add on-canvas unit-aware editor, preview/restore and visible inference guides.
 - [ ] **CM3.e:** Replay two-point Horizontal, revolved-profile diameter and constant-path-length workflows; preserve last-valid drag preview on failure.
 
+CM3.a–e are **In progress**. The [dimension slice contracts](decisions/core-modeling-cm3-dimensions.md)
+cover driving/reference mode, signed component distances, saved placements and a
+worker-backed native dimension editor. Remaining dimension variants, inference,
+Fully Define and constrained dragging remain open; see the
+[execution evidence](testing/core-modeling.md#cm3--drivingreference-and-component-dimension-slice).
+
+The [associated-dimension slice](decisions/core-modeling-cm3-associated-dimensions.md)
+adds centerline diameter, per-point shared-datum ordinates and exact circular arc
+length with schema-7 persistence. Its verification and remaining limits are
+recorded separately; these additions do not close CM3.a–e.
+
 ### CM4 — Datums and associative sketch support
 
 - [ ] **CM4.a:** Extend the dependency graph to support typed geometry references and reject cycles/order violations.

@@ -1,0 +1,42 @@
+{
+  "status": "Partial verification; native/UI revalidation blocked by host suspension",
+  "scope": "CenterlineDiameter, per-point X/Y ordinates and circular ArcLength implemented; whole CM3 In progress",
+  "source_identity": "source-identity.json",
+  "source_sha256": "dc0ac4e4c1c7dead7629d909653c6d9b65819d73ed51b0f3ae6663d048993985",
+  "source_unchanged_static_continuation": true,
+  "build": "Pass",
+  "geometry_persistence_tests": {
+    "cm3.associated_dimensions": "Pass in full run",
+    "cm3.dimensions": "Pass in full run"
+  },
+  "focused_pre_full": "focused-pre-full.txt: all three CM3 tests passed before the full run; later failure requires revalidation",
+  "full_ctest": {
+    "status": "Fail",
+    "passed": 64,
+    "failed": 9,
+    "disabled": 1,
+    "timeouts": 8,
+    "record": "ctest.txt",
+    "ui_failure": "cm3.dimension_contracts: Dimension action disabled after preview cancellation; not yet proved solely environmental"
+  },
+  "static_checks": {
+    "status": "Pass",
+    "record": "static-continuation.json",
+    "scope": "Format, changed production/all CM3 test Clang analysis, ownership/research/coverage/specifications"
+  },
+  "native": {
+    "status": "Blocked / Not run for this slice",
+    "reason": "Awake unlocked Mac required; Sleep/DarkWake observed; keep-awake widget repeat also timed out",
+    "evidence": [
+      "power-events.txt",
+      "awake-widget-repeat.txt",
+      "diagnosis.json"
+    ]
+  },
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false
+}

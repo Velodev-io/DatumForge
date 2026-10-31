@@ -2464,8 +2464,15 @@
       ],
       "analytical_fixture": "cm-076-geometry",
       "native_workflow": "cm-076-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-dimensions.md",
+        "tests/core_modeling/dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-077",
@@ -2492,8 +2499,15 @@
       ],
       "analytical_fixture": "cm-077-geometry",
       "native_workflow": "cm-077-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-dimensions.md",
+        "tests/core_modeling/dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-078",
@@ -2520,8 +2534,15 @@
       ],
       "analytical_fixture": "cm-078-geometry",
       "native_workflow": "cm-078-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-dimensions.md",
+        "tests/core_modeling/dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-079",
@@ -2548,8 +2569,15 @@
       ],
       "analytical_fixture": "cm-079-geometry",
       "native_workflow": "cm-079-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-dimensions.md",
+        "tests/core_modeling/dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-080",
@@ -2576,8 +2604,15 @@
       ],
       "analytical_fixture": "cm-080-geometry",
       "native_workflow": "cm-080-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-dimensions.md",
+        "tests/core_modeling/dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-081",
@@ -2604,8 +2639,15 @@
       ],
       "analytical_fixture": "cm-081-geometry",
       "native_workflow": "cm-081-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-dimensions.md",
+        "tests/core_modeling/dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-082",
@@ -2632,8 +2674,15 @@
       ],
       "analytical_fixture": "cm-082-geometry",
       "native_workflow": "cm-082-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-associated-dimensions.md",
+        "tests/core_modeling/associated_dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-083",
@@ -2660,8 +2709,15 @@
       ],
       "analytical_fixture": "cm-083-geometry",
       "native_workflow": "cm-083-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-associated-dimensions.md",
+        "tests/core_modeling/associated_dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-084",
@@ -2688,8 +2744,15 @@
       ],
       "analytical_fixture": "cm-084-geometry",
       "native_workflow": "cm-084-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-associated-dimensions.md",
+        "tests/core_modeling/associated_dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-085",
@@ -2744,8 +2807,15 @@
       ],
       "analytical_fixture": "cm-086-geometry",
       "native_workflow": "cm-086-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-dimensions.md",
+        "tests/core_modeling/dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-087",
@@ -2772,8 +2842,15 @@
       ],
       "analytical_fixture": "cm-087-geometry",
       "native_workflow": "cm-087-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-dimensions.md",
+        "tests/core_modeling/dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-088",
@@ -2800,8 +2877,15 @@
       ],
       "analytical_fixture": "cm-088-geometry",
       "native_workflow": "cm-088-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-dimensions.md",
+        "tests/core_modeling/dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-089",
@@ -2828,8 +2912,15 @@
       ],
       "analytical_fixture": "cm-089-geometry",
       "native_workflow": "cm-089-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-dimensions.md",
+        "tests/core_modeling/dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-090",
@@ -2937,8 +3028,15 @@
       ],
       "analytical_fixture": "cm-093-geometry",
       "native_workflow": "cm-093-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-associated-dimensions.md",
+        "tests/core_modeling/associated_dimensions.cpp",
+        "tests/core_modeling/dimension_contracts.cpp",
+        "docs/testing/core-modeling.md",
+        "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
+      ]
     },
     {
       "id": "CM-094",

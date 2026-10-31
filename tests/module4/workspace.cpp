@@ -5,10 +5,10 @@
 #include "render/Viewport.hpp"
 #include <QActionGroup>
 #include <QApplication>
+#include <QDialog>
 #include <QDir>
 #include <QDockWidget>
 #include <QFile>
-#include <QInputDialog>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNativeGestureEvent>
@@ -280,10 +280,15 @@ class Workspace : public QObject {
         auto *dimension = button(w, "sketch.dimension");
         QVERIFY(dimension && dimension->isEnabled());
         QTimer::singleShot(30, [] {
-            auto *dialog = qobject_cast<QInputDialog *>(QApplication::activeModalWidget());
+            auto *dialog = qobject_cast<QDialog *>(QApplication::activeModalWidget());
             if (dialog) {
-                dialog->setTextValue("8 mm");
-                dialog->accept();
+                dialog->findChild<QLineEdit *>("dimensionExpression")->setText("8 mm");
+                dialog->findChild<QPushButton *>("dimensionPreview")->click();
+                auto *apply = dialog->findChild<QPushButton *>("dimensionApply");
+                if (wait([&] { return apply->isEnabled(); }))
+                    apply->click();
+                else
+                    dialog->reject();
             }
         });
         QTest::mouseClick(dimension, Qt::LeftButton);

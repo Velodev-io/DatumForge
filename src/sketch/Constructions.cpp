@@ -319,7 +319,7 @@ void resizeRectangle(Sketch &s, const ConstructionGroup &g, RectangleParameters 
 void checkConstructionEdit(const Sketch &before, const Sketch &after, const ConstructionGroup &g) {
     auto ids = members(g);
     for (auto &c : before.constraints)
-        if (!g.relations.contains(c.id) && affected(c, ids)) {
+        if (c.driving && !g.relations.contains(c.id) && affected(c, ids)) {
             if (c.kind == "Length")
                 continue;
             if (c.kind == "Fixed" && length(location(before, before.entity(c.a)),
@@ -339,7 +339,7 @@ void checkConstructionEdit(const Sketch &before, const Sketch &after, const Cons
 Sketch dragConstruction(const Sketch &s, const ConstructionGroup &g, QString id, Vec2 delta) {
     auto ids = members(g);
     for (auto &c : s.constraints)
-        if (!g.relations.contains(c.id) && affected(c, ids))
+        if (c.driving && !g.relations.contains(c.id) && affected(c, ids))
             blocked(c);
     auto result = s;
     auto p = rectangleParameters(s, g);

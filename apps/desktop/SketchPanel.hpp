@@ -68,6 +68,8 @@ class SketchPanel : public QWidget {
     bool lineContinuationAnchor = false;
     qint64 revision = -1;
     bool editing = false, syncing = false, committing = false;
+    bool dimensionEditing = false;
+    void openDimensionEditor(QString constraint = {});
     std::vector<sketch::Vec2> clicks;
     sketch::Sketch &current();
     void rebuild();

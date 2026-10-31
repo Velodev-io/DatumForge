@@ -1,6 +1,7 @@
 #include "SketchView.hpp"
 #include "sketch/Constructions.hpp"
 #include "sketch/Curves.hpp"
+#include "sketch/Dimensions.hpp"
 #include "sketch/Editing.hpp"
 #include "sketch/Slots.hpp"
 #include <QApplication>
@@ -440,11 +441,11 @@ void SketchView::paintEvent(QPaintEvent *) {
     }
     p.setPen(dark ? QColor(255, 218, 140) : QColor(142, 86, 11));
     QVector<QRectF> dimensionLabels;
+    dimensionHits.clear();
     static const QRegularExpression literal("^[+-]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[eE][+-]?["
                                             "0-9]+)?(?:\\s+(?:mm|cm|m|in|deg|rad))?$");
     for (auto &c : drawing.constraints)
-        if (QStringList{"Length", "Distance", "Angle", "Radius", "Diameter", "SlotLength", "Sweep"}
-                .contains(c.kind)) {
+        if (sketch::dimensional(c.kind)) {
             auto &e = drawing.entity(c.a);
             auto pos = screen(e.kind == "Point" ? e.point : drawing.entity(e.a).point);
             if (e.kind == "Line") {
@@ -461,11 +462,22 @@ void SketchView::paintEvent(QPaintEvent *) {
             QString expression = c.expression.trimmed();
             bool named = !expression.isEmpty() && !literal.match(expression).hasMatch();
             QString label = c.kind + " " + QString::number(n, 'g', 7) + " " + unit;
+            if (c.kind == "CenterlineDiameter")
+                label = "Ø " + QString::number(n, 'g', 7) + " " + unit;
+            else if (c.kind == "ArcLength")
+                label = "Arc length " + QString::number(n, 'g', 7) + " " + unit;
+            else if (c.kind == "HorizontalOrdinate" || c.kind == "VerticalOrdinate")
+                label = (c.kind == "HorizontalOrdinate" ? "X " : "Y ") +
+                        QString::number(n, 'g', 7) + " " + unit;
+            if (!c.driving)
+                label = "(" + label + ")";
             if (named)
                 label += " [" + p.fontMetrics().elidedText(expression, Qt::ElideRight, 180) + "]";
             double labelWidth = p.fontMetrics().horizontalAdvance(label);
             double labelHeight = p.fontMetrics().height();
             auto anchor = pos;
+            if (c.placement)
+                pos = screen(*c.placement) + QPointF(-8, 12);
             pos.setX(std::clamp(pos.x() + 8, 12.0, std::max(12.0, width() - labelWidth - 12)));
             pos.setY(std::clamp(pos.y() - 12, 65.0, std::max(65.0, height() - 35.0)));
             QRectF bounds(pos.x() - 3, pos.y() - p.fontMetrics().ascent() - 2, labelWidth + 6,
@@ -487,6 +499,7 @@ void SketchView::paintEvent(QPaintEvent *) {
                 }
             }
             dimensionLabels.push_back(bounds);
+            dimensionHits.insert(c.id, bounds);
             p.save();
             p.setPen(QPen(dark ? QColor(255, 218, 140, 110) : QColor(142, 86, 11, 110), 1));
             p.drawLine(anchor, bounds.topLeft() + QPointF(0, bounds.height() / 2));
@@ -693,6 +706,10 @@ void SketchView::mousePressEvent(QMouseEvent *e) {
     previous = e->pos();
     if (e->button() != Qt::LeftButton || spaceDown)
         return;
+    if (editable && tool == "Select / drag")
+        for (auto &hit : dimensionHits)
+            if (hit.contains(e->position()))
+                return;
     pressedAt = e->pos();
     primitivePressed = false;
     if (editable && tool != "Select / drag") {
@@ -857,6 +874,12 @@ void SketchView::wheelEvent(QWheelEvent *e) {
     e->accept();
 }
 void SketchView::mouseDoubleClickEvent(QMouseEvent *e) {
+    if (editable && e->button() == Qt::LeftButton)
+        for (auto i = dimensionHits.cbegin(); i != dimensionHits.cend(); ++i)
+            if (i.value().contains(e->position())) {
+                emit dimensionEditRequested(i.key());
+                return;
+            }
     if (e->button() == Qt::LeftButton)
         emit editRequested(pick(e->position()));
 }

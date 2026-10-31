@@ -2,6 +2,7 @@
 #include "domain/Documents.hpp"
 #include "sketch/Constructions.hpp"
 #include "sketch/Curves.hpp"
+#include "sketch/Dimensions.hpp"
 #include "sketch/LineEditing.hpp"
 #include "sketch/Slots.hpp"
 #include <QFormLayout>
@@ -644,6 +645,8 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
             gestureOrigin = {x, y};
         }
     });
+    connect(view, &SketchView::dimensionEditRequested, this,
+            [this](QString id) { openDimensionEditor(id); });
     connect(view, &SketchView::dragged, this, [this](QString id, double x, double y) {
         if (!editing || !gestureBefore)
             return;
@@ -689,18 +692,15 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
         QStringList ids;
         for (auto *item : selected)
             ids.append(item->data(Qt::UserRole).toString());
-        for (auto id : relationSelectionOrder)
-            if (!ids.contains(id))
-                relationSelectionOrder.removeAll(id);
+        relationSelectionOrder.removeIf([&](const auto &id) { return !ids.contains(id); });
         for (auto id : ids)
             if (!relationSelectionOrder.contains(id))
                 relationSelectionOrder.append(id);
         updateRelations();
-        if (entities->selectedItems().empty())
-            return;
-        selectedId = entities->selectedItems().first()->data(Qt::UserRole).toString();
+        selectedId = selected.empty() ? QString() : selected.first()->data(Qt::UserRole).toString();
         view->showSketch(current(), selectedId, editing);
         updateSelection();
+        emit selectionChanged();
     });
     connect(preview, &QPushButton::clicked, this, &SketchPanel::previewDraft);
     connect(accept, &QPushButton::clicked, this, [this] {
@@ -728,13 +728,13 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     paneEscape->setContext(Qt::WidgetWithChildrenShortcut);
     connect(paneEscape, &QShortcut::activated, this, &SketchPanel::cancelInput);
     connect(client, &Client::sketchPreview, this, [this](QCborArray a) {
-        if (editing) {
+        if (editing && !dimensionEditing) {
             draft = sketch::parse(a);
             rebuild();
         }
     });
     connect(client, &Client::sketchDiagnosed, this, [this](QCborArray diagnostics) {
-        if (!editing || draft.empty())
+        if (!editing || draft.empty() || dimensionEditing)
             return;
         for (auto item : diagnostics) {
             auto d = item.toMap();
@@ -819,10 +819,11 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
             int at = constraints->currentRow();
             domain::check(editing && at >= 0, "InvalidInput",
                           "Select a dimension in an active edit");
-            domain::check(QStringList{"Length", "Distance", "Angle", "Radius", "Diameter",
-                                      "SlotLength", "Sweep"}
-                              .contains(current().constraints[at].kind),
-                          "InvalidInput", "Select a dimensional constraint");
+            domain::check(sketch::dimensional(current().constraints[at].kind), "InvalidInput",
+                          "Select a dimensional constraint");
+            domain::check(
+                current().constraints[at].driving, "InvalidInput",
+                "Reference dimensions are readouts; double-click the label to change mode");
             auto before = current();
             current().constraints[at].expression = value->text();
             remember(std::move(before));
@@ -884,6 +885,7 @@ void SketchPanel::install(QCborMap d, bool idle) {
         lineContinuationAnchor = false;
         clicks.clear();
         selectedId.clear();
+        relationSelectionOrder.clear();
         rebuild();
     }
     setProperty("units", d.value("units").toString());
@@ -1044,6 +1046,8 @@ void SketchPanel::rebuild() {
                     ? "Coincident endpoint"
                     : c.kind + " · " +
                           (c.expression.isEmpty() ? QString::number(c.value) : c.expression);
+            if (!c.driving)
+                label = "Reference · " + label;
             auto *item = new QListWidgetItem(label, constraints);
             item->setData(Qt::UserRole, c.id);
             if (c.id == constraintId)
@@ -1190,6 +1194,29 @@ void SketchPanel::previewDraft() {
     client->projectCommand("PreviewSketches", fields({{"sketches", sketch::encode(draft)}}));
 }
 bool SketchPanel::dimensionAvailable() const {
+    if (relationSelectionOrder.size() >= 2) {
+        if (relationSelectionOrder.size() > 2)
+            return false;
+        for (auto &s : editing ? draft : accepted)
+            if (s.id == sketches->currentData().toString()) {
+                QString a, b;
+                bool aAxis = false, bAxis = false;
+                for (auto &e : s.entities) {
+                    if (e.id == relationSelectionOrder[0]) {
+                        a = e.kind;
+                        aAxis = e.kind == "Line" && e.construction;
+                    }
+                    if (e.id == relationSelectionOrder[1]) {
+                        b = e.kind;
+                        bAxis = e.kind == "Line" && e.construction;
+                    }
+                }
+                if ((a == b && (a == "Point" || a == "Line")) || (a == "Point" && bAxis) ||
+                    (aAxis && b == "Point"))
+                    return true;
+            }
+        return false;
+    }
     for (auto &s : editing ? draft : accepted)
         for (auto &e : s.entities)
             if (e.id == selectedId)
@@ -1203,53 +1230,6 @@ void SketchPanel::chooseSketch(QString id) {
 void SketchPanel::choosePlane(QString name) {
     if (!editing)
         plane->setCurrentText(name);
-}
-void SketchPanel::dimensionSelection() {
-    if (!editing || selectedId.isEmpty() || client->outstanding())
-        return;
-    guard([&] {
-        auto &e = current().entity(selectedId);
-        QString kind = e.kind == "Line"                          ? "Length"
-                       : (e.kind == "Circle" || e.kind == "Arc") ? "Radius"
-                                                                 : QString();
-        domain::check(!kind.isEmpty(), "InvalidInput", "Select a line, circle or arc");
-        auto unit = property("units").toString();
-        double value = e.kind == "Line" ? sketch::length(current().entity(e.a).point,
-                                                         current().entity(e.b).point)
-                                        : e.radius;
-        QString text =
-            QString::number(value / domain::toSI(1, "length", unit), 'g', 10) + " " + unit;
-        for (auto &c : current().constraints)
-            if (c.kind == kind && c.a == e.id && !c.expression.isEmpty())
-                text = c.expression;
-        bool ok = false;
-        text = QInputDialog::getText(this, "Dimension", kind + " (" + unit + ") or expression",
-                                     QLineEdit::Normal, text, &ok);
-        if (!ok)
-            return;
-        bool number;
-        text.toDouble(&number);
-        if (number)
-            text += " " + unit;
-        auto before = current();
-        bool found = false;
-        for (auto &c : current().constraints)
-            if (c.kind == kind && c.a == e.id) {
-                c.expression = text;
-                found = true;
-                break;
-            }
-        if (!found) {
-            sketch::Constraint c;
-            c.kind = kind;
-            c.a = e.id;
-            c.expression = text;
-            current().constraints.push_back(c);
-        }
-        remember(std::move(before));
-        rebuild();
-        previewDraft();
-    });
 }
 void SketchPanel::editSelected(QString entity) {
     if (!client->ready() || client->outstanding() || committing)
@@ -1321,6 +1301,7 @@ void SketchPanel::redoDraftEdit() {
 }
 void SketchPanel::selectEntity(QString id) {
     selectedId = id;
+    relationSelectionOrder = id.isEmpty() ? QStringList{} : QStringList{id};
     QSignalBlocker block(entities);
     for (int i = 0; i < entities->count(); ++i)
         entities->item(i)->setSelected(entities->item(i)->data(Qt::UserRole).toString() == id);
@@ -1443,7 +1424,7 @@ void SketchPanel::updateSelection() {
     };
     auto dim = [&](QString id, double value) {
         for (auto &c : s.constraints)
-            if ((c.kind == "Radius" || c.kind == "Length") && c.a == id)
+            if (c.driving && (c.kind == "Radius" || c.kind == "Length") && c.a == id)
                 return c.expression.isEmpty() ? text(c.value) : c.expression;
         return text(value);
     };
@@ -1487,7 +1468,7 @@ void SketchPanel::updateSelection() {
         for (int i = 0; i < 2; ++i) {
             QString id = group->edges[i];
             for (auto &c : s.constraints)
-                if (c.kind == "Length" && (c.a == id || c.a == group->edges[i + 2]))
+                if (c.driving && c.kind == "Length" && (c.a == id || c.a == group->edges[i + 2]))
                     id = c.a;
             (i == 0 ? selectedWidth : selectedHeight)->setText(dim(id, i == 0 ? width : height));
         }
@@ -1558,7 +1539,7 @@ void SketchPanel::applySelected() {
             domain::check(n > 1e-9, "InvalidGeometry", "Positive size required");
         QString expression = field->text() + (numeric ? " " + units : QString());
         for (auto &c : candidate.constraints)
-            if (c.kind == kind && c.a == id) {
+            if (c.driving && c.kind == kind && c.a == id) {
                 c.expression = expression;
                 return numeric ? n : old;
             }
@@ -1675,7 +1656,7 @@ void SketchPanel::applySelected() {
                 parameters.sweep = sweep * sketch::arcPi / 180;
         }
         for (auto &constraint : before.constraints)
-            if (!group->relations.contains(constraint.id)) {
+            if (constraint.driving && !group->relations.contains(constraint.id)) {
                 auto members = sketch::constructionMembers(*group);
                 bool ownDimension =
                     (constraint.a == group->edges[2] && constraint.kind == "Diameter") ||
@@ -1699,7 +1680,7 @@ void SketchPanel::applySelected() {
                 field = selectedWidth;
             else if (constraint.kind == "Sweep" && constraint.a == group->diagonals[0])
                 field = selectedSweep;
-            if (field) {
+            if (field && constraint.driving) {
                 bool numeric;
                 field->text().toDouble(&numeric);
                 constraint.expression =
@@ -1715,7 +1696,7 @@ void SketchPanel::applySelected() {
         auto driving = [&](int side) {
             QString id = group->edges[side];
             for (auto &c : before.constraints)
-                if (c.kind == "Length" && (c.a == id || c.a == group->edges[side + 2]))
+                if (c.driving && c.kind == "Length" && (c.a == id || c.a == group->edges[side + 2]))
                     id = c.a;
             return id;
         };
@@ -1754,7 +1735,7 @@ void SketchPanel::applySelected() {
         }
         // Prefer an existing driving dimension, on either parallel edge.
         for (auto &c : before.constraints)
-            if (c.kind == "Length")
+            if (c.driving && c.kind == "Length")
                 for (auto &id : rect->lines)
                     if (c.a == id) {
                         auto &l = before.entity(id);
