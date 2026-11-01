@@ -92,7 +92,7 @@ contracts/evidence retain their original historical scope.
 
 ### CM4 — Datums and associative sketch support
 
-- [ ] **CM4.a:** Extend the dependency graph to support typed geometry references and reject cycles/order violations.
+- [x] **CM4.a:** Extend the dependency graph to support typed geometry references and reject cycles/order violations. Production structural implementation and available-Mac development-build verification: [CM4.a evidence](testing/core-modeling-cm4-a.md). This does not close CM4.b–e or whole-CM4 acceptance.
 - [ ] **CM4.b:** Implement described plane/axis modes, face attachment, Convert Entities and external sketch references.
 - [ ] **CM4.c:** Persist support definitions and unique reference evolution; require explicit missing/ambiguous repair.
 - [ ] **CM4.d:** Add native datum selection/visibility and Normal To navigation.

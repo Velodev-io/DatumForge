@@ -1,0 +1,14 @@
+Command: ['ctest', '--preset', 'macos-debug', '-R', '^(cm4\\.graph|cm1\\.pierce|module5\\.plan)$', '--output-on-failure']
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 36: module5.plan
+1/3 Test #36: module5.plan .....................   Passed    0.58 sec
+    Start 60: cm4.graph
+2/3 Test #60: cm4.graph ........................   Passed    0.10 sec
+    Start 65: cm1.pierce
+3/3 Test #65: cm1.pierce .......................   Passed    5.44 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Total Test time (real) =   6.13 sec
+
+Exit: 0

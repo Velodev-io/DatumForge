@@ -1,0 +1,4 @@
+Command: ['build/macos-debug/cm4_plan']
+PASS
+
+Exit: 0

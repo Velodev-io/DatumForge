@@ -1,0 +1,11 @@
+Command: ['cmake', '--build', '--preset', 'macos-debug', '--target', 'cm4_graph']
+[1/2] Building CXX object CMakeFiles/cm4_graph.dir/tests/core_modeling/graph.cpp.o
+FAILED: [code=1] CMakeFiles/cm4_graph.dir/tests/core_modeling/graph.cpp.o 
+/usr/bin/c++ -DCAD_SOURCE_ROOT="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_CORE_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/cm4_graph.dir/tests/core_modeling/graph.cpp.o -MF CMakeFiles/cm4_graph.dir/tests/core_modeling/graph.cpp.o.d -o CMakeFiles/cm4_graph.dir/tests/core_modeling/graph.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/graph.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/graph.cpp:2:10: fatal error: 'evaluation/Graph.hpp' file not found
+    2 | #include "evaluation/Graph.hpp"
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+ninja: build stopped: subcommand failed.
+
+Exit: 1

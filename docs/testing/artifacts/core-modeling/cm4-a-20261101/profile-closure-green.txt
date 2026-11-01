@@ -1,0 +1,4 @@
+Command: ['build/macos-debug/cm4_store']
+PASS
+
+Exit: 0

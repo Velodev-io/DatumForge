@@ -6,32 +6,7 @@
 #include <Geom_TrimmedCurve.hxx>
 #include <Standard_Failure.hxx>
 #include <algorithm>
-#include <functional>
 namespace cad::sketch {
-std::vector<size_t> dependencyOrder(const std::vector<Sketch> &all) {
-    QMap<QString, size_t> indices;
-    for (size_t i = 0; i < all.size(); ++i)
-        indices.insert(all[i].id, i);
-    std::vector<int> states(all.size());
-    std::vector<size_t> order;
-    std::function<void(size_t)> visit = [&](size_t i) {
-        domain::check(states[i] != 1, "DependencyCycle", "Cyclic sketch Pierce dependencies");
-        if (states[i] == 2)
-            return;
-        states[i] = 1;
-        for (auto &c : all[i].constraints)
-            if (c.reference) {
-                domain::check(indices.contains(c.reference->sketch), "ReferenceMissing",
-                              "Pierce source sketch is missing; repair its reference");
-                visit(indices.value(c.reference->sketch));
-            }
-        states[i] = 2;
-        order.push_back(i);
-    };
-    for (size_t i = 0; i < all.size(); ++i)
-        visit(i);
-    return order;
-}
 void resolvePierce(Sketch &target, Constraint &c, const Sketch &source) {
     auto &ref = *c.reference;
     const auto &e = source.entity(ref.entity);

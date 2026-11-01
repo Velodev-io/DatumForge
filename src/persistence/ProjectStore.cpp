@@ -236,21 +236,44 @@ QCborArray gather(Database &db, QString document, QCborArray definitions, QStrin
         if (!id.isEmpty())
             wanted.insert(id);
     }
-    QCborArray out;
+    QCborArray available;
+    auto include = [&](QString doc, const QCborArray &records) {
+        for (auto value : records) {
+            available.append(value);
+            if (doc == document)
+                wanted.insert(value.toMap().value("id").toString());
+        }
+    };
     bool seen = false;
     for (auto row : db.rows("SELECT e.document_id,s.definition FROM sketch_entities s JOIN "
                             "entities e ON e.id=s.entity_id")) {
         auto doc = row[0].toString();
         auto a = doc == changed ? replacement : decode(row[1]).value("sketches").toArray();
         seen = seen || doc == changed;
-        for (auto value : a)
-            if (doc == document || wanted.contains(value.toMap().value("id").toString()))
-                out.append(value);
+        include(doc, a);
     }
     if (!changed.isEmpty() && !seen)
-        for (auto value : replacement)
-            if (changed == document || wanted.contains(value.toMap().value("id").toString()))
-                out.append(value);
+        include(changed, replacement);
+    // A profile shared from another Part can itself depend on other sketches.
+    // Retain that semantic closure; a solved frame is not a substitute for its
+    // source references when validating the unified model graph.
+    qsizetype previous;
+    do {
+        previous = wanted.size();
+        for (auto value : available) {
+            auto s = value.toMap();
+            if (wanted.contains(s.value("id").toString()))
+                for (auto constraint : s.value("constraints").toArray()) {
+                    auto c = constraint.toMap();
+                    if (c.contains(QStringLiteral("reference")))
+                        wanted.insert(c.value("reference").toMap().value("sketch").toString());
+                }
+        }
+    } while (wanted.size() != previous);
+    QCborArray out;
+    for (auto value : available)
+        if (wanted.contains(value.toMap().value("id").toString()))
+            out.append(value);
     sketch::parse(out);
     return out;
 }

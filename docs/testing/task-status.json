@@ -1847,13 +1847,23 @@
     "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
   },
   "CM4.a": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM4.a structural production contract and current sketch/feature integration verified on the available Mac development build: typed references, mixed-kind graph, cycles/order, source closure and cache propagation. All 79 enabled CTests passed; no CM4.b-e exact/native workflow or whole-CM4 acceptance claimed. Preserve deferred 6.1b/6.4c/7.4c and stop before Module 11.",
     "evidence": [
       "docs/CORE_MODELING.md",
       "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/research/core-modeling-coverage.json",
+      "docs/decisions/core-modeling-cm4-graph.md",
+      "docs/testing/core-modeling-cm4-a.md",
+      "tests/core_modeling/graph.cpp",
+      "tests/core_modeling/graph_plan.cpp",
+      "tests/core_modeling/graph_store.cpp",
+      "docs/testing/artifacts/core-modeling/cm4-a-20261101/verification.json"
+    ],
+    "implementation_status": "Pass: CM4.a structural production contracts and existing adapters",
+    "development_verification_status": "Pass: 79 enabled CTests, formatting, nine changed-source Clang analyses, ownership and structural checks",
+    "native_verification_status": "Not run: no new native interaction in CM4.a",
+    "full_acceptance_status": "Blocked: CM4.b-e exact/native workflows and unrun platform/device/installed/resource acceptance"
   },
   "CM4.b": {
     "status": "Not run",

@@ -137,3 +137,8 @@ Pierce branch repair. These are executable case mappings, not blanket per-row
 acceptance. Projected-edge/external-vertex operand cases remain dependent on CM4.
 [Continuation evidence](testing/core-modeling.md) retains precise verification
 scope and failures, including compatibility and interrupted acceptance tests.
+
+CM4.a is mapped separately to executable `cm4.graph`, `cm4.plan` and `cm4.store`
+in the [graph execution record](testing/core-modeling-cm4-a.md). These establish
+structural contracts and current production integration; they do not close
+CM-098–CM-119, whose exact/native course workflows remain Not run pending CM4.b–e.

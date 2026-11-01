@@ -1,4 +1,5 @@
 #pragma once
+#include "Graph.hpp"
 #include "features/Model.hpp"
 namespace cad::evaluation {
 struct Node {
@@ -7,6 +8,7 @@ struct Node {
     QByteArray fingerprint;
 };
 struct Plan {
+    Graph geometryGraph;
     std::vector<Node> nodes;
     QMap<QString, QStringList> descendants;
     explicit Plan(QCborArray sketches, QCborArray features);

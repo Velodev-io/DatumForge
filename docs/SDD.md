@@ -340,6 +340,14 @@ indices. UI draft construction math uses Qt/domain values; PlaneGCS solving and
 accepted writes stay worker-owned. These slices do not implement the later
 unified dependency graph or multi-collection ModelEdit protocol.
 
+CM4.a adds the shared kernel-free [typed-reference/model graph contract](decisions/core-modeling-cm4-graph.md)
+and connects existing feature-history and Pierce dependency validation. Sketches,
+datum planes/axes, derived curves and features have distinct node kinds; graph
+validation rejects mixed-kind cycles, missing/wrong-role sources and transitive
+history violations. Source-sketch hashes invalidate consuming feature results.
+Exact datum/support evaluation, durable support collections and multi-collection
+ModelEdit remain CM4.b–e/shared follow-on work. [Scoped evidence](testing/core-modeling-cm4-a.md).
+
 The [CM1 schema-4 continuation](decisions/core-modeling-cm1-primitives.md) keeps
 rational/conic control definitions and Slot member identities in the semantic
 model. A worker-only exact-curve adapter is shared by profile construction and

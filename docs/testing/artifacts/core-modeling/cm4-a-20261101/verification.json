@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-01",
+  "task": "CM4.a",
+  "base_head": "c11c3daa9c3210ed003ccb9c56ed589ea8549adc",
+  "branch": "review/cm4-a-20261101",
+  "scope": "Typed-reference/graph contracts plus production sketch/feature integration; exact datum/support workflows remain open",
+  "implementation_status": "Pass: structural production implementation",
+  "available_mac_development_verification_status": "Pass",
+  "checks": {
+    "build": "Pass: build.txt",
+    "ctest": {
+      "status": "Pass",
+      "enabled": 79,
+      "failed": 0,
+      "seconds": 381.4,
+      "disabled": [
+        "harness.deliberate_failure"
+      ],
+      "log": "ctest.txt",
+      "host_ipc_permissions": true
+    },
+    "format": "Pass: pinned clang-format 21.1.8 plus whitespace; format.txt",
+    "changed_source_clang_analysis": {
+      "status": "Pass",
+      "translation_units": 9,
+      "log": "static-analysis.txt"
+    },
+    "ownership": "Pass: architecture.json",
+    "coverage": "Pass: 257 page-indexed requirements; structural-checks.txt",
+    "research_isolation": "Pass: 97 research files unchanged; isolation.txt",
+    "specifications": "Pass: specifications.txt",
+    "source_integrity": {
+      "status": "Pass",
+      "files": 216,
+      "log": "source-integrity.txt"
+    }
+  },
+  "sandbox_preflight": "Fail: module1.contracts worker/socket startup denied; ipc-preflight.txt retained, superseded only by complete host run",
+  "review": "Author self-review; review.md; independent review required before merge",
+  "native_checks": "Not run for CM4.a; no new native interaction",
+  "full_cm4_acceptance": "Open: CM4.b-e and all 22 course workflows remain Not run",
+  "cm4_course_rows_closed": 0,
+  "deferred_gates_preserved": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false,
+  "committed": false,
+  "merged": false,
+  "pushed": false
+}

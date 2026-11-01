@@ -1,0 +1,4 @@
+Command: ['python3', 'tools/check_core_modeling.py']
+Pass: 257 CM requirements with page/task/fixture mappings; source/evidence bounds and preserved deferred gates
+
+Exit: 0

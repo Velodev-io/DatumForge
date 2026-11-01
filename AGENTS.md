@@ -25,3 +25,11 @@ production implementation, native verification and full acceptance.
 On 2026-10-25 the user authorized local commits grouped by feature on separate
 review branches. This supersedes the earlier no-commit restriction for those
 commits. Do not merge any branch without review; do not push.
+
+On 2026-11-01 the user instructed that each successfully verified module or
+lettered module task should be committed and pushed on its separate review
+branch. This supersedes the earlier no-push restriction for those completed
+changes. Use the configured origin, preserve scoped verification evidence and
+blocked acceptance gates, and verify the remote branch after pushing. Do not
+merge without review or force-push. This workflow does not authorize starting
+additional modules or tasks beyond the user's requested scope.

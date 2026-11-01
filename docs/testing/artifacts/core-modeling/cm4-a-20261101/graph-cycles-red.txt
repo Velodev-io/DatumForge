@@ -1,0 +1,4 @@
+Command: ['build/macos-debug/cm4_graph']
+FAIL: Expected DependencyCycle, observed success
+
+Exit: 1

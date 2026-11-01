@@ -1,0 +1,26 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 14: module1.contracts
+1/1 Test #14: module1.contracts ................***Failed   11.14 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+PASS   : Contracts::frameCorpus()
+PASS   : Contracts::transferCorpus()
+FAIL!  : Contracts::workerCorpus() 'raw.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module1/contracts.cpp(223)]
+FAIL!  : Contracts::clientLifecycle() 'waitUntil([&] { return client.ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module1/contracts.cpp(296)]
+FAIL!  : Contracts::clientFailureCorpus() 'waitUntil([&] { return client.state().phase == Phase::WorkerUnavailable; })' returned FALSE. (capability)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module1/contracts.cpp(357)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 4 passed, 3 failed, 0 skipped, 0 blacklisted, 10055ms
+********* Finished testing of Contracts *********
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =  11.17 sec
+
+The following tests FAILED:
+	 14 - module1.contracts (Failed)
+Errors while running CTest

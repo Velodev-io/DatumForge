@@ -215,3 +215,13 @@ effective scales. Disposable project/recovery/save roots only. See
 [completion contracts](../docs/decisions/core-modeling-cm3-interactions.md) and
 [execution evidence](../docs/testing/core-modeling-cm3-completion.md); physical
 devices, installed builds and other-platform/resource acceptance remain separate.
+
+CM4.a graph contracts: `ctest --preset macos-debug -R '^cm4\.' --output-on-failure`
+runs typed-reference/graph, feature-planner and marked-disposable-store checks.
+`cm4.store` includes a shared cross-Part profile's Pierce source closure,
+failed-edit revision retention, undo/redo and saved reopen. Run the complete
+enabled CTest suite after the full build for legacy integration regressions;
+worker/IPC entries require local socket permission. The
+[CM4.a record](../docs/testing/core-modeling-cm4-a.md) includes changed-source
+analysis and ownership checks. No exact datum construction, native controls,
+CM4.b–e workflow or physical/platform acceptance is inferred from these tests.

@@ -1,5 +1,6 @@
 #include "Plan.hpp"
 #include "domain/Expressions.hpp"
+#include "sketch/Dependencies.hpp"
 namespace cad::evaluation {
 using domain::check;
 using sketch::fields;
@@ -21,12 +22,14 @@ Plan::Plan(QCborArray sketches, QCborArray definitions) {
     QMap<QString, int> index, owners;
     QMap<QString, QByteArray> sketchHashes;
     QMap<QString, QString> names;
+    std::vector<sketch::Sketch> profiles;
     check(sketches.size() <= 32 && QCborValue(sketches).toCbor().size() <= 524288, "ResourceLimit",
           "Impact profile union exceeds bounded admission");
     for (auto value : sketches) {
         auto s = sketch::Sketch::parse(value.toMap());
         check(!sketchHashes.contains(s.id), "InvalidInput", "Duplicate profile identity");
         sketchHashes.insert(s.id, QCborValue(s.map()).toCbor(QCborValue::SortKeysInMaps));
+        profiles.push_back(std::move(s));
     }
     for (size_t i = 0; i < all.size(); ++i) {
         auto &f = all[i];
@@ -84,27 +87,47 @@ Plan::Plan(QCborArray sketches, QCborArray definitions) {
         check(sketch.isEmpty() || sketchHashes.contains(sketch), "ReferenceMissing",
               "Profile sketch is missing");
     }
-    QSet<QString> visiting, done;
-    std::function<void(QString)> visit = [&](QString id) {
-        check(!visiting.contains(id), "DependencyCycle", "Feature/expression dependency cycle");
-        if (done.contains(id))
-            return;
-        visiting.insert(id);
-        for (auto dep : deps[index[id]])
-            visit(dep);
-        visiting.remove(id);
-        done.insert(id);
-    };
-    for (auto &f : all)
-        visit(f.id);
+    auto graphNodes = sketch::dependencyNodes(profiles);
+    QStringList history;
+    for (size_t i = 0; i < all.size(); ++i) {
+        const auto &f = all[i];
+        GraphNode node{f.id, "Feature", {}, {}};
+        auto inputs = deps[i];
+        auto profile = f.parameters.value("sketch").toString();
+        if (!profile.isEmpty())
+            inputs.append(profile);
+        for (auto id : inputs) {
+            domain::GeometryReference ref;
+            ref.object = id;
+            node.references.push_back(ref);
+        }
+        graphNodes.push_back(std::move(node));
+        history.append(f.id);
+    }
+    geometryGraph = Graph(graphNodes, history);
+    // Reference inputs are part of profile identity even before the worker has
+    // recomputed the dependent's solved coordinates. Never reuse its old result
+    // solely because those coordinates happen to be unchanged.
+    for (auto id : geometryGraph.order()) {
+        if (!sketchHashes.contains(id))
+            continue;
+        auto inputs = geometryGraph.dependencies(id);
+        if (inputs.empty())
+            continue;
+        QCborArray upstream;
+        for (auto source : inputs)
+            upstream.append(sketchHashes.value(source));
+        auto value = fields({{"sketch-dependencies", 1},
+                             {"definition", sketchHashes.value(id)},
+                             {"upstream", upstream}});
+        sketchHashes[id] = QCryptographicHash::hash(
+            QCborValue(value).toCbor(QCborValue::SortKeysInMaps), QCryptographicHash::Sha256);
+    }
     expression::Environment environment(names, 1024);
     environment.validateAll();
     QMap<QString, QByteArray> fingerprints;
     for (size_t i = 0; i < all.size(); ++i) {
         auto f = all[i];
-        for (auto dep : deps[i])
-            check(index[dep] < int(i), "DependencyOrder",
-                  "Feature must follow its source/target/expression dependencies");
         for (auto it = f.expressions.cbegin(); it != f.expressions.cend(); ++it) {
             auto q = environment.name(symbol(f.id, it.key()));
             check(q.dimension == dimension(it.key()), "UnitMismatch",
@@ -134,16 +157,7 @@ Plan::Plan(QCborArray sketches, QCborArray definitions) {
         nodes.push_back({f, deps[i], hash});
     }
     for (auto &n : nodes) {
-        QSet<QString> affected;
-        std::function<void(QString)> collect = [&](QString id) {
-            for (auto &candidate : nodes)
-                if (candidate.dependencies.contains(id) &&
-                    !affected.contains(candidate.feature.id)) {
-                    affected.insert(candidate.feature.id);
-                    collect(candidate.feature.id);
-                }
-        };
-        collect(n.feature.id);
+        auto affected = geometryGraph.descendants(n.feature.id);
         QStringList ordered;
         for (auto &candidate : nodes)
             if (affected.contains(candidate.feature.id))

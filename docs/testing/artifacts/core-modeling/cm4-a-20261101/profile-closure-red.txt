@@ -1,0 +1,4 @@
+Command: ['build/macos-debug/cm4_store']
+FAIL: Model source is missing
+
+Exit: 1

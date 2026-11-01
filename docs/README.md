@@ -76,3 +76,14 @@ the T2–T8 variants; [evidence](testing/core-modeling.md) distinguishes product
 work from isolated feasibility. This authorization does not close deferred gates
 or authorize Modules 11–12 or assembly/drawing expansion. Local feature commits
 were separately authorized on 25 October; no merge or push was authorized.
+
+CM4.a adds production typed geometry references and a shared model dependency
+validator, integrated with current feature planning and Pierce. Its
+[scoped evidence](testing/core-modeling-cm4-a.md) distinguishes graph contracts
+from the still-open exact datum/support, persistence, native UI and course
+workflows in CM4.b–e.
+
+On 1 November the user authorized committing and pushing each successfully
+verified module/task on its review branch. This supersedes the historical
+no-push restrictions above; review before merge and all scope/acceptance gates
+remain in effect. The standing workflow is recorded in `AGENTS.md`.

@@ -37,6 +37,10 @@ passing behavior tests from the final enabled-suite/static/native verification
 and full acceptance. Historical CM3 slice evidence below retains its original
 scope.
 
+CM4.a now has production typed-reference/graph implementation and integration with
+feature planning and Pierce. Its [scoped execution record](core-modeling-cm4-a.md)
+distinguishes structural verification from CM4.b–e and all unrun course workflows.
+
 The old source/specification/module reports retain their original scope. The
 extension does not certify Windows/Linux, physical device/assistive technology,
 installed builds or complete physical 8 GB resource budgets. Module 11 is not

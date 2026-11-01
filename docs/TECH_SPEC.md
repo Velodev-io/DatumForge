@@ -670,3 +670,10 @@ retained history. Pierce uses exact worker curve/plane intersections and an
 explicit parameter interval, evaluated in sketch dependency order. This is a
 sketch dependency subset; face-supported sketches, projected model edges, datums
 and general multi-collection ModelEdit remain scheduled in the broader roadmap.
+
+CM4.a structural integration: the [model graph contract](decisions/core-modeling-cm4-graph.md)
+defines typed geometry identities, five model node kinds, bounded traversal and
+cycle/history validation shared by feature planning and Pierce. Shared-profile
+gathering includes source-sketch closure, preserving existing cross-Part profiles.
+It adds no persisted datum/support schema or functioning datum controls; the
+remaining exact/persistence/native CM4 tasks stay open. [Evidence](testing/core-modeling-cm4-a.md).
