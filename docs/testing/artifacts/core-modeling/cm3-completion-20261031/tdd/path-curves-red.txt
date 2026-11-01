@@ -1,0 +1,16 @@
+********* Start testing of Completion *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Completion::initTestCase()
+FAIL!  : Completion::pathCurves(Circle) 'result.valid' returned FALSE. (InvalidInput: Distinct supported path curves required)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(62)]
+FAIL!  : Completion::pathCurves(Ellipse) 'result.valid' returned FALSE. (InvalidInput: Distinct supported path curves required)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(62)]
+FAIL!  : Completion::pathCurves(EllipticalArc) 'result.valid' returned FALSE. (InvalidInput: Distinct supported path curves required)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(62)]
+FAIL!  : Completion::pathCurves(Parabola) 'result.valid' returned FALSE. (InvalidInput: Distinct supported path curves required)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(62)]
+FAIL!  : Completion::pathCurves(Spline) 'result.valid' returned FALSE. (InvalidInput: Distinct supported path curves required)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(62)]
+PASS   : Completion::cleanupTestCase()
+Totals: 2 passed, 5 failed, 0 skipped, 0 blacklisted, 7ms
+********* Finished testing of Completion *********

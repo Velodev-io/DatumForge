@@ -1,0 +1,10 @@
+********* Start testing of Completion *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Completion::initTestCase()
+PASS   : Completion::inferenceCurvePair(Circle)
+PASS   : Completion::inferenceCurvePair(EllipticalArc)
+PASS   : Completion::inferenceCurvePair(Parabola)
+PASS   : Completion::inferenceCurvePair(Spline)
+PASS   : Completion::cleanupTestCase()
+Totals: 6 passed, 0 failed, 0 skipped, 0 blacklisted, 54ms
+********* Finished testing of Completion *********

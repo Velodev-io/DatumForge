@@ -74,16 +74,21 @@ CM2.a–e remain **In progress**. The [straight-line editing slice](testing/core
 - [ ] **CM3.d:** Add on-canvas unit-aware editor, preview/restore and visible inference guides.
 - [ ] **CM3.e:** Replay two-point Horizontal, revolved-profile diameter and constant-path-length workflows; preserve last-valid drag preview on failure.
 
-CM3.a–e are **In progress**. The [dimension slice contracts](decisions/core-modeling-cm3-dimensions.md)
-cover driving/reference mode, signed component distances, saved placements and a
-worker-backed native dimension editor. Remaining dimension variants, inference,
-Fully Define and constrained dragging remain open; see the
-[execution evidence](testing/core-modeling.md#cm3--drivingreference-and-component-dimension-slice).
-
-The [associated-dimension slice](decisions/core-modeling-cm3-associated-dimensions.md)
-adds centerline diameter, per-point shared-datum ordinates and exact circular arc
-length with schema-7 persistence. Its verification and remaining limits are
-recorded separately; these additions do not close CM3.a–e.
+CM3 production implementation now covers the approved current planar interfaces:
+identity-safe dimension editing, reversal/increments/drawing metadata, multi-target
+ordinates, true path length, temporary constrained drag targets, confirmed
+inference guides and deterministic Fully Define All/Selected proposals.
+[Completion contracts](decisions/core-modeling-cm3-interactions.md) define schema 8,
+worker ownership, confirmation and resource bounds. The
+[execution record](testing/core-modeling-cm3-completion.md) preserves individual
+red/green cycles and final verification status. CM3.a–e have **Pass** production
+implementation and available-Mac development-build verification (all 76 enabled
+tests, static checks and five native scales, with affected-test follow-up). Their
+overall status remains **Blocked** for unrun full course/platform/device/installed/
+resource acceptance.
+Earlier [dimension](decisions/core-modeling-cm3-dimensions.md) and
+[associated-dimension](decisions/core-modeling-cm3-associated-dimensions.md)
+contracts/evidence retain their original historical scope.
 
 ### CM4 — Datums and associative sketch support
 

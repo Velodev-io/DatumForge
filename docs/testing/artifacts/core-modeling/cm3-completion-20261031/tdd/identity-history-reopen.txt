@@ -1,0 +1,7 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 68: cm3.dimension_identity
+1/1 Test #68: cm3.dimension_identity ...........   Passed    2.18 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   2.18 sec

@@ -1,0 +1,16 @@
+********* Start testing of Completion *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Completion::initTestCase()
+PASS   : Completion::inferenceCurveTangent(Ellipse-middle)
+PASS   : Completion::inferenceCurveTangent(Ellipse-endpoint)
+PASS   : Completion::inferenceCurveTangent(EllipticalArc-middle)
+FAIL!  : Completion::inferenceCurveTangent(EllipticalArc-endpoint) 'std::any_of(proposed.constraints.begin(), proposed.constraints.end(), [&](auto &c) { return c.kind == "CurveTangent" && c.a == line && c.b == curve; })' returned FALSE. (EllipticalArc)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(49)]
+PASS   : Completion::inferenceCurveTangent(Parabola-middle)
+PASS   : Completion::inferenceCurveTangent(Parabola-endpoint)
+FAIL!  : Completion::inferenceCurveTangent(Spline-middle) 'std::any_of(proposed.constraints.begin(), proposed.constraints.end(), [&](auto &c) { return c.kind == "CurveTangent" && c.a == line && c.b == curve; })' returned FALSE. (Spline)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(49)]
+PASS   : Completion::inferenceCurveTangent(Spline-endpoint)
+PASS   : Completion::cleanupTestCase()
+Totals: 8 passed, 2 failed, 0 skipped, 0 blacklisted, 24ms
+********* Finished testing of Completion *********

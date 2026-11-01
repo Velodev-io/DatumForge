@@ -1,3 +1,4 @@
+#include "../support/modal.hpp"
 #include "MainWindow.hpp"
 #include "SketchPanel.hpp"
 #include "protocol/Client.hpp"
@@ -12,6 +13,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QNativeGestureEvent>
+#include <QScrollArea>
 #include <QSettings>
 #include <QSignalSpy>
 #include <QSurfaceFormat>
@@ -264,14 +266,23 @@ class Workspace : public QObject {
         QVERIFY(panel->active());
         QCOMPARE(panel->toolName(), QString("Select / drag"));
         QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, view->screen({.02, .01}).toPoint());
+        QVERIFY(wait([&] { return !c->outstanding(); }));
         auto *width = w.findChild<QLineEdit *>("selectedWidth");
         auto *height = w.findChild<QLineEdit *>("selectedHeight");
         QVERIFY(width->isVisible() && height->isVisible());
         width->setText("60");
         height->setText("30");
-        QTest::mouseClick(w.findChild<QPushButton *>("applySelectionProperties"), Qt::LeftButton);
-        QVERIFY2(wait([&] { return !c->outstanding() && c->state().phase == Phase::PreviewReady; }),
-                 qPrintable(c->state().message));
+        auto *applyProperties = w.findChild<QPushButton *>("applySelectionProperties");
+        for (auto *scroll : w.findChildren<QScrollArea *>())
+            if (scroll->isAncestorOf(applyProperties))
+                scroll->ensureWidgetVisible(applyProperties);
+        QTest::qWait(10);
+        QTest::mouseClick(applyProperties, Qt::LeftButton);
+        bool previewed =
+            wait([&] { return !c->outstanding() && c->state().phase == Phase::PreviewReady; });
+        QVERIFY2(previewed, qPrintable(c->state().message + " / " +
+                                       w.findChild<QLabel *>("sketchContext")->text() +
+                                       " / phase " + QString::number(int(c->state().phase))));
         QCOMPARE(c->state().revision, revision);
         QVERIFY(part(*c).value("sketches").toArray().empty());
         w.resize(1280, 800);
@@ -279,8 +290,8 @@ class Workspace : public QObject {
         QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, view->screen({.006, 0}).toPoint());
         auto *dimension = button(w, "sketch.dimension");
         QVERIFY(dimension && dimension->isEnabled());
-        QTimer::singleShot(30, [] {
-            auto *dialog = qobject_cast<QDialog *>(QApplication::activeModalWidget());
+        QSignalSpy dimensionPreviews(c, &Client::sketchPreview);
+        auto modalAction = test::whenModal(&w, [](QDialog *dialog) {
             if (dialog) {
                 dialog->findChild<QLineEdit *>("dimensionExpression")->setText("8 mm");
                 dialog->findChild<QPushButton *>("dimensionPreview")->click();
@@ -295,7 +306,13 @@ class Workspace : public QObject {
         QVERIFY2(wait([&] { return !c->outstanding() && c->state().phase == Phase::PreviewReady; }),
                  qPrintable(c->state().message));
         QCOMPARE(c->state().revision, revision);
-        // A driving radius blocks free dragging and leaves a visible explanation after release.
+        QVERIFY(!dimensionPreviews.empty());
+        auto beforeDrag = sketch::parse(dimensionPreviews.last()[0].value<QCborArray>())[0];
+        QVERIFY(std::abs(beforeDrag.entities[0].point.x - firstWorld.x) < 1e-12 &&
+                std::abs(beforeDrag.entities[0].point.y - firstWorld.y) < 1e-12);
+        // The worker can move a radius-driven circle's centre while preserving
+        // its radius. Await the solved preview rather than assuming a local rejection.
+        QSignalSpy dragPreviews(c, &Client::sketchPreview);
         auto radiusPixel = view->screen({firstWorld.x + .008, firstWorld.y}).toPoint();
         QTest::mousePress(view, Qt::LeftButton, Qt::NoModifier, radiusPixel);
         QMouseEvent resize(QEvent::MouseMove, radiusPixel + QPoint(20, 0),
@@ -303,8 +320,14 @@ class Workspace : public QObject {
                            Qt::LeftButton, Qt::NoModifier);
         QApplication::sendEvent(view, &resize);
         QTest::mouseRelease(view, Qt::LeftButton, Qt::NoModifier, radiusPixel + QPoint(20, 0));
+        QVERIFY(wait([&] { return !c->outstanding() && !dragPreviews.empty(); }));
+        auto dragged = sketch::parse(dragPreviews.last()[0].value<QCborArray>())[0];
+        QVERIFY(std::abs(dragged.entities[1].radius - .008) < 1e-10);
+        QCOMPARE(dragged.constraints.back().id, beforeDrag.constraints.back().id);
+        QCOMPARE(dragged.constraints.back().expression, beforeDrag.constraints.back().expression);
         auto *context = w.findChild<QLabel *>("sketchContext");
-        QVERIFY(context->text().contains("Controlled by Radius"));
+        QVERIFY2(context->text().contains("Constrained drag preview"), qPrintable(context->text()));
+        QCOMPARE(c->state().phase, Phase::PreviewReady);
         QTest::qWait(30);
         QVERIFY(context->visibleRegion().boundingRect().height() >=
                 context->heightForWidth(context->width()));
@@ -323,8 +346,8 @@ class Workspace : public QObject {
         auto sketches = sketch::parse(part(*c).value("sketches").toArray());
         QCOMPARE(sketches.size(), size_t(1));
         QCOMPARE(sketches[0].entities.size(), size_t(10));
-        QVERIFY(std::abs(sketches[0].entities[0].point.x - firstWorld.x) < 1e-12 &&
-                std::abs(sketches[0].entities[0].point.y - firstWorld.y) < 1e-12);
+        QVERIFY(std::abs(sketches[0].entities[0].point.x - dragged.entities[0].point.x) < 1e-12 &&
+                std::abs(sketches[0].entities[0].point.y - dragged.entities[0].point.y) < 1e-12);
         auto circleId = sketches[0].entities[1].id;
         QVERIFY(std::abs(sketches[0].entity(circleId).radius - .008) < 1e-10);
         auto *rootItem = tree->topLevelItem(0);

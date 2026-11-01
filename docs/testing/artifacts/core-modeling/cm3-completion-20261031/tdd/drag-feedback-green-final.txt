@@ -1,0 +1,7 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 30: module4.workspace
+1/1 Test #30: module4.workspace ................   Passed    2.11 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   2.11 sec

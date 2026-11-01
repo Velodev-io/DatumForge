@@ -1,0 +1,94 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 23: module3.shapeEditing
+1/1 Test #23: module3.shapeEditing .............***Failed    1.90 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::shapeEditing() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::shapeEditing() qt.qpa.fonts: Populating font family aliases took 109 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::shapeEditing() Compared values are not the same
+   Actual   (entities->count()): 10
+   Expected (8)                : 8
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(511)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 1079ms
+********* Finished testing of Contracts *********
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   1.91 sec
+
+The following tests FAILED:
+	 23 - module3.shapeEditing (Failed)
+Errors while running CTest

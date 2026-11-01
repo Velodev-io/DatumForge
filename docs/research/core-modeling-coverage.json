@@ -2464,15 +2464,26 @@
       ],
       "analytical_fixture": "cm-076-geometry",
       "native_workflow": "cm-076-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-dimensions.md",
         "tests/core_modeling/dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-077",
@@ -2499,15 +2510,26 @@
       ],
       "analytical_fixture": "cm-077-geometry",
       "native_workflow": "cm-077-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-dimensions.md",
         "tests/core_modeling/dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-078",
@@ -2534,15 +2556,26 @@
       ],
       "analytical_fixture": "cm-078-geometry",
       "native_workflow": "cm-078-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-dimensions.md",
         "tests/core_modeling/dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-079",
@@ -2569,15 +2602,26 @@
       ],
       "analytical_fixture": "cm-079-geometry",
       "native_workflow": "cm-079-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-dimensions.md",
         "tests/core_modeling/dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-080",
@@ -2604,15 +2648,26 @@
       ],
       "analytical_fixture": "cm-080-geometry",
       "native_workflow": "cm-080-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-dimensions.md",
         "tests/core_modeling/dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-081",
@@ -2639,15 +2694,26 @@
       ],
       "analytical_fixture": "cm-081-geometry",
       "native_workflow": "cm-081-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-dimensions.md",
         "tests/core_modeling/dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-082",
@@ -2674,15 +2740,26 @@
       ],
       "analytical_fixture": "cm-082-geometry",
       "native_workflow": "cm-082-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-associated-dimensions.md",
         "tests/core_modeling/associated_dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-083",
@@ -2709,15 +2786,26 @@
       ],
       "analytical_fixture": "cm-083-geometry",
       "native_workflow": "cm-083-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-associated-dimensions.md",
         "tests/core_modeling/associated_dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-084",
@@ -2744,15 +2832,26 @@
       ],
       "analytical_fixture": "cm-084-geometry",
       "native_workflow": "cm-084-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-associated-dimensions.md",
         "tests/core_modeling/associated_dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-085",
@@ -2779,8 +2878,20 @@
       ],
       "analytical_fixture": "cm-085-geometry",
       "native_workflow": "cm-085-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Blocked",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-086",
@@ -2807,15 +2918,26 @@
       ],
       "analytical_fixture": "cm-086-geometry",
       "native_workflow": "cm-086-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-dimensions.md",
         "tests/core_modeling/dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-087",
@@ -2842,15 +2964,26 @@
       ],
       "analytical_fixture": "cm-087-geometry",
       "native_workflow": "cm-087-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-dimensions.md",
         "tests/core_modeling/dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-088",
@@ -2877,15 +3010,26 @@
       ],
       "analytical_fixture": "cm-088-geometry",
       "native_workflow": "cm-088-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-dimensions.md",
         "tests/core_modeling/dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-089",
@@ -2912,15 +3056,26 @@
       ],
       "analytical_fixture": "cm-089-geometry",
       "native_workflow": "cm-089-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-dimensions.md",
         "tests/core_modeling/dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-090",
@@ -2947,8 +3102,20 @@
       ],
       "analytical_fixture": "cm-090-geometry",
       "native_workflow": "cm-090-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Blocked",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-091",
@@ -2975,8 +3142,20 @@
       ],
       "analytical_fixture": "cm-091-geometry",
       "native_workflow": "cm-091-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Blocked",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-092",
@@ -3003,8 +3182,20 @@
       ],
       "analytical_fixture": "cm-092-geometry",
       "native_workflow": "cm-092-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Blocked",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-093",
@@ -3028,15 +3219,26 @@
       ],
       "analytical_fixture": "cm-093-geometry",
       "native_workflow": "cm-093-native",
-      "status": "In progress",
+      "status": "Blocked",
       "evidence": [
         "docs/decisions/core-modeling-cm3-associated-dimensions.md",
         "tests/core_modeling/associated_dimensions.cpp",
         "tests/core_modeling/dimension_contracts.cpp",
         "docs/testing/core-modeling.md",
         "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
-        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-      ]
+        "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-094",
@@ -3060,8 +3262,20 @@
       ],
       "analytical_fixture": "cm-094-geometry",
       "native_workflow": "cm-094-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Blocked",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-095",
@@ -3085,8 +3299,20 @@
       ],
       "analytical_fixture": "cm-095-geometry",
       "native_workflow": "cm-095-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Blocked",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-096",
@@ -3110,8 +3336,20 @@
       ],
       "analytical_fixture": "cm-096-geometry",
       "native_workflow": "cm-096-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Blocked",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-097",
@@ -3135,8 +3373,20 @@
       ],
       "analytical_fixture": "cm-097-geometry",
       "native_workflow": "cm-097-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Blocked",
+      "evidence": [
+        "docs/decisions/core-modeling-cm3-completion-plan.md",
+        "docs/decisions/core-modeling-cm3-interactions.md",
+        "docs/testing/core-modeling-cm3-completion.md",
+        "tests/core_modeling/completion.cpp",
+        "tests/core_modeling/completion_contracts.cpp",
+        "tools/verify_cm3_completion.py",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+        "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+      ],
+      "implementation_status": "Pass: approved current planar interfaces implemented",
+      "native_verification_status": "Pass: available-Mac development build at 100/125/150/175/200 percent; full-suite baseline plus affected-test follow-up",
+      "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
     },
     {
       "id": "CM-098",

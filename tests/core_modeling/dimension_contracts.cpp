@@ -1,3 +1,4 @@
+#include "../support/modal.hpp"
 #include "MainWindow.hpp"
 #include "SketchPanel.hpp"
 #include "render/Viewport.hpp"
@@ -46,6 +47,101 @@ void select(MainWindow &w, QStringList ids) {
 class DimensionContracts : public QObject {
     Q_OBJECT
   private slots:
+    void identity() {
+        QTemporaryDir root(QDir::tempPath() + "/cad-module3-cm3-identity-XXXXXX");
+        QTemporaryDir files(QDir::tempPath() + "/cad-module3-cm3-identity-files-XXXXXX");
+        QVERIFY(root.isValid() && files.isValid());
+        mark(root.path());
+        mark(files.path());
+        auto prefs = root.filePath("settings.ini");
+        QSettings settings(prefs, QSettings::IniFormat);
+        settings.setValue("startup/offerRecovery", false);
+        settings.sync();
+        MainWindow w(prefs, nullptr, root.path());
+        w.resize(1280, 800);
+        w.show();
+        auto *c = w.workerClient();
+        QVERIFY(wait([&] { return c->ready(); }));
+        c->newProject("Part", "Dimension identity", "mm");
+        QVERIFY(wait([&] { return c->state().projectOpen && !c->outstanding(); }));
+        auto *panel = w.findChild<SketchPanel *>();
+        auto cleanup = qScopeGuard([&] {
+            if (panel->active())
+                panel->discard();
+            c->closeProject();
+            wait([&] { return !c->state().projectOpen && !c->outstanding(); });
+        });
+        sketch::Sketch s;
+        auto line = s.line(s.point({0, 0}), s.point({.03, .04}));
+        sketch::Constraint driver;
+        driver.kind = "Length";
+        driver.a = line;
+        driver.value = .05;
+        driver.expression = "50 mm";
+        driver.placement = sketch::Vec2{.02, .06};
+        auto readout = driver;
+        readout.id = newId();
+        readout.driving = false;
+        readout.expression.clear();
+        readout.placement = sketch::Vec2{.04, .08};
+        s.constraints = {driver, readout};
+        c->projectCommand("SetSketches", sketch::fields({{"sketches", sketch::encode({s})}}));
+        QVERIFY(wait([&] { return !c->outstanding() && sketches(c).size() == 1; }));
+        w.findChild<QPushButton *>("editSketchButton")->click();
+        QVERIFY(panel->active());
+        auto *canvas = panel->canvas();
+        QVERIFY(wait([&] { return !canvas->dimensionLabelRect(readout.id).isEmpty(); }));
+        bool applied = false;
+        auto modalAction = test::whenModal(&w, [&](QDialog *dialog) {
+            auto close = qScopeGuard([&] {
+                if (dialog->isVisible())
+                    dialog->reject();
+            });
+            QVERIFY(dialog->findChild<QCheckBox *>("dimensionReference")->isChecked());
+            dialog->findChild<QLineEdit *>("dimensionPlacementX")->setText("70");
+            dialog->findChild<QPushButton *>("dimensionPreview")->click();
+            auto *apply = dialog->findChild<QPushButton *>("dimensionApply");
+            QVERIFY(wait([&] { return apply->isEnabled(); }));
+            applied = true;
+            apply->click();
+        });
+        QTest::mouseDClick(canvas, Qt::LeftButton, Qt::NoModifier,
+                           canvas->dimensionLabelRect(readout.id).center().toPoint());
+        QVERIFY(applied);
+        QVERIFY(wait([&] { return !c->outstanding(); }));
+        panel->finish();
+        QVERIFY(wait([&] { return !c->outstanding() && !panel->active(); }));
+        auto accepted = sketch::parse(sketches(c))[0];
+        QCOMPARE(accepted.constraints.size(), size_t(2));
+        for (auto &dimension : accepted.constraints) {
+            if (dimension.id == driver.id) {
+                QVERIFY2(dimension.driving, "Editing a readout must retain the original driver");
+                QCOMPARE(dimension.expression, driver.expression);
+                QCOMPARE(dimension.placement->x, .02);
+            } else {
+                QCOMPARE(dimension.id, readout.id);
+                QVERIFY(!dimension.driving);
+                QCOMPARE(dimension.placement->x, .07);
+            }
+        }
+        auto confirmed = sketches(c);
+        c->projectCommand("Undo");
+        QVERIFY(wait([&] { return !c->outstanding(); }));
+        auto undone = sketch::parse(sketches(c))[0];
+        QCOMPARE(undone.constraints[0].id, driver.id);
+        QVERIFY(undone.constraints[0].driving);
+        QCOMPARE(undone.constraints[1].id, readout.id);
+        QCOMPARE(undone.constraints[1].placement->x, .04);
+        c->projectCommand("Redo");
+        QVERIFY(wait([&] { return !c->outstanding() && sketches(c) == confirmed; }));
+        auto file = files.filePath("identity.cadproj");
+        c->saveProject(file);
+        QVERIFY(wait([&] { return !c->outstanding() && QFile::exists(file); }));
+        c->closeProject();
+        QVERIFY(wait([&] { return !c->outstanding() && !c->state().projectOpen; }));
+        c->openProject(file);
+        QVERIFY(wait([&] { return !c->outstanding() && sketches(c) == confirmed; }));
+    }
     void widgets() {
         workflow(false);
     }
@@ -138,13 +234,7 @@ class DimensionContracts : public QObject {
                 QVERIFY(panel->dimensionAvailable());
                 auto open = [&](std::function<void(QDialog *)> action, QString dimensionId = {}) {
                     bool opened = false;
-                    QTimer timer;
-                    timer.setSingleShot(true);
-                    connect(&timer, &QTimer::timeout, &w, [&, action] {
-                        auto *d = qobject_cast<QDialog *>(QApplication::activeModalWidget());
-                        if (!d) {
-                            QFAIL("Missing dimension editor");
-                        }
+                    auto modalAction = test::whenModal(&w, [&](QDialog *d) {
                         opened = true;
                         auto cleanup = qScopeGuard([&] {
                             if (d->isVisible())
@@ -159,13 +249,13 @@ class DimensionContracts : public QObject {
                     });
                     if (dimensionId.isEmpty()) {
                         QVERIFY(w.command("sketch.dimension")->isEnabled());
-                        timer.start(20);
                         w.command("sketch.dimension")->trigger();
                     } else {
                         // Hit rectangles are published by paintEvent, not showSketch/fit.
                         // Native repaint scheduling can outlast a fixed qWait(20).
                         QVERIFY2(
                             wait([&] {
+                                panel->canvas()->repaint();
                                 return !panel->canvas()->dimensionLabelRect(dimensionId).isEmpty();
                             }),
                             qPrintable(QString("Dimension label not painted; canvas visible=%1 "
@@ -175,7 +265,6 @@ class DimensionContracts : public QObject {
                                            .arg(dimensionId)));
                         auto rect = panel->canvas()->dimensionLabelRect(dimensionId);
                         QVERIFY(!rect.isEmpty());
-                        timer.start(20);
                         QTest::mouseDClick(panel->canvas(), Qt::LeftButton, Qt::NoModifier,
                                            rect.center().toPoint());
                     }

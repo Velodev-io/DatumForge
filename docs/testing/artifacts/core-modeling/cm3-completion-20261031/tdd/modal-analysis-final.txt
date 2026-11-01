@@ -1,0 +1,2 @@
+Analyzed tests/core_modeling/dimension_contracts.cpp
+Analyzed tests/core_modeling/completion_contracts.cpp

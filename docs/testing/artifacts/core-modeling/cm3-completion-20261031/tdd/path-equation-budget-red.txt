@@ -1,0 +1,2 @@
+15 paths: 975 expanded equations admitted
+FAIL: 16 paths (1040 expanded equations) admitted without a solver-object budget

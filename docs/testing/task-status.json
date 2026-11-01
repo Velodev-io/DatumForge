@@ -1707,8 +1707,8 @@
     ]
   },
   "CM3.a": {
-    "status": "In progress",
-    "scope": "Selected driving/reference/component, centerline diameter, per-point ordinate and circular ArcLength implementation has available-Mac engine/persistence and scoped native verification. 73 enabled CTests passed; one test-only repaint synchronization correction then passed four widget repeats, Clang reanalysis and native 100\u2013200% mm/in. A legacy arc-count failure is retained; three isolated 100% reruns and the 200% endpoint passed without production change, cause unproven. Full interaction repeatability, remaining dimensions/inference/Fully Define/drag and whole-task/resource/platform acceptance remain open.",
+    "status": "Blocked",
+    "scope": "Approved CM3 current-planar implementation and available-Mac development-build verification complete. All 76 enabled tests and static/structural checks passed; affected widget follow-up and five-scale native matrix passed. Full course/device/assistive-technology/installed/platform/resource acceptance remains Blocked. Preserve 6.1b/6.4c/7.4c and stop before Module 11.",
     "evidence": [
       "docs/CORE_MODELING.md",
       "docs/testing/core-modeling.md",
@@ -1720,12 +1720,23 @@
       "docs/decisions/core-modeling-cm3-associated-dimensions.md",
       "tests/core_modeling/associated_dimensions.cpp",
       "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
-      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-    ]
+      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+      "docs/decisions/core-modeling-cm3-completion-plan.md",
+      "docs/decisions/core-modeling-cm3-interactions.md",
+      "docs/testing/core-modeling-cm3-completion.md",
+      "tests/core_modeling/completion.cpp",
+      "tests/core_modeling/completion_contracts.cpp",
+      "tools/verify_cm3_completion.py",
+      "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+      "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+    ],
+    "implementation_status": "Pass: approved current planar interfaces implemented",
+    "native_verification_status": "Pass: available-Mac 100/125/150/175/200 percent",
+    "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
   },
   "CM3.b": {
-    "status": "In progress",
-    "scope": "Selected driving/reference/component, centerline diameter, per-point ordinate and circular ArcLength implementation has available-Mac engine/persistence and scoped native verification. 73 enabled CTests passed; one test-only repaint synchronization correction then passed four widget repeats, Clang reanalysis and native 100\u2013200% mm/in. A legacy arc-count failure is retained; three isolated 100% reruns and the 200% endpoint passed without production change, cause unproven. Full interaction repeatability, remaining dimensions/inference/Fully Define/drag and whole-task/resource/platform acceptance remain open.",
+    "status": "Blocked",
+    "scope": "Approved CM3 current-planar implementation and available-Mac development-build verification complete. All 76 enabled tests and static/structural checks passed; affected widget follow-up and five-scale native matrix passed. Full course/device/assistive-technology/installed/platform/resource acceptance remains Blocked. Preserve 6.1b/6.4c/7.4c and stop before Module 11.",
     "evidence": [
       "docs/CORE_MODELING.md",
       "docs/testing/core-modeling.md",
@@ -1737,12 +1748,23 @@
       "docs/decisions/core-modeling-cm3-associated-dimensions.md",
       "tests/core_modeling/associated_dimensions.cpp",
       "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
-      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-    ]
+      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+      "docs/decisions/core-modeling-cm3-completion-plan.md",
+      "docs/decisions/core-modeling-cm3-interactions.md",
+      "docs/testing/core-modeling-cm3-completion.md",
+      "tests/core_modeling/completion.cpp",
+      "tests/core_modeling/completion_contracts.cpp",
+      "tools/verify_cm3_completion.py",
+      "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+      "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+    ],
+    "implementation_status": "Pass: approved current planar interfaces implemented",
+    "native_verification_status": "Pass: available-Mac 100/125/150/175/200 percent",
+    "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
   },
   "CM3.c": {
-    "status": "In progress",
-    "scope": "Selected driving/reference/component, centerline diameter, per-point ordinate and circular ArcLength implementation has available-Mac engine/persistence and scoped native verification. 73 enabled CTests passed; one test-only repaint synchronization correction then passed four widget repeats, Clang reanalysis and native 100\u2013200% mm/in. A legacy arc-count failure is retained; three isolated 100% reruns and the 200% endpoint passed without production change, cause unproven. Full interaction repeatability, remaining dimensions/inference/Fully Define/drag and whole-task/resource/platform acceptance remain open.",
+    "status": "Blocked",
+    "scope": "Approved CM3 current-planar implementation and available-Mac development-build verification complete. All 76 enabled tests and static/structural checks passed; affected widget follow-up and five-scale native matrix passed. Full course/device/assistive-technology/installed/platform/resource acceptance remains Blocked. Preserve 6.1b/6.4c/7.4c and stop before Module 11.",
     "evidence": [
       "docs/CORE_MODELING.md",
       "docs/testing/core-modeling.md",
@@ -1754,12 +1776,23 @@
       "docs/decisions/core-modeling-cm3-associated-dimensions.md",
       "tests/core_modeling/associated_dimensions.cpp",
       "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
-      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-    ]
+      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+      "docs/decisions/core-modeling-cm3-completion-plan.md",
+      "docs/decisions/core-modeling-cm3-interactions.md",
+      "docs/testing/core-modeling-cm3-completion.md",
+      "tests/core_modeling/completion.cpp",
+      "tests/core_modeling/completion_contracts.cpp",
+      "tools/verify_cm3_completion.py",
+      "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+      "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+    ],
+    "implementation_status": "Pass: approved current planar interfaces implemented",
+    "native_verification_status": "Pass: available-Mac 100/125/150/175/200 percent",
+    "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
   },
   "CM3.d": {
-    "status": "In progress",
-    "scope": "Selected driving/reference/component, centerline diameter, per-point ordinate and circular ArcLength implementation has available-Mac engine/persistence and scoped native verification. 73 enabled CTests passed; one test-only repaint synchronization correction then passed four widget repeats, Clang reanalysis and native 100\u2013200% mm/in. A legacy arc-count failure is retained; three isolated 100% reruns and the 200% endpoint passed without production change, cause unproven. Full interaction repeatability, remaining dimensions/inference/Fully Define/drag and whole-task/resource/platform acceptance remain open.",
+    "status": "Blocked",
+    "scope": "Approved CM3 current-planar implementation and available-Mac development-build verification complete. All 76 enabled tests and static/structural checks passed; affected widget follow-up and five-scale native matrix passed. Full course/device/assistive-technology/installed/platform/resource acceptance remains Blocked. Preserve 6.1b/6.4c/7.4c and stop before Module 11.",
     "evidence": [
       "docs/CORE_MODELING.md",
       "docs/testing/core-modeling.md",
@@ -1771,12 +1804,23 @@
       "docs/decisions/core-modeling-cm3-associated-dimensions.md",
       "tests/core_modeling/associated_dimensions.cpp",
       "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
-      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-    ]
+      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+      "docs/decisions/core-modeling-cm3-completion-plan.md",
+      "docs/decisions/core-modeling-cm3-interactions.md",
+      "docs/testing/core-modeling-cm3-completion.md",
+      "tests/core_modeling/completion.cpp",
+      "tests/core_modeling/completion_contracts.cpp",
+      "tools/verify_cm3_completion.py",
+      "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+      "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+    ],
+    "implementation_status": "Pass: approved current planar interfaces implemented",
+    "native_verification_status": "Pass: available-Mac 100/125/150/175/200 percent",
+    "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
   },
   "CM3.e": {
-    "status": "In progress",
-    "scope": "Selected driving/reference/component, centerline diameter, per-point ordinate and circular ArcLength implementation has available-Mac engine/persistence and scoped native verification. 73 enabled CTests passed; one test-only repaint synchronization correction then passed four widget repeats, Clang reanalysis and native 100\u2013200% mm/in. A legacy arc-count failure is retained; three isolated 100% reruns and the 200% endpoint passed without production change, cause unproven. Full interaction repeatability, remaining dimensions/inference/Fully Define/drag and whole-task/resource/platform acceptance remain open.",
+    "status": "Blocked",
+    "scope": "Approved CM3 current-planar implementation and available-Mac development-build verification complete. All 76 enabled tests and static/structural checks passed; affected widget follow-up and five-scale native matrix passed. Full course/device/assistive-technology/installed/platform/resource acceptance remains Blocked. Preserve 6.1b/6.4c/7.4c and stop before Module 11.",
     "evidence": [
       "docs/CORE_MODELING.md",
       "docs/testing/core-modeling.md",
@@ -1788,8 +1832,19 @@
       "docs/decisions/core-modeling-cm3-associated-dimensions.md",
       "tests/core_modeling/associated_dimensions.cpp",
       "docs/testing/artifacts/core-modeling/20261028T075209.998083Z/cm3-associated/completion.json",
-      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json"
-    ]
+      "docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/completion.json",
+      "docs/decisions/core-modeling-cm3-completion-plan.md",
+      "docs/decisions/core-modeling-cm3-interactions.md",
+      "docs/testing/core-modeling-cm3-completion.md",
+      "tests/core_modeling/completion.cpp",
+      "tests/core_modeling/completion_contracts.cpp",
+      "tools/verify_cm3_completion.py",
+      "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z/verification.json",
+      "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/verification.json"
+    ],
+    "implementation_status": "Pass: approved current planar interfaces implemented",
+    "native_verification_status": "Pass: available-Mac 100/125/150/175/200 percent",
+    "full_acceptance_status": "Blocked: unrun physical device, assistive technology, installed builds, other platforms and full resource matrix"
   },
   "CM4.a": {
     "status": "Not run",

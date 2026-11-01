@@ -1,0 +1,33 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 30: module4.workspace
+1/1 Test #30: module4.workspace ................***Failed   13.42 sec
+********* Start testing of Workspace *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Workspace::initTestCase()
+QWARN  : Workspace::layout() QOpenGLWidget is not supported on this platform.
+QWARN  : Workspace::layout() qt.qpa.fonts: Populating font family aliases took 97 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+FAIL!  : Workspace::layout() 'wait([&] { return !c->outstanding() && c->state().phase == Phase::PreviewReady; })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(275)]
+PASS   : Workspace::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 12726ms
+********* Finished testing of Workspace *********
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =  13.42 sec
+
+The following tests FAILED:
+	 30 - module4.workspace (Failed)
+Errors while running CTest

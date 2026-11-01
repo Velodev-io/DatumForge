@@ -436,6 +436,8 @@ class Contracts : public QObject {
         QSignalSpy removed(list->model(), &QAbstractItemModel::rowsRemoved),
             inserted(list->model(), &QAbstractItemModel::rowsInserted);
         auto operation = c->latestOperation();
+        QSignalSpy dragPreviews(c, &Client::sketchPreview);
+        int maximumPending = 0;
         std::vector<double> timings;
         for (int i = 1; i <= 60; ++i) {
             QPoint at = start + QPoint(i, 0);
@@ -445,14 +447,20 @@ class Contracts : public QObject {
                              Qt::LeftButton, Qt::NoModifier);
             QApplication::sendEvent(view, &move);
             QApplication::processEvents();
+            maximumPending = std::max(maximumPending, c->outstanding());
+            QVERIFY2(c->outstanding() <= 2,
+                     "Drag previews must coalesce to one running and one pending request");
             timings.push_back(timer.nsecsElapsed() / 1e6);
         }
         QCOMPARE(removed.size(), 0);
         QCOMPARE(inserted.size(), 0);
-        QCOMPARE(c->latestOperation(), operation);
+        QVERIFY2(c->latestOperation() != operation, "Constrained dragging is solved by the worker");
         QCOMPARE(c->state().revision, revision + 1);
         QTest::mouseRelease(view, Qt::LeftButton, Qt::NoModifier, start + QPoint(60, 0));
         QVERIFY(wait([&] { return !c->outstanding(); }));
+        QVERIFY(!dragPreviews.empty());
+        int workerDragResults = dragPreviews.size();
+        QCOMPARE(part(*c).value("sketches").toArray(), accepted);
         QVERIFY(panel->active());
         auto *radius = window.findChild<QLineEdit *>("selectedRadius");
         QVERIFY(!radius->isHidden());
@@ -531,7 +539,8 @@ class Contracts : public QObject {
                             {"p95_event_to_paint_ms", timings[size_t(timings.size() * .95)]},
                             {"max_ms", timings.back()},
                             {"list_rebuilds_during_drag", 0},
-                            {"worker_commands_during_drag", 0},
+                            {"maximum_pending_drag_requests", maximumPending},
+                            {"worker_preview_results_during_drag", workerDragResults},
                             {"source", "Application-dispatched mouse events plus event processing; "
                                        "not physical trackpad latency or SRS acceptance"}})
                         .toJson());
@@ -789,11 +798,16 @@ class Contracts : public QObject {
         auto draggedId = view->pick(point);
         QVERIFY(!draggedId.isEmpty());
         QTest::mousePress(view, Qt::LeftButton, Qt::NoModifier, point);
+        QTest::qWait(20);
+        point = view->screen({0, 0}).toPoint();
+        auto target = view->local(point + QPoint(30, -10));
+        QSignalSpy previews(c, &Client::sketchPreview);
         QMouseEvent move(QEvent::MouseMove, point + QPoint(30, -10),
                          view->mapToGlobal(point + QPoint(30, -10)), Qt::NoButton, Qt::LeftButton,
                          Qt::NoModifier);
         QApplication::sendEvent(view, &move);
-        QCOMPARE(view->pick(point + QPoint(30, -10)), draggedId);
+        QVERIFY(wait([&] { return !c->outstanding() && !previews.empty(); }));
+        QCOMPARE(view->pick(view->screen(target)), draggedId);
         QTest::mouseRelease(view, Qt::LeftButton, Qt::NoModifier, point + QPoint(30, -10));
         QVERIFY(wait([&] { return !c->outstanding(); }));
         click(window, "cancelSketchButton");

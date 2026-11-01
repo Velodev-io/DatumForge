@@ -5,11 +5,17 @@
 #include "CurveConstraint.hpp"
 #include "Curves.hpp"
 #include "Dimensions.hpp"
+#include "PathLengthConstraint.hpp"
 #include "References.hpp"
 #include "Slots.hpp"
 #include "domain/Expressions.hpp"
+#include "geometry/occt/SketchCurve.hpp"
 #include <Eigen/QR>
 #include <GCS.h>
+#include <GeomAPI_ExtremaCurveCurve.hxx>
+#include <GeomAPI_ProjectPointOnCurve.hxx>
+#include <QElapsedTimer>
+#include <Standard_Failure.hxx>
 #include <deque>
 namespace cad::sketch {
 using domain::check;
@@ -44,8 +50,8 @@ void combinations(const Sketch &s, const Constraint &c) {
         check((c.value == 0 || c.value == 1) && (c.second == 0 || c.second == 1) &&
                   (s.entity(c.b).kind != "Point" || c.second == 0),
               "InvalidInput", "Endpoint selectors must be zero or one");
-    if (QStringList{"Length", "Distance", "Radius", "Diameter", "SlotLength", "CenterlineDiameter",
-                    "ArcLength"}
+    if (QStringList{"Length", "Distance", "Radius", "MinorRadius", "Diameter", "SlotLength",
+                    "CenterlineDiameter", "ArcLength", "PathLength"}
             .contains(c.kind))
         check(c.value > 1e-9 && c.value <= 1e3, "InvalidGeometry",
               "Dimension must exceed 1 nm and be at most 1 km");
@@ -58,8 +64,13 @@ void combinations(const Sketch &s, const Constraint &c) {
     if (c.kind == "Sweep")
         check(c.value > 1e-8 && c.value < tau - 1e-8, "InvalidGeometry",
               "Sweep must be between zero and 360 degrees");
-    if (c.kind == "Angle")
+    if (c.kind == "Angle" || c.kind == "StartAngle")
         check(std::abs(c.value) <= tau, "InvalidInput", "Angle must be within ±360 degrees");
+    if (c.kind == "TrimStart")
+        check(std::abs(c.value) <= 1000, "InvalidGeometry", "Trim start must be within ±1 km");
+    if (c.kind == "TrimSpan")
+        check(c.value > 1e-9 && c.value <= 2000, "InvalidGeometry",
+              "Trim span must be positive and within 2 km");
 }
 std::vector<double> residuals(const Sketch &s) {
     std::vector<double> out;
@@ -93,7 +104,9 @@ std::vector<double> residuals(const Sketch &s) {
                  c.value);
         } else if (c.kind == "Diameter")
             push(2 * a.radius - c.value);
-        else if (c.kind == "Sweep")
+        else if (c.kind == "StartAngle" || c.kind == "TrimStart")
+            push(a.start - c.value);
+        else if (c.kind == "Sweep" || c.kind == "TrimSpan")
             push(a.sweep - c.value);
         else if (c.kind == "ArcTangent" || c.kind == "ArcNormal" || c.kind == "ArcCoincident") {
             auto p = curveEnd(s, a, int(c.value));
@@ -201,6 +214,14 @@ std::vector<double> residuals(const Sketch &s) {
             double l = std::hypot(v.x, v.y), m = std::hypot(w.x, w.y);
             push((v.x * w.y - v.y * w.x) / (l * m));
             push(((q.x - p.x) * v.y - (q.y - p.y) * v.x) / l);
+        } else if (c.kind == "PathLength") {
+            push(measureDimension(s, c) - c.value);
+            for (int i = 0; i < c.members.size() - (c.closed ? 0 : 1); ++i) {
+                auto a = pathEndpoint(s, c, i, true),
+                     b = pathEndpoint(s, c, (i + 1) % c.members.size(), false);
+                push(a.x - b.x);
+                push(a.y - b.y);
+            }
         } else if (c.kind == "CenterlineDiameter") {
             double side = c.reversed ? -1 : 1;
             push(2 * side * axisDistance(s, c) - c.value);
@@ -212,7 +233,7 @@ std::vector<double> residuals(const Sketch &s) {
             push(measureDimension(s, c) - c.value);
         else if (c.kind == "Distance")
             push(length(p, s.entity(c.b).point) - c.value);
-        else if (c.kind == "Radius")
+        else if (c.kind == "Radius" || c.kind == "MinorRadius")
             push(a.radius - c.value);
         else if (c.kind == "Equal" && (a.kind == "Circle" || a.kind == "Arc"))
             push(a.radius - s.entity(c.b).radius);
@@ -340,7 +361,40 @@ QCborMap Result::diagnostic() const {
                    {"redundant", QCborArray::fromStringList(redundant)},
                    {"reference_candidates", referenceCandidates}});
 }
-static Result solveLocal(Sketch candidate, const Sketch *previous, bool referencesResolved) {
+struct DragTargets {
+    std::vector<std::pair<QString, Vec2>> points;
+    std::vector<std::pair<QString, double>> radii;
+    QString circle;
+    Vec2 cursor;
+};
+static void seedTangent(Sketch &s, const Constraint &c) {
+    if (c.kind != "CurveTangent" || s.entity(c.a).kind != "Line" || constructionOf(s, c.a))
+        return;
+    auto &line = s.entity(c.a);
+    auto &curve = s.entity(c.b);
+    auto controls = controlPoints(curve);
+    if (controls.contains(line.a) || controls.contains(line.b))
+        return;
+    auto contact = curveValue(s, curve, c.second), direction = curveDerivative(s, curve, c.second);
+    double speed = std::hypot(direction.x, direction.y);
+    double extent = length(s.entity(line.a).point, s.entity(line.b).point);
+    double sign = c.reversed ? -1 : 1;
+    if (speed > 1e-12) {
+        Vec2 first{contact.x - sign * c.value * extent * direction.x / speed,
+                   contact.y - sign * c.value * extent * direction.y / speed};
+        Vec2 last{contact.x + sign * (1 - c.value) * extent * direction.x / speed,
+                  contact.y + sign * (1 - c.value) * extent * direction.y / speed};
+        // A local numerical warm start must not choose a distant contact or
+        // reverse a curve on the user's behalf.
+        if (std::max(length(first, s.entity(line.a).point), length(last, s.entity(line.b).point)) <=
+            .01 * extent) {
+            s.entity(line.a).point = first;
+            s.entity(line.b).point = last;
+        }
+    }
+}
+static Result solveLocal(Sketch candidate, const Sketch *previous, bool referencesResolved,
+                         const DragTargets *dragTargets = nullptr) {
     Result result;
     result.sketch = candidate;
     try {
@@ -355,17 +409,22 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
                   "Expressions apply only to dimensional constraints");
             if (!c.expression.isEmpty()) {
                 auto q = names.evaluate(c.expression);
-                check(q.dimension == ((c.kind == "Angle" || c.kind == "Sweep")
-                                          ? expression::angle
-                                          : expression::length),
+                check(q.dimension ==
+                          (angularDimension(c.kind) ? expression::angle : expression::length),
                       "UnitMismatch", "Dimension expression has the wrong physical dimension");
                 c.value = q.value;
             }
             combinations(candidate, c);
         }
+        for (auto &c : candidate.constraints)
+            if (!previous ||
+                std::none_of(previous->constraints.begin(), previous->constraints.end(),
+                             [&](auto &old) { return old.id == c.id; }))
+                seedTangent(candidate, c);
+        candidate.validate();
         result.sketch = candidate;
-        if (std::none_of(candidate.constraints.begin(), candidate.constraints.end(),
-                         [](auto &c) { return c.driving; })) {
+        if (!dragTargets && std::none_of(candidate.constraints.begin(), candidate.constraints.end(),
+                                         [](auto &c) { return c.driving; })) {
             auto count = variables(candidate).size();
             check(count <= 256, "ResourceLimit", "At most 256 numerical sketch variables");
             for (auto &c : candidate.constraints)
@@ -414,8 +473,9 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
                 if (candidate.entity(c.b).kind == "Parabola")
                     c.second /= scale;
             } else if (componentDimension(c.kind) ||
-                       QStringList{"Length", "Distance", "Radius", "Diameter", "SlotLength",
-                                   "CenterlineDiameter", "ArcLength"}
+                       QStringList{"TrimStart", "TrimSpan", "Length", "Distance", "Radius",
+                                   "MinorRadius", "Diameter", "SlotLength", "CenterlineDiameter",
+                                   "ArcLength", "PathLength"}
                            .contains(c.kind))
                 c.value /= scale;
         }
@@ -435,6 +495,11 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
         QMap<QString, GCS::Parabola> exactParabolas;
         QMap<QString, GCS::BSpline> splines;
         QSet<QString> joinedArcs;
+        for (auto &c : candidate.constraints)
+            if (c.driving && c.kind == "PathLength")
+                for (auto &id : c.members)
+                    if (candidate.entity(id).kind == "Arc")
+                        joinedArcs.insert(id);
         for (const auto &c : candidate.constraints)
             if (c.kind == "ArcTangent" || c.kind == "ArcNormal" || c.kind == "ArcCoincident") {
                 joinedArcs.insert(c.a);
@@ -519,6 +584,26 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
         system.sketchSizeMultiplier = false;
         system.sketchSizeMultiplierRedundant = false;
         system.convergence = 1e-10;
+        if (dragTargets)
+            for (auto &[id, target] : dragTargets->points) {
+                auto point = points[id];
+                // Negative tags are the pinned PlaneGCS auxiliary subsystem:
+                // approach the cursor while preserving the driving equations.
+                system.addConstraintCoordinateX(point, constant((target.x - origin.x) / scale), -1);
+                system.addConstraintCoordinateY(point, constant((target.y - origin.y) / scale), -1);
+            }
+        if (dragTargets) {
+            for (auto &[id, target] : dragTargets->radii)
+                system.addConstraintEqual(&candidate.entity(id).radius, constant(target / scale),
+                                          -1);
+            if (!dragTargets->circle.isEmpty()) {
+                GCS::Point cursor{constant((dragTargets->cursor.x - origin.x) / scale),
+                                  constant((dragTargets->cursor.y - origin.y) / scale)};
+                auto index =
+                    system.addConstraintPointOnCircle(cursor, circles[dragTargets->circle], -1);
+                system.rescaleConstraint(index, 1000);
+            }
+        }
         check(vars.size() <= 256, "ResourceLimit",
               "At most 256 numerical variables including arc endpoints");
         for (auto &arc : arcs)
@@ -589,6 +674,33 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
                 // Express diameter - radius = radius without that reduction path.
                 system.addConstraintDifference(circles[b].rad, diameter, circles[b].rad, tag);
                 system.addConstraintDifference(distance, constant(c.value), diameter, tag);
+            } else if (c.kind == "PathLength") {
+                std::vector<GCS::Line> edges;
+                bool curves = false;
+                for (auto &id : c.members)
+                    if (candidate.entity(id).kind == "Line")
+                        edges.push_back(lines[id]);
+                    else
+                        curves = true;
+                auto target = constant(c.value);
+                if (!curves)
+                    system.addConstraint(new PathLengthConstraint(edges, target, tag));
+                else
+                    system.addConstraint(
+                        new CurvePathConstraint(candidate, c, joinedArcs, target, tag));
+                for (int i = 0; i < c.members.size() - (c.closed ? 0 : 1); ++i) {
+                    int next = (i + 1) % c.members.size();
+                    auto &a = candidate.entity(c.members[i]),
+                         &b = candidate.entity(c.members[next]);
+                    if (a.id == b.id && (a.kind == "Circle" || a.kind == "Ellipse"))
+                        continue;
+                    if (a.kind == "Line" && b.kind == "Line" &&
+                        (c.directions[i] ? a.a : a.b) == (c.directions[next] ? b.b : b.a))
+                        continue;
+                    for (int axis = 0; axis < 2; ++axis)
+                        system.addConstraint(new CurvePathConstraint(candidate, c, joinedArcs,
+                                                                     target, tag, i, axis));
+                }
             } else if (c.kind == "CenterlineDiameter") {
                 auto target = constant((c.reversed ? -1 : 1) * c.value / 2);
                 if (candidate.entity(a).kind == "Point")
@@ -607,6 +719,10 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
                     constant(c.value), tag));
             } else if (c.kind == "Diameter")
                 system.addConstraintCircleRadius(circles[a], constant(c.value / 2), tag);
+            else if (c.kind == "StartAngle" || c.kind == "TrimStart")
+                system.addConstraintEqual(&candidate.entity(a).start, constant(c.value), tag);
+            else if (c.kind == "TrimSpan")
+                system.addConstraintEqual(&candidate.entity(a).sweep, constant(c.value), tag);
             else if (c.kind == "Sweep") {
                 if (joinedArcs.contains(a))
                     system.addConstraintDifference(arcs[a].startAngle, arcs[a].endAngle,
@@ -721,6 +837,8 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
                 system.addConstraintP2PDistance(lines[a].p1, lines[a].p2, constant(c.value), tag);
             else if (c.kind == "Distance")
                 system.addConstraintP2PDistance(points[a], points[b], constant(c.value), tag);
+            else if (c.kind == "MinorRadius")
+                system.addConstraintEqual(&candidate.entity(a).radius, constant(c.value), tag);
             else if (c.kind == "Radius")
                 system.addConstraintCircleRadius(circles[a], constant(c.value), tag);
             else if (c.kind == "Tangent") {
@@ -761,11 +879,9 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
             result.message = "Conflicting constraints: " + result.conflicting.mid(0, 16).join(", ");
             return result;
         }
-        check(candidate.constraints.empty() ||
-                  system.solve(true, GCS::DogLeg, !redundants.empty()) == GCS::Success,
-              "SolveFailure", "PlaneGCS failed to converge");
-        if (!candidate.constraints.empty())
-            system.applySolution();
+        check(system.solve(true, GCS::DogLeg, !redundants.empty()) == GCS::Success, "SolveFailure",
+              "PlaneGCS failed to converge");
+        system.applySolution();
         for (auto *v : vars)
             check(std::isfinite(*v), "SolveFailure", "Nonfinite solver output");
         for (auto &e : candidate.entities)
@@ -923,7 +1039,9 @@ static Result solveLocal(Sketch candidate, const Sketch *previous, bool referenc
                                       [&](auto &a) { return a.driving && a.id == b.id; });
                 if (i == previous->constraints.end() || i->value != b.value ||
                     i->second != b.second || i->expression != b.expression || i->kind != b.kind ||
-                    i->a != b.a || i->b != b.b || i->third != b.third || i->reversed != b.reversed)
+                    i->a != b.a || i->b != b.b || i->third != b.third ||
+                    i->reversed != b.reversed || i->members != b.members ||
+                    i->directions != b.directions || i->closed != b.closed)
                     same = false;
             }
             if (same)
@@ -1033,6 +1151,560 @@ QCborMap evaluate(const QCborArray &input, const QCborArray &previous, bool reje
             failed.insert(s.id);
     }
     return fields({{"sketches", encode(all)}, {"diagnostics", diagnostics}});
+}
+static QCborMap infer(const QCborArray &input, const QCborMap &request,
+                      const QCborArray &previous) {
+    wire::keys(request, {"kind", "sketch", "selection", "tolerance"});
+    check(request.value("selection").isArray() &&
+              request.value("selection").toArray().size() <= 256,
+          "InvalidInput", "Bounded inference selection required");
+    auto toleranceValue = request.value("tolerance");
+    check(toleranceValue.isDouble() || toleranceValue.isInteger(), "InvalidInput",
+          "Numeric inference tolerance required");
+    double tolerance = toleranceValue.toDouble();
+    check(std::isfinite(tolerance) && tolerance > 0 && tolerance <= .01, "InvalidInput",
+          "Inference tolerance must be positive and at most 10 mm");
+    auto all = parse(evaluate(input, previous).value("sketches").toArray());
+    auto id = domain::id(wire::text(request, "sketch"));
+    auto found = std::find_if(all.begin(), all.end(), [&](auto &s) { return s.id == id; });
+    check(found != all.end(), "ReferenceMissing", "Inference sketch missing");
+    QStringList selected;
+    for (auto value : request.value("selection").toArray()) {
+        check(value.isString(), "InvalidInput", "Inference entity identity required");
+        selected << domain::id(value.toString());
+        found->entity(selected.back());
+    }
+    if (selected.empty())
+        for (auto &e : found->entities)
+            selected << e.id;
+    selected.removeDuplicates();
+    std::sort(selected.begin(), selected.end());
+    auto candidate = *found;
+    int freedomBefore = solveLocal(candidate, nullptr, true).freedom;
+    QElapsedTimer budget;
+    budget.start();
+    auto key = [&](Constraint c) {
+        bool symmetric =
+            c.kind == "Perpendicular" ||
+            ((c.kind == "Horizontal" || c.kind == "Vertical" || c.kind == "Coincident") &&
+             !c.b.isEmpty() && found->entity(c.a).kind == "Point" &&
+             found->entity(c.b).kind == "Point") ||
+            (c.kind == "Tangent" && found->entity(c.a).kind != "Line");
+        if (symmetric && c.b < c.a)
+            std::swap(c.a, c.b);
+        if (c.kind == "Intersection" && c.third < c.b)
+            std::swap(c.b, c.third);
+        return c.kind + ":" + c.a + ":" + c.b + ":" + c.third;
+    };
+    QSet<QString> existing;
+    for (auto &c : candidate.constraints)
+        existing.insert(key(c));
+    int attempts = 0;
+    auto propose = [&](QString kind, QString a, QString b = {}, QString third = {},
+                       double value = 0, double second = 0, bool reversed = false) {
+        check(budget.elapsed() <= 5000, "ResourceLimit",
+              "Inference work budget exceeded; select fewer entities");
+        Constraint relation;
+        relation.kind = kind;
+        relation.a = a;
+        relation.b = b;
+        relation.third = third;
+        relation.value = value;
+        relation.second = second;
+        relation.reversed = reversed;
+        auto identity = key(relation);
+        if (existing.contains(identity) ||
+            !constraintReason(candidate, kind, a, b, third).isEmpty())
+            return;
+        check(++attempts <= 512 && candidate.constraints.size() < 512, "ResourceLimit",
+              "Inference proposal budget exceeded; select fewer entities");
+        relation.id = QUuid::createUuidV5(QUuid(found->id), ("CM3:relation:" + identity).toUtf8())
+                          .toString(QUuid::WithoutBraces);
+        auto trial = candidate;
+        trial.constraints.push_back(relation);
+        auto result = solveLocal(trial, &candidate, true);
+        if (!result.valid || result.freedom >= freedomBefore)
+            return;
+        bool close = true;
+        for (auto &e : found->entities) {
+            auto &after = result.sketch.entity(e.id);
+            if (e.kind == "Point" && length(e.point, after.point) > tolerance)
+                close = false;
+            if (radiusCurve(e.kind) && std::abs(e.radius - after.radius) > tolerance)
+                close = false;
+        }
+        if (!close)
+            return;
+        candidate = result.sketch;
+        freedomBefore = result.freedom;
+        existing.insert(identity);
+    };
+    std::vector<const Entity *> lines;
+    for (auto &e : found->entities)
+        if (e.kind == "Line")
+            lines.push_back(&e);
+    int contactQueries = 0;
+    auto contactBudget = [&] {
+        check(++contactQueries <= 512 && budget.elapsed() <= 5000, "ResourceLimit",
+              "Exact inference contact budget exceeded; select fewer entities");
+    };
+    auto closest = [&](const Entity &curve, Vec2 point) -> std::optional<double> {
+        contactBudget();
+        try {
+            auto exact = geometry::sketchCurve(*found, curve);
+            auto world = found->frame.world(point);
+            GeomAPI_ProjectPointOnCurve projection(
+                gp_Pnt(world[0] * 1000, world[1] * 1000, world[2] * 1000), exact.curve, exact.first,
+                exact.last);
+            if (projection.NbPoints() == 0 || projection.LowerDistance() > tolerance * 1000)
+                return {};
+            check(projection.NbPoints() <= 128, "ResourceLimit",
+                  "Inference contact projection is too complex");
+            double parameter = projection.LowerDistanceParameter();
+            for (int i = 1; i <= projection.NbPoints(); ++i)
+                if (std::abs(projection.Distance(i) - projection.LowerDistance()) <= 1e-7 &&
+                    std::abs(projection.Parameter(i) - parameter) >
+                        1e-6 * (exact.last - exact.first)) {
+                    bool seam = curve.kind == "Ellipse" &&
+                                std::abs(std::abs(projection.Parameter(i) - parameter) -
+                                         (exact.last - exact.first)) <= 1e-8;
+                    if (!seam)
+                        return {};
+                }
+            return parameter / exact.parameterScale;
+        } catch (const Standard_Failure &) {
+            throw domain::Error("SolveFailure", "Exact inference contact projection failed");
+        }
+    };
+    auto tangent = [&](const Entity &line, const Entity &circle) {
+        auto a = found->entity(line.a).point, b = found->entity(line.b).point,
+             center = found->entity(circle.a).point;
+        Vec2 v{b.x - a.x, b.y - a.y};
+        double norm = length(a, b);
+        double t = ((center.x - a.x) * v.x + (center.y - a.y) * v.y) / (norm * norm);
+        Vec2 foot{a.x + t * v.x, a.y + t * v.y};
+        if (std::abs(length(center, foot) - circle.radius) > tolerance)
+            return;
+        if (circle.kind == "Arc") {
+            double delta = std::fmod(
+                std::atan2(foot.y - center.y, foot.x - center.x) - circle.start + 2 * tau, tau);
+            if (delta > circle.sweep + 1e-8)
+                return;
+        }
+        propose("Tangent", line.id, circle.id);
+    };
+    auto curveTangent = [&](const Entity &line, const Entity &curve) {
+        auto a = found->entity(line.a).point, b = found->entity(line.b).point;
+        Vec2 v{b.x - a.x, b.y - a.y};
+        double size = length(a, b);
+        struct Contact {
+            double line, curve, score;
+        };
+        std::vector<Contact> contacts;
+        for (double fraction : {0., .5, 1.}) {
+            Vec2 query{a.x + fraction * v.x, a.y + fraction * v.y};
+            auto parameter = closest(curve, query);
+            if (!parameter)
+                continue;
+            auto point = curveValue(*found, curve, *parameter),
+                 direction = curveDerivative(*found, curve, *parameter);
+            double speed = std::hypot(direction.x, direction.y);
+            double angle = speed < 1e-12
+                               ? 1
+                               : std::abs(v.x * direction.y - v.y * direction.x) / (size * speed);
+            double angularTolerance = std::min(.05, tolerance / std::max(size, 2 * tolerance));
+            if (speed < 1e-12 || angle > angularTolerance)
+                continue;
+            double along = ((point.x - a.x) * v.x + (point.y - a.y) * v.y) / (size * size);
+            double distance = length(point, {a.x + along * v.x, a.y + along * v.y});
+            if (along < -tolerance / size || along > 1 + tolerance / size || distance > tolerance)
+                continue;
+            auto range = curveRange(curve);
+            if (std::none_of(contacts.begin(), contacts.end(), [&](auto old) {
+                    return std::abs(old.curve - *parameter) < 1e-6 * (range.second - range.first);
+                }))
+                contacts.push_back({std::clamp(along, 1e-6, 1 - 1e-6), *parameter,
+                                    distance / tolerance + angle / angularTolerance});
+        }
+        // Multiple contacts require explicit branch selection, not an arbitrary
+        // automatic tangent choice.
+        if (contacts.empty())
+            return;
+        std::sort(contacts.begin(), contacts.end(),
+                  [](auto a, auto b) { return a.score < b.score; });
+        if (contacts.size() > 1 && contacts[1].score - contacts[0].score <= 1e-4)
+            return;
+        auto direction = curveDerivative(*found, curve, contacts[0].curve);
+        propose("CurveTangent", line.id, curve.id, {}, contacts[0].line, contacts[0].curve,
+                v.x * direction.x + v.y * direction.y < 0);
+    };
+    auto curvePair = [&](const Entity &left, const Entity &right) {
+        if (left.id == right.id)
+            return;
+        auto *a = &left, *b = &right;
+        if (b->id < a->id)
+            std::swap(a, b);
+        contactBudget();
+        try {
+            auto first = geometry::sketchCurve(*found, *a),
+                 second = geometry::sketchCurve(*found, *b);
+            GeomAPI_ExtremaCurveCurve extrema(first.curve, second.curve, first.first, first.last,
+                                              second.first, second.last);
+            if (extrema.NbExtrema() == 0 || extrema.IsParallel())
+                return;
+            check(extrema.NbExtrema() <= 128, "ResourceLimit", "Too many competing curve contacts");
+            struct Contact {
+                double u, v, distance;
+            };
+            std::vector<Contact> contacts;
+            for (int i = 1; i <= extrema.NbExtrema(); ++i) {
+                double u, v;
+                extrema.Parameters(i, u, v);
+                contacts.push_back(
+                    {u / first.parameterScale, v / second.parameterScale, extrema.Distance(i)});
+            }
+            std::sort(contacts.begin(), contacts.end(),
+                      [](auto &x, auto &y) { return x.distance < y.distance; });
+            auto best = contacts.front();
+            if (best.distance > tolerance * 1000)
+                return;
+            auto equivalent = [&](const Entity &e, double x, double y) {
+                double difference = std::abs(x - y);
+                return difference <= 1e-8 || ((e.kind == "Circle" || e.kind == "Ellipse") &&
+                                              std::abs(difference - tau) <= 1e-8);
+            };
+            for (size_t i = 1; i < contacts.size(); ++i)
+                if (std::abs(contacts[i].distance - best.distance) <= 1e-7 &&
+                    (!equivalent(*a, contacts[i].u, best.u) ||
+                     !equivalent(*b, contacts[i].v, best.v)))
+                    return;
+            auto u = curveDerivative(*found, *a, best.u), v = curveDerivative(*found, *b, best.v);
+            double product = length(u, {}) * length(v, {});
+            if (product <= 1e-20)
+                return;
+            double angularTolerance =
+                std::min(.05, tolerance / std::max(1e-6, std::min(length(u, {}), length(v, {}))));
+            if (std::abs(u.x * v.y - u.y * v.x) / product > angularTolerance)
+                return;
+            propose("CurveTangent", a->id, b->id, {}, best.u, best.v, u.x * v.x + u.y * v.y < 0);
+        } catch (const Standard_Failure &) {
+            throw domain::Error("SolveFailure", "Exact curve-to-curve inference failed");
+        }
+    };
+    for (auto &entity : selected) {
+        check(budget.elapsed() <= 5000, "ResourceLimit",
+              "Inference work budget exceeded; select fewer entities");
+        auto &e = found->entity(entity);
+        if (e.kind == "Point") {
+            for (size_t i = 0; i < lines.size(); ++i)
+                for (size_t j = i + 1; j < lines.size(); ++j) {
+                    auto a = found->entity(lines[i]->a).point, b = found->entity(lines[i]->b).point,
+                         c = found->entity(lines[j]->a).point, d = found->entity(lines[j]->b).point;
+                    Vec2 v{b.x - a.x, b.y - a.y}, w{d.x - c.x, d.y - c.y};
+                    double det = v.x * w.y - v.y * w.x;
+                    if (std::abs(det) < 1e-10 * length(a, b) * length(c, d))
+                        continue;
+                    double t = ((c.x - a.x) * w.y - (c.y - a.y) * w.x) / det;
+                    if (length(e.point, {a.x + t * v.x, a.y + t * v.y}) <= tolerance)
+                        propose("Intersection", e.id, lines[i]->id, lines[j]->id);
+                }
+            for (auto *line : lines) {
+                auto a = found->entity(line->a).point, b = found->entity(line->b).point;
+                if (length(e.point, {(a.x + b.x) / 2, (a.y + b.y) / 2}) <= tolerance)
+                    propose("Midpoint", e.id, line->id);
+            }
+            for (auto &other : found->entities) {
+                if (other.id == e.id)
+                    continue;
+                if (other.kind == "Point") {
+                    if (length(e.point, other.point) <= tolerance)
+                        propose("Coincident", e.id, other.id);
+                    else if (std::abs(e.point.y - other.point.y) <= tolerance)
+                        propose("Horizontal", e.id, other.id);
+                    else if (std::abs(e.point.x - other.point.x) <= tolerance)
+                        propose("Vertical", e.id, other.id);
+                } else if (other.kind == "Line") {
+                    auto a = found->entity(other.a).point, b = found->entity(other.b).point;
+                    double size = length(a, b),
+                           t = ((e.point.x - a.x) * (b.x - a.x) + (e.point.y - a.y) * (b.y - a.y)) /
+                               (size * size);
+                    if (t >= 0 && t <= 1 &&
+                        length(e.point, {a.x + t * (b.x - a.x), a.y + t * (b.y - a.y)}) <=
+                            tolerance)
+                        propose("Coincident", e.id, other.id);
+                } else if (advancedCurve(other.kind)) {
+                    if (auto parameter = closest(other, e.point))
+                        propose("Coincident", e.id, other.id, {}, 0,
+                                other.kind == "Spline" ? *parameter : 0);
+                } else if (other.kind == "Circle" || other.kind == "Arc") {
+                    auto center = found->entity(other.a).point;
+                    double delta =
+                        std::fmod(std::atan2(e.point.y - center.y, e.point.x - center.x) -
+                                      other.start + 2 * tau,
+                                  tau);
+                    if (std::abs(length(e.point, center) - other.radius) <= tolerance &&
+                        (other.kind == "Circle" || delta <= other.sweep + 1e-8))
+                        propose("Coincident", e.id, other.id);
+                }
+            }
+        } else if (e.kind == "Line") {
+            auto a = found->entity(e.a).point, b = found->entity(e.b).point;
+            if (std::abs(b.y - a.y) <= tolerance && std::abs(b.x - a.x) > 2 * tolerance)
+                propose("Horizontal", e.id);
+            if (std::abs(b.x - a.x) <= tolerance && std::abs(b.y - a.y) > 2 * tolerance)
+                propose("Vertical", e.id);
+            for (auto &other : found->entities) {
+                if (other.id == e.id)
+                    continue;
+                if (other.kind == "Line") {
+                    auto c = found->entity(other.a).point, d = found->entity(other.b).point;
+                    double size = length(a, b), span = length(c, d);
+                    double cosine =
+                        std::abs((b.x - a.x) * (d.x - c.x) + (b.y - a.y) * (d.y - c.y)) /
+                        (size * span);
+                    if (cosine <=
+                        std::min(.05, tolerance / std::max(2 * tolerance, std::min(size, span))))
+                        propose("Perpendicular", e.id, other.id);
+                } else if (other.kind == "Circle" || other.kind == "Arc")
+                    tangent(e, other);
+                else if (advancedCurve(other.kind))
+                    curveTangent(e, other);
+            }
+        } else if (advancedCurve(e.kind)) {
+            for (auto *line : lines)
+                curveTangent(*line, e);
+            for (auto &other : found->entities)
+                if (other.kind != "Point" && other.kind != "Line")
+                    curvePair(e, other);
+        } else if (e.kind == "Circle" || e.kind == "Arc") {
+            for (auto &other : found->entities) {
+                if (other.id == e.id)
+                    continue;
+                if (other.kind == "Line")
+                    tangent(other, e);
+                else if (advancedCurve(other.kind))
+                    curvePair(e, other);
+                else if (other.kind == "Circle" || other.kind == "Arc") {
+                    double distance =
+                        length(found->entity(e.a).point, found->entity(other.a).point);
+                    if (distance <= 1e-9)
+                        continue;
+                    if (std::abs(distance - e.radius - other.radius) <= tolerance)
+                        propose("Tangent", e.id, other.id);
+                    else if (std::abs(distance - std::abs(e.radius - other.radius)) <= tolerance)
+                        propose("Tangent", e.id, other.id, {}, 1);
+                }
+            }
+        }
+    }
+    *found = candidate;
+    return evaluate(encode(all), previous, false);
+}
+static QCborMap fullyDefine(const QCborArray &input, const QCborMap &request,
+                            const QCborArray &previous) {
+    wire::keys(request, {"kind", "sketch", "scope", "selection"});
+    auto scope = wire::text(request, "scope");
+    check(scope == "All" || scope == "Selected", "UnsupportedOperation",
+          "Unknown Fully Define scope");
+    check(request.value("selection").isArray() &&
+              request.value("selection").toArray().size() <= 256,
+          "InvalidInput", "Bounded Fully Define selection required");
+    auto prepared = evaluate(input, previous);
+    auto all = parse(prepared.value("sketches").toArray());
+    auto id = domain::id(wire::text(request, "sketch"));
+    auto found = std::find_if(all.begin(), all.end(), [&](auto &s) { return s.id == id; });
+    check(found != all.end(), "ReferenceMissing", "Fully Define sketch missing");
+    auto original = *found;
+    QSet<QString> selected;
+    for (auto value : request.value("selection").toArray()) {
+        check(value.isString(), "InvalidInput", "Fully Define entity identity required");
+        auto entity = domain::id(value.toString());
+        original.entity(entity);
+        selected.insert(entity);
+    }
+    check(scope == "All" || !selected.empty(), "InvalidInput", "Select geometry to fully define");
+    if (scope == "All")
+        for (auto &e : original.entities)
+            selected.insert(e.id);
+    QSet<QString> selectedPoints;
+    for (auto &entity : selected)
+        for (auto &point : controlPoints(original.entity(entity)))
+            selectedPoints.insert(point);
+    auto base = solveLocal(original, nullptr, true);
+    if (base.freedom == 0)
+        return prepared;
+    auto candidate = original;
+    auto identity = [&](QString key) {
+        return QUuid::createUuidV5(QUuid(id), ("CM3:define:" + key).toUtf8())
+            .toString(QUuid::WithoutBraces);
+    };
+    auto anchor = identity("origin");
+    auto origin = std::find_if(candidate.entities.begin(), candidate.entities.end(),
+                               [&](auto &e) { return e.id == anchor; });
+    if (origin == candidate.entities.end()) {
+        candidate.point({0, 0}, true);
+        candidate.entities.back().id = anchor;
+        Constraint fixed;
+        fixed.id = identity("anchor");
+        fixed.kind = "Fixed";
+        fixed.a = anchor;
+        candidate.constraints.push_back(fixed);
+    } else
+        check(origin->kind == "Point" && origin->construction &&
+                  length(origin->point, {0, 0}) <= 1e-12,
+              "ReferenceAmbiguous", "Fully Define origin identity is occupied");
+    auto anchored = solveLocal(candidate, &original, true);
+    check(anchored.valid, "ResourceLimit",
+          "Fully Define requires capacity for a construction origin");
+    int freedom = anchored.freedom;
+    candidate = anchored.sketch;
+    QElapsedTimer budget;
+    budget.start();
+    int attempts = 0;
+    auto propose = [&](Constraint c) {
+        if (freedom == 0)
+            return;
+        check(budget.elapsed() <= 5000 && ++attempts <= 512 && candidate.constraints.size() < 512,
+              "ResourceLimit", "Fully Define work budget exceeded; select fewer entities");
+        c.id = identity(c.kind + ":" + c.a + ":" + c.b);
+        for (auto &existing : candidate.constraints)
+            if (existing.id == c.id)
+                return;
+        c.value = measureDimension(candidate, c);
+        c.expression =
+            QString::number(c.value, 'g', 17) + (angularDimension(c.kind) ? " rad" : " m");
+        auto trial = candidate;
+        trial.constraints.push_back(c);
+        auto result = solveLocal(trial, &candidate, true);
+        if (!result.valid || result.freedom >= freedom)
+            return;
+        for (auto &e : original.entities) {
+            auto &after = result.sketch.entity(e.id);
+            if (e.kind == "Point" && length(e.point, after.point) > 1e-9)
+                return;
+            if (radiusCurve(e.kind) && std::abs(e.radius - after.radius) > 1e-9)
+                return;
+            if ((e.kind == "Arc" || e.kind == "EllipticalArc" || e.kind == "Parabola") &&
+                (std::abs(e.start - after.start) > 1e-9 || std::abs(e.sweep - after.sweep) > 1e-9))
+                return;
+        }
+        candidate = result.sketch;
+        freedom = result.freedom;
+    };
+    QStringList points;
+    for (auto &e : original.entities)
+        if (e.kind == "Point" && selectedPoints.contains(e.id))
+            points << e.id;
+    std::sort(points.begin(), points.end());
+    for (auto &point : points)
+        for (QString kind : {"HorizontalDistance", "VerticalDistance"}) {
+            Constraint c;
+            c.kind = kind;
+            c.a = anchor;
+            c.b = point;
+            propose(c);
+        }
+    QStringList curves(selected.begin(), selected.end());
+    std::sort(curves.begin(), curves.end());
+    for (auto &curve : curves)
+        if (original.entity(curve).kind == "Circle" || original.entity(curve).kind == "Arc") {
+            Constraint c;
+            c.kind = "Radius";
+            c.a = curve;
+            propose(c);
+            if (original.entity(curve).kind == "Arc")
+                for (QString kind : {"StartAngle", "Sweep"}) {
+                    c.kind = kind;
+                    propose(c);
+                }
+        } else if (ellipseCurve(original.entity(curve).kind)) {
+            Constraint c;
+            c.kind = "MinorRadius";
+            c.a = curve;
+            propose(c);
+            if (original.entity(curve).kind == "EllipticalArc")
+                for (QString kind : {"StartAngle", "Sweep"}) {
+                    c.kind = kind;
+                    propose(c);
+                }
+        } else if (original.entity(curve).kind == "Parabola") {
+            Constraint c;
+            c.a = curve;
+            for (QString kind : {"TrimStart", "TrimSpan"}) {
+                c.kind = kind;
+                propose(c);
+            }
+        }
+    if (freedom == anchored.freedom)
+        return prepared;
+    *found = candidate;
+    return evaluate(encode(all), previous, false);
+}
+QCborMap interact(const QCborArray &candidates, const QCborMap &request,
+                  const QCborArray &previous) {
+    if (wire::text(request, "kind") == "Infer")
+        return infer(candidates, request, previous);
+    if (wire::text(request, "kind") == "FullyDefine")
+        return fullyDefine(candidates, request, previous);
+    wire::keys(request, {"kind", "sketch", "entity", "from", "to"});
+    check(wire::text(request, "kind") == "Drag", "UnsupportedOperation",
+          "Unknown sketch interaction");
+    auto point = [&](QString key) {
+        auto value = request.value(key);
+        check(value.isArray() && value.toArray().size() == 2, "InvalidInput",
+              "Two drag coordinates required");
+        auto pair = value.toArray();
+        for (auto coordinate : pair)
+            check((coordinate.isDouble() || coordinate.isInteger()) &&
+                      std::isfinite(coordinate.toDouble()) &&
+                      std::abs(coordinate.toDouble()) <= 1e3,
+                  "InvalidInput", "Finite drag coordinates within 1 km required");
+        return Vec2{pair[0].toDouble(), pair[1].toDouble()};
+    };
+    auto from = point("from"), to = point("to");
+    auto all = parse(evaluate(candidates, previous).value("sketches").toArray());
+    auto id = domain::id(wire::text(request, "sketch"));
+    auto selected = std::find_if(all.begin(), all.end(), [&](auto &s) { return s.id == id; });
+    check(selected != all.end(), "ReferenceMissing", "Drag sketch missing");
+    auto &entity = selected->entity(domain::id(wire::text(request, "entity")));
+    DragTargets targets;
+    Vec2 delta{to.x - from.x, to.y - from.y};
+    auto move = [&](QString point) {
+        auto p = selected->entity(point).point;
+        targets.points.push_back({point, {p.x + delta.x, p.y + delta.y}});
+    };
+    if (entity.kind == "Point")
+        move(entity.id);
+    else if (auto group = constructionOf(*selected, entity.id)) {
+        auto members = constructionMembers(*group);
+        for (auto &id : members) {
+            auto &member = selected->entity(id);
+            if (member.kind == "Point")
+                move(id);
+            else if (radiusCurve(member.kind))
+                targets.radii.push_back({id, member.radius});
+        }
+    } else if (entity.kind == "Circle" || entity.kind == "Arc") {
+        auto center = selected->entity(entity.a).point;
+        auto distance = length(center, from);
+        check(distance > 1e-9, "ReferenceAmbiguous", "Choose the circle or arc perimeter");
+        targets.points.push_back({entity.a, center});
+        targets.circle = entity.id;
+        targets.cursor = {center.x + entity.radius * (from.x - center.x) / distance + delta.x,
+                          center.y + entity.radius * (from.y - center.y) / distance + delta.y};
+    } else {
+        for (auto &point : controlPoints(entity))
+            move(point);
+        if (radiusCurve(entity.kind))
+            targets.radii.push_back({entity.id, entity.radius});
+    }
+    auto before = *selected;
+    auto result = solveLocal(before, &before, true, &targets);
+    if (!result.valid)
+        return fields(
+            {{"sketches", encode(all)}, {"diagnostics", QCborArray{result.diagnostic()}}});
+    *selected = result.sketch;
+    return evaluate(encode(all), previous, false);
 }
 QCborArray validateAccepted(const QCborArray &input) {
     auto result = evaluate(input);

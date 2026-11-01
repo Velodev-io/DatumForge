@@ -171,7 +171,9 @@ Sketch eraseEntity(const Sketch &s, QString id) {
     removed.unite(support);
     std::erase_if(result.entities, [&](auto &e) { return removed.contains(e.id); });
     std::erase_if(result.constraints, [&](auto &c) {
-        return removed.contains(c.a) || removed.contains(c.b) || removed.contains(c.third);
+        return removed.contains(c.a) || removed.contains(c.b) || removed.contains(c.third) ||
+               std::any_of(c.members.begin(), c.members.end(),
+                           [&](auto &member) { return removed.contains(member); });
     });
     result.validate();
     return result;

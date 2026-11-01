@@ -41,6 +41,14 @@ void MainWindow::buildCommandTabs() {
     connect(cancel, &QAction::triggered, sketchPanel, &SketchPanel::discard);
     auto *dimension = add("sketch.dimension", "Dimension");
     connect(dimension, &QAction::triggered, sketchPanel, &SketchPanel::dimensionSelection);
+    auto *ordinates = add("sketch.ordinates", "Ordinates");
+    connect(ordinates, &QAction::triggered, sketchPanel, &SketchPanel::ordinateSelection);
+    auto *path = add("sketch.pathLength", "Path length");
+    connect(path, &QAction::triggered, sketchPanel, &SketchPanel::pathSelection);
+    auto *inference = add("sketch.infer", "Review relations");
+    connect(inference, &QAction::triggered, sketchPanel, &SketchPanel::inferSelection);
+    auto *fullyDefine = add("sketch.fullyDefine", "Fully Define");
+    connect(fullyDefine, &QAction::triggered, sketchPanel, &SketchPanel::fullyDefineSelection);
     auto *remove = add("sketch.delete", "Delete");
     connect(remove, &QAction::triggered, sketchPanel, &SketchPanel::removeSelection);
     auto *group = new QActionGroup(this);
@@ -112,6 +120,10 @@ void MainWindow::buildCommandTabs() {
                     "sketch.tool.Point",
                     "",
                     "sketch.dimension",
+                    "sketch.ordinates",
+                    "sketch.pathLength",
+                    "sketch.infer",
+                    "sketch.fullyDefine",
                     "sketch.delete",
                     "sketch.grid",
                     "",
@@ -233,6 +245,14 @@ void MainWindow::refreshCommandTabs() {
               "No cancelable sketch edit is active");
     available("sketch.dimension", editing && idle && sketchPanel->dimensionAvailable(),
               "Select a line, circle or arc in an active sketch");
+    available("sketch.ordinates", editing && idle && sketchPanel->ordinateAvailable(),
+              "Select one or more points in an active sketch");
+    available("sketch.pathLength", editing && idle && sketchPanel->pathAvailable(),
+              "Select curves forming one connected path");
+    available("sketch.infer", editing && idle && sketchPanel->proposalAvailable(),
+              "Create geometry in an active sketch");
+    available("sketch.fullyDefine", editing && idle && sketchPanel->proposalAvailable(),
+              "Create geometry in an active sketch");
     available("sketch.delete", editing && idle && !sketchPanel->selectedEntity().isEmpty(),
               "Select geometry in an active sketch");
     available("sketch.grid", part, "Open a Part document");

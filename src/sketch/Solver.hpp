@@ -13,6 +13,8 @@ struct Result {
 };
 Result solve(Sketch candidate, const Sketch *previous = nullptr);
 QCborArray validateAccepted(const QCborArray &sketches);
+QCborMap interact(const QCborArray &candidates, const QCborMap &request,
+                  const QCborArray &previous = {});
 QCborMap evaluate(const QCborArray &candidates, const QCborArray &previous = {},
                   bool rejectInvalid = true);
 } // namespace cad::sketch

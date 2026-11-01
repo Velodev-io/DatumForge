@@ -207,3 +207,11 @@ checks and native CM3 at five scales, plus endpoint native workspace/arc regress
 Its scope and retained activation-only retry policy are in the
 [associated dimension contract](../docs/decisions/core-modeling-cm3-associated-dimensions.md).
 It does not certify whole CM3, other-platform or full physical 8 GB acceptance.
+
+CM3 completion: `python3 tools/verify_cm3_completion.py --native` records the
+full enabled suite, pinned formatting, changed-source Clang analysis and ownership/
+coverage/specification checks, then current CM3 Cocoa workflows in mm/in at five
+effective scales. Disposable project/recovery/save roots only. See
+[completion contracts](../docs/decisions/core-modeling-cm3-interactions.md) and
+[execution evidence](../docs/testing/core-modeling-cm3-completion.md); physical
+devices, installed builds and other-platform/resource acceptance remain separate.

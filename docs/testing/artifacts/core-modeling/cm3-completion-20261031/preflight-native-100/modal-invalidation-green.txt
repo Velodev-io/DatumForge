@@ -1,0 +1,11 @@
+********* Start testing of CompletionContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : CompletionContracts::initTestCase()
+QINFO  : CompletionContracts::delayedModalReadiness() Modal readiness 0 0 "" true true
+QINFO  : CompletionContracts::delayedModalReadiness() Modal action entered ""
+QINFO  : CompletionContracts::delayedModalReadiness() Modal action returned "" false
+PASS   : CompletionContracts::delayedModalReadiness()
+QINFO  : CompletionContracts::proposalRestart(fullyDefine) Modal readiness 0 1 "sketchProposalEditor" true true
+QINFO  : CompletionContracts::proposalRestart(fullyDefine) Modal action entered "sketchProposalEditor"
+QINFO  : CompletionContracts::proposalRestart(fullyDefine) Modal action returned "sketchProposalEditor" false
+Bounded diagnostic timed out after 70 seconds

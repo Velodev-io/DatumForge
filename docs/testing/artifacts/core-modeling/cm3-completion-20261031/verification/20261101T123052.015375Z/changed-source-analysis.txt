@@ -1,0 +1,289 @@
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed apps/desktop/WorkspaceChrome.cpp
+Analyzed apps/desktop/SketchPanel.cpp
+Analyzed apps/desktop/DimensionUI.cpp
+Analyzed apps/desktop/SketchProposalUI.cpp
+Analyzed src/render/SketchView.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/persistence/ProjectStore.cpp
+Analyzed src/sketch/Sketch.cpp
+Analyzed src/sketch/Editing.cpp
+Analyzed src/sketch/Constructions.cpp
+Analyzed src/sketch/Dimensions.cpp
+Analyzed tests/module3/contracts.cpp
+Analyzed src/sketch/Solver.cpp
+Analyzed src/sketch/LineEditing.cpp
+Analyzed tests/module4/workspace.cpp
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:237:60: warning: Potential leak of memory pointed to by field '__f_' [cplusplus.NewDeleteLeaks]
+  237 |                     auto modalAction = test::whenModal(&w, [&, action](QDialog *d) {
+      |                                                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:156:28: note: Assuming '__begin1' is not equal to '__end1'
+  156 |         for (QString units : {"mm", "in"}) {
+      |                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:159:21: note: Assuming the condition is false
+  159 |             QVERIFY(root.isValid() && files.isValid());
+      |                     ^~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:43: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |                                           ^~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:159:36: note: Left side of '&&' is false
+  159 |             QVERIFY(root.isValid() && files.isValid());
+      |                                    ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:159:13: note: Assuming the condition is false
+  159 |             QVERIFY(root.isValid() && files.isValid());
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:9: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:159:13: note: Taking false branch
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:5: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:159:13: note: Loop condition is false.  Exiting loop
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:64:28: note: expanded from macro 'QVERIFY'
+   64 | #define QVERIFY(statement) \
+      |                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:169:17: note: Assuming 'native' is false
+  169 |             if (native) {
+      |                 ^~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:169:13: note: Taking false branch
+  169 |             if (native) {
+      |             ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:178:13: note: Taking true branch
+  178 |             QVERIFY2(wait([&] { return c->ready(); }), qPrintable(c->state().message));
+      |             ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:78:5: note: expanded from macro 'QVERIFY2'
+   78 |     if (statement) {\
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:178:13: note: Assuming the condition is false
+  178 |             QVERIFY2(wait([&] { return c->ready(); }), qPrintable(c->state().message));
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:79:13: note: expanded from macro 'QVERIFY2'
+   79 |         if (!QTest::qVerify(true, #statement, static_cast<const char *>(description), __FILE__, __LINE__))\
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:178:13: note: Taking false branch
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:79:9: note: expanded from macro 'QVERIFY2'
+   79 |         if (!QTest::qVerify(true, #statement, static_cast<const char *>(description), __FILE__, __LINE__))\
+      |         ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:178:13: note: Loop condition is false.  Exiting loop
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:76:42: note: expanded from macro 'QVERIFY2'
+   76 | #define QVERIFY2(statement, description) \
+      |                                          ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:180:13: note: Assuming the condition is false
+  180 |             QVERIFY(wait([&] { return c->state().projectOpen && !c->outstanding(); }));
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:9: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:180:13: note: Taking false branch
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:5: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:180:13: note: Loop condition is false.  Exiting loop
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:64:28: note: expanded from macro 'QVERIFY'
+   64 | #define QVERIFY(statement) \
+      |                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:182:31: note: Assuming '__begin2' is not equal to '__end2'
+  182 |             for (QString mode :
+      |                               ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:187:21: note: 'axisAngle' is false
+  187 |                 if (axisAngle)
+      |                     ^~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:187:17: note: Taking false branch
+  187 |                 if (axisAngle)
+      |                 ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:190:21: note: 'pointDiameter' is false
+  190 |                 if (pointDiameter)
+      |                     ^~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:190:17: note: Taking false branch
+  190 |                 if (pointDiameter)
+      |                 ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:203:17: note: Taking false branch
+  203 |                 if (mode == "CenterlineDiameter") {
+      |                 ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:215:17: note: Taking false branch
+  215 |                 QVERIFY2(wait([&] { return !c->outstanding() && sketches(c).size() == 1; }),
+      |                 ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:78:5: note: expanded from macro 'QVERIFY2'
+   78 |     if (statement) {\
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:215:17: note: Assuming the condition is false
+  215 |                 QVERIFY2(wait([&] { return !c->outstanding() && sketches(c).size() == 1; }),
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  216 |                          qPrintable(c->state().message));
+      |                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:82:13: note: expanded from macro 'QVERIFY2'
+   82 |         if (!QTest::qVerify(false, #statement, static_cast<const char *>(description), __FILE__, __LINE__))\
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:215:17: note: Taking false branch
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:82:9: note: expanded from macro 'QVERIFY2'
+   82 |         if (!QTest::qVerify(false, #statement, static_cast<const char *>(description), __FILE__, __LINE__))\
+      |         ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:215:17: note: Loop condition is false.  Exiting loop
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:76:42: note: expanded from macro 'QVERIFY2'
+   76 | #define QVERIFY2(statement, description) \
+      |                                          ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:220:21: note: Assuming the condition is false
+  220 |                 if (!panel->active())
+      |                     ^~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:220:17: note: Taking false branch
+  220 |                 if (!panel->active())
+      |                 ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:222:17: note: Assuming the condition is false
+  222 |                 QVERIFY(panel->active());
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:9: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:222:17: note: Taking false branch
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:5: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:222:17: note: Loop condition is false.  Exiting loop
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:64:28: note: expanded from macro 'QVERIFY'
+   64 | #define QVERIFY(statement) \
+      |                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:224:21: note: '?' condition is false
+  224 |                     mode == "CenterlineDiameter" ? (pointDiameter ? QStringList{pointProfile, axis}
+      |                     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:226:23: note: '?' condition is false
+  226 |                     : mode == "Angle"
+      |                       ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:228:23: note: Left side of '||' is false
+  228 |                     : mode == "Distance" || sketch::componentDimension(mode)
+      |                       ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:228:45: note: Assuming the condition is false
+  228 |                     : mode == "Distance" || sketch::componentDimension(mode)
+      |                                             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:228:23: note: '?' condition is false
+  228 |                     : mode == "Distance" || sketch::componentDimension(mode)
+      |                       ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:230:39: note: Left side of '||' is false
+  230 |                         : QStringList{mode == "Radius" || mode == "Diameter"   ? circle
+      |                                       ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:230:39: note: '?' condition is false
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:231:41: note: Left side of '||' is false
+  231 |                                       : mode == "Sweep" || mode == "ArcLength" ? arc
+      |                                         ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:231:41: note: '?' condition is false
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:234:17: note: Assuming the condition is false
+  234 |                 QVERIFY(panel->dimensionAvailable());
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:9: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:234:17: note: Taking false branch
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:5: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:234:17: note: Loop condition is false.  Exiting loop
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:64:28: note: expanded from macro 'QVERIFY'
+   64 | #define QVERIFY(statement) \
+      |                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:287:17: note: Assuming the condition is false
+  287 |                 QVERIFY(wait([&] { return !c->outstanding(); }));
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:9: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:287:17: note: Taking false branch
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:5: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:287:17: note: Loop condition is false.  Exiting loop
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:64:28: note: expanded from macro 'QVERIFY'
+   64 | #define QVERIFY(statement) \
+      |                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:288:17: note: Assuming the condition is false
+  288 |                 QCOMPARE(sketches(c), original);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:89:9: note: expanded from macro 'QCOMPARE'
+   89 |     if (!QTest::qCompare(actual, expected, #actual, #expected, __FILE__, __LINE__))\
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:288:17: note: Taking false branch
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:89:5: note: expanded from macro 'QCOMPARE'
+   89 |     if (!QTest::qCompare(actual, expected, #actual, #expected, __FILE__, __LINE__))\
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:288:17: note: Loop condition is false.  Exiting loop
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:87:36: note: expanded from macro 'QCOMPARE'
+   87 | #define QCOMPARE(actual, expected) \
+      |                                    ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:289:17: note: Assuming the condition is false
+  289 |                 QCOMPARE(c->state().revision, revision);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:89:9: note: expanded from macro 'QCOMPARE'
+   89 |     if (!QTest::qCompare(actual, expected, #actual, #expected, __FILE__, __LINE__))\
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:289:17: note: Taking false branch
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:89:5: note: expanded from macro 'QCOMPARE'
+   89 |     if (!QTest::qCompare(actual, expected, #actual, #expected, __FILE__, __LINE__))\
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:289:17: note: Loop condition is false.  Exiting loop
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:87:36: note: expanded from macro 'QCOMPARE'
+   87 | #define QCOMPARE(actual, expected) \
+      |                                    ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:291:17: note: Calling 'operator()'
+  291 |                 open([&](QDialog *d) {
+      |                 ^~~~~~~~~~~~~~~~~~~~~~
+  292 |                     auto *modes = d->findChild<QComboBox *>("dimensionMode");
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  293 |                     modes->setCurrentIndex(modes->findData(mode));
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  294 |                     auto *expression = d->findChild<QLineEdit *>("dimensionExpression");
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  295 |                     auto *preview = d->findChild<QPushButton *>("dimensionPreview");
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  296 |                     auto *apply = d->findChild<QPushButton *>("dimensionApply");
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  297 |                     expression->setText(mode == "Angle" || mode == "Sweep" ? "60 deg" : "50.8 mm");
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  298 |                     preview->click();
+      |                     ~~~~~~~~~~~~~~~~~
+  299 |                     QVERIFY2(wait([&] { return apply->isEnabled(); }),
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  300 |                              qPrintable(d->findChild<QLabel *>("dimensionStatus")->text()));
+      |                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  301 |                     QCOMPARE(c->state().revision, revision);
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  302 |                     QCOMPARE(sketches(c), original);
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  303 |                     d->findChild<QPushButton *>("dimensionRestore")->click();
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  304 |                     QVERIFY(!apply->isEnabled());
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  305 |                     expression->setText(mode == "Angle" || mode == "Sweep" ? "60 deg"
+      |                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  306 |                                                                            : "2 * 25.4 mm");
+      |                                                                            ~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:237:64: note: Calling copy constructor for 'function<void (QDialog *)>'
+  237 |                     auto modalAction = test::whenModal(&w, [&, action](QDialog *d) {
+      |                                                                ^~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:710:62: note: Calling copy constructor for '__value_func<void (QDialog *)>'
+  710 | function<_Rp(_ArgTypes...)>::function(const function& __f) : __f_(__f.__f_) {}
+      |                                                              ^~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:219:5: note: Taking false branch
+  219 |     if (__f.__f_ == nullptr)
+      |     ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:221:10: note: Taking false branch
+  221 |     else if ((void*)__f.__f_ == &__f.__buf_) {
+      |          ^
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:225:14: note: Calling '__func::__clone'
+  225 |       __f_ = __f.__f_->__clone();
+      |              ^~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:165:94: note: Memory is allocated
+  165 |   _LIBCPP_HIDE_FROM_ABI_VIRTUAL __base<_Rp(_ArgTypes...)>* __clone() const override { return new __func(__func_); }
+      |                                                                                              ^~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:225:14: note: Returned allocated memory
+  225 |       __f_ = __f.__f_->__clone();
+      |              ^~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:710:62: note: Returning from copy constructor for '__value_func<void (QDialog *)>'
+  710 | function<_Rp(_ArgTypes...)>::function(const function& __f) : __f_(__f.__f_) {}
+      |                                                              ^~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:237:64: note: Returning from copy constructor for 'function<void (QDialog *)>'
+  237 |                     auto modalAction = test::whenModal(&w, [&, action](QDialog *d) {
+      |                                                                ^~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp:237:60: note: Potential leak of memory pointed to by field '__f_'
+  237 |                     auto modalAction = test::whenModal(&w, [&, action](QDialog *d) {
+      |                                                            ^
+1 warning generated.
+Fail: analyzer reported an error or warning in tests/core_modeling/dimension_contracts.cpp

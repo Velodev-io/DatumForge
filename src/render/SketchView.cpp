@@ -53,10 +53,25 @@ void SketchView::showSketch(sketch::Sketch s, QString selected, bool editing) {
         setRectangleInput(rectangleMethod, rectangleInputs);
     if (editable && tool == "Slot")
         setSlotInput(slotMethod, slotInputs);
+    if (!inferenceGuides.empty()) {
+        QStringList names;
+        for (auto &c : inferenceGuides)
+            names << (c.kind == "CurveTangent" ? "Tangent" : c.kind);
+        names.removeDuplicates();
+        setAccessibleDescription(accessibleDescription() + " · Unconfirmed: " + names.join(", "));
+    }
     update();
+}
+void SketchView::showInferenceGuides(std::vector<sketch::Constraint> guides) {
+    inferenceGuides = std::move(guides);
+    if (present)
+        showSketch(drawing, selectedId, editable);
+    else
+        update();
 }
 void SketchView::clearSketch() {
     drawing = {};
+    inferenceGuides.clear();
     curveDisplay.clear();
     editable = present = false;
     setAccessibleDescription("No sketch · choose a support plane and New sketch");
@@ -439,6 +454,34 @@ void SketchView::paintEvent(QPaintEvent *) {
         p.setPen(dark ? QColor(255, 218, 140) : QColor(142, 86, 11));
         p.drawText(QPointF(14, 52), accessibleDescription());
     }
+    for (size_t i = 0; i < std::min(size_t(32), inferenceGuides.size()); ++i) {
+        auto &c = inferenceGuides[i];
+        auto position = [&](QString id) {
+            auto &e = drawing.entity(id);
+            if (e.kind == "Point")
+                return screen(e.point);
+            if (e.kind == "Line")
+                return (screen(drawing.entity(e.a).point) + screen(drawing.entity(e.b).point)) / 2;
+            auto range = sketch::curveRange(e);
+            return screen(sketch::curveValue(drawing, e, (range.first + range.second) / 2));
+        };
+        QPointF a = position(c.a), b = c.b.isEmpty() ? a : position(c.b);
+        if (c.b.isEmpty() && drawing.entity(c.a).kind == "Line") {
+            auto &line = drawing.entity(c.a);
+            a = screen(drawing.entity(line.a).point);
+            b = screen(drawing.entity(line.b).point);
+        }
+        p.setPen(QPen(QColor(45, 145, 255), 1.5, Qt::DashLine));
+        p.drawLine(a, b);
+        p.drawEllipse(a, 6, 6);
+        QString label = (c.kind == "CurveTangent" ? QString("Tangent") : c.kind) + " (unconfirmed)";
+        auto at = (a + b) / 2 + QPointF(10, -12 - int(i % 4) * 18);
+        QRectF box(
+            at + QPointF(-3, -p.fontMetrics().ascent() - 2),
+            QSizeF(p.fontMetrics().horizontalAdvance(label) + 6, p.fontMetrics().height() + 4));
+        p.fillRect(box, background);
+        p.drawText(at, label);
+    }
     p.setPen(dark ? QColor(255, 218, 140) : QColor(142, 86, 11));
     QVector<QRectF> dimensionLabels;
     dimensionHits.clear();
@@ -452,13 +495,11 @@ void SketchView::paintEvent(QPaintEvent *) {
                 auto end = screen(drawing.entity(e.b).point);
                 pos = (pos + end) / 2;
             }
-            QString unit =
-                (c.kind == "Angle" || c.kind == "Sweep") ? "deg" : property("units").toString();
+            QString unit = sketch::angularDimension(c.kind) ? "deg" : property("units").toString();
             if (unit.isEmpty())
                 unit = "mm";
             double n = c.value /
-                       domain::toSI(
-                           1, (c.kind == "Angle" || c.kind == "Sweep") ? "angle" : "length", unit);
+                       domain::toSI(1, sketch::angularDimension(c.kind) ? "angle" : "length", unit);
             QString expression = c.expression.trimmed();
             bool named = !expression.isEmpty() && !literal.match(expression).hasMatch();
             QString label = c.kind + " " + QString::number(n, 'g', 7) + " " + unit;
@@ -466,6 +507,8 @@ void SketchView::paintEvent(QPaintEvent *) {
                 label = "Ø " + QString::number(n, 'g', 7) + " " + unit;
             else if (c.kind == "ArcLength")
                 label = "Arc length " + QString::number(n, 'g', 7) + " " + unit;
+            else if (c.kind == "PathLength")
+                label = "Path length " + QString::number(n, 'g', 7) + " " + unit;
             else if (c.kind == "HorizontalOrdinate" || c.kind == "VerticalOrdinate")
                 label = (c.kind == "HorizontalOrdinate" ? "X " : "Y ") +
                         QString::number(n, 'g', 7) + " " + unit;
@@ -773,6 +816,7 @@ void SketchView::mousePressEvent(QMouseEvent *e) {
     emit selected(id);
     if (editable && !id.isEmpty()) {
         dragging = id;
+        lastDragGlobal = e->globalPosition().toPoint();
         auto p = local(e->position());
         emit dragStarted(id, p.x, p.y);
     }
@@ -807,6 +851,7 @@ void SketchView::mouseMoveEvent(QMouseEvent *e) {
         update();
     }
     if (!dragging.isEmpty() && (e->buttons() & Qt::LeftButton)) {
+        lastDragGlobal = e->globalPosition().toPoint();
         auto p = local(e->position());
         emit dragged(dragging, p.x, p.y);
     }
@@ -856,8 +901,10 @@ void SketchView::mouseReleaseEvent(QMouseEvent *e) {
     }
     primitivePressed = false;
     if (!dragging.isEmpty()) {
-        auto p = local(e->position());
-        emit dragged(dragging, p.x, p.y);
+        if (e->globalPosition().toPoint() != lastDragGlobal) {
+            auto p = local(e->position());
+            emit dragged(dragging, p.x, p.y);
+        }
         dragging.clear();
         emit dragFinished();
     }

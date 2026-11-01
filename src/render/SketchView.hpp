@@ -10,6 +10,7 @@ class SketchView : public QWidget {
     QMap<QString, std::vector<sketch::Vec2>> curveDisplay;
     QString selectedId, dragging;
     QMap<QString, QRectF> dimensionHits;
+    std::vector<sketch::Constraint> inferenceGuides;
     double scale = 6000;
     sketch::Vec2 cameraCenter;
     bool editable = false;
@@ -38,6 +39,7 @@ class SketchView : public QWidget {
     bool continuationAway = false;
     sketch::Vec2 cursor;
     QPoint previous, pressedAt;
+    QPoint lastDragGlobal;
     bool primitivePressed = false, secondPress = false, spaceDown = false;
     void zoomAt(QPointF at, double factor);
     void finishCircle(QPointF at);
@@ -64,6 +66,7 @@ class SketchView : public QWidget {
     explicit SketchView(QWidget *parent = nullptr);
     void showSketch(sketch::Sketch sketch, QString selected, bool editing);
     void clearSketch();
+    void showInferenceGuides(std::vector<sketch::Constraint> guides);
     void setTool(QString name);
     void setInputAnchor(std::optional<sketch::Vec2> anchor);
     void setRectangleInput(QString method, std::vector<sketch::Vec2> inputs);

@@ -1,0 +1,291 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+      Start  1: harness.pass
+ 1/77 Test  #1: harness.pass .....................   Passed    0.01 sec
+      Start  2: harness.failure_reporting
+ 2/77 Test  #2: harness.failure_reporting ........   Passed    0.15 sec
+      Start  3: measurement.statistics
+ 3/77 Test  #3: measurement.statistics ...........   Passed    0.08 sec
+      Start  4: harness.deliberate_failure
+ 4/77 Test  #4: harness.deliberate_failure .......***Not Run (Disabled)   0.00 sec
+      Start  5: protocol.boundaries
+ 5/77 Test  #5: protocol.boundaries ..............   Passed    0.06 sec
+      Start  6: storage.crash_matrix
+ 6/77 Test  #6: storage.crash_matrix .............   Passed    0.55 sec
+      Start  7: cad.geometry_topology
+ 7/77 Test  #7: cad.geometry_topology ............   Passed    0.24 sec
+      Start  8: cad.sketch_solver
+ 8/77 Test  #8: cad.sketch_solver ................   Passed    0.55 sec
+      Start  9: cad.rigid_mates
+ 9/77 Test  #9: cad.rigid_mates ..................   Passed    0.24 sec
+      Start 10: native.process_transport
+10/77 Test #10: native.process_transport .........   Passed    0.22 sec
+      Start 11: fixtures.determinism
+11/77 Test #11: fixtures.determinism .............   Passed    0.05 sec
+      Start 12: isolation.research
+12/77 Test #12: isolation.research ...............   Passed    0.15 sec
+      Start 13: module1.ownership
+13/77 Test #13: module1.ownership ................   Passed    0.11 sec
+      Start 14: module1.contracts
+14/77 Test #14: module1.contracts ................   Passed    1.53 sec
+      Start 15: module2.domain
+15/77 Test #15: module2.domain ...................   Passed    0.02 sec
+      Start 16: module2.storage
+16/77 Test #16: module2.storage ..................   Passed    2.18 sec
+      Start 17: module2.worker_lifecycle
+17/77 Test #17: module2.worker_lifecycle .........   Passed    1.54 sec
+      Start 18: module2.crash_matrix
+18/77 Test #18: module2.crash_matrix .............   Passed   20.25 sec
+      Start 19: module2.dispatch
+19/77 Test #19: module2.dispatch .................   Passed    0.74 sec
+      Start 20: module3.model
+20/77 Test #20: module3.model ....................   Passed    0.52 sec
+      Start 21: module3.persistence
+21/77 Test #21: module3.persistence ..............   Passed    1.21 sec
+      Start 22: module3.input
+22/77 Test #22: module3.input ....................   Passed    1.44 sec
+      Start 23: module3.shapeEditing
+23/77 Test #23: module3.shapeEditing .............***Failed    1.19 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::shapeEditing() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::shapeEditing() qt.qpa.fonts: Populating font family aliases took 110 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::shapeEditing() Compared values are not the same
+   Actual   (c->latestOperation()): "215f72e7-8661-4ba1-890b-80e12e6443fb"
+   Expected (operation)           : "b5c95191-115c-45b3-b9f6-a51eca57de06"
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(452)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 548ms
+********* Finished testing of Contracts *********
+
+      Start 24: module3.gestures
+24/77 Test #24: module3.gestures .................   Passed    1.80 sec
+      Start 25: module3.arcs
+25/77 Test #25: module3.arcs .....................   Passed    1.10 sec
+      Start 26: module3.all_arcs
+26/77 Test #26: module3.all_arcs .................   Passed    1.50 sec
+      Start 27: module3.interaction
+27/77 Test #27: module3.interaction ..............***Failed    0.73 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::drafts() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::drafts() qt.qpa.fonts: Populating font family aliases took 110 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::drafts() Compared values are not the same
+   Actual   (view->pick(point + QPoint(30, -10))): ""
+   Expected (draggedId)                          : "3e3a4068-7de7-454f-b158-772280a4d472"
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(796)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 692ms
+********* Finished testing of Contracts *********
+
+      Start 28: module3.solver
+28/77 Test #28: module3.solver ...................   Passed    0.61 sec
+      Start 29: module3.expressions
+29/77 Test #29: module3.expressions ..............   Passed    0.01 sec
+      Start 30: module4.workspace
+30/77 Test #30: module4.workspace ................***Failed   13.17 sec
+********* Start testing of Workspace *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Workspace::initTestCase()
+QWARN  : Workspace::layout() QOpenGLWidget is not supported on this platform.
+QWARN  : Workspace::layout() qt.qpa.fonts: Populating font family aliases took 110 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+FAIL!  : Workspace::layout() 'wait([&] { return !c->outstanding() && c->state().phase == Phase::PreviewReady; })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(274)]
+PASS   : Workspace::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 12580ms
+********* Finished testing of Workspace *********
+
+      Start 31: module4.tool_selection
+31/77 Test #31: module4.tool_selection ...........   Passed    0.46 sec
+      Start 32: module4.geometry
+32/77 Test #32: module4.geometry .................   Passed    0.86 sec
+      Start 33: module4.persistence
+33/77 Test #33: module4.persistence ..............   Passed    1.92 sec
+      Start 34: module4.lifecycle
+34/77 Test #34: module4.lifecycle ................   Passed    3.70 sec
+      Start 35: module4.variants
+35/77 Test #35: module4.variants .................   Passed    2.00 sec
+      Start 36: module5.plan
+36/77 Test #36: module5.plan .....................   Passed    0.56 sec
+      Start 37: module5.engine
+37/77 Test #37: module5.engine ...................   Passed    0.73 sec
+      Start 38: module5.persistence
+38/77 Test #38: module5.persistence ..............   Passed    1.06 sec
+      Start 39: module5.b2
+39/77 Test #39: module5.b2 .......................   Passed   95.15 sec
+      Start 40: module5.lifecycle
+40/77 Test #40: module5.lifecycle ................   Passed    2.44 sec
+      Start 41: module6.exchange
+41/77 Test #41: module6.exchange .................   Passed    0.77 sec
+      Start 42: module6.persistence
+42/77 Test #42: module6.persistence ..............   Passed    1.09 sec
+      Start 43: module6.contracts
+43/77 Test #43: module6.contracts ................   Passed    3.37 sec
+      Start 44: module7.model
+44/77 Test #44: module7.model ....................   Passed    0.68 sec
+      Start 45: module7.geometry
+45/77 Test #45: module7.geometry .................   Passed    0.60 sec
+      Start 46: module7.persistence
+46/77 Test #46: module7.persistence ..............   Passed    1.72 sec
+      Start 47: module7.b3
+47/77 Test #47: module7.b3 .......................   Passed   14.12 sec
+      Start 48: module7.contracts
+48/77 Test #48: module7.contracts ................   Passed    2.36 sec
+      Start 49: module8.drawing
+49/77 Test #49: module8.drawing ..................   Passed   58.25 sec
+      Start 50: module8.contracts
+50/77 Test #50: module8.contracts ................   Passed    2.06 sec
+      Start 51: module8.geometry
+51/77 Test #51: module8.geometry .................   Passed    0.66 sec
+      Start 52: module9.privacy
+52/77 Test #52: module9.privacy ..................   Passed    0.73 sec
+      Start 53: module9.interaction
+53/77 Test #53: module9.interaction ..............   Passed    1.54 sec
+      Start 54: module10.crash_matrix
+54/77 Test #54: module10.crash_matrix ............   Passed   22.77 sec
+      Start 55: module10.hardening
+55/77 Test #55: module10.hardening ...............   Passed    2.56 sec
+      Start 56: module10.contracts
+56/77 Test #56: module10.contracts ...............   Passed    1.05 sec
+      Start 57: cm1.relations
+57/77 Test #57: cm1.relations ....................   Passed    1.15 sec
+      Start 58: cm1.contracts
+58/77 Test #58: cm1.contracts ....................   Passed   10.91 sec
+      Start 59: cm0.coverage
+59/77 Test #59: cm0.coverage .....................   Passed    0.07 sec
+      Start 60: cm1.rectangles
+60/77 Test #60: cm1.rectangles ...................   Passed    4.30 sec
+      Start 61: cm1.slots
+61/77 Test #61: cm1.slots ........................   Passed    2.08 sec
+      Start 62: cm1.curves
+62/77 Test #62: cm1.curves .......................   Passed    0.64 sec
+      Start 63: cm1.pierce
+63/77 Test #63: cm1.pierce .......................   Passed    3.79 sec
+      Start 64: cm1.intent
+64/77 Test #64: cm1.intent .......................   Passed    0.79 sec
+      Start 65: cm3.associated_dimensions
+65/77 Test #65: cm3.associated_dimensions ........   Passed    1.61 sec
+      Start 66: cm3.dimensions
+66/77 Test #66: cm3.dimensions ...................   Passed    1.03 sec
+      Start 67: cm3.dimension_contracts
+67/77 Test #67: cm3.dimension_contracts ..........   Passed   10.04 sec
+      Start 68: cm3.dimension_identity
+68/77 Test #68: cm3.dimension_identity ...........   Passed    0.68 sec
+      Start 69: cm3.completion
+69/77 Test #69: cm3.completion ...................   Passed    2.67 sec
+      Start 70: cm3.completion_contracts
+70/77 Test #70: cm3.completion_contracts .........   Passed   11.80 sec
+      Start 71: cm2.editing
+71/77 Test #71: cm2.editing ......................   Passed    2.17 sec
+      Start 72: cm2.editing_contracts
+72/77 Test #72: cm2.editing_contracts ............   Passed    8.09 sec
+      Start 73: cm1.pointer_contracts
+73/77 Test #73: cm1.pointer_contracts ............   Passed    4.98 sec
+      Start 74: cm1.pierce_contracts
+74/77 Test #74: cm1.pierce_contracts .............   Passed    1.48 sec
+      Start 75: cm1.curve_contracts
+75/77 Test #75: cm1.curve_contracts ..............   Passed    5.82 sec
+      Start 76: cm1.slot_contracts
+76/77 Test #76: cm1.slot_contracts ...............   Passed    7.91 sec
+      Start 77: cm1.rectangle_contracts
+77/77 Test #77: cm1.rectangle_contracts ..........   Passed    9.47 sec
+
+96% tests passed, 3 tests failed out of 76
+
+Total Test time (real) = 366.64 sec
+
+The following tests did not run:
+	  4 - harness.deliberate_failure (Disabled)
+
+The following tests FAILED:
+	 23 - module3.shapeEditing (Failed)
+	 27 - module3.interaction (Failed)
+	 30 - module4.workspace (Failed)
+Errors while running CTest

@@ -1,0 +1,42 @@
+{
+  "status": "Fail",
+  "scope": "CM3 schema-8 dimensions, true paths, ordinates, constrained drag, confirmed inference and Fully Define",
+  "host": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "steps": [
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 45.80787083299947
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 8,
+      "seconds": 366.71229441600735
+    }
+  ],
+  "module_11_started": false,
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "blocked_acceptance": [
+    "Physical input devices and assistive technologies",
+    "Installed/signed builds",
+    "Windows/Linux",
+    "Full resource and whole-course acceptance corpus"
+  ],
+  "physical_ram_bytes": 8589934592
+}

@@ -55,13 +55,17 @@ class SketchPanel : public QWidget {
     void requestLineEdit();
     void refreshLineEdit();
     std::optional<sketch::Sketch> gestureBefore;
+    QCborArray gestureAllBefore, gesturePreview;
+    bool gestureIsWorker = false, gestureFinishing = false;
+    void finishGesture();
+    void cancelGesture();
     sketch::Vec2 gestureOrigin;
-    QString gestureError;
+    QString gestureError, dragFeedback;
     std::vector<sketch::Sketch> draftUndo, draftRedo;
     QPushButton *preview, *accept, *cancel, *edit, *create, *add, *addConstraint, *removeConstraint,
         *setDimension, *setName;
     std::vector<sketch::Sketch> accepted, draft;
-    QString document, selectedId;
+    QString document, selectedId, workerEpoch;
     QStringList relationSelectionOrder;
     QString resumeLineTool;
     std::optional<std::pair<QString, int>> pendingArcJoin;
@@ -69,7 +73,17 @@ class SketchPanel : public QWidget {
     qint64 revision = -1;
     bool editing = false, syncing = false, committing = false;
     bool dimensionEditing = false;
-    void openDimensionEditor(QString constraint = {});
+    QCheckBox *automaticRelations;
+    QPushButton *reviewInference;
+    QCborArray inferenceBefore, inferenceReceived, inferenceProposed;
+    QStringList inferenceSelection;
+    bool inferencePending = false;
+    quint64 inferenceGeneration = 0;
+    void clearInference();
+    void queueInference(const sketch::Sketch &before);
+    void completeInference(const QCborArray &diagnostics);
+    void reviewProposals(QString kind);
+    void openDimensionEditor(QString constraint = {}, QStringList path = {});
     std::vector<sketch::Vec2> clicks;
     sketch::Sketch &current();
     void rebuild();
@@ -112,6 +126,9 @@ class SketchPanel : public QWidget {
         return propertyPane;
     }
     bool dimensionAvailable() const;
+    bool ordinateAvailable() const;
+    bool pathAvailable() const;
+    bool proposalAvailable() const;
     QString selectedEntity() const {
         return selectedId;
     }
@@ -124,6 +141,10 @@ class SketchPanel : public QWidget {
     void chooseSketch(QString id);
     void choosePlane(QString name);
     void dimensionSelection();
+    void ordinateSelection();
+    void pathSelection();
+    void inferSelection();
+    void fullyDefineSelection();
     void removeSelection() {
         guard([&] { deleteSelected(); });
     }

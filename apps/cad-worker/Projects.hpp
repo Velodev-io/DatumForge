@@ -432,12 +432,20 @@ class Projects {
                      {"affected_constraints", result.value("affected_constraints")}});
             }
             if (e.command == "PreviewSketches") {
-                wire::keys(p, {"sketches"});
+                wire::keys(p, p.contains(QStringLiteral("interaction"))
+                                  ? QSet<QString>{"sketches", "interaction"}
+                                  : QSet<QString>{"sketches"});
                 check(e.revision == store->revision(), "StaleRevision",
                       "Project changed before preview");
                 check(p.value("sketches").isArray(), "InvalidInput", "Sketch array required");
-                auto candidate = sketch::evaluate(p.value("sketches").toArray(),
-                                                  store->sketches(e.context.document), false);
+                check(!p.contains(QStringLiteral("interaction")) || p.value("interaction").isMap(),
+                      "InvalidInput", "Typed sketch interaction required");
+                auto candidate = p.contains(QStringLiteral("interaction"))
+                                     ? sketch::interact(p.value("sketches").toArray(),
+                                                        p.value("interaction").toMap(),
+                                                        store->sketches(e.context.document))
+                                     : sketch::evaluate(p.value("sketches").toArray(),
+                                                        store->sketches(e.context.document), false);
                 QCborMap reply;
                 reply.insert(QStringLiteral("sketch_preview"), candidate.value("sketches"));
                 reply.insert(QStringLiteral("sketch_diagnostics"), candidate.value("diagnostics"));

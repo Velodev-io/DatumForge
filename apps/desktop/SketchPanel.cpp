@@ -136,6 +136,18 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
                     "Select / drag", "Trim / extend"});
     tool->setCurrentText("Select / drag");
     form->addRow("Tool", tool);
+    automaticRelations = new QCheckBox("Automatic relations");
+    automaticRelations->setObjectName("automaticRelations");
+    automaticRelations->setToolTip(
+        "Show unconfirmed relation guides after creating or moving geometry");
+    form->addRow(automaticRelations);
+    reviewInference = button("Review proposed relations", "reviewInference");
+    reviewInference->setEnabled(false);
+    connect(reviewInference, &QPushButton::clicked, this, &SketchPanel::inferSelection);
+    connect(automaticRelations, &QCheckBox::toggled, this, [this](bool enabled) {
+        if (!enabled)
+            clearInference();
+    });
     rectangleMethod = new QComboBox;
     rectangleMethod->setObjectName("sketchRectangleMethod");
     rectangleMethod->setAccessibleName("Rectangle method");
@@ -640,7 +652,12 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     connect(view, &SketchView::selected, this, &SketchPanel::selectEntity);
     connect(view, &SketchView::dragStarted, this, [this](QString, double x, double y) {
         if (editing) {
+            dragFeedback.clear();
+            clearInference();
             gestureBefore = current();
+            gestureAllBefore = sketch::encode(draft);
+            gesturePreview.clear();
+            gestureIsWorker = gestureFinishing = false;
             gestureError.clear();
             gestureOrigin = {x, y};
         }
@@ -648,43 +665,26 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     connect(view, &SketchView::dimensionEditRequested, this,
             [this](QString id) { openDimensionEditor(id); });
     connect(view, &SketchView::dragged, this, [this](QString id, double x, double y) {
-        if (!editing || !gestureBefore)
+        if (!editing || !gestureBefore || gestureFinishing)
             return;
-        try {
-            current() = sketch::dragEntity(*gestureBefore, id, gestureOrigin, {x, y});
-            gestureError.clear();
-            view->showSketch(current(), selectedId, true);
-            updateSelection();
-        } catch (const std::exception &e) {
-            gestureError = e.what();
-            context->setText(gestureError);
-        }
+        if (x == gestureOrigin.x && y == gestureOrigin.y)
+            return;
+        gestureIsWorker = true;
+        gesturePreview.clear();
+        auto interaction = fields({{"kind", "Drag"},
+                                   {"sketch", gestureBefore->id},
+                                   {"entity", id},
+                                   {"from", QCborArray{gestureOrigin.x, gestureOrigin.y}},
+                                   {"to", QCborArray{x, y}}});
+        client->projectCommand("PreviewSketches", fields({{"sketches", gestureAllBefore},
+                                                          {"interaction", interaction}}));
     });
-    connect(view, &SketchView::dragCanceled, this, [this] {
-        if (gestureBefore) {
-            current() = *gestureBefore;
-            gestureBefore.reset();
-            rebuild();
-        }
-    });
+    connect(view, &SketchView::dragCanceled, this, &SketchPanel::cancelGesture);
     connect(view, &SketchView::dragFinished, this, [this] {
-        if (!gestureBefore)
-            return;
-        auto before = std::move(*gestureBefore);
-        gestureBefore.reset();
-        if (!gestureError.isEmpty()) {
-            current() = std::move(before);
-            rebuild();
-            context->setText(gestureError);
-            gestureError.clear();
-            return;
-        }
-        bool changed = before.map() != current().map();
-        remember(std::move(before));
-        rebuild();
-        if (changed)
-            previewDraft();
+        gestureFinishing = gestureBefore.has_value();
+        finishGesture();
     });
+    connect(client, &Client::changed, this, &SketchPanel::finishGesture);
     connect(entities, &QListWidget::itemSelectionChanged, this, [this] {
         if (syncing)
             return;
@@ -717,6 +717,7 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
             return;
         }
         committing = true;
+        clearInference();
         client->projectCommand("SetSketches", fields({{"sketches", sketch::encode(draft)}}));
     });
     connect(cancel, &QPushButton::clicked, this, &SketchPanel::discard);
@@ -729,6 +730,14 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     connect(paneEscape, &QShortcut::activated, this, &SketchPanel::cancelInput);
     connect(client, &Client::sketchPreview, this, [this](QCborArray a) {
         if (editing && !dimensionEditing) {
+            if (inferencePending) {
+                inferenceReceived = a;
+                return;
+            }
+            if (gestureBefore && gestureIsWorker) {
+                gesturePreview = a;
+                return;
+            }
             draft = sketch::parse(a);
             rebuild();
         }
@@ -736,6 +745,30 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     connect(client, &Client::sketchDiagnosed, this, [this](QCborArray diagnostics) {
         if (!editing || draft.empty() || dimensionEditing)
             return;
+        if (inferencePending) {
+            completeInference(diagnostics);
+            return;
+        }
+        if (gestureBefore && gestureIsWorker) {
+            bool valid = !gesturePreview.empty();
+            QStringList messages;
+            for (auto item : diagnostics) {
+                auto diagnostic = item.toMap();
+                valid = valid && diagnostic.value("valid").toBool();
+                messages << diagnostic.value("status").toString() + " " +
+                                diagnostic.value("message").toString();
+            }
+            if (valid) {
+                draft = sketch::parse(gesturePreview);
+                gestureError.clear();
+                view->showSketch(current(), selectedId, true);
+                updateSelection();
+            } else {
+                gestureError = messages.join("; ");
+                context->setText("Last valid drag retained: " + gestureError);
+            }
+            return;
+        }
         for (auto item : diagnostics) {
             auto d = item.toMap();
             if (d.value("sketch_id").toString() != current().id)
@@ -782,13 +815,17 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
             committing = false;
         for (auto *b : {add, addConstraint, setDimension, removeConstraint, setName})
             b->setEnabled(editing && idle);
-        view->setEnabled(idle);
+        view->setEnabled(idle || (editing && gestureBefore && !gestureFinishing));
         updateRelations();
         updateSelection();
         cancel->setEnabled(editing && !committing);
         preview->setEnabled(editing && idle);
         accept->setEnabled(editing && idle);
-        if (client->state().phase == Phase::Failed)
+        if (editing && !gestureError.isEmpty())
+            context->setText("Last valid drag retained: " + gestureError);
+        else if (editing && idle && !dragFeedback.isEmpty())
+            context->setText(dragFeedback);
+        else if (client->state().phase == Phase::Failed)
             context->setText(client->state().message);
         else
             context->setText(editing ? sketches->currentText() + " · Editing"
@@ -852,7 +889,47 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     });
     setVisible(false);
 }
+void SketchPanel::cancelGesture() {
+    if (!gestureBefore)
+        return;
+    draft = sketch::parse(gestureAllBefore);
+    gestureBefore.reset();
+    gestureAllBefore.clear();
+    gesturePreview.clear();
+    gestureFinishing = gestureIsWorker = false;
+    gestureError.clear();
+    dragFeedback.clear();
+    client->discardSketchPreview();
+    rebuild();
+}
+void SketchPanel::finishGesture() {
+    if (!gestureFinishing || !gestureBefore || client->outstanding())
+        return;
+    auto before = *gestureBefore;
+    bool worker = gestureIsWorker;
+    auto error = gestureError;
+    if (!worker && !error.isEmpty())
+        draft = sketch::parse(gestureAllBefore);
+    gestureBefore.reset();
+    gestureAllBefore.clear();
+    gesturePreview.clear();
+    gestureFinishing = gestureIsWorker = false;
+    gestureError.clear();
+    bool changed = before.map() != current().map();
+    remember(std::move(before));
+    rebuild();
+    if (!error.isEmpty())
+        dragFeedback = "Last valid drag retained: " + error;
+    else if (worker && client->state().phase == Phase::PreviewReady)
+        dragFeedback =
+            "Constrained drag preview · driving constraints retained · Finish Sketch to commit";
+    if (!dragFeedback.isEmpty())
+        context->setText(dragFeedback);
+    if (changed && !worker)
+        previewDraft();
+}
 void SketchPanel::guard(std::function<void()> f) {
+    dragFeedback.clear();
     try {
         f();
     } catch (const std::exception &e) {
@@ -870,13 +947,24 @@ void SketchPanel::install(QCborMap d, bool idle) {
         ->setText("Numeric input" + (d.value("units").toString().isEmpty()
                                          ? QString()
                                          : " · " + d.value("units").toString()));
-    bool changed = document != d.value("id").toString() || revision != client->state().revision;
+    bool changed = document != d.value("id").toString() || revision != client->state().revision ||
+                   workerEpoch != client->state().epoch;
     if (changed) {
+        document = d.value("id").toString();
+        revision = client->state().revision;
+        workerEpoch = client->state().epoch;
+        gestureBefore.reset();
+        gestureAllBefore.clear();
+        gesturePreview.clear();
+        gestureFinishing = gestureIsWorker = false;
+        gestureError.clear();
+        dragFeedback.clear();
+        draftUndo.clear();
+        draftRedo.clear();
+        clearInference();
         clearLineEdit();
         view->cancelPointerInput();
         committing = false;
-        document = d.value("id").toString();
-        revision = client->state().revision;
         accepted = sketch::parse(d.value("sketches").toArray());
         draft = accepted;
         editing = false;
@@ -938,6 +1026,7 @@ void SketchPanel::begin() {
 void SketchPanel::discard() {
     if (!editing || committing)
         return;
+    clearInference();
     clearLineEdit();
     view->cancelPointerInput();
     pendingArcJoin.reset();
@@ -956,6 +1045,14 @@ void SketchPanel::discard() {
 void SketchPanel::cancelInput() {
     if (!editing || committing)
         return;
+    dragFeedback.clear();
+    clearInference();
+    if (gestureBefore) {
+        cancelGesture();
+        view->cancelPointerInput();
+        context->setText("Drag canceled · pregesture draft retained");
+        return;
+    }
     if (!lineEditBefore.empty()) {
         clearLineEdit();
         context->setText("Line edit preview canceled · draft retained");
@@ -1015,6 +1112,7 @@ void SketchPanel::updateToolFields() {
                      : "Add coordinate / next vertex");
 }
 void SketchPanel::rebuild() {
+    dragFeedback.clear();
     syncing = true;
     auto constraintId = constraints->currentItem()
                             ? constraints->currentItem()->data(Qt::UserRole).toString()
@@ -1183,6 +1281,7 @@ void SketchPanel::finishSplineInput() {
     rebuild();
 }
 void SketchPanel::previewDraft() {
+    clearInference();
     if (view->sizingCircle() || view->sizingArc()) {
         context->setText("Finish or cancel the circle/arc before solving");
         return;
@@ -1256,6 +1355,7 @@ void SketchPanel::setTool(QString name) {
 void SketchPanel::remember(sketch::Sketch before) {
     if (before.map() == current().map())
         return;
+    queueInference(before);
     clearLineEdit();
     if (draftUndo.size() >= 40)
         draftUndo.erase(draftUndo.begin());
@@ -1266,6 +1366,7 @@ void SketchPanel::remember(sketch::Sketch before) {
 void SketchPanel::undoDraftEdit() {
     if (!editing || draftUndo.empty() || client->outstanding() || committing)
         return;
+    clearInference();
     clearLineEdit();
     view->cancelPointerInput();
     pendingArcJoin.reset();
@@ -1284,6 +1385,7 @@ void SketchPanel::undoDraftEdit() {
 void SketchPanel::redoDraftEdit() {
     if (!editing || draftRedo.empty() || client->outstanding() || committing)
         return;
+    clearInference();
     clearLineEdit();
     view->cancelPointerInput();
     pendingArcJoin.reset();
@@ -1790,6 +1892,7 @@ void SketchPanel::deleteSelected() {
     auto before = current();
     current() = sketch::eraseEntity(before, selectedId);
     selectedId.clear();
+    relationSelectionOrder.clear();
     remember(std::move(before));
     rebuild();
 }

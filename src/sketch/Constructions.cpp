@@ -62,7 +62,9 @@ QStringList strings(QCborValue v, int count) {
     return out;
 }
 bool affected(const Constraint &c, const QSet<QString> &members) {
-    return members.contains(c.a) || members.contains(c.b) || members.contains(c.third);
+    return members.contains(c.a) || members.contains(c.b) || members.contains(c.third) ||
+           std::any_of(c.members.begin(), c.members.end(),
+                       [&](auto &member) { return members.contains(member); });
 }
 QSet<QString> members(const ConstructionGroup &g) {
     auto list = constructionMembers(g);

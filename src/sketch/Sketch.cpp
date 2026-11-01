@@ -109,6 +109,8 @@ QString constraintReason(const Sketch &s, QString kind, QString first, QString s
              s.entity(second).construction;
     if (kind == "Length")
         ok = a == "Line" && b.isEmpty();
+    if (kind == "PathLength")
+        ok = !a.isEmpty() && a != "Point" && b.isEmpty();
     if (kind == "Midpoint")
         ok = a == "Point" && b == "Line";
     if (kind == "Collinear")
@@ -135,8 +137,14 @@ QString constraintReason(const Sketch &s, QString kind, QString first, QString s
              first != second;
     if (kind == "Radius" || kind == "Diameter")
         ok = (a == "Circle" || a == "Arc") && b.isEmpty();
-    if (kind == "Sweep" || kind == "ArcLength")
+    if (kind == "ArcLength")
         ok = a == "Arc" && b.isEmpty();
+    if (kind == "StartAngle" || kind == "Sweep")
+        ok = (a == "Arc" || a == "EllipticalArc") && b.isEmpty();
+    if (kind == "MinorRadius")
+        ok = ellipseCurve(a) && b.isEmpty();
+    if (kind == "TrimStart" || kind == "TrimSpan")
+        ok = a == "Parabola" && b.isEmpty();
     if (kind == "SlotLength")
         ok = a == "Line" && b == "Arc";
     if (kind == "SlotGeometry")
@@ -327,8 +335,24 @@ void Sketch::validate() const {
                       e.sweep > 1e-8 && e.sweep < tau - 1e-8,
                   "InvalidGeometry", "Arc requires a positive sweep below 360 degrees");
     }
+    int pathEquations = 0;
     for (auto &c : constraints) {
         validateDimension(*this, c);
+        if (c.kind == "PathLength" && c.driving) {
+            ++pathEquations;
+            for (int i = 0; i < c.members.size() - (c.closed ? 0 : 1); ++i) {
+                int next = (i + 1) % c.members.size();
+                auto &a = entity(c.members[i]), &b = entity(c.members[next]);
+                if (a.id == b.id && (a.kind == "Circle" || a.kind == "Ellipse"))
+                    continue;
+                if (a.kind == "Line" && b.kind == "Line" &&
+                    (c.directions[i] ? a.a : a.b) == (c.directions[next] ? b.b : b.a))
+                    continue;
+                pathEquations += 2;
+            }
+            check(pathEquations <= 1024, "ResourceLimit",
+                  "At most 1024 expanded path equations; reduce path dimensions or members");
+        }
         domain::id(c.id);
         check(!ids.contains(c.id), "InvalidInput", "Duplicate constraint identity");
         ids.insert(c.id);
@@ -443,7 +467,8 @@ QCborMap Sketch::map() const {
                               {"expression", c.expression}});
         if (c.reference)
             record.insert(QStringLiteral("reference"), c.reference->map());
-        if (c.kind == "CurveTangent" || c.kind == "CenterlineDiameter")
+        if (c.kind == "CurveTangent" || c.kind == "CenterlineDiameter" ||
+            (c.reversed && (c.kind == "Length" || c.kind == "Distance")))
             record.insert(QStringLiteral("reversed"), c.reversed);
         if (!c.third.isEmpty())
             record.insert(QStringLiteral("third"), c.third);
@@ -453,18 +478,34 @@ QCborMap Sketch::map() const {
                 record.insert(QStringLiteral("placement"),
                               QCborArray{c.placement->x, c.placement->y});
         }
+        if (c.increment)
+            record.insert(QStringLiteral("increment"), *c.increment);
+        if (c.drawing)
+            record.insert(QStringLiteral("drawing"), true);
+        if (c.kind == "PathLength") {
+            QCborArray members, directions;
+            for (int i = 0; i < c.members.size(); ++i) {
+                members.append(c.members[i]);
+                directions.append(bool(c.directions[i]));
+            }
+            record.insert(QStringLiteral("members"), members);
+            record.insert(QStringLiteral("directions"), directions);
+            if (c.closed)
+                record.insert(QStringLiteral("closed"), true);
+        }
         cs.append(record);
     }
     QCborMap ns;
     for (auto i = names.begin(); i != names.end(); ++i)
         ns.insert(i.key(), i.value());
-    auto result = fields({{"version", associatedDimensionSemantics() ? 7
-                                      : dimensionSemantics()         ? 6
-                                      : !edits.empty()               ? 5
-                                      : primitiveSemantics()         ? 4
-                                      : !groups.empty()              ? 3
-                                      : extendedRelations()          ? 2
-                                                                     : 1},
+    auto result = fields({{"version", interactionSemantics()           ? 8
+                                      : associatedDimensionSemantics() ? 7
+                                      : dimensionSemantics()           ? 6
+                                      : !edits.empty()                 ? 5
+                                      : primitiveSemantics()           ? 4
+                                      : !groups.empty()                ? 3
+                                      : extendedRelations()            ? 2
+                                                                       : 1},
                           {"id", id},
                           {"name", name},
                           {"origin", vector(frame.origin)},
@@ -485,7 +526,7 @@ QCborMap Sketch::map() const {
 }
 Sketch Sketch::parse(const QCborMap &m) {
     auto version = wire::integer(m, "version");
-    check(version >= 1 && version <= 7, "IncompatibleSchema", "Unsupported sketch version");
+    check(version >= 1 && version <= 8, "IncompatibleSchema", "Unsupported sketch version");
     QSet<QString> keys{"version", "id",       "name",        "origin", "u",
                        "v",       "entities", "constraints", "names"};
     if (version >= 3)
@@ -589,12 +630,25 @@ Sketch Sketch::parse(const QCborMap &m) {
             keys.insert("reversed");
         if (version >= 7 && wire::text(p, "kind") == "CenterlineDiameter")
             keys.insert("reversed");
+        if (version >= 8 &&
+            (wire::text(p, "kind") == "Length" || wire::text(p, "kind") == "Distance") &&
+            p.contains(QStringLiteral("reversed")))
+            keys.insert("reversed");
         if (version >= 4 && wire::text(p, "kind") == "Pierce")
             keys.insert("reference");
         if (version >= 6 && dimensional(wire::text(p, "kind"))) {
             keys.insert("driving");
             if (p.contains(QStringLiteral("placement")))
                 keys.insert("placement");
+        }
+        if (version >= 8 && dimensional(wire::text(p, "kind")))
+            for (QString key : {"increment", "drawing"})
+                if (p.contains(key))
+                    keys.insert(key);
+        if (version >= 8 && wire::text(p, "kind") == "PathLength") {
+            keys.unite({"members", "directions"});
+            if (p.contains(QStringLiteral("closed")))
+                keys.insert("closed");
         }
         wire::keys(p, keys);
         s.constraints.push_back({wire::text(p, "id"), wire::text(p, "kind"), wire::text(p, "a"),
@@ -614,12 +668,36 @@ Sketch Sketch::parse(const QCborMap &m) {
                 s.constraints.back().placement = Vec2{a[0].toDouble(), a[1].toDouble()};
             }
         }
+        if (p.contains(QStringLiteral("increment")))
+            s.constraints.back().increment = number(p, "increment");
+        if (p.contains(QStringLiteral("drawing"))) {
+            check(p.value("drawing").isBool(), "InvalidInput", "Boolean drawing mark required");
+            s.constraints.back().drawing = p.value("drawing").toBool();
+        }
+        if (s.constraints.back().kind == "PathLength") {
+            check(p.value("members").isArray() && p.value("directions").isArray(), "InvalidInput",
+                  "Path members and directions required");
+            for (auto value : p.value("members").toArray()) {
+                check(value.isString(), "InvalidInput", "Path member identity required");
+                s.constraints.back().members.append(domain::id(value.toString()));
+            }
+            for (auto value : p.value("directions").toArray()) {
+                check(value.isBool(), "InvalidInput", "Boolean path directions required");
+                s.constraints.back().directions.push_back(value.toBool());
+            }
+            if (p.contains(QStringLiteral("closed"))) {
+                check(p.value("closed").isBool(), "InvalidInput",
+                      "Boolean closed-path association required");
+                s.constraints.back().closed = p.value("closed").toBool();
+            }
+        }
         if (s.constraints.back().kind == "Pierce") {
             check(p.value("reference").isMap(), "InvalidInput", "Pierce reference required");
             s.constraints.back().reference = CurveReference::parse(p.value("reference").toMap());
         }
         if (s.constraints.back().kind == "CurveTangent" ||
-            s.constraints.back().kind == "CenterlineDiameter") {
+            s.constraints.back().kind == "CenterlineDiameter" ||
+            p.contains(QStringLiteral("reversed"))) {
             check(p.value("reversed").isBool(), "InvalidInput",
                   "Constraint orientation flag required");
             s.constraints.back().reversed = p.value("reversed").toBool();
@@ -650,6 +728,8 @@ Sketch Sketch::parse(const QCborMap &m) {
         s.edits = m.value("edits").toArray();
     }
     s.validate();
+    check(version >= 8 || !s.interactionSemantics(), "IncompatibleSchema",
+          "Sketch interaction semantics require version 8");
     check(version >= 7 || !s.associatedDimensionSemantics(), "IncompatibleSchema",
           "Associated dimensions require sketch version 7");
     check(version >= 6 || !s.dimensionSemantics(), "IncompatibleSchema",

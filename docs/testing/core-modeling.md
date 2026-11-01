@@ -4,7 +4,7 @@
 later drawing-mode fix and its regression evidence. It adds no CM2 feature or
 milestone acceptance claim.
 
-Updated: 29 October 2026. CM0–CM9 authorized on 22 October, after Module 10 and before Module 11.
+Updated: 1 November 2026. CM0–CM9 authorized on 22 October, after Module 10 and before Module 11.
 Original work branch: `feature/core-modeling-expansion`; local review commits were
 authorized on 25 October and are stacked through `review/core-modeling-integration`.
 No merge/push. Preserve all earlier
@@ -31,9 +31,11 @@ remain CM4 dependencies.
 CM1–CM9 remain incomplete until their production, persistence,
 native and verification tasks have actual evidence.
 
-CM3 now has a production driving/reference/component-dimension slice with
-available-Mac verification. See [CM3 scope below](#cm3--drivingreference-and-component-dimension-slice);
-the remaining dimensions, inference, Fully Define and constrained dragging stay open.
+CM3 now implements the approved dimension and interaction interfaces; the
+[completion record](core-modeling-cm3-completion.md) distinguishes individual
+passing behavior tests from the final enabled-suite/static/native verification
+and full acceptance. Historical CM3 slice evidence below retains its original
+scope.
 
 The old source/specification/module reports retain their original scope. The
 extension does not certify Windows/Linux, physical device/assistive technology,
@@ -695,3 +697,19 @@ failure probe disabled; development configure/build; pinned formatting; Clang
 analysis of all 16 changed C++ translation units; architecture, research isolation,
 coverage and specifications. The sandbox attempt was interrupted after local IPC
 denials; the complete passing suite ran with host permissions on identical sources.
+
+
+### 1 November — CM3 completion verification
+
+The approved current-planar CM3 implementation is complete: identity-safe
+reference editing, reverse/increment/drawing metadata controls, grouped
+ordinates, true path length, worker-constrained dragging, confirmed inference
+and Fully Define All/Selected. The [completion record](core-modeling-cm3-completion.md)
+retains every red/green cycle and failed native attempt. Its full-suite baseline
+passed 76 enabled tests and static/structural checks; an affected-test follow-up
+passed after the test-only repaint correction. The complete native corpus,
+identity and mm/in dimensions passed at 100/125/150/175/200%, with workspace and
+arc checks at both endpoints. Production inputs match the full-suite baseline;
+final follow-up source integrity passed. Full course/hardware/platform/installed/
+resource acceptance stays Blocked, separately from implementation and available-Mac
+verification. Preserve 6.1b/6.4c/7.4c; stop before Module 11. No merge or push.

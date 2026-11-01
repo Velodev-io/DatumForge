@@ -176,8 +176,10 @@ QCborMap previewLineEdit(const Sketch &source, const QCborMap &request) {
         affected.insert(e.b);
     QCborArray disclosure, removed;
     std::erase_if(candidate.constraints, [&](const Constraint &c) {
-        bool touches =
-            affected.contains(c.a) || affected.contains(c.b) || affected.contains(c.third);
+        bool touches = affected.contains(c.a) || affected.contains(c.b) ||
+                       affected.contains(c.third) ||
+                       std::any_of(c.members.begin(), c.members.end(),
+                                   [&](auto &member) { return affected.contains(member); });
         bool invariant = intervals.size() == 1 && c.a == id && c.b.isEmpty() && c.third.isEmpty() &&
                          (c.kind == "Horizontal" || c.kind == "Vertical");
         if (!touches || invariant)

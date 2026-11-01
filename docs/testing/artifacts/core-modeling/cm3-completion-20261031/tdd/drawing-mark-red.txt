@@ -1,0 +1,35 @@
+********* Start testing of CompletionContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : CompletionContracts::initTestCase()
+QWARN  : CompletionContracts::drawingMark() QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::drawingMark() qt.qpa.fonts: Populating font family aliases took 112 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+FAIL!  : CompletionContracts::drawingMark() 'mark' returned FALSE. (Dimension drawing-import intent must be explicitly editable)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(123)]
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+FAIL!  : CompletionContracts::drawingMark() 'result.constraints[0].drawing' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(132)]
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::drawingMark() This plugin does not support propagateSizeHints()
+PASS   : CompletionContracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 649ms
+********* Finished testing of CompletionContracts *********

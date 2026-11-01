@@ -1,0 +1,29 @@
+********* Start testing of DimensionContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : DimensionContracts::initTestCase()
+PASS   : DimensionContracts::identity()
+QINFO  : DimensionContracts::native() Dimension workflow "Length" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Distance" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "HorizontalDistance" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "VerticalDistance" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Angle" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Radius" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Diameter" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Sweep" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "CenterlineDiameter" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "ArcLength" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "HorizontalOrdinate" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "VerticalOrdinate" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "CenterlineDiameter" "mm" point diameter true
+QINFO  : DimensionContracts::native() Dimension workflow "Angle" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Length" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Distance" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "HorizontalDistance" "in" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "VerticalDistance" "in" point diameter false
+FAIL!  : DimensionContracts::native() 'wait([&] { return !panel->canvas()->dimensionLabelRect(dimensionId).isEmpty(); })' returned FALSE. (Dimension label not painted; canvas visible=1 enabled=1, dimension=222a2599-989c-441a-9a48-693036b888fc)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp(264)]
+FAIL!  : DimensionContracts::native() '!reference.driving && reference.expression.isEmpty()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp(363)]
+PASS   : DimensionContracts::cleanupTestCase()
+Totals: 3 passed, 1 failed, 0 skipped, 0 blacklisted, 27475ms
+********* Finished testing of DimensionContracts *********

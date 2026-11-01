@@ -1,0 +1,214 @@
+{
+  "status": "Pass: development-build scope; blocked acceptance remains separate",
+  "scope": "CM3 schema-8 dimensions, true paths, ordinates, constrained drag, confirmed inference and Fully Define",
+  "host": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "steps": [
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07731395898736082
+    },
+    {
+      "name": "affected-tests",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "-R",
+        "^cm3.dimension_",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 10.593085958011216
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.113418291992275
+    },
+    {
+      "name": "affected-source-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T125243.188910Z/analysis-commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 6.641089207987534
+    },
+    {
+      "name": "coverage",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_core_modeling.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07820754198473878
+    },
+    {
+      "name": "specifications",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "docs/scripts/check_specs.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07272391699370928
+    },
+    {
+      "name": "completion-native-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_completion_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 27.58087529198383
+    },
+    {
+      "name": "dimensions-native-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "identity",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 27.789210207993165
+    },
+    {
+      "name": "workspace-native-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_workspace",
+        "nativeWorkspace"
+      ],
+      "exit_code": 0,
+      "seconds": 1.9956904590071645
+    },
+    {
+      "name": "arcs-native-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "exit_code": 0,
+      "seconds": 4.894413333007833
+    },
+    {
+      "name": "completion-native-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_completion_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 26.91463204199681
+    },
+    {
+      "name": "dimensions-native-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "identity",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 28.972713540977566
+    },
+    {
+      "name": "completion-native-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_completion_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 27.92719233300886
+    },
+    {
+      "name": "dimensions-native-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "identity",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 30.420670249994146
+    },
+    {
+      "name": "completion-native-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_completion_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 29.5183708340046
+    },
+    {
+      "name": "dimensions-native-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "identity",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 32.28636583298794
+    },
+    {
+      "name": "completion-native-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_completion_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 31.279854124994017
+    },
+    {
+      "name": "dimensions-native-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "identity",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 34.419482707977295
+    },
+    {
+      "name": "workspace-native-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_workspace",
+        "nativeWorkspace"
+      ],
+      "exit_code": 0,
+      "seconds": 2.3729896250006277
+    },
+    {
+      "name": "arcs-native-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "exit_code": 0,
+      "seconds": 6.185468041978311
+    }
+  ],
+  "module_11_started": false,
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "blocked_acceptance": [
+    "Physical input devices and assistive technologies",
+    "Installed/signed builds",
+    "Windows/Linux",
+    "Full resource and whole-course acceptance corpus"
+  ],
+  "physical_ram_bytes": 8589934592,
+  "baseline": "docs/testing/artifacts/core-modeling/cm3-completion-20261031/verification/20261101T124037.301140Z",
+  "baseline_validation": "76 enabled tests and all static/structural checks passed; only the native/widget dimension test repaint changed afterward",
+  "changed_since_baseline": [
+    "tests/core_modeling/dimension_contracts.cpp"
+  ],
+  "source_unchanged": true
+}

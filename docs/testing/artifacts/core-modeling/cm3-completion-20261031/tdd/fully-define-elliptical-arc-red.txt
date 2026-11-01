@@ -1,0 +1,10 @@
+********* Start testing of Completion *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Completion::initTestCase()
+FAIL!  : Completion::fullyDefineEllipticalArc() Compared values are not the same
+   Actual   (diagnostic.value("freedom").toInteger()): 2
+   Expected (qint64(0))                              : 0
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(28)]
+PASS   : Completion::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 10ms
+********* Finished testing of Completion *********
