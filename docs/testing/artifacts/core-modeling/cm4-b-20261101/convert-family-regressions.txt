@@ -1,0 +1,5 @@
+Command: ['build/macos-debug/cm4_support_convert']
+Ellipse volume: 3.1415926535406057e-06, analytic: 3.1415926535897938e-06
+PASS
+
+Exit: 0

@@ -17,7 +17,8 @@ QString literal(double value, QString key) {
     return QString::number(value, 'g', 17) + (key == "angle" ? " rad" : key == "count" ? "" : " m");
 }
 } // namespace
-Plan::Plan(QCborArray sketches, QCborArray definitions) {
+Plan::Plan(QCborArray sketches, QCborArray definitions,
+           const QMap<QString, QMap<QString, QString>> &transientMembers) {
     auto all = features::parse(definitions);
     QMap<QString, int> index, owners;
     QMap<QString, QByteArray> sketchHashes;
@@ -88,6 +89,28 @@ Plan::Plan(QCborArray sketches, QCborArray definitions) {
               "Profile sketch is missing");
     }
     auto graphNodes = sketch::dependencyNodes(profiles);
+    check(transientMembers.size() <= 32, "ResourceLimit",
+          "Transient profile-member admission exceeded");
+    for (auto it = transientMembers.cbegin(); it != transientMembers.cend(); ++it) {
+        auto node = std::find_if(graphNodes.begin(), graphNodes.end(),
+                                 [&](auto &n) { return n.id == it.key(); });
+        check(node != graphNodes.end(), "ReferenceMissing", "Transient profile is missing");
+        check(it->size() <= 256, "ResourceLimit", "Transient member admission exceeded");
+        QCborMap declared;
+        for (auto member = it->cbegin(); member != it->cend(); ++member) {
+            domain::id(member.key());
+            check((member.value() == "Point" || member.value() == "Curve") &&
+                      !node->members.contains(member.key()),
+                  "InvalidInput", "Transient member role/identity collision");
+            node->members.insert(member.key(), member.value());
+            declared.insert(member.key(), member.value());
+        }
+        sketchHashes[it.key()] = QCryptographicHash::hash(
+            QCborValue(fields({{"definition", sketchHashes.value(it.key())},
+                               {"declared-members", declared}}))
+                .toCbor(QCborValue::SortKeysInMaps),
+            QCryptographicHash::Sha256);
+    }
     QStringList history;
     for (size_t i = 0; i < all.size(); ++i) {
         const auto &f = all[i];

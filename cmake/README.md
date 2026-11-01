@@ -225,3 +225,12 @@ worker/IPC entries require local socket permission. The
 [CM4.a record](../docs/testing/core-modeling-cm4-a.md) includes changed-source
 analysis and ownership checks. No exact datum construction, native controls,
 CM4.b–e workflow or physical/platform acceptance is inferred from these tests.
+
+CM4.b engine verification uses the same full build and CTest preset. Focused
+checks: `ctest --preset macos-debug -R '^cm4\.support_' --output-on-failure`.
+The six entries cover semantic contracts, exact datum/reference geometry,
+projection/volume invariants, mixed history, real project-worker preview and
+isolated client/worker lifecycle. Transport tests require local socket access;
+storage roots are marked disposable. [CM4.b evidence](../docs/testing/core-modeling-cm4-b.md)
+records the scoped result; this adds no persisted support definitions or native
+datum UI acceptance.

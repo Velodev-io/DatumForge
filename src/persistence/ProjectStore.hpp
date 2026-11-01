@@ -69,6 +69,8 @@ class ProjectStore {
     kernel::Part evaluatePart(QString document, std::optional<QCborArray> candidate = std::nullopt,
                               bool allowFailure = false) const;
     QCborMap referenceCandidates(QString document, QString feature, QString token) const;
+    QCborMap previewSupports(QString document, const QCborMap &definition,
+                             const exchange::Control &control = {}) const;
     QCborMap cacheStatistics() const {
         return resultCache.statistics();
     }

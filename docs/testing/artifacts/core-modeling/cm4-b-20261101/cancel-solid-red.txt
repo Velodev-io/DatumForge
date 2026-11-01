@@ -1,0 +1,13 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 68: cm4.support_transport
+1/1 Test #68: cm4.support_transport ............***Failed   13.49 sec
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/support_contracts.cpp:108: wait([&] { return !client.outstanding(); })
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =  13.50 sec
+
+The following tests FAILED:
+	 68 - cm4.support_transport (Failed)
+Errors while running CTest

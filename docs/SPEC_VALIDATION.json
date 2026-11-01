@@ -1,14 +1,14 @@
 {
   "scope": "Documentation structure only; no product acceptance tests executed",
-  "checked_at_utc": "2026-11-01T15:12:01.615050+00:00",
+  "checked_at_utc": "2026-11-01T16:24:58.508089+00:00",
   "status": "pass",
   "product_implementation": "Modules 1-10 scoped implementation on the available Mac; CM0-CM9 authorized and incomplete, with selected CM1 primitives/relations, CM2 straight-line editing and CM3 dimension slices; full acceptance remains Blocked",
   "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
   "documents": {
     "README.md": {
-      "sha256": "e045e564d191b4af89cd97cd7aea0faae85846b54fa063fc159fa271460adc7b",
-      "lines": 89,
-      "words": 1367
+      "sha256": "73b5a62a875e0429f2b7b8c650e701c3e36e6c81233e3e326f95bd84c7b591b5",
+      "lines": 94,
+      "words": 1399
     },
     "SRS.md": {
       "sha256": "4f678592b374aace92caf5d3b52bf74d550ffefee71369471f3b6efaffcb3efd",
@@ -16,14 +16,14 @@
       "words": 3229
     },
     "SDD.md": {
-      "sha256": "aea35ed7895072bf4b374c6a0e2e291423ccb4066b8227ef5e028a2483c093f8",
-      "lines": 359,
-      "words": 4637
+      "sha256": "5c688aef49e010c4ffaa3c60520f29701b0d41e3117799db2b90717f08015208",
+      "lines": 368,
+      "words": 4701
     },
     "TECH_SPEC.md": {
-      "sha256": "6836cb01e160cee46c8d4722382bea755d3cef6ebe2e3874dfb282a15692c52d",
-      "lines": 679,
-      "words": 7972
+      "sha256": "c68d39a28021b96646804f5ab6ed2d74a76dc7f4779bd195d0960face330f3ea",
+      "lines": 687,
+      "words": 8028
     },
     "STEP_ZERO.md": {
       "sha256": "6167d9864b36d9d5e3d56763b02400d18ac0219859a9c8a21174fe0ed84b9ae2",
@@ -31,9 +31,9 @@
       "words": 1950
     },
     "TRACEABILITY.md": {
-      "sha256": "039ab4a22537fc2e1d81c33bcf74a91ae812d4c222482749cda96a836aad8fa1",
-      "lines": 144,
-      "words": 1756
+      "sha256": "8f9d79ddaee729614cf2093a77748524651675a91570d7c2f6ce8b731ad48292",
+      "lines": 150,
+      "words": 1786
     },
     "REFERENCES.md": {
       "sha256": "9df2410a2d7dec2b39308e4058d1bcecf5ec65794bb693c8455b98230bc7f5bc",
@@ -41,9 +41,9 @@
       "words": 550
     },
     "CORE_MODELING.md": {
-      "sha256": "46ddd7899969507b1955915662cd17a019c14c2e1322e9903ea1714d6da0ed11",
+      "sha256": "6280cde0a4810a1c72648258aa9c97dae45f7d401cc343294075676b00bf43f2",
       "lines": 154,
-      "words": 1486
+      "words": 1505
     }
   },
   "requirements": 56,
@@ -52,6 +52,6 @@
   "unchecked_engineering_tasks": 39,
   "completed_engineering_tasks": 120,
   "core_modeling_tasks": 50,
-  "completed_core_modeling_tasks": 4,
+  "completed_core_modeling_tasks": 5,
   "errors": []
 }

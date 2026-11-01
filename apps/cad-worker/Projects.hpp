@@ -68,6 +68,7 @@ class Projects {
                            "SetSketches",
                            "PreviewSketches",
                            "PreviewSketchEdit",
+                           "PreviewModelSupports",
                            "SetFeatures",
                            "PreviewHistory",
                            "CommitHistory",
@@ -195,6 +196,17 @@ class Projects {
                              (e.command == "SaveAs" &&
                               store->outcome(e.operation).value("durable").toBool())),
                   "StaleSession", "The project session changed");
+            if (e.command == "PreviewModelSupports") {
+                wire::keys(p, {"model"});
+                check(e.revision == store->revision(), "StaleRevision",
+                      "Project changed before model support preview");
+                check(p.value("model").isMap(), "InvalidInput",
+                      "Typed model support definition required");
+                return sketch::fields(
+                    {{"model_support_preview",
+                      store->previewSupports(e.context.document, p.value("model").toMap(),
+                                             control)}});
+            }
             if (e.command == "PreviewDrawing" || e.command == "DisplayDrawing" ||
                 e.command == "DrawingAnchors" || e.command == "ExportDrawing") {
                 check(e.revision == store->revision(), "StaleRevision", "Drawing revision changed");

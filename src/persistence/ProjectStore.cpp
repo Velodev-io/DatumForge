@@ -2,6 +2,7 @@
 #include "drawing/Paint.hpp"
 #include "evaluation/Plan.hpp"
 #include "geometry/occt/Part.hpp"
+#include "geometry/occt/Supports.hpp"
 #include "sketch/Solver.hpp"
 #include <BRep_Builder.hxx>
 #include <QDateTime>
@@ -801,6 +802,22 @@ QCborMap ProjectStore::referenceCandidates(QString document, QString ownerId, QS
     result.insert(QStringLiteral("affected"),
                   QCborArray::fromStringList(plan.descendants.value(ownerId)));
     return result;
+}
+QCborMap ProjectStore::previewSupports(QString document, const QCborMap &definition,
+                                       const exchange::Control &control) const {
+    check(db &&
+              db->scalar("SELECT type FROM documents WHERE id=?", {document}).toString() == "Part",
+          "UnsupportedOperation", "Model support preview requires a Part document");
+    auto model = model::SupportDefinition::parse(definition);
+    check(model.document == "Self" || model.document == document, "StaleSession",
+          "Model support document changed");
+    auto result = geometry::evaluateSupports(
+        model,
+        [&](const QCborArray &sketches, const QCborArray &features) {
+            return buildPart(*db, sketches, features, &resultCache);
+        },
+        control);
+    return result.map(revision());
 }
 QCborMap ProjectStore::outcome(QString op) const {
     domain::id(op);

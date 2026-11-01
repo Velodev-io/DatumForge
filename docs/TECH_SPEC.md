@@ -677,3 +677,11 @@ cycle/history validation shared by feature planning and Pierce. Shared-profile
 gathering includes source-sketch closure, preserving existing cross-Part profiles.
 It adds no persisted datum/support schema or functioning datum controls; the
 remaining exact/persistence/native CM4 tasks stay open. [Evidence](testing/core-modeling-cm4-a.md).
+
+CM4.b adds [engine contracts](decisions/core-modeling-cm4-supports.md) for principal
+and derived planes/axes, face/datum attachments, exact Convert Entities and
+same-Part external sketch references, including rotate/scale construction.
+Versioned `PreviewModelSupports` is worker-owned and read-only; it preserves
+revision/context/epoch/generation fences and one-running/one-pending coalescing.
+No native datum tool or durable support collection is inferred. [CM4.b evidence](testing/core-modeling-cm4-b.md)
+separates exact engine verification from CM4.c–e and full acceptance.

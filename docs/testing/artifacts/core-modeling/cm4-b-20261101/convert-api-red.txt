@@ -1,0 +1,21 @@
+Command: ['cmake', '--build', '--preset', 'macos-debug', '--target', 'cm4_support_convert']
+[0/1] Re-running CMake...
+-- Configuring done (0.5s)
+-- Generating done (0.2s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/10] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/10] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/10] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/10] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[5/10] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[6/10] Building CXX object CMakeFiles/cm4_support_convert.dir/tests/core_modeling/support_convert.cpp.o
+FAILED: [code=1] CMakeFiles/cm4_support_convert.dir/tests/core_modeling/support_convert.cpp.o 
+/usr/bin/c++ -DCAD_SOURCE_ROOT="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/cm4_support_convert.dir/tests/core_modeling/support_convert.cpp.o -MF CMakeFiles/cm4_support_convert.dir/tests/core_modeling/support_convert.cpp.o.d -o CMakeFiles/cm4_support_convert.dir/tests/core_modeling/support_convert.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/support_convert.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/support_convert.cpp:2:10: fatal error: 'geometry/occt/Convert.hpp' file not found
+    2 | #include "geometry/occt/Convert.hpp"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+[7/10] Linking CXX static library libcad_planegcs.a
+ninja: build stopped: subcommand failed.
+
+Exit: 1

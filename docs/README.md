@@ -87,3 +87,8 @@ On 1 November the user authorized committing and pushing each successfully
 verified module/task on its review branch. This supersedes the historical
 no-push restrictions above; review before merge and all scope/acceptance gates
 remain in effect. The standing workflow is recorded in `AGENTS.md`.
+
+CM4.b adds the exact datum/associative support engine and read-only worker
+previews: [implementation/evidence](testing/core-modeling-cm4-b.md). Durable
+support definitions and topology evolution/repair remain CM4.c; native datum
+controls/navigation remain CM4.d. Engine previews do not close those gates.

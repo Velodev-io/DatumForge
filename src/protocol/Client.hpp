@@ -124,6 +124,7 @@ class Client : public QObject {
     void projectInspection(QCborMap inspection);
     void projectChanged();
     void sketchPreview(QCborArray sketches);
+    void modelSupportsPreview(QCborMap result);
     void sketchEditPreview(QCborArray sketches, QCborArray affectedConstraints);
     void partResult(QCborMap result);
     void referenceResolution(QCborMap result);

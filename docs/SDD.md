@@ -348,6 +348,15 @@ history violations. Source-sketch hashes invalidate consuming feature results.
 Exact datum/support evaluation, durable support collections and multi-collection
 ModelEdit remain CM4.b–e/shared follow-on work. [Scoped evidence](testing/core-modeling-cm4-a.md).
 
+CM4.b implements [exact transient support evaluation](decisions/core-modeling-cm4-supports.md):
+typed datum/attachment/conversion definitions feed the mixed graph, then the sole
+worker resolves exact feature-stage topology, evaluates frames, projects exact
+rational curves and rebuilds feature prefixes. `PreviewModelSupports` publishes
+bounded semantic results without authoritative writes. Generated-member
+declarations are checked against recomputation; missing/ambiguous references fail.
+CM4.c owns durable support schemas and evolution/repair; CM4.d owns native UI.
+[Engine evidence](testing/core-modeling-cm4-b.md) retains numerical/lifecycle limits.
+
 The [CM1 schema-4 continuation](decisions/core-modeling-cm1-primitives.md) keeps
 rational/conic control definitions and Slot member identities in the semantic
 model. A worker-only exact-curve adapter is shared by profile construction and

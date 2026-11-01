@@ -1866,13 +1866,23 @@
     "full_acceptance_status": "Blocked: CM4.b-e exact/native workflows and unrun platform/device/installed/resource acceptance"
   },
   "CM4.b": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM4.b exact datum/support/conversion engine and read-only worker preview, verified on available Mac development build. 85 enabled CTests, formatting, 15 changed-source Clang analyses and structural checks passed. No CM4.c-e durable/native/full acceptance claimed.",
     "evidence": [
       "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/decisions/core-modeling-cm4-supports.md",
+      "docs/testing/core-modeling-cm4-b.md",
+      "tests/core_modeling/support_model.cpp",
+      "tests/core_modeling/support_geometry.cpp",
+      "tests/core_modeling/support_convert.cpp",
+      "tests/core_modeling/support_engine.cpp",
+      "tests/core_modeling/support_contracts.cpp",
+      "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+    ],
+    "implementation_status": "Pass: exact engine and read-only worker/client preview",
+    "development_verification_status": "Pass: 85 enabled CTests and static/structural/source checks",
+    "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+    "full_acceptance_status": "Blocked: CM4.c-e, other-platform/device/installed/resource acceptance"
   },
   "CM4.c": {
     "status": "Not run",

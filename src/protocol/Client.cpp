@@ -189,7 +189,7 @@ void Client::enqueue(wire::Envelope e) {
         return;
     }
     if (e.command == "PreviewReference" || e.command == "PreviewSketchEdit" ||
-        e.command == "PreviewSketches" ||
+        e.command == "PreviewSketches" || e.command == "PreviewModelSupports" ||
         (e.command == "PreviewFeatures" || e.command == "PreviewHistory" ||
          (e.command == "ReferenceCandidates" || e.command == "PreviewAssembly" ||
           e.command == "DisplayAssembly")))
@@ -225,7 +225,8 @@ void Client::pump() {
     if (e.command == "ImportGeometry" || e.command == "ExportGeometry" ||
         e.command == "PortableCopy" || e.command == "ExportDrawing" ||
         QStringList{"SetFeatures", "CommitHistory", "SetAssembly", "SetDrawing", "UpdateDrawing",
-                    "DisplayDrawing", "PreviewDrawing", "DisplayAssembly", "PreviewAssembly"}
+                    "DisplayDrawing", "PreviewDrawing", "DisplayAssembly", "PreviewAssembly",
+                    "PreviewModelSupports"}
             .contains(e.command))
         pending[e.request].deadline = clock.elapsed() + 120000;
     if (!QStringList{"QueryOperation", "GrantFile", "RecoverProject", "ListRecoveries",
@@ -398,9 +399,13 @@ void Client::receive(const QCborMap &m) {
                                  "PreviewFeatures",   "DisplayPart",         "MeasurePart",
                                  "PreviewHistory",    "ReferenceCandidates", "PreviewAssembly",
                                  "DisplayAssembly",   "DisplayDrawing",      "PreviewDrawing",
-                                 "PreviewSketchEdit", "PreviewSketches"}
+                                 "PreviewSketchEdit", "PreviewSketches",     "PreviewModelSupports"}
                          .contains(e.command);
     if ((reference && !visibleResult(projection, e, revision)) || e.epoch != projection.epoch) {
+        // An obsolete heavy preview still owns the worker until its terminal
+        // reply. Retiring it on Progress would admit another computation early.
+        if (e.command == "PreviewModelSupports" && m.value("status").toString() == "Progress")
+            return;
         pending.erase(found);
         transfers.clear();
         // Retiring a canceled/stale request changes the idle state even though
@@ -429,6 +434,7 @@ void Client::receive(const QCborMap &m) {
         pending.erase(found);
         projection.job = "Cancellation requested; waiting for the worker outcome";
         emit changed();
+        pump();
         return;
     }
     if (e.command == "CancelJob" && status == "Failed" &&
@@ -561,6 +567,35 @@ void Client::receive(const QCborMap &m) {
         projection.phase = Phase::Ready;
         projection.job = "Exact measurement ready";
         emit partResult(data);
+        emit changed();
+        pump();
+        return;
+    }
+    if (e.command == "PreviewModelSupports") {
+        wire::keys(data, {"model_support_preview"});
+        wire::require(data.value("model_support_preview").isMap(), "model support preview map");
+        auto result = data.value("model_support_preview").toMap();
+        wire::keys(result, {"version", "sketches", "datums", "conversions", "evaluation_order",
+                            "part_empty", "measurement"});
+        wire::require(wire::integer(result, "version") == 1 &&
+                          result.value("part_empty").isBool() &&
+                          result.value("measurement").isMap(),
+                      "typed model support preview fields");
+        for (auto field : {"sketches", "datums", "conversions", "evaluation_order"})
+            wire::require(result.value(QString::fromLatin1(field)).isArray(),
+                          "model support result collection");
+        wire::require(result.value("sketches").toArray().size() <= 16 &&
+                          result.value("datums").toArray().size() <= 132 &&
+                          result.value("conversions").toArray().size() <= 32 &&
+                          result.value("evaluation_order").toArray().size() <= 132 &&
+                          wire::integer(result.value("measurement").toMap(), "revision") ==
+                              revision,
+                      "model support preview bounds/revision");
+        pending.erase(found);
+        projection.phase = Phase::PreviewReady;
+        projection.job = "Model support preview · not committed";
+        projection.message.clear();
+        emit modelSupportsPreview(result);
         emit changed();
         pump();
         return;
@@ -860,6 +895,11 @@ void Client::displayPart() {
 void Client::cancelPartPreview() {
     ++projection.generation;
     preview.reset();
+    bool modelPending = false;
+    for (const auto &entry : pending)
+        modelPending = modelPending || entry.request.command == "PreviewModelSupports";
+    if (modelPending)
+        cancelExchange();
     projection.phase = Phase::Ready;
     projection.message.clear();
     bool hasFeatures = false;
@@ -878,15 +918,19 @@ void Client::cancelPartPreview() {
 }
 void Client::projectCommand(QString command, QCborMap payload) {
     bool sketchPreview = command == "PreviewSketchEdit" || command == "PreviewSketches";
-    if (sketchPreview && alive && projection.projectOpen) {
+    bool supportPreview = command == "PreviewModelSupports";
+    if ((sketchPreview || supportPreview) && alive && projection.projectOpen) {
         // Permit one running and one replaceable pending sketch preview, while
         // preserving serialization with commits, file operations and other jobs.
         bool busy = !ordinary.empty();
         for (const auto &entry : pending)
-            busy = busy || (entry.request.command != "PreviewSketchEdit" &&
-                            entry.request.command != "PreviewSketches");
+            busy = busy || (supportPreview ? entry.request.command != "PreviewModelSupports"
+                                           : (entry.request.command != "PreviewSketchEdit" &&
+                                              entry.request.command != "PreviewSketches"));
         if (busy) {
-            projection.message = "Wait for the active operation before previewing a sketch";
+            projection.message =
+                supportPreview ? "Wait for the active operation before previewing model supports"
+                               : "Wait for the active operation before previewing a sketch";
             emit changed();
             return;
         }
@@ -895,7 +939,8 @@ void Client::projectCommand(QString command, QCborMap payload) {
     projection.job = "Running " + command;
     if (command == "PreviewFeatures" || command == "PreviewHistory" ||
         command == "PreviewAssembly" || command == "PreviewDrawing" ||
-        command == "PreviewSketchEdit" || command == "PreviewSketches") {
+        command == "PreviewSketchEdit" || command == "PreviewSketches" ||
+        command == "PreviewModelSupports") {
         ++projection.generation;
         projection.phase = Phase::PreviewPending;
     }
@@ -1042,7 +1087,7 @@ void Client::cancelExchange() {
             QStringList{"SetSketches", "SetFeatures", "CommitHistory", "ResolveReference",
                         "SetAssembly", "PreviewAssembly", "DisplayAssembly", "SetDrawing",
                         "UpdateDrawing", "PreviewDrawing", "DisplayDrawing", "ExportDrawing",
-                        "Undo", "Redo"}
+                        "Undo", "Redo", "PreviewModelSupports"}
                 .contains(value.request.command)) {
             auto e = request("CancelJob",
                              QCborMap{{QStringLiteral("operation"), value.request.operation}});

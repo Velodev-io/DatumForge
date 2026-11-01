@@ -1,0 +1,188 @@
+Command: ['cmake', '--build', '--preset', 'macos-debug']
+[1/167] Automatic MOC for target cad_client
+[2/166] Building CXX object CMakeFiles/cad_support_model.dir/src/model/Supports.cpp.o
+[3/166] Linking CXX static library libcad_support_model.a
+[4/166] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[5/166] Linking CXX static library libcad_client.a
+[6/166] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Datums.cpp.o
+[7/166] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/SupportReferences.cpp.o
+[8/166] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Convert.cpp.o
+[9/166] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Supports.cpp.o
+[10/166] Linking CXX static library libcad_support_geometry.a
+[11/166] Automatic MOC for target cad_desktop_ui
+[12/166] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[13/166] Linking CXX static library libcad_persistence.a
+[14/166] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[15/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[16/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[17/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[18/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+[19/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[20/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[21/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchEditingUI.cpp.o
+[22/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DimensionUI.cpp.o
+[23/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchProposalUI.cpp.o
+[24/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[25/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+[26/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o
+[27/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ExchangeUI.cpp.o
+[28/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyUI.cpp.o
+[29/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyPanel.cpp.o
+[30/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DrawingUI.cpp.o
+[31/166] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DrawingPanel.cpp.o
+[32/166] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[33/166] Automatic MOC for target module10_contracts
+[34/165] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/InteractionUI.cpp.o
+[35/165] Linking CXX static library libcad_desktop_ui.a
+[36/165] Automatic MOC for target cm3_completion
+[37/164] Automatic MOC for target module1_contracts
+[38/163] Automatic MOC for target module3_input
+[39/162] Automatic MOC for target module2_contracts
+[40/161] Automatic MOC for target module3_contracts
+[41/160] Automatic MOC for target module4_workspace
+[42/159] Automatic MOC for target module4_contracts
+[43/158] Automatic MOC for target module5_contracts
+[44/157] Automatic MOC for target module6_contracts
+[45/156] Automatic MOC for target module7_contracts
+[46/155] Automatic MOC for target module8_contracts
+[47/154] Automatic MOC for target cm1_contracts
+[48/153] Automatic MOC for target module9_interaction
+[49/152] Automatic MOC for target cm3_dimension_contracts
+[50/151] Automatic MOC for target cm3_completion_contracts
+[51/150] Automatic MOC for target cm2_contracts
+[52/149] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[53/149] Building CXX object CMakeFiles/module2_storage.dir/tests/module2/storage.cpp.o
+[54/149] Building CXX object CMakeFiles/module2_fault_worker.dir/tests/module2/fault_worker.cpp.o
+[55/149] Building CXX object CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o
+[56/149] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[57/149] Building CXX object CMakeFiles/module4_persistence.dir/tests/module4/persistence.cpp.o
+[58/149] Building CXX object CMakeFiles/module4_variants.dir/tests/module4/variants.cpp.o
+[59/149] Building CXX object CMakeFiles/module5_persistence.dir/tests/module5/persistence.cpp.o
+[60/149] Building CXX object CMakeFiles/module5_b2.dir/tests/module5/b2.cpp.o
+[61/149] Building CXX object CMakeFiles/module6_persistence.dir/tests/module6/persistence.cpp.o
+[62/149] Building CXX object CMakeFiles/module7_persistence.dir/tests/module7/persistence.cpp.o
+[63/149] Building CXX object CMakeFiles/module7_b3.dir/tests/module7/b3.cpp.o
+[64/149] Building CXX object CMakeFiles/module8_drawing.dir/tests/module8/drawing.cpp.o
+[65/149] Building CXX object CMakeFiles/module10_fault_worker.dir/tests/module10/fault_worker.cpp.o
+[66/149] Building CXX object CMakeFiles/module10_hardening.dir/tests/module10/hardening.cpp.o
+[67/149] Building CXX object CMakeFiles/cm0_feasibility.dir/tests/core_modeling/feasibility.cpp.o
+[68/149] Building CXX object CMakeFiles/cm1_relations.dir/tests/core_modeling/relations.cpp.o
+[69/149] Building CXX object CMakeFiles/cm4_store.dir/tests/core_modeling/graph_store.cpp.o
+[70/149] Building CXX object CMakeFiles/cm4_support_geometry.dir/tests/core_modeling/support_geometry.cpp.o
+[71/149] Building CXX object CMakeFiles/cm4_support_convert.dir/tests/core_modeling/support_convert.cpp.o
+[72/149] Building CXX object CMakeFiles/cm4_support_engine.dir/tests/core_modeling/support_engine.cpp.o
+[73/149] Building CXX object CMakeFiles/cm1_rectangles.dir/tests/core_modeling/rectangles.cpp.o
+[74/149] Building CXX object CMakeFiles/cm4_support_contracts.dir/tests/core_modeling/support_contracts.cpp.o
+[75/149] Building CXX object CMakeFiles/cm1_slots.dir/tests/core_modeling/slots.cpp.o
+[76/149] Building CXX object CMakeFiles/cm1_pierce.dir/tests/core_modeling/pierce.cpp.o
+[77/149] Building CXX object CMakeFiles/cm2_editing.dir/tests/core_modeling/editing.cpp.o
+[78/149] Building CXX object CMakeFiles/cm3_dimensions.dir/tests/core_modeling/dimensions.cpp.o
+[79/149] Building CXX object CMakeFiles/cm3_associated_dimensions.dir/tests/core_modeling/associated_dimensions.cpp.o
+[80/149] Building CXX object CMakeFiles/module1_contracts.dir/tests/module1/contracts.cpp.o
+[81/149] Building CXX object CMakeFiles/module2_contracts.dir/tests/module2/contracts.cpp.o
+[82/149] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[83/149] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[84/149] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[85/149] Building CXX object CMakeFiles/module5_contracts.dir/tests/module5/contracts.cpp.o
+[86/149] Building CXX object CMakeFiles/module6_contracts.dir/tests/module6/contracts.cpp.o
+[87/149] Building CXX object CMakeFiles/module7_contracts.dir/tests/module7/contracts.cpp.o
+[88/149] Building CXX object CMakeFiles/module8_contracts.dir/tests/module8/contracts.cpp.o
+[89/149] Building CXX object CMakeFiles/module9_interaction.dir/tests/module9/interaction.cpp.o
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module9/interaction.cpp:89:27: warning: 'setActiveWindow' is deprecated: Use QWidget::activateWindow() instead. [-Wdeprecated-declarations]
+   89 |             QApplication::setActiveWindow(&w);
+      |                           ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qapplication.h:83:5: note: 'setActiveWindow' has been explicitly marked deprecated here
+   83 |     QT_DEPRECATED_VERSION_X_6_5("Use QWidget::activateWindow() instead.")
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:181:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_5'
+  181 | # define QT_DEPRECATED_VERSION_X_6_5(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module9/interaction.cpp:102:27: warning: 'setActiveWindow' is deprecated: Use QWidget::activateWindow() instead. [-Wdeprecated-declarations]
+  102 |             QApplication::setActiveWindow(&w);
+      |                           ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qapplication.h:83:5: note: 'setActiveWindow' has been explicitly marked deprecated here
+   83 |     QT_DEPRECATED_VERSION_X_6_5("Use QWidget::activateWindow() instead.")
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:181:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_5'
+  181 | # define QT_DEPRECATED_VERSION_X_6_5(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+2 warnings generated.
+[90/149] Building CXX object CMakeFiles/module10_contracts.dir/tests/module10/contracts.cpp.o
+[91/149] Building CXX object CMakeFiles/cm1_contracts.dir/tests/core_modeling/contracts.cpp.o
+[92/149] Building CXX object CMakeFiles/cm3_dimension_contracts.dir/tests/core_modeling/dimension_contracts.cpp.o
+[93/149] Building CXX object CMakeFiles/cm3_completion.dir/tests/core_modeling/completion.cpp.o
+[94/149] Building CXX object CMakeFiles/cm3_completion_contracts.dir/tests/core_modeling/completion_contracts.cpp.o
+[95/149] Linking CXX executable solver_spike
+[96/149] Building CXX object CMakeFiles/cm2_contracts.dir/tests/core_modeling/editing_contracts.cpp.o
+[97/149] Linking CXX executable module1_contracts
+[98/149] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[99/149] Linking CXX executable module2_storage
+[100/149] Linking CXX executable module2_contracts
+[101/149] Linking CXX executable module2_fault_worker
+[102/149] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[103/149] Linking CXX executable module3_input
+[104/149] Linking CXX executable module3_persistence
+[105/149] Linking CXX executable module3_solver
+[106/149] Linking CXX executable module3_contracts
+[107/149] Linking CXX executable module4_workspace
+[108/149] Linking CXX executable module4_geometry
+[109/149] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[110/149] Linking CXX executable module4_contracts
+[111/149] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[112/149] Linking CXX executable module5_engine
+[113/149] Linking CXX executable module5_persistence
+[114/149] Linking CXX executable module5_b2
+[115/149] Linking CXX executable module5_contracts
+[116/149] Linking CXX executable module6_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_exchange.a'
+[117/149] Linking CXX executable module6_contracts
+[118/149] Linking CXX executable module7_geometry
+[119/149] Linking CXX executable module7_persistence
+[120/149] Linking CXX executable module7_b3
+[121/149] Linking CXX executable module7_contracts
+[122/149] Linking CXX executable module8_drawing
+[123/149] Linking CXX executable module8_contracts
+[124/149] Linking CXX executable module8_geometry
+[125/149] Linking CXX executable module9_interaction
+[126/149] Linking CXX executable module10_fault_worker
+[127/149] Linking CXX executable module10_contracts
+[128/149] Linking CXX executable module10_hardening
+[129/149] Linking CXX executable cm0_feasibility
+[130/149] Linking CXX executable cm1_relations
+[131/149] Linking CXX executable cm1_contracts
+[132/149] Linking CXX executable cm4_support_model
+[133/149] Linking CXX executable cm4_store
+[134/149] Linking CXX executable cm4_support_geometry
+[135/149] Linking CXX executable cm4_support_convert
+[136/149] Linking CXX executable cm4_support_engine
+[137/149] Linking CXX executable cm4_support_contracts
+[138/149] Linking CXX executable cm1_rectangles
+[139/149] Linking CXX executable cm1_slots
+[140/149] Linking CXX executable cm1_curves
+[141/149] Linking CXX executable cm1_pierce
+[142/149] Linking CXX executable cm1_intent
+[143/149] Linking CXX executable cm3_dimensions
+[144/149] Linking CXX executable cm2_editing
+[145/149] Linking CXX executable cm3_associated_dimensions
+[146/149] Linking CXX executable cm3_dimension_contracts
+[147/149] Linking CXX executable cm3_completion
+[148/149] Linking CXX executable cm3_completion_contracts
+[149/149] Linking CXX executable cm2_contracts
+
+Exit: 0

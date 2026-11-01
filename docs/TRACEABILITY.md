@@ -142,3 +142,9 @@ CM4.a is mapped separately to executable `cm4.graph`, `cm4.plan` and `cm4.store`
 in the [graph execution record](testing/core-modeling-cm4-a.md). These establish
 structural contracts and current production integration; they do not close
 CM-098–CM-119, whose exact/native course workflows remain Not run pending CM4.b–e.
+
+CM4.b maps the engine portions of CM-098–CM-114 and CM-117–CM-119 to
+`cm4.support_model`, `cm4.support_geometry`, `cm4.support_convert`,
+`cm4.support_engine`, `cm4.support_worker` and `cm4.support_transport`.
+[Scoped engine evidence](testing/core-modeling-cm4-b.md) does not close durable
+repair/native/reopen acceptance; CM-115/CM-116 navigation/visibility remain CM4.d.

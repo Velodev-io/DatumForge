@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-01",
+  "task": "CM4.b",
+  "branch": "review/cm4-b-20261101",
+  "base_head": "997e1db328dcae29824a5f3ae4bbed64fc48b501",
+  "scope": "Exact datum and associative support engine plus read-only worker/client preview; no durable support storage or native datum UI",
+  "implementation_status": "Pass: CM4.b exact engine and read-only worker/client preview",
+  "checks": {
+    "build": "Pass: build-final.txt",
+    "format": "Pass: pinned clang-format 21.1.8 plus whitespace; format.txt",
+    "clang_analysis": {
+      "status": "Pass",
+      "translation_units": 15,
+      "log": "static-analysis.txt"
+    },
+    "ownership": "Pass: architecture.json",
+    "coverage": "Pass: coverage.txt",
+    "research_isolation": "Pass: isolation.txt",
+    "specifications": "Pass: specifications.txt",
+    "source_integrity": "232 recorded source/configuration hashes unchanged; source-identity.json/source-integrity.txt",
+    "ctest": {
+      "status": "Pass",
+      "enabled": 85,
+      "failed": 0,
+      "seconds": 398.7,
+      "disabled": [
+        "harness.deliberate_failure"
+      ],
+      "log": "ctest.txt",
+      "host_ipc_permissions": true
+    }
+  },
+  "native_verification": "Not run: CM4.d native datum controls remain open",
+  "full_acceptance": "Blocked: durable support/reference evolution/repair, native workflows, platform/device/installed/resource gates",
+  "deferred_gates_preserved": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false,
+  "review": "Author self-review; review.md; separate review required before merge",
+  "publication": "Verification snapshot before commit/push; authorized review-branch publication follows; no merge",
+  "available_mac_development_verification_status": "Pass"
+}

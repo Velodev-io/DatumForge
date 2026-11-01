@@ -56,7 +56,24 @@ gp_Dir direction(sketch::Vec3 v) {
 }
 double volume(const TopoDS_Shape &s) {
     GProp_GProps p;
-    BRepGProp::VolumeProperties(s, p);
+    bool spline = false;
+    for (TopExp_Explorer it(s, TopAbs_EDGE); it.More() && !spline; it.Next()) {
+        auto type = BRepAdaptor_Curve(TopoDS::Edge(it.Current())).GetType();
+        spline = type == GeomAbs_BSplineCurve || type == GeomAbs_BezierCurve;
+    }
+    for (TopExp_Explorer it(s, TopAbs_FACE); it.More() && !spline; it.Next()) {
+        auto type = BRepAdaptor_Surface(TopoDS::Face(it.Current())).GetType();
+        spline = type == GeomAbs_BSplineSurface || type == GeomAbs_BezierSurface;
+    }
+    if (spline) {
+        // Fixed/adaptive Gauss can alias the rational spans of a closed conic.
+        // Knot-aware Gauss-Kronrod is independently checked by CM4 projection
+        // fixtures; retain the existing analytic path for primitive geometry.
+        auto error = BRepGProp::VolumePropertiesGK(s, p, 1e-10, true, true);
+        check(std::isfinite(error) && error >= 0 && error <= 1e-6, "InvalidGeometry",
+              "Exact volume integration did not meet the declared error bound");
+    } else
+        BRepGProp::VolumeProperties(s, p);
     return p.Mass();
 }
 int count(const TopoDS_Shape &s, TopAbs_ShapeEnum kind) {

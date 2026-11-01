@@ -3408,8 +3408,20 @@
       ],
       "analytical_fixture": "cm-098-geometry",
       "native_workflow": "cm-098-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-099",
@@ -3431,8 +3443,20 @@
       ],
       "analytical_fixture": "cm-099-geometry",
       "native_workflow": "cm-099-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-100",
@@ -3456,8 +3480,20 @@
       ],
       "analytical_fixture": "cm-100-geometry",
       "native_workflow": "cm-100-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-101",
@@ -3479,8 +3515,20 @@
       ],
       "analytical_fixture": "cm-101-geometry",
       "native_workflow": "cm-101-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-102",
@@ -3502,8 +3550,20 @@
       ],
       "analytical_fixture": "cm-102-geometry",
       "native_workflow": "cm-102-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-103",
@@ -3525,8 +3585,20 @@
       ],
       "analytical_fixture": "cm-103-geometry",
       "native_workflow": "cm-103-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-104",
@@ -3548,8 +3620,20 @@
       ],
       "analytical_fixture": "cm-104-geometry",
       "native_workflow": "cm-104-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-105",
@@ -3571,8 +3655,20 @@
       ],
       "analytical_fixture": "cm-105-geometry",
       "native_workflow": "cm-105-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-106",
@@ -3594,8 +3690,20 @@
       ],
       "analytical_fixture": "cm-106-geometry",
       "native_workflow": "cm-106-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-107",
@@ -3616,8 +3724,20 @@
       ],
       "analytical_fixture": "cm-107-geometry",
       "native_workflow": "cm-107-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-108",
@@ -3638,8 +3758,20 @@
       ],
       "analytical_fixture": "cm-108-geometry",
       "native_workflow": "cm-108-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-109",
@@ -3660,8 +3792,20 @@
       ],
       "analytical_fixture": "cm-109-geometry",
       "native_workflow": "cm-109-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-110",
@@ -3682,8 +3826,20 @@
       ],
       "analytical_fixture": "cm-110-geometry",
       "native_workflow": "cm-110-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-111",
@@ -3704,8 +3860,20 @@
       ],
       "analytical_fixture": "cm-111-geometry",
       "native_workflow": "cm-111-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-112",
@@ -3729,8 +3897,20 @@
       ],
       "analytical_fixture": "cm-112-geometry",
       "native_workflow": "cm-112-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-113",
@@ -3754,8 +3934,20 @@
       ],
       "analytical_fixture": "cm-113-geometry",
       "native_workflow": "cm-113-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-114",
@@ -3779,8 +3971,20 @@
       ],
       "analytical_fixture": "cm-114-geometry",
       "native_workflow": "cm-114-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-115",
@@ -3853,8 +4057,20 @@
       ],
       "analytical_fixture": "cm-117-geometry",
       "native_workflow": "cm-117-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-118",
@@ -3877,8 +4093,20 @@
       ],
       "analytical_fixture": "cm-118-geometry",
       "native_workflow": "cm-118-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-119",
@@ -3901,8 +4129,20 @@
       ],
       "analytical_fixture": "cm-119-geometry",
       "native_workflow": "cm-119-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm4-supports.md",
+        "docs/testing/core-modeling-cm4-b.md",
+        "tests/core_modeling/support_geometry.cpp",
+        "tests/core_modeling/support_convert.cpp",
+        "tests/core_modeling/support_engine.cpp",
+        "tests/core_modeling/support_contracts.cpp",
+        "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json"
+      ],
+      "implementation_status": "Pass: CM4.b exact engine and read-only worker preview",
+      "native_verification_status": "Not run: native datum/support controls remain CM4.d",
+      "full_acceptance_status": "Open: CM4.c persistence/evolution/repair, CM4.d native controls and CM4.e full workflows",
+      "development_verification_status": "Pass: 85 enabled CTests, including exact analytical and worker/client checks; native/full acceptance open"
     },
     {
       "id": "CM-120",

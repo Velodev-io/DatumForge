@@ -41,6 +41,11 @@ CM4.a now has production typed-reference/graph implementation and integration wi
 feature planning and Pierce. Its [scoped execution record](core-modeling-cm4-a.md)
 distinguishes structural verification from CM4.b–e and all unrun course workflows.
 
+CM4.b adds exact datum construction, sketch support and conversion evaluation
+through a read-only worker preview. [CM4.b evidence](core-modeling-cm4-b.md) keeps
+the engine scope separate from durable support evolution/repair, native controls
+and full CM4.c–e acceptance.
+
 The old source/specification/module reports retain their original scope. The
 extension does not certify Windows/Linux, physical device/assistive technology,
 installed builds or complete physical 8 GB resource budgets. Module 11 is not
