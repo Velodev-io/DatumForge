@@ -75,3 +75,11 @@ started. Final review is author self-review, not independent merge approval.
 
 [Author source review](artifacts/core-modeling/cm5-a-20261103/source-review.md)
 records the parser/graph/scope checks. No source changes followed the final run.
+
+## Delivery
+
+Feature commit `2968c4e` was pushed to `origin/review/cm5-a-20261103`; its remote
+SHA matched the local commit. [Delivery evidence](artifacts/core-modeling/cm5-a-20261103/delivery.json)
+records the check before this documentation-only follow-up. All 263 source/
+configuration hashes also matched after publication. No merge or force-push;
+independent review remains required before merge.
