@@ -50,6 +50,11 @@ CM4.c adds durable base support collections, unique exact reference evolution an
 explicit repair commands; [its execution record](core-modeling-cm4-c.md) preserves
 the final verification status, failures and remaining CM4.d/e boundaries.
 
+CM4.d adds native selection and visibility of accepted datum outputs and sketch
+planes, worker-owned display-frame inspection and arbitrary-plane Normal To.
+Its [execution record](core-modeling-cm4-d.md) separates this native browsing scope
+from open support authoring, CM4.e course workflows and full acceptance.
+
 The old source/specification/module reports retain their original scope. The
 extension does not certify Windows/Linux, physical device/assistive technology,
 installed builds or complete physical 8 GB resource budgets. Module 11 is not

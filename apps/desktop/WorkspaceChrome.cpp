@@ -272,5 +272,6 @@ void MainWindow::refreshCommandTabs() {
     refreshFeatures();
     refreshAssemblyUI();
     refreshDrawingUI();
+    refreshDatumUI();
 }
 } // namespace cad

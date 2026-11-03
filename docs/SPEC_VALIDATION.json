@@ -1,14 +1,14 @@
 {
   "scope": "Documentation structure only; no product acceptance tests executed",
-  "checked_at_utc": "2026-11-03T04:21:55.575566+00:00",
+  "checked_at_utc": "2026-11-03T05:22:54.669790+00:00",
   "status": "pass",
   "product_implementation": "Modules 1-10 scoped implementation on the available Mac; CM0-CM9 authorized and incomplete, with selected CM1 primitives/relations, CM2 straight-line editing and CM3 dimension slices; full acceptance remains Blocked",
   "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
   "documents": {
     "README.md": {
-      "sha256": "0c67f522d3706f42b58301a78911a592421bece442b2867ac3f1eb14692494dd",
-      "lines": 100,
-      "words": 1437
+      "sha256": "99d40bd11b1a18ea0742e0f4ded19838cbe7f11dc9edd80d79a8105178400a43",
+      "lines": 107,
+      "words": 1495
     },
     "SRS.md": {
       "sha256": "4f678592b374aace92caf5d3b52bf74d550ffefee71369471f3b6efaffcb3efd",
@@ -41,9 +41,9 @@
       "words": 550
     },
     "CORE_MODELING.md": {
-      "sha256": "ef2c7c4ba2848697be2ff8b5958fcb0e79435520eab57f89301b41ee55132614",
+      "sha256": "33f7bdc10a1630c4ced50d31e89bf67b83c8d86069917ec1455cc3ae43c12d73",
       "lines": 154,
-      "words": 1519
+      "words": 1537
     }
   },
   "requirements": 56,
@@ -52,6 +52,6 @@
   "unchecked_engineering_tasks": 39,
   "completed_engineering_tasks": 120,
   "core_modeling_tasks": 50,
-  "completed_core_modeling_tasks": 6,
+  "completed_core_modeling_tasks": 7,
   "errors": []
 }

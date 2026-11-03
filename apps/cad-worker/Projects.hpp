@@ -71,6 +71,7 @@ class Projects {
                            "PreviewModelSupports",
                            "SetModelSupports",
                            "SupportReferenceCandidates",
+                           "SupportGeometry",
                            "ResolveSupportReference",
                            "SetFeatures",
                            "PreviewHistory",
@@ -199,6 +200,13 @@ class Projects {
                              (e.command == "SaveAs" &&
                               store->outcome(e.operation).value("durable").toBool())),
                   "StaleSession", "The project session changed");
+            if (e.command == "SupportGeometry") {
+                wire::keys(p, {});
+                check(e.revision == store->revision(), "StaleRevision",
+                      "Project changed before datum inspection");
+                return sketch::fields(
+                    {{"support_geometry", store->supportGeometry(e.context.document, control)}});
+            }
             if (e.command == "SupportReferenceCandidates") {
                 wire::keys(p, {"model", "owner", "slot"});
                 check(e.revision == store->revision(), "StaleRevision",

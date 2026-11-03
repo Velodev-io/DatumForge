@@ -961,6 +961,17 @@ QCborMap ProjectStore::previewSupports(QString document, const QCborMap &definit
         control);
     return result.map(revision());
 }
+QCborMap ProjectStore::supportGeometry(QString document, const exchange::Control &control) const {
+    check(db &&
+              db->scalar("SELECT type FROM documents WHERE id=?", {document}).toString() == "Part",
+          "UnsupportedOperation", "Datum inspection requires a Part document");
+    auto collection = featureState(document);
+    QCborArray datums;
+    if (collection.contains(QStringLiteral("supports")))
+        datums = rebuildSupports(*db, collection, &resultCache, control).datumGeometry();
+    return values(
+        {{"version", 1}, {"document", document}, {"revision", revision()}, {"datums", datums}});
+}
 QCborMap ProjectStore::outcome(QString op) const {
     domain::id(op);
     auto rows = db->rows("SELECT new_revision,outcome FROM commands WHERE operation_id=?", {op});

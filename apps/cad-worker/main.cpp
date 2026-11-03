@@ -201,7 +201,8 @@ class Worker : public QObject {
                             "SetAssembly", "PreviewAssembly", "DisplayAssembly", "SetDrawing",
                             "UpdateDrawing", "PreviewDrawing", "DisplayDrawing", "ExportDrawing",
                             "Undo", "Redo", "PreviewModelSupports", "SetModelSupports",
-                            "SupportReferenceCandidates", "ResolveSupportReference"}
+                            "SupportReferenceCandidates", "ResolveSupportReference",
+                            "SupportGeometry"}
                     .contains(e.command))
                 startExchange(e);
             else

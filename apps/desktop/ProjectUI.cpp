@@ -2,6 +2,7 @@
 #include "MainWindow.hpp"
 #include "SketchPanel.hpp"
 #include "domain/Documents.hpp"
+#include "model/Supports.hpp"
 #include "protocol/Client.hpp"
 #include "render/Viewport.hpp"
 #include <QDialog>
@@ -339,7 +340,34 @@ void MainWindow::refreshProjectUI() {
                     plane->setData(0, Qt::UserRole + 1, documentId);
                     plane->setData(0, Qt::UserRole + 2, documentId + "/" + name);
                     plane->setData(0, Qt::UserRole + 4, QString(name));
+                    plane->setData(0, Qt::UserRole + 6, "principal/" + QString(name));
                 }
+                for (auto name : {"X", "Y", "Z"}) {
+                    auto *axis = new QTreeWidgetItem(row, {QString(name) + " Axis"});
+                    axis->setData(0, Qt::UserRole + 1, documentId);
+                    axis->setData(0, Qt::UserRole + 2, documentId + "/axis/" + name);
+                    axis->setData(0, Qt::UserRole + 6, "principal/" + QString(name));
+                }
+                if (d.contains(QStringLiteral("model_supports")))
+                    for (auto &datum :
+                         model::SupportDefinition::parse(d.value("model_supports").toMap())
+                             .datums) {
+                        auto outputs = datum.outputs();
+                        for (int i = 0; i < outputs.size(); ++i) {
+                            auto id = outputs[i];
+                            auto *node = new QTreeWidgetItem(
+                                row,
+                                {datum.mode + " " +
+                                 (datum.kind == "DatumPlane" ? "Plane " : "Axis ") + id.right(8) +
+                                 (outputs.size() > 1
+                                      ? QString(" (%1/%2)").arg(i + 1).arg(outputs.size())
+                                      : QString())});
+                            node->setData(0, Qt::UserRole + 1, documentId);
+                            node->setData(0, Qt::UserRole + 2, id);
+                            node->setData(0, Qt::UserRole + 6, id);
+                            node->setSelected(selectedKey == id);
+                        }
+                    }
                 bool hasDraft = false;
                 for (auto value : d.value("sketches").toArray()) {
                     auto sketch = value.toMap();
@@ -353,6 +381,7 @@ void MainWindow::refreshProjectUI() {
                     node->setData(0, Qt::UserRole + 1, documentId);
                     node->setData(0, Qt::UserRole + 2, id);
                     node->setData(0, Qt::UserRole + 3, id);
+                    node->setData(0, Qt::UserRole + 6, "sketch/" + id);
                     node->setSelected(selectedKey == id);
                 }
                 for (auto f : d.value("features").toArray()) {

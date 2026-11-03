@@ -96,6 +96,15 @@ void workerContract() {
     CHECK(worker.revision() == revision + 1);
     auto documents = committed.value("project_state").toMap().value("documents").toArray();
     CHECK(documents[0].toMap().value("model_supports").isMap());
+    auto inspectedRevision = worker.revision();
+    auto acceptedGeometry =
+        worker.run(command("SupportGeometry")).value("support_geometry").toMap();
+    CHECK(acceptedGeometry.value("revision").toInteger() == inspectedRevision);
+    CHECK(acceptedGeometry.value("datums").toArray().size() == 1);
+    CHECK(worker.revision() == inspectedRevision);
+    auto staleInspection = command("SupportGeometry");
+    --staleInspection.revision;
+    error("StaleRevision", [&] { worker.run(staleInspection); });
     auto display = worker.run(command("DisplayPart", sketch::fields({{"deflection_mm", .2}})));
     CHECK(!display.value("part_empty").toBool());
     revision = worker.revision();

@@ -12,6 +12,7 @@ struct SupportResult {
     kernel::Part part;
     QCborArray evolution;
     QCborMap inspection;
+    QCborArray datumGeometry() const;
     QCborMap map(qint64 revision = 0) const;
 };
 sketch::Frame attachmentFrame(const model::Attachment &attachment,

@@ -98,3 +98,10 @@ evidence and explicit worker repair: [implementation/verification](testing/core-
 CM4.c production implementation and available-Mac development verification passed
 (87 enabled tests and scoped static checks). Native controls remain CM4.d and
 full workflows/acceptance remain CM4.e.
+
+CM4.d adds native selection/visibility of accepted datum outputs and sketch planes,
+worker-owned display inspection and arbitrary-plane Normal To:
+[implementation and available-Mac native verification](testing/core-modeling-cm4-d.md).
+All 88 enabled CTests, 12 changed-source analyses and native checks at five effective
+scales passed. Support authoring, CM4.e course workflows and full acceptance remain
+open; deferred gates and the stop before Module 11 are preserved.

@@ -1,4 +1,5 @@
 #pragma once
+#include "model/DatumGeometry.hpp"
 #include "protocol/Client.hpp"
 #include <QElapsedTimer>
 #include <QLabel>
@@ -8,6 +9,10 @@
 #include <QOpenGLVertexArrayObject>
 #include <QOpenGLWidget>
 namespace cad {
+struct DisplayDatum {
+    model::DatumGeometry geometry;
+    bool visible = true;
+};
 class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     Q_OBJECT
     MeshPtr mesh;
@@ -21,6 +26,9 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     QVector3D center;
     float yaw = 35, pitch = -25, distance = 100, span = 50;
     QVector2D pan;
+    std::vector<DisplayDatum> datums;
+    QQuaternion orientation;
+    bool customOrientation = false;
     QPoint previous, press;
     bool componentDrag = false;
     QString draggedOccurrence;
@@ -60,6 +68,9 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     }
     void fit();
     void setView(QString view);
+    void setDatums(std::vector<DisplayDatum> values);
+    bool normalTo(const sketch::Frame &frame);
+    QVector<QVector3D> datumSegments(QString id) const;
     Selection pick(QPointF position) const;
     QPointF project(QVector3D point) const;
     QString graphicsDescription() const;

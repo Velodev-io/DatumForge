@@ -1,0 +1,12 @@
+Analyzed src/protocol/Client.cpp
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed apps/desktop/ProjectUI.cpp
+Analyzed src/render/Viewport.cpp
+Analyzed apps/desktop/WorkspaceChrome.cpp
+Analyzed apps/desktop/DatumUI.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/persistence/ProjectStore.cpp
+Analyzed src/model/DatumGeometry.cpp
+Analyzed src/geometry/occt/Supports.cpp
+Analyzed tests/core_modeling/support_contracts.cpp
+Analyzed tests/core_modeling/datum_contracts.cpp

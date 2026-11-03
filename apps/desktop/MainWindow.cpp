@@ -43,6 +43,7 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
     buildExchangeUI();
     buildAssemblyUI();
     buildDrawingUI();
+    buildDatumUI();
     auto *historyAction = commands.add(this, "history", "History / repair");
     addAction(historyAction);
     findChild<QToolBar *>("commandsFeatures")->addAction(historyAction);
@@ -309,7 +310,7 @@ void MainWindow::buildFrame() {
     addToolBar(Qt::BottomToolBarArea, controls);
     filter = new QComboBox;
     filter->setObjectName("selectionFilter");
-    filter->addItems({"Face", "Edge", "Body", "Component"});
+    filter->addItems({"Face", "Edge", "Body", "Component", "Datum"});
     controls->addWidget(new QLabel(" Selection: "));
     controls->addWidget(filter);
     connect(filter, &QComboBox::currentTextChanged, viewport, &Viewport::setFilter);
@@ -432,6 +433,11 @@ void MainWindow::rebuildTree() {
     syncing = false;
 }
 void MainWindow::choose(const Selection &selection) {
+    if (selection.kind == "DatumPlane" || selection.kind == "DatumAxis") {
+        selectDatum(selection.entity);
+        return;
+    }
+    selectedDatum.clear();
     client->select(selection);
 }
 void MainWindow::saveLayout() {

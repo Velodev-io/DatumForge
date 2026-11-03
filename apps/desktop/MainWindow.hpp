@@ -2,6 +2,7 @@
 #include "CommandRegistry.hpp"
 #include "diagnostics/Journal.hpp"
 #include "domain/WorkspaceState.hpp"
+#include "model/DatumGeometry.hpp"
 #include <QComboBox>
 #include <QDoubleSpinBox>
 #include <QLabel>
@@ -42,6 +43,20 @@ class MainWindow : public QMainWindow {
     void buildAssemblyUI();
     void refreshAssemblyUI();
     void refreshFeatures();
+    void buildDatumUI();
+    void refreshDatumUI();
+    void selectDatum(QString id);
+    void setDatumVisible(QString id, bool visible);
+    QString datumKey() const;
+    QTreeWidget *datumTree = nullptr;
+    QLabel *datumInfo = nullptr;
+    QMap<QString, model::DatumGeometry> datumGeometry;
+    QMap<QString, QString> datumLabels;
+    QMap<QString, QMap<QString, bool>> datumVisibility;
+    QString datumProject, datumScope, selectedDatum, datumRequestedKey, datumResultKey;
+    QCborArray acceptedDatums;
+    QByteArray datumProjection;
+    bool syncingDatums = false;
     QTreeWidget *tree = nullptr;
     QTabWidget *commandTabs = nullptr;
     QStackedWidget *propertyPages = nullptr;

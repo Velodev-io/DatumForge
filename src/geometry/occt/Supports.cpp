@@ -200,8 +200,8 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
                             QString("Exact support evaluation failed: ") + e.GetMessageString());
     }
 }
-QCborMap SupportResult::map(qint64 revision) const {
-    QCborArray datums, history;
+QCborArray SupportResult::datumGeometry() const {
+    QCborArray datums;
     for (auto it = planes.cbegin(); it != planes.cend(); ++it)
         datums.append(fields({{"id", it.key()},
                               {"kind", "DatumPlane"},
@@ -213,12 +213,16 @@ QCborMap SupportResult::map(qint64 revision) const {
                               {"kind", "DatumAxis"},
                               {"origin", features::array(it->origin)},
                               {"direction", features::array(it->direction)}}));
+    return datums;
+}
+QCborMap SupportResult::map(qint64 revision) const {
+    QCborArray history;
     for (auto id : order)
         history.append(id);
     auto result = fields(
         {{"version", 1},
          {"sketches", sketch::encode(sketches)},
-         {"datums", datums},
+         {"datums", datumGeometry()},
          {"conversions", conversions},
          {"evaluation_order", history},
          {"part_empty", part.bodies.empty()},

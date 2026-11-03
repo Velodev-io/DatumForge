@@ -1898,12 +1898,18 @@
     ]
   },
   "CM4.d": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM4.d accepted datum and sketch-plane native selection, session-local visibility, bounded read-only worker inspection and arbitrary-frame Normal To. 88 enabled CTests, 12 changed-source Clang analyses, static/ownership/coverage checks and native Mac mm/in/datum-only/solid workflows at five effective scales passed. Native authoring, CM4.e full course workflows and full acceptance remain open; preserve deferred 6.1b/6.4c/7.4c and stop before Module 11.",
+    "implementation_status": "Pass: CM4.d selection/display/navigation production implementation",
+    "development_verification_status": "Pass: 88 enabled CTests and scoped static checks",
+    "native_verification_status": "Pass: available Mac development build, five effective scales, synthetic Qt pointer/keyboard input; screenshots reviewed",
+    "full_acceptance_status": "Blocked: native authoring, CM4.e course workflows, other platforms, installed builds, physical devices/assistive technology and full physical 8 GB resource acceptance",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/testing/core-modeling-cm4-d.md",
+      "docs/decisions/core-modeling-cm4-native.md",
+      "docs/testing/artifacts/core-modeling/cm4-d-20261103/verification/20261103T051241.992649Z/verification.json",
+      "docs/testing/artifacts/core-modeling/cm4-d-20261103/verification/20261103T051241.992649Z/ctest.txt",
+      "docs/testing/artifacts/core-modeling/cm4-d-20261103/verification/20261103T051241.992649Z/source-identity.json"
     ]
   },
   "CM4.e": {

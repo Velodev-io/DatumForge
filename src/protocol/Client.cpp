@@ -1,6 +1,7 @@
 #include "Client.hpp"
 #include "domain/Documents.hpp"
 #include "drawing/Paths.hpp"
+#include "model/DatumGeometry.hpp"
 #include "model/Supports.hpp"
 #include <QCoreApplication>
 #include <QDir>
@@ -228,7 +229,7 @@ void Client::pump() {
         QStringList{"SetFeatures", "CommitHistory", "SetAssembly", "SetDrawing", "UpdateDrawing",
                     "DisplayDrawing", "PreviewDrawing", "DisplayAssembly", "PreviewAssembly",
                     "PreviewModelSupports", "SetModelSupports", "ResolveSupportReference",
-                    "SupportReferenceCandidates"}
+                    "SupportReferenceCandidates", "SupportGeometry"}
             .contains(e.command))
         pending[e.request].deadline = clock.elapsed() + 120000;
     if (!QStringList{"QueryOperation", "GrantFile", "RecoverProject", "ListRecoveries",
@@ -412,12 +413,14 @@ void Client::receive(const QCborMap &m) {
                                  "PreviewSketchEdit",
                                  "PreviewSketches",
                                  "PreviewModelSupports",
-                                 "SupportReferenceCandidates"}
+                                 "SupportReferenceCandidates",
+                                 "SupportGeometry"}
                          .contains(e.command);
     if ((reference && !visibleResult(projection, e, revision)) || e.epoch != projection.epoch) {
         // An obsolete heavy preview still owns the worker until its terminal
         // reply. Retiring it on Progress would admit another computation early.
-        if (e.command == "PreviewModelSupports" && m.value("status").toString() == "Progress")
+        if ((e.command == "PreviewModelSupports" || e.command == "SupportGeometry") &&
+            m.value("status").toString() == "Progress")
             return;
         pending.erase(found);
         transfers.clear();
@@ -462,6 +465,13 @@ void Client::receive(const QCborMap &m) {
         projection.message =
             wire::text(diagnostics, "code") + ": " + wire::text(diagnostics, "message");
         projection.job = status;
+        if (e.command == "SupportGeometry") {
+            // Inspection failure cannot invalidate an accepted solid or its revision.
+            pending.erase(found);
+            emit changed();
+            pump();
+            return;
+        }
         projection.phase = Phase::Failed;
         projection.stale = bool(display);
         pending.erase(found);
@@ -580,6 +590,38 @@ void Client::receive(const QCborMap &m) {
         projection.phase = Phase::Ready;
         projection.job = "Exact measurement ready";
         emit partResult(data);
+        emit changed();
+        pump();
+        return;
+    }
+    if (e.command == "SupportGeometry") {
+        wire::keys(data, {"support_geometry"});
+        wire::require(data.value("support_geometry").isMap(), "Datum geometry reply required");
+        auto result = data.value("support_geometry").toMap();
+        wire::keys(result, {"version", "document", "revision", "datums"});
+        wire::require(wire::integer(result, "version") == 1 &&
+                          wire::text(result, "document") == e.context.document &&
+                          wire::integer(result, "revision") == revision &&
+                          result.value("datums").isArray(),
+                      "Typed datum geometry reply required");
+        auto datums = model::DatumGeometry::parse(result.value("datums").toArray());
+        QMap<QString, QString> expected;
+        for (auto doc : projection.documentRecords)
+            if (doc.toMap().value("id").toString() == e.context.document &&
+                doc.toMap().contains(QStringLiteral("model_supports")))
+                for (auto &datum :
+                     model::SupportDefinition::parse(doc.toMap().value("model_supports").toMap())
+                         .datums)
+                    for (auto id : datum.outputs())
+                        expected.insert(id, datum.kind);
+        wire::require(datums.size() == size_t(expected.size()), "Complete datum geometry required");
+        for (auto &d : datums)
+            wire::require(expected.value(d.id) == d.kind, "Accepted datum identity required");
+        pending.erase(found);
+        if (revision == projection.revision) {
+            projection.job = "Datum geometry ready";
+            emit supportGeometry(result);
+        }
         emit changed();
         pump();
         return;
@@ -1117,7 +1159,7 @@ void Client::cancelExchange() {
                         "SetAssembly", "PreviewAssembly", "DisplayAssembly", "SetDrawing",
                         "UpdateDrawing", "PreviewDrawing", "DisplayDrawing", "ExportDrawing",
                         "Undo", "Redo", "PreviewModelSupports", "SetModelSupports",
-                        "ResolveSupportReference", "SupportReferenceCandidates"}
+                        "ResolveSupportReference", "SupportReferenceCandidates", "SupportGeometry"}
                 .contains(value.request.command)) {
             auto e = request("CancelJob",
                              QCborMap{{QStringLiteral("operation"), value.request.operation}});

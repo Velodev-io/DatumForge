@@ -1,4 +1,5 @@
 #include "Viewport.hpp"
+#include <QLineF>
 #include <QMouseEvent>
 #include <QOpenGLContext>
 #include <QWheelEvent>
@@ -66,8 +67,12 @@ QMatrix4x4 Viewport::matrix() const {
     else
         m.perspective(40, aspect, .1f, 100000.f);
     m.translate(pan.x(), pan.y(), -distance);
-    m.rotate(pitch, 1, 0, 0);
-    m.rotate(yaw, 0, 1, 0);
+    if (customOrientation)
+        m.rotate(orientation);
+    else {
+        m.rotate(pitch, 1, 0, 0);
+        m.rotate(yaw, 0, 1, 0);
+    }
     m.translate(-center);
     return m;
 }
@@ -89,52 +94,61 @@ void Viewport::draw(const QVector<QVector3D> &vertices, GLenum primitive, const 
 void Viewport::paintGL() {
     glClearColor(.09f, .12f, .16f, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    if (!initialized || failed || !mesh)
+    if (!initialized || failed || (!mesh && datums.empty()))
         return;
     auto began = frameClock.nsecsElapsed();
     QOpenGLVertexArrayObject::Binder bound(&vao);
     shader.bind();
-    QVector<QVector3D> triangles;
-    triangles.reserve(mesh->indices.size());
-    for (auto i : mesh->indices)
-        triangles.append(mesh->vertices[i]);
-    const QVector4D base = stale ? QVector4D(.42, .46, .5, 1) : QVector4D(.3, .64, .83, 1);
-    for (const auto &instance : mesh->instances) {
-        auto first = instance.firstTriangle;
-        auto count =
-            instance.triangleCount < 0 ? mesh->triangleRoles.size() : instance.triangleCount;
-        auto firstEdge = instance.firstEdge;
-        auto edgeCount = instance.edgeCount < 0 ? mesh->edgeIds.size() : instance.edgeCount;
-        auto localTriangles = triangles.mid(first * 3, count * 3),
-             localEdges = mesh->edges.mid(firstEdge * 2, edgeCount * 2);
-        if (mode != "Wireframe") {
-            glEnable(GL_POLYGON_OFFSET_FILL);
-            glPolygonOffset(1, 1);
-            draw(localTriangles, GL_TRIANGLES,
-                 mode == "Hidden edges" ? QVector4D(.09, .12, .16, 1) : base, instance);
-            glDisable(GL_POLYGON_OFFSET_FILL);
-        }
-        if (mode != "Shaded")
-            draw(localEdges, GL_LINES, QVector4D(.85, .9, .95, 1), instance);
-        if (selection.occurrence != instance.id)
-            continue;
-        QVector<QVector3D> highlight;
-        if (selection.kind == "Face") {
-            int role = mesh->faceIds.indexOf(selection.entity);
-            for (int t = first; t < first + count; ++t)
-                if (mesh->triangleRoles[t] == quint32(role))
-                    for (int j = 0; j < 3; ++j)
-                        highlight.append(mesh->vertices[mesh->indices[t * 3 + j]]);
-            draw(highlight, GL_TRIANGLES, QVector4D(1, .65, .15, 1), instance);
-        } else if (selection.kind == "Edge") {
-            int role = mesh->edgeIds.indexOf(selection.entity);
-            if (role >= 0) {
-                highlight = {mesh->edges[role * 2], mesh->edges[role * 2 + 1]};
-                draw(highlight, GL_LINES, QVector4D(1, .65, .15, 1), instance);
+    if (mesh) {
+        QVector<QVector3D> triangles;
+        triangles.reserve(mesh->indices.size());
+        for (auto i : mesh->indices)
+            triangles.append(mesh->vertices[i]);
+        const QVector4D base = stale ? QVector4D(.42, .46, .5, 1) : QVector4D(.3, .64, .83, 1);
+        for (const auto &instance : mesh->instances) {
+            auto first = instance.firstTriangle;
+            auto count =
+                instance.triangleCount < 0 ? mesh->triangleRoles.size() : instance.triangleCount;
+            auto firstEdge = instance.firstEdge;
+            auto edgeCount = instance.edgeCount < 0 ? mesh->edgeIds.size() : instance.edgeCount;
+            auto localTriangles = triangles.mid(first * 3, count * 3),
+                 localEdges = mesh->edges.mid(firstEdge * 2, edgeCount * 2);
+            if (mode != "Wireframe") {
+                glEnable(GL_POLYGON_OFFSET_FILL);
+                glPolygonOffset(1, 1);
+                draw(localTriangles, GL_TRIANGLES,
+                     mode == "Hidden edges" ? QVector4D(.09, .12, .16, 1) : base, instance);
+                glDisable(GL_POLYGON_OFFSET_FILL);
             }
-        } else
-            draw(localEdges, GL_LINES, QVector4D(1, .65, .15, 1), instance);
+            if (mode != "Shaded")
+                draw(localEdges, GL_LINES, QVector4D(.85, .9, .95, 1), instance);
+            if (selection.occurrence != instance.id)
+                continue;
+            QVector<QVector3D> highlight;
+            if (selection.kind == "Face") {
+                int role = mesh->faceIds.indexOf(selection.entity);
+                for (int t = first; t < first + count; ++t)
+                    if (mesh->triangleRoles[t] == quint32(role))
+                        for (int j = 0; j < 3; ++j)
+                            highlight.append(mesh->vertices[mesh->indices[t * 3 + j]]);
+                draw(highlight, GL_TRIANGLES, QVector4D(1, .65, .15, 1), instance);
+            } else if (selection.kind == "Edge") {
+                int role = mesh->edgeIds.indexOf(selection.entity);
+                if (role >= 0) {
+                    highlight = {mesh->edges[role * 2], mesh->edges[role * 2 + 1]};
+                    draw(highlight, GL_LINES, QVector4D(1, .65, .15, 1), instance);
+                }
+            } else
+                draw(localEdges, GL_LINES, QVector4D(1, .65, .15, 1), instance);
+        }
     }
+    for (auto &d : datums)
+        if (d.visible)
+            draw(datumSegments(d.geometry.id), GL_LINES,
+                 selection.entity == d.geometry.id ? QVector4D(1, .65, .15, 1)
+                 : stale                           ? QVector4D(.42, .46, .5, 1)
+                                                   : QVector4D(.5, .85, .55, 1),
+                 Instance{});
     shader.release();
     buffer.release();
     frameTimes.append(double(frameClock.nsecsElapsed() - began) / 1e6);
@@ -171,17 +185,30 @@ void Viewport::setMode(QString value) {
     setStale(stale);
 }
 void Viewport::fit() {
-    if (!mesh)
+    if (!mesh && datums.empty())
         return;
     QVector3D low, high;
     bool first = true;
-    for (auto &instance : mesh->instances)
-        for (int t = instance.firstTriangle;
-             t < (instance.triangleCount < 0 ? mesh->triangleRoles.size()
-                                             : instance.firstTriangle + instance.triangleCount);
-             ++t)
-            for (int k = 0; k < 3; ++k) {
-                auto v = instance.map(mesh->vertices[mesh->indices[t * 3 + k]]);
+    if (mesh)
+        for (auto &instance : mesh->instances)
+            for (int t = instance.firstTriangle;
+                 t < (instance.triangleCount < 0 ? mesh->triangleRoles.size()
+                                                 : instance.firstTriangle + instance.triangleCount);
+                 ++t)
+                for (int k = 0; k < 3; ++k) {
+                    auto v = instance.map(mesh->vertices[mesh->indices[t * 3 + k]]);
+                    if (first) {
+                        low = high = v;
+                        first = false;
+                    } else
+                        for (int j = 0; j < 3; ++j) {
+                            low[j] = qMin(low[j], v[j]);
+                            high[j] = qMax(high[j], v[j]);
+                        }
+                }
+    for (auto &d : datums)
+        if (d.visible)
+            for (auto v : datumSegments(d.geometry.id)) {
                 if (first) {
                     low = high = v;
                     first = false;
@@ -191,6 +218,8 @@ void Viewport::fit() {
                         high[j] = qMax(high[j], v[j]);
                     }
             }
+    if (first)
+        return;
     center = (low + high) / 2;
     float radius = qMax((high - low).length() / 2, 1.f);
     float aspect = float(qMax(width(), 1)) / qMax(height(), 1);
@@ -200,10 +229,55 @@ void Viewport::fit() {
     update();
 }
 void Viewport::setView(QString view) {
+    customOrientation = false;
     orthographic = view != "Isometric";
     yaw = view == "Right" ? 90 : view == "Isometric" ? 35 : 0;
     pitch = view == "Top" ? 90 : view == "Isometric" ? -25 : 0;
     fit();
+}
+void Viewport::setDatums(std::vector<DisplayDatum> values) {
+    datums = std::move(values);
+    update();
+}
+bool Viewport::normalTo(const sketch::Frame &frame) {
+    try {
+        frame.validate();
+    } catch (const std::exception &) {
+        return false;
+    }
+    auto vector = [](sketch::Vec3 p) { return QVector3D(p[0], p[1], p[2]); };
+    auto u = vector(frame.u), v = vector(frame.v), n = QVector3D::crossProduct(u, v);
+    QMatrix3x3 rotation;
+    for (int j = 0; j < 3; ++j) {
+        rotation(0, j) = u[j];
+        rotation(1, j) = v[j];
+        rotation(2, j) = n[j];
+    }
+    orientation = QQuaternion::fromRotationMatrix(rotation);
+    customOrientation = true;
+    orthographic = true;
+    center = vector(frame.origin) * 1000;
+    pan = {};
+    update();
+    return true;
+}
+QVector<QVector3D> Viewport::datumSegments(QString id) const {
+    auto vector = [](sketch::Vec3 p) { return QVector3D(p[0], p[1], p[2]); };
+    for (auto &display : datums) {
+        auto &d = display.geometry;
+        if (d.id != id)
+            continue;
+        auto o = vector(d.frame.origin) * 1000;
+        float size = 10;
+        if (d.kind == "DatumAxis") {
+            auto direction = vector(d.direction) * size;
+            return {o - direction, o + direction};
+        }
+        auto u = vector(d.frame.u) * size, v = vector(d.frame.v) * size;
+        return {o - u - v, o + u - v, o + u - v,    o + u + v,    o + u + v,    o - u + v,
+                o - u + v, o - u - v, o - u * .15f, o + u * .15f, o - v * .15f, o + v * .15f};
+    }
+    return {};
 }
 QPointF Viewport::project(QVector3D point) const {
     auto p = matrix() * QVector4D(point, 1);
@@ -212,7 +286,38 @@ QPointF Viewport::project(QVector3D point) const {
     return {(p.x() / p.w() + 1) * width() / 2, (1 - p.y() / p.w()) * height() / 2};
 }
 Selection Viewport::pick(QPointF pos) const {
-    if (!mesh || stale || failed)
+    if (stale || failed)
+        return {};
+    if (filter == "Datum") {
+        Selection hit;
+        double best = 9, depth = std::numeric_limits<double>::max();
+        for (auto &d : datums) {
+            if (!d.visible)
+                continue;
+            auto vertices = datumSegments(d.geometry.id);
+            for (int i = 0; i + 1 < vertices.size(); i += 2) {
+                auto a = project(vertices[i]), b = project(vertices[i + 1]), ab = b - a;
+                if (std::abs(a.x()) >= 1e8 || std::abs(b.x()) >= 1e8)
+                    continue;
+                auto length2 = QPointF::dotProduct(ab, ab);
+                double t = length2 > 1e-12
+                               ? qBound(0., QPointF::dotProduct(pos - a, ab) / length2, 1.)
+                               : 0.;
+                auto pixels = QLineF(pos, a + ab * t).length();
+                auto p = matrix() * QVector4D(vertices[i] * (1 - t) + vertices[i + 1] * t, 1);
+                double z = p.z() / p.w();
+                if (p.w() <= 0 || z < -1 || z > 1)
+                    continue;
+                if (pixels < best - .01 || (std::abs(pixels - best) < .01 && z < depth)) {
+                    best = pixels;
+                    depth = z;
+                    hit = {d.geometry.kind, d.geometry.id, {}};
+                }
+            }
+        }
+        return hit;
+    }
+    if (!mesh)
         return {};
     bool invertible = false;
     auto inverse = matrix().inverted(&invertible);
@@ -300,8 +405,13 @@ void Viewport::mouseMoveEvent(QMouseEvent *e) {
     auto delta = e->position().toPoint() - previous;
     previous = e->position().toPoint();
     if (e->buttons() & Qt::RightButton) {
-        yaw += delta.x() * .5f;
-        pitch = qBound(-89.f, pitch + delta.y() * .5f, 89.f);
+        if (customOrientation)
+            orientation = QQuaternion::fromAxisAndAngle(1, 0, 0, delta.y() * .5f) *
+                          QQuaternion::fromAxisAndAngle(0, 1, 0, delta.x() * .5f) * orientation;
+        else {
+            yaw += delta.x() * .5f;
+            pitch = qBound(-89.f, pitch + delta.y() * .5f, 89.f);
+        }
     }
     if (e->buttons() & Qt::MiddleButton)
         pan += QVector2D(delta.x(), -delta.y()) * (2 * span / qMax(height(), 1));
@@ -312,8 +422,12 @@ void Viewport::mouseReleaseEvent(QMouseEvent *e) {
         (e->position().toPoint() - press).manhattanLength() >= 4) {
         auto delta = e->position() - press;
         QMatrix4x4 rotation;
-        rotation.rotate(pitch, 1, 0, 0);
-        rotation.rotate(yaw, 0, 1, 0);
+        if (customOrientation)
+            rotation.rotate(orientation);
+        else {
+            rotation.rotate(pitch, 1, 0, 0);
+            rotation.rotate(yaw, 0, 1, 0);
+        }
         auto world = rotation.inverted().mapVector(
             QVector3D(float(delta.x()), float(-delta.y()), 0) * (2 * span / qMax(height(), 1)));
         emit componentDragged(draggedOccurrence, world);

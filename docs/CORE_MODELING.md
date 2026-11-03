@@ -95,7 +95,7 @@ contracts/evidence retain their original historical scope.
 - [x] **CM4.a:** Extend the dependency graph to support typed geometry references and reject cycles/order violations. Production structural implementation and available-Mac development-build verification: [CM4.a evidence](testing/core-modeling-cm4-a.md). This does not close CM4.b–e or whole-CM4 acceptance.
 - [x] **CM4.b:** Implement described plane/axis modes, face attachment, Convert Entities and external sketch references. Exact engine/read-only worker implementation and available-Mac development verification: [CM4.b evidence](testing/core-modeling-cm4-b.md). Durable definitions/evolution/repair, native controls and full CM4 acceptance remain CM4.c–e.
 - [x] **CM4.c:** Persist support definitions and unique reference evolution; require explicit missing/ambiguous repair. Production implementation and available-Mac development verification: [CM4.c evidence](testing/core-modeling-cm4-c.md). CM4.d/e and full CM4 acceptance remain open.
-- [ ] **CM4.d:** Add native datum selection/visibility and Normal To navigation.
+- [x] **CM4.d:** Add native datum selection/visibility and Normal To navigation. Production selection/display/navigation implementation and available-Mac development/native verification: [CM4.d evidence](testing/core-modeling-cm4-d.md). Support authoring, CM4.e course workflows and full acceptance remain open.
 - [ ] **CM4.e:** Change upstream supports, rebuild descendants, repair, undo and reopen without freezing the former frame.
 
 ### CM5 — Extrude/revolve, regions, thin features and draft

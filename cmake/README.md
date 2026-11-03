@@ -242,3 +242,12 @@ specification and source-integrity evidence. Focused checks use
 tests use marked disposable roots; transport tests need local socket access.
 See [CM4.c evidence](../docs/testing/core-modeling-cm4-c.md). This does not certify
 CM4.d native controls or CM4.e full course/platform/resource acceptance.
+
+CM4.d: `python3 tools/verify_cm4_native.py --native` records the full enabled
+suite, pinned format, changed-source Clang analysis, ownership/coverage/specification
+checks and datum UI workflows in mm/in at 100/125/150/175/200% effective scales.
+Focused headless verification is `ctest --preset macos-debug -R '^cm4\.' --output-on-failure`.
+All worker/project roots are marked disposable; IPC requires local socket access.
+The native datum browser, model-tree visibility, viewport Datum filter and Normal To
+inspect accepted supports. Support authoring and CM4.e complete workflows remain
+open. See [CM4.d scope and evidence](../docs/testing/core-modeling-cm4-d.md).
