@@ -112,3 +112,10 @@ normal approval review and passed; no approval check was bypassed.
 final author review and scope rulings. It is not independent review or merge
 approval. The accepted mesh remains displayed during exact draft preview; planar
 interaction previews keep their existing scope until strict model admission.
+
+## Delivery
+
+Feature commit `3c4dc55` is on `origin/review/cm4-e-20261103`, with its remote
+SHA verified. A documentation-only follow-up records delivery in
+[delivery evidence](artifacts/core-modeling/cm4-e-20261103/delivery.json). No merge
+or force-push was performed. Independent review is still required before merge.

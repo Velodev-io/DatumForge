@@ -1,0 +1,18 @@
+{
+  "status": "Pass",
+  "verified_at_utc": "2026-11-03T06:31:09.985453+00:00",
+  "remote": "origin",
+  "branch": "review/cm4-e-20261103",
+  "verified_feature_commit": "3c4dc557b86ffd3171d512387c62b613399f9ff4",
+  "remote_feature_sha": "3c4dc557b86ffd3171d512387c62b613399f9ff4",
+  "verification_command": [
+    "git",
+    "ls-remote",
+    "--exit-code",
+    "origin",
+    "refs/heads/review/cm4-e-20261103"
+  ],
+  "merged": false,
+  "force_pushed": false,
+  "scope": "Feature commit delivery verified before this documentation-only follow-up; final branch HEAD is checked again after publishing the follow-up."
+}
