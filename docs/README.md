@@ -92,3 +92,9 @@ CM4.b adds the exact datum/associative support engine and read-only worker
 previews: [implementation/evidence](testing/core-modeling-cm4-b.md). Durable
 support definitions and topology evolution/repair remain CM4.c; native datum
 controls/navigation remain CM4.d. Engine previews do not close those gates.
+
+CM4.c adds durable original support definitions, unique reference-evolution
+evidence and explicit worker repair: [implementation/verification](testing/core-modeling-cm4-c.md).
+CM4.c production implementation and available-Mac development verification passed
+(87 enabled tests and scoped static checks). Native controls remain CM4.d and
+full workflows/acceptance remain CM4.e.

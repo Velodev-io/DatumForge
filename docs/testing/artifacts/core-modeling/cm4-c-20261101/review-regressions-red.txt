@@ -1,0 +1,18 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 67: cm4.support_store
+1/2 Test #67: cm4.support_store ................***Failed    2.43 sec
+FAIL: Source topology is missing; choose a replacement explicitly
+
+    Start 68: cm4.support_evolution
+2/2 Test #68: cm4.support_evolution ............***Failed    0.58 sec
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/support_evolution.cpp:60: scene.inspect(source).value("state") == "Direct"
+
+
+0% tests passed, 2 tests failed out of 2
+
+Total Test time (real) =   3.01 sec
+
+The following tests FAILED:
+	 67 - cm4.support_store (Failed)
+	 68 - cm4.support_evolution (Failed)
+Errors while running CTest

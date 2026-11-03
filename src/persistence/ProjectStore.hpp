@@ -34,7 +34,8 @@ class ProjectStore {
     void reconcile();
     void cleanupStaging();
     QCborMap mutate(const wire::Envelope &e, const exchange::Control &control);
-    QCborMap deltaFor(const wire::Envelope &e, QCborMap &inverse);
+    QCborMap deltaFor(const wire::Envelope &e, QCborMap &inverse,
+                      const exchange::Control &control = {});
     void record(const wire::Envelope &e, QByteArray hash, QCborMap before, QCborMap after,
                 qint64 revision, QString category);
 
@@ -69,6 +70,8 @@ class ProjectStore {
     kernel::Part evaluatePart(QString document, std::optional<QCborArray> candidate = std::nullopt,
                               bool allowFailure = false) const;
     QCborMap referenceCandidates(QString document, QString feature, QString token) const;
+    QCborMap supportReferenceCandidates(QString document, const QCborMap &definition, QString owner,
+                                        int slot, const exchange::Control &control = {}) const;
     QCborMap previewSupports(QString document, const QCborMap &definition,
                              const exchange::Control &control = {}) const;
     QCborMap cacheStatistics() const {

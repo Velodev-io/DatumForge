@@ -46,6 +46,10 @@ through a read-only worker preview. [CM4.b evidence](core-modeling-cm4-b.md) kee
 the engine scope separate from durable support evolution/repair, native controls
 and full CM4.c–e acceptance.
 
+CM4.c adds durable base support collections, unique exact reference evolution and
+explicit repair commands; [its execution record](core-modeling-cm4-c.md) preserves
+the final verification status, failures and remaining CM4.d/e boundaries.
+
 The old source/specification/module reports retain their original scope. The
 extension does not certify Windows/Linux, physical device/assistive technology,
 installed builds or complete physical 8 GB resource budgets. Module 11 is not

@@ -13,6 +13,50 @@
 #include <gp_Pnt2d.hxx>
 namespace cad::geometry {
 namespace {
+QCborMap lineage(QString original, const QCborArray &history, const QStringList &current) {
+    if (current.contains(original))
+        return sketch::fields({{"state", "Direct"}, {"candidates", QCborArray{original}}});
+    QMap<QString, QSet<QString>> next, previous;
+    QSet<QString> deleted;
+    for (auto value : history) {
+        auto record = value.toMap();
+        auto input = record.value("input").toString();
+        if (record.value("deleted").toBool())
+            deleted.insert(input);
+        for (auto target : record.value("modified").toArray()) {
+            next[input].insert(target.toString());
+            if (target.toString() != input)
+                previous[target.toString()].insert(input);
+        }
+    }
+    QSet<QString> seen, candidates;
+    QStringList queue{original};
+    bool split = false, merged = false, removed = false;
+    while (!queue.empty()) {
+        auto token = queue.takeLast();
+        if (seen.contains(token))
+            continue;
+        seen.insert(token);
+        domain::check(seen.size() <= 8192, "ResourceLimit",
+                      "Topology lineage traversal exceeds admission");
+        if (current.contains(token))
+            candidates.insert(token);
+        split = split || next.value(token).size() > 1;
+        merged = merged || previous.value(token).size() > 1;
+        removed = removed || deleted.contains(token);
+        for (auto target : next.value(token))
+            if (target != token)
+                queue.append(target);
+    }
+    auto tokens = candidates.values();
+    std::sort(tokens.begin(), tokens.end());
+    QString state = split || tokens.size() > 1 ? "Split"
+                    : merged                   ? "Merged"
+                    : tokens.size() == 1       ? (tokens[0] == original ? "Direct" : "History")
+                    : removed                  ? "Deleted"
+                                               : "Missing";
+    return sketch::fields({{"state", state}, {"candidates", QCborArray::fromStringList(tokens)}});
+}
 sketch::Frame surfaceFrame(const TopoDS_Face &face, double u, double v) {
     BRepClass_FaceClassifier classifier(face, gp_Pnt2d(u, v), 1e-7);
     domain::check(classifier.State() == TopAbs_IN || classifier.State() == TopAbs_ON,
@@ -188,24 +232,68 @@ SupportAxis SupportReferences::axis(const domain::GeometryReference &r) const {
         direction.Reverse();
     return {siPoint(c.curve->Value(c.first)), coordinates(direction)};
 }
-TopoDS_Shape SupportReferences::topology(const domain::GeometryReference &r) const {
+QCborMap SupportReferences::inspect(const domain::GeometryReference &r, bool replacements) const {
     scope(r);
+    domain::check(r.role == "Face" || r.role == "Edge" || r.role == "Vertex",
+                  "UnsupportedOperation",
+                  "Exact topology inspection requires a face, edge or vertex operand");
     domain::check(stages.contains(r.object), "ReferenceMissing",
                   "Producing feature stage is unavailable");
     auto kind = r.role == "Face" ? TopAbs_FACE : r.role == "Edge" ? TopAbs_EDGE : TopAbs_VERTEX;
-    domain::check(r.role == "Face" || r.role == "Edge" || r.role == "Vertex", "InvalidInput",
-                  "Typed topology reference required");
+    TopTools_IndexedMapOfShape shapes;
+    TopExp::MapShapes(stages.value(r.object), kind, shapes);
+    QMap<QString, int> counts;
+    for (int i = 1; i <= shapes.Extent(); ++i)
+        ++counts[supportToken(shapes(i))];
+    domain::check(!replacements || counts.size() <= 256, "ResourceLimit",
+                  "Reference inspection exceeds 256 candidates");
+    QCborArray sourceHistory;
+    for (auto value : history) {
+        auto feature = value.toMap().value("feature").toString();
+        if (!stageOrder.contains(r.object) ||
+            (stageOrder.contains(feature) &&
+             stageOrder.value(feature) <= stageOrder.value(r.object)))
+            sourceHistory.append(value);
+    }
+    auto resolved = lineage(r.topology, sourceHistory, counts.keys());
+    auto state = resolved.value("state").toString();
+    auto mapped = resolved.value("candidates").toArray();
+    if ((state == "Direct" || state == "History") && mapped.size() == 1 &&
+        counts.value(mapped[0].toString()) != 1)
+        resolved.insert(QStringLiteral("state"), "Ambiguous");
+    QCborArray candidates;
+    for (auto it = counts.cbegin(); it != counts.cend(); ++it)
+        if (replacements && it.value() == 1) {
+            auto candidate = r;
+            candidate.topology = it.key();
+            candidates.append(candidate.map());
+        }
+    resolved.insert(QStringLiteral("reference"), r.map());
+    resolved.insert(QStringLiteral("replacements"), candidates);
+    return resolved;
+}
+TopoDS_Shape SupportReferences::topology(const domain::GeometryReference &r) const {
+    auto resolution = inspect(r, false);
+    auto state = resolution.value("state").toString();
+    domain::check(state != "Split" && state != "Merged" && state != "Ambiguous",
+                  "ReferenceAmbiguous",
+                  "Topology lineage is not unique; choose a replacement explicitly");
+    domain::check(state == "Direct" || state == "History", "ReferenceMissing",
+                  "Source topology is missing; choose a replacement explicitly");
+    auto token = resolution.value("candidates").toArray()[0].toString();
     TopTools_IndexedMapOfShape all;
+    auto kind = r.role == "Face" ? TopAbs_FACE : r.role == "Edge" ? TopAbs_EDGE : TopAbs_VERTEX;
     TopExp::MapShapes(stages.value(r.object), kind, all);
     TopoDS_Shape found;
     for (int i = 1; i <= all.Extent(); ++i)
-        if (supportToken(all(i)) == r.topology) {
-            domain::check(found.IsNull(), "ReferenceAmbiguous",
-                          "Multiple source shapes have this topology signature; repair explicitly");
+        if (supportToken(all(i)) == token) {
+            domain::check(found.IsNull(), "ReferenceAmbiguous", "Duplicate topology signature");
             found = all(i);
         }
-    domain::check(!found.IsNull(), "ReferenceMissing",
-                  "Source topology is missing; repair explicitly");
+    domain::check(!found.IsNull(), "ReferenceMissing", "Resolved topology is unavailable");
+    auto record = sketch::fields({{"reference", r.map()}, {"state", state}, {"resolved", token}});
+    if (!evolution.contains(record))
+        evolution.append(record);
     return found;
 }
 sketch::Frame SupportReferences::tangent(const domain::GeometryReference &r, double u,

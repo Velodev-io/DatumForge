@@ -1,0 +1,24 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.4s)
+-- Generating done (0.2s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/20] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[5/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[6/20] Linking CXX static library libcad_planegcs.a
+[7/20] Linking CXX static library libcad_sketch_solver.a
+[8/20] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[9/20] Linking CXX static library libcad_persistence.a
+[10/20] Automatic MOC for target cad_client
+[11/20] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[12/20] Building CXX object CMakeFiles/cad_client.dir/cad_client_autogen/mocs_compilation.cpp.o
+[13/20] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[14/20] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[15/20] Linking CXX static library libcad_client.a
+[16/20] Building CXX object CMakeFiles/cm4_support_store.dir/tests/core_modeling/support_store.cpp.o
+[17/20] Linking CXX executable cm4_support_store
+[18/20] Building CXX object CMakeFiles/cm4_support_contracts.dir/tests/core_modeling/support_contracts.cpp.o
+[19/20] Linking CXX executable cm4_support_contracts

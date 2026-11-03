@@ -1,0 +1,42 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 68: cm4.support_evolution
+Could not find executable /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm4_support_evolution
+Looked in the following places:
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm4_support_evolution
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm4_support_evolution
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Release/cm4_support_evolution
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Release/cm4_support_evolution
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Debug/cm4_support_evolution
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Debug/cm4_support_evolution
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/MinSizeRel/cm4_support_evolution
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/MinSizeRel/cm4_support_evolution
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/RelWithDebInfo/cm4_support_evolution
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/RelWithDebInfo/cm4_support_evolution
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Deployment/cm4_support_evolution
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Deployment/cm4_support_evolution
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Development/cm4_support_evolution
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Development/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Release/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Release/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Debug/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Debug/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/MinSizeRel/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/MinSizeRel/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/RelWithDebInfo/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/RelWithDebInfo/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Deployment/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Deployment/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Development/cm4_support_evolution
+Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/Development/cm4_support_evolution
+Unable to find executable: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm4_support_evolution
+1/1 Test #68: cm4.support_evolution ............***Not Run   0.00 sec
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.01 sec
+
+The following tests FAILED:
+	 68 - cm4.support_evolution (Not Run)
+Errors while running CTest

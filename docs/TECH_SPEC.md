@@ -685,3 +685,11 @@ Versioned `PreviewModelSupports` is worker-owned and read-only; it preserves
 revision/context/epoch/generation fences and one-running/one-pending coalescing.
 No native datum tool or durable support collection is inferred. [CM4.b evidence](testing/core-modeling-cm4-b.md)
 separates exact engine verification from CM4.c–e and full acceptance.
+
+CM4.c adds [durable support contracts](decisions/core-modeling-cm4-persistence.md):
+original base definitions, atomic mixed-model commits, a sticky reader manifest,
+independently rebuilt reference evolution and explicit revision/fingerprint-gated
+topology repair. `SetModelSupports` preserves associations across saved/recoverable
+revisions and semantic undo; loose feature/sketch replacements on supported Parts
+are refused. [CM4.c evidence](testing/core-modeling-cm4-c.md) records verification
+separately from CM4.d native controls and CM4.e full acceptance.

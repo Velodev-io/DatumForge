@@ -31,6 +31,10 @@ class SupportReferences {
     QMap<QString, SupportAxis> axes;
     QMap<QString, std::vector<SupportCurve>> derived;
     QMap<QString, TopoDS_Shape> stages;
+    QCborArray history;
+    QMap<QString, qsizetype> stageOrder;
+    mutable QCborArray evolution;
+    QCborMap inspect(const domain::GeometryReference &reference, bool replacements = true) const;
     TopoDS_Shape topology(const domain::GeometryReference &reference) const;
     sketch::Frame plane(const domain::GeometryReference &reference) const;
     SupportAxis axis(const domain::GeometryReference &reference) const;

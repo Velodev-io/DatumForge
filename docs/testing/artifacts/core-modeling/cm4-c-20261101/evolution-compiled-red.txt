@@ -1,0 +1,13 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 68: cm4.support_evolution
+1/1 Test #68: cm4.support_evolution ............***Failed    1.13 sec
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/support_evolution.cpp:42: scene.inspect(source).value("state") == "History"
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   1.14 sec
+
+The following tests FAILED:
+	 68 - cm4.support_evolution (Failed)
+Errors while running CTest

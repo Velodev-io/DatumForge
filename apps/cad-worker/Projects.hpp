@@ -69,6 +69,9 @@ class Projects {
                            "PreviewSketches",
                            "PreviewSketchEdit",
                            "PreviewModelSupports",
+                           "SetModelSupports",
+                           "SupportReferenceCandidates",
+                           "ResolveSupportReference",
                            "SetFeatures",
                            "PreviewHistory",
                            "CommitHistory",
@@ -196,6 +199,17 @@ class Projects {
                              (e.command == "SaveAs" &&
                               store->outcome(e.operation).value("durable").toBool())),
                   "StaleSession", "The project session changed");
+            if (e.command == "SupportReferenceCandidates") {
+                wire::keys(p, {"model", "owner", "slot"});
+                check(e.revision == store->revision(), "StaleRevision",
+                      "Project changed before support inspection");
+                auto slot = wire::integer(p, "slot");
+                check(slot >= 0 && slot < 32, "InvalidInput", "Bounded support slot required");
+                return sketch::fields({{"support_reference_resolution",
+                                        store->supportReferenceCandidates(
+                                            e.context.document, p.value("model").toMap(),
+                                            wire::text(p, "owner"), int(slot), control)}});
+            }
             if (e.command == "PreviewModelSupports") {
                 wire::keys(p, {"model"});
                 check(e.revision == store->revision(), "StaleRevision",

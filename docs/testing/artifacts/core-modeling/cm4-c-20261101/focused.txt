@@ -1,0 +1,27 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+      Start 60: cm4.graph
+ 1/11 Test #60: cm4.graph ........................   Passed    0.11 sec
+      Start 61: cm4.plan
+ 2/11 Test #61: cm4.plan .........................   Passed    0.03 sec
+      Start 62: cm4.store
+ 3/11 Test #62: cm4.store ........................   Passed    0.40 sec
+      Start 63: cm4.support_model
+ 4/11 Test #63: cm4.support_model ................   Passed    0.03 sec
+      Start 64: cm4.support_geometry
+ 5/11 Test #64: cm4.support_geometry .............   Passed    0.10 sec
+      Start 65: cm4.support_convert
+ 6/11 Test #65: cm4.support_convert ..............   Passed    0.11 sec
+      Start 66: cm4.support_engine
+ 7/11 Test #66: cm4.support_engine ...............   Passed    0.21 sec
+      Start 67: cm4.support_store
+ 8/11 Test #67: cm4.support_store ................   Passed    2.14 sec
+      Start 68: cm4.support_evolution
+ 9/11 Test #68: cm4.support_evolution ............   Passed    0.10 sec
+      Start 69: cm4.support_worker
+10/11 Test #69: cm4.support_worker ...............   Passed    2.29 sec
+      Start 70: cm4.support_transport
+11/11 Test #70: cm4.support_transport ............   Passed    1.85 sec
+
+100% tests passed, 0 tests failed out of 11
+
+Total Test time (real) =   7.38 sec

@@ -30,8 +30,10 @@ const QString editManifest = primitiveManifest + ";sketch-edits=1";
 const QString dimensionManifest = editManifest + ";sketch-dimensions=1";
 const QString associatedDimensionManifest = dimensionManifest + ";sketch-associated-dimensions=1";
 const QString interactionManifest = associatedDimensionManifest + ";sketch-interactions=1";
+const QString supportManifest = interactionManifest + ";model-supports=1";
 int manifestRequirement(QString value) {
-    return value == interactionManifest           ? 8
+    return value == supportManifest               ? 9
+           : value == interactionManifest         ? 8
            : value == associatedDimensionManifest ? 7
            : value == dimensionManifest           ? 6
            : value == editManifest                ? 5
@@ -48,9 +50,14 @@ int sketchRequirement(const QCborValue &value) {
             result = std::max(result, sketchRequirement(child));
     } else if (value.isMap()) {
         auto map = value.toMap();
+        if ((map.value("supports").isMap() && map.value("features").isArray()) ||
+            (map.contains(QStringLiteral("datums")) &&
+             map.contains(QStringLiteral("attachments")) &&
+             map.contains(QStringLiteral("conversions"))))
+            result = 9;
         if (map.contains(QStringLiteral("entities")) &&
             map.contains(QStringLiteral("constraints")) && map.value("version").toInteger() >= 2)
-            result = int(map.value("version").toInteger());
+            result = std::max(result, int(map.value("version").toInteger()));
         for (auto i = map.cbegin(); i != map.cend(); ++i)
             result = std::max(result, sketchRequirement(i.value()));
     }
@@ -119,13 +126,15 @@ CREATE TABLE save_intents(operation_id TEXT PRIMARY KEY,request_hash BLOB NOT NU
                 QCryptographicHash::hash(manifest.toUtf8(), QCryptographicHash::Sha256).toHex()),
             QDateTime::currentDateTimeUtc().toString(Qt::ISODateWithMs)});
 }
+void validateModelCollection(const QCborMap &collection);
 void validateDelta(const QCborMap &d) {
     if (d.empty())
         return;
     auto type = wire::text(d, "type");
     check(QStringList{"restore_document", "delete_document", "rename", "units", "set_parameter",
                       "remove_parameter", "attach_object", "detach_object", "set_sketches",
-                      "set_features", "set_feature_state", "set_assembly", "set_drawing"}
+                      "set_features", "set_feature_state", "set_assembly", "set_drawing",
+                      "set_model"}
               .contains(type),
           "InvalidProject", "Unsupported semantic delta in project history");
     if (type == "restore_document") {
@@ -148,7 +157,13 @@ void validateDelta(const QCborMap &d) {
     } else {
         domain::id(wire::text(d, "owner"));
         domain::id(wire::text(d, "document"));
-        if (type == "set_drawing") {
+        if (type == "set_model") {
+            wire::keys(d, {"type", "owner", "document", "collection", "sketches"});
+            check(d.value("collection").isMap() && d.value("sketches").isArray(), "InvalidProject",
+                  "Typed model collections required");
+            validateModelCollection(d.value("collection").toMap());
+            sketch::validateAccepted(d.value("sketches").toArray());
+        } else if (type == "set_drawing") {
             wire::keys(d, {"type", "owner", "document", "drawing"});
             drawing::Model::parse(d.value("drawing").toMap());
         } else if (type == "set_assembly") {
@@ -218,7 +233,7 @@ void compatible(Database &db) {
     check(QStringList{manifest, sketchManifest, featureManifest, historyManifest, exchangeManifest,
                       assemblyManifest, drawingManifest, coreManifest, constructionManifest,
                       primitiveManifest, editManifest, dimensionManifest,
-                      associatedDimensionManifest, interactionManifest}
+                      associatedDimensionManifest, interactionManifest, supportManifest}
               .contains(db.scalar("SELECT manifest FROM project_meta").toString()),
           "IncompatibleSchema",
           "Unsupported semantic/object encoding; original file was not changed");
@@ -338,6 +353,56 @@ kernel::Part buildPart(Database &database, const QCborArray &sketches,
                                   wire::text(p, "units"), wire::text(p, "healing"))
                 .shape;
         });
+}
+void validateModelCollection(const QCborMap &c) {
+    auto keys =
+        c.contains(QStringLiteral("supports"))
+            ? QSet<QString>{"features", "supports", "support_evolution"}
+        : c.contains(QStringLiteral("checkpoint_features"))
+            ? QSet<QString>{"features", "checkpoint_features", "checkpoint_sketches", "stale"}
+            : QSet<QString>{"features"};
+    wire::keys(c, keys);
+    check(c.value("features").isArray(), "InvalidProject", "Typed feature collection required");
+    features::parse(c.value("features").toArray());
+    if (c.contains(QStringLiteral("supports"))) {
+        check(c.value("supports").isMap() && c.value("support_evolution").isArray(),
+              "InvalidProject", "Typed support collection and evolution required");
+        check(c.value("support_evolution").toArray().size() <= 2048, "ResourceLimit",
+              "Support evolution exceeds operand admission");
+        QSet<QByteArray> references;
+        for (auto value : c.value("support_evolution").toArray()) {
+            check(value.isMap(), "InvalidProject", "Typed evolution record required");
+            auto record = value.toMap();
+            wire::keys(record, {"reference", "state", "resolved"});
+            auto reference = domain::GeometryReference::parse(record.value("reference").toMap());
+            check(!reference.topology.isEmpty() &&
+                      (record.value("state") == "Direct" || record.value("state") == "History"),
+                  "InvalidProject", "Only uniquely resolved topology can be retained");
+            reference.topology = wire::text(record, "resolved");
+            reference.validate();
+            auto identity =
+                QCborValue(record.value("reference")).toCbor(QCborValue::SortKeysInMaps);
+            check(!references.contains(identity), "InvalidProject", "Repeated evolution reference");
+            references.insert(identity);
+        }
+        auto model = model::SupportDefinition::parse(c.value("supports").toMap());
+        check(model.features == c.value("features").toArray(), "InvalidProject",
+              "Support and feature collections disagree");
+    } else if (c.contains(QStringLiteral("checkpoint_features"))) {
+        check(c.value("stale").isBool(), "InvalidProject", "Explicit checkpoint status required");
+        features::parse(c.value("checkpoint_features").toArray());
+        sketch::validateAccepted(c.value("checkpoint_sketches").toArray());
+    }
+}
+geometry::SupportResult rebuildSupports(Database &db, const QCborMap &collection,
+                                        kernel::ResultCache *cache = nullptr,
+                                        const exchange::Control &control = {}) {
+    return geometry::evaluateSupports(
+        model::SupportDefinition::parse(collection.value("supports").toMap()),
+        [&](const QCborArray &sketches, const QCborArray &features) {
+            return buildPart(db, sketches, features, cache);
+        },
+        control);
 }
 } // namespace
 ProjectStore::ProjectStore(QString recoveryDirectory, StoreOptions settings)
@@ -490,7 +555,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
         check(assemblyDefinitions.value(doc).first == "Assembly" && row[1].toString() == doc &&
                   QStringList{assemblyManifest, drawingManifest, coreManifest, constructionManifest,
                               primitiveManifest, editManifest, dimensionManifest,
-                              associatedDimensionManifest, interactionManifest}
+                              associatedDimensionManifest, interactionManifest, supportManifest}
                       .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
               "InvalidProject", "Invalid assembly collection owner/manifest");
         auto m = assembly::Model::parse(decode(row[2]));
@@ -512,7 +577,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                   row[2].toLongLong() == 0 &&
                   QStringList{drawingManifest, coreManifest, constructionManifest,
                               primitiveManifest, editManifest, dimensionManifest,
-                              associatedDimensionManifest, interactionManifest}
+                              associatedDimensionManifest, interactionManifest, supportManifest}
                       .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
               "InvalidProject", "Invalid drawing collection owner/manifest");
         auto model = drawing::Model::parse(decode(row[3]));
@@ -571,10 +636,45 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                   QStringList{featureManifest, historyManifest, exchangeManifest, assemblyManifest,
                               drawingManifest, coreManifest, constructionManifest,
                               primitiveManifest, editManifest, dimensionManifest,
-                              associatedDimensionManifest, interactionManifest}
+                              associatedDimensionManifest, interactionManifest, supportManifest}
                       .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
               "InvalidProject", "Invalid feature collection context or manifest");
         auto collection = decode(row[0]);
+        if (collection.contains(QStringLiteral("supports"))) {
+            check(semanticRequirement >= 9, "IncompatibleSchema",
+                  "Model-support manifest required");
+            validateModelCollection(collection);
+            auto model = model::SupportDefinition::parse(collection.value("supports").toMap());
+            check(model.document == row[1].toString(), "InvalidProject",
+                  "Support document mismatch");
+            for (auto &datum : model.datums) {
+                auto ids = datum.outputs();
+                if (!ids.contains(datum.id))
+                    ids.append(datum.id);
+                for (auto id : ids) {
+                    check(!sketchIds.contains(id), "InvalidProject", "Datum identity collision");
+                    sketchIds.insert(id);
+                }
+            }
+            for (auto &conversion : model.conversions) {
+                check(!sketchIds.contains(conversion.id), "InvalidProject",
+                      "Conversion identity collision");
+                sketchIds.insert(conversion.id);
+            }
+            for (auto &feature : features::parse(model.features)) {
+                check(!sketchIds.contains(feature.id), "InvalidProject",
+                      "Feature identity collision");
+                sketchIds.insert(feature.id);
+            }
+            auto rebuilt = rebuildSupports(candidate, collection, &resultCache);
+            auto stored =
+                candidate.scalar("SELECT definition FROM sketch_entities WHERE entity_id=?",
+                                 {owner(candidate, row[1].toString())});
+            check(sketch::encode(rebuilt.sketches) == decode(stored).value("sketches").toArray() &&
+                      rebuilt.evolution == collection.value("support_evolution").toArray(),
+                  "InvalidProject", "Stored support evaluation disagrees with exact rebuild");
+            continue;
+        }
         bool history = collection.contains(QStringLiteral("checkpoint_features"));
         wire::keys(collection, history ? QSet<QString>{"features", "checkpoint_features",
                                                        "checkpoint_sketches", "stale"}
@@ -585,7 +685,8 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                         historyManifest ||
                     QStringList{exchangeManifest, assemblyManifest, drawingManifest, coreManifest,
                                 constructionManifest, primitiveManifest, editManifest,
-                                dimensionManifest, associatedDimensionManifest, interactionManifest}
+                                dimensionManifest, associatedDimensionManifest, interactionManifest,
+                                supportManifest}
                         .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
                 "IncompatibleSchema", "History manifest required");
             check(collection.value("stale").isBool(), "InvalidProject",
@@ -702,6 +803,11 @@ QCborMap ProjectStore::state() const {
              {"feature_status", featureState(doc).value("stale").toBool() ? "Stale" : "Current"},
              {"sketches", sketches(doc)},
              {"sketch_diagnostics", sketch::validateAccepted(sketches(doc))}}));
+        if (featureState(doc).contains(QStringLiteral("supports"))) {
+            auto item = docs.last().toMap();
+            item.insert(QStringLiteral("model_supports"), featureState(doc).value("supports"));
+            docs[docs.size() - 1] = item;
+        }
         if (r[1].toString() == "Drawing") {
             auto item = docs.last().toMap();
             item.insert(QStringLiteral("drawing"), drawingModel(doc).map());
@@ -750,6 +856,11 @@ QCborArray ProjectStore::profileSketches(QString document, QCborArray definition
 kernel::Part ProjectStore::evaluatePart(QString document, std::optional<QCborArray> candidate,
                                         bool allowFailure) const {
     auto collection = featureState(document);
+    if (collection.contains(QStringLiteral("supports"))) {
+        check(!candidate || *candidate == collection.value("features").toArray(),
+              "UnsupportedOperation", "Edit the complete support model to retain its associations");
+        return rebuildSupports(*db, collection, &resultCache).part;
+    }
     auto definitions = candidate ? *candidate : features(document);
     auto result =
         buildPart(*db, profileSketches(document, definitions), definitions, &resultCache,
@@ -803,6 +914,37 @@ QCborMap ProjectStore::referenceCandidates(QString document, QString ownerId, QS
                   QCborArray::fromStringList(plan.descendants.value(ownerId)));
     return result;
 }
+QCborMap ProjectStore::supportReferenceCandidates(QString document, const QCborMap &definition,
+                                                  QString owner, int slot,
+                                                  const exchange::Control &control) const {
+    auto model = model::SupportDefinition::parse(definition);
+    check(model.document == "Self" || model.document == document, "StaleSession",
+          "Support document changed");
+    model.document = document;
+    check(db &&
+              db->scalar("SELECT type FROM documents WHERE id=?", {document}).toString() == "Part",
+          "UnsupportedOperation", "Support inspection requires a Part");
+    domain::id(owner);
+    check(slot >= 0 && slot < 32, "InvalidInput", "Bounded support operand slot required");
+    auto result = geometry::evaluateSupports(
+                      model,
+                      [&](const QCborArray &sketches, const QCborArray &features) {
+                          return buildPart(*db, sketches, features, &resultCache);
+                      },
+                      control, owner, slot)
+                      .inspection;
+    result.insert(
+        QStringLiteral("fingerprint"),
+        QCryptographicHash::hash(QCborValue(model.map()).toCbor(QCborValue::SortKeysInMaps),
+                                 QCryptographicHash::Sha256)
+            .toHex());
+    result.insert(QStringLiteral("owner"), owner);
+    result.insert(QStringLiteral("slot"), slot);
+    result.insert(QStringLiteral("revision"), revision());
+    check(QCborValue(result).toCbor().size() <= qsizetype(limits::control), "ResourceLimit",
+          "Support inspection exceeds control admission");
+    return result;
+}
 QCborMap ProjectStore::previewSupports(QString document, const QCborMap &definition,
                                        const exchange::Control &control) const {
     check(db &&
@@ -829,7 +971,8 @@ QCborMap ProjectStore::outcome(QString op) const {
                                   {"revision", rows[0][0].toLongLong()},
                                   {"result", decode(rows[0][1])}});
 }
-QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse) {
+QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse,
+                                const exchange::Control &control) {
     auto &p = e.payload;
     auto doc = e.context.document;
     auto entity = owner(*db, doc);
@@ -953,6 +1096,67 @@ QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse) {
                        {"document", doc},
                        {"assembly", model.map()}});
     }
+    if (e.command == "SetModelSupports" || e.command == "ResolveSupportReference") {
+        check(db->scalar("SELECT type FROM documents WHERE id=?", {doc}).toString() == "Part",
+              "UnsupportedOperation", "Model supports require a Part");
+        auto model = model::SupportDefinition::parse(p.value("model").toMap());
+        check(model.document == "Self" || model.document == doc, "StaleSession",
+              "Support document changed");
+        model.document = doc;
+        if (e.command == "ResolveSupportReference") {
+            wire::keys(p, {"model", "owner", "slot", "replacement", "fingerprint"});
+            auto id = domain::id(wire::text(p, "owner"));
+            auto slot = wire::integer(p, "slot");
+            check(slot >= 0 && slot < 32, "InvalidInput", "Bounded support operand slot required");
+            auto inspection = supportReferenceCandidates(doc, model.map(), id, int(slot), control);
+            check(inspection.value("fingerprint") == p.value("fingerprint"), "StaleRevision",
+                  "Support model changed before repair");
+            check(inspection.value("replacements").toArray().contains(p.value("replacement")),
+                  "InvalidInput", "Choose one of the current exact typed candidates");
+            auto replacement = domain::GeometryReference::parse(p.value("replacement").toMap());
+            bool replaced = false;
+            for (auto &datum : model.datums)
+                if (datum.id == id || datum.outputs().contains(id)) {
+                    check(size_t(slot) < datum.references.size(), "InvalidInput",
+                          "Missing operand slot");
+                    datum.references[size_t(slot)] = replacement;
+                    replaced = true;
+                }
+            for (auto &conversion : model.conversions)
+                if (conversion.id == id) {
+                    check(size_t(slot) < conversion.sources.size(), "InvalidInput",
+                          "Missing operand slot");
+                    conversion.sources[size_t(slot)] = replacement;
+                    replaced = true;
+                }
+            for (auto &attachment : model.attachments)
+                if (attachment.sketch == id && slot == 0) {
+                    attachment.reference = replacement;
+                    replaced = true;
+                }
+            check(replaced, "ReferenceMissing", "Support owner is missing");
+        } else
+            wire::keys(p, {"model"});
+        auto collection = values({{"features", model.features},
+                                  {"supports", model.map()},
+                                  {"support_evolution", QCborArray{}}});
+        auto result = rebuildSupports(*db, collection, &resultCache, control);
+        collection.insert(QStringLiteral("support_evolution"), result.evolution);
+        inverse = values({{"type", "set_model"},
+                          {"owner", entity},
+                          {"document", doc},
+                          {"collection", featureState(doc)},
+                          {"sketches", sketches(doc)}});
+        return values({{"type", "set_model"},
+                       {"owner", entity},
+                       {"document", doc},
+                       {"collection", collection},
+                       {"sketches", sketch::encode(result.sketches)}});
+    }
+    if (QStringList{"SetSketches", "SetFeatures", "CommitHistory", "ResolveReference"}.contains(
+            e.command))
+        check(!featureState(doc).contains(QStringLiteral("supports")), "UnsupportedOperation",
+              "Edit the complete support model to preserve its associations");
     if (e.command == "SetFeatures" || e.command == "CommitHistory" ||
         e.command == "ResolveReference") {
         QCborArray incoming;
@@ -1191,7 +1395,22 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
                          {entity, wire::text(d, "document")})
                       .toInt() == 1,
               "ReferenceMissing", "History entity/document context no longer resolves");
-        if (type == "set_drawing") {
+        if (type == "set_model") {
+            auto c = d.value("collection").toMap();
+            auto sketches = d.value("sketches").toArray();
+            if (c.contains(QStringLiteral("supports"))) {
+                auto rebuilt = rebuildSupports(*db, c, &resultCache);
+                check(sketch::encode(rebuilt.sketches) == sketches &&
+                          rebuilt.evolution == c.value("support_evolution").toArray(),
+                      "InvalidProject", "Model delta disagrees with exact evaluation");
+            }
+            db->run("INSERT INTO features VALUES(?,1,0,?) ON CONFLICT(entity_id) DO UPDATE SET "
+                    "definition=excluded.definition",
+                    {entity, encode(c)});
+            db->run("INSERT INTO sketch_entities VALUES(?,?) ON CONFLICT(entity_id) DO UPDATE SET "
+                    "definition=excluded.definition",
+                    {entity, encode(values({{"sketches", sketches}}))});
+        } else if (type == "set_drawing") {
             auto model = drawing::Model::parse(d.value("drawing").toMap());
             if (model.sheets.empty())
                 db->run("DELETE FROM drawing_views WHERE entity_id=?", {entity});
@@ -1229,10 +1448,10 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
                         "definition=excluded.definition",
                         {entity, encode(collection)});
             db->run(
-                "UPDATE project_meta SET manifest=? WHERE manifest NOT IN (?,?,?,?,?,?,?,?,?,?)",
+                "UPDATE project_meta SET manifest=? WHERE manifest NOT IN (?,?,?,?,?,?,?,?,?,?,?)",
                 {historyManifest, exchangeManifest, assemblyManifest, drawingManifest, coreManifest,
                  constructionManifest, primitiveManifest, editManifest, dimensionManifest,
-                 associatedDimensionManifest, interactionManifest});
+                 associatedDimensionManifest, interactionManifest, supportManifest});
         } else if (type == "set_features") {
             auto a = d.value("features").toArray();
             buildPart(*db, profileSketches(wire::text(d, "document"), a), a, &resultCache);
@@ -1259,11 +1478,11 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
                     "definition=excluded.definition",
                     {entity, bytes});
             db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN "
-                    "(?,?,?,?,?,?,?,?,?,?,?,?)",
+                    "(?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     {sketchManifest, featureManifest, historyManifest, exchangeManifest,
                      assemblyManifest, drawingManifest, coreManifest, constructionManifest,
                      primitiveManifest, editManifest, dimensionManifest,
-                     associatedDimensionManifest, interactionManifest});
+                     associatedDimensionManifest, interactionManifest, supportManifest});
         } else if (type == "set_parameter")
             db->run("INSERT INTO parameters VALUES(?,?,?,?) ON CONFLICT(owner,name) DO UPDATE SET "
                     "dimension=excluded.dimension,value_si=excluded.value_si",
@@ -1282,7 +1501,8 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
         db->run("UPDATE documents SET revision=? WHERE id=?",
                 {revision, wire::text(d, "document")});
     }
-    if ((type == "set_features" || type == "set_feature_state") && !sourceHashes(d).empty())
+    if ((type == "set_features" || type == "set_feature_state" || type == "set_model") &&
+        !sourceHashes(d).empty())
         db->run("UPDATE project_meta SET manifest=?",
                 {db->scalar("SELECT count(*) FROM drawing_views").toInt() > 0
                      ? drawingManifest
@@ -1310,7 +1530,8 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
     // history may still contain extended sketches even when the active state does not.
     auto required = std::max(retainedRequirement, sketchRequirement(d));
     if (required >= 2)
-        db->run("UPDATE project_meta SET manifest=?", {required >= 8   ? interactionManifest
+        db->run("UPDATE project_meta SET manifest=?", {required >= 9   ? supportManifest
+                                                       : required >= 8 ? interactionManifest
                                                        : required >= 7 ? associatedDimensionManifest
                                                        : required >= 6 ? dimensionManifest
                                                        : required >= 5 ? editManifest
@@ -1402,7 +1623,7 @@ QCborMap ProjectStore::mutate(const wire::Envelope &e, const exchange::Control &
             apply(after, next);
             cursor = step[0][0].toLongLong() - (undo ? 1 : 0);
         } else {
-            after = deltaFor(e, before);
+            after = deltaFor(e, before, control);
             apply(after, next);
             db->run("DELETE FROM history WHERE position>?", {cursor});
             ++cursor;
@@ -1419,7 +1640,7 @@ QCborMap ProjectStore::mutate(const wire::Envelope &e, const exchange::Control &
                   qint64(limits::control),
               "ResourceLimit", "Project reply exceeds the bounded control-frame budget");
         if (e.command == "SetDrawing" || e.command == "UpdateDrawing" ||
-            (after.value("type") == "set_drawing"))
+            (after.value("type") == "set_drawing") || after.value("type") == "set_model")
             validate(*db);
         point("before_commit");
         control.checkpoint("Before durable commit", 99);
@@ -1947,7 +2168,8 @@ void ProjectStore::migrationCopy(QString source, QString destination, const Boun
     auto prior = old.scalar("SELECT manifest FROM project_meta").toString();
     check(prior != drawingManifest && prior != coreManifest && prior != constructionManifest &&
               prior != primitiveManifest && prior != editManifest && prior != dimensionManifest &&
-              prior != associatedDimensionManifest && prior != interactionManifest,
+              prior != associatedDimensionManifest && prior != interactionManifest &&
+              prior != supportManifest,
           "IncompatibleSchema", "Project already uses the current semantic manifest");
     spaceFor(QFileInfo(destination).absolutePath(), QFileInfo(source).size() * 2);
     QTemporaryFile staged(QFileInfo(destination).absolutePath() + "/.cad-migration-XXXXXX");
@@ -2076,13 +2298,13 @@ QCborMap ProjectStore::importGeometry(const wire::Envelope &request, QString pat
     auto after = deltaFor(edit, before);
     auto next = revision() + 1;
     apply(after, next);
-    db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN (?,?,?,?,?,?,?)",
+    db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN (?,?,?,?,?,?,?,?)",
             {db->scalar("SELECT count(*) FROM drawing_views").toInt() > 0
                  ? drawingManifest
                  : (db->scalar("SELECT count(*) FROM occurrences").toInt() > 0 ? assemblyManifest
                                                                                : exchangeManifest),
              coreManifest, constructionManifest, primitiveManifest, editManifest, dimensionManifest,
-             associatedDimensionManifest, interactionManifest});
+             associatedDimensionManifest, interactionManifest, supportManifest});
     auto cursor = db->scalar("SELECT history_cursor FROM project_meta").toLongLong();
     db->run("DELETE FROM history WHERE position>?", {cursor});
     db->run("UPDATE project_meta SET revision=?,history_cursor=?", {next, cursor + 1});

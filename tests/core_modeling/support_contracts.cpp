@@ -1,5 +1,6 @@
 #include "Projects.hpp"
 #include "SupportFixture.hpp"
+#include "geometry/occt/Supports.hpp"
 #include "protocol/Client.hpp"
 #include <QCoreApplication>
 #include <QDir>
@@ -7,6 +8,7 @@
 #include <QSignalSpy>
 #include <QTemporaryDir>
 #include <QTest>
+#include <TopExp_Explorer.hxx>
 using namespace cad;
 using namespace support_fixture;
 namespace {
@@ -86,6 +88,36 @@ void workerContract() {
     canceled.canceled = [] { return true; };
     error("Canceled", [&] { worker.run(preview, canceled); });
     CHECK(worker.revision() == revision);
+    CHECK(worker.handles("SetModelSupports") && worker.handles("ResolveSupportReference") &&
+          worker.handles("SupportReferenceCandidates"));
+    auto model = definition();
+    auto committed =
+        worker.run(command("SetModelSupports", sketch::fields({{"model", model.map()}})));
+    CHECK(worker.revision() == revision + 1);
+    auto documents = committed.value("project_state").toMap().value("documents").toArray();
+    CHECK(documents[0].toMap().value("model_supports").isMap());
+    auto display = worker.run(command("DisplayPart", sketch::fields({{"deflection_mm", .2}})));
+    CHECK(!display.value("part_empty").toBool());
+    revision = worker.revision();
+    bool cancelBeforeCommit = false;
+    exchange::Control late;
+    late.canceled = [&] { return cancelBeforeCommit; };
+    late.progress = [&](QString stage, int) {
+        cancelBeforeCommit = stage == "Before durable commit";
+    };
+    model.datums[0].parameters.insert(QStringLiteral("distance"), .06);
+    error("Canceled", [&] {
+        worker.run(command("SetModelSupports", sketch::fields({{"model", model.map()}})), late);
+    });
+    CHECK(worker.revision() == revision);
+    worker.run(command("Undo"));
+    CHECK(worker.run(command("DisplayPart", sketch::fields({{"deflection_mm", .2}})))
+              .value("part_empty")
+              .toBool());
+    worker.run(command("Redo"));
+    CHECK(!worker.run(command("DisplayPart", sketch::fields({{"deflection_mm", .2}})))
+               .value("part_empty")
+               .toBool());
 }
 void transportContract() {
     QTemporaryDir root(QDir::tempPath() + "/cad-module5-cm4-support-client-XXXXXX");
@@ -141,6 +173,54 @@ void transportContract() {
     CHECK(results.empty());
     CHECK(client.state().revision == revision);
     CHECK(client.state().documentRecords == before);
+    client.projectCommand("SetModelSupports", sketch::fields({{"model", d.map()}}));
+    CHECK(wait([&] { return !client.outstanding(); }));
+    CHECK(client.state().revision == revision + 1);
+    auto accepted = client.state().documentRecords;
+    CHECK(accepted[0].toMap().value("model_supports").isMap());
+    near(sketch::parse(accepted[0].toMap().value("sketches").toArray())[1].frame.origin[2], .119);
+    client.restart();
+    CHECK(wait(
+        [&] { return client.ready() && client.state().projectOpen && !client.outstanding(); }));
+    CHECK(client.state().documentRecords == accepted);
+    client.projectCommand("Undo");
+    CHECK(wait([&] { return !client.outstanding(); }));
+    CHECK(client.state().documentRecords[0].toMap().value("model_supports").isUndefined());
+    client.projectCommand("Redo");
+    CHECK(wait([&] { return !client.outstanding(); }));
+    CHECK(client.state().documentRecords[0].toMap().value("model_supports").isMap());
+    CHECK(client.state().revision == revision + 3);
+    auto part = geometry::evaluateSupports(d).part;
+    TopExp_Explorer faces(part.stages.value(features::parse(d.features)[0].id), TopAbs_FACE);
+    CHECK(faces.More());
+    auto selected = ref(features::parse(d.features)[0].id, "Face");
+    selected.topology = kernel::topologyToken(faces.Current());
+    model::Datum extra;
+    extra.references = {selected};
+    extra.references[0].topology = "face/" + QString(64, 'a');
+    extra.parameters = sketch::fields({{"distance", .01}, {"count", 1}});
+    d.datums.push_back(extra);
+    d.history.append(extra.id);
+    QSignalSpy inspected(&client, SIGNAL(supportReferenceResolution(QCborMap)));
+    CHECK(inspected.isValid());
+    client.projectCommand("SupportReferenceCandidates",
+                          sketch::fields({{"model", d.map()}, {"owner", extra.id}, {"slot", 0}}));
+    CHECK(wait([&] { return !client.outstanding() && !inspected.empty(); }));
+    auto resolution = qvariant_cast<QCborMap>(inspected[0][0]);
+    CHECK(resolution.value("state") == "Missing");
+    CHECK(resolution.value("replacements").toArray().contains(selected.map()));
+    CHECK(client.state().revision == revision + 3);
+    client.projectCommand("ResolveSupportReference",
+                          sketch::fields({{"model", d.map()},
+                                          {"owner", extra.id},
+                                          {"slot", 0},
+                                          {"replacement", selected.map()},
+                                          {"fingerprint", resolution.value("fingerprint")}}));
+    CHECK(wait([&] { return !client.outstanding(); }));
+    CHECK(client.state().revision == revision + 4);
+    auto savedModel = model::SupportDefinition::parse(
+        client.state().documentRecords[0].toMap().value("model_supports").toMap());
+    CHECK(savedModel.datums.back().references[0].map() == selected.map());
 }
 } // namespace
 int main(int argc, char **argv) {

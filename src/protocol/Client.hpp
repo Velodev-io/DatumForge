@@ -128,6 +128,7 @@ class Client : public QObject {
     void sketchEditPreview(QCborArray sketches, QCborArray affectedConstraints);
     void partResult(QCborMap result);
     void referenceResolution(QCborMap result);
+    void supportReferenceResolution(QCborMap result);
     void exchangeProgress(QString stage, int percent);
     void exchangeReport(QCborMap result);
     void drawingInformation(QCborMap result);

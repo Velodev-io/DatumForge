@@ -200,7 +200,8 @@ class Worker : public QObject {
                 QStringList{"SetSketches", "SetFeatures", "CommitHistory", "ResolveReference",
                             "SetAssembly", "PreviewAssembly", "DisplayAssembly", "SetDrawing",
                             "UpdateDrawing", "PreviewDrawing", "DisplayDrawing", "ExportDrawing",
-                            "Undo", "Redo", "PreviewModelSupports"}
+                            "Undo", "Redo", "PreviewModelSupports", "SetModelSupports",
+                            "SupportReferenceCandidates", "ResolveSupportReference"}
                     .contains(e.command))
                 startExchange(e);
             else

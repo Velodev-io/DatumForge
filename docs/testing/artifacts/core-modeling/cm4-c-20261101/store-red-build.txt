@@ -1,0 +1,16 @@
+[1/16] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/16] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/16] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/16] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[5/16] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[6/16] Linking CXX static library libcad_planegcs.a
+[7/16] Linking CXX static library libcad_sketch_solver.a
+[8/16] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Datums.cpp.o
+[9/16] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/SupportReferences.cpp.o
+[10/16] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Convert.cpp.o
+[11/16] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Supports.cpp.o
+[12/16] Linking CXX static library libcad_support_geometry.a
+[13/16] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[14/16] Linking CXX static library libcad_persistence.a
+[15/16] Building CXX object CMakeFiles/cm4_support_store.dir/tests/core_modeling/support_store.cpp.o
+[16/16] Linking CXX executable cm4_support_store

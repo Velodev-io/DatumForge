@@ -1885,12 +1885,16 @@
     "full_acceptance_status": "Blocked: CM4.c-e, other-platform/device/installed/resource acceptance"
   },
   "CM4.c": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM4.c durable same-Part original support definitions, atomic mixed-model history, saved/recoverable rebuild, unique producing-stage Modified topology lineage and explicit typed worker repair verified on the available Mac development build. All 87 enabled CTests, pinned format, 12 Clang analyses, ownership, coverage, specifications and 246 source/configuration hashes passed. Retain the documented intermittent unchanged CM3 repeatability failure; its isolated repeats and final full run passed. Preserve CM4.d/e, deferred 6.1b/6.4c/7.4c and the Module 11 boundary.",
+    "implementation_status": "Pass: CM4.c durable model/worker implementation and available-Mac development verification",
+    "experiments_status": "Production tests use real OCCT/PlaneGCS/SQLite and isolated worker transport; no Module 0 shortcut",
+    "native_verification_status": "Not run: new datum controls remain CM4.d",
+    "full_acceptance_status": "Blocked: CM4.d/e and unrun course/platform/device/installed/resource acceptance",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/decisions/core-modeling-cm4-persistence.md",
+      "docs/testing/core-modeling-cm4-c.md",
+      "docs/testing/artifacts/core-modeling/cm4-c-20261101/verification.json"
     ]
   },
   "CM4.d": {

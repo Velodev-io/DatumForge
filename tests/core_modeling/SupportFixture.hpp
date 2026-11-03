@@ -11,15 +11,16 @@ inline domain::GeometryReference ref(QString object, QString role, QString entit
     return r;
 }
 template <class F> void error(QString expected, F &&action) {
-    QString code;
+    QString code, message;
     try {
         action();
     } catch (const domain::Error &e) {
         code = e.code;
+        message = QString::fromUtf8(e.what());
     }
     if (code != expected)
         throw std::runtime_error("Expected " + expected.toStdString() + ", got " +
-                                 code.toStdString());
+                                 code.toStdString() + ": " + message.toStdString());
 }
 inline void vector(sketch::Vec3 actual, sketch::Vec3 expected, double tolerance = 1e-10) {
     for (int i = 0; i < 3; ++i)

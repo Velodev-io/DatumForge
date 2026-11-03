@@ -18,7 +18,8 @@ sketch::Frame attachmentFrame(const model::Attachment &a, const SupportReference
     return f;
 }
 SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportBuild &build,
-                               const exchange::Control &control) {
+                               const exchange::Control &control, QString inspectOwner,
+                               int inspectSlot) {
     d.map(); // Validate the complete graph/history and transport admission first.
     control.checkpoint("Preparing model supports", 0);
     auto base = sketch::parse(d.sketches);
@@ -49,13 +50,17 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
     }
     for (auto &f : features) {
         byFeature.insert(f.id, &f);
+        scene.stageOrder.insert(f.id, d.history.indexOf(f.id));
         admit(f.id);
     }
-    for (auto &datum : d.datums)
+    for (auto &datum : d.datums) {
+        if (!datum.outputs().contains(datum.id))
+            admit(datum.id);
         for (auto id : datum.outputs()) {
             byDatum.insert(id, &datum);
             admit(id);
         }
+    }
     for (auto &c : d.conversions) {
         byConversion.insert(c.id, &c);
         admit(c.id);
@@ -76,6 +81,30 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
         for (qsizetype position = 0; position < d.history.size(); ++position) {
             control.checkpoint("Evaluating model supports", int(position * 100 / d.history.size()));
             auto id = d.history[position];
+            bool inspectAttachment =
+                attachments.contains(inspectOwner) &&
+                (id == inspectOwner ||
+                 (byConversion.contains(id) && byConversion.value(id)->sketch == inspectOwner));
+            if (inspectAttachment || id == inspectOwner ||
+                (byDatum.contains(id) && byDatum.value(id)->id == inspectOwner)) {
+                const std::vector<domain::GeometryReference> *operands = nullptr;
+                std::vector<domain::GeometryReference> attached;
+                if (inspectAttachment) {
+                    attached.push_back(attachments.value(inspectOwner)->reference);
+                    operands = &attached;
+                } else if (byDatum.contains(id))
+                    operands = &byDatum.value(id)->references;
+                else if (byConversion.contains(id))
+                    operands = &byConversion.value(id)->sources;
+                else if (attachments.contains(id)) {
+                    attached.push_back(attachments.value(id)->reference);
+                    operands = &attached;
+                }
+                check(operands && inspectSlot >= 0 && size_t(inspectSlot) < operands->size(),
+                      "InvalidInput", "Choose a current support operand slot");
+                result.inspection = scene.inspect((*operands)[size_t(inspectSlot)]);
+                return result;
+            }
             if (byDatum.contains(id)) {
                 const auto &definition = *byDatum.value(id);
                 if (!evaluatedDatums.contains(definition.id)) {
@@ -155,8 +184,11 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
                 check(!result.part.stale, "StaleResult",
                       "Support preview requires current exact geometry");
                 scene.stages = result.part.stages;
+                scene.history = result.part.history;
             }
         }
+        check(inspectOwner.isEmpty(), "ReferenceMissing", "Support operand owner is missing");
+        result.evolution = scene.evolution;
         result.sketches = base;
         result.planes = scene.planes;
         result.axes = scene.axes;

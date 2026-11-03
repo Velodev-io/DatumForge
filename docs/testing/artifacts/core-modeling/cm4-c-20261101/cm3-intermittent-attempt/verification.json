@@ -1,0 +1,47 @@
+{
+  "status": "Fail",
+  "scope": "CM4.c durable same-Part supports, unique topology evolution and explicit worker repair",
+  "host": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "steps": [
+    {
+      "name": "configure-final",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.7151802080043126
+    },
+    {
+      "name": "build-final",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 17.72251070800121
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 8,
+      "seconds": 382.82689412499894
+    }
+  ],
+  "native_verification": "Not run: native datum controls remain CM4.d",
+  "full_acceptance": "Blocked: CM4.e course/native workflows, installed/other-platform/device/resource matrices unrun",
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false
+}

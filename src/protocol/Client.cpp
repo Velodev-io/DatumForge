@@ -1,6 +1,7 @@
 #include "Client.hpp"
 #include "domain/Documents.hpp"
 #include "drawing/Paths.hpp"
+#include "model/Supports.hpp"
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
@@ -226,7 +227,8 @@ void Client::pump() {
         e.command == "PortableCopy" || e.command == "ExportDrawing" ||
         QStringList{"SetFeatures", "CommitHistory", "SetAssembly", "SetDrawing", "UpdateDrawing",
                     "DisplayDrawing", "PreviewDrawing", "DisplayAssembly", "PreviewAssembly",
-                    "PreviewModelSupports"}
+                    "PreviewModelSupports", "SetModelSupports", "ResolveSupportReference",
+                    "SupportReferenceCandidates"}
             .contains(e.command))
         pending[e.request].deadline = clock.elapsed() + 120000;
     if (!QStringList{"QueryOperation", "GrantFile", "RecoverProject", "ListRecoveries",
@@ -395,11 +397,22 @@ void Client::receive(const QCborMap &m) {
         return;
     wire::require(sameRequest(e, found->request), "reply request correlation");
     auto revision = wire::integer(m, "result_revision");
-    bool reference = QStringList{"LoadReference",     "PreviewReference",    "Measure",
-                                 "PreviewFeatures",   "DisplayPart",         "MeasurePart",
-                                 "PreviewHistory",    "ReferenceCandidates", "PreviewAssembly",
-                                 "DisplayAssembly",   "DisplayDrawing",      "PreviewDrawing",
-                                 "PreviewSketchEdit", "PreviewSketches",     "PreviewModelSupports"}
+    bool reference = QStringList{"LoadReference",
+                                 "PreviewReference",
+                                 "Measure",
+                                 "PreviewFeatures",
+                                 "DisplayPart",
+                                 "MeasurePart",
+                                 "PreviewHistory",
+                                 "ReferenceCandidates",
+                                 "PreviewAssembly",
+                                 "DisplayAssembly",
+                                 "DisplayDrawing",
+                                 "PreviewDrawing",
+                                 "PreviewSketchEdit",
+                                 "PreviewSketches",
+                                 "PreviewModelSupports",
+                                 "SupportReferenceCandidates"}
                          .contains(e.command);
     if ((reference && !visibleResult(projection, e, revision)) || e.epoch != projection.epoch) {
         // An obsolete heavy preview still owns the worker until its terminal
@@ -567,6 +580,16 @@ void Client::receive(const QCborMap &m) {
         projection.phase = Phase::Ready;
         projection.job = "Exact measurement ready";
         emit partResult(data);
+        emit changed();
+        pump();
+        return;
+    }
+    if (e.command == "SupportReferenceCandidates") {
+        wire::keys(data, {"support_reference_resolution"});
+        wire::require(data.value("support_reference_resolution").isMap(),
+                      "Support resolution map required");
+        pending.erase(found);
+        emit supportReferenceResolution(data.value("support_reference_resolution").toMap());
         emit changed();
         pump();
         return;
@@ -807,6 +830,12 @@ void Client::installProject(const QCborMap &m) {
                                           "units",      "revision",      "properties_entity",
                                           "parameters", "sketches",      "sketch_diagnostics",
                                           "features",   "feature_status"};
+        if (d.contains(QStringLiteral("model_supports"))) {
+            documentKeys.insert("model_supports");
+            wire::require(d.value("type").toString() == "Part" && d.value("model_supports").isMap(),
+                          "Part support definition required");
+            model::SupportDefinition::parse(d.value("model_supports").toMap());
+        }
         if (d.contains(QStringLiteral("drawing")))
             documentKeys.insert("drawing");
         if (d.contains(QStringLiteral("assembly")))
@@ -1087,7 +1116,8 @@ void Client::cancelExchange() {
             QStringList{"SetSketches", "SetFeatures", "CommitHistory", "ResolveReference",
                         "SetAssembly", "PreviewAssembly", "DisplayAssembly", "SetDrawing",
                         "UpdateDrawing", "PreviewDrawing", "DisplayDrawing", "ExportDrawing",
-                        "Undo", "Redo", "PreviewModelSupports"}
+                        "Undo", "Redo", "PreviewModelSupports", "SetModelSupports",
+                        "ResolveSupportReference", "SupportReferenceCandidates"}
                 .contains(value.request.command)) {
             auto e = request("CancelJob",
                              QCborMap{{QStringLiteral("operation"), value.request.operation}});

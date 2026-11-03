@@ -1,0 +1,12 @@
+Analyzed src/protocol/Client.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/persistence/ProjectStore.cpp
+Analyzed src/geometry/occt/SupportReferences.cpp
+Analyzed src/geometry/occt/Supports.cpp
+Analyzed tests/core_modeling/support_model.cpp
+Analyzed tests/core_modeling/support_geometry.cpp
+Analyzed tests/core_modeling/support_convert.cpp
+Analyzed tests/core_modeling/support_engine.cpp
+Analyzed tests/core_modeling/support_store.cpp
+Analyzed tests/core_modeling/support_evolution.cpp
+Analyzed tests/core_modeling/support_contracts.cpp

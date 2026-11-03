@@ -234,3 +234,11 @@ isolated client/worker lifecycle. Transport tests require local socket access;
 storage roots are marked disposable. [CM4.b evidence](../docs/testing/core-modeling-cm4-b.md)
 records the scoped result; this adds no persisted support definitions or native
 datum UI acceptance.
+
+CM4.c: `python3 tools/verify_model_supports.py` records full development build,
+enabled CTest, pinned format, changed-source analysis, ownership, coverage,
+specification and source-integrity evidence. Focused checks use
+`ctest --preset macos-debug -R '^cm4\.' --output-on-failure`. New storage/evolution
+tests use marked disposable roots; transport tests need local socket access.
+See [CM4.c evidence](../docs/testing/core-modeling-cm4-c.md). This does not certify
+CM4.d native controls or CM4.e full course/platform/resource acceptance.

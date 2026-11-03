@@ -10,11 +10,14 @@ struct SupportResult {
     QCborArray conversions;
     QStringList order;
     kernel::Part part;
+    QCborArray evolution;
+    QCborMap inspection;
     QCborMap map(qint64 revision = 0) const;
 };
 sketch::Frame attachmentFrame(const model::Attachment &attachment,
                               const SupportReferences &references);
 SupportResult evaluateSupports(const model::SupportDefinition &definition,
                                const SupportBuild &build = {},
-                               const exchange::Control &control = {});
+                               const exchange::Control &control = {}, QString inspectOwner = {},
+                               int inspectSlot = -1);
 } // namespace cad::geometry

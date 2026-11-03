@@ -3,7 +3,7 @@
 #include "evaluation/Graph.hpp"
 #include "sketch/Sketch.hpp"
 namespace cad::model {
-// Transient engine contracts. CM4.c owns durable support collections/manifests.
+// Versioned semantic definitions shared by previews and durable CM4.c collections.
 struct Datum {
     QString id = newId(), kind = "DatumPlane", mode = "Offset";
     std::vector<domain::GeometryReference> references;
