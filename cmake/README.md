@@ -1,5 +1,14 @@
 # Source builds and commands
 
+CM5.b exact modeling: `python3 tools/verify_cm5_modeling.py` records the complete
+enabled CTest suite, pinned formatting, all nine changed-source Clang analyses,
+ownership/coverage/specification checks and frozen source integrity. Focused check:
+`ctest --preset macos-debug -R '^cm5\.' --output-on-failure`. Worker/transport
+tests require local IPC and marked disposable roots; no user application session
+is reused. This adds transient exact read-only preview, not a saved feature schema
+or new native controls. See [CM5.b evidence and limits](../docs/testing/core-modeling-cm5-b.md).
+CM5.c–e, full platform/device/resource acceptance and Module 11 remain open.
+
 CM5.a contracts: `python3 tools/verify_cm5_intent.py` runs the full enabled CTest
 suite, pinned format, both changed-source Clang analyses, ownership/coverage/spec
 checks and frozen source integrity. Focused check:

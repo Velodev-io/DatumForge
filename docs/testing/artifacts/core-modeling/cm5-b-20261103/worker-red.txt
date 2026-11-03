@@ -1,0 +1,13 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 63: cm5.worker
+1/1 Test #63: cm5.worker .......................***Failed    0.79 sec
+FAIL: Unsupported project command
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.79 sec
+
+The following tests FAILED:
+	 63 - cm5.worker (Failed)
+Errors while running CTest

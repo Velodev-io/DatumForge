@@ -1,0 +1,45 @@
+[1/2] Building CXX object CMakeFiles/cm5_features.dir/tests/core_modeling/modeling_features.cpp.o
+FAILED: [code=1] CMakeFiles/cm5_features.dir/tests/core_modeling/modeling_features.cpp.o
+/usr/bin/c++ -DCAD_SOURCE_ROOT="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/cm5_features.dir/tests/core_modeling/modeling_features.cpp.o -MF CMakeFiles/cm5_features.dir/tests/core_modeling/modeling_features.cpp.o.d -o CMakeFiles/cm5_features.dir/tests/core_modeling/modeling_features.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:252:25: error: no member named 'modelingProfile' in namespace 'cad::geometry'
+  252 |     auto tool=geometry::modelingProfile(limit,fields({{"sketch",limit.id},{"mode","AllClosed"},{"regions",QCborArray{}}}),fields({{"mode","Solid"}})).shape;
+      |                         ^~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:265:68: error: no viable conversion from '(lambda at /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:265:68)' to 'const SourceResolver' (aka 'const function<TopoDS_Shape (const features::Feature &)>')
+  265 |         return kernel::Part::build(sketches,features,nullptr,false,[&](const features::Feature &){return slab;});
+      |                                                                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:639:25: note: candidate constructor not viable: no known conversion from '(lambda at /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:265:68)' to 'nullptr_t' (aka 'std::nullptr_t') for 1st argument
+  639 |   _LIBCPP_HIDE_FROM_ABI function(nullptr_t) _NOEXCEPT {}
+      |                         ^        ~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:640:25: note: candidate constructor not viable: no known conversion from '(lambda at /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:265:68)' to 'const function<TopoDS_Shape (const cad::features::Feature &)> &' for 1st argument
+  640 |   _LIBCPP_HIDE_FROM_ABI function(const function&);
+      |                         ^        ~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:641:25: note: candidate constructor not viable: no known conversion from '(lambda at /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:265:68)' to 'function<TopoDS_Shape (const cad::features::Feature &)> &&' for 1st argument
+  641 |   _LIBCPP_HIDE_FROM_ABI function(function&&) _NOEXCEPT;
+      |                         ^        ~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:643:25: note: candidate template ignored: requirement '__callable<(lambda at /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:265:68) &, false>::value' was not satisfied [with _Fp = (lambda at /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:265:68)]
+  643 |   _LIBCPP_HIDE_FROM_ABI function(_Fp);
+      |                         ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/Part.hpp:21:45: note: passing argument to parameter 'sources' here
+   21 |                       const SourceResolver &sources = {});
+      |                                             ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:264:28: error: no viable conversion from '(lambda at /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:264:34)' to 'geometry::SupportBuild' (aka 'function<kernel::Part (const QCborArray &, const QCborArray &)>')
+  264 |     geometry::SupportBuild build=[&](const QCborArray &sketches,const QCborArray &features) {
+      |                            ^     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  265 |         return kernel::Part::build(sketches,features,nullptr,false,[&](const features::Feature &){return slab;});
+      |         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  266 |     };
+      |     ~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:639:25: note: candidate constructor not viable: no known conversion from '(lambda at /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:264:34)' to 'nullptr_t' (aka 'std::nullptr_t') for 1st argument
+  639 |   _LIBCPP_HIDE_FROM_ABI function(nullptr_t) _NOEXCEPT {}
+      |                         ^        ~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:640:25: note: candidate constructor not viable: no known conversion from '(lambda at /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:264:34)' to 'const function<cad::kernel::Part (const QCborArray &, const QCborArray &)> &' for 1st argument
+  640 |   _LIBCPP_HIDE_FROM_ABI function(const function&);
+      |                         ^        ~~~~~~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:641:25: note: candidate constructor not viable: no known conversion from '(lambda at /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:264:34)' to 'function<cad::kernel::Part (const QCborArray &, const QCborArray &)> &&' for 1st argument
+  641 |   _LIBCPP_HIDE_FROM_ABI function(function&&) _NOEXCEPT;
+      |                         ^        ~~~~~~~~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/c++/v1/__functional/function.h:643:25: note: candidate template ignored: requirement '__callable<(lambda at /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:264:34) &, false>::value' was not satisfied [with _Fp = (lambda at /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:264:34)]
+  643 |   _LIBCPP_HIDE_FROM_ABI function(_Fp);
+      |                         ^
+3 errors generated.
+ninja: build stopped: subcommand failed.

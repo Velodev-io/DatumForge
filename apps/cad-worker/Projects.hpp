@@ -219,15 +219,19 @@ class Projects {
                                             wire::text(p, "owner"), int(slot), control)}});
             }
             if (e.command == "PreviewModelSupports") {
-                wire::keys(p, {"model"});
+                wire::keys(p, p.contains(QStringLiteral("intents"))
+                                  ? QSet<QString>{"model", "intents"}
+                                  : QSet<QString>{"model"});
+                check(!p.contains(QStringLiteral("intents")) || p.value("intents").isArray(),
+                      "InvalidInput", "Modeling intents must be a bounded array");
                 check(e.revision == store->revision(), "StaleRevision",
                       "Project changed before model support preview");
                 check(p.value("model").isMap(), "InvalidInput",
                       "Typed model support definition required");
                 return sketch::fields(
                     {{"model_support_preview",
-                      store->previewSupports(e.context.document, p.value("model").toMap(),
-                                             control)}});
+                      store->previewSupports(e.context.document, p.value("model").toMap(), control,
+                                             p.value("intents").toArray())}});
             }
             if (e.command == "PreviewDrawing" || e.command == "DisplayDrawing" ||
                 e.command == "DrawingAnchors" || e.command == "ExportDrawing") {

@@ -1,6 +1,7 @@
 #include "ProjectStore.hpp"
 #include "drawing/Paint.hpp"
 #include "evaluation/Plan.hpp"
+#include "geometry/occt/ModelingFeatures.hpp"
 #include "geometry/occt/Part.hpp"
 #include "geometry/occt/Supports.hpp"
 #include "sketch/Solver.hpp"
@@ -946,15 +947,17 @@ QCborMap ProjectStore::supportReferenceCandidates(QString document, const QCborM
     return result;
 }
 QCborMap ProjectStore::previewSupports(QString document, const QCborMap &definition,
-                                       const exchange::Control &control) const {
+                                       const exchange::Control &control,
+                                       const QCborArray &intents) const {
     check(db &&
               db->scalar("SELECT type FROM documents WHERE id=?", {document}).toString() == "Part",
           "UnsupportedOperation", "Model support preview requires a Part document");
     auto model = model::SupportDefinition::parse(definition);
     check(model.document == "Self" || model.document == document, "StaleSession",
           "Model support document changed");
-    auto result = geometry::evaluateSupports(
-        model,
+    model.document = document;
+    auto result = geometry::evaluateModeling(
+        model, intents,
         [&](const QCborArray &sketches, const QCborArray &features) {
             return buildPart(*db, sketches, features, &resultCache);
         },

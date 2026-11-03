@@ -26,6 +26,12 @@ struct Part {
     QCborMap reference(QString source, QString token, const Part &former) const;
 };
 QCborArray trace(BRepBuilderAPI_MakeShape &operation, const TopoDS_Shape &input);
+// Shared worker-only admission/profile helpers for exact feature adapters.
+TopoDS_Shape profileShape(const sketch::Sketch &sketch);
+void validateShape(const TopoDS_Shape &shape);
+double shapeVolume(const TopoDS_Shape &shape);
+void recordShapeHistory(Part &part, QString feature, BRepBuilderAPI_MakeShape &operation,
+                        const TopoDS_Shape &input);
 QString topologyToken(const TopoDS_Shape &shape);
 QCborMap evolution(QString token, QCborArray history, QStringList currentTokens);
 struct Effect {

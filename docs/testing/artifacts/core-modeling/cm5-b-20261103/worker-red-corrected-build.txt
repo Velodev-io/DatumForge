@@ -1,0 +1,2 @@
+[1/2] Building CXX object CMakeFiles/cm5_contracts.dir/tests/core_modeling/modeling_contracts.cpp.o
+[2/2] Linking CXX executable cm5_contracts

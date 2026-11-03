@@ -121,3 +121,12 @@ ownership/structural checks; 263 frozen source/configuration hashes matched.
 These definitions are not yet accepted exact features or native tools. CM5.b–e
 remain open; all 29 CM5 workflow rows remain In progress and full acceptance stays
 Blocked. Deferred gates and the stop before Module 11 are unchanged.
+
+CM5.b adds exact transient modeling through the existing read-only worker preview:
+selected regions, starts/extents, independent directions/draft, thin extrude/revolve,
+open cuts and standalone draft. [Scoped available-Mac verification](testing/core-modeling-cm5-b.md)
+passed all 94 enabled CTests, nine Clang analyses, pinned format and ownership/
+structural checks; all 274 source/configuration hashes matched. Unsupported draft
+combinations and the broader exact course corpus are documented. New definitions
+are not yet saved or exposed through new native controls; CM5.c–e and full
+acceptance remain open/Blocked. Deferred gates and Module 11 are unchanged.

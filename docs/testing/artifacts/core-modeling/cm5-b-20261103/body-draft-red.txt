@@ -1,0 +1,22 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 62: cm5.features
+1/1 Test #62: cm5.features .....................***Failed    0.97 sec
+midplane passed
+offset start passed
+vertex start passed
+inclined termination passed
+starts and exact plane limits passed
+independent drafted directions passed
+solid and thin revolves passed
+through-all cut passed
+UpToNext add passed
+FAIL: Drafted body termination is not yet supported
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.97 sec
+
+The following tests FAILED:
+	 62 - cm5.features (Failed)
+Errors while running CTest

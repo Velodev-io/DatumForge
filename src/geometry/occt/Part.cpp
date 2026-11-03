@@ -795,6 +795,19 @@ QCborArray trace(BRepBuilderAPI_MakeShape &operation, const TopoDS_Shape &input)
     recordHistory(result, QString(), operation, input);
     return result.history;
 }
+TopoDS_Shape profileShape(const sketch::Sketch &sketch) {
+    return profiles(sketch);
+}
+void validateShape(const TopoDS_Shape &shape) {
+    valid(shape);
+}
+double shapeVolume(const TopoDS_Shape &shape) {
+    return volume(shape);
+}
+void recordShapeHistory(Part &part, QString feature, BRepBuilderAPI_MakeShape &operation,
+                        const TopoDS_Shape &input) {
+    recordHistory(part, std::move(feature), operation, input);
+}
 QString topologyToken(const TopoDS_Shape &s) {
     return token(s);
 }

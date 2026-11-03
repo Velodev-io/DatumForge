@@ -1,0 +1,9 @@
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/persistence/ProjectStore.cpp
+Analyzed src/geometry/occt/Part.cpp
+Analyzed src/geometry/occt/ModelingProfiles.cpp
+Analyzed src/geometry/occt/ModelingFeatures.cpp
+Analyzed src/geometry/occt/ModelingExtents.cpp
+Analyzed tests/core_modeling/modeling_profiles.cpp
+Analyzed tests/core_modeling/modeling_features.cpp
+Analyzed tests/core_modeling/modeling_contracts.cpp

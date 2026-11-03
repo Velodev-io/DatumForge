@@ -4335,12 +4335,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: startsAndLimits and directed extrusion"
     },
     {
       "id": "CM-121",
@@ -4367,12 +4371,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: startsAndLimits; curvedLimits; failureBoundaries; full face/start variants remain open"
     },
     {
       "id": "CM-122",
@@ -4399,12 +4407,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: point-like Vertex start; full topological vertex corpus remains open"
     },
     {
       "id": "CM-123",
@@ -4431,12 +4443,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: signed Offset start"
     },
     {
       "id": "CM-124",
@@ -4466,12 +4482,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: Blind extrusion"
     },
     {
       "id": "CM-125",
@@ -4501,12 +4521,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: total Midplane depth and drafted halves"
     },
     {
       "id": "CM-126",
@@ -4536,12 +4560,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: point-like UpToVertex termination"
     },
     {
       "id": "CM-127",
@@ -4571,16 +4599,20 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "feasibility": {
         "scope": "Narrow isolated seed only; see per-probe limits. No production/native/persistence completion implied.",
         "evidence": "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
       },
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: inclined, changed upstream, planar and spherical limits; exact cap coverage"
     },
     {
       "id": "CM-128",
@@ -4610,12 +4642,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: normal surface offset in both directions"
     },
     {
       "id": "CM-129",
@@ -4645,12 +4681,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: UpToBody Add and drafted cap"
     },
     {
       "id": "CM-130",
@@ -4680,12 +4720,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: UpToNext Add and drafted cap"
     },
     {
       "id": "CM-131",
@@ -4715,12 +4759,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: ThroughAll cut"
     },
     {
       "id": "CM-132",
@@ -4750,12 +4798,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: independent 10/15 mm directions and draft"
     },
     {
       "id": "CM-133",
@@ -4785,12 +4837,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: reverse extrusion and revolve directions"
     },
     {
       "id": "CM-134",
@@ -4820,12 +4876,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: inward/outward, Midplane and reference/body-terminated draft"
     },
     {
       "id": "CM-135",
@@ -4855,12 +4915,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "Contracts defined; functioning native manipulator remains CM5.d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Not run: live depth/draft manipulator remains CM5.d/e"
     },
     {
       "id": "CM-136",
@@ -4889,12 +4953,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: full/partial/Midplane revolve and exact derived axis"
     },
     {
       "id": "CM-137",
@@ -4923,12 +4991,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: revolved annular cut with independent volume"
     },
     {
       "id": "CM-138",
@@ -4957,12 +5029,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: inward/outward rectangle and circular wall bands"
     },
     {
       "id": "CM-139",
@@ -4991,12 +5067,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: total Midplane thickness; cm5.features: open thin revolve"
     },
     {
       "id": "CM-140",
@@ -5025,12 +5105,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: independent 1/2 mm thickness and exact bounds"
     },
     {
       "id": "CM-141",
@@ -5059,12 +5143,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: closed rectangle/circle thin walls"
     },
     {
       "id": "CM-142",
@@ -5093,12 +5181,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: open section closure; cm5.features: open thin revolve"
     },
     {
       "id": "CM-143",
@@ -5127,12 +5219,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: closed and open thin revolve volume equations"
     },
     {
       "id": "CM-144",
@@ -5161,12 +5257,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: selected regions/holes, adjacent union, overlap and touching-hole refusal"
     },
     {
       "id": "CM-145",
@@ -5195,12 +5295,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: repeated selection preserves original sketch semantics; durable reuse remains CM5.c/e"
     },
     {
       "id": "CM-146",
@@ -5229,12 +5333,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: exact open cut curtain with ThroughAll/blind extent"
     },
     {
       "id": "CM-147",
@@ -5263,12 +5371,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: both explicit open cut sides"
     },
     {
       "id": "CM-148",
@@ -5293,12 +5405,16 @@
       "evidence": [
         "docs/decisions/core-modeling-cm5-intent.md",
         "docs/testing/core-modeling-cm5-a.md",
-        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+        "docs/decisions/core-modeling-cm5-engine.md",
+        "docs/testing/core-modeling-cm5-b.md",
+        "docs/testing/artifacts/core-modeling/cm5-b-20261103/verification/20261103T152143.162364Z/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "implementation_status": "CM5.a contracts and CM5.b scoped exact worker engine implemented; new persistence/native controls remain CM5.c/d",
       "native_verification_status": "Not run: CM5.d/e",
-      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
+      "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: planar and cylindrical standalone draft; broader analytic/tangent corpus remains open"
     },
     {
       "id": "CM-149",

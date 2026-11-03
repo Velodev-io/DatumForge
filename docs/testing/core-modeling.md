@@ -1,5 +1,12 @@
 # Core-modeling execution evidence
 
+[CM5.b exact engine](core-modeling-cm5-b.md) records the subsequent 3 November
+transient exact feature/worker implementation: 94 enabled CTests, nine Clang
+analyses, pinned format, ownership and structural/source checks passed. Surface
+termination remains reference-based with exact cap/footprint checks. Documented
+combination limits, CM5.c–e and full course/platform/device/resource acceptance
+remain open; all 29 CM5 coverage rows stay In progress.
+
 [CM5.a intent contracts](core-modeling-cm5-a.md) record the 3 November production
 semantic parser/graph work and available-Mac verification: 90 enabled CTests,
 formatting, both changed-source Clang analyses and structural/source checks pass.

@@ -1,0 +1,30 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 61: cm5.profiles
+1/1 Test #61: cm5.profiles .....................***Failed    0.67 sec
+selected regions passed
+offset bounded=0 wire valid=1 face valid=0
+face status=27
+wire status=18
+wire context status=18
+edge status=0
+edge status=0
+edge status=0
+edge status=0
+offset bounded=1 wire valid=1 face valid=0
+face status=27
+wire status=18
+wire context status=18
+edge status=0
+edge status=0
+edge status=0
+edge status=0
+FAIL: Selected boundary has invalid topology
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.68 sec
+
+The following tests FAILED:
+	 61 - cm5.profiles (Failed)
+Errors while running CTest

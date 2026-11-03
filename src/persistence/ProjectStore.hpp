@@ -73,7 +73,8 @@ class ProjectStore {
     QCborMap supportReferenceCandidates(QString document, const QCborMap &definition, QString owner,
                                         int slot, const exchange::Control &control = {}) const;
     QCborMap previewSupports(QString document, const QCborMap &definition,
-                             const exchange::Control &control = {}) const;
+                             const exchange::Control &control = {},
+                             const QCborArray &intents = {}) const;
     QCborMap supportGeometry(QString document, const exchange::Control &control = {}) const;
     QCborMap cacheStatistics() const {
         return resultCache.statistics();

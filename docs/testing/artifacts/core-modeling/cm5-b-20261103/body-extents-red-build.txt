@@ -1,0 +1,4 @@
+[1/4] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingExtents.cpp.o
+[2/4] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingFeatures.cpp.o
+[3/4] Linking CXX static library libcad_support_geometry.a
+[4/4] Linking CXX executable cm5_features

@@ -1,0 +1,14 @@
+[1/2] Building CXX object CMakeFiles/cm5_profiles.dir/tests/core_modeling/modeling_profiles.cpp.o
+FAILED: [code=1] CMakeFiles/cm5_profiles.dir/tests/core_modeling/modeling_profiles.cpp.o
+/usr/bin/c++ -DCAD_SOURCE_ROOT="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/cm5_profiles.dir/tests/core_modeling/modeling_profiles.cpp.o -MF CMakeFiles/cm5_profiles.dir/tests/core_modeling/modeling_profiles.cpp.o.d -o CMakeFiles/cm5_profiles.dir/tests/core_modeling/modeling_profiles.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_profiles.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_profiles.cpp:46:28: error: calling 'OuterWire' with incomplete return type 'TopoDS_Wire'
+   46 |             offset.AddWire(BRepTools::OuterWire(face));
+      |                            ^~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade/BRepTools.hxx:260:38: note: 'OuterWire' declared here
+  260 |   Standard_EXPORT static TopoDS_Wire OuterWire(const TopoDS_Face& F);
+      |                                      ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade/BRepMAT2d_LinkTopoBilo.hxx:31:7: note: forward declaration of 'TopoDS_Wire'
+   31 | class TopoDS_Wire;
+      |       ^
+1 error generated.
+ninja: build stopped: subcommand failed.
