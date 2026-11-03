@@ -133,3 +133,11 @@ is claimed and no new functioning native control exists. CM5.c–e, full page-in
 course/platform/installed/device/assistive/physical-8-GB resource acceptance remain
 open/Blocked. Preserve deferred 6.1b/6.4c/7.4c; Module 11 is not started. Author
 source review is separate from independent review required before any merge.
+
+## Delivery
+
+Feature commit `81a596e` was pushed to `origin/review/cm5-b-20261103`; its remote
+SHA matched the verified local commit. [Delivery evidence](artifacts/core-modeling/cm5-b-20261103/delivery.json)
+records that check before this documentation-only follow-up. All 274 source/
+configuration hashes also matched after publication. No merge or force-push;
+independent review remains required before merge.
