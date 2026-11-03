@@ -1,0 +1,25 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.8s)
+-- Generating done (0.4s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/17] Building CXX object CMakeFiles/cad_model_graph.dir/src/domain/GeometryReference.cpp.o
+[2/17] Building CXX object CMakeFiles/cad_model_graph.dir/src/evaluation/Graph.cpp.o
+[3/17] Linking CXX static library libcad_model_graph.a
+[4/17] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[5/17] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Editing.cpp.o
+[6/17] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Constructions.cpp.o
+[7/17] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Slots.cpp.o
+[8/17] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/EditHistory.cpp.o
+[9/17] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Curves.cpp.o
+[10/17] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Dimensions.cpp.o
+[11/17] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Dependencies.cpp.o
+[12/17] Linking CXX static library libcad_sketch_model.a
+[13/17] Building CXX object CMakeFiles/cm5_intent.dir/tests/core_modeling/feature_intent.cpp.o
+FAILED: [code=1] CMakeFiles/cm5_intent.dir/tests/core_modeling/feature_intent.cpp.o
+/usr/bin/c++ -DCAD_SOURCE_ROOT="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_CORE_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/cm5_intent.dir/tests/core_modeling/feature_intent.cpp.o -MF CMakeFiles/cm5_intent.dir/tests/core_modeling/feature_intent.cpp.o.d -o CMakeFiles/cm5_intent.dir/tests/core_modeling/feature_intent.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/feature_intent.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/feature_intent.cpp:1:10: fatal error: 'features/ModelingIntent.hpp' file not found
+    1 | #include "features/ModelingIntent.hpp"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+[14/17] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/Model.cpp.o
+ninja: build stopped: subcommand failed.

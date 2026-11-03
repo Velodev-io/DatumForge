@@ -1930,12 +1930,22 @@
     ]
   },
   "CM5.a": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM5.a kernel-free versioned contour/start/end/direction/thickness/draft intent contracts and complete structural dependency validation on the available Mac development build. No exact adapter, durable schema or native tool added; CM5.b-e and full workflow/platform/device/installed/resource acceptance remain open. Preserve deferred 6.1b/6.4c/7.4c and stop before Module 11.",
+    "implementation_status": "Pass: production immutable ModelingIntent API, strict parsing and source-kind/history/graph validation",
+    "development_verification_status": "Pass: 90 enabled CTests, pinned format, both changed-source Clang analyses and ownership/structural checks; all 263 frozen source/configuration hashes matched",
+    "experiments_status": "No new isolated experiment or kernel feasibility claim; production semantic contract tests only",
+    "native_verification_status": "Not applicable to CM5.a: no UI or worker command added; CM5.d/e remain open",
+    "full_acceptance_status": "Blocked: CM5.b-e and full source-course/platform/device/installed/physical 8 GB resource acceptance",
+    "review_status": "Author self-review recorded; independent review required before merge",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/decisions/core-modeling-cm5-intent.md",
+      "docs/testing/core-modeling-cm5-a.md",
+      "tests/core_modeling/feature_intent.cpp",
+      "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json",
+      "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/source-identity.json",
+      "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/ctest.txt",
+      "docs/testing/artifacts/core-modeling/cm5-a-20261103/source-review.md"
     ]
   },
   "CM5.b": {

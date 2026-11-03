@@ -112,3 +112,12 @@ drafts. [Available-Mac workflow verification](testing/core-modeling-cm4-e.md) pa
 89 enabled tests, 11 changed-source analyses and 24 native cases at each of five
 effective scales. Full source-course/platform/device/resource acceptance remains
 Blocked; coverage rows remain In progress. CM5 and Module 11 were not started.
+
+CM5.a now defines versioned contour, independent extrude start/end/direction,
+thin extrude/revolve and draft contracts with structural dependency validation.
+[Available-Mac contract verification](testing/core-modeling-cm5-a.md) passed all
+90 enabled CTests, pinned format, both changed-source Clang analyses and
+ownership/structural checks; 263 frozen source/configuration hashes matched.
+These definitions are not yet accepted exact features or native tools. CM5.b–e
+remain open; all 29 CM5 workflow rows remain In progress and full acceptance stays
+Blocked. Deferred gates and the stop before Module 11 are unchanged.

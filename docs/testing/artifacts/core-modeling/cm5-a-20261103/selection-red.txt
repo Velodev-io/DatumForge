@@ -1,0 +1,14 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 60: cm5.intent
+1/1 Test #60: cm5.intent .......................***Failed    0.55 sec
+mode contracts passed
+FAIL: AllClosed profile required
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.55 sec
+
+The following tests FAILED:
+	 60 - cm5.intent (Failed)
+Errors while running CTest

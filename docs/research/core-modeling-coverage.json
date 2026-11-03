@@ -4331,8 +4331,16 @@
       ],
       "analytical_fixture": "cm-120-geometry",
       "native_workflow": "cm-120-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-121",
@@ -4355,8 +4363,16 @@
       ],
       "analytical_fixture": "cm-121-geometry",
       "native_workflow": "cm-121-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-122",
@@ -4379,8 +4395,16 @@
       ],
       "analytical_fixture": "cm-122-geometry",
       "native_workflow": "cm-122-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-123",
@@ -4403,8 +4427,16 @@
       ],
       "analytical_fixture": "cm-123-geometry",
       "native_workflow": "cm-123-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-124",
@@ -4430,8 +4462,16 @@
       ],
       "analytical_fixture": "cm-124-geometry",
       "native_workflow": "cm-124-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-125",
@@ -4457,8 +4497,16 @@
       ],
       "analytical_fixture": "cm-125-geometry",
       "native_workflow": "cm-125-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-126",
@@ -4484,8 +4532,16 @@
       ],
       "analytical_fixture": "cm-126-geometry",
       "native_workflow": "cm-126-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-127",
@@ -4511,12 +4567,20 @@
       ],
       "analytical_fixture": "cm-127-geometry",
       "native_workflow": "cm-127-native",
-      "status": "Not run",
-      "evidence": [],
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
       "feasibility": {
         "scope": "Narrow isolated seed only; see per-probe limits. No production/native/persistence completion implied.",
         "evidence": "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
-      }
+      },
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-128",
@@ -4542,8 +4606,16 @@
       ],
       "analytical_fixture": "cm-128-geometry",
       "native_workflow": "cm-128-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-129",
@@ -4569,8 +4641,16 @@
       ],
       "analytical_fixture": "cm-129-geometry",
       "native_workflow": "cm-129-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-130",
@@ -4596,8 +4676,16 @@
       ],
       "analytical_fixture": "cm-130-geometry",
       "native_workflow": "cm-130-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-131",
@@ -4623,8 +4711,16 @@
       ],
       "analytical_fixture": "cm-131-geometry",
       "native_workflow": "cm-131-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-132",
@@ -4650,8 +4746,16 @@
       ],
       "analytical_fixture": "cm-132-geometry",
       "native_workflow": "cm-132-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-133",
@@ -4677,8 +4781,16 @@
       ],
       "analytical_fixture": "cm-133-geometry",
       "native_workflow": "cm-133-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-134",
@@ -4704,8 +4816,16 @@
       ],
       "analytical_fixture": "cm-134-geometry",
       "native_workflow": "cm-134-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-135",
@@ -4731,8 +4851,16 @@
       ],
       "analytical_fixture": "cm-135-geometry",
       "native_workflow": "cm-135-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-136",
@@ -4757,8 +4885,16 @@
       ],
       "analytical_fixture": "cm-136-geometry",
       "native_workflow": "cm-136-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-137",
@@ -4783,8 +4919,16 @@
       ],
       "analytical_fixture": "cm-137-geometry",
       "native_workflow": "cm-137-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-138",
@@ -4809,8 +4953,16 @@
       ],
       "analytical_fixture": "cm-138-geometry",
       "native_workflow": "cm-138-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-139",
@@ -4835,8 +4987,16 @@
       ],
       "analytical_fixture": "cm-139-geometry",
       "native_workflow": "cm-139-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-140",
@@ -4861,8 +5021,16 @@
       ],
       "analytical_fixture": "cm-140-geometry",
       "native_workflow": "cm-140-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-141",
@@ -4887,8 +5055,16 @@
       ],
       "analytical_fixture": "cm-141-geometry",
       "native_workflow": "cm-141-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-142",
@@ -4913,8 +5089,16 @@
       ],
       "analytical_fixture": "cm-142-geometry",
       "native_workflow": "cm-142-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-143",
@@ -4939,8 +5123,16 @@
       ],
       "analytical_fixture": "cm-143-geometry",
       "native_workflow": "cm-143-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-144",
@@ -4965,8 +5157,16 @@
       ],
       "analytical_fixture": "cm-144-geometry",
       "native_workflow": "cm-144-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-145",
@@ -4991,8 +5191,16 @@
       ],
       "analytical_fixture": "cm-145-geometry",
       "native_workflow": "cm-145-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-146",
@@ -5017,8 +5225,16 @@
       ],
       "analytical_fixture": "cm-146-geometry",
       "native_workflow": "cm-146-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-147",
@@ -5043,8 +5259,16 @@
       ],
       "analytical_fixture": "cm-147-geometry",
       "native_workflow": "cm-147-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-148",
@@ -5065,8 +5289,16 @@
       ],
       "analytical_fixture": "cm-148-geometry",
       "native_workflow": "cm-148-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm5-intent.md",
+        "docs/testing/core-modeling-cm5-a.md",
+        "docs/testing/artifacts/core-modeling/cm5-a-20261103/verification/20261103T093035.623376Z/verification.json"
+      ],
+      "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
+      "implementation_status": "CM5.a contracts implemented; exact feature adapter remains CM5.b",
+      "native_verification_status": "Not run: CM5.d/e",
+      "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance"
     },
     {
       "id": "CM-149",

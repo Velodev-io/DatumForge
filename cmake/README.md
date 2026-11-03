@@ -1,5 +1,15 @@
 # Source builds and commands
 
+CM5.a contracts: `python3 tools/verify_cm5_intent.py` runs the full enabled CTest
+suite, pinned format, both changed-source Clang analyses, ownership/coverage/spec
+checks and frozen source integrity. Focused check:
+`ctest --preset macos-debug -R '^cm5\.intent$' --output-on-failure`.
+The new test uses no project storage or worker; full regressions require local
+worker IPC and retain their marked disposable roots. The task adds semantic
+contracts only, with no new exact adapter, persistence schema or native UI.
+See [CM5.a evidence](../docs/testing/core-modeling-cm5-a.md); CM5.b–e and all full
+platform/device/resource gates remain open.
+
 Module 0 experiments plus the authorized Modules 1–10 native workspace, persistence, sketch, exact feature and dependency/history foundation. `dependencies.lock.json` pins upstream source archives and extracted
 PlaneGCS files by SHA-256. Qt's archive was also checked against its official
 checksum. Source commit identities for OCCT/Eigen/FreeCAD are immutable. Ninja's

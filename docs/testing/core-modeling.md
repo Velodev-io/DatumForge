@@ -1,5 +1,11 @@
 # Core-modeling execution evidence
 
+[CM5.a intent contracts](core-modeling-cm5-a.md) record the 3 November production
+semantic parser/graph work and available-Mac verification: 90 enabled CTests,
+formatting, both changed-source Clang analyses and structural/source checks pass.
+This starts CM5 with contracts only; exact geometry, persistence, native tools and
+whole-workflow acceptance remain CM5.b–e. All 29 CM5 coverage rows stay In progress.
+
 [26 October sketch tool selection repair](module-4-tool-selection.md) records the
 later drawing-mode fix and its regression evidence. It adds no CM2 feature or
 milestone acceptance claim.

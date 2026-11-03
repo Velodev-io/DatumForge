@@ -100,7 +100,7 @@ contracts/evidence retain their original historical scope.
 
 ### CM5 — Extrude/revolve, regions, thin features and draft
 
-- [ ] **CM5.a:** Define contour selections, independent start/end conditions, direction/depth and thickness/draft semantics.
+- [x] **CM5.a:** Define contour selections, independent start/end conditions, direction/depth and thickness/draft semantics. Production kernel-free versioned intent contracts and available-Mac development verification passed: [CM5.a evidence](testing/core-modeling-cm5-a.md). All 90 enabled CTests, pinned format, both changed-source Clang analyses and structural/source checks passed. Exact geometry, persistence, native tools and whole-workflow acceptance remain CM5.b–e.
 - [ ] **CM5.b:** Implement exact starts/extents, open cuts, thin extrude/revolve and standalone draft. Surface termination remains a geometric dependency, never a substituted fixed depth.
 - [ ] **CM5.c:** Persist definitions, Boolean provenance and repair behavior.
 - [ ] **CM5.d:** Add native depth/thickness/draft manipulators and bounded exact previews.
