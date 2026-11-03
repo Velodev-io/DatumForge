@@ -18,6 +18,7 @@ class FeaturePanel : public QWidget {
     features::Feature draft;
     QCborArray candidate;
     bool editing = false, validPreview = false, installing = false, commitPending = false;
+    bool supportPreviewPending = false;
     QFormLayout *form;
     QWidget *inputs, *evaluation;
     QLineEdit *name;

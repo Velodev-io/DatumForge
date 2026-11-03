@@ -4,6 +4,7 @@
 #include "HistoryPanel.hpp"
 #include "MainWindow.hpp"
 #include "SketchPanel.hpp"
+#include "SupportEditor.hpp"
 #include "domain/Documents.hpp"
 #include "model/Supports.hpp"
 #include "render/Viewport.hpp"
@@ -82,6 +83,26 @@ void MainWindow::buildDatumUI() {
     auto *viewMenu = menuBar()->addMenu("&Reference geometry");
     for (auto *action : {show, normal, refresh})
         viewMenu->addAction(action);
+    auto *edit = commands.add(this, "supports.edit", "Edit datums / supports");
+    edit->setProperty("aliases", "plane axis attach Convert Entities external repair");
+    addAction(edit);
+    viewMenu->addAction(edit);
+    findChild<QToolBar *>("commandsFeatures")->addAction(edit);
+    connect(edit, &QAction::triggered, this, [this] {
+        if (!commands.get("supports.edit")->isEnabled())
+            return;
+        for (auto value : state().documentRecords)
+            if (value.toMap().value("id").toString() == state().activeDocument) {
+                try {
+                    SupportEditor dialog(client, value.toMap(), this, selectedDatum);
+                    dialog.exec();
+                    this->refresh();
+                } catch (const std::exception &e) {
+                    notice->setText(e.what());
+                }
+                break;
+            }
+    });
     findChild<QToolBar *>("commandsEvaluate")->addAction(normal);
     findChild<QToolBar *>("commandsFeatures")->addAction(show);
     connect(datumTree, &QTreeWidget::itemSelectionChanged, this, [this] {
@@ -272,6 +293,7 @@ void MainWindow::refreshDatumUI() {
                                            : reason);
     commands.get("datum.browser")->setEnabled(part && !editing);
     commands.get("datum.refresh")->setEnabled(part && idle && !editing);
+    commands.get("supports.edit")->setEnabled(part && idle && !editing);
     datumTree->setEnabled(part && idle && !editing);
     if (selected) {
         auto d = datumGeometry.value(selectedDatum);

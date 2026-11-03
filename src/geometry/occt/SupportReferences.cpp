@@ -1,8 +1,11 @@
 #include "SupportReferences.hpp"
+#include <BRepAdaptor_Curve.hxx>
 #include <BRepAdaptor_Surface.hxx>
 #include <BRepClass_FaceClassifier.hxx>
+#include <BRepGProp.hxx>
 #include <BRepTools.hxx>
 #include <BRep_Tool.hxx>
+#include <GProp_GProps.hxx>
 #include <GeomAPI_ProjectPointOnSurf.hxx>
 #include <GeomAdaptor_Curve.hxx>
 #include <Geom_BSplineCurve.hxx>
@@ -262,14 +265,46 @@ QCborMap SupportReferences::inspect(const domain::GeometryReference &r, bool rep
         counts.value(mapped[0].toString()) != 1)
         resolved.insert(QStringLiteral("state"), "Ambiguous");
     QCborArray candidates;
+    QCborArray descriptions;
     for (auto it = counts.cbegin(); it != counts.cend(); ++it)
         if (replacements && it.value() == 1) {
             auto candidate = r;
             candidate.topology = it.key();
             candidates.append(candidate.map());
+            for (int i = 1; i <= shapes.Extent(); ++i) {
+                auto shape = shapes(i);
+                if (supportToken(shape) != it.key())
+                    continue;
+                gp_Pnt center;
+                QString type = r.role;
+                if (r.role == "Vertex")
+                    center = BRep_Tool::Pnt(TopoDS::Vertex(shape));
+                else {
+                    GProp_GProps properties;
+                    if (r.role == "Face") {
+                        BRepGProp::SurfaceProperties(shape, properties);
+                        auto surface = BRepAdaptor_Surface(TopoDS::Face(shape)).GetType();
+                        type = surface == GeomAbs_Plane      ? "Plane"
+                               : surface == GeomAbs_Cylinder ? "Cylinder"
+                               : surface == GeomAbs_Cone     ? "Cone"
+                                                             : "Surface";
+                    } else {
+                        BRepGProp::LinearProperties(shape, properties);
+                        type = BRepAdaptor_Curve(TopoDS::Edge(shape)).GetType() == GeomAbs_Line
+                                   ? "Line"
+                                   : "Curve";
+                    }
+                    center = properties.CentreOfMass();
+                }
+                descriptions.append(sketch::fields({{"reference", candidate.map()},
+                                                    {"center_si", features::array(siPoint(center))},
+                                                    {"geometry_type", type}}));
+                break;
+            }
         }
     resolved.insert(QStringLiteral("reference"), r.map());
     resolved.insert(QStringLiteral("replacements"), candidates);
+    resolved.insert(QStringLiteral("descriptions"), descriptions);
     return resolved;
 }
 TopoDS_Shape SupportReferences::topology(const domain::GeometryReference &r) const {

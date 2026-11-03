@@ -251,3 +251,13 @@ All worker/project roots are marked disposable; IPC requires local socket access
 The native datum browser, model-tree visibility, viewport Datum filter and Normal To
 inspect accepted supports. Support authoring and CM4.e complete workflows remain
 open. See [CM4.d scope and evidence](../docs/testing/core-modeling-cm4-d.md).
+
+CM4.e: `python3 tools/verify_cm4_workflows.py --native` verifies the complete
+native support editor and supported feature/sketch rebuild/repair workflows,
+including all 16 datum modes, face/datum attachment, transformed conversions and
+external conversion chaining. Focused checks use
+`ctest --preset macos-debug -R '^cm4\.' --output-on-failure` with local IPC access.
+Tests use marked disposable recovery roots and separate marked saved-file roots;
+saving into private recovery storage remains refused. The native matrix uses
+mm/in at 100/125/150/175/200% effective scales; full course/platform/device/resource
+acceptance is separate. See [CM4.e evidence](../docs/testing/core-modeling-cm4-e.md).

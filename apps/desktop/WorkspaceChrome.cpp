@@ -237,8 +237,10 @@ void MainWindow::refreshCommandTabs() {
                                           "endpoint for Tangent Arc; click tool again to select");
         a->setChecked(editing && sketchPanel->toolName() == name);
     }
-    available("sketch.edit", part && idle && !editing && !sketchPanel->sketchId().isEmpty(),
-              "Select an existing Part sketch");
+    available("sketch.edit",
+              part && idle && !editing && !sketchPanel->sketchId().isEmpty() &&
+                  sketchPanel->selectionEditable(),
+              "Select an editable Part sketch; converted members are edited through their sources");
     available("sketch.finish", editing && idle, "No sketch edit is active");
     available("sketch.cancel",
               editing && findChild<QPushButton *>("cancelSketchButton")->isEnabled(),

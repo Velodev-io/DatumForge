@@ -105,3 +105,10 @@ worker-owned display inspection and arbitrary-plane Normal To:
 All 88 enabled CTests, 12 changed-source analyses and native checks at five effective
 scales passed. Support authoring, CM4.e course workflows and full acceptance remain
 open; deferred gates and the stop before Module 11 are preserved.
+
+CM4.e adds typed native datum/support/conversion authoring, complete original-model
+submission from feature/sketch editors and explicit repair of pending upstream
+drafts. [Available-Mac workflow verification](testing/core-modeling-cm4-e.md) passed
+89 enabled tests, 11 changed-source analyses and 24 native cases at each of five
+effective scales. Full source-course/platform/device/resource acceptance remains
+Blocked; coverage rows remain In progress. CM5 and Module 11 were not started.

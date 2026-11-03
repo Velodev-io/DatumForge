@@ -1,5 +1,7 @@
 #include "SketchPanel.hpp"
+#include "SupportEditor.hpp"
 #include "domain/Documents.hpp"
+#include "model/SupportEditing.hpp"
 #include "sketch/Constructions.hpp"
 #include "sketch/Curves.hpp"
 #include "sketch/Dimensions.hpp"
@@ -703,6 +705,22 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
         emit selectionChanged();
     });
     connect(preview, &QPushButton::clicked, this, &SketchPanel::previewDraft);
+    auto *repairSupports = new QPushButton("Repair supports in this sketch draft");
+    repairSupports->setObjectName("sketchRepairSupports");
+    rootForm->addRow(repairSupports);
+    repairSupports->hide();
+    connect(client, &Client::changed, this, [this, repairSupports] {
+        repairSupports->setVisible(editing &&
+                                   supportDocument.contains(QStringLiteral("model_supports")));
+        repairSupports->setEnabled(editing && !client->outstanding() && !committing);
+    });
+    connect(repairSupports, &QPushButton::clicked, this, [this] {
+        guard([&] {
+            auto model = model::editSupportedSketches(supportDocument, sketch::encode(draft));
+            SupportEditor dialog(client, supportDocument, this, {}, model);
+            dialog.exec();
+        });
+    });
     connect(accept, &QPushButton::clicked, this, [this] {
         if (!lineEditBefore.empty()) {
             context->setText("Apply or cancel the line edit preview before finishing");
@@ -716,9 +734,20 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
             context->setText("Complete the second vertex before accepting");
             return;
         }
-        committing = true;
-        clearInference();
-        client->projectCommand("SetSketches", fields({{"sketches", sketch::encode(draft)}}));
+        guard([&] {
+            auto payload =
+                supportDocument.contains(QStringLiteral("model_supports"))
+                    ? fields({{"model",
+                               model::editSupportedSketches(supportDocument, sketch::encode(draft))
+                                   .map()}})
+                    : fields({{"sketches", sketch::encode(draft)}});
+            committing = true;
+            clearInference();
+            client->projectCommand(supportDocument.contains(QStringLiteral("model_supports"))
+                                       ? "SetModelSupports"
+                                       : "SetSketches",
+                                   payload);
+        });
     });
     connect(cancel, &QPushButton::clicked, this, &SketchPanel::discard);
     connect(view, &SketchView::canceled, this, &SketchPanel::cancelInput);
@@ -740,6 +769,22 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
             }
             draft = sketch::parse(a);
             rebuild();
+        }
+    });
+    connect(client, &Client::modelSupportsPreview, this, [this](QCborMap result) {
+        if (editing && supportPreviewPending && !dimensionEditing &&
+            supportDocument.contains(QStringLiteral("model_supports"))) {
+            supportPreviewPending = false;
+            // Rebuilt descendants are display results, not user edits to their base definitions.
+            auto solved = sketch::parse(result.value("sketches").toArray());
+            for (auto &sketch : solved)
+                if (sketch.id == sketchId())
+                    for (auto &editable : draft)
+                        if (editable.id == sketch.id)
+                            editable = sketch;
+            rebuild();
+            context->setText("Exact associated-model preview · Finish Sketch rebuilds and commits "
+                             "descendants atomically");
         }
     });
     connect(client, &Client::sketchDiagnosed, this, [this](QCborArray diagnostics) {
@@ -811,8 +856,10 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     });
     connect(client, &Client::changed, this, [this] {
         bool idle = client->ready() && !client->outstanding();
-        if (idle && client->state().phase == Phase::Failed)
+        if (idle && client->state().phase == Phase::Failed) {
             committing = false;
+            supportPreviewPending = false;
+        }
         for (auto *b : {add, addConstraint, setDimension, removeConstraint, setName})
             b->setEnabled(editing && idle);
         view->setEnabled(idle || (editing && gestureBefore && !gestureFinishing));
@@ -942,6 +989,7 @@ sketch::Sketch &SketchPanel::current() {
     return s[std::clamp(sketches->currentIndex(), 0, int(s.size() - 1))];
 }
 void SketchPanel::install(QCborMap d, bool idle) {
+    supportDocument = d;
     setProperty("units", d.value("units").toString());
     propertyPane->findChild<QToolButton *>("numericSketchInputToggle")
         ->setText("Numeric input" + (d.value("units").toString().isEmpty()
@@ -990,7 +1038,7 @@ void SketchPanel::install(QCborMap d, bool idle) {
         context->setText(labels.isEmpty() ? "Create a planar sketch" : labels.join("\n"));
     }
     create->setEnabled(idle && !editing);
-    edit->setEnabled(idle && !editing && !accepted.empty());
+    edit->setEnabled(idle && !editing && !accepted.empty() && selectionEditable());
     plane->setEnabled(!editing);
     sketches->setEnabled(!editing);
     preview->setEnabled(idle && editing);
@@ -1290,7 +1338,20 @@ void SketchPanel::previewDraft() {
         context->setText("Complete the remaining vertices before previewing");
         return;
     }
-    client->projectCommand("PreviewSketches", fields({{"sketches", sketch::encode(draft)}}));
+    guard([&] {
+        if (supportDocument.contains(QStringLiteral("model_supports"))) {
+            supportPreviewPending = true;
+            client->projectCommand("PreviewModelSupports",
+                                   fields({{"model", model::editSupportedSketches(
+                                                         supportDocument, sketch::encode(draft))
+                                                         .map()}}));
+        } else
+            client->projectCommand("PreviewSketches",
+                                   fields({{"sketches", sketch::encode(draft)}}));
+    });
+}
+bool SketchPanel::selectionEditable() const {
+    return !model::convertedSketch(supportDocument, sketchId());
 }
 bool SketchPanel::dimensionAvailable() const {
     if (relationSelectionOrder.size() >= 2) {
@@ -1331,6 +1392,11 @@ void SketchPanel::choosePlane(QString name) {
         plane->setCurrentText(name);
 }
 void SketchPanel::editSelected(QString entity) {
+    if (!selectionEditable()) {
+        context->setText(
+            "Converted members are read-only; edit their source or conversion definition");
+        return;
+    }
     if (!client->ready() || client->outstanding() || committing)
         return;
     if (!editing) {

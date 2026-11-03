@@ -16,6 +16,8 @@ namespace cad {
 class SketchPanel : public QWidget {
     Q_OBJECT
     Client *client;
+    QCborMap supportDocument;
+    bool supportPreviewPending = false;
     QWidget *propertyPane;
     QFormLayout *rootForm;
     SketchView *view;
@@ -110,6 +112,7 @@ class SketchPanel : public QWidget {
     void begin();
     void discard();
     void editSelected(QString entity = {});
+    bool selectionEditable() const;
     void setTool(QString name);
     void undoDraftEdit();
     void redoDraftEdit();

@@ -54,6 +54,10 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
             if (v.toMap().value("id").toString() == state().activeDocument)
                 active = v.toMap();
         auto *item = tree->currentItem();
+        if (active.contains(QStringLiteral("model_supports"))) {
+            commands.get("supports.edit")->trigger();
+            return;
+        }
         historyPanel->begin(active, item ? item->data(0, Qt::UserRole + 5).toString() : QString());
     });
     connect(historyPanel, &HistoryPanel::editingChanged, this, &MainWindow::refresh);

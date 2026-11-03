@@ -1,0 +1,11 @@
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed apps/desktop/WorkspaceChrome.cpp
+Analyzed apps/desktop/SketchPanel.cpp
+Analyzed apps/desktop/FeaturePanel.cpp
+Analyzed apps/desktop/DatumUI.cpp
+Analyzed apps/desktop/SupportEditor.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/model/Supports.cpp
+Analyzed src/model/SupportEditing.cpp
+Analyzed src/geometry/occt/SupportReferences.cpp
+Analyzed tests/core_modeling/workflow_contracts.cpp

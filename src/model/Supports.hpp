@@ -40,7 +40,8 @@ struct SupportDefinition {
     std::vector<Attachment> attachments;
     std::vector<Conversion> conversions;
     QStringList history;
-    evaluation::Graph graph() const;
+    evaluation::Graph graph(bool validateHistory = true) const;
+    void sequence();
     QCborMap map() const;
     static SupportDefinition parse(const QCborMap &map);
 };

@@ -3418,13 +3418,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-099",
@@ -3456,13 +3460,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-100",
@@ -3496,13 +3504,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-101",
@@ -3534,13 +3546,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-102",
@@ -3572,13 +3588,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-103",
@@ -3610,13 +3630,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-104",
@@ -3648,13 +3672,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-105",
@@ -3686,13 +3714,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-106",
@@ -3724,13 +3756,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-107",
@@ -3761,13 +3797,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-108",
@@ -3798,13 +3838,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-109",
@@ -3835,13 +3879,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-110",
@@ -3872,13 +3920,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-111",
@@ -3909,13 +3961,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-112",
@@ -3949,13 +4005,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-113",
@@ -3989,13 +4049,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-114",
@@ -4029,13 +4093,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-115",
@@ -4063,13 +4131,17 @@
       "evidence": [
         "docs/testing/core-modeling-cm4-d.md",
         "tests/core_modeling/datum_contracts.cpp",
-        "docs/testing/artifacts/core-modeling/cm4-d-20261103/verification/20261103T051241.992649Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm4-d-20261103/verification/20261103T051241.992649Z/verification.json",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To",
       "native_verification_status": "Pass: scoped accepted-output mm/in and datum-only/solid workflows on available Mac at 100/125/150/175/200 percent effective scales; full acceptance remains open",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
       "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
-      "development_verification_status": "Pass: 88 enabled CTests, 12 Clang analyses, format and structural checks"
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-116",
@@ -4097,13 +4169,17 @@
       "evidence": [
         "docs/testing/core-modeling-cm4-d.md",
         "tests/core_modeling/datum_contracts.cpp",
-        "docs/testing/artifacts/core-modeling/cm4-d-20261103/verification/20261103T051241.992649Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm4-d-20261103/verification/20261103T051241.992649Z/verification.json",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To",
       "native_verification_status": "Pass: scoped accepted-output mm/in and datum-only/solid workflows on available Mac at 100/125/150/175/200 percent effective scales; full acceptance remains open",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
       "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
-      "development_verification_status": "Pass: 88 enabled CTests, 12 Clang analyses, format and structural checks"
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-117",
@@ -4136,13 +4212,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-118",
@@ -4175,13 +4255,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-119",
@@ -4214,13 +4298,17 @@
         "tests/core_modeling/support_contracts.cpp",
         "docs/testing/artifacts/core-modeling/cm4-b-20261101/verification.json",
         "docs/testing/core-modeling-cm4-c.md",
-        "docs/testing/core-modeling-cm4-d.md"
+        "docs/testing/core-modeling-cm4-d.md",
+        "docs/testing/core-modeling-cm4-e.md",
+        "docs/testing/artifacts/core-modeling/cm4-e-20261103/verification/20261103T061241.682636Z/verification.json",
+        "tests/core_modeling/workflow_contracts.cpp"
       ],
       "implementation_status": "Pass: CM4.b exact engine and CM4.c durable support/evolution/repair on the available Mac development build",
       "native_verification_status": "Not run: native datum/support controls remain CM4.d",
-      "full_acceptance_status": "Open: CM4.e complete course/workflow acceptance and native authoring; unrun platform/device/installed/resource matrices",
-      "development_verification_status": "Pass: final 87 enabled CTests, 12 Clang analyses, format and structural checks; retained intermittent CM3 repeatability concern is documented",
-      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun"
+      "full_acceptance_status": "Blocked: full page-indexed course/platform/device/installed/resource acceptance; no whole-milestone acceptance inferred",
+      "development_verification_status": "Pass: CM4.e final 89 enabled CTests, 11 Clang analyses, pinned format and structural checks; 259 source/configuration hashes matched",
+      "native_display_verification_status": "Pass: CM4.d accepted datum/sketch selection, visibility and Normal To on available Mac; five effective scales; native authoring and full course workflows remain unrun",
+      "native_authoring_verification_status": "Pass: CM4.e native datum/support/conversion authoring and representative upstream rebuild/repair/history/reopen on available Mac at five effective scales; complete course corpus remains open"
     },
     {
       "id": "CM-120",

@@ -731,3 +731,10 @@ arc checks at both endpoints. Production inputs match the full-suite baseline;
 final follow-up source integrity passed. Full course/hardware/platform/installed/
 resource acceptance stays Blocked, separately from implementation and available-Mac
 verification. Preserve 6.1b/6.4c/7.4c; stop before Module 11. No merge or push.
+
+CM4.e adds typed native support authoring, full original-model submission from
+feature/sketch editors, explicit repair of pending upstream drafts, and associated
+rebuild/history/reopen workflows. Its [execution record](core-modeling-cm4-e.md)
+retains failed attempts and distinguishes development/native verification from
+full course/platform/device/resource acceptance. CM5 and Module 11 remain outside
+this task.

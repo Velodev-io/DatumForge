@@ -1,6 +1,7 @@
 #include "Supports.hpp"
 #include "evaluation/Plan.hpp"
 #include "sketch/Dependencies.hpp"
+#include <algorithm>
 #include <numbers>
 namespace cad::model {
 using domain::check;
@@ -233,7 +234,7 @@ Conversion Conversion::parse(const QCborMap &m) {
     c.map();
     return c;
 }
-evaluation::Graph SupportDefinition::graph() const {
+evaluation::Graph SupportDefinition::graph(bool validateHistory) const {
     check(datums.size() <= 32 && attachments.size() <= 16 && conversions.size() <= 32,
           "ResourceLimit", "Bounded support definition collections required");
     auto parsed = cad::sketch::parse(sketches);
@@ -288,10 +289,34 @@ evaluation::Graph SupportDefinition::graph() const {
         r.object = c.id;
         nodes[sketchNodes.value(c.sketch)].references.push_back(r);
     }
-    auto graph = evaluation::Graph(nodes, history, document);
-    check(history.size() == qsizetype(nodes.size()), "InvalidInput",
+    auto graph = evaluation::Graph(nodes, validateHistory ? history : QStringList{}, document);
+    check(!validateHistory || history.size() == qsizetype(nodes.size()), "InvalidInput",
           "Complete explicit model history required");
     return graph;
+}
+void SupportDefinition::sequence() {
+    auto dependencies = graph(false);
+    auto priority = history;
+    for (auto id : dependencies.order())
+        if (!priority.contains(id))
+            priority.append(id);
+    QStringList ordered;
+    auto nodes = dependencies.order();
+    while (ordered.size() < nodes.size()) {
+        bool advanced = false;
+        for (auto id : priority) {
+            if (!nodes.contains(id) || ordered.contains(id))
+                continue;
+            auto sources = dependencies.dependencies(id);
+            if (std::all_of(sources.begin(), sources.end(),
+                            [&](auto source) { return ordered.contains(source); })) {
+                ordered.append(id);
+                advanced = true;
+            }
+        }
+        check(advanced, "DependencyCycle", "Cannot order the complete support model");
+    }
+    history = ordered;
 }
 QCborMap SupportDefinition::map() const {
     QCborArray ds, as, cs, hs;

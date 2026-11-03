@@ -1,0 +1,28 @@
+********* Start testing of WorkflowContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : WorkflowContracts::initTestCase()
+PASS   : WorkflowContracts::datumModes(plane-Principal)
+PASS   : WorkflowContracts::datumModes(plane-Offset)
+PASS   : WorkflowContracts::datumModes(plane-ParallelPoint)
+PASS   : WorkflowContracts::datumModes(plane-Angle)
+PASS   : WorkflowContracts::datumModes(plane-ThreePoints)
+PASS   : WorkflowContracts::datumModes(plane-LinePoint)
+PASS   : WorkflowContracts::datumModes(plane-TwoLines)
+PASS   : WorkflowContracts::datumModes(plane-NormalCurve)
+PASS   : WorkflowContracts::datumModes(plane-TangentSurface)
+PASS   : WorkflowContracts::datumModes(plane-Midplane)
+PASS   : WorkflowContracts::datumModes(axis-Principal)
+PASS   : WorkflowContracts::datumModes(axis-FaceAxis)
+PASS   : WorkflowContracts::datumModes(axis-Line)
+PASS   : WorkflowContracts::datumModes(axis-TwoPlanes)
+PASS   : WorkflowContracts::datumModes(axis-TwoPoints)
+PASS   : WorkflowContracts::datumModes(axis-PointNormal)
+PASS   : WorkflowContracts::upstreamHistory(mm)
+PASS   : WorkflowContracts::upstreamHistory(in)
+PASS   : WorkflowContracts::conversionChain()
+PASS   : WorkflowContracts::explicitSplitRepair()
+PASS   : WorkflowContracts::cancelAndStale()
+PASS   : WorkflowContracts::faceAttachmentAndProjection()
+PASS   : WorkflowContracts::cleanupTestCase()
+Totals: 24 passed, 0 failed, 0 skipped, 0 blacklisted, 78193ms
+********* Finished testing of WorkflowContracts *********

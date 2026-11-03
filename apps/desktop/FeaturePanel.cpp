@@ -1,4 +1,6 @@
 #include "FeaturePanel.hpp"
+#include "SupportEditor.hpp"
+#include "model/SupportEditing.hpp"
 #include <QGroupBox>
 #include <QHBoxLayout>
 #include <QScrollArea>
@@ -160,8 +162,48 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
                                                            {"value_si", density->value()}}));
     });
     connect(previewButton, &QPushButton::clicked, this, &FeaturePanel::preview);
+    connect(client, &Client::modelSupportsPreview, this, [this](QCborMap preview) {
+        if (!editing || !supportPreviewPending ||
+            !document.contains(QStringLiteral("model_supports")))
+            return;
+        supportPreviewPending = false;
+        validPreview = true;
+        auto m = preview.value("measurement").toMap();
+        result.insert(QStringLiteral("part_measurement"), m);
+        diagnostic->setText(
+            "Exact associated-model rebuild preview · accepted display retained until commit");
+        measurement->setText(QString("Exact preview revision %1\nVolume: %2 m³")
+                                 .arg(m.value("revision").toInteger())
+                                 .arg(m.value("volume_m3").toDouble(), 0, 'g', 12));
+        accept->setEnabled(!client->outstanding());
+    });
     connect(accept, &QPushButton::clicked, this, &FeaturePanel::finish);
     connect(cancelButton, &QPushButton::clicked, this, &FeaturePanel::discard);
+    auto *repairSupports = new QPushButton("Repair supports in this feature draft");
+    repairSupports->setObjectName("featureRepairSupports");
+    layout->addWidget(repairSupports);
+    repairSupports->hide();
+    connect(client, &Client::changed, this, [this, repairSupports] {
+        repairSupports->setVisible(editing && document.contains(QStringLiteral("model_supports")));
+        repairSupports->setEnabled(editing && !client->outstanding() && !commitPending);
+    });
+    connect(repairSupports, &QPushButton::clicked, this, [this] {
+        try {
+            auto model = model::editSupportedFeatures(document, definitions());
+            SupportEditor dialog(client, document, this, {}, model);
+            if (dialog.exec() == QDialog::Accepted) {
+                editing = false;
+                inputs->hide();
+                accept->hide();
+                previewButton->hide();
+                cancelButton->hide();
+                emit editingChanged();
+            } else
+                invalidate();
+        } catch (const std::exception &e) {
+            diagnostic->setText(e.what());
+        }
+    });
     auto *timingGroup = new QGroupBox("Feature timings");
     timingGroup->setCheckable(true);
     timingGroup->setChecked(false);
@@ -249,6 +291,7 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
                                client->state().phase == Phase::PreviewReady);
             previewButton->setEnabled(idle);
             if (client->state().phase == Phase::Failed) {
+                supportPreviewPending = false;
                 validPreview = false;
                 commitPending = false;
                 diagnostic->setText(client->state().message);
@@ -535,8 +578,14 @@ void FeaturePanel::preview() {
     try {
         candidate = definitions();
         validPreview = false;
-        client->projectCommand("PreviewFeatures",
-                               fields({{"features", candidate}, {"deflection_mm", .2}}));
+        if (document.contains(QStringLiteral("model_supports"))) {
+            supportPreviewPending = true;
+            client->projectCommand(
+                "PreviewModelSupports",
+                fields({{"model", model::editSupportedFeatures(document, candidate).map()}}));
+        } else
+            client->projectCommand("PreviewFeatures",
+                                   fields({{"features", candidate}, {"deflection_mm", .2}}));
     } catch (const std::exception &e) {
         diagnostic->setText(QString::fromUtf8(e.what()));
         validPreview = false;
@@ -554,8 +603,14 @@ void FeaturePanel::finish() {
         }
         validPreview = false;
         commitPending = true;
-        client->projectCommand("SetFeatures", fields({{"features", current}}));
+        if (document.contains(QStringLiteral("model_supports")))
+            client->projectCommand(
+                "SetModelSupports",
+                fields({{"model", model::editSupportedFeatures(document, current).map()}}));
+        else
+            client->projectCommand("SetFeatures", fields({{"features", current}}));
     } catch (const std::exception &e) {
+        commitPending = false;
         diagnostic->setText(QString::fromUtf8(e.what()));
         return;
     }
