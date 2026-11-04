@@ -90,6 +90,15 @@ Earlier [dimension](decisions/core-modeling-cm3-dimensions.md) and
 [associated-dimension](decisions/core-modeling-cm3-associated-dimensions.md)
 contracts/evidence retain their original historical scope.
 
+The separately authorized [Smart Dimension parity follow-up](superpowers/plans/2026-11-04-smart-dimension-parity.md)
+tracks interaction/annotation gaps against the supplied T4/T5/T10 course pages in
+its [acceptance matrix](research/smart-dimension-acceptance.json) and
+[execution evidence](testing/smart-dimension-parity.md). Earlier CM3 mathematical
+and editor verification does not establish persistent Smart Dimension selection,
+pointer placement, conventional annotation graphics or marked-dimension drawing
+import. Those requirements remain open until individually implemented and verified.
+The authorized drawing slice is limited to the plan; Module 11 remains excluded.
+
 ### CM4 — Datums and associative sketch support
 
 - [x] **CM4.a:** Extend the dependency graph to support typed geometry references and reject cycles/order violations. Production structural implementation and available-Mac development-build verification: [CM4.a evidence](testing/core-modeling-cm4-a.md). This does not close CM4.b–e or whole-CM4 acceptance.

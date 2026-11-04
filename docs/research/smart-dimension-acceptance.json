@@ -1,0 +1,1346 @@
+{
+  "version": 1,
+  "plan": "docs/superpowers/plans/2026-11-04-smart-dimension-parity.md",
+  "sources_sha256": {
+    "T4 ADD RELATIONS": "845d2d09a293a91c9f0d72772cb68eee94bdb5bcb654b9366ef8d696548e3c6d",
+    "T5 ADD PART FEATURES": "cc5b2dae95fe306255d57935dcdd09faf7e548f56711fbac26f1b157b6cd44d9",
+    "T10 DRAWING": "7769963671e6ebeda72a047b0adca5a518962502cb2ca6cf7da2fb789226d999"
+  },
+  "source_review": "Original PDFs extracted with macOS PDFKit, 18 referenced pages; T4 p.20 and T5 p.34 visually inspected. Extraction/images retained only in private temporary files, never committed.",
+  "entries": [
+    {
+      "id": "SD-A-01",
+      "task": "A",
+      "requirement": "Create a page-indexed checklist for every requirement below, separately recording baseline, implementation, tests and native verification.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15,
+          33,
+          34
+        ],
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Pass: plan, acceptance matrix and CM3 status distinction recorded",
+      "focused_tests": "Pass: specification and coverage structure checks",
+      "native_verification": "Not applicable: documentation task",
+      "acceptance": "Pass: Task A documentation scope only"
+    },
+    {
+      "id": "SD-A-02",
+      "task": "A",
+      "requirement": "Distinguish implemented CM3 mathematics from remaining interaction parity.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15,
+          33,
+          34
+        ],
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Pass: plan, acceptance matrix and CM3 status distinction recorded",
+      "focused_tests": "Pass: specification and coverage structure checks",
+      "native_verification": "Not applicable: documentation task",
+      "acceptance": "Pass: Task A documentation scope only"
+    },
+    {
+      "id": "SD-A-03",
+      "task": "A",
+      "requirement": "Preserve historical verification records.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15,
+          33,
+          34
+        ],
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Pass: plan, acceptance matrix and CM3 status distinction recorded",
+      "focused_tests": "Pass: specification and coverage structure checks",
+      "native_verification": "Not applicable: documentation task",
+      "acceptance": "Pass: Task A documentation scope only"
+    },
+    {
+      "id": "SD-B-01",
+      "task": "B",
+      "requirement": "Rename visible command Smart Dimension; preserve ID and aliases.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          22,
+          23
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-B-02",
+      "task": "B",
+      "requirement": "Add flyout using the existing toolbar-menu pattern.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          22,
+          23
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-B-03",
+      "task": "B",
+      "requirement": "Enable whenever sketch editable/worker ready without requiring selection.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          22,
+          23
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-B-04",
+      "task": "B",
+      "requirement": "Sketch UI owns transient Selecting, Placing, EditingValue states.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          22,
+          23
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-B-05",
+      "task": "B",
+      "requirement": "Keep picks, hover, previews and retained centerline/datum outside storage.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          22,
+          23
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-B-06",
+      "task": "B",
+      "requirement": "Clicks select operands instead of creating/dragging geometry.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          22,
+          23
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-B-07",
+      "task": "B",
+      "requirement": "Highlight operands and show a concise next-action prompt.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          22,
+          23
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-B-08",
+      "task": "B",
+      "requirement": "Consume valid preselection; explain invalid selection without mutation.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          22,
+          23
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-B-09",
+      "task": "B",
+      "requirement": "Acceptance clears ordinary operands and resumes selection; retain only the centerline/datum required for repeated workflows.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          22,
+          23
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-B-10",
+      "task": "B",
+      "requirement": "Escape cancels candidate, then exits mode; tool/document/sketch/epoch changes cancel transient state.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          22,
+          23
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-C-01",
+      "task": "C",
+      "requirement": "Circle defaults Diameter; arc defaults Radius.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          21,
+          22,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-C-02",
+      "task": "C",
+      "requirement": "Lines/two points: pointer chooses horizontal/vertical/aligned; explicit Horizontal/Vertical modes lock orientation.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          21,
+          22,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-C-03",
+      "task": "C",
+      "requirement": "Resolve endpoints/centers to stable point IDs; never duplicate centers.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          21,
+          22,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-C-04",
+      "task": "C",
+      "requirement": "Point-line/parallel-line distances are perpendicular; H/V presentation applies to corresponding axis-aligned cases.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          21,
+          22,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-C-05",
+      "task": "C",
+      "requirement": "Nonparallel lines give angular preview; pointer chooses sector and solving preserves the chosen branch.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          21,
+          22,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-C-06",
+      "task": "C",
+      "requirement": "One circular arc's center/endpoints resolve to its existing Sweep.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          21,
+          22,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-C-07",
+      "task": "C",
+      "requirement": "Profile/construction centerline supports linear diameter; crossing axis switches radial/full-diameter intent with explicit preview.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          21,
+          22,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-C-08",
+      "task": "C",
+      "requirement": "Retain centerline for successive dimensions.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          21,
+          22,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-C-09",
+      "task": "C",
+      "requirement": "Ambiguity requires explicit selection, never nearest-entity substitution.",
+      "source_pdf_pages": {
+        "T4": [
+          20,
+          21,
+          22,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-D-01",
+      "task": "D",
+      "requirement": "Generate display geometry from operands/model-space label position.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-D-02",
+      "task": "D",
+      "requirement": "Render H/V/aligned extensions/arrows, radius/diameter leaders, centerline diameters and angular arcs.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-D-03",
+      "task": "D",
+      "requirement": "Share layout for previews, accepted labels and hit tests.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-D-04",
+      "task": "D",
+      "requirement": "Keep text/arrows readable across zoom/scales; respect units, reference parentheses, angle units and named expressions.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-D-05",
+      "task": "D",
+      "requirement": "Pointer-place new dimensions; retain numeric advanced placement fields.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-D-06",
+      "task": "D",
+      "requirement": "Label dragging changes placement only, never geometry.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-D-07",
+      "task": "D",
+      "requirement": "Compact Modify near label, clamped to viewport.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-D-08",
+      "task": "D",
+      "requirement": "Keep value, Preview/Accept/Cancel visible; Advanced contains increments, reverse, reference and drawing mark.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-D-09",
+      "task": "D",
+      "requirement": "Enter accepts only successful current worker validation.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-D-10",
+      "task": "D",
+      "requirement": "Cancel restores original candidate/placement; rejected values leave actionable errors and editor open.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-D-11",
+      "task": "D",
+      "requirement": "One draft undo step per accepted dimension; Finish Sketch publishes.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-D-12",
+      "task": "D",
+      "requirement": "Double-click exact dimension ID, including shared reference/driver operands.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-D-13",
+      "task": "D",
+      "requirement": "Fence asynchronous results by generation/context/revision/epoch.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-E-01",
+      "task": "E",
+      "requirement": "Ordinates: place zero datum, successive point/straight-entity targets, retaining stable associations.",
+      "source_pdf_pages": {
+        "T4": [
+          21,
+          22
+        ],
+        "T5": [
+          33,
+          34
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-E-02",
+      "task": "E",
+      "requirement": "Aligned labels/leaders; reuse individual IDs and driving/reference rules.",
+      "source_pdf_pages": {
+        "T4": [
+          21,
+          22
+        ],
+        "T5": [
+          33,
+          34
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-E-03",
+      "task": "E",
+      "requirement": "No automatic Modify per ordinate; exit then double-click for editing.",
+      "source_pdf_pages": {
+        "T4": [
+          21,
+          22
+        ],
+        "T5": [
+          33,
+          34
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-E-04",
+      "task": "E",
+      "requirement": "Path Length: reuse chain ordering, exact worker measurement and 64-member limit; add interactive selection/placement.",
+      "source_pdf_pages": {
+        "T4": [
+          21,
+          22
+        ],
+        "T5": [
+          33,
+          34
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-E-05",
+      "task": "E",
+      "requirement": "Preserve constant total length in supported constrained dragging; explicitly reject branches/disconnections/duplicates.",
+      "source_pdf_pages": {
+        "T4": [
+          21,
+          22
+        ],
+        "T5": [
+          33,
+          34
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-E-06",
+      "task": "E",
+      "requirement": "Preserve true circular Arc Length, distinct from chords/sweep.",
+      "source_pdf_pages": {
+        "T4": [
+          21,
+          22
+        ],
+        "T5": [
+          33,
+          34
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-E-07",
+      "task": "E",
+      "requirement": "Preserve Fully Define, inference review and constrained dragging.",
+      "source_pdf_pages": {
+        "T4": [
+          21,
+          22
+        ],
+        "T5": [
+          33,
+          34
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-F-01",
+      "task": "F",
+      "requirement": "Keep old encodings for existing semantics.",
+      "source_pdf_pages": {
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-F-02",
+      "task": "F",
+      "requirement": "Schema 9 for new distances/angular presentation; never reinterpret schema 8.",
+      "source_pdf_pages": {
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-F-03",
+      "task": "F",
+      "requirement": "Sticky reader capability after CM5.c, including active/history/recovery/copy.",
+      "source_pdf_pages": {
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-F-04",
+      "task": "F",
+      "requirement": "Update every manifest admission/SQL binding consistently; retain Save As requirement for older sources.",
+      "source_pdf_pages": {
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-F-05",
+      "task": "F",
+      "requirement": "No SQLite table change; extend semantic payloads.",
+      "source_pdf_pages": {
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-F-06",
+      "task": "F",
+      "requirement": "Explicit functional Import marked dimensions drawing command.",
+      "source_pdf_pages": {
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-F-07",
+      "task": "F",
+      "requirement": "Associate source document/sketch/constraint and destination view IDs; worker recomputes values/projected anchors without guessed BRep edge matches.",
+      "source_pdf_pages": {
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-F-08",
+      "task": "F",
+      "requirement": "Imported reference annotations become stale through existing source revision tracking; deleted sources dangle and require explicit repair/removal.",
+      "source_pdf_pages": {
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-F-09",
+      "task": "F",
+      "requirement": "Deduplicate by source dimension/view; exclude unmarked dimensions.",
+      "source_pdf_pages": {
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-F-10",
+      "task": "F",
+      "requirement": "Interactive drawing Linear/Angular/Radius/Diameter selection and placement.",
+      "source_pdf_pages": {
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-F-11",
+      "task": "F",
+      "requirement": "Drawing measurements never drive Parts.",
+      "source_pdf_pages": {
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-F-12",
+      "task": "F",
+      "requirement": "Version associations, preserve old records, reuse renderer/exporter.",
+      "source_pdf_pages": {
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-G-01",
+      "task": "G",
+      "requirement": "Document operands, exact gestures, keys and compatibility changes.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15,
+          33,
+          34
+        ],
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-G-02",
+      "task": "G",
+      "requirement": "Update page-indexed coverage without unsupported acceptance claims.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15,
+          33,
+          34
+        ],
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-G-03",
+      "task": "G",
+      "requirement": "Record native screenshots/results beside numerical tests; headless tests do not verify graphics.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15,
+          33,
+          34
+        ],
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-G-04",
+      "task": "G",
+      "requirement": "Final comparison identifies each closed or explicitly blocked gap.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15,
+          33,
+          34
+        ],
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    },
+    {
+      "id": "SD-G-05",
+      "task": "G",
+      "requirement": "Never label complete while any required comparison behavior is deferred.",
+      "source_pdf_pages": {
+        "T4": [
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          32,
+          33
+        ],
+        "T5": [
+          12,
+          13,
+          14,
+          15,
+          33,
+          34
+        ],
+        "T10": [
+          32
+        ]
+      },
+      "baseline": "Existing CM3 mathematics/editor only; required parity not established",
+      "implementation": "Not started",
+      "focused_tests": "Not run",
+      "native_verification": "Not run",
+      "acceptance": "Open"
+    }
+  ],
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false
+}
