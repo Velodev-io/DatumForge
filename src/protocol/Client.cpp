@@ -494,17 +494,25 @@ void Client::receive(const QCborMap &m) {
         display = std::move(mesh);
         projection.revision = revision;
         projection.stale = false;
-        projection.phase = (e.command == "PreviewReference" ||
-                            (e.command == "PreviewFeatures" || e.command == "PreviewHistory" ||
-                             (e.command == "ReferenceCandidates" ||
-                              e.command == "PreviewAssembly" || e.command == "DisplayAssembly")))
-                               ? Phase::PreviewReady
-                               : Phase::Ready;
+        projection.phase =
+            (e.command == "PreviewReference" ||
+             (e.command == "PreviewFeatures" || e.command == "PreviewHistory" ||
+              (e.command == "ReferenceCandidates" || e.command == "PreviewAssembly" ||
+               e.command == "DisplayAssembly" || e.command == "PreviewModelSupports")))
+                ? Phase::PreviewReady
+                : Phase::Ready;
         projection.job = e.command == "PreviewReference" ? "Preview — no document was committed"
                                                          : "Reference scene ready";
         projection.message.clear();
         pending.erase(found);
         emit meshChanged(display);
+        if (e.command == "PreviewModelSupports") {
+            projection.job = "Model support preview · not committed";
+            projection.stale = false;
+            projection.message.clear();
+            if (partReply.contains(QStringLiteral("model_support_preview")))
+                emit modelSupportsPreview(partReply.value("model_support_preview").toMap());
+        }
         if (e.command == "DisplayPart" ||
             (e.command == "PreviewFeatures" || e.command == "PreviewHistory" ||
              (e.command == "ReferenceCandidates" || e.command == "PreviewAssembly" ||
@@ -546,7 +554,7 @@ void Client::receive(const QCborMap &m) {
         if (e.command == "DisplayPart" ||
             (e.command == "PreviewFeatures" || e.command == "PreviewHistory" ||
              (e.command == "ReferenceCandidates" || e.command == "PreviewAssembly" ||
-              e.command == "DisplayAssembly")))
+              e.command == "DisplayAssembly" || e.command == "PreviewModelSupports")))
             partReply = data;
         found->result = revision;
         transfers.begin(e, data.value("display_manifest").toMap());
@@ -641,7 +649,9 @@ void Client::receive(const QCborMap &m) {
         return;
     }
     if (e.command == "PreviewModelSupports") {
-        wire::keys(data, {"model_support_preview"});
+        wire::keys(data, data.contains(QStringLiteral("part_empty"))
+                             ? QSet<QString>{"model_support_preview", "part_empty"}
+                             : QSet<QString>{"model_support_preview"});
         wire::require(data.value("model_support_preview").isMap(), "model support preview map");
         auto result = data.value("model_support_preview").toMap();
         wire::keys(result, {"version", "sketches", "datums", "conversions", "evaluation_order",
@@ -661,6 +671,10 @@ void Client::receive(const QCborMap &m) {
                               revision,
                       "model support preview bounds/revision");
         pending.erase(found);
+        if (data.value("part_empty").toBool() || result.value("part_empty").toBool()) {
+            display.reset();
+            emit meshChanged({});
+        }
         projection.phase = Phase::PreviewReady;
         projection.job = "Model support preview · not committed";
         projection.message.clear();

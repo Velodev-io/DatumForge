@@ -62,6 +62,28 @@ void workerContract() {
     CHECK(worker.run(command("DisplayPart", fields({{"deflection_mm", .2}})))
               .value("part_empty")
               .toBool());
+    auto displayPreview = command("PreviewModelSupports", fields({{"model", d.map()},
+                                                                  {"intents", QCborArray{f}},
+                                                                  {"display", true},
+                                                                  {"deflection_mm", .2}}));
+    auto displayReply = worker.run(displayPreview);
+    CHECK(displayReply.contains(QStringLiteral("display_manifest")));
+    CHECK(displayReply.contains(QStringLiteral("_display_bytes")));
+    CHECK(displayReply.contains(QStringLiteral("model_support_preview")));
+    auto noDisplayPreview =
+        command("PreviewModelSupports",
+                fields({{"model", d.map()}, {"intents", QCborArray{f}}, {"display", false}}));
+    auto noDisplayReply = worker.run(noDisplayPreview);
+    CHECK(!noDisplayReply.contains(QStringLiteral("display_manifest")));
+    auto badKey = preview;
+    badKey.payload.insert(QStringLiteral("unknown_option"), true);
+    rejects([&] { worker.run(badKey); });
+    auto badDisplay = preview;
+    badDisplay.payload.insert(QStringLiteral("display"), 123);
+    rejects([&] { worker.run(badDisplay); });
+    auto badDeflection = preview;
+    badDeflection.payload.insert(QStringLiteral("deflection_mm"), "coarse");
+    rejects([&] { worker.run(badDeflection); });
     auto outcome =
         worker.run(command("QueryOperation", fields({{"operation", preview.operation}})));
     CHECK(!outcome.value("durable").toBool());
@@ -104,15 +126,19 @@ void transportContract() {
     CHECK(results.isValid());
     auto revision = client.state().revision;
     auto before = client.state().documentRecords;
-    client.projectCommand("PreviewModelSupports",
-                          fields({{"model", d.map()}, {"intents", QCborArray{f}}}));
+    client.projectCommand("PreviewModelSupports", fields({{"model", d.map()},
+                                                          {"intents", QCborArray{f}},
+                                                          {"display", true},
+                                                          {"deflection_mm", .2}}));
     CHECK(wait([&] { return !client.outstanding() && !results.empty(); }));
     CHECK(client.state().phase == Phase::PreviewReady);
+    CHECK(client.mesh());
     near(results[0][0].toMap().value("measurement").toMap().value("volume_m3").toDouble(), .000002,
          1e-12);
     CHECK(client.state().revision == revision && client.state().documentRecords == before);
     client.cancelPartPreview();
     CHECK(wait([&] { return !client.outstanding(); }));
+    CHECK(!client.mesh());
     results.clear();
     for (int i = 0; i < 12; ++i) {
         f.insert(QStringLiteral("direction1"), blind(.01 + i * .001));

@@ -1,0 +1,21 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 60: cm5.intent
+1/8 Test #60: cm5.intent .......................   Passed    0.06 sec
+    Start 61: cm5.profiles
+2/8 Test #61: cm5.profiles .....................   Passed    0.25 sec
+    Start 62: cm5.features
+3/8 Test #62: cm5.features .....................   Passed    0.89 sec
+    Start 63: cm5.worker
+4/8 Test #63: cm5.worker .......................   Passed    0.27 sec
+    Start 64: cm5.transport
+5/8 Test #64: cm5.transport ....................   Passed    1.28 sec
+    Start 65: cm5.records
+6/8 Test #65: cm5.records ......................   Passed    0.02 sec
+    Start 66: cm5.store
+7/8 Test #66: cm5.store ........................   Passed    1.23 sec
+    Start 67: cm5.repair
+8/8 Test #67: cm5.repair .......................   Passed    1.41 sec
+
+100% tests passed, 0 tests failed out of 8
+
+Total Test time (real) =   5.42 sec

@@ -397,6 +397,20 @@ void MainWindow::refreshProjectUI() {
                     node->setData(0, Qt::UserRole + 5, feature.value("id").toString());
                     node->setIcon(0, commands.get("extrude")->icon());
                 }
+                if (d.contains(QStringLiteral("modeling")))
+                    for (auto v : d.value("modeling").toMap().value("intents").toArray()) {
+                        auto intent = v.toMap();
+                        auto id = intent.value("id").toString();
+                        auto name = intent.value("name").toString();
+                        auto kind = intent.value("kind").toString();
+                        auto *node = new QTreeWidgetItem(
+                            row, {name.isEmpty() ? kind : name + " (" + kind + ")"});
+                        node->setData(0, Qt::UserRole + 1, documentId);
+                        node->setData(0, Qt::UserRole + 2, id);
+                        node->setData(0, Qt::UserRole + 5, id);
+                        node->setIcon(
+                            0, commands.get(kind == "Revolve" ? "revolve" : "extrude")->icon());
+                    }
                 if (sketchPanel && sketchPanel->active() && documentId == s.activeDocument &&
                     !hasDraft) {
                     auto *node =

@@ -1967,12 +1967,24 @@
     ]
   },
   "CM5.c": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "Production durable modeling definitions, Boolean/draft provenance and explicit reference candidate repair on the available Mac development build. Rebuild and verify exact intent provenance, sticky reader manifest markers, omitted-versus-empty intent preservation, and atomic candidate repair. Native controls and full acceptance remain open; preserve deferred 6.1b/6.4c/7.4c and stop before Module 11.",
+    "implementation_status": "Pass: durable ProjectStore metadata, ModelingRecords provenance, candidate inspection and atomic repair",
+    "development_verification_status": "Pass: all 97 enabled CTests, 12 changed-source Clang analyses, pinned format, ownership/research/coverage/specification checks; all 280 frozen source/configuration hashes matched on delivery commit a97364c (branch review/cm5-c-delivery-20261114). Current checkout HEAD 37501e8 contains 17 modified source files from subsequent CM2/Smart Dimension work; full 97 enabled CTests and 12 Clang analyses re-verified on current source.",
+    "experiments_status": "Production SQLite/OCCT storage and repair fixtures; earlier failed run and SQL binding diagnosis retained",
+    "native_verification_status": "Not run: no new native tools; headless client/worker tests do not certify CM5.d/e",
+    "full_acceptance_status": "Blocked: CM5.d-e and full source-course/platform/device/installed/physical 8 GB resource acceptance",
+    "review_status": "Author self-review recorded; independent review required before merge",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/decisions/core-modeling-cm5-persistence.md",
+      "docs/testing/core-modeling-cm5-c.md",
+      "tests/core_modeling/modeling_records.cpp",
+      "tests/core_modeling/modeling_store.cpp",
+      "tests/core_modeling/modeling_repair.cpp",
+      "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
+      "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/ctest.txt",
+      "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/source-identity.json",
+      "docs/testing/artifacts/core-modeling/cm5-c-20261103/source-review.md"
     ]
   },
   "CM5.d": {

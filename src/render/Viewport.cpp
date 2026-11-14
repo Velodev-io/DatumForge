@@ -149,6 +149,23 @@ void Viewport::paintGL() {
                  : stale                           ? QVector4D(.42, .46, .5, 1)
                                                    : QVector4D(.5, .85, .55, 1),
                  Instance{});
+    if (manipulatorActive && manipulatorKind == "Depth") {
+        auto dir = manipulatorReverse ? -manipulatorDirection : manipulatorDirection;
+        auto tip = manipulatorOrigin + dir * float(manipulatorValue);
+        QVector<QVector3D> lines{manipulatorOrigin, tip};
+        draw(lines, GL_LINES, QVector4D(1.f, .75f, .1f, 1.f), Instance{});
+        auto side = QVector3D::crossProduct(dir, QVector3D(0, 0, 1));
+        if (side.lengthSquared() < 0.01f)
+            side = QVector3D::crossProduct(dir, QVector3D(0, 1, 0));
+        side.normalize();
+        auto up = QVector3D::crossProduct(dir, side).normalized();
+        float head = 2.f;
+        QVector<QVector3D> headLines{tip, tip - dir * head + side * (head * .5f),
+                                     tip, tip - dir * head - side * (head * .5f),
+                                     tip, tip - dir * head + up * (head * .5f),
+                                     tip, tip - dir * head - up * (head * .5f)};
+        draw(headLines, GL_LINES, QVector4D(1.f, .85f, .2f, 1.f), Instance{});
+    }
     shader.release();
     buffer.release();
     frameTimes.append(double(frameClock.nsecsElapsed() - began) / 1e6);
@@ -397,11 +414,38 @@ Selection Viewport::pick(QPointF pos) const {
 }
 void Viewport::mousePressEvent(QMouseEvent *e) {
     previous = press = e->position().toPoint();
+    if (manipulatorActive && manipulatorKind == "Depth" && e->button() == Qt::LeftButton) {
+        auto dir = manipulatorReverse ? -manipulatorDirection : manipulatorDirection;
+        auto tip = manipulatorOrigin + dir * float(manipulatorValue);
+        auto screenTip = project(tip);
+        if ((e->position() - screenTip).manhattanLength() < 24) {
+            manipulatorDragging = true;
+            setFocus();
+            return;
+        }
+    }
     draggedOccurrence =
         componentDrag && e->button() == Qt::LeftButton ? pick(e->position()).occurrence : QString();
     setFocus();
 }
 void Viewport::mouseMoveEvent(QMouseEvent *e) {
+    if (manipulatorDragging && (e->buttons() & Qt::LeftButton)) {
+        auto dir = manipulatorReverse ? -manipulatorDirection : manipulatorDirection;
+        auto originProj = project(manipulatorOrigin);
+        auto tipProj = project(manipulatorOrigin + dir * float(manipulatorValue));
+        auto screenAxis = tipProj - originProj;
+        float lenSq = screenAxis.x() * screenAxis.x() + screenAxis.y() * screenAxis.y();
+        if (lenSq > 1.f) {
+            float t = float((e->position().x() - originProj.x()) * screenAxis.x() +
+                            (e->position().y() - originProj.y()) * screenAxis.y()) /
+                      lenSq;
+            double newDepth = qMax(0.1, manipulatorValue * double(t));
+            manipulatorValue = newDepth;
+            emit depthManipulatorMoved(newDepth);
+            update();
+            return;
+        }
+    }
     auto delta = e->position().toPoint() - previous;
     previous = e->position().toPoint();
     if (e->buttons() & Qt::RightButton) {
@@ -418,6 +462,11 @@ void Viewport::mouseMoveEvent(QMouseEvent *e) {
     update();
 }
 void Viewport::mouseReleaseEvent(QMouseEvent *e) {
+    if (manipulatorDragging && e->button() == Qt::LeftButton) {
+        manipulatorDragging = false;
+        emit depthManipulatorReleased(manipulatorValue);
+        return;
+    }
     if (componentDrag && e->button() == Qt::LeftButton && !draggedOccurrence.isEmpty() &&
         (e->position().toPoint() - press).manhattanLength() >= 4) {
         auto delta = e->position() - press;
@@ -436,6 +485,36 @@ void Viewport::mouseReleaseEvent(QMouseEvent *e) {
     }
     if (e->button() == Qt::LeftButton && (e->position().toPoint() - press).manhattanLength() < 4)
         emit selected(pick(e->position()));
+}
+void Viewport::setExtrudeManipulator(QVector3D origin, QVector3D direction, double depthMM,
+                                     bool reverse) {
+    manipulatorActive = true;
+    manipulatorKind = "Depth";
+    manipulatorOrigin = origin;
+    manipulatorDirection = direction.isNull() ? QVector3D(0, 0, 1) : direction.normalized();
+    manipulatorValue = depthMM;
+    manipulatorReverse = reverse;
+    update();
+}
+void Viewport::clearManipulators() {
+    manipulatorActive = false;
+    manipulatorDragging = false;
+    manipulatorKind.clear();
+    update();
+}
+void Viewport::dragExtrudeDepthHandle(double deltaMM) {
+    if (!manipulatorActive || manipulatorKind != "Depth")
+        return;
+    manipulatorValue = qMax(0.1, manipulatorValue + deltaMM);
+    emit depthManipulatorMoved(manipulatorValue);
+    emit depthManipulatorReleased(manipulatorValue);
+    update();
+}
+void Viewport::dragDraftAngleHandle(double deltaDeg) {
+    manipulatorValue = qBound(0.0, manipulatorValue + deltaDeg, 89.9);
+    emit draftManipulatorMoved(manipulatorValue);
+    emit draftManipulatorReleased(manipulatorValue);
+    update();
 }
 void Viewport::wheelEvent(QWheelEvent *e) {
     float factor = std::exp(-e->angleDelta().y() / 120.f * .12f);

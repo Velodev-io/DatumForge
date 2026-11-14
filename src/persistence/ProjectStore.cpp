@@ -977,7 +977,8 @@ QCborMap ProjectStore::supportReferenceCandidates(QString document, const QCborM
 }
 QCborMap ProjectStore::previewSupports(QString document, const QCborMap &definition,
                                        const exchange::Control &control,
-                                       std::optional<QCborArray> intents) const {
+                                       std::optional<QCborArray> intents,
+                                       std::optional<double> deflection_mm) const {
     check(db &&
               db->scalar("SELECT type FROM documents WHERE id=?", {document}).toString() == "Part",
           "UnsupportedOperation", "Model support preview requires a Part document");
@@ -993,7 +994,13 @@ QCborMap ProjectStore::previewSupports(QString document, const QCborMap &definit
             return buildPart(*db, sketches, features, &resultCache);
         },
         control);
-    return result.map(revision());
+    auto map = result.map(revision());
+    if (deflection_mm && !result.part.bodies.empty()) {
+        auto packed = pack(result.part.mesh(*deflection_mm));
+        map.insert(QStringLiteral("display_manifest"), packed.manifest);
+        map.insert(QStringLiteral("_display_bytes"), packed.bytes);
+    }
+    return map;
 }
 QCborMap ProjectStore::modelingReferenceCandidates(QString document, const QCborMap &definition,
                                                    const QCborArray &intents, QString ownerId,

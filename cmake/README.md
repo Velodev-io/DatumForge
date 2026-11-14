@@ -1,5 +1,23 @@
 # Source builds and commands
 
+CM5 current-source baseline on HEAD 37501e8: `python3 tools/verify_cm5_baseline.py`
+records CMake configure, build, focused CM5 CTests, the full enabled CTest suite,
+SQL persistence recheck, pinned formatting, all 22 CM5/HEAD translation units' Clang
+analyses, architecture/ownership, research isolation, core-modeling, specification,
+and whitespace checks. Focused check: `ctest --preset macos-debug -R '^cm5\.' --output-on-failure`.
+See [CM5 baseline and 29-row matrix](../task.md). CM5.d–e, full platform/device/resource
+acceptance and Module 11 remain open.
+
+CM5.c durable modeling: `python3 tools/verify_cm5_persistence.py` records the complete
+enabled CTest suite, pinned formatting, all 12 changed-source Clang analyses,
+ownership/coverage/specification checks and frozen source integrity. Focused check:
+`ctest --preset macos-debug -R '^cm5\.(records|store|repair)$' --output-on-failure`.
+Storage and repair tests use SQLite/OCCT with marked disposable roots; release/private
+recovery paths stay refused. This adds durable intent persistence, sticky reader manifest
+markers and explicit topology repair, not new native authoring or manipulators.
+See [CM5.c evidence and limits](../docs/testing/core-modeling-cm5-c.md).
+CM5.d–e, full platform/device/resource acceptance and Module 11 remain open.
+
 CM5.b exact modeling: `python3 tools/verify_cm5_modeling.py` records the complete
 enabled CTest suite, pinned formatting, all nine changed-source Clang analyses,
 ownership/coverage/specification checks and frozen source integrity. Focused check:

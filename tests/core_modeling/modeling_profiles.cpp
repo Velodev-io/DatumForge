@@ -1,3 +1,4 @@
+#include "SupportFixture.hpp"
 #include "geometry/occt/ModelingProfiles.hpp"
 #include "support/check.hpp"
 #include <BRepBndLib.hxx>
@@ -65,6 +66,65 @@ void thinSections() {
     near(area(geometry::modelingProfile(open, selected, mid).shape), 60, 1e-7);
     auto openSection = geometry::modelingProfile(open, selected, fields({{"mode", "Solid"}}));
     CHECK(openSection.open);
+
+    sketch::Sketch openArc;
+    auto center = openArc.point({0, 0});
+    openArc.arc(center, .02, 0, std::numbers::pi / 2);
+    auto arcSelected = selection(openArc, "OpenChains");
+    auto arcMid = fields({{"mode", "Midplane"}, {"thickness", .002}});
+    auto arcProfile = geometry::modelingProfile(openArc, arcSelected, arcMid);
+    CHECK(!arcProfile.open);
+    near(area(arcProfile.shape), 20 * std::numbers::pi, 1e-7);
+    Bnd_Box arcBox;
+    BRepBndLib::AddOptimal(arcProfile.shape, arcBox, false, false);
+    arcBox.Get(x0, y0, z0, x1, y1, z1);
+    near(x0, 0, 1e-7);
+    near(x1, 21, 1e-7);
+    near(y0, 0, 1e-7);
+    near(y1, 21, 1e-7);
+    auto arcTwo = fields({{"mode", "TwoDirection"}, {"thickness1", .001}, {"thickness2", .002}});
+    near(area(geometry::modelingProfile(openArc, arcSelected, arcTwo).shape),
+         29.25 * std::numbers::pi, 1e-7);
+    CHECK(geometry::modelingProfile(openArc, arcSelected, fields({{"mode", "Solid"}})).open);
+    rejects([&] {
+        geometry::modelingProfile(
+            openArc, arcSelected,
+            fields({{"mode", "OneDirection"}, {"thickness", .025}, {"reverse", true}}));
+    });
+
+    sketch::Sketch trimmed;
+    trimmed.polyline({{0, 0}, {.04, 0}}, false);
+    QString lineId;
+    for (auto &e : trimmed.entities)
+        if (e.kind == "Line")
+            lineId = e.id;
+    CHECK(!lineId.isEmpty());
+    auto trimmedUse = fields({{"entity", lineId}, {"from", .25}, {"to", .75}, {"reverse", false}});
+    auto trimmedSelection = fields({{"sketch", trimmed.id},
+                                    {"mode", "OpenChains"},
+                                    {"regions", QCborArray{QCborArray{QCborArray{trimmedUse}}}}});
+    auto trimmedSection = geometry::modelingProfile(trimmed, trimmedSelection, mid);
+    near(area(trimmedSection.shape), 60, 1e-7);
+    Bnd_Box trimmedBox;
+    BRepBndLib::AddOptimal(trimmedSection.shape, trimmedBox, false, false);
+    trimmedBox.Get(x0, y0, z0, x1, y1, z1);
+    near(x0, 10, 1e-7);
+    near(x1, 30, 1e-7);
+    auto revTrimmedUse =
+        fields({{"entity", lineId}, {"from", .75}, {"to", .25}, {"reverse", true}});
+    auto revTrimmedSelection =
+        fields({{"sketch", trimmed.id},
+                {"mode", "OpenChains"},
+                {"regions", QCborArray{QCborArray{QCborArray{revTrimmedUse}}}}});
+    near(area(geometry::modelingProfile(trimmed, revTrimmedSelection, mid).shape), 60, 1e-7);
+
+    sketch::Sketch disconnected;
+    disconnected.polyline({{0, 0}, {.01, 0}}, false);
+    disconnected.polyline({{.02, 0}, {.03, 0}}, false);
+    auto disSelected = selection(disconnected, "OpenChains");
+    support_fixture::error("ReferenceMissing",
+                           [&] { geometry::modelingProfile(disconnected, disSelected, mid); });
+
     std::cout << "thin sections passed\n";
 }
 void selectedRegions() {
@@ -124,7 +184,20 @@ void selectedRegions() {
         boundaries.append(loop);
     }
     excessive.insert(QStringLiteral("regions"), QCborArray{boundaries});
-    rejects([&] { geometry::modelingProfile(many, excessive, fields({{"mode", "Solid"}})); });
+    support_fixture::error("ResourceLimit", [&] {
+        geometry::modelingProfile(many, excessive, fields({{"mode", "Solid"}}));
+    });
+    QCborArray seventeenRegions;
+    for (int i = 0; i < 17; ++i) {
+        QCborArray loop;
+        for (int j = 0; j < 4; ++j)
+            loop.append(members[i * 4 + j]);
+        seventeenRegions.append(QCborArray{loop});
+    }
+    excessive.insert(QStringLiteral("regions"), seventeenRegions);
+    support_fixture::error("ResourceLimit", [&] {
+        geometry::modelingProfile(many, excessive, fields({{"mode", "Solid"}}));
+    });
     std::cout << "selected regions passed\n";
 }
 } // namespace
@@ -143,6 +216,10 @@ int main(int argc, char **argv) {
         auto before = s.map();
         geometry::modelingProfile(s, selection(s), solid);
         CHECK(s.map() == before);
+        // Collapsing inward offset on rectangle: thickness .006 m > half-height .005 m
+        auto collapsing =
+            fields({{"mode", "OneDirection"}, {"thickness", .006}, {"reverse", false}});
+        rejects([&] { geometry::modelingProfile(s, all(s.id), collapsing); });
         selectedRegions();
         thinSections();
     });

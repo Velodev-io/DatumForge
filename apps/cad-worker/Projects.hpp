@@ -233,22 +233,51 @@ class Projects {
                                             wire::text(p, "path"), control)}});
             }
             if (e.command == "PreviewModelSupports") {
-                wire::keys(p, p.contains(QStringLiteral("intents"))
-                                  ? QSet<QString>{"model", "intents"}
-                                  : QSet<QString>{"model"});
+                QSet<QString> allowed{"model"};
+                if (p.contains(QStringLiteral("intents")))
+                    allowed.insert(QStringLiteral("intents"));
+                if (p.contains(QStringLiteral("display")))
+                    allowed.insert(QStringLiteral("display"));
+                if (p.contains(QStringLiteral("deflection_mm")))
+                    allowed.insert(QStringLiteral("deflection_mm"));
+                wire::keys(p, allowed);
                 check(!p.contains(QStringLiteral("intents")) || p.value("intents").isArray(),
                       "InvalidInput", "Modeling intents must be a bounded array");
+                check(!p.contains(QStringLiteral("display")) || p.value("display").isBool(),
+                      "InvalidInput", "Display flag must be boolean");
+                check(!p.contains(QStringLiteral("deflection_mm")) ||
+                          (p.value("deflection_mm").isDouble() ||
+                           p.value("deflection_mm").isInteger()),
+                      "InvalidInput", "Deflection must be numeric");
                 check(e.revision == store->revision(), "StaleRevision",
                       "Project changed before model support preview");
                 check(p.value("model").isMap(), "InvalidInput",
                       "Typed model support definition required");
-                return sketch::fields(
-                    {{"model_support_preview",
-                      store->previewSupports(
-                          e.context.document, p.value("model").toMap(), control,
-                          p.contains(QStringLiteral("intents"))
-                              ? std::optional<QCborArray>(p.value("intents").toArray())
-                              : std::nullopt)}});
+                bool requestDisplay =
+                    (p.contains(QStringLiteral("display")) && p.value("display").toBool()) ||
+                    p.contains(QStringLiteral("deflection_mm"));
+                double deflection = p.contains(QStringLiteral("deflection_mm"))
+                                        ? features::number(p, "deflection_mm", .01, 5)
+                                        : .2;
+                auto preview = store->previewSupports(
+                    e.context.document, p.value("model").toMap(), control,
+                    p.contains(QStringLiteral("intents"))
+                        ? std::optional<QCborArray>(p.value("intents").toArray())
+                        : std::nullopt,
+                    requestDisplay ? std::optional<double>(deflection) : std::nullopt);
+                QCborMap reply;
+                if (preview.contains(QStringLiteral("display_manifest"))) {
+                    reply.insert(QStringLiteral("display_manifest"),
+                                 preview.value(QStringLiteral("display_manifest")));
+                    reply.insert(QStringLiteral("_display_bytes"),
+                                 preview.value(QStringLiteral("_display_bytes")));
+                    preview.remove(QStringLiteral("display_manifest"));
+                    preview.remove(QStringLiteral("_display_bytes"));
+                } else if (requestDisplay) {
+                    reply.insert(QStringLiteral("part_empty"), true);
+                }
+                reply.insert(QStringLiteral("model_support_preview"), preview);
+                return reply;
             }
             if (e.command == "PreviewDrawing" || e.command == "DisplayDrawing" ||
                 e.command == "DrawingAnchors" || e.command == "ExportDrawing") {

@@ -77,6 +77,94 @@ void startsAndLimits() {
     m = geometry::evaluateModeling(d, QCborArray{f}).part.measure(0);
     near(m.value("volume_m3").toDouble(), .02 * .01 * .01, 1e-12);
     near(m.value("minimum_m").toArray()[2].toDouble(), height, 1e-10);
+
+    f = extrude(s.id);
+    f.insert(QStringLiteral("start"), fields({{"mode", "Offset"}, {"distance", .004}}));
+    m = geometry::evaluateModeling(d, QCborArray{f}).part.measure(0);
+    near(m.value("minimum_m").toArray()[2].toDouble(), .004, 1e-10);
+    near(m.value("maximum_m").toArray()[2].toDouble(), .014, 1e-10);
+    near(m.value("volume_m3").toDouble(), .02 * .01 * .01, 1e-12);
+
+    f = extrude(s.id);
+    f.insert(QStringLiteral("start"), fields({{"mode", "Offset"}, {"distance", .005}}));
+    f.insert(QStringLiteral("direction1"), blind(.010));
+    f.insert(QStringLiteral("direction2"), blind(.015));
+    m = geometry::evaluateModeling(d, QCborArray{f}).part.measure(0);
+    near(m.value("minimum_m").toArray()[2].toDouble(), -.010, 1e-10);
+    near(m.value("maximum_m").toArray()[2].toDouble(), .015, 1e-10);
+    near(m.value("volume_m3").toDouble(), .02 * .01 * .025, 1e-12);
+
+    auto firstBox = extrude(s.id);
+    auto boxRes = geometry::evaluateModeling(d, QCborArray{firstBox});
+    auto boxStage = firstBox.value("id").toString();
+    domain::GeometryReference topoVertexRef, topoFaceRef;
+    for (TopExp_Explorer v(boxRes.part.stages.value(boxStage), TopAbs_VERTEX); v.More(); v.Next()) {
+        auto pt = BRep_Tool::Pnt(TopoDS::Vertex(v.Current()));
+        if (std::abs(pt.Z() - 10) < 1e-6) {
+            topoVertexRef = support_fixture::ref(boxStage, "Vertex");
+            topoVertexRef.topology = geometry::supportToken(v.Current());
+            break;
+        }
+    }
+    CHECK(!topoVertexRef.topology.isEmpty());
+    for (TopExp_Explorer fc(boxRes.part.stages.value(boxStage), TopAbs_FACE); fc.More();
+         fc.Next()) {
+        BRepAdaptor_Surface surf(TopoDS::Face(fc.Current()));
+        if (surf.GetType() == GeomAbs_Plane && std::abs(surf.Plane().Location().Z() - 10) < 1e-6) {
+            topoFaceRef = support_fixture::ref(boxStage, "Face");
+            topoFaceRef.topology = geometry::supportToken(fc.Current());
+            break;
+        }
+    }
+    CHECK(!topoFaceRef.topology.isEmpty());
+
+    sketch::Sketch s2;
+    s2.rectangle({0, 0}, {.01, .01});
+    auto d2 = base({s, s2});
+    auto fTopoVertexStart = extrude(s2.id);
+    fTopoVertexStart.insert(QStringLiteral("start"),
+                            fields({{"mode", "Vertex"}, {"reference", topoVertexRef.map()}}));
+    fTopoVertexStart.insert(QStringLiteral("direction1"), blind(.005));
+    auto resTopoVStart = geometry::evaluateModeling(d2, QCborArray{firstBox, fTopoVertexStart});
+    auto idTopoV = fTopoVertexStart.value("id").toString();
+    auto mTopoV = resTopoVStart.part.measure(0, idTopoV);
+    near(mTopoV.value("minimum_m").toArray()[2].toDouble(), .01, 1e-10);
+    near(mTopoV.value("maximum_m").toArray()[2].toDouble(), .015, 1e-10);
+    near(mTopoV.value("volume_m3").toDouble(), .01 * .01 * .005, 1e-12);
+
+    auto fUpToTopoV = extrude(s2.id);
+    fUpToTopoV.insert(QStringLiteral("direction1"), fields({{"mode", "UpToVertex"},
+                                                            {"reference", topoVertexRef.map()},
+                                                            {"draft", blind().value("draft")}}));
+    auto resUpToTopoV = geometry::evaluateModeling(d2, QCborArray{firstBox, fUpToTopoV});
+    auto idUpToTopoV = fUpToTopoV.value("id").toString();
+    near(resUpToTopoV.part.measure(0, idUpToTopoV).value("volume_m3").toDouble(), .01 * .01 * .01,
+         1e-12);
+
+    auto fFaceStart = extrude(s2.id);
+    fFaceStart.insert(QStringLiteral("start"),
+                      fields({{"mode", "Surface"}, {"reference", topoFaceRef.map()}}));
+    fFaceStart.insert(QStringLiteral("direction1"), blind(.005));
+    auto resFaceStart = geometry::evaluateModeling(d2, QCborArray{firstBox, fFaceStart});
+    auto idFaceStart = fFaceStart.value("id").toString();
+    auto mFaceS = resFaceStart.part.measure(0, idFaceStart);
+    near(mFaceS.value("minimum_m").toArray()[2].toDouble(), .01, 1e-10);
+    near(mFaceS.value("maximum_m").toArray()[2].toDouble(), .015, 1e-10);
+    near(mFaceS.value("volume_m3").toDouble(), .01 * .01 * .005, 1e-12);
+
+    sketch::Sketch sOffset;
+    sOffset.frame.origin[2] = -.01;
+    sOffset.rectangle({0, 0}, {.01, .01});
+    auto d3 = base({s, sOffset});
+    auto fUpToFace = extrude(sOffset.id);
+    fUpToFace.insert(QStringLiteral("direction1"), fields({{"mode", "UpToSurface"},
+                                                           {"reference", topoFaceRef.map()},
+                                                           {"draft", blind().value("draft")}}));
+    auto resUpToFace = geometry::evaluateModeling(d3, QCborArray{firstBox, fUpToFace});
+    auto idUpToFace = fUpToFace.value("id").toString();
+    near(resUpToFace.part.measure(0, idUpToFace).value("volume_m3").toDouble(), .01 * .01 * .02,
+         1e-12);
+
     std::cout << "starts and exact plane limits passed\n";
 }
 void draftedDirections() {
@@ -97,6 +185,12 @@ void draftedDirections() {
     expected = .02 * .01 * h - (.02 + .01) * k * h * h + 4 * k * k * h * h * h / 3;
     near(geometry::evaluateModeling(d, QCborArray{f}).part.measure(0).value("volume_m3").toDouble(),
          expected, 1e-12);
+    // Inward draft collapsing profile width: h * tan(35 deg) = .007 m > half-width .005 m
+    auto collapsingDraft = extrude(s.id);
+    collapsingDraft.insert(QStringLiteral("direction1"), blind(.01, alpha, false));
+    support_fixture::error("InvalidGeometry",
+                           [&] { geometry::evaluateModeling(d, QCborArray{collapsingDraft}); });
+
     auto mid = blind(.02, .1, true);
     mid.insert(QStringLiteral("mode"), "Midplane");
     f.insert(QStringLiteral("direction1"), mid);
@@ -174,6 +268,41 @@ void revolves() {
              .value("volume_m3")
              .toDouble(),
          std::numbers::pi * (.011 * .011 - .009 * .009) * .01, 1e-12);
+
+    f.insert(QStringLiteral("profile"),
+             fields({{"sketch", s.id}, {"mode", "AllClosed"}, {"regions", QCborArray{}}}));
+    f.insert(QStringLiteral("thin"), fields({{"mode", "Solid"}}));
+    f.insert(QStringLiteral("reverse"), false);
+    f.insert(QStringLiteral("direction1"),
+             fields({{"mode", "Blind"}, {"value", 2 * std::numbers::pi / 3}}));
+    f.insert(QStringLiteral("direction2"),
+             fields({{"mode", "Blind"}, {"value", std::numbers::pi / 3}}));
+    near(geometry::evaluateModeling(d, QCborArray{f}).part.measure(0).value("volume_m3").toDouble(),
+         expected / 2, 1e-12);
+
+    sketch::Sketch offPlane;
+    offPlane.frame.origin[2] = .005;
+    auto offLine = offPlane.line(offPlane.point({0, 0}), offPlane.point({0, .01}));
+    auto dOff = base({s, offPlane});
+    auto fNonCoplanar = extrude(s.id);
+    fNonCoplanar.insert(QStringLiteral("kind"), "Revolve");
+    fNonCoplanar.insert(QStringLiteral("axis"),
+                        support_fixture::ref(offPlane.id, "Curve", offLine).map());
+    fNonCoplanar.insert(QStringLiteral("direction1"),
+                        fields({{"mode", "Blind"}, {"value", 2 * std::numbers::pi}}));
+    support_fixture::error("InvalidInput",
+                           [&] { geometry::evaluateModeling(dOff, QCborArray{fNonCoplanar}); });
+
+    auto fOpenSolid = f;
+    fOpenSolid.insert(QStringLiteral("profile"),
+                      fields({{"sketch", open.id},
+                              {"mode", "OpenChains"},
+                              {"regions", QCborArray{QCborArray{uses}}}}));
+    fOpenSolid.insert(QStringLiteral("axis"), support_fixture::ref(axis.id, "Axis").map());
+    fOpenSolid.insert(QStringLiteral("thin"), fields({{"mode", "Solid"}}));
+    support_fixture::error("UnsupportedOperation",
+                           [&] { geometry::evaluateModeling(openModel, QCborArray{fOpenSolid}); });
+
     std::cout << "solid and thin revolves passed\n";
 }
 void derivedAxis() {
@@ -355,6 +484,11 @@ void openCuts() {
              .value("volume_m3")
              .toDouble(),
          .04 * .03 * .01 - .04 * .02 * .005, 1e-12);
+    auto badDraftedCut = cut;
+    badDraftedCut.insert(QStringLiteral("direction1"), blind(.01, .1, false));
+    support_fixture::error("UnsupportedOperation", [&] {
+        geometry::evaluateModeling(d, QCborArray{first, badDraftedCut});
+    });
     std::cout << "open cuts and explicit side passed\n";
 }
 void standaloneDraft() {
@@ -430,6 +564,20 @@ void standaloneDraft() {
              .value("volume_m3")
              .toDouble(),
          std::numbers::pi * h * (radius * radius + radius * end + end * end) / 3, 1e-12);
+    auto inwardCylindricalDraft = cylindricalDraft;
+    inwardCylindricalDraft.insert(QStringLiteral("outward"), false);
+    double endInward = radius - h * k;
+    near(geometry::evaluateModeling(curved, QCborArray{cylinder, inwardCylindricalDraft})
+             .part.measure(0)
+             .value("volume_m3")
+             .toDouble(),
+         std::numbers::pi * h * (radius * radius + radius * endInward + endInward * endInward) / 3,
+         1e-12);
+    auto badNeutralDraft = cylindricalDraft;
+    badNeutralDraft.insert(QStringLiteral("neutral"), wall[0]);
+    support_fixture::error("UnsupportedOperation", [&] {
+        geometry::evaluateModeling(curved, QCborArray{cylinder, badNeutralDraft});
+    });
     std::cout << "standalone draft passed\n";
 }
 void failureBoundaries() {
@@ -516,6 +664,33 @@ void failureBoundaries() {
     admission.canceled = [] { return true; };
     support_fixture::error("ResourceLimit",
                            [&] { geometry::evaluateModeling(base({s}), heavy, {}, admission); });
+
+    auto fMissingRef = extrude(s.id);
+    auto missingFaceRef = support_fixture::ref(newId(), "Face");
+    missingFaceRef.topology = QStringLiteral("face/") + QString(64, 'a');
+    fMissingRef.insert(QStringLiteral("direction1"), fields({{"mode", "UpToSurface"},
+                                                             {"reference", missingFaceRef.map()},
+                                                             {"draft", blind().value("draft")}}));
+    support_fixture::error("ReferenceMissing",
+                           [&] { geometry::evaluateModeling(base({s}), QCborArray{fMissingRef}); });
+
+    auto firstValid = extrude(s.id);
+    auto fWrongBody = extrude(s.id, "Cut", body(firstValid.value("id").toString()));
+    auto targetWrong = fWrongBody.value("target").toMap();
+    targetWrong.insert(QStringLiteral("body"), newId());
+    fWrongBody.insert(QStringLiteral("target"), targetWrong);
+    support_fixture::error("ReferenceMissing", [&] {
+        geometry::evaluateModeling(base({s}), QCborArray{firstValid, fWrongBody});
+    });
+
+    auto fNoNext = extrude(s.id, "Add", body(firstValid.value("id").toString()));
+    fNoNext.insert(QStringLiteral("reverse"), true);
+    fNoNext.insert(QStringLiteral("direction1"),
+                   fields({{"mode", "UpToNext"}, {"draft", blind().value("draft")}}));
+    support_fixture::error("ReferenceMissing", [&] {
+        geometry::evaluateModeling(base({s}), QCborArray{firstValid, fNoNext});
+    });
+
     std::cout << "geometry and reference failure boundaries passed\n";
 }
 } // namespace

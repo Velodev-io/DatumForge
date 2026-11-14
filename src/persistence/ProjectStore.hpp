@@ -74,7 +74,8 @@ class ProjectStore {
                                         int slot, const exchange::Control &control = {}) const;
     QCborMap previewSupports(QString document, const QCborMap &definition,
                              const exchange::Control &control = {},
-                             std::optional<QCborArray> intents = std::nullopt) const;
+                             std::optional<QCborArray> intents = std::nullopt,
+                             std::optional<double> deflection_mm = std::nullopt) const;
     QCborMap supportGeometry(QString document, const exchange::Control &control = {}) const;
     QCborMap modelingReferenceCandidates(QString document, const QCborMap &definition,
                                          const QCborArray &intents, QString owner, QString path,

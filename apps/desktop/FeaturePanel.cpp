@@ -89,6 +89,81 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
         axis[i] = spin("featureAxis" + QString(suffix),
                        "Unit direction / normal " + QString(suffix), i == 2 ? 1 : 0, -1, 1);
     }
+    auto check = [&](QString id, QString label) {
+        auto *w = new QCheckBox(label);
+        w->setObjectName(id);
+        form->addRow(w);
+        connect(w, &QCheckBox::toggled, this, [this] { invalidate(); });
+        return w;
+    };
+    profileMode = combo("featureProfileMode", "Contour selection");
+    profileMode->addItems({"AllClosed", "SelectedRegions", "OpenChains"});
+    flipSide = check("featureFlipSide", "Flip side to cut");
+    startMode = combo("featureStartMode", "Start condition");
+    startMode->addItems({"SketchPlane", "Surface", "Vertex", "Offset"});
+    startOffset = spin("featureStartOffset", "Start offset distance", 0, -1000, 1000);
+    startReference = combo("featureStartReference", "Start reference");
+    reverseDirection = check("featureReverse", "Reverse direction 1");
+    surfaceOffset = spin("featureSurfaceOffset", "Surface offset distance", 0, 0, 1000);
+    offsetReverse = check("featureOffsetReverse", "Reverse surface offset");
+    dir1Reference = combo("featureDir1Reference", "Direction 1 reference");
+    draftEnable = check("featureDraftEnable", "Draft On/Off");
+    draftAngle = spin("featureDraftAngle", "Draft angle (degrees)", 0, 0, 89.9);
+    draftOutward = check("featureDraftOutward", "Draft outward");
+    direction2Enable = check("featureDirection2Enable", "Direction 2");
+    extent2 = combo("featureExtent2", "Direction 2 end condition");
+    extent2->addItems({"Blind", "UpToVertex", "UpToSurface", "OffsetFromSurface", "UpToBody",
+                       "UpToNext", "ThroughAll"});
+    depth2 = spin("featureDepth2", "Direction 2 depth", 10, 1e-6, 1e6);
+    reverseDirection2 = check("featureReverse2", "Reverse direction 2");
+    dir2Reference = combo("featureDir2Reference", "Direction 2 reference");
+    draft2Enable = check("featureDraft2Enable", "Direction 2 Draft On/Off");
+    draft2Angle = spin("featureDraft2Angle", "Direction 2 draft angle (degrees)", 0, 0, 89.9);
+    draft2Outward = check("featureDraft2Outward", "Direction 2 draft outward");
+    thinMode = combo("featureThinMode", "Thin feature");
+    thinMode->addItems({"Solid", "OneDirection", "Midplane", "TwoDirection"});
+    thickness1 = spin("featureThickness1", "Wall thickness (T1)", 1, 1e-6, 1e6);
+    thickness2 = spin("featureThickness2", "Wall thickness (T2)", 1, 1e-6, 1e6);
+    thinReverse = check("featureThinReverse", "Reverse thin direction");
+    revolveAxis = combo("featureRevolveAxis", "Axis of revolution");
+    revolveExtent = combo("featureRevolveExtent", "Revolve direction");
+    revolveExtent->addItems({"Blind", "Midplane", "TwoDirection"});
+    angle2 = spin("featureAngle2", "Direction 2 angle (degrees)", 0, 0, 360);
+
+    // Standalone Draft controls
+    draftNeutral = combo("draftNeutral", "Neutral plane / face");
+    draftPull = combo("draftPull", "Pull direction axis / edge");
+    draftFaces = combo("draftFaces", "Faces to draft");
+    draftStandaloneAngle = spin("draftStandaloneAngle", "Draft angle (degrees)", 5, 0.001, 89.9);
+    draftStandaloneOutward = check("draftStandaloneOutward", "Draft outward");
+
+    // Repair controls
+    repairCandidate = combo("featureRepairCandidate", "Repair candidate");
+    applyRepairButton = new QPushButton("Apply repair");
+    applyRepairButton->setObjectName("featureApplyRepair");
+    form->addRow(applyRepairButton);
+    form->setRowVisible(repairCandidate, false);
+    form->setRowVisible(applyRepairButton, false);
+    connect(applyRepairButton, &QPushButton::clicked, this, [this] {
+        if (!editing || repairCandidate->count() == 0)
+            return;
+        auto chosen = repairCandidate->currentData().value<QCborMap>();
+        if (chosen.isEmpty())
+            return;
+        if (draft.kind == "Draft") {
+            draftNeutral->addItem(chosen.value("object").toString(), QVariant::fromValue(chosen));
+            draftNeutral->setCurrentIndex(draftNeutral->count() - 1);
+        } else {
+            dir1Reference->addItem(chosen.value("object").toString(), QVariant::fromValue(chosen));
+            dir1Reference->setCurrentIndex(dir1Reference->count() - 1);
+        }
+        invalidate();
+        preview();
+    });
+    for (auto *c : {profileMode, startMode, extent, extent2, thinMode, operation, revolveExtent})
+        connect(c, &QComboBox::currentIndexChanged, this, [this] { fieldsForKind(); });
+    for (auto *k : {draftEnable, direction2Enable, draft2Enable, flipSide, thinReverse})
+        connect(k, &QCheckBox::toggled, this, [this] { fieldsForKind(); });
     connect(name, &QLineEdit::textChanged, this, [this] { invalidate(); });
     evaluation = new QWidget;
     auto *evaluationLayout = new QVBoxLayout(evaluation);
@@ -163,31 +238,68 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
     });
     connect(previewButton, &QPushButton::clicked, this, &FeaturePanel::preview);
     connect(client, &Client::modelSupportsPreview, this, [this](QCborMap preview) {
-        if (!editing || !supportPreviewPending ||
-            !document.contains(QStringLiteral("model_supports")))
+        if (!editing || !supportPreviewPending)
             return;
         supportPreviewPending = false;
         validPreview = true;
         auto m = preview.value("measurement").toMap();
         result.insert(QStringLiteral("part_measurement"), m);
-        diagnostic->setText(
-            "Exact associated-model rebuild preview · accepted display retained until commit");
+        diagnostic->setText("Exact preview ready · review or click Accept feature");
         measurement->setText(QString("Exact preview revision %1\nVolume: %2 m³")
                                  .arg(m.value("revision").toInteger())
                                  .arg(m.value("volume_m3").toDouble(), 0, 'g', 12));
         accept->setEnabled(!client->outstanding());
+        updateManipulator();
     });
     connect(accept, &QPushButton::clicked, this, &FeaturePanel::finish);
     connect(cancelButton, &QPushButton::clicked, this, &FeaturePanel::discard);
     auto *repairSupports = new QPushButton("Repair supports in this feature draft");
     repairSupports->setObjectName("featureRepairSupports");
+    repairButton = repairSupports;
     layout->addWidget(repairSupports);
     repairSupports->hide();
     connect(client, &Client::changed, this, [this, repairSupports] {
-        repairSupports->setVisible(editing && document.contains(QStringLiteral("model_supports")));
+        repairSupports->setVisible(editing &&
+                                   (document.contains(QStringLiteral("model_supports")) ||
+                                    document.contains(QStringLiteral("modeling"))));
         repairSupports->setEnabled(editing && !client->outstanding() && !commitPending);
     });
+    connect(client, &Client::supportReferenceResolution, this, [this](QCborMap resolution) {
+        if (!editing)
+            return;
+        repairCandidate->clear();
+        for (auto val : resolution.value("candidates").toArray()) {
+            auto ref = val.toMap();
+            repairCandidate->addItem(
+                QString("%1: %2").arg(ref.value("role").toString(), ref.value("object").toString()),
+                QVariant::fromValue(ref));
+        }
+        if (repairCandidate->count() > 0) {
+            form->setRowVisible(repairCandidate, true);
+            form->setRowVisible(applyRepairButton, true);
+            diagnostic->setText("Select replacement candidate and click Apply repair.");
+        }
+    });
     connect(repairSupports, &QPushButton::clicked, this, [this] {
+        if (isModeling) {
+            try {
+                auto model = model::editableSupports(document);
+                auto cand = definitionModeling();
+                QString path = "direction1/reference";
+                if (draft.kind == "Draft")
+                    path = "neutral";
+                client->projectCommand(
+                    "ModelingReferenceCandidates",
+                    fields({{"model", model.map()},
+                            {"intents",
+                             candidateIntents.empty() ? QCborArray{cand} : candidateIntents},
+                            {"owner", cand.value("id").toString()},
+                            {"path", path}}));
+            } catch (const std::exception &e) {
+                diagnostic->setText(e.what());
+            }
+            return;
+        }
         try {
             auto model = model::editSupportedFeatures(document, definitions());
             SupportEditor dialog(client, document, this, {}, model);
@@ -313,6 +425,7 @@ void FeaturePanel::invalidate() {
     validPreview = false;
     accept->setEnabled(false);
     diagnostic->setText("Inputs changed · preview required");
+    updateManipulator();
 }
 void FeaturePanel::install(QCborMap active, bool idle) {
     if (editing) {
@@ -325,58 +438,322 @@ void FeaturePanel::install(QCborMap active, bool idle) {
     setEnabled(!active.empty() && idle);
     title->setText("Exact Part");
 }
+static domain::GeometryReference makeRef(QString object, QString role, QString entity = {},
+                                         QString topo = {}) {
+    domain::GeometryReference r;
+    r.object = object;
+    r.role = role;
+    r.entity = entity;
+    r.topology = topo;
+    return r;
+}
+
 void FeaturePanel::fieldsForKind() {
     auto kind = draft.kind;
-    bool sketch = kind == "Extrude" || kind == "Revolve",
-         treatment = kind == "Fillet" || kind == "Chamfer", hole = kind == "Hole";
-    auto show = [&](QWidget *w, bool yes) { form->setRowVisible(w, yes); };
-    show(profile, sketch);
-    show(operation, sketch || (!treatment && !hole));
-    show(target, true);
-    show(source, !sketch && !hole);
-    show(extent, kind == "Extrude" || kind == "Revolve");
-    show(distribution, kind == "CircularPattern");
-    show(size, treatment || hole);
-    show(depth, kind == "Extrude" || hole);
-    show(angle, kind == "Revolve" || kind == "CircularPattern");
-    show(spacing, kind == "LinearPattern");
-    show(count, kind == "LinearPattern" || kind == "CircularPattern");
-    show(through, hole);
-    bool vectors = kind == "Revolve" || hole || kind == "Mirror" || kind == "CircularPattern";
-    for (int i = 0; i < 3; ++i) {
-        show(origin[i], vectors);
-        show(axis[i], vectors || kind == "LinearPattern");
+    bool isExtrude = (kind == "Extrude");
+    bool isRevolve = (kind == "Revolve");
+    bool isDraft = (kind == "Draft");
+    bool isSketch = isExtrude || isRevolve;
+    bool isTreatment = (kind == "Fillet" || kind == "Chamfer");
+    bool isHole = (kind == "Hole");
+    bool isPattern = (kind == "LinearPattern" || kind == "CircularPattern" || kind == "Mirror");
+
+    auto show = [&](QWidget *w, bool yes) {
+        if (w)
+            form->setRowVisible(w, yes);
+    };
+
+    if (isModeling) {
+        // Hide legacy controls
+        show(source, false);
+        show(distribution, false);
+        show(size, false);
+        show(spacing, false);
+        show(count, false);
+        show(through, false);
+        for (int i = 0; i < 3; ++i) {
+            show(origin[i], false);
+            show(axis[i], false);
+        }
+
+        if (isDraft) {
+            // Standalone draft
+            show(profile, false);
+            show(profileMode, false);
+            show(flipSide, false);
+            show(operation, false);
+            show(target, true); // target body
+            show(startMode, false);
+            show(startOffset, false);
+            show(startReference, false);
+            show(extent, false);
+            show(depth, false);
+            show(angle, false);
+            show(reverseDirection, false);
+            show(surfaceOffset, false);
+            show(offsetReverse, false);
+            show(dir1Reference, false);
+            show(draftEnable, false);
+            show(draftAngle, false);
+            show(draftOutward, false);
+            show(direction2Enable, false);
+            show(extent2, false);
+            show(depth2, false);
+            show(reverseDirection2, false);
+            show(dir2Reference, false);
+            show(draft2Enable, false);
+            show(draft2Angle, false);
+            show(draft2Outward, false);
+            show(thinMode, false);
+            show(thickness1, false);
+            show(thickness2, false);
+            show(thinReverse, false);
+            show(revolveAxis, false);
+            show(revolveExtent, false);
+            show(angle2, false);
+
+            show(draftNeutral, true);
+            show(draftPull, true);
+            show(draftFaces, true);
+            show(draftStandaloneAngle, true);
+            show(draftStandaloneOutward, true);
+        } else {
+            // Extrude or Revolve
+            show(draftNeutral, false);
+            show(draftPull, false);
+            show(draftFaces, false);
+            show(draftStandaloneAngle, false);
+            show(draftStandaloneOutward, false);
+
+            show(profile, true);
+            show(profileMode, true);
+            show(operation, true);
+            show(target, operation->currentText() != "NewBody");
+
+            // Open chains cut flip side
+            bool isOpenCut =
+                (profileMode->currentText() == "OpenChains" && thinMode->currentText() == "Solid" &&
+                 isExtrude && operation->currentText() == "Cut");
+            show(flipSide, isOpenCut);
+
+            // Start condition (only for Extrude; Revolve start is sketch plane)
+            show(startMode, isExtrude);
+            auto sMode = startMode->currentText();
+            show(startOffset, isExtrude && sMode == "Offset");
+            show(startReference, isExtrude && (sMode == "Surface" || sMode == "Vertex"));
+
+            // Extent / Direction 1
+            show(extent, isExtrude);
+            show(depth, isExtrude && (extent->currentText() == "Blind" ||
+                                      extent->currentText() == "Midplane"));
+            show(angle, isRevolve);
+            show(reverseDirection, true);
+
+            auto ext1 = extent->currentText();
+            bool dir1RefNeeded = isExtrude && (ext1 == "UpToVertex" || ext1 == "UpToSurface" ||
+                                               ext1 == "OffsetFromSurface" || ext1 == "UpToBody");
+            show(dir1Reference, dir1RefNeeded);
+            show(surfaceOffset, isExtrude && ext1 == "OffsetFromSurface");
+            show(offsetReverse, isExtrude && ext1 == "OffsetFromSurface");
+
+            // Direction 1 Draft (only for Extrude)
+            show(draftEnable, isExtrude);
+            show(draftAngle, isExtrude && draftEnable->isChecked());
+            show(draftOutward, isExtrude && draftEnable->isChecked());
+
+            // Direction 2 (inactive if Midplane)
+            bool midplane1 = (isExtrude && ext1 == "Midplane") ||
+                             (isRevolve && revolveExtent->currentText() == "Midplane");
+            show(direction2Enable, !midplane1);
+            bool dir2On = !midplane1 && direction2Enable->isChecked();
+            if (isRevolve) {
+                show(extent2, false);
+                show(depth2, false);
+                show(reverseDirection2, false);
+                show(dir2Reference, false);
+                show(draft2Enable, false);
+                show(draft2Angle, false);
+                show(draft2Outward, false);
+                show(angle2, dir2On);
+            } else {
+                show(angle2, false);
+                show(extent2, dir2On);
+                auto ext2 = extent2->currentText();
+                show(depth2, dir2On && ext2 == "Blind");
+                show(reverseDirection2, dir2On);
+                bool dir2RefNeeded = dir2On && (ext2 == "UpToVertex" || ext2 == "UpToSurface" ||
+                                                ext2 == "OffsetFromSurface" || ext2 == "UpToBody");
+                show(dir2Reference, dir2RefNeeded);
+                show(draft2Enable, dir2On);
+                show(draft2Angle, dir2On && draft2Enable->isChecked());
+                show(draft2Outward, dir2On && draft2Enable->isChecked());
+            }
+
+            // Thin mode
+            show(thinMode, true);
+            auto tm = thinMode->currentText();
+            show(thickness1, tm != "Solid");
+            show(thickness2, tm == "TwoDirection");
+            show(thinReverse, tm == "OneDirection");
+
+            // Revolve specific
+            show(revolveAxis, isRevolve);
+            show(revolveExtent, isRevolve);
+        }
+    } else {
+        // Legacy feature UI
+        show(profile, isSketch);
+        show(operation, isSketch || (!isTreatment && !isHole));
+        show(target, true);
+        show(source, !isSketch && !isHole);
+        show(extent, isExtrude || isRevolve);
+        show(distribution, kind == "CircularPattern");
+        show(size, isTreatment || isHole);
+        show(depth, isExtrude || isHole);
+        show(angle, isRevolve || kind == "CircularPattern");
+        show(spacing, kind == "LinearPattern");
+        show(count, isPattern && kind != "Mirror");
+        show(through, isHole);
+        bool vectors = isRevolve || isHole || kind == "Mirror" || kind == "CircularPattern";
+        for (int i = 0; i < 3; ++i) {
+            show(origin[i], vectors);
+            show(axis[i], vectors || kind == "LinearPattern");
+        }
+        // Hide all CM5 widgets
+        show(profileMode, false);
+        show(flipSide, false);
+        show(startMode, false);
+        show(startOffset, false);
+        show(startReference, false);
+        show(reverseDirection, false);
+        show(surfaceOffset, false);
+        show(offsetReverse, false);
+        show(dir1Reference, false);
+        show(draftEnable, false);
+        show(draftAngle, false);
+        show(draftOutward, false);
+        show(direction2Enable, false);
+        show(extent2, false);
+        show(depth2, false);
+        show(reverseDirection2, false);
+        show(dir2Reference, false);
+        show(draft2Enable, false);
+        show(draft2Angle, false);
+        show(draft2Outward, false);
+        show(thinMode, false);
+        show(thickness1, false);
+        show(thickness2, false);
+        show(thinReverse, false);
+        show(revolveAxis, false);
+        show(revolveExtent, false);
+        show(angle2, false);
+        show(draftNeutral, false);
+        show(draftPull, false);
+        show(draftFaces, false);
+        show(draftStandaloneAngle, false);
+        show(draftStandaloneOutward, false);
     }
+
     if (auto *label = qobject_cast<QLabel *>(form->labelForField(size)))
-        label->setText(hole ? "Diameter" : kind == "Chamfer" ? "Equal distance" : "Radius");
+        label->setText(isHole ? "Diameter" : kind == "Chamfer" ? "Equal distance" : "Radius");
     auto units = document.value("units").toString();
-    for (auto *w : {size, depth, spacing})
-        w->setSuffix(" " + units);
+    for (auto *w :
+         {size, depth, depth2, spacing, thickness1, thickness2, startOffset, surfaceOffset})
+        if (w)
+            w->setSuffix(" " + units);
     for (auto *w : origin)
-        w->setSuffix(" " + units);
+        if (w)
+            w->setSuffix(" " + units);
 }
+
 void FeaturePanel::begin(QString kind, QString editId) {
     if (editing || document.empty() || client->outstanding())
         return;
     installing = true;
-    draft = features::Feature{};
-    draft.kind = kind;
-    draft.name = kind;
     candidate = {};
-    auto definitions = document.value("features").toArray();
-    if (!editId.isEmpty())
-        for (auto f : definitions)
-            if (f.toMap().value("id").toString() == editId)
-                draft = features::Feature::parse(f.toMap());
-    kind = draft.kind;
+    candidateIntents = {};
+    currentRegions = {};
+
+    bool hasLegacyFeatures =
+        !document.value("features").toArray().empty() ||
+        (!document.value("model_supports").toMap().value("features").toArray().empty());
+    bool hasModeling = document.contains(QStringLiteral("modeling")) &&
+                       !document.value("modeling").toMap().value("intents").toArray().empty();
+    bool hasSupports = document.contains(QStringLiteral("model_supports"));
+
+    isModeling = false;
+    modelingDraft = {};
+    draft = features::Feature{};
+
+    if (!editId.isEmpty()) {
+        if (document.contains(QStringLiteral("modeling"))) {
+            for (auto v : document.value("modeling").toMap().value("intents").toArray()) {
+                if (v.toMap().value("id").toString() == editId) {
+                    isModeling = true;
+                    modelingDraft = v.toMap();
+                    break;
+                }
+            }
+        }
+        if (!isModeling) {
+            auto definitions = document.value("features").toArray();
+            for (auto f : definitions) {
+                if (f.toMap().value("id").toString() == editId) {
+                    draft = features::Feature::parse(f.toMap());
+                    break;
+                }
+            }
+        }
+    } else {
+        if (kind == "Draft") {
+            isModeling = true;
+        } else if (hasModeling) {
+            isModeling = true;
+        } else if (hasSupports && !hasLegacyFeatures) {
+            isModeling = true;
+        } else {
+            isModeling = false;
+        }
+    }
+
+    if (isModeling) {
+        if (!editId.isEmpty() && !modelingDraft.isEmpty()) {
+            draft.id = modelingDraft.value("id").toString();
+            draft.kind = modelingDraft.value("kind").toString();
+            kind = draft.kind;
+            draft.name = modelingDraft.contains(QStringLiteral("name"))
+                             ? modelingDraft.value("name").toString()
+                             : kind;
+        } else {
+            draft.id = QUuid::createUuid().toString(QUuid::WithoutBraces);
+            draft.kind = kind;
+            draft.name = kind;
+        }
+    } else {
+        if (editId.isEmpty()) {
+            draft.kind = kind;
+            draft.name = kind;
+        } else {
+            kind = draft.kind;
+        }
+    }
+
     extent->clear();
-    extent->addItems(kind == "Revolve" ? QStringList{"Forward", "Reverse"}
-                                       : QStringList{"Forward", "Reverse", "Symmetric"});
+    if (kind == "Revolve") {
+        extent->addItems({"Blind", "Midplane"});
+    } else if (isModeling) {
+        extent->addItems({"Blind", "Midplane", "UpToVertex", "UpToSurface", "OffsetFromSurface",
+                          "UpToBody", "UpToNext", "ThroughAll"});
+    } else {
+        extent->addItems({"Forward", "Reverse", "Symmetric"});
+    }
+
     name->setText(draft.name);
     profile->clear();
     source->clear();
     target->clear();
     target->addItem("None", QString());
+
     for (auto s : document.value("sketches").toArray()) {
         auto m = s.toMap();
         profile->addItem(m.value("name").toString(), m.value("id").toString());
@@ -391,7 +768,9 @@ void FeaturePanel::begin(QString kind, QString editId) {
                              m.value("id").toString());
         }
     }
-    for (auto f : definitions) {
+
+    auto definitionsList = document.value("features").toArray();
+    for (auto f : definitionsList) {
         auto m = f.toMap();
         if (m.value("id").toString() == editId)
             break;
@@ -406,17 +785,136 @@ void FeaturePanel::begin(QString kind, QString editId) {
     if (target->count() > 1)
         target->setCurrentIndex(1);
     source->setCurrentIndex(source->count() - 1);
+
+    // Populate references for CM5
+    startReference->clear();
+    dir1Reference->clear();
+    dir2Reference->clear();
+    revolveAxis->clear();
+    draftNeutral->clear();
+    draftPull->clear();
+    draftFaces->clear();
+
+    auto addRef = [](QComboBox *box, const QString &text, const domain::GeometryReference &r) {
+        try {
+            box->addItem(text, QVariant::fromValue(r.map()));
+        } catch (...) {
+        }
+    };
+
+    for (auto s : document.value("sketches").toArray()) {
+        auto sm = s.toMap();
+        auto sName = sm.value("name").toString();
+        auto sId = sm.value("id").toString();
+        auto planeRef = makeRef(sId, "Plane");
+        addRef(startReference, sName + " / Plane", planeRef);
+        addRef(dir1Reference, sName + " / Plane", planeRef);
+        addRef(dir2Reference, sName + " / Plane", planeRef);
+        addRef(draftNeutral, sName + " / Plane", planeRef);
+
+        for (auto entVal : sm.value("entities").toArray()) {
+            auto ent = entVal.toMap();
+            auto eKind = ent.value("kind").toString();
+            auto eId = ent.value("id").toString();
+            if (eKind == "Point") {
+                auto ptRef = makeRef(sId, "Point", eId);
+                addRef(startReference, sName + " / Point " + eId.right(6), ptRef);
+                addRef(dir1Reference, sName + " / Point " + eId.right(6), ptRef);
+                addRef(dir2Reference, sName + " / Point " + eId.right(6), ptRef);
+            } else if (eKind == "Line") {
+                auto lineRef = makeRef(sId, "Curve", eId);
+                addRef(revolveAxis, sName + " / Line " + eId.right(6), lineRef);
+                addRef(draftPull, sName + " / Line " + eId.right(6), lineRef);
+            }
+        }
+    }
+
+    if (document.contains(QStringLiteral("model_supports"))) {
+        for (auto datumVal : document.value("model_supports").toMap().value("datums").toArray()) {
+            auto dm = datumVal.toMap();
+            auto dId = dm.value("id").toString();
+            auto dKind = dm.value("kind").toString();
+            if (dKind == "DatumPlane") {
+                auto r = makeRef(dId, "Plane");
+                addRef(startReference, dKind + " " + dId.right(6), r);
+                addRef(dir1Reference, dKind + " " + dId.right(6), r);
+                addRef(dir2Reference, dKind + " " + dId.right(6), r);
+                addRef(draftNeutral, dKind + " " + dId.right(6), r);
+            } else if (dKind == "DatumAxis") {
+                auto r = makeRef(dId, "Axis");
+                addRef(revolveAxis, dKind + " " + dId.right(6), r);
+                addRef(draftPull, dKind + " " + dId.right(6), r);
+            } else if (dKind == "DatumPoint") {
+                auto r = makeRef(dId, "Point", dId);
+                addRef(startReference, dKind + " " + dId.right(6), r);
+                addRef(dir1Reference, dKind + " " + dId.right(6), r);
+                addRef(dir2Reference, dKind + " " + dId.right(6), r);
+            }
+        }
+    }
+
+    for (auto bId : result.value("bodies").toArray()) {
+        auto bid = bId.toString();
+        auto bRef = makeRef(bid, "Body");
+        addRef(dir1Reference, "Body " + bid.right(6), bRef);
+        addRef(dir2Reference, "Body " + bid.right(6), bRef);
+    }
+
+    for (auto topVal : result.value("topology").toArray()) {
+        auto top = topVal.toMap();
+        auto token = top.value("token").toString();
+        auto bId = top.value("body").toString();
+        if (bId.isEmpty() && result.value("bodies").toArray().size() > 0)
+            bId = result.value("bodies").toArray()[0].toString();
+        if (token.startsWith("face/")) {
+            auto r = makeRef(bId, "Face", {}, token);
+            addRef(startReference, "Face " + token.right(8), r);
+            addRef(dir1Reference, "Face " + token.right(8), r);
+            addRef(dir2Reference, "Face " + token.right(8), r);
+            addRef(draftNeutral, "Face " + token.right(8), r);
+            addRef(draftFaces, "Face " + token.right(8), r);
+        } else if (token.startsWith("vertex/")) {
+            auto r = makeRef(bId, "Vertex", {}, token);
+            addRef(startReference, "Vertex " + token.right(8), r);
+            addRef(dir1Reference, "Vertex " + token.right(8), r);
+            addRef(dir2Reference, "Vertex " + token.right(8), r);
+        }
+    }
+
+    // Default values
     operation->setCurrentText(
         (kind == "Extrude" || kind == "Revolve" || kind == "Mirror" || kind.endsWith("Pattern"))
             ? "NewBody"
             : "Cut");
-    extent->setCurrentText("Forward");
+    extent->setCurrentText(isModeling ? "Blind" : "Forward");
     depth->setValue(10);
+    depth2->setValue(10);
     size->setValue(2);
     spacing->setValue(10);
     angle->setValue(360);
+    angle2->setValue(0);
     count->setValue(2);
     through->setChecked(true);
+    reverseDirection->setChecked(false);
+    reverseDirection2->setChecked(false);
+    draftEnable->setChecked(false);
+    draftAngle->setValue(0);
+    draftOutward->setChecked(false);
+    draft2Enable->setChecked(false);
+    draft2Angle->setValue(0);
+    draft2Outward->setChecked(false);
+    direction2Enable->setChecked(false);
+    thinMode->setCurrentText("Solid");
+    thickness1->setValue(1);
+    thickness2->setValue(1);
+    thinReverse->setChecked(false);
+    profileMode->setCurrentText("AllClosed");
+    flipSide->setChecked(false);
+    startMode->setCurrentText("SketchPlane");
+    startOffset->setValue(0);
+    surfaceOffset->setValue(0);
+    offsetReverse->setChecked(false);
+
     for (int i = 0; i < 3; ++i) {
         origin[i]->setValue(0);
         axis[i]->setValue(i == 2 ? 1 : 0);
@@ -435,7 +933,93 @@ void FeaturePanel::begin(QString kind, QString editId) {
         if (m.size() == 3)
             origin[2]->setValue(m[2].toDouble() / unit());
     }
-    if (!editId.isEmpty()) {
+
+    if (isModeling && !modelingDraft.isEmpty()) {
+        auto p = modelingDraft;
+        if (p.contains(QStringLiteral("operation")))
+            operation->setCurrentText(p.value("operation").toString());
+        if (p.contains(QStringLiteral("reverse")))
+            reverseDirection->setChecked(p.value("reverse").toBool());
+        if (p.contains(QStringLiteral("flip_side")))
+            flipSide->setChecked(p.value("flip_side").toBool());
+
+        if (p.contains(QStringLiteral("profile"))) {
+            auto prof = p.value("profile").toMap();
+            auto sId = prof.value("sketch").toString();
+            int idx = profile->findData(sId);
+            if (idx >= 0)
+                profile->setCurrentIndex(idx);
+            profileMode->setCurrentText(prof.value("mode").toString());
+            currentRegions = prof.value("regions").toArray();
+        }
+
+        if (p.contains(QStringLiteral("start"))) {
+            auto st = p.value("start").toMap();
+            startMode->setCurrentText(st.value("mode").toString());
+            if (st.contains(QStringLiteral("distance")))
+                startOffset->setValue(st.value("distance").toDouble() / unit());
+        }
+
+        if (p.contains(QStringLiteral("direction1"))) {
+            auto d1 = p.value("direction1").toMap();
+            auto mode = d1.value("mode").toString();
+            extent->setCurrentText(mode);
+            if (mode == "Blind" || mode == "Midplane") {
+                if (kind == "Revolve")
+                    angle->setValue(d1.value("value").toDouble() * 180.0 / std::numbers::pi);
+                else
+                    depth->setValue(d1.value("value").toDouble() / unit());
+            }
+            if (d1.contains(QStringLiteral("draft"))) {
+                auto dr = d1.value("draft").toMap();
+                double deg = dr.value("angle").toDouble() * 180.0 / std::numbers::pi;
+                draftEnable->setChecked(deg > 1e-6);
+                draftAngle->setValue(deg);
+                draftOutward->setChecked(dr.value("outward").toBool());
+            }
+        }
+
+        if (p.contains(QStringLiteral("direction2")) && !p.value("direction2").isNull()) {
+            auto d2 = p.value("direction2").toMap();
+            direction2Enable->setChecked(true);
+            auto mode = d2.value("mode").toString();
+            extent2->setCurrentText(mode);
+            if (mode == "Blind") {
+                if (kind == "Revolve")
+                    angle2->setValue(d2.value("value").toDouble() * 180.0 / std::numbers::pi);
+                else
+                    depth2->setValue(d2.value("value").toDouble() / unit());
+            }
+            if (d2.contains(QStringLiteral("draft"))) {
+                auto dr = d2.value("draft").toMap();
+                double deg = dr.value("angle").toDouble() * 180.0 / std::numbers::pi;
+                draft2Enable->setChecked(deg > 1e-6);
+                draft2Angle->setValue(deg);
+                draft2Outward->setChecked(dr.value("outward").toBool());
+            }
+        }
+
+        if (p.contains(QStringLiteral("thin"))) {
+            auto th = p.value("thin").toMap();
+            thinMode->setCurrentText(th.value("mode").toString());
+            if (th.contains(QStringLiteral("thickness")))
+                thickness1->setValue(th.value("thickness").toDouble() / unit());
+            if (th.contains(QStringLiteral("thickness1")))
+                thickness1->setValue(th.value("thickness1").toDouble() / unit());
+            if (th.contains(QStringLiteral("thickness2")))
+                thickness2->setValue(th.value("thickness2").toDouble() / unit());
+            if (th.contains(QStringLiteral("reverse")))
+                thinReverse->setChecked(th.value("reverse").toBool());
+        }
+
+        if (kind == "Draft") {
+            if (p.contains(QStringLiteral("angle")))
+                draftStandaloneAngle->setValue(p.value("angle").toDouble() * 180.0 /
+                                               std::numbers::pi);
+            if (p.contains(QStringLiteral("outward")))
+                draftStandaloneOutward->setChecked(p.value("outward").toBool());
+        }
+    } else if (!isModeling && !editId.isEmpty()) {
         auto p = draft.parameters;
         auto pick = [&](QComboBox *w, QString key) {
             int i = w->findData(p.value(key).toString());
@@ -474,6 +1058,7 @@ void FeaturePanel::begin(QString kind, QString editId) {
                 axis[i]->setValue(a[i].toDouble());
         }
     }
+
     editing = true;
     evaluation->hide();
     inputs->setEnabled(true);
@@ -488,12 +1073,14 @@ void FeaturePanel::begin(QString kind, QString editId) {
     cancelButton->show();
     fieldsForKind();
     invalidate();
+    updateManipulator();
     diagnostic->setText(kind == "Fillet" || kind == "Chamfer"
                             ? "Select an edge in the current 3D result, then Preview."
                             : "Lengths use " + document.value("units").toString() +
                                   "; angles use degrees. Select inputs, then Preview.");
     emit editingChanged();
 }
+
 QCborArray FeaturePanel::definitions() const {
     auto f = draft;
     f.name = name->text();
@@ -574,8 +1161,300 @@ QCborArray FeaturePanel::definitions() const {
         all.append(f.map());
     return all;
 }
+
+QCborMap FeaturePanel::definitionModeling() const {
+    double u = unit();
+    auto kind = draft.kind;
+    QCborMap m;
+    m.insert(QStringLiteral("version"), 1);
+    m.insert(QStringLiteral("id"), draft.id);
+    m.insert(QStringLiteral("kind"), kind);
+
+    if (kind == "Draft") {
+        // target body
+        auto targetData = target->currentData();
+        QCborMap targetMap;
+        if (targetData.canConvert<QCborMap>()) {
+            targetMap = targetData.value<QCborMap>();
+        } else if (!targetData.toString().isEmpty()) {
+            targetMap.insert(QStringLiteral("source"),
+                             makeRef(targetData.toString(), "Object").map());
+            targetMap.insert(QStringLiteral("body"), targetData.toString());
+        } else if (!modelingDraft.isEmpty() && modelingDraft.contains(QStringLiteral("target"))) {
+            targetMap = modelingDraft.value("target").toMap();
+        } else {
+            for (auto idVal : result.value("bodies").toArray()) {
+                auto bid = idVal.toString();
+                targetMap.insert(QStringLiteral("source"), makeRef(bid, "Object").map());
+                targetMap.insert(QStringLiteral("body"), bid);
+                break;
+            }
+        }
+        m.insert(QStringLiteral("target"), targetMap);
+
+        // neutral
+        QCborMap neutralMap;
+        if (draftNeutral->currentData().canConvert<QCborMap>())
+            neutralMap = draftNeutral->currentData().value<QCborMap>();
+        else if (!modelingDraft.isEmpty() && modelingDraft.contains(QStringLiteral("neutral")))
+            neutralMap = modelingDraft.value("neutral").toMap();
+        m.insert(QStringLiteral("neutral"), neutralMap);
+
+        // pull
+        QCborMap pullMap;
+        if (draftPull->currentData().canConvert<QCborMap>())
+            pullMap = draftPull->currentData().value<QCborMap>();
+        else if (!modelingDraft.isEmpty() && modelingDraft.contains(QStringLiteral("pull")))
+            pullMap = modelingDraft.value("pull").toMap();
+        m.insert(QStringLiteral("pull"), pullMap);
+
+        // faces
+        QCborArray facesArray;
+        if (draftFaces->currentData().canConvert<QCborArray>())
+            facesArray = draftFaces->currentData().value<QCborArray>();
+        else if (draftFaces->currentData().canConvert<QCborMap>())
+            facesArray = QCborArray{draftFaces->currentData().value<QCborMap>()};
+        else if (!modelingDraft.isEmpty() && modelingDraft.contains(QStringLiteral("faces")))
+            facesArray = modelingDraft.value("faces").toArray();
+        m.insert(QStringLiteral("faces"), facesArray);
+
+        m.insert(QStringLiteral("angle"), draftStandaloneAngle->value() * std::numbers::pi / 180.0);
+        m.insert(QStringLiteral("outward"), draftStandaloneOutward->isChecked());
+        return m;
+    }
+
+    // Extrude or Revolve
+    auto op = operation->currentText();
+    m.insert(QStringLiteral("operation"), op);
+    if (op == "NewBody") {
+        m.insert(QStringLiteral("target"), QCborValue(nullptr));
+    } else {
+        auto targetData = target->currentData();
+        QCborMap targetMap;
+        if (targetData.canConvert<QCborMap>()) {
+            targetMap = targetData.value<QCborMap>();
+        } else if (!targetData.toString().isEmpty()) {
+            targetMap.insert(QStringLiteral("source"),
+                             makeRef(targetData.toString(), "Object").map());
+            targetMap.insert(QStringLiteral("body"), targetData.toString());
+        } else if (!modelingDraft.isEmpty() && !modelingDraft.value("target").isNull()) {
+            targetMap = modelingDraft.value("target").toMap();
+        } else {
+            for (auto idVal : result.value("bodies").toArray()) {
+                auto bid = idVal.toString();
+                targetMap.insert(QStringLiteral("source"), makeRef(bid, "Object").map());
+                targetMap.insert(QStringLiteral("body"), bid);
+                break;
+            }
+        }
+        m.insert(QStringLiteral("target"), targetMap);
+    }
+
+    // profile
+    QCborMap prof;
+    auto profSketchId = profile->currentData().toString();
+    prof.insert(QStringLiteral("sketch"), profSketchId);
+    auto pMode = profileMode->currentText();
+    prof.insert(QStringLiteral("mode"), pMode);
+    QCborArray regions = currentRegions;
+    if (regions.isEmpty() && pMode == "OpenChains") {
+        QCborArray uses;
+        for (auto skVal : document.value("sketches").toArray()) {
+            auto sk = skVal.toMap();
+            if (sk.value("id").toString() == profSketchId) {
+                for (auto entVal : sk.value("entities").toArray()) {
+                    auto ent = entVal.toMap();
+                    if (!ent.value("construction").toBool()) {
+                        QString ek = ent.value("kind").toString();
+                        if (ek == "Line" || ek == "Arc" || ek == "Circle" || ek == "Spline") {
+                            QCborMap uMap;
+                            uMap.insert(QStringLiteral("entity"), ent.value("id").toString());
+                            uMap.insert(QStringLiteral("from"), 0.0);
+                            uMap.insert(QStringLiteral("to"), 1.0);
+                            uMap.insert(QStringLiteral("reverse"), false);
+                            uses.append(uMap);
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        if (!uses.isEmpty()) {
+            regions = QCborArray{QCborArray{uses}};
+        }
+    }
+    prof.insert(QStringLiteral("regions"), regions);
+    m.insert(QStringLiteral("profile"), prof);
+
+    // start
+    QCborMap st;
+    auto sMode = (kind == "Revolve") ? QString("SketchPlane") : startMode->currentText();
+    st.insert(QStringLiteral("mode"), sMode);
+    if (sMode == "Offset") {
+        st.insert(QStringLiteral("distance"), startOffset->value() * u);
+    } else if (sMode == "Surface" || sMode == "Vertex") {
+        QCborMap refMap;
+        if (startReference->currentData().canConvert<QCborMap>())
+            refMap = startReference->currentData().value<QCborMap>();
+        else if (!modelingDraft.isEmpty() &&
+                 modelingDraft.value("start").toMap().contains(QStringLiteral("reference")))
+            refMap = modelingDraft.value("start").toMap().value("reference").toMap();
+        st.insert(QStringLiteral("reference"), refMap);
+    }
+    m.insert(QStringLiteral("start"), st);
+
+    // direction 1
+    QCborMap d1;
+    auto ext1 = (kind == "Revolve") ? revolveExtent->currentText() : extent->currentText();
+    d1.insert(QStringLiteral("mode"), ext1);
+    if (ext1 == "Blind" || ext1 == "Midplane") {
+        if (kind == "Revolve")
+            d1.insert(QStringLiteral("value"), angle->value() * std::numbers::pi / 180.0);
+        else
+            d1.insert(QStringLiteral("value"), depth->value() * u);
+    } else if (ext1 == "UpToVertex" || ext1 == "UpToSurface" || ext1 == "OffsetFromSurface" ||
+               ext1 == "UpToBody") {
+        QCborMap refMap;
+        if (dir1Reference->currentData().canConvert<QCborMap>())
+            refMap = dir1Reference->currentData().value<QCborMap>();
+        else if (!modelingDraft.isEmpty() &&
+                 modelingDraft.value("direction1").toMap().contains(QStringLiteral("reference")))
+            refMap = modelingDraft.value("direction1").toMap().value("reference").toMap();
+        d1.insert(QStringLiteral("reference"), refMap);
+        if (ext1 == "UpToBody") {
+            auto bodyId =
+                dir1Reference->currentData().canConvert<QCborMap>()
+                    ? dir1Reference->currentData().value<QCborMap>().value("object").toString()
+                    : dir1Reference->currentData().toString();
+            d1.insert(QStringLiteral("body"), bodyId);
+        } else if (ext1 == "OffsetFromSurface") {
+            d1.insert(QStringLiteral("offset"), surfaceOffset->value() * u);
+            d1.insert(QStringLiteral("offset_reverse"), offsetReverse->isChecked());
+        }
+    }
+    if (kind != "Revolve") {
+        QCborMap d1Draft;
+        d1Draft.insert(QStringLiteral("angle"),
+                       (draftEnable->isChecked() ? draftAngle->value() : 0.0) * std::numbers::pi /
+                           180.0);
+        d1Draft.insert(QStringLiteral("outward"), draftOutward->isChecked());
+        d1.insert(QStringLiteral("draft"), d1Draft);
+    }
+    m.insert(QStringLiteral("direction1"), d1);
+
+    // direction 2
+    bool midplane1 = (ext1 == "Midplane");
+    if (direction2Enable->isChecked() && !midplane1) {
+        QCborMap d2;
+        auto ext2 = (kind == "Revolve") ? QString("Blind") : extent2->currentText();
+        d2.insert(QStringLiteral("mode"), ext2);
+        if (kind == "Revolve") {
+            d2.insert(QStringLiteral("value"), angle2->value() * std::numbers::pi / 180.0);
+        } else {
+            if (ext2 == "Blind") {
+                d2.insert(QStringLiteral("value"), depth2->value() * u);
+            } else if (ext2 == "UpToVertex" || ext2 == "UpToSurface" ||
+                       ext2 == "OffsetFromSurface" || ext2 == "UpToBody") {
+                QCborMap refMap;
+                if (dir2Reference->currentData().canConvert<QCborMap>())
+                    refMap = dir2Reference->currentData().value<QCborMap>();
+                else if (!modelingDraft.isEmpty() && modelingDraft.value("direction2")
+                                                         .toMap()
+                                                         .contains(QStringLiteral("reference")))
+                    refMap = modelingDraft.value("direction2").toMap().value("reference").toMap();
+                d2.insert(QStringLiteral("reference"), refMap);
+                if (ext2 == "UpToBody") {
+                    auto bodyId = dir2Reference->currentData().canConvert<QCborMap>()
+                                      ? dir2Reference->currentData()
+                                            .value<QCborMap>()
+                                            .value("object")
+                                            .toString()
+                                      : dir2Reference->currentData().toString();
+                    d2.insert(QStringLiteral("body"), bodyId);
+                } else if (ext2 == "OffsetFromSurface") {
+                    d2.insert(QStringLiteral("offset"), surfaceOffset->value() * u);
+                    d2.insert(QStringLiteral("offset_reverse"), offsetReverse->isChecked());
+                }
+            }
+            QCborMap d2Draft;
+            d2Draft.insert(QStringLiteral("angle"),
+                           (draft2Enable->isChecked() ? draft2Angle->value() : 0.0) *
+                               std::numbers::pi / 180.0);
+            d2Draft.insert(QStringLiteral("outward"), draft2Outward->isChecked());
+            d2.insert(QStringLiteral("draft"), d2Draft);
+        }
+        m.insert(QStringLiteral("direction2"), d2);
+    } else {
+        m.insert(QStringLiteral("direction2"), QCborValue(nullptr));
+    }
+
+    // reverse
+    m.insert(QStringLiteral("reverse"), reverseDirection->isChecked());
+
+    // thin
+    QCborMap th;
+    auto tMode = thinMode->currentText();
+    th.insert(QStringLiteral("mode"), tMode);
+    if (tMode == "OneDirection" || tMode == "Midplane") {
+        th.insert(QStringLiteral("thickness"), thickness1->value() * u);
+        if (tMode == "OneDirection")
+            th.insert(QStringLiteral("reverse"), thinReverse->isChecked());
+    } else if (tMode == "TwoDirection") {
+        th.insert(QStringLiteral("thickness1"), thickness1->value() * u);
+        th.insert(QStringLiteral("thickness2"), thickness2->value() * u);
+    }
+    m.insert(QStringLiteral("thin"), th);
+
+    // revolve axis
+    if (kind == "Revolve") {
+        QCborMap axisMap;
+        if (revolveAxis->currentData().canConvert<QCborMap>())
+            axisMap = revolveAxis->currentData().value<QCborMap>();
+        else if (!modelingDraft.isEmpty() && modelingDraft.contains(QStringLiteral("axis")))
+            axisMap = modelingDraft.value("axis").toMap();
+        m.insert(QStringLiteral("axis"), axisMap);
+    }
+
+    // open non-thin cut flip_side
+    if (pMode == "OpenChains" && tMode == "Solid" && kind == "Extrude" && op == "Cut") {
+        m.insert(QStringLiteral("flip_side"), flipSide->isChecked());
+    }
+
+    return m;
+}
+
+QCborArray FeaturePanel::definitionsModeling() const {
+    auto m = definitionModeling();
+    features::ModelingIntent::parse(m);
+
+    auto all = document.value("modeling").toMap().value("intents").toArray();
+    bool found = false;
+    for (qsizetype i = 0; i < all.size(); ++i) {
+        if (all[i].toMap().value("id").toString() == draft.id) {
+            all[i] = m;
+            found = true;
+            break;
+        }
+    }
+    if (!found)
+        all.append(m);
+    return all;
+}
+
 void FeaturePanel::preview() {
     try {
+        if (isModeling) {
+            candidateIntents = definitionsModeling();
+            validPreview = false;
+            supportPreviewPending = true;
+            auto model = model::editableSupports(document);
+            client->projectCommand("PreviewModelSupports", fields({{"model", model.map()},
+                                                                   {"intents", candidateIntents},
+                                                                   {"display", true},
+                                                                   {"deflection_mm", .2}}));
+            accept->setEnabled(false);
+            return;
+        }
         candidate = definitions();
         validPreview = false;
         if (document.contains(QStringLiteral("model_supports"))) {
@@ -592,10 +1471,24 @@ void FeaturePanel::preview() {
     }
     accept->setEnabled(false);
 }
+
 void FeaturePanel::finish() {
     if (!editing || !validPreview || client->outstanding())
         return;
     try {
+        if (isModeling) {
+            auto current = definitionsModeling();
+            if (current != candidateIntents) {
+                invalidate();
+                return;
+            }
+            validPreview = false;
+            commitPending = true;
+            auto model = model::editableSupports(document);
+            client->projectCommand("SetModelSupports",
+                                   fields({{"model", model.map()}, {"intents", current}}));
+            return;
+        }
         auto current = definitions();
         if (current != candidate) {
             invalidate();
@@ -625,7 +1518,63 @@ void FeaturePanel::discard() {
     accept->hide();
     previewButton->hide();
     cancelButton->hide();
+    form->setRowVisible(repairCandidate, false);
+    form->setRowVisible(applyRepairButton, false);
+    emit clearManipulatorRequested();
     client->cancelPartPreview();
     emit editingChanged();
+}
+
+void FeaturePanel::updateManipulator() {
+    if (!editing || draft.kind != "Extrude") {
+        emit clearManipulatorRequested();
+        return;
+    }
+    auto profileSketchId = profile->currentData().toString();
+    if (profileSketchId.isEmpty()) {
+        emit clearManipulatorRequested();
+        return;
+    }
+    QVector3D orig(0, 0, 0);
+    QVector3D norm(0, 0, 1);
+    for (auto sVal : document.value("sketches").toArray()) {
+        auto sk = sVal.toMap();
+        if (sk.value("id").toString() == profileSketchId) {
+            auto f = sk.value("frame").toMap();
+            auto o = f.value("origin").toArray();
+            auto u = f.value("u").toArray();
+            auto v = f.value("v").toArray();
+            if (o.size() == 3)
+                orig = QVector3D(float(o[0].toDouble() * 1000.), float(o[1].toDouble() * 1000.),
+                                 float(o[2].toDouble() * 1000.));
+            if (u.size() == 3 && v.size() == 3) {
+                QVector3D uVec(float(u[0].toDouble()), float(u[1].toDouble()),
+                               float(u[2].toDouble()));
+                QVector3D vVec(float(v[0].toDouble()), float(v[1].toDouble()),
+                               float(v[2].toDouble()));
+                norm = QVector3D::crossProduct(uVec, vVec).normalized();
+            }
+            break;
+        }
+    }
+    double depthMM = depth->value() * (unit() * 1000.0);
+    bool reverse = reverseDirection->isChecked();
+    emit requestManipulator(orig, norm, depthMM, reverse);
+}
+
+void FeaturePanel::setDepthFromManipulator(double depthMM) {
+    if (!editing || !depth)
+        return;
+    double val = depthMM / (unit() * 1000.0);
+    if (std::abs(depth->value() - val) > 1e-4) {
+        depth->setValue(val);
+    }
+}
+
+void FeaturePanel::setDepthFinishedFromManipulator(double depthMM) {
+    setDepthFromManipulator(depthMM);
+    if (editing) {
+        preview();
+    }
 }
 } // namespace cad

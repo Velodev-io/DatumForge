@@ -79,10 +79,19 @@ paths remain refused. Host IPC is required by transport tests.
 
 ## Final verification
 
-Full available-Mac development-build verification is in progress. The final runner
-records enabled CTest, pinned format, twelve changed/affected-source Clang analyses,
-UI/worker ownership, research isolation, coverage/specification and source hashes.
-No final full-suite pass is inferred before those commands complete.
+The [final timestamped verification folder](artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/)
+records the exact commands, logs and machine-readable result:
+
+- Full development build: Pass.
+- Full enabled CTest: **97 passed, zero failures**, 432.33 seconds. The deliberate
+  harness failure probe remained Disabled and is not counted as passed.
+- Pinned clang-format 21.1.8 and all **twelve** changed-source Clang analyses: Pass.
+- UI/worker ownership, research isolation, coverage, specifications and whitespace: Pass.
+- Source integrity: all **280** frozen source/configuration hashes matched.
+
+CM5.c production durable modeling definitions and available-Mac development-build
+persistence/repair verification are **Pass**. All 29 whole-workflow coverage rows
+remain In progress. New native workflow verification is Not run.
 
 The first full run is retained in
 `verification/20261103T170926.949891Z/` with status Fail. It was stopped after
@@ -90,8 +99,11 @@ legacy Module 3 persistence reported `column index out of range`, followed by
 related interaction failures. The new reader marker had been added to three
 SQL binding lists without matching placeholders in sketch/history/import updates.
 All three statements were corrected. `manifest-bindings-green.txt` records the
-affected Module 3/5/6 persistence tests passing before a fresh full run. The partial
-run is not a completed suite or a platform/gesture-repeatability result.
+affected Module 3/5/6 persistence tests passing before the fresh full run.
+
+[Author source review](artifacts/core-modeling/cm5-c-20261103/source-review.md)
+records ownership, provenance, upgrade-copy and repair checks. It is not independent
+review or merge approval.
 
 ## Remaining acceptance
 
@@ -101,3 +113,83 @@ releases, physical devices/assistive technology and full physical 8 GB workload
 acceptance remain Blocked/unrun. No new resource-capacity claim. Preserve deferred
 6.1b/6.4c/7.4c and stop before Module 11. Author self-review is separate from the
 independent review required before merge.
+
+## Delivery
+
+Feature commit `a97364c` was pushed to `origin/review/cm5-c-delivery-20261114`;
+its remote SHA matched the local commit. All 280 source/configuration hashes
+matched after publication. No merge or force-push; independent review remains
+required before merge.
+
+## Model completeness inventory
+
+To ensure subsequent feature and sketch editors preserve the complete model
+without silent omission or data loss, the accepted document collection and
+persistence layers enforce strict ownership and boundary invariants:
+
+- **Original base features (`features`):** Legacy feature array containing
+  `[id, name, type, parameters]`. Rebuilt deterministically before supports.
+- **Support model (`supports`):** Support definitions containing `datums`
+  (planes, axes, coordinates), `attachments` (sketch attachments to planes/faces),
+  and `conversions` (derived reference geometry).
+- **Support evolution (`support_evolution`):** Tracking map recording persistent
+  and transient datum/attachment changes across upstream rebuilds.
+- **Modeling metadata (`modeling`):** Version-1 dictionary containing
+  `{version: 1, intents: [...], provenance: [...]}`:
+  - `version`: Integer semantic version (1). Unknown versions fail explicitly.
+  - `intents`: QCborArray of version-1 intent maps (extrude/revolve, start/end
+    conditions, thin-feature, draft, selected contours, open cuts).
+  - `provenance`: Deterministic Boolean and draft Generated/Modified/Deleted
+    records produced by the exact CAD worker.
+- **Original sketches (`sketches`):** Authoritative sketch definitions containing
+  curves, constraints, and dimensions, preserved atomically across model updates.
+- **Omission vs. deletion invariant:** Calling `SetModelSupports` with `intents`
+  omitted preserves previously saved modeling intents; providing an explicit
+  array replaces them (an explicit empty array deletes all intents deliberately).
+- **Reference repair invariant:** Candidate queries inspect the exact producing
+  stage immediately before the failed intent. Candidate replacement requires current
+  revision, whole-pending-definition fingerprint, whitelisted reference path,
+  and current candidate membership; dependent features are rebuilt atomically.
+
+## Baseline discrepancy register (a97364c vs. HEAD 37501e8)
+
+Comparing current HEAD (`37501e8`) against the frozen 280-file source identity
+of delivery commit `a97364c` confirms exactly 17 modified files from subsequent
+Smart Dimension B (`2f95970`) and CM2 editing repair (`40d834c`, `37501e8`):
+
+1. `apps/desktop/DimensionUI.cpp`
+2. `apps/desktop/SketchPanel.cpp`
+3. `apps/desktop/SketchPanel.hpp`
+4. `apps/desktop/WorkspaceChrome.cpp`
+5. `src/geometry/occt/SketchCurve.cpp`
+6. `src/geometry/occt/SketchCurve.hpp`
+7. `src/render/SketchView.cpp`
+8. `src/render/SketchView.hpp`
+9. `src/sketch/EditHistory.cpp`
+10. `src/sketch/LineEditing.cpp`
+11. `src/sketch/LineEditing.hpp`
+12. `src/sketch/Sketch.cpp`
+13. `tests/core_modeling/completion_contracts.cpp`
+14. `tests/core_modeling/dimension_contracts.cpp`
+15. `tests/core_modeling/editing.cpp`
+16. `tests/core_modeling/editing_contracts.cpp`
+17. `tests/module4/workspace.cpp`
+
+All 12 translation units of CM5.c remain identical to `a97364c`. On current HEAD,
+all 97 enabled CTests pass (126.46s real time), all 12 Clang static analyses pass,
+and all specification and isolation checks pass.
+
+## Unresolved prerequisites register
+
+- **Host IPC environment:** Headless client/worker transport tests (`cm5.transport`,
+  `cm4.support_transport`, `native.process_transport`) require host IPC permissions
+  and succeed outside the sandbox; within sandboxed runners, scoped unit tests pass
+  independently.
+- **Course sketch authoring:** Complete course workflows (T5, T6, T8) depend on
+  authentic sketch inputs; seeded fixtures validate exact modeling independently.
+- **Native controls (CM5.d):** On-screen manipulators and interactive FeaturePanel
+  controls remain scheduled for CM5.d.
+- **Course verification (CM5.e):** Upstream rebuilds and per-variant matrix
+  acceptance remain scheduled for CM5.e.
+- **Platform/device gates:** Physical 8 GB baseline and other platforms remain
+  preserved as Blocked.

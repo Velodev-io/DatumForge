@@ -61,14 +61,24 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
         historyPanel->begin(active, item ? item->data(0, Qt::UserRole + 5).toString() : QString());
     });
     connect(historyPanel, &HistoryPanel::editingChanged, this, &MainWindow::refresh);
-    for (auto pair :
-         {std::pair{"extrude", "Extrude"}, std::pair{"revolve", "Revolve"},
-          std::pair{"fillet", "Fillet"}, std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"},
-          std::pair{"pattern", "LinearPattern"}, std::pair{"mirror", "Mirror"},
-          std::pair{"circularPattern", "CircularPattern"}})
+    for (auto pair : {std::pair{"extrude", "Extrude"}, std::pair{"revolve", "Revolve"},
+                      std::pair{"draft", "Draft"}, std::pair{"fillet", "Fillet"},
+                      std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"},
+                      std::pair{"pattern", "LinearPattern"}, std::pair{"mirror", "Mirror"},
+                      std::pair{"circularPattern", "CircularPattern"}})
         connect(commands.get(pair.first), &QAction::triggered, this,
                 [this, pair] { featurePanel->begin(pair.second); });
     connect(featurePanel, &FeaturePanel::editingChanged, this, &MainWindow::refresh);
+    connect(featurePanel, &FeaturePanel::requestManipulator, this,
+            [this](QVector3D origin, QVector3D direction, double depthMM, bool reverse) {
+                viewport->setExtrudeManipulator(origin, direction, depthMM, reverse);
+            });
+    connect(featurePanel, &FeaturePanel::clearManipulatorRequested, this,
+            [this] { viewport->clearManipulators(); });
+    connect(viewport, &Viewport::depthManipulatorMoved, featurePanel,
+            &FeaturePanel::setDepthFromManipulator);
+    connect(viewport, &Viewport::depthManipulatorReleased, featurePanel,
+            &FeaturePanel::setDepthFinishedFromManipulator);
     connect(tree, &QTreeWidget::itemDoubleClicked, this, [this](QTreeWidgetItem *item, int) {
         auto id = item->data(0, Qt::UserRole + 5).toString();
         if (!id.isEmpty() && !sketchPanel->active()) {

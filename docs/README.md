@@ -130,3 +130,13 @@ structural checks; all 274 source/configuration hashes matched. Unsupported draf
 combinations and the broader exact course corpus are documented. New definitions
 are not yet saved or exposed through new native controls; CM5.c–e and full
 acceptance remain open/Blocked. Deferred gates and Module 11 are unchanged.
+
+CM5.c adds durable persistence for version-1 modeling intents, deterministic
+Boolean/draft provenance, sticky reader manifest markers, omitted-versus-empty
+intent preservation and atomic reference candidate inspection and repair.
+[Available-Mac persistence verification](testing/core-modeling-cm5-c.md) passed
+all 97 enabled CTests, 12 changed-source Clang analyses, pinned format and
+structural checks; all 280 source/configuration hashes matched. New definitions
+are not yet exposed through native authoring or on-screen manipulators; CM5.d–e
+and full course/platform/device/resource acceptance remain open/Blocked. Deferred
+gates and Module 11 are unchanged.

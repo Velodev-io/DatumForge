@@ -1,5 +1,21 @@
 # Core-modeling execution evidence
 
+[CM5 current-source baseline](artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json)
+records the 14 November current-source baseline freeze on HEAD `37501e8`:
+CMake configure, build, 97 enabled CTests, focused CM5 tests, SQL placeholder/binding
+recheck, 22-translation-unit Clang static analyses, pinned format, ownership and
+structural/source checks passed. All 29 CM5 coverage rows (CM-120 through CM-148)
+are mapped and frozen. Native authoring, manipulators, CM5.d–e and full
+course/platform/device/resource acceptance remain open; all 29 CM5 coverage rows stay In progress.
+
+[CM5.c durable persistence](core-modeling-cm5-c.md) records the 3 November
+durable modeling metadata, Boolean/draft provenance, sticky reader manifest
+markers, omitted-intent preservation and explicit candidate repair: 97 enabled
+CTests, 12 Clang analyses, pinned format, ownership and structural/source checks
+passed. The initial failed run with SQL placeholder/binding diagnosis is retained.
+Native authoring, manipulators, CM5.d–e and full course/platform/device/resource
+acceptance remain open; all 29 CM5 coverage rows stay In progress.
+
 [CM5.b exact engine](core-modeling-cm5-b.md) records the subsequent 3 November
 transient exact feature/worker implementation: 94 enabled CTests, nine Clang
 analyses, pinned format, ownership and structural/source checks passed. Surface

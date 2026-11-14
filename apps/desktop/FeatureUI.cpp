@@ -28,9 +28,13 @@ void MainWindow::refreshFeatures() {
         a->setToolTip(a->text() + (yes ? QString() : " — " + reason));
     };
     bool sketches = !active.value("sketches").toArray().empty(),
-         solids = !active.value("features").toArray().empty();
-    for (auto id : {"extrude", "revolve", "fillet", "chamfer", "hole", "pattern", "circularPattern",
-                    "mirror"}) {
+         solids = !active.value("features").toArray().empty() ||
+                  (active.contains(QStringLiteral("modeling")) &&
+                   !active.value("modeling").toMap().value("intents").toArray().empty()) ||
+                  (active.contains(QStringLiteral("model_supports")) &&
+                   !active.value("model_supports").toMap().value("features").toArray().empty());
+    for (auto id : {"extrude", "revolve", "draft", "fillet", "chamfer", "hole", "pattern",
+                    "circularPattern", "mirror"}) {
         bool profile = QString(id) == "extrude" || QString(id) == "revolve";
         available(id, part && idle && !sketchEdit && !edit && (profile ? sketches : solids),
                   profile ? "Accept a closed Part sketch first"

@@ -78,8 +78,8 @@ void MainWindow::buildCommandTabs() {
     connect(grid, &QAction::toggled, check, &QCheckBox::setChecked);
     connect(check, &QCheckBox::toggled, grid, &QAction::setChecked);
     for (auto pair :
-         {std::pair{"revolve", "Revolve"}, std::pair{"fillet", "Fillet"},
-          std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"},
+         {std::pair{"revolve", "Revolve"}, std::pair{"draft", "Draft"},
+          std::pair{"fillet", "Fillet"}, std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"},
           std::pair{"pattern", "Linear pattern"}, std::pair{"circularPattern", "Circular pattern"},
           std::pair{"mirror", "Mirror"}})
         add(pair.first, pair.second, "Exact features are planned after workspace UI (4.1/4.2)");
@@ -107,8 +107,8 @@ void MainWindow::buildCommandTabs() {
         }
         commandTabs->addTab(bar, name);
     };
-    page("Features", {"sketch", "sketch.edit", "", "extrude", "revolve", "", "fillet", "chamfer",
-                      "hole", "pattern", "circularPattern", "mirror"});
+    page("Features", {"sketch", "sketch.edit", "", "extrude", "revolve", "draft", "", "fillet",
+                      "chamfer", "hole", "pattern", "circularPattern", "mirror"});
     page("Sketch", {"sketch",
                     "sketch.edit",
                     "",

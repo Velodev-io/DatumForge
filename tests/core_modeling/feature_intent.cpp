@@ -5,9 +5,23 @@
 #include <QCoreApplication>
 #include <limits>
 #include <numbers>
+#include <utility>
+#include <vector>
 using namespace cad;
 using sketch::fields;
 namespace {
+template <class F> void error(QString expected, F &&action) {
+    QString code, message;
+    try {
+        action();
+    } catch (const domain::Error &e) {
+        code = e.code;
+        message = QString::fromUtf8(e.what());
+    }
+    if (code != expected)
+        throw std::runtime_error("Expected " + expected.toStdString() + ", got " +
+                                 code.toStdString() + ": " + message.toStdString());
+}
 QCborMap profile(QString sketch) {
     return fields({{"sketch", sketch}, {"mode", "AllClosed"}, {"regions", QCborArray{}}});
 }
@@ -344,11 +358,10 @@ void graphContracts(QString sketch) {
     broken = upstream;
     broken.erase(broken.begin() + 1);
     rejects([&] { intent.graph(broken, history); });
-    domain::GeometryReference back;
-    back.object = id;
+    auto back = domain::GeometryReference::parse(reference(id, "Face"));
     broken = upstream;
     broken[1].references = {back};
-    rejects([&] { intent.graph(broken, history); });
+    error("DependencyCycle", [&] { intent.graph(broken, history); });
     // Object references alone cannot distinguish a body stage from a sketch.
     auto all = extrude(sketch);
     all.insert(QStringLiteral("operation"), "Cut");
@@ -372,6 +385,618 @@ void graphContracts(QString sketch) {
     explicitScope.graph(upstream, history, document);
     std::cout << "graph contracts passed\n";
 }
+void ambiguousInteractions(QString sketch) {
+    auto original = extrude(sketch);
+    auto source = newId();
+    auto target = body(source);
+
+    // 1. Midplane depth, thickness, and revolve angle are totals
+    auto midExtrude = original;
+    auto midEnd = blind(.03);
+    midEnd.insert(QStringLiteral("mode"), "Midplane");
+    midExtrude.insert(QStringLiteral("direction1"), midEnd);
+    roundtrip(midExtrude);
+    auto parsedMid = features::ModelingIntent::parse(midExtrude).map();
+    CHECK(parsedMid.value("direction1").toMap().value("mode").toString() == "Midplane");
+    near(parsedMid.value("direction1").toMap().value("value").toDouble(), .03, 1e-14);
+    CHECK(parsedMid.value("direction2").isNull());
+
+    auto midThin = original;
+    midThin.insert(QStringLiteral("thin"), fields({{"mode", "Midplane"}, {"thickness", .006}}));
+    roundtrip(midThin);
+    auto parsedThin = features::ModelingIntent::parse(midThin).map();
+    CHECK(parsedThin.value("thin").toMap().value("mode").toString() == "Midplane");
+    near(parsedThin.value("thin").toMap().value("thickness").toDouble(), .006, 1e-14);
+
+    auto midRevolve = original;
+    midRevolve.insert(QStringLiteral("kind"), "Revolve");
+    midRevolve.insert(QStringLiteral("axis"), reference(source, "Axis"));
+    midRevolve.insert(QStringLiteral("direction1"),
+                      fields({{"mode", "Midplane"}, {"value", std::numbers::pi}}));
+    roundtrip(midRevolve);
+    auto parsedRev = features::ModelingIntent::parse(midRevolve).map();
+    CHECK(parsedRev.value("direction1").toMap().value("mode").toString() == "Midplane");
+    near(parsedRev.value("direction1").toMap().value("value").toDouble(), std::numbers::pi, 1e-14);
+    CHECK(parsedRev.value("direction2").isNull());
+
+    // 2. Direction 2 is inactive for Midplane (extrude and revolve)
+    auto invalidDir2 = midExtrude;
+    invalidDir2.insert(QStringLiteral("direction2"), blind(.01));
+    rejects([&] { features::ModelingIntent::parse(invalidDir2); });
+    invalidDir2.insert(QStringLiteral("direction2"), fields({}));
+    rejects([&] { features::ModelingIntent::parse(invalidDir2); });
+
+    auto invalidRevDir2 = midRevolve;
+    invalidRevDir2.insert(QStringLiteral("direction2"), fields({{"mode", "Blind"}, {"value", .2}}));
+    rejects([&] { features::ModelingIntent::parse(invalidRevDir2); });
+
+    auto midInDir2 = original;
+    midInDir2.insert(QStringLiteral("direction2"), midEnd);
+    rejects([&] { features::ModelingIntent::parse(midInDir2); });
+
+    // 3. Direction drafts are independent
+    auto draftFixture = original;
+    auto dir1 = blind(.010);
+    dir1.insert(QStringLiteral("draft"),
+                fields({{"angle", 35. * std::numbers::pi / 180.}, {"outward", true}}));
+    auto dir2 = blind(.015);
+    dir2.insert(QStringLiteral("draft"), fields({{"angle", 0.}, {"outward", false}}));
+    draftFixture.insert(QStringLiteral("direction1"), dir1);
+    draftFixture.insert(QStringLiteral("direction2"), dir2);
+    roundtrip(draftFixture);
+    auto parsedDraft = features::ModelingIntent::parse(draftFixture).map();
+    auto pDir1Draft = parsedDraft.value("direction1").toMap().value("draft").toMap();
+    auto pDir2Draft = parsedDraft.value("direction2").toMap().value("draft").toMap();
+    near(pDir1Draft.value("angle").toDouble(), 35. * std::numbers::pi / 180., 1e-14);
+    CHECK(pDir1Draft.value("outward").toBool() == true);
+    near(pDir2Draft.value("angle").toDouble(), 0., 1e-14);
+    CHECK(pDir2Draft.value("outward").toBool() == false);
+
+    dir1.insert(QStringLiteral("draft"), fields({{"angle", 0.}, {"outward", false}}));
+    dir2.insert(QStringLiteral("draft"),
+                fields({{"angle", 20. * std::numbers::pi / 180.}, {"outward", true}}));
+    draftFixture.insert(QStringLiteral("direction1"), dir1);
+    draftFixture.insert(QStringLiteral("direction2"), dir2);
+    roundtrip(draftFixture);
+    parsedDraft = features::ModelingIntent::parse(draftFixture).map();
+    pDir1Draft = parsedDraft.value("direction1").toMap().value("draft").toMap();
+    pDir2Draft = parsedDraft.value("direction2").toMap().value("draft").toMap();
+    near(pDir1Draft.value("angle").toDouble(), 0., 1e-14);
+    CHECK(pDir1Draft.value("outward").toBool() == false);
+    near(pDir2Draft.value("angle").toDouble(), 20. * std::numbers::pi / 180., 1e-14);
+    CHECK(pDir2Draft.value("outward").toBool() == true);
+
+    dir1.insert(QStringLiteral("draft"),
+                fields({{"angle", 10. * std::numbers::pi / 180.}, {"outward", false}}));
+    dir2.insert(QStringLiteral("draft"),
+                fields({{"angle", 25. * std::numbers::pi / 180.}, {"outward", true}}));
+    draftFixture.insert(QStringLiteral("direction1"), dir1);
+    draftFixture.insert(QStringLiteral("direction2"), dir2);
+    roundtrip(draftFixture);
+
+    auto revDraft = original;
+    revDraft.insert(QStringLiteral("kind"), "Revolve");
+    revDraft.insert(QStringLiteral("axis"), reference(source, "Axis"));
+    revDraft.insert(QStringLiteral("direction1"), fields({{"mode", "Blind"}, {"value", 1.}}));
+    revDraft.insert(QStringLiteral("direction2"),
+                    fields({{"mode", "Blind"},
+                            {"value", 1.},
+                            {"draft", fields({{"angle", .1}, {"outward", false}})}}));
+    rejects([&] { features::ModelingIntent::parse(revDraft); });
+
+    // 4. Offset side is independent of reversal
+    for (bool rev : {false, true}) {
+        for (bool offRev : {false, true}) {
+            auto offsetCombo = original;
+            offsetCombo.insert(QStringLiteral("operation"), "Add");
+            offsetCombo.insert(QStringLiteral("target"), target);
+            offsetCombo.insert(QStringLiteral("reverse"), rev);
+            auto offEnd = fields({{"mode", "OffsetFromSurface"},
+                                  {"reference", reference(source, "Face")},
+                                  {"offset", .005},
+                                  {"offset_reverse", offRev},
+                                  {"draft", fields({{"angle", 0.}, {"outward", false}})}});
+            offsetCombo.insert(QStringLiteral("direction1"), offEnd);
+            roundtrip(offsetCombo);
+            auto parsedCombo = features::ModelingIntent::parse(offsetCombo).map();
+            CHECK(parsedCombo.value("reverse").toBool() == rev);
+            auto parsedEnd = parsedCombo.value("direction1").toMap();
+            CHECK(parsedEnd.value("offset_reverse").toBool() == offRev);
+            near(parsedEnd.value("offset").toDouble(), .005, 1e-14);
+        }
+    }
+
+    for (bool rev : {false, true}) {
+        for (double dist : {-.005, .005}) {
+            auto startOffset = original;
+            startOffset.insert(QStringLiteral("reverse"), rev);
+            startOffset.insert(QStringLiteral("start"),
+                               fields({{"mode", "Offset"}, {"distance", dist}}));
+            roundtrip(startOffset);
+            auto parsedStart = features::ModelingIntent::parse(startOffset).map();
+            CHECK(parsedStart.value("reverse").toBool() == rev);
+            near(parsedStart.value("start").toMap().value("distance").toDouble(), dist, 1e-14);
+        }
+    }
+
+    // 5. Revolve angles use radians and total at most one turn (2*pi)
+    auto rev = original;
+    rev.insert(QStringLiteral("kind"), "Revolve");
+    rev.insert(QStringLiteral("axis"), reference(source, "Axis"));
+    rev.insert(QStringLiteral("direction1"),
+               fields({{"mode", "Blind"}, {"value", 2 * std::numbers::pi}}));
+    roundtrip(rev);
+    rev.insert(QStringLiteral("direction1"),
+               fields({{"mode", "Blind"}, {"value", 2 * std::numbers::pi + 1e-6}}));
+    rejects([&] { features::ModelingIntent::parse(rev); });
+    rev.insert(QStringLiteral("direction1"),
+               fields({{"mode", "Midplane"}, {"value", 2 * std::numbers::pi}}));
+    roundtrip(rev);
+    rev.insert(QStringLiteral("direction1"),
+               fields({{"mode", "Midplane"}, {"value", 2 * std::numbers::pi + 1e-4}}));
+    rejects([&] { features::ModelingIntent::parse(rev); });
+    rev.insert(QStringLiteral("direction1"),
+               fields({{"mode", "Blind"}, {"value", 1.2 * std::numbers::pi}}));
+    rev.insert(QStringLiteral("direction2"),
+               fields({{"mode", "Blind"}, {"value", .8 * std::numbers::pi}}));
+    roundtrip(rev);
+    rev.insert(QStringLiteral("direction2"),
+               fields({{"mode", "Blind"}, {"value", .8001 * std::numbers::pi}}));
+    rejects([&] { features::ModelingIntent::parse(rev); });
+    rev.insert(QStringLiteral("direction1"),
+               fields({{"mode", "Blind"}, {"value", 1.5 * std::numbers::pi}}));
+    rev.insert(QStringLiteral("direction2"),
+               fields({{"mode", "Blind"}, {"value", .5 * std::numbers::pi}}));
+    roundtrip(rev);
+    rev.insert(QStringLiteral("direction2"), QCborValue(nullptr));
+    for (double badAngle : {0., -0.1, std::numeric_limits<double>::quiet_NaN(),
+                            std::numeric_limits<double>::infinity()}) {
+        rev.insert(QStringLiteral("direction1"), fields({{"mode", "Blind"}, {"value", badAngle}}));
+        rejects([&] { features::ModelingIntent::parse(rev); });
+    }
+
+    // 6. Open non-thin cut alone requires flip-side
+    auto openCurve = newId();
+    auto openProfile = selected(sketch, "OpenChains", openCurve);
+    auto selProfile = selected(sketch, "SelectedRegions", openCurve);
+
+    auto openSolidCut = original;
+    openSolidCut.insert(QStringLiteral("operation"), "Cut");
+    openSolidCut.insert(QStringLiteral("target"), target);
+    openSolidCut.insert(QStringLiteral("profile"), openProfile);
+    openSolidCut.insert(QStringLiteral("thin"), fields({{"mode", "Solid"}}));
+    rejects([&] { features::ModelingIntent::parse(openSolidCut); });
+    openSolidCut.insert(QStringLiteral("flip_side"), false);
+    roundtrip(openSolidCut);
+    openSolidCut.insert(QStringLiteral("flip_side"), true);
+    roundtrip(openSolidCut);
+
+    for (QString op : {"NewBody", "Add"}) {
+        auto openSolidOther = openSolidCut;
+        openSolidOther.insert(QStringLiteral("operation"), op);
+        if (op == "NewBody")
+            openSolidOther.insert(QStringLiteral("target"), QCborValue(nullptr));
+        rejects([&] { features::ModelingIntent::parse(openSolidOther); });
+        openSolidOther.remove(QStringLiteral("flip_side"));
+        rejects([&] { features::ModelingIntent::parse(openSolidOther); });
+    }
+
+    auto openSolidRevCut = openSolidCut;
+    openSolidRevCut.insert(QStringLiteral("kind"), "Revolve");
+    openSolidRevCut.insert(QStringLiteral("axis"), reference(source, "Axis"));
+    openSolidRevCut.insert(QStringLiteral("direction1"),
+                           fields({{"mode", "Blind"}, {"value", 1.}}));
+    rejects([&] { features::ModelingIntent::parse(openSolidRevCut); });
+
+    for (auto thinMode :
+         {fields({{"mode", "OneDirection"}, {"thickness", .002}, {"reverse", false}}),
+          fields({{"mode", "Midplane"}, {"thickness", .004}}),
+          fields({{"mode", "TwoDirection"}, {"thickness1", .001}, {"thickness2", .003}})}) {
+        auto openThinCut = openSolidCut;
+        openThinCut.insert(QStringLiteral("thin"), thinMode);
+        rejects([&] { features::ModelingIntent::parse(openThinCut); });
+        openThinCut.remove(QStringLiteral("flip_side"));
+        roundtrip(openThinCut);
+    }
+
+    auto closedCut = original;
+    closedCut.insert(QStringLiteral("operation"), "Cut");
+    closedCut.insert(QStringLiteral("target"), target);
+    closedCut.insert(QStringLiteral("flip_side"), false);
+    rejects([&] { features::ModelingIntent::parse(closedCut); });
+
+    auto selCut = closedCut;
+    selCut.insert(QStringLiteral("profile"), selProfile);
+    rejects([&] { features::ModelingIntent::parse(selCut); });
+
+    std::cout << "ambiguous interactions passed\n";
+}
+void failureAndImmutabilityContracts(QString sketch) {
+    auto original = extrude(sketch);
+    auto source = newId();
+    auto target = body(source);
+
+    // 1. Model immutability on parse failure and success
+    {
+        auto validMap = original;
+        auto snapshot = validMap;
+        auto intent = features::ModelingIntent::parse(validMap);
+        CHECK(validMap == snapshot);
+
+        auto badMap = original;
+        badMap.insert(QStringLiteral("unknown_key"), "corrupt");
+        auto badSnapshot = badMap;
+        rejects([&] { features::ModelingIntent::parse(badMap); });
+        CHECK(badMap == badSnapshot);
+    }
+
+    // 2. Inactive fields in start, end, thin
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("start"), fields({{"mode", "SketchPlane"}, {"distance", .01}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("start"),
+                   fields({{"mode", "SketchPlane"}, {"reference", reference(source, "Face")}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("direction1"),
+                   fields({{"mode", "UpToSurface"},
+                           {"reference", reference(source, "Face")},
+                           {"offset", .002},
+                           {"draft", fields({{"angle", 0.}, {"outward", false}})}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("direction1"),
+                   fields({{"mode", "UpToSurface"},
+                           {"reference", reference(source, "Face")},
+                           {"body", newId()},
+                           {"draft", fields({{"angle", 0.}, {"outward", false}})}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("operation"), "Cut");
+        bad.insert(QStringLiteral("target"), target);
+        bad.insert(QStringLiteral("direction1"),
+                   fields({{"mode", "ThroughAll"},
+                           {"reference", reference(source, "Face")},
+                           {"draft", fields({{"angle", 0.}, {"outward", false}})}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("operation"), "Cut");
+        bad.insert(QStringLiteral("target"), target);
+        bad.insert(QStringLiteral("direction1"),
+                   fields({{"mode", "UpToNext"},
+                           {"reference", reference(source, "Face")},
+                           {"draft", fields({{"angle", 0.}, {"outward", false}})}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("thin"), fields({{"mode", "Solid"}, {"thickness", .002}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("thin"),
+                   fields({{"mode", "Midplane"}, {"thickness", .002}, {"reverse", true}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("thin"), fields({{"mode", "TwoDirection"},
+                                                   {"thickness1", .001},
+                                                   {"thickness2", .002},
+                                                   {"thickness", .002}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("thin"), fields({{"mode", "TwoDirection"},
+                                                   {"thickness1", .001},
+                                                   {"thickness2", .002},
+                                                   {"reverse", false}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("thin"), fields({{"mode", "OneDirection"},
+                                                   {"thickness", .002},
+                                                   {"thickness1", .001},
+                                                   {"reverse", false}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("axis"), reference(source, "Axis"));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+
+    // 3. Unknown keys in nested objects
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("start"), fields({{"mode", "SketchPlane"}, {"bogus", 123}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("direction1"),
+                   fields({{"mode", "Blind"},
+                           {"value", .01},
+                           {"draft", fields({{"angle", 0.}, {"outward", false}})},
+                           {"bogus", "extra"}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("thin"), fields({{"mode", "Solid"}, {"bogus", true}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("profile"), fields({{"sketch", sketch},
+                                                      {"mode", "AllClosed"},
+                                                      {"regions", QCborArray{}},
+                                                      {"bogus", 1}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("operation"), "Add");
+        bad.insert(QStringLiteral("target"), fields({{"source", reference(source, "Object")},
+                                                     {"body", newId()},
+                                                     {"extra_key", "fail"}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        auto end = blind();
+        end.insert(QStringLiteral("draft"),
+                   fields({{"angle", 0.}, {"outward", false}, {"extra", 1}}));
+        bad.insert(QStringLiteral("direction1"), end);
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+
+    // 4. Invalid units and ranges
+    for (double badDist : {-1001., 1001., std::numeric_limits<double>::quiet_NaN(),
+                           std::numeric_limits<double>::infinity()}) {
+        auto bad = original;
+        bad.insert(QStringLiteral("start"), fields({{"mode", "Offset"}, {"distance", badDist}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    for (double badOff : {-.001, 1001., std::numeric_limits<double>::quiet_NaN(),
+                          std::numeric_limits<double>::infinity()}) {
+        auto bad = original;
+        bad.insert(QStringLiteral("operation"), "Add");
+        bad.insert(QStringLiteral("target"), target);
+        bad.insert(QStringLiteral("direction1"),
+                   fields({{"mode", "OffsetFromSurface"},
+                           {"reference", reference(source, "Face")},
+                           {"offset", badOff},
+                           {"offset_reverse", false},
+                           {"draft", fields({{"angle", 0.}, {"outward", false}})}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    auto draftBase = fields({{"version", 1},
+                             {"id", newId()},
+                             {"kind", "Draft"},
+                             {"target", target},
+                             {"neutral", reference(source, "Face")},
+                             {"pull", reference(newId(), "Axis")},
+                             {"faces", QCborArray{reference(source, "Face")}},
+                             {"angle", .1},
+                             {"outward", true}});
+    for (double badAngle :
+         {0., -0.01, std::numbers::pi / 2, 2.0, std::numeric_limits<double>::quiet_NaN(),
+          std::numeric_limits<double>::infinity()}) {
+        auto bad = draftBase;
+        bad.insert(QStringLiteral("angle"), badAngle);
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    auto curveId = newId();
+    for (auto [from, to] :
+         std::vector<std::pair<double, double>>{{0.5, 0.5}, {0.8, 0.2}, {-0.1, 0.5}, {0.2, 1.1}}) {
+        auto use = fields({{"entity", curveId}, {"from", from}, {"to", to}, {"reverse", false}});
+        auto badProfile = fields({{"sketch", sketch},
+                                  {"mode", "SelectedRegions"},
+                                  {"regions", QCborArray{QCborArray{QCborArray{use}}}}});
+        auto bad = original;
+        bad.insert(QStringLiteral("profile"), badProfile);
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto use1 = fields({{"entity", curveId}, {"from", 0.}, {"to", 0.5}, {"reverse", false}});
+        auto use2 = fields({{"entity", newId()}, {"from", 0.5}, {"to", 1.}, {"reverse", false}});
+        auto multiBoundary =
+            fields({{"sketch", sketch},
+                    {"mode", "OpenChains"},
+                    {"regions", QCborArray{QCborArray{QCborArray{use1}, QCborArray{use2}}}}});
+        auto bad = original;
+        bad.insert(QStringLiteral("profile"), multiBoundary);
+        bad.insert(QStringLiteral("thin"),
+                   fields({{"mode", "OneDirection"}, {"thickness", .002}, {"reverse", false}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+
+    // 5. Wrong reference kinds
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("operation"), "Add");
+        bad.insert(QStringLiteral("target"),
+                   fields({{"source", reference(source, "Face")}, {"body", newId()}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("start"),
+                   fields({{"mode", "Surface"}, {"reference", reference(source, "Point")}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("start"),
+                   fields({{"mode", "Vertex"}, {"reference", reference(source, "Face")}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("direction1"),
+                   fields({{"mode", "UpToSurface"},
+                           {"reference", reference(source, "Point")},
+                           {"draft", fields({{"angle", 0.}, {"outward", false}})}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("direction1"),
+                   fields({{"mode", "UpToVertex"},
+                           {"reference", reference(source, "Face")},
+                           {"draft", fields({{"angle", 0.}, {"outward", false}})}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto bad = original;
+        bad.insert(QStringLiteral("direction1"),
+                   fields({{"mode", "UpToBody"},
+                           {"reference", reference(source, "Face")},
+                           {"body", newId()},
+                           {"draft", fields({{"angle", 0.}, {"outward", false}})}}));
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+    {
+        auto otherSource = newId();
+        auto bad = draftBase;
+        bad.insert(QStringLiteral("faces"), QCborArray{reference(otherSource, "Face")});
+        rejects([&] { features::ModelingIntent::parse(bad); });
+    }
+
+    // 6. Stale and missing producing stages fail with DependencyOrder / ReferenceMissing
+    {
+        auto cutIntent = original;
+        cutIntent.insert(QStringLiteral("operation"), "Cut");
+        cutIntent.insert(QStringLiteral("target"), target);
+        auto parsedCut = features::ModelingIntent::parse(cutIntent);
+        auto cutId = parsedCut.graphNode().id;
+        std::vector<evaluation::GraphNode> upstream{{sketch, "Sketch", {}, {}},
+                                                    {source, "Feature", {}, {}}};
+
+        // Normal dependency order: sketch, source, cutId
+        QStringList validHistory{sketch, source, cutId};
+        auto g = parsedCut.graph(upstream, validHistory);
+        CHECK(g.dependencies(cutId).contains(source));
+        CHECK(g.dependencies(cutId).contains(sketch));
+
+        // Stale producing stage: source placed AFTER cutId in history fails DependencyOrder
+        QStringList staleHistory{sketch, cutId, source};
+        auto upstreamCopy = upstream;
+        auto staleCopy = staleHistory;
+        error("DependencyOrder", [&] { parsedCut.graph(upstreamCopy, staleCopy); });
+        CHECK(upstreamCopy.size() == upstream.size());
+        CHECK(staleCopy == staleHistory);
+        CHECK(parsedCut.map() == cutIntent);
+
+        // Truncated history (missing elements) fails DependencyOrder
+        QStringList truncatedHistory{sketch, cutId};
+        auto truncatedCopy = truncatedHistory;
+        error("DependencyOrder", [&] { parsedCut.graph(upstreamCopy, truncatedCopy); });
+        CHECK(upstreamCopy.size() == upstream.size());
+        CHECK(truncatedCopy == truncatedHistory);
+        CHECK(parsedCut.map() == cutIntent);
+
+        // History containing an identity not in the graph nodes fails ReferenceMissing
+        QStringList missingNodeHistory{sketch, newId(), cutId};
+        auto missingCopy = missingNodeHistory;
+        error("ReferenceMissing", [&] { parsedCut.graph(upstreamCopy, missingCopy); });
+        CHECK(upstreamCopy.size() == upstream.size());
+        CHECK(missingCopy == missingNodeHistory);
+        CHECK(parsedCut.map() == cutIntent);
+    }
+
+    // 7. Graph cycles fail with DependencyCycle without modifying inputs
+    {
+        auto cutIntent = original;
+        cutIntent.insert(QStringLiteral("operation"), "Cut");
+        cutIntent.insert(QStringLiteral("target"), target);
+        auto parsedCut = features::ModelingIntent::parse(cutIntent);
+        auto cutId = parsedCut.graphNode().id;
+
+        // Upstream cycle: datumA references datumB and datumB references datumA
+        auto datumA = newId();
+        auto datumB = newId();
+        auto toB = domain::GeometryReference::parse(reference(datumB, "Plane"));
+        auto toA = domain::GeometryReference::parse(reference(datumA, "Plane"));
+        std::vector<evaluation::GraphNode> cyclicUpstream{{sketch, "Sketch", {}, {}},
+                                                          {datumA, "DatumPlane", {toB}, {}},
+                                                          {datumB, "DatumPlane", {toA}, {}},
+                                                          {source, "Feature", {}, {}}};
+        QStringList cyclicHistory{sketch, datumA, datumB, source, cutId};
+        auto cyclicUpCopy = cyclicUpstream;
+        auto cyclicHistCopy = cyclicHistory;
+        error("DependencyCycle", [&] { parsedCut.graph(cyclicUpCopy, cyclicHistCopy); });
+        CHECK(cyclicUpCopy.size() == cyclicUpstream.size());
+        CHECK(cyclicHistCopy == cyclicHistory);
+        CHECK(parsedCut.map() == cutIntent);
+
+        // Intent-upstream cycle: source references cutId while cutId depends on source
+        auto toCut = domain::GeometryReference::parse(reference(cutId, "Face"));
+        std::vector<evaluation::GraphNode> backEdgeUpstream{{sketch, "Sketch", {}, {}},
+                                                            {source, "Feature", {toCut}, {}}};
+        QStringList validHistory{sketch, source, cutId};
+        auto backEdgeCopy = backEdgeUpstream;
+        auto histCopy = validHistory;
+        error("DependencyCycle", [&] { parsedCut.graph(backEdgeCopy, histCopy); });
+        CHECK(backEdgeCopy.size() == backEdgeUpstream.size());
+        CHECK(histCopy == validHistory);
+        CHECK(parsedCut.map() == cutIntent);
+    }
+
+    // 8. Cross-document IDs fail without modifying input model
+    {
+        // Reference targeting foreign document rejected by graph projection
+        auto crossDoc = original;
+        auto extRef = reference(source, "Object");
+        auto foreignDoc = newId();
+        extRef.insert(QStringLiteral("document"), foreignDoc);
+        crossDoc.insert(QStringLiteral("operation"), "Add");
+        crossDoc.insert(QStringLiteral("target"), fields({{"source", extRef}, {"body", newId()}}));
+        auto crossSnapshot = crossDoc;
+        auto parsedCross = features::ModelingIntent::parse(crossDoc);
+        CHECK(crossDoc == crossSnapshot);
+
+        auto currentDoc = newId();
+        std::vector<evaluation::GraphNode> upstream{{sketch, "Sketch", {}, {}},
+                                                    {source, "Feature", {}, {}}};
+        QStringList history{sketch, source, parsedCross.graphNode().id};
+        auto upCopy = upstream;
+        auto histCopy = history;
+        error("UnsupportedOperation", [&] { parsedCross.graph(upCopy, histCopy, currentDoc); });
+        CHECK(upCopy.size() == upstream.size());
+        CHECK(histCopy == history);
+        CHECK(parsedCross.map() == crossDoc);
+
+        // Reference with malformed document ID format rejected at parse time
+        auto malformedRef = reference(source, "Object");
+        malformedRef.insert(QStringLiteral("document"), "not-a-valid-uuid!");
+        auto malformedIntent = original;
+        malformedIntent.insert(QStringLiteral("operation"), "Add");
+        malformedIntent.insert(QStringLiteral("target"),
+                               fields({{"source", malformedRef}, {"body", newId()}}));
+        auto malformedSnapshot = malformedIntent;
+        error("InvalidInput", [&] { features::ModelingIntent::parse(malformedIntent); });
+        CHECK(malformedIntent == malformedSnapshot);
+    }
+
+    std::cout << "failure and immutability contracts passed\n";
+}
 } // namespace
 int main(int argc, char **argv) {
     QCoreApplication app(argc, argv);
@@ -388,5 +1013,7 @@ int main(int argc, char **argv) {
         modeContracts(sketch);
         profileContracts(sketch);
         graphContracts(sketch);
+        ambiguousInteractions(sketch);
+        failureAndImmutabilityContracts(sketch);
     });
 }

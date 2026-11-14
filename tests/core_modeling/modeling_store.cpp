@@ -95,6 +95,11 @@ int main(int argc, char **argv) {
               QCborArray{f});
         revision = store.revision();
         auto accepted = store.featureState(document);
+        // Storage boundary: invalid intents type rejected without modifying database state
+        auto badIntents =
+            command("SetModelSupports", fields({{"model", d.map()}, {"intents", 12345}}));
+        error("InvalidInput", [&] { store.execute(badIntents); });
+        CHECK(store.revision() == revision && store.featureState(document) == accepted);
         auto bad = d;
         limit.frame.origin[2] = -.01;
         bad.sketches = sketch::encode({s, limit});

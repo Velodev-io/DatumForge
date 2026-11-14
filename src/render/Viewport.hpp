@@ -32,6 +32,13 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     QPoint previous, press;
     bool componentDrag = false;
     QString draggedOccurrence;
+    bool manipulatorActive = false;
+    QString manipulatorKind;
+    QVector3D manipulatorOrigin;
+    QVector3D manipulatorDirection;
+    double manipulatorValue = 0;
+    bool manipulatorReverse = false;
+    bool manipulatorDragging = false;
     bool initialized = false, failed = false, stale = false, orthographic = false;
     QList<double> frameTimes;
     QElapsedTimer frameClock;
@@ -83,9 +90,21 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     QVector2D cameraPan() const {
         return pan;
     }
+    void setExtrudeManipulator(QVector3D origin, QVector3D direction, double depthMM,
+                               bool reverse = false);
+    void clearManipulators();
+    bool hasManipulator() const {
+        return manipulatorActive;
+    }
+    void dragExtrudeDepthHandle(double deltaMM);
+    void dragDraftAngleHandle(double deltaDeg);
   signals:
     void selected(cad::Selection selection);
     void componentDragged(QString occurrence, QVector3D deltaMM);
+    void depthManipulatorMoved(double newDepthMM);
+    void depthManipulatorReleased(double finalDepthMM);
+    void draftManipulatorMoved(double newAngleDeg);
+    void draftManipulatorReleased(double finalAngleDeg);
     void graphicsFailed(QString reason);
 };
 } // namespace cad
