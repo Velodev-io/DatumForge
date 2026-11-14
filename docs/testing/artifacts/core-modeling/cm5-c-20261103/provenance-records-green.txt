@@ -1,0 +1,9 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 62: cm5.features
+1/2 Test #62: cm5.features .....................   Passed    1.70 sec
+    Start 65: cm5.records
+2/2 Test #65: cm5.records ......................   Passed    0.45 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   2.16 sec

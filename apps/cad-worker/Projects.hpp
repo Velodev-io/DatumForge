@@ -73,6 +73,8 @@ class Projects {
                            "SupportReferenceCandidates",
                            "SupportGeometry",
                            "ResolveSupportReference",
+                           "ResolveModelingReference",
+                           "ModelingReferenceCandidates",
                            "SetFeatures",
                            "PreviewHistory",
                            "CommitHistory",
@@ -218,6 +220,18 @@ class Projects {
                                             e.context.document, p.value("model").toMap(),
                                             wire::text(p, "owner"), int(slot), control)}});
             }
+            if (e.command == "ModelingReferenceCandidates") {
+                wire::keys(p, {"model", "intents", "owner", "path"});
+                check(e.revision == store->revision(), "StaleRevision",
+                      "Model changed before modeling inspection");
+                check(p.value("model").isMap() && p.value("intents").isArray(), "InvalidInput",
+                      "Complete typed modeling definition required");
+                return sketch::fields({{"support_reference_resolution",
+                                        store->modelingReferenceCandidates(
+                                            e.context.document, p.value("model").toMap(),
+                                            p.value("intents").toArray(), wire::text(p, "owner"),
+                                            wire::text(p, "path"), control)}});
+            }
             if (e.command == "PreviewModelSupports") {
                 wire::keys(p, p.contains(QStringLiteral("intents"))
                                   ? QSet<QString>{"model", "intents"}
@@ -230,8 +244,11 @@ class Projects {
                       "Typed model support definition required");
                 return sketch::fields(
                     {{"model_support_preview",
-                      store->previewSupports(e.context.document, p.value("model").toMap(), control,
-                                             p.value("intents").toArray())}});
+                      store->previewSupports(
+                          e.context.document, p.value("model").toMap(), control,
+                          p.contains(QStringLiteral("intents"))
+                              ? std::optional<QCborArray>(p.value("intents").toArray())
+                              : std::nullopt)}});
             }
             if (e.command == "PreviewDrawing" || e.command == "DisplayDrawing" ||
                 e.command == "DrawingAnchors" || e.command == "ExportDrawing") {

@@ -1,0 +1,23 @@
+[1/8] Automatic MOC for target cad_client
+[2/7] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[3/7] Linking CXX static library libcad_client.a
+[4/7] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[5/7] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[6/7] Building CXX object CMakeFiles/cm5_contracts.dir/tests/core_modeling/modeling_contracts.cpp.o
+FAILED: [code=1] CMakeFiles/cm5_contracts.dir/tests/core_modeling/modeling_contracts.cpp.o 
+/usr/bin/c++ -DCAD_SOURCE_ROOT="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_TESTCASE_BUILDDIR="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug\"" -DQT_TESTCASE_SOURCEDIR="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_TESTLIB_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/cad-worker" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/src/sqlite" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtNetwork" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/cm5_contracts.dir/tests/core_modeling/modeling_contracts.cpp.o -MF CMakeFiles/cm5_contracts.dir/tests/core_modeling/modeling_contracts.cpp.o.d -o CMakeFiles/cm5_contracts.dir/tests/core_modeling/modeling_contracts.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_contracts.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_contracts.cpp:148:18: error: no member named 'displayMesh' in 'cad::Client'
+  148 |     CHECK(client.displayMesh());
+      |           ~~~~~~ ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_contracts.cpp:161:53: error: no member named 'toArray' in 'QVariant'
+  161 |     for(auto value:inspection.value("descriptions").toArray()) {
+      |                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_contracts.cpp:165:54: error: no matching function for call to 'fields'
+  165 |     client.projectCommand("ResolveModelingReference",fields({{"model",d.map()},{"intents",pending},{"owner",second.value("id")},
+      |                                                      ^~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/sketch/Sketch.hpp:86:10: note: candidate function not viable: cannot convert initializer list argument to 'std::pair<QString, QCborValue>'
+   86 | QCborMap fields(std::initializer_list<std::pair<QString, QCborValue>> list);
+      |          ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+3 errors generated.
+ninja: build stopped: subcommand failed.

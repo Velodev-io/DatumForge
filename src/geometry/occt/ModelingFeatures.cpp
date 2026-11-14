@@ -2,6 +2,7 @@
 #include "ModelingInternal.hpp"
 #include "ModelingProfiles.hpp"
 #include "features/ModelingIntent.hpp"
+#include "features/ModelingRecords.hpp"
 #include "sketch/Dependencies.hpp"
 #include <BRepAlgoAPI_Check.hxx>
 #include <BRepAlgoAPI_Cut.hxx>
@@ -153,7 +154,8 @@ TopoDS_Shape revolve(const ModelingProfile &profile, const QCborMap &m,
 }
 } // namespace
 SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArray &definitions,
-                               const SupportBuild &build, const exchange::Control &control) {
+                               const SupportBuild &build, const exchange::Control &control,
+                               QString inspectOwner, QString inspectPath) {
     auto combined = d.features;
     for (auto value : definitions)
         combined.append(value);
@@ -240,6 +242,12 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
             control.checkpoint("Evaluating exact solid intent", int(i * 100 / intents.size()));
             auto m = intents[i].map();
             auto id = m.value("id").toString();
+            if (id == inspectOwner) {
+                result.inspection =
+                    context.references.inspect(features::intentReference(m, inspectPath));
+                return result;
+            }
+            QCborArray provenance;
             check(m.value("kind").toString() == "Extrude" ||
                       m.value("kind").toString() == "Revolve" ||
                       m.value("kind").toString() == "Draft",
@@ -263,11 +271,14 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
                     domain::GeometryReference::parse(m.value("neutral").toMap()));
                 auto axis = context.references.axis(
                     domain::GeometryReference::parse(m.value("pull").toMap()));
+                auto historyStart = result.part.history.size();
                 auto shape = modeling::draft(
                     target, faces, gp_Dir(vector(axis.direction)),
                     gp_Pln(kernelPoint(frame.origin),
                            gp_Dir(vector(frame.u).Crossed(vector(frame.v)))),
                     m.value("angle").toDouble(), m.value("outward").toBool(), result.part, id);
+                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                    provenance.append(result.part.history[n]);
                 auto selected = m.value("target").toMap().value("body").toString();
                 auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
                                             [&](auto &b) { return b.id == selected; });
@@ -286,14 +297,34 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
                     m.value("kind").toString() == "Revolve"
                         ? revolve(profile, m, context, result.part)
                         : modeling::extrude(profile, m, context, target, result.part, control);
+                auto historyStart = result.part.history.size();
                 publish(result.part, context, m, tool);
+                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                    provenance.append(result.part.history[n]);
             }
+            QCborArray outputs;
+            for (auto &b : context.bodyStages.value(id))
+                outputs.append(b.id);
+            result.modelingProvenance.append(
+                sketch::fields({{"feature", id},
+                                {"kind", m.value("kind")},
+                                {"operation", m.value("kind") == "Draft" ? QCborValue("Draft")
+                                                                         : m.value("operation")},
+                                {"target", m.value("target")},
+                                {"outputs", outputs},
+                                {"history", provenance}}));
             context.references.stages = result.part.stages;
             context.references.history = result.part.history;
             result.part.diagnostics.append(sketch::fields(
                 {{"id", id}, {"status", "Current"}, {"valid", true}, {"reused", false}}));
         }
         control.checkpoint("Exact modeling preview ready", 100);
+        check(inspectOwner.isEmpty(), "ReferenceMissing", "Modeling inspection owner missing");
+        for (auto value : context.references.evolution)
+            if (!result.evolution.contains(value))
+                result.evolution.append(value);
+        features::validateModelingRecords(sketch::fields(
+            {{"version", 1}, {"intents", definitions}, {"provenance", result.modelingProvenance}}));
         result.map();
         return result;
     } catch (const Standard_Failure &e) {

@@ -1,4 +1,5 @@
 #include "ModelingFixture.hpp"
+#include "features/ModelingRecords.hpp"
 #include "geometry/occt/ModelingFeatures.hpp"
 #include "geometry/occt/ModelingProfiles.hpp"
 #include <BRepAdaptor_Surface.hxx>
@@ -273,6 +274,17 @@ void booleansAndBodies() {
              .value("volume_m3")
              .toDouble(),
          .04 * .03 * .01 - std::numbers::pi * (.005 * .005 - .003 * .003) * .005, 1e-12);
+    features::validateModelingRecords(fields(
+        {{"version", 1},
+         {"intents", QCborArray{first, cutRevolve}},
+         {"provenance",
+          geometry::evaluateModeling(g, QCborArray{first, cutRevolve}).modelingProvenance}}));
+    CHECK(!geometry::evaluateModeling(g, QCborArray{first, cutRevolve})
+               .modelingProvenance[1]
+               .toMap()
+               .value("history")
+               .toArray()
+               .empty());
     std::cout << "Boolean and body-terminated features passed\n";
 }
 void curvedLimits() {

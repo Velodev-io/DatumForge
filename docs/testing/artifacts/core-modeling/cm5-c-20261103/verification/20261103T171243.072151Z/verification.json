@@ -1,0 +1,109 @@
+{
+  "status": "Pass: CM5.c available-Mac development-build persistence/repair scope",
+  "scope": "CM5.c durable modeling/provenance and explicit repair on available Mac",
+  "host": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "steps": [
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 6.460328584013041
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 432.33356262499
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.3417030830169097
+    },
+    {
+      "name": "changed-source-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/analysis-commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 67.4716821249458
+    },
+    {
+      "name": "architecture",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.13256095797987655
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.24209254200104624
+    },
+    {
+      "name": "coverage",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_core_modeling.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07608829101081938
+    },
+    {
+      "name": "specifications",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "docs/scripts/check_specs.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07704674999695271
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.04024033300811425
+    }
+  ],
+  "module_11_started": false,
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "exact_geometry": "Production exact engine tests; see scoped evidence and explicit geometry restrictions",
+  "persistence": "Production saved/recovery/history and upgrade-copy verification",
+  "native_verification": "Not run: no new UI controls; headless worker/transport checks do not certify CM5.d/e",
+  "full_acceptance": "Blocked: full source-course/platform/device/installed/resource acceptance",
+  "source_unchanged": true
+}

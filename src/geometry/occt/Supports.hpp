@@ -11,6 +11,7 @@ struct SupportResult {
     QStringList order;
     kernel::Part part;
     QCborArray evolution;
+    QCborArray modelingProvenance;
     QCborMap inspection;
     QCborArray datumGeometry() const;
     QCborMap map(qint64 revision = 0) const;

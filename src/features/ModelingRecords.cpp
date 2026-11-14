@@ -1,0 +1,118 @@
+#include "ModelingRecords.hpp"
+namespace cad::features {
+using domain::check;
+namespace {
+QStringList referencePath(QString path) {
+    check(QStringList{"start/reference", "direction1/reference", "direction2/reference", "axis",
+                      "target/source", "neutral", "pull"}
+                  .contains(path) ||
+              QRegularExpression("^faces/([0-9]|[12][0-9]|3[01])$").match(path).hasMatch(),
+          "InvalidInput", "Choose an explicit modeling reference path");
+    return path.split('/');
+}
+QCborValue at(const QCborMap &intent, const QStringList &parts) {
+    auto value = intent.value(parts[0]);
+    if (parts.size() == 2) {
+        if (parts[0] == "faces") {
+            check(value.isArray() && parts[1].toInt() < value.toArray().size(), "InvalidInput",
+                  "Draft face slot missing");
+            value = value.toArray()[parts[1].toInt()];
+        } else {
+            check(value.isMap(), "InvalidInput", "Modeling reference path missing");
+            value = value.toMap().value(parts[1]);
+        }
+    }
+    check(value.isMap(), "InvalidInput", "Typed modeling reference missing");
+    return value;
+}
+void token(QCborValue value) {
+    check(value.isString() &&
+              QRegularExpression("^(edge|face)/[0-9a-f]{64}$").match(value.toString()).hasMatch(),
+          "InvalidProject", "Typed Boolean topology token required");
+}
+} // namespace
+domain::GeometryReference intentReference(const QCborMap &intent, QString path) {
+    ModelingIntent::parse(intent);
+    return domain::GeometryReference::parse(at(intent, referencePath(path)).toMap());
+}
+QCborArray replaceIntentReference(const QCborArray &intents, QString owner, QString path,
+                                  const domain::GeometryReference &replacement) {
+    domain::id(owner);
+    replacement.validate();
+    auto parts = referencePath(path);
+    auto result = intents;
+    bool found = false;
+    for (qsizetype i = 0; i < intents.size(); ++i) {
+        auto m = ModelingIntent::parse(intents[i].toMap()).map();
+        if (m.value("id").toString() != owner)
+            continue;
+        check(!found, "InvalidInput", "Repeated modeling owner");
+        found = true;
+        at(m, parts);
+        if (parts.size() == 1)
+            m.insert(parts[0], replacement.map());
+        else if (parts[0] == "faces") {
+            auto faces = m.value("faces").toArray();
+            faces[parts[1].toInt()] = replacement.map();
+            m.insert(QStringLiteral("faces"), faces);
+        } else {
+            auto map = m.value(parts[0]).toMap();
+            map.insert(parts[1], replacement.map());
+            m.insert(parts[0], map);
+        }
+        result[i] = ModelingIntent::parse(m).map();
+    }
+    check(found, "ReferenceMissing", "Modeling reference owner missing");
+    return result;
+}
+void validateModelingRecords(const QCborMap &m) {
+    wire::keys(m, {"version", "intents", "provenance"});
+    check(wire::integer(m, "version") == 1, "IncompatibleSchema",
+          "Unsupported modeling collection version");
+    check(m.value("intents").isArray() && m.value("provenance").isArray(), "InvalidProject",
+          "Typed modeling collections required");
+    auto intents = m.value("intents").toArray(), provenance = m.value("provenance").toArray();
+    check(intents.size() <= 100 && QCborValue(intents).toCbor().size() <= 131072 &&
+              QCborValue(m).toCbor().size() <= 262144,
+          "ResourceLimit", "Modeling metadata exceeds existing admission");
+    check(intents.size() == provenance.size(), "InvalidProject",
+          "Every modeling intent requires provenance");
+    QSet<QString> seen;
+    for (qsizetype i = 0; i < intents.size(); ++i) {
+        check(intents[i].isMap() && provenance[i].isMap(), "InvalidProject",
+              "Typed intent/provenance required");
+        auto f = ModelingIntent::parse(intents[i].toMap()).map(), p = provenance[i].toMap();
+        auto id = f.value("id").toString();
+        check(!seen.contains(id), "InvalidProject", "Duplicate modeling identity");
+        seen.insert(id);
+        wire::keys(p, {"feature", "kind", "operation", "target", "outputs", "history"});
+        check(p.value("feature") == f.value("id") && p.value("kind") == f.value("kind") &&
+                  p.value("operation") ==
+                      (f.value("kind") == "Draft" ? QCborValue("Draft") : f.value("operation")) &&
+                  p.value("target") == f.value("target") && p.value("outputs").isArray() &&
+                  p.value("history").isArray(),
+              "InvalidProject", "Modeling provenance disagrees with original intent");
+        auto outputs = p.value("outputs").toArray();
+        check(!outputs.empty() && outputs.size() <= 10, "ResourceLimit",
+              "Modeling output identities exceed body admission");
+        QSet<QString> bodies;
+        for (auto value : outputs) {
+            auto body = domain::id(value.toString());
+            check(!bodies.contains(body), "InvalidProject", "Repeated output body identity");
+            bodies.insert(body);
+        }
+        for (auto value : p.value("history").toArray()) {
+            check(value.isMap(), "InvalidProject", "Typed kernel provenance required");
+            auto h = value.toMap();
+            wire::keys(h, {"feature", "input", "generated", "modified", "deleted"});
+            check(h.value("feature") == f.value("id") && h.value("deleted").isBool() &&
+                      h.value("generated").isArray() && h.value("modified").isArray(),
+                  "InvalidProject", "Invalid kernel provenance owner/type");
+            token(h.value("input"));
+            for (auto key : {"generated", "modified"})
+                for (auto t : h.value(QString::fromLatin1(key)).toArray())
+                    token(t);
+        }
+    }
+}
+} // namespace cad::features

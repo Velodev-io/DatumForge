@@ -197,11 +197,26 @@ class Worker : public QObject {
         using wire::require;
         if (projects.handles(e.command)) {
             if (e.command == "ImportGeometry" || e.command == "ExportGeometry" ||
-                QStringList{"SetSketches", "SetFeatures", "CommitHistory", "ResolveReference",
-                            "SetAssembly", "PreviewAssembly", "DisplayAssembly", "SetDrawing",
-                            "UpdateDrawing", "PreviewDrawing", "DisplayDrawing", "ExportDrawing",
-                            "Undo", "Redo", "PreviewModelSupports", "SetModelSupports",
-                            "SupportReferenceCandidates", "ResolveSupportReference",
+                QStringList{"SetSketches",
+                            "SetFeatures",
+                            "CommitHistory",
+                            "ResolveReference",
+                            "SetAssembly",
+                            "PreviewAssembly",
+                            "DisplayAssembly",
+                            "SetDrawing",
+                            "UpdateDrawing",
+                            "PreviewDrawing",
+                            "DisplayDrawing",
+                            "ExportDrawing",
+                            "Undo",
+                            "Redo",
+                            "PreviewModelSupports",
+                            "SetModelSupports",
+                            "SupportReferenceCandidates",
+                            "ResolveSupportReference",
+                            "ModelingReferenceCandidates",
+                            "ResolveModelingReference",
                             "SupportGeometry"}
                     .contains(e.command))
                 startExchange(e);

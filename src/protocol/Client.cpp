@@ -1,6 +1,7 @@
 #include "Client.hpp"
 #include "domain/Documents.hpp"
 #include "drawing/Paths.hpp"
+#include "features/ModelingRecords.hpp"
 #include "model/DatumGeometry.hpp"
 #include "model/Supports.hpp"
 #include <QCoreApplication>
@@ -229,7 +230,8 @@ void Client::pump() {
         QStringList{"SetFeatures", "CommitHistory", "SetAssembly", "SetDrawing", "UpdateDrawing",
                     "DisplayDrawing", "PreviewDrawing", "DisplayAssembly", "PreviewAssembly",
                     "PreviewModelSupports", "SetModelSupports", "ResolveSupportReference",
-                    "SupportReferenceCandidates", "SupportGeometry"}
+                    "ResolveModelingReference", "SupportReferenceCandidates",
+                    "ModelingReferenceCandidates", "SupportGeometry"}
             .contains(e.command))
         pending[e.request].deadline = clock.elapsed() + 120000;
     if (!QStringList{"QueryOperation", "GrantFile", "RecoverProject", "ListRecoveries",
@@ -414,12 +416,14 @@ void Client::receive(const QCborMap &m) {
                                  "PreviewSketches",
                                  "PreviewModelSupports",
                                  "SupportReferenceCandidates",
+                                 "ModelingReferenceCandidates",
                                  "SupportGeometry"}
                          .contains(e.command);
     if ((reference && !visibleResult(projection, e, revision)) || e.epoch != projection.epoch) {
         // An obsolete heavy preview still owns the worker until its terminal
         // reply. Retiring it on Progress would admit another computation early.
-        if ((e.command == "PreviewModelSupports" || e.command == "SupportGeometry") &&
+        if ((e.command == "PreviewModelSupports" || e.command == "SupportGeometry" ||
+             e.command == "ModelingReferenceCandidates") &&
             m.value("status").toString() == "Progress")
             return;
         pending.erase(found);
@@ -626,7 +630,7 @@ void Client::receive(const QCborMap &m) {
         pump();
         return;
     }
-    if (e.command == "SupportReferenceCandidates") {
+    if (e.command == "SupportReferenceCandidates" || e.command == "ModelingReferenceCandidates") {
         wire::keys(data, {"support_reference_resolution"});
         wire::require(data.value("support_reference_resolution").isMap(),
                       "Support resolution map required");
@@ -770,7 +774,8 @@ void Client::receive(const QCborMap &m) {
                 break;
             }
             if (d.value("id").toString() == projection.activeDocument &&
-                !d.value("features").toArray().empty()) {
+                (!d.value("features").toArray().empty() ||
+                 !d.value("modeling").toMap().value("intents").toArray().empty())) {
                 displayPart();
                 break;
             }
@@ -878,6 +883,13 @@ void Client::installProject(const QCborMap &m) {
                           "Part support definition required");
             model::SupportDefinition::parse(d.value("model_supports").toMap());
         }
+        if (d.contains(QStringLiteral("modeling"))) {
+            documentKeys.insert("modeling");
+            wire::require(d.contains(QStringLiteral("model_supports")) &&
+                              d.value("modeling").isMap(),
+                          "Modeling metadata requires original supports");
+            features::validateModelingRecords(d.value("modeling").toMap());
+        }
         if (d.contains(QStringLiteral("drawing")))
             documentKeys.insert("drawing");
         if (d.contains(QStringLiteral("assembly")))
@@ -977,7 +989,8 @@ void Client::cancelPartPreview() {
     for (auto value : projection.documentRecords) {
         auto d = value.toMap();
         if (d.value("id").toString() == projection.activeDocument)
-            hasFeatures = !d.value("features").toArray().empty();
+            hasFeatures = (!d.value("features").toArray().empty() ||
+                           !d.value("modeling").toMap().value("intents").toArray().empty());
     }
     if (hasFeatures)
         displayPart();
@@ -1155,11 +1168,27 @@ void Client::cancelExchange() {
     for (auto value : pending)
         if (value.request.command == "ImportGeometry" ||
             value.request.command == "ExportGeometry" ||
-            QStringList{"SetSketches", "SetFeatures", "CommitHistory", "ResolveReference",
-                        "SetAssembly", "PreviewAssembly", "DisplayAssembly", "SetDrawing",
-                        "UpdateDrawing", "PreviewDrawing", "DisplayDrawing", "ExportDrawing",
-                        "Undo", "Redo", "PreviewModelSupports", "SetModelSupports",
-                        "ResolveSupportReference", "SupportReferenceCandidates", "SupportGeometry"}
+            QStringList{"SetSketches",
+                        "SetFeatures",
+                        "CommitHistory",
+                        "ResolveReference",
+                        "SetAssembly",
+                        "PreviewAssembly",
+                        "DisplayAssembly",
+                        "SetDrawing",
+                        "UpdateDrawing",
+                        "PreviewDrawing",
+                        "DisplayDrawing",
+                        "ExportDrawing",
+                        "Undo",
+                        "Redo",
+                        "PreviewModelSupports",
+                        "SetModelSupports",
+                        "ResolveSupportReference",
+                        "ResolveModelingReference",
+                        "SupportReferenceCandidates",
+                        "ModelingReferenceCandidates",
+                        "SupportGeometry"}
                 .contains(value.request.command)) {
             auto e = request("CancelJob",
                              QCborMap{{QStringLiteral("operation"), value.request.operation}});

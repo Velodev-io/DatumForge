@@ -1,5 +1,6 @@
 #include "ModelingFixture.hpp"
 #include "Projects.hpp"
+#include "geometry/occt/ModelingFeatures.hpp"
 #include "protocol/Client.hpp"
 #include <QCoreApplication>
 #include <QDir>
@@ -139,6 +140,65 @@ void transportContract() {
         [&] { return client.ready() && client.state().projectOpen && !client.outstanding(); }));
     CHECK(results.empty());
     CHECK(client.state().revision == revision && client.state().documentRecords == before);
+    client.projectCommand("SetModelSupports",
+                          fields({{"model", d.map()}, {"intents", QCborArray{f}}}));
+    CHECK(wait([&] { return !client.outstanding(); }));
+    CHECK(client.state().revision == revision + 1);
+    auto committed = client.state().documentRecords;
+    CHECK(committed[0].toMap().value("modeling").toMap().value("intents").toArray() ==
+          QCborArray{f});
+    CHECK(client.mesh());
+    client.restart();
+    CHECK(wait(
+        [&] { return client.ready() && client.state().projectOpen && !client.outstanding(); }));
+    CHECK(client.state().documentRecords == committed);
+    sketch::Sketch p;
+    p.rectangle({.002, .002}, {.004, .004});
+    p.frame.origin[2] = -.005;
+    d = base({s, p});
+    auto second = extrude(p.id);
+    auto reference = support_fixture::ref(f.value("id").toString(), "Face");
+    reference.topology = "face/" + QString(64, 'a');
+    second.insert(QStringLiteral("direction1"), fields({{"mode", "UpToSurface"},
+                                                        {"reference", reference.map()},
+                                                        {"draft", blind().value("draft")}}));
+    QSignalSpy candidates(&client, SIGNAL(supportReferenceResolution(QCborMap)));
+    CHECK(candidates.isValid());
+    auto pending = QCborArray{f, second};
+    client.projectCommand("ModelingReferenceCandidates",
+                          fields({{"model", d.map()},
+                                  {"intents", pending},
+                                  {"owner", second.value("id")},
+                                  {"path", "direction1/reference"}}));
+    CHECK(wait([&] { return !client.outstanding() && !candidates.empty(); }));
+    auto inspection = qvariant_cast<QCborMap>(candidates[0][0]);
+    CHECK(inspection.value("state") == "Missing");
+    QCborMap chosen;
+    for (auto value : inspection.value("descriptions").toArray()) {
+        auto m = value.toMap();
+        if (m.value("geometry_type") == "Plane" &&
+            std::abs(m.value("center_si").toArray()[2].toDouble() - .021) < 1e-9)
+            chosen = m.value("reference").toMap();
+    }
+    CHECK(!chosen.empty());
+    client.projectCommand("ResolveModelingReference",
+                          fields({{"model", d.map()},
+                                  {"intents", pending},
+                                  {"owner", second.value("id")},
+                                  {"path", "direction1/reference"},
+                                  {"replacement", chosen},
+                                  {"fingerprint", inspection.value("fingerprint")}}));
+    CHECK(wait([&] { return !client.outstanding(); }));
+    CHECK(client.state().revision == revision + 2);
+    auto repaired = client.state().documentRecords;
+    client.projectCommand("Undo");
+    CHECK(wait([&] { return !client.outstanding(); }));
+    CHECK(client.state().documentRecords[0].toMap().value("modeling") ==
+          committed[0].toMap().value("modeling"));
+    client.projectCommand("Redo");
+    CHECK(wait([&] { return !client.outstanding(); }));
+    CHECK(client.state().documentRecords[0].toMap().value("modeling") ==
+          repaired[0].toMap().value("modeling"));
 }
 } // namespace
 int main(int argc, char **argv) {
