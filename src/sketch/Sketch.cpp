@@ -88,7 +88,7 @@ QString constraintReason(const Sketch &s, QString kind, QString first, QString s
         ok = a == "Point" && b == "Line" && !third.isEmpty() && s.entity(third).kind == "Line" &&
              second != third;
     if (kind == "Symmetric")
-        ok = QStringList{"Point", "Line", "Arc", "Ellipse"}.contains(a) && a == b &&
+        ok = QStringList{"Point", "Line", "Circle", "Arc", "Ellipse"}.contains(a) && a == b &&
              first != second && !third.isEmpty() && s.entity(third).kind == "Line" &&
              s.entity(third).construction;
     if (kind == "CurveTangent")
@@ -154,7 +154,8 @@ QString constraintReason(const Sketch &s, QString kind, QString first, QString s
         {"Fixed", "one geometry entity"},
         {"Merge", "two distinct points"},
         {"Intersection", "a point and two distinct lines"},
-        {"Symmetric", "two same-type points/lines/arcs/ellipses and a construction centerline"},
+        {"Symmetric",
+         "two same-type points/lines/circles/arcs/ellipses and a construction centerline"},
         {"CurveTangent", "two distinct curves including an exact conic or spline"},
         {"Coincident", "a point followed by a point, line, circular or exact conic/spline curve"},
         {"Distance", "two distinct points"},

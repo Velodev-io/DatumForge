@@ -5,6 +5,26 @@ QStringList lineEditModes() {
     return {"Trim to closest", "Trim away inside", "Trim away outside", "Dynamic extend",
             "Extend to apparent intersection"};
 }
+QStringList sketchEditModes() {
+    return {"Trim to closest",
+            "Trim away inside",
+            "Trim away outside",
+            "Dynamic extend",
+            "Extend to apparent intersection",
+            "Power trim",
+            "Corner",
+            "Fillet",
+            "Chamfer",
+            "Offset entities",
+            "Linear pattern",
+            "Circular pattern",
+            "Mirror",
+            "Dynamic mirror",
+            "Move",
+            "Copy",
+            "Rotate",
+            "Scale"};
+}
 void validateEditHistory(const Sketch &s, QSet<QString> &ids) {
     domain::check(s.edits.size() <= 64, "ResourceLimit", "At most 64 sketch edit records");
     for (auto value : s.edits) {
@@ -16,15 +36,15 @@ void validateEditHistory(const Sketch &s, QSet<QString> &ids) {
         domain::check(!ids.contains(id), "InvalidInput", "Duplicate sketch edit identity");
         ids.insert(id);
         domain::id(wire::text(m, "source"));
-        domain::check(lineEditModes().contains(wire::text(m, "mode")), "InvalidInput",
+        domain::check(sketchEditModes().contains(wire::text(m, "mode")), "InvalidInput",
                       "Unsupported sketch edit mode");
         for (auto key : {"descendants", "removed_constraints"}) {
             auto v = m.value(QLatin1String(key));
             domain::check(v.isArray() &&
-                              v.toArray().size() <= (QString(key) == "descendants" ? 2 : 512),
+                              v.toArray().size() <= (QString(key) == "descendants" ? 256 : 512),
                           "ResourceLimit", "Bounded sketch edit mappings required");
             domain::check(QString(key) != "descendants" || !v.toArray().empty(), "InvalidInput",
-                          "Line edit requires a surviving descendant");
+                          "Edit requires a surviving descendant");
             QSet<QString> seen;
             for (auto item : v.toArray()) {
                 domain::check(item.isString(), "InvalidInput", "Mapped semantic ID required");

@@ -53,6 +53,9 @@ class EditingContracts : public QObject {
     void widgets() {
         workflow(false);
     }
+    void advancedModes() {
+        advancedEditingModes();
+    }
     void native() {
         if (!qEnvironmentVariableIsSet("CAD_NATIVE_TESTS"))
             QSKIP("Native desktop required");
@@ -229,6 +232,75 @@ class EditingContracts : public QObject {
                 QVERIFY2(wait([&] { return !c->outstanding() && sketches(c) == accepted; }),
                          qPrintable(c->state().message));
             }
+    }
+    void advancedEditingModes() {
+        QTemporaryDir root(QDir::tempPath() + "/cad-module3-cm2-adv-XXXXXX"),
+            files(QDir::tempPath() + "/cad-module3-cm2-adv-files-XXXXXX");
+        QVERIFY(root.isValid() && files.isValid());
+        mark(root.path());
+        mark(files.path());
+        auto prefs = files.filePath("settings.ini");
+        QSettings settings(prefs, QSettings::IniFormat);
+        settings.setValue("startup/offerRecovery", false);
+        settings.sync();
+        MainWindow w(prefs, nullptr, root.path());
+        w.show();
+        auto *c = w.workerClient();
+        QVERIFY2(wait([&] { return c->ready(); }), qPrintable(c->state().message));
+        c->newProject("Part", "CM2 advanced edits", "mm");
+        QVERIFY2(wait([&] { return c->state().projectOpen && !c->outstanding(); }),
+                 qPrintable(c->state().message));
+
+        sketch::Sketch s;
+        auto l1 = s.line(s.point({0, 0}), s.point({.04, 0}));
+        auto l2 = s.line(s.point({0, 0}), s.point({0, .04}));
+        c->projectCommand("SetSketches", sketch::fields({{"sketches", sketch::encode({s})}}));
+        QVERIFY(wait([&] { return !c->outstanding() && sketches(c).size() == 1; }));
+
+        QSignalSpy editPreview(c, &Client::sketchEditPreview);
+
+        // Fillet via PreviewSketchEdit
+        c->projectCommand("PreviewSketchEdit",
+                          sketch::fields({{"sketches", sketch::encode({s})},
+                                          {"sketch", s.id},
+                                          {"edit", sketch::fields({{"mode", "Fillet"},
+                                                                   {"source", l1},
+                                                                   {"boundaries", QCborArray{l2}},
+                                                                   {"radius", .005}})}}));
+        QVERIFY(wait([&] { return !c->outstanding() && editPreview.count() == 1; }));
+        auto sketchesArray = editPreview.takeFirst().at(0).value<QCborArray>();
+        auto previewSketches = sketch::parse(sketchesArray);
+        QCOMPARE(previewSketches.size(), 1);
+        QVERIFY(!previewSketches[0].edits.empty());
+        QCOMPARE(previewSketches[0].edits.last().toMap().value("mode").toString(),
+                 QString("Fillet"));
+
+        // Offset Entities via PreviewSketchEdit
+        c->projectCommand("PreviewSketchEdit",
+                          sketch::fields({{"sketches", sketch::encode({s})},
+                                          {"sketch", s.id},
+                                          {"edit", sketch::fields({{"mode", "Offset entities"},
+                                                                   {"source", l1},
+                                                                   {"distance", .005}})}}));
+        QVERIFY(wait([&] { return !c->outstanding() && editPreview.count() == 1; }));
+        sketchesArray = editPreview.takeFirst().at(0).value<QCborArray>();
+        previewSketches = sketch::parse(sketchesArray);
+        QCOMPARE(previewSketches[0].edits.last().toMap().value("mode").toString(),
+                 QString("Offset entities"));
+
+        // Linear Pattern via PreviewSketchEdit
+        c->projectCommand("PreviewSketchEdit",
+                          sketch::fields({{"sketches", sketch::encode({s})},
+                                          {"sketch", s.id},
+                                          {"edit", sketch::fields({{"mode", "Linear pattern"},
+                                                                   {"source", l1},
+                                                                   {"count1", 2},
+                                                                   {"spacing1", .01}})}}));
+        QVERIFY(wait([&] { return !c->outstanding() && editPreview.count() == 1; }));
+        sketchesArray = editPreview.takeFirst().at(0).value<QCborArray>();
+        previewSketches = sketch::parse(sketchesArray);
+        QCOMPARE(previewSketches[0].edits.last().toMap().value("mode").toString(),
+                 QString("Linear pattern"));
     }
 };
 int main(int argc, char **argv) {

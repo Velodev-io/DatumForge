@@ -1543,8 +1543,12 @@
       ],
       "analytical_fixture": "cm-041-geometry",
       "native_workflow": "cm-041-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-042",
@@ -1568,8 +1572,12 @@
       ],
       "analytical_fixture": "cm-042-geometry",
       "native_workflow": "cm-042-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-043",
@@ -1766,8 +1774,12 @@
       ],
       "analytical_fixture": "cm-048-geometry",
       "native_workflow": "cm-048-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-049",
@@ -1789,8 +1801,12 @@
       ],
       "analytical_fixture": "cm-049-geometry",
       "native_workflow": "cm-049-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-050",
@@ -1812,8 +1828,12 @@
       ],
       "analytical_fixture": "cm-050-geometry",
       "native_workflow": "cm-050-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-051",
@@ -1835,8 +1855,12 @@
       ],
       "analytical_fixture": "cm-051-geometry",
       "native_workflow": "cm-051-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-052",
@@ -1858,8 +1882,12 @@
       ],
       "analytical_fixture": "cm-052-geometry",
       "native_workflow": "cm-052-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-053",
@@ -1881,8 +1909,12 @@
       ],
       "analytical_fixture": "cm-053-geometry",
       "native_workflow": "cm-053-native",
-      "status": "Not run",
-      "evidence": [],
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ],
       "required_operand_cases": [
         "Spline/Spline",
         "Spline/Line",
@@ -1909,8 +1941,12 @@
       ],
       "analytical_fixture": "cm-054-geometry",
       "native_workflow": "cm-054-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-055",
@@ -1932,8 +1968,12 @@
       ],
       "analytical_fixture": "cm-055-geometry",
       "native_workflow": "cm-055-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-056",
@@ -1955,8 +1995,12 @@
       ],
       "analytical_fixture": "cm-056-geometry",
       "native_workflow": "cm-056-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-057",
@@ -2011,8 +2055,12 @@
       ],
       "analytical_fixture": "cm-058-geometry",
       "native_workflow": "cm-058-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-059",
@@ -2035,8 +2083,12 @@
       ],
       "analytical_fixture": "cm-059-geometry",
       "native_workflow": "cm-059-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-060",
@@ -2059,8 +2111,12 @@
       ],
       "analytical_fixture": "cm-060-geometry",
       "native_workflow": "cm-060-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-061",
@@ -2083,8 +2139,12 @@
       ],
       "analytical_fixture": "cm-061-geometry",
       "native_workflow": "cm-061-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-062",
@@ -2107,8 +2167,12 @@
       ],
       "analytical_fixture": "cm-062-geometry",
       "native_workflow": "cm-062-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-063",
@@ -2131,8 +2195,12 @@
       ],
       "analytical_fixture": "cm-063-geometry",
       "native_workflow": "cm-063-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-064",
@@ -2155,8 +2223,12 @@
       ],
       "analytical_fixture": "cm-064-geometry",
       "native_workflow": "cm-064-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-065",
@@ -2179,8 +2251,12 @@
       ],
       "analytical_fixture": "cm-065-geometry",
       "native_workflow": "cm-065-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-066",
@@ -2205,8 +2281,12 @@
       ],
       "analytical_fixture": "cm-066-geometry",
       "native_workflow": "cm-066-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-067",
@@ -2231,8 +2311,12 @@
       ],
       "analytical_fixture": "cm-067-geometry",
       "native_workflow": "cm-067-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-068",
@@ -2257,8 +2341,12 @@
       ],
       "analytical_fixture": "cm-068-geometry",
       "native_workflow": "cm-068-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-069",
@@ -2283,8 +2371,12 @@
       ],
       "analytical_fixture": "cm-069-geometry",
       "native_workflow": "cm-069-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-070",
@@ -2309,8 +2401,12 @@
       ],
       "analytical_fixture": "cm-070-geometry",
       "native_workflow": "cm-070-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-071",
@@ -2335,8 +2431,12 @@
       ],
       "analytical_fixture": "cm-071-geometry",
       "native_workflow": "cm-071-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-072",
@@ -2361,8 +2461,12 @@
       ],
       "analytical_fixture": "cm-072-geometry",
       "native_workflow": "cm-072-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-073",
@@ -2387,8 +2491,12 @@
       ],
       "analytical_fixture": "cm-073-geometry",
       "native_workflow": "cm-073-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-074",
@@ -2413,8 +2521,12 @@
       ],
       "analytical_fixture": "cm-074-geometry",
       "native_workflow": "cm-074-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-075",
@@ -2436,8 +2548,12 @@
       ],
       "analytical_fixture": "cm-075-geometry",
       "native_workflow": "cm-075-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/decisions/core-modeling-cm2-editing.md",
+        "tests/core_modeling/editing.cpp",
+        "tests/core_modeling/editing_contracts.cpp"
+      ]
     },
     {
       "id": "CM-076",
