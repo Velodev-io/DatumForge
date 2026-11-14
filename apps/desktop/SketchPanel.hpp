@@ -75,6 +75,14 @@ class SketchPanel : public QWidget {
     qint64 revision = -1;
     bool editing = false, syncing = false, committing = false;
     bool dimensionEditing = false;
+    enum class DimensionStage { Off, Selecting, Placing, EditingValue };
+    DimensionStage dimensionStage = DimensionStage::Off;
+    QString dimensionMode, dimensionAxis;
+    QStringList dimensionOperands;
+    std::optional<sketch::Constraint> dimensionCandidate;
+    void clearDimensionInput();
+    void refreshDimensionInput();
+    void pickDimension(QString id, sketch::Vec2 at);
     QCheckBox *automaticRelations;
     QPushButton *reviewInference;
     QCborArray inferenceBefore, inferenceReceived, inferenceProposed;
@@ -85,7 +93,8 @@ class SketchPanel : public QWidget {
     void queueInference(const sketch::Sketch &before);
     void completeInference(const QCborArray &diagnostics);
     void reviewProposals(QString kind);
-    void openDimensionEditor(QString constraint = {}, QStringList path = {});
+    bool openDimensionEditor(QString constraint = {}, QStringList path = {},
+                             std::optional<sketch::Constraint> candidate = {});
     std::vector<sketch::Vec2> clicks;
     sketch::Sketch &current();
     void rebuild();
@@ -144,6 +153,10 @@ class SketchPanel : public QWidget {
     void chooseSketch(QString id);
     void choosePlane(QString name);
     void dimensionSelection();
+    void startSmartDimension(QString mode = {});
+    bool smartDimensionActive() const {
+        return dimensionStage != DimensionStage::Off;
+    }
     void ordinateSelection();
     void pathSelection();
     void inferSelection();

@@ -1,0 +1,14 @@
+{
+  "sources": {
+    "apps/desktop/DimensionUI.cpp": "188fdb917f2ef21c148a1cbcaa5b1f7dbb3e4dc82dda8cb81aaf96367ad98efd",
+    "apps/desktop/SketchPanel.hpp": "6d31ebf5adc72a5acea5f38301a8264d1081f77f3e5be57e934285102cf75ada",
+    "apps/desktop/SketchPanel.cpp": "5bb52727c93e2f6969e376b190684fe9970195bf5b4d0f807bf65604effb90bf",
+    "apps/desktop/WorkspaceChrome.cpp": "a6ec4cea82a46655a8122af4d685a54f094a7ec39f6136dec799e7ad8b018ce3",
+    "src/render/SketchView.cpp": "33eaac23876e275d60fba7d0c962873a9ede127b53d87cb7ac58eef191f39f9f",
+    "src/render/SketchView.hpp": "a7fcce36ce7d0b5358fe18db9744e0713ee2da8640f58bba3c9fa7d663863535",
+    "tests/core_modeling/dimension_contracts.cpp": "18d2740b0f65e1441517df6536c76d964affd56df4a6e666818a79a605b47e00",
+    "tests/core_modeling/completion_contracts.cpp": "2c400bdd13092452a96c222fab29b70425ecbe9d89f9c105c7d9311db7266b45",
+    "tests/module4/workspace.cpp": "661f7afc88935f9ba897aa885b9f331d52f3de74e2351aca5d0962fe6fae13c8"
+  },
+  "cm5_c_unchanged": true
+}

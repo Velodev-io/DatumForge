@@ -303,6 +303,7 @@ class Workspace : public QObject {
             }
         });
         QTest::mouseClick(dimension, Qt::LeftButton);
+        QTest::mouseClick(view, Qt::LeftButton, Qt::NoModifier, QPoint(view->width() - 30, 70));
         QVERIFY2(wait([&] { return !c->outstanding() && c->state().phase == Phase::PreviewReady; }),
                  qPrintable(c->state().message));
         QCOMPARE(c->state().revision, revision);
@@ -313,6 +314,7 @@ class Workspace : public QObject {
         // The worker can move a radius-driven circle's centre while preserving
         // its radius. Await the solved preview rather than assuming a local rejection.
         QSignalSpy dragPreviews(c, &Client::sketchPreview);
+        panel->setTool("Select / drag");
         auto radiusPixel = view->screen({firstWorld.x + .008, firstWorld.y}).toPoint();
         QTest::mousePress(view, Qt::LeftButton, Qt::NoModifier, radiusPixel);
         QMouseEvent resize(QEvent::MouseMove, radiusPixel + QPoint(20, 0),

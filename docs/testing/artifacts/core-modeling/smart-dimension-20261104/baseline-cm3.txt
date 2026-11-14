@@ -1,0 +1,152 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 86: cm3.associated_dimensions
+1/6 Test #86: cm3.associated_dimensions ........   Passed    2.13 sec
+    Start 87: cm3.dimensions
+2/6 Test #87: cm3.dimensions ...................   Passed    0.94 sec
+    Start 88: cm3.dimension_contracts
+3/6 Test #88: cm3.dimension_contracts ..........***Failed   14.39 sec
+********* Start testing of DimensionContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 27.2.0
+PASS   : DimensionContracts::initTestCase()
+QWARN  : DimensionContracts::widgets() QOpenGLWidget is not supported on this platform.
+QWARN  : DimensionContracts::widgets() qt.qpa.fonts: Populating font family aliases took 33 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : DimensionContracts::widgets() This plugin does not support propagateSizeHints()
+FAIL!  : DimensionContracts::widgets() 'wait([&] { return c->ready(); })' returned FALSE. (WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp(178)]
+PASS   : DimensionContracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 12426ms
+********* Finished testing of DimensionContracts *********
+
+    Start 89: cm3.dimension_identity
+4/6 Test #89: cm3.dimension_identity ...........***Failed   12.22 sec
+********* Start testing of DimensionContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 27.2.0
+PASS   : DimensionContracts::initTestCase()
+QWARN  : DimensionContracts::identity() QOpenGLWidget is not supported on this platform.
+QWARN  : DimensionContracts::identity() qt.qpa.fonts: Populating font family aliases took 28 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+FAIL!  : DimensionContracts::identity() 'wait([&] { return c->ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp(64)]
+PASS   : DimensionContracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 12172ms
+********* Finished testing of DimensionContracts *********
+
+    Start 90: cm3.completion
+5/6 Test #90: cm3.completion ...................   Passed    2.70 sec
+    Start 91: cm3.completion_contracts
+sh: /bin/ps: Operation not permitted
+6/6 Test #91: cm3.completion_contracts .........***Timeout 240.01 sec
+********* Start testing of CompletionContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 27.2.0
+PASS   : CompletionContracts::initTestCase()
+PASS   : CompletionContracts::delayedModalReadiness(ready)
+PASS   : CompletionContracts::delayedModalReadiness(nested)
+QWARN  : CompletionContracts::proposalRestart(fullyDefine) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::proposalRestart(fullyDefine) qt.qpa.fonts: Populating font family aliases took 28 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : CompletionContracts::proposalRestart(fullyDefine) This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::proposalRestart(fullyDefine) CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::proposalRestart(fullyDefine) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(178)]
+QWARN  : CompletionContracts::proposalRestart(infer) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::proposalRestart(infer) This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::proposalRestart(infer) CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::proposalRestart(infer) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(178)]
+QWARN  : CompletionContracts::proposalRestart(dimension) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::proposalRestart(dimension) This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::proposalRestart(dimension) CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::proposalRestart(dimension) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(178)]
+QWARN  : CompletionContracts::proposalRestart(ordinates) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::proposalRestart(ordinates) This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::proposalRestart(ordinates) CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::proposalRestart(ordinates) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(178)]
+QWARN  : CompletionContracts::dragRestart() QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::dragRestart() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::dragRestart() CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::dragRestart() 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(228)]
+QWARN  : CompletionContracts::inferenceRecheckTangent() QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::inferenceRecheckTangent() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::inferenceRecheckTangent() CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::inferenceRecheckTangent() 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(268)]
+QWARN  : CompletionContracts::fullyDefineReview(mm) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::fullyDefineReview(mm) This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::fullyDefineReview(mm) CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::fullyDefineReview(mm) 'session.start(units)' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(322)]
+QWARN  : CompletionContracts::fullyDefineReview(in) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::fullyDefineReview(in) This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::fullyDefineReview(in) CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::fullyDefineReview(in) 'session.start(units)' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(322)]
+QWARN  : CompletionContracts::automaticInference() QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::automaticInference() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::automaticInference() CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::automaticInference() 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(389)]
+QWARN  : CompletionContracts::confirmInference() QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::confirmInference() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::confirmInference() CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::confirmInference() 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(427)]
+QWARN  : CompletionContracts::dragCancel(button-held) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::dragCancel(button-held) This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::dragCancel(button-held) CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::dragCancel(button-held) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(487)]
+QWARN  : CompletionContracts::dragCancel(released-request-pending) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::dragCancel(released-request-pending) This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::dragCancel(released-request-pending) CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::dragCancel(released-request-pending) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(487)]
+QWARN  : CompletionContracts::dragLastValid() QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::dragLastValid() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::dragLastValid() CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::dragLastValid() 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(524)]
+QWARN  : CompletionContracts::constrainedCurvePointer() QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::constrainedCurvePointer() This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::constrainedCurvePointer() CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::constrainedCurvePointer() 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(566)]
+QWARN  : CompletionContracts::dragFamilies(Line) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::dragFamilies(Line) This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::dragFamilies(Line) CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::dragFamilies(Line) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(607)]
+QWARN  : CompletionContracts::dragFamilies(Circle) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::dragFamilies(Circle) This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::dragFamilies(Circle) CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::dragFamilies(Circle) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(607)]
+QWARN  : CompletionContracts::dragFamilies(Arc) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::dragFamilies(Arc) This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::dragFamilies(Arc) CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::dragFamilies(Arc) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(607)]
+QWARN  : CompletionContracts::dragFamilies(Ellipse) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::dragFamilies(Ellipse) This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::dragFamilies(Ellipse) CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::dragFamilies(Ellipse) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(607)]
+QWARN  : CompletionContracts::dragFamilies(EllipticalArc) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::dragFamilies(EllipticalArc) This plugin does not support propagateSizeHints()
+QWARN  : CompletionContracts::dragFamilies(EllipticalArc) CM3 fixture setup failed: "worker handshake" platform "offscreen" DPR 1 expected "" "WorkerUnavailable: Private local IPC is unavailable: QLocalServer::listen: Unknown error 1"
+FAIL!  : CompletionContracts::dragFamilies(EllipticalArc) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(607)]
+QWARN  : CompletionContracts::dragFamilies(Parabola) QOpenGLWidget is not supported on this platform.
+QWARN  : CompletionContracts::dragFamilies(Parabola) This plugin does not support propagateSizeHints()
+
+
+50% tests passed, 3 tests failed out of 6
+
+Total Test time (real) = 272.41 sec
+
+The following tests FAILED:
+	 88 - cm3.dimension_contracts (Failed)
+	 89 - cm3.dimension_identity (Failed)
+	 91 - cm3.completion_contracts (Timeout)
+Errors while running CTest

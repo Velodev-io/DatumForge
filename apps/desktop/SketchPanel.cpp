@@ -135,7 +135,7 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     tool->setObjectName("sketchTool");
     tool->addItems({"Point", "Line", "Polyline", "Rectangle", "Circle", "Arc", "3 Point Arc",
                     "Tangent Arc", "Slot", "Ellipse", "EllipticalArc", "Parabola", "Spline",
-                    "Select / drag", "Trim / extend"});
+                    "Select / drag", "Trim / extend", "Smart Dimension"});
     tool->setCurrentText("Select / drag");
     form->addRow("Tool", tool);
     automaticRelations = new QCheckBox("Automatic relations");
@@ -535,6 +535,7 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     connect(view, &SketchView::deleteRequested, this, [this] { guard([&] { deleteSelected(); }); });
     connect(sketches, &QComboBox::currentIndexChanged, this, [this] {
         if (!syncing) {
+            clearDimensionInput();
             selectedId.clear();
             clicks.clear();
             rebuild();
@@ -542,6 +543,7 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
         }
     });
     connect(tool, &QComboBox::currentTextChanged, this, [this] {
+        clearDimensionInput();
         clearLineEdit();
         clicks.clear();
         pendingArcJoin.reset();
@@ -550,6 +552,10 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
         view->setTool(tool->currentText());
         updateToolFields();
         emit toolChanged(tool->currentText());
+        if (tool->currentText() == "Smart Dimension") {
+            dimensionStage = DimensionStage::Selecting;
+            refreshDimensionInput();
+        }
     });
     updateToolFields();
     connect(add, &QPushButton::clicked, this, [this] {
@@ -666,6 +672,8 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     });
     connect(view, &SketchView::dimensionEditRequested, this,
             [this](QString id) { openDimensionEditor(id); });
+    connect(view, &SketchView::dimensionPicked, this,
+            [this](QString id, double x, double y) { pickDimension(id, {x, y}); });
     connect(view, &SketchView::dragged, this, [this](QString id, double x, double y) {
         if (!editing || !gestureBefore || gestureFinishing)
             return;
@@ -687,6 +695,12 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
         finishGesture();
     });
     connect(client, &Client::changed, this, &SketchPanel::finishGesture);
+    connect(client, &Client::changed, this, [this] {
+        if (smartDimensionActive() && !client->ready()) {
+            clearDimensionInput();
+            setTool("Select / drag");
+        }
+    });
     connect(entities, &QListWidget::itemSelectionChanged, this, [this] {
         if (syncing)
             return;
@@ -998,6 +1012,9 @@ void SketchPanel::install(QCborMap d, bool idle) {
     bool changed = document != d.value("id").toString() || revision != client->state().revision ||
                    workerEpoch != client->state().epoch;
     if (changed) {
+        clearDimensionInput();
+        if (tool->currentText() == "Smart Dimension")
+            tool->setCurrentText("Select / drag");
         document = d.value("id").toString();
         revision = client->state().revision;
         workerEpoch = client->state().epoch;
@@ -1074,6 +1091,7 @@ void SketchPanel::begin() {
 void SketchPanel::discard() {
     if (!editing || committing)
         return;
+    clearDimensionInput();
     clearInference();
     clearLineEdit();
     view->cancelPointerInput();
@@ -1093,6 +1111,19 @@ void SketchPanel::discard() {
 void SketchPanel::cancelInput() {
     if (!editing || committing)
         return;
+    if (smartDimensionActive()) {
+        if (dimensionOperands.empty()) {
+            clearDimensionInput();
+            setTool("Select / drag");
+        } else {
+            dimensionOperands.clear();
+            dimensionAxis.clear();
+            dimensionCandidate.reset();
+            dimensionStage = DimensionStage::Selecting;
+            refreshDimensionInput();
+        }
+        return;
+    }
     dragFeedback.clear();
     clearInference();
     if (gestureBefore) {
@@ -1121,7 +1152,7 @@ void SketchPanel::cancelInput() {
 void SketchPanel::updateToolFields() {
     auto *form = qobject_cast<QFormLayout *>(x->parentWidget()->layout());
     auto t = tool->currentText();
-    bool draw = t != "Select / drag" && t != "Trim / extend";
+    bool draw = t != "Select / drag" && t != "Trim / extend" && t != "Smart Dimension";
     lineEditGroup->setVisible(editing && t == "Trim / extend");
     bool arc = t == "Arc" || t == "3 Point Arc" || t == "Tangent Arc";
     rootForm->setRowVisible(splineDegree, t == "Spline");
@@ -1354,35 +1385,10 @@ bool SketchPanel::selectionEditable() const {
     return !model::convertedSketch(supportDocument, sketchId());
 }
 bool SketchPanel::dimensionAvailable() const {
-    if (relationSelectionOrder.size() >= 2) {
-        if (relationSelectionOrder.size() > 2)
-            return false;
-        for (auto &s : editing ? draft : accepted)
-            if (s.id == sketches->currentData().toString()) {
-                QString a, b;
-                bool aAxis = false, bAxis = false;
-                for (auto &e : s.entities) {
-                    if (e.id == relationSelectionOrder[0]) {
-                        a = e.kind;
-                        aAxis = e.kind == "Line" && e.construction;
-                    }
-                    if (e.id == relationSelectionOrder[1]) {
-                        b = e.kind;
-                        bAxis = e.kind == "Line" && e.construction;
-                    }
-                }
-                if ((a == b && (a == "Point" || a == "Line")) || (a == "Point" && bAxis) ||
-                    (aAxis && b == "Point"))
-                    return true;
-            }
-        return false;
-    }
-    for (auto &s : editing ? draft : accepted)
-        for (auto &e : s.entities)
-            if (e.id == selectedId)
-                return e.kind == "Line" || e.kind == "Circle" || e.kind == "Arc";
-    return false;
+    return editing && selectionEditable() && client->ready() && !client->outstanding() &&
+           !dimensionEditing && lineEditBefore.empty();
 }
+
 void SketchPanel::chooseSketch(QString id) {
     if (!editing)
         sketches->setCurrentIndex(sketches->findData(id));

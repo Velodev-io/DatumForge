@@ -32,8 +32,31 @@ Baseline build and six focused CTests are recorded in this task's artifact folde
 
 ## Implementation and native verification
 
-Tasks B–G: Not started. New native interaction/graphics verification: Not run.
-No required acceptance-matrix row is closed by documentation or historical tests.
+Task B adds persistent Selecting/Placing/EditingValue state to SketchPanel, the
+Smart Dimension label with the existing command identity, a toolbar flyout and
+explicit Horizontal/Vertical entry points. Activation does not require selection.
+Transient picks highlight and place a candidate through the existing advanced
+worker-validated editor. Ordinary operands clear after acceptance; construction
+centerline retention remains supported. Escape cancels the unfinished candidate
+before exiting; tool/context/revision/worker changes invalidate transient state.
+
+The new `smartDimensionMode` test covers mm/in activation, preselection, invalid
+preselection, placement, repeated acceptance, no geometry drag, two-stage Escape,
+tool switching and one undo step per dimension. Existing tests now include a
+placement click and explicitly reselect for each new operation, retaining their
+identity, geometry, preview/cancel, history and saved-reopen assertions. The
+restart case also places before restarting its open editor.
+
+Eight affected CTests passed in 33.35 seconds before the final repeated-dimension
+assertions; those new assertions separately passed. Final full-suite verification
+is pending. Pinned format, seven changed-source Clang analyses, ownership,
+isolation, coverage and specification checks passed. Native mm/in mode workflows
+passed at 100/125/150/175/200% effective scales, with screenshots. This verifies
+Task B mode behavior, not Task D conventional graphics/compact editor. Retained
+failed attempts exposed reference-preselection initialization and obsolete fixture
+selection assumptions; corrections preserve the original assertions.
+
+Tasks C–G: Not started. Overall parity remains incomplete.
 
 ## Blocked acceptance
 

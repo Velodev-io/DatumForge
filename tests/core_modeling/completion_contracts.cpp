@@ -139,6 +139,95 @@ struct Session {
 class CompletionContracts : public QObject {
     Q_OBJECT
   private slots:
+    void smartDimensionMode_data() {
+        QTest::addColumn<QString>("units");
+        QTest::newRow("mm") << QString("mm");
+        QTest::newRow("in") << QString("in");
+    }
+    void smartDimensionMode() {
+        QFETCH(QString, units);
+        Session session;
+        QVERIFY(session.start(units));
+        sketch::Sketch s;
+        auto line = s.line(s.point({0, 0}), s.point({.03, .02}));
+        auto circle = s.circle(s.point({.06, 0}), .005);
+        QVERIFY(session.seed(s));
+        auto *panel = session.panel;
+        auto *canvas = panel->canvas();
+        auto *command = session.window->command("sketch.dimension");
+        QVERIFY(command->isEnabled());
+        QCOMPARE(command->text(), QString("Smart Dimension"));
+        command->trigger();
+        QVERIFY(panel->smartDimensionActive());
+        QVERIFY(canvas->accessibleDescription().contains("Select dimension operands"));
+        QSignalSpy drags(canvas, &SketchView::dragStarted);
+        QTest::mouseClick(canvas, Qt::LeftButton, Qt::NoModifier,
+                          canvas->screen({.015, .01}).toPoint());
+        QCOMPARE(drags.size(), 0);
+        QVERIFY(canvas->accessibleDescription().contains("place"));
+        QVERIFY(session.snapshot("smart-dimension-selecting"));
+        QTest::keyClick(canvas, Qt::Key_Escape);
+        QVERIFY(panel->smartDimensionActive());
+        QVERIFY(canvas->accessibleDescription().contains("Select dimension operands"));
+        QTest::keyClick(canvas, Qt::Key_Escape);
+        QVERIFY(!panel->smartDimensionActive());
+        // Invalid three-operand preselection must not mutate the draft.
+        auto *entities = session.window->findChild<QListWidget *>("sketchEntities");
+        entities->selectAll();
+        command->trigger();
+        QVERIFY(panel->smartDimensionActive());
+        QVERIFY(canvas->accessibleDescription().contains("Select a line"));
+        panel->setTool("Line");
+        QVERIFY(!panel->smartDimensionActive());
+        panel->setTool("Select / drag");
+        entities->clearSelection();
+        for (int i = 0; i < entities->count(); ++i)
+            if (entities->item(i)->data(Qt::UserRole).toString() == circle)
+                entities->item(i)->setSelected(true);
+        command->trigger();
+        QVERIFY(canvas->accessibleDescription().contains("place"));
+        bool applied = false;
+        auto modal = test::whenModal(session.window.get(), [&](QDialog *dialog) {
+            dialog->findChild<QLineEdit *>("dimensionExpression")->setText("8 mm");
+            dialog->findChild<QPushButton *>("dimensionPreview")->click();
+            auto *apply = dialog->findChild<QPushButton *>("dimensionApply");
+            QVERIFY(wait([&] { return apply->isEnabled(); }));
+            applied = true;
+            QVERIFY(session.snapshot("smart-dimension-editor", dialog));
+            apply->click();
+        });
+        QTest::mouseClick(canvas, Qt::LeftButton, Qt::NoModifier, QPoint(canvas->width() - 30, 70));
+        QVERIFY(applied);
+        QVERIFY(wait([&] { return !session.client->outstanding(); }));
+        QVERIFY(panel->smartDimensionActive());
+        QVERIFY(canvas->accessibleDescription().contains("Select dimension operands"));
+        QVERIFY(panel->canUndoDraft());
+        QCOMPARE(session.sketches(), sketch::encode({s}));
+        QTest::mouseClick(canvas, Qt::LeftButton, Qt::NoModifier,
+                          canvas->screen({.015, .01}).toPoint());
+        auto repeat = test::whenModal(session.window.get(), [&](QDialog *dialog) {
+            dialog->findChild<QLineEdit *>("dimensionExpression")->setText("40 mm");
+            dialog->findChild<QPushButton *>("dimensionPreview")->click();
+            auto *apply = dialog->findChild<QPushButton *>("dimensionApply");
+            QVERIFY(wait([&] { return apply->isEnabled(); }));
+            apply->click();
+        });
+        QTest::mouseClick(canvas, Qt::LeftButton, Qt::NoModifier, QPoint(canvas->width() - 30, 70));
+        QVERIFY(wait([&] { return !session.client->outstanding(); }));
+        QVERIFY(panel->smartDimensionActive());
+        panel->undoDraftEdit();
+        QVERIFY(panel->canUndoDraft());
+        panel->undoDraftEdit();
+        QVERIFY(!panel->canUndoDraft());
+        panel->redoDraftEdit();
+        panel->redoDraftEdit();
+        QVERIFY(session.finish());
+        auto saved = sketch::parse(session.sketches())[0];
+        QCOMPARE(saved.entities.size(), s.entities.size());
+        QCOMPARE(saved.constraints.size(), size_t(2));
+        QCOMPARE(saved.constraints[0].a, circle);
+        QCOMPARE(saved.entity(line).kind, QString("Line"));
+    }
     void delayedModalReadiness_data() {
         QTest::addColumn<bool>("nestedWait");
         QTest::newRow("ready") << false;
@@ -218,6 +307,9 @@ class CompletionContracts : public QObject {
                                            "recalculate a discarded draft");
         });
         session.window->command("sketch." + editor)->trigger();
+        if (editor == "dimension")
+            QTest::mouseClick(session.panel->canvas(), Qt::LeftButton, Qt::NoModifier,
+                              QPoint(session.panel->canvas()->width() - 30, 70));
         QVERIFY(opened);
         QVERIFY(!session.panel->active());
         QVERIFY(!session.panel->canUndoDraft());

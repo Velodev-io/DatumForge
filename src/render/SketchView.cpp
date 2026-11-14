@@ -49,6 +49,8 @@ void SketchView::showSketch(sketch::Sketch s, QString selected, bool editing) {
     present = true;
     setAccessibleDescription(drawing.name + (editable ? " · Sketch draft" : " · Accepted sketch") +
                              (editable && arcTool() ? " · " + arcPrompt() : ""));
+    if (editable && tool == "Smart Dimension")
+        setAccessibleDescription(dimensionPrompt);
     if (editable && tool == "Rectangle")
         setRectangleInput(rectangleMethod, rectangleInputs);
     if (editable && tool == "Slot")
@@ -68,6 +70,13 @@ void SketchView::showInferenceGuides(std::vector<sketch::Constraint> guides) {
         showSketch(drawing, selectedId, editable);
     else
         update();
+}
+void SketchView::showDimensionInput(QStringList operands, QString prompt) {
+    dimensionOperands = std::move(operands);
+    dimensionPrompt = std::move(prompt);
+    setAccessibleDescription(dimensionPrompt);
+    setCursor(dimensionPrompt.isEmpty() ? Qt::ArrowCursor : Qt::CrossCursor);
+    update();
 }
 void SketchView::clearSketch() {
     drawing = {};
@@ -245,7 +254,8 @@ void SketchView::paintEvent(QPaintEvent *) {
     p.drawLine(QPointF(0, o.y()), QPointF(width(), o.y()));
     p.drawLine(QPointF(o.x(), 0), QPointF(o.x(), height()));
     for (auto &e : drawing.entities) {
-        p.setPen(QPen(e.id == selectedId ? QColor(255, 197, 74) : ink, e.id == selectedId ? 3 : 2,
+        bool selected = e.id == selectedId || dimensionOperands.contains(e.id);
+        p.setPen(QPen(selected ? QColor(255, 197, 74) : ink, selected ? 3 : 2,
                       e.construction ? Qt::DashLine : Qt::SolidLine));
         if (e.kind == "Point") {
             auto q = screen(e.point);
@@ -554,7 +564,9 @@ void SketchView::paintEvent(QPaintEvent *) {
     p.drawText(QRect(14, 10, width() - 28, 30), Qt::TextWordWrap,
                present ? drawing.name + (editable ? " · Editing · " + tool : "")
                        : "Choose Sketch to start");
-    if (editable && arcTool()) {
+    if (editable && tool == "Smart Dimension") {
+        p.drawText(QRect(14, height() - 48, width() - 28, 44), Qt::TextWordWrap, dimensionPrompt);
+    } else if (editable && arcTool()) {
         p.drawText(QRect(14, height() - 42, width() - 28, 38), Qt::TextWordWrap, arcPrompt());
     } else if (editable && (tool == "Line" || tool == "Polyline")) {
         p.drawText(QRect(14, height() - 42, width() - 28, 38), Qt::TextWordWrap,
@@ -749,6 +761,11 @@ void SketchView::mousePressEvent(QMouseEvent *e) {
     previous = e->pos();
     if (e->button() != Qt::LeftButton || spaceDown)
         return;
+    if (editable && tool == "Smart Dimension") {
+        auto at = local(e->position());
+        emit dimensionPicked(pick(e->position()), at.x, at.y);
+        return;
+    }
     if (editable && tool == "Select / drag")
         for (auto &hit : dimensionHits)
             if (hit.contains(e->position()))
@@ -829,6 +846,10 @@ void SketchView::mouseMoveEvent(QMouseEvent *e) {
         update();
     }
     previous = e->pos();
+    if (editable && tool == "Smart Dimension" && e->buttons() == Qt::NoButton) {
+        auto at = local(e->position());
+        emit dimensionMoved(at.x, at.y);
+    }
     if (editable && continuation && (tool == "Line" || tool == "Polyline") &&
         !(e->buttons() & Qt::MiddleButton) && !spaceDown) {
         double distance = QLineF(e->position(), screen(continuation->point)).length();

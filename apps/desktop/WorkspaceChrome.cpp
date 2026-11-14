@@ -39,8 +39,13 @@ void MainWindow::buildCommandTabs() {
     connect(finish, &QAction::triggered, this, [this] { sketchPanel->finish(); });
     auto *cancel = add("sketch.cancel", "Cancel Sketch");
     connect(cancel, &QAction::triggered, sketchPanel, &SketchPanel::discard);
-    auto *dimension = add("sketch.dimension", "Dimension");
+    auto *dimension = add("sketch.dimension", "Smart Dimension");
     connect(dimension, &QAction::triggered, sketchPanel, &SketchPanel::dimensionSelection);
+    for (auto axis : {"Horizontal", "Vertical"}) {
+        auto *action = add("sketch.dimension." + QString(axis), QString(axis) + " Dimension");
+        connect(action, &QAction::triggered, sketchPanel,
+                [this, axis] { sketchPanel->startSmartDimension(QString(axis) + "Distance"); });
+    }
     auto *ordinates = add("sketch.ordinates", "Ordinates");
     connect(ordinates, &QAction::triggered, sketchPanel, &SketchPanel::ordinateSelection);
     auto *path = add("sketch.pathLength", "Path length");
@@ -129,6 +134,15 @@ void MainWindow::buildCommandTabs() {
                     "",
                     "sketch.finish"});
     auto *sketchBar = commandTabs->findChild<QToolBar *>("commandsSketch");
+    auto *dimensionButton =
+        qobject_cast<QToolButton *>(sketchBar->widgetForAction(commands.get("sketch.dimension")));
+    auto *dimensionMenu = new QMenu(dimensionButton);
+    for (auto id : {"sketch.dimension", "sketch.dimension.Horizontal", "sketch.dimension.Vertical",
+                    "sketch.ordinates", "sketch.pathLength"})
+        dimensionMenu->addAction(commands.get(id));
+    dimensionButton->setObjectName("sketchDimensionFlyout");
+    dimensionButton->setMenu(dimensionMenu);
+    dimensionButton->setPopupMode(QToolButton::MenuButtonPopup);
     auto *arcButton =
         qobject_cast<QToolButton *>(sketchBar->widgetForAction(commands.get("sketch.tool.Arc")));
     auto *ellipseButton = qobject_cast<QToolButton *>(
@@ -246,7 +260,11 @@ void MainWindow::refreshCommandTabs() {
               editing && findChild<QPushButton *>("cancelSketchButton")->isEnabled(),
               "No cancelable sketch edit is active");
     available("sketch.dimension", editing && idle && sketchPanel->dimensionAvailable(),
-              "Select a line, circle or arc in an active sketch");
+              "Edit a sketch with the worker ready");
+    for (auto axis : {"Horizontal", "Vertical"})
+        available("sketch.dimension." + QString(axis),
+                  editing && idle && sketchPanel->dimensionAvailable(),
+                  "Edit a sketch with the worker ready");
     available("sketch.ordinates", editing && idle && sketchPanel->ordinateAvailable(),
               "Select one or more points in an active sketch");
     available("sketch.pathLength", editing && idle && sketchPanel->pathAvailable(),

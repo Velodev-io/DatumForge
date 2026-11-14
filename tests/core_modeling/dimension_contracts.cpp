@@ -248,8 +248,11 @@ class DimensionContracts : public QObject {
                         action(d);
                     });
                     if (dimensionId.isEmpty()) {
+                        select(w, ids);
                         QVERIFY(w.command("sketch.dimension")->isEnabled());
                         w.command("sketch.dimension")->trigger();
+                        QTest::mouseClick(panel->canvas(), Qt::LeftButton, Qt::NoModifier,
+                                          QPoint(panel->canvas()->width() - 30, 70));
                     } else {
                         // Hit rectangles are published by paintEvent, not showSketch/fit.
                         // Native repaint scheduling can outlast a fixed qWait(20).

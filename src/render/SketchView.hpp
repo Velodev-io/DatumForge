@@ -9,6 +9,8 @@ class SketchView : public QWidget {
     sketch::Sketch drawing;
     QMap<QString, std::vector<sketch::Vec2>> curveDisplay;
     QString selectedId, dragging;
+    QStringList dimensionOperands;
+    QString dimensionPrompt;
     QMap<QString, QRectF> dimensionHits;
     std::vector<sketch::Constraint> inferenceGuides;
     double scale = 6000;
@@ -67,6 +69,7 @@ class SketchView : public QWidget {
     void showSketch(sketch::Sketch sketch, QString selected, bool editing);
     void clearSketch();
     void showInferenceGuides(std::vector<sketch::Constraint> guides);
+    void showDimensionInput(QStringList operands, QString prompt);
     void setTool(QString name);
     void setInputAnchor(std::optional<sketch::Vec2> anchor);
     void setRectangleInput(QString method, std::vector<sketch::Vec2> inputs);
@@ -104,6 +107,8 @@ class SketchView : public QWidget {
     void dragCanceled();
     void editRequested(QString entity);
     void dimensionEditRequested(QString constraint);
+    void dimensionPicked(QString entity, double x, double y);
+    void dimensionMoved(double x, double y);
     void deleteRequested();
     void canceled();
 };

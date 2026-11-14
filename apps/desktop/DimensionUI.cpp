@@ -75,6 +75,37 @@ sketch::Constraint pathDefinition(const sketch::Sketch &s, QStringList ids) {
     c.a = c.members[0];
     return c; // The worker measures the initial value; UI only orders IDs.
 }
+QStringList dimensionKinds(const sketch::Sketch &before, sketch::Constraint &initial,
+                           const QStringList &selection) {
+    domain::check(!selection.empty() && selection.size() <= 2, "InvalidInput",
+                  "Select a line, circle, arc, two points or two lines");
+    initial.a = selection[0];
+    initial.b = selection.value(1);
+    if (!initial.b.isEmpty()) {
+        auto &first = before.entity(initial.a), &second = before.entity(initial.b);
+        if (first.kind == "Line" && first.construction &&
+            (second.kind == "Point" || (second.kind == "Line" && !second.construction)))
+            std::swap(initial.a, initial.b);
+    }
+    QStringList kinds;
+    for (QString kind : {"Length", "Distance", "HorizontalDistance", "VerticalDistance", "Angle",
+                         "Radius", "Diameter", "Sweep", "CenterlineDiameter", "ArcLength",
+                         "HorizontalOrdinate", "VerticalOrdinate"})
+        if (sketch::constraintReason(before, kind, initial.a, initial.b).isEmpty())
+            kinds << kind;
+    if (kinds.removeAll("CenterlineDiameter")) {
+        auto candidate = initial;
+        candidate.kind = "CenterlineDiameter";
+        bool parallel = before.entity(candidate.a).kind == "Point" ||
+                        std::abs(sketch::axisDistance(before, candidate) -
+                                 sketch::axisDistance(before, candidate, true)) <= 1e-10;
+        if (parallel)
+            kinds.prepend("CenterlineDiameter");
+        else
+            kinds.append("CenterlineDiameter");
+    }
+    return kinds;
+}
 } // namespace
 bool SketchPanel::pathAvailable() const {
     QStringList ids = relationSelectionOrder;
@@ -282,11 +313,97 @@ void SketchPanel::ordinateSelection() {
     });
 }
 void SketchPanel::dimensionSelection() {
-    openDimensionEditor();
+    startSmartDimension();
 }
-void SketchPanel::openDimensionEditor(QString constraintId, QStringList pathMembers) {
-    if (!editing || client->outstanding() || dimensionEditing || !lineEditBefore.empty())
+void SketchPanel::clearDimensionInput() {
+    dimensionStage = DimensionStage::Off;
+    dimensionMode.clear();
+    dimensionAxis.clear();
+    dimensionOperands.clear();
+    dimensionCandidate.reset();
+    view->showDimensionInput({}, {});
+}
+void SketchPanel::refreshDimensionInput() {
+    dimensionCandidate.reset();
+    dimensionStage = DimensionStage::Selecting;
+    QString prompt = "Select dimension operands · Esc to exit Smart Dimension";
+    if (dimensionOperands == QStringList{dimensionAxis} && !dimensionAxis.isEmpty()) {
+        prompt = "Select the next profile for the retained centerline · Esc to clear";
+        context->setText(prompt);
+        view->showDimensionInput(dimensionOperands, prompt);
         return;
+    }
+    if (!dimensionOperands.empty()) {
+        try {
+            sketch::Constraint candidate;
+            auto kinds = dimensionKinds(current(), candidate, dimensionOperands);
+            if (!kinds.empty()) {
+                candidate.kind = dimensionMode.isEmpty() ? kinds[0] : dimensionMode;
+                domain::check(kinds.contains(candidate.kind), "InvalidInput",
+                              "This selection does not support the chosen dimension mode");
+                if (candidate.kind == "CenterlineDiameter")
+                    candidate.reversed = sketch::axisDistance(current(), candidate) < 0;
+                candidate.value = sketch::measureDimension(current(), candidate);
+                dimensionCandidate = candidate;
+                dimensionStage = DimensionStage::Placing;
+                prompt = candidate.kind +
+                         " · Select another operand or click empty space to place · Esc to cancel";
+            } else
+                prompt = "Select a second operand · Esc to cancel";
+        } catch (const std::exception &error) {
+            prompt = QString::fromUtf8(error.what()) + " · Esc to clear operands";
+        }
+    }
+    context->setText(dimensionCandidate ? "Smart Dimension · Click to place" : prompt);
+    view->showDimensionInput(dimensionOperands, prompt);
+}
+void SketchPanel::startSmartDimension(QString mode) {
+    if (!editing || !selectionEditable() || !client->ready() || client->outstanding() ||
+        dimensionEditing || !lineEditBefore.empty())
+        return;
+    auto selection = relationSelectionOrder;
+    if (selection.empty() && !selectedId.isEmpty())
+        selection << selectedId;
+    setTool("Smart Dimension");
+    clearDimensionInput();
+    clearInference();
+    selectedId.clear();
+    relationSelectionOrder.clear();
+    rebuild();
+    dimensionMode = mode;
+    dimensionOperands = selection;
+    refreshDimensionInput();
+    emit editingChanged();
+}
+void SketchPanel::pickDimension(QString id, sketch::Vec2 at) {
+    if (!smartDimensionActive() || dimensionEditing || client->outstanding())
+        return;
+    if (!id.isEmpty()) {
+        if (dimensionOperands.contains(id))
+            dimensionOperands.removeAll(id);
+        else
+            dimensionOperands << id;
+        refreshDimensionInput();
+    } else if (dimensionCandidate) {
+        auto candidate = *dimensionCandidate;
+        candidate.placement = at;
+        dimensionStage = DimensionStage::EditingValue;
+        bool accepted = openDimensionEditor({}, {}, candidate);
+        if (!editing || tool->currentText() != "Smart Dimension")
+            return;
+        dimensionOperands.clear();
+        if (accepted && candidate.kind == "CenterlineDiameter") {
+            dimensionAxis = candidate.b;
+            dimensionOperands << dimensionAxis;
+        }
+        refreshDimensionInput();
+    }
+}
+bool SketchPanel::openDimensionEditor(QString constraintId, QStringList pathMembers,
+                                      std::optional<sketch::Constraint> candidate) {
+    if (!editing || client->outstanding() || dimensionEditing || !lineEditBefore.empty())
+        return false;
+    bool applied = false;
     guard([&] {
         clearInference();
         auto sourceEpoch = client->state().epoch;
@@ -302,6 +419,16 @@ void SketchPanel::openDimensionEditor(QString constraintId, QStringList pathMemb
                           "InvalidInput", "Select a dimension");
             initial = *found;
             kinds << initial.kind;
+        } else if (candidate) {
+            initial = *candidate;
+            kinds = dimensionKinds(before, initial, dimensionOperands);
+            for (auto &existing : before.constraints)
+                if (existing.kind == initial.kind && existing.a == initial.a &&
+                    existing.b == initial.b) {
+                    initial = existing;
+                    initial.placement = candidate->placement;
+                    break;
+                }
         } else if (!pathMembers.empty()) {
             initial = pathDefinition(before, pathMembers);
             kinds << "PathLength";
@@ -309,33 +436,7 @@ void SketchPanel::openDimensionEditor(QString constraintId, QStringList pathMemb
             QStringList selection = relationSelectionOrder;
             if (selection.isEmpty() && !selectedId.isEmpty())
                 selection << selectedId;
-            domain::check(!selection.empty() && selection.size() <= 2, "InvalidInput",
-                          "Select a line, circle, arc, two points or two lines");
-            initial.a = selection[0];
-            initial.b = selection.size() == 2 ? selection[1] : QString();
-            // Axis-role selection is canonical regardless of pointer/list order.
-            if (!initial.b.isEmpty()) {
-                auto &first = before.entity(initial.a), &second = before.entity(initial.b);
-                if (first.kind == "Line" && first.construction &&
-                    (second.kind == "Point" || (second.kind == "Line" && !second.construction)))
-                    std::swap(initial.a, initial.b);
-            }
-            for (QString kind : {"Length", "Distance", "HorizontalDistance", "VerticalDistance",
-                                 "Angle", "Radius", "Diameter", "Sweep", "CenterlineDiameter",
-                                 "ArcLength", "HorizontalOrdinate", "VerticalOrdinate"})
-                if (sketch::constraintReason(before, kind, initial.a, initial.b).isEmpty())
-                    kinds << kind;
-            if (kinds.removeAll("CenterlineDiameter")) {
-                auto candidate = initial;
-                candidate.kind = "CenterlineDiameter";
-                bool parallel = before.entity(candidate.a).kind == "Point" ||
-                                std::abs(sketch::axisDistance(before, candidate) -
-                                         sketch::axisDistance(before, candidate, true)) <= 1e-10;
-                if (parallel)
-                    kinds.prepend("CenterlineDiameter");
-                else
-                    kinds.append("CenterlineDiameter");
-            }
+            kinds = dimensionKinds(before, initial, selection);
             domain::check(!kinds.empty(), "InvalidInput", "This selection has no dimension mode");
             initial.kind = kinds[0];
             if (initial.kind == "CenterlineDiameter")
@@ -677,10 +778,12 @@ void SketchPanel::openDimensionEditor(QString constraintId, QStringList pathMemb
         if (accepted) {
             draft = sketch::parse(validPreview);
             remember(before);
+            applied = true;
         }
         rebuild();
         if (accepted)
             previewDraft();
     });
+    return applied;
 }
 } // namespace cad
