@@ -1191,10 +1191,219 @@ void transformsAndPatterns() {
     near(ptCopyOut.entity(newPtId).point.x, .06, 1e-9);
     near(ptCopyOut.entity(newPtId).point.y, .08, 1e-9);
 }
+void editingRegressions() {
+    // A trimmed spline keeps every defining pole and its original locus.
+    for (bool end : {false, true}) {
+        sketch::Sketch s;
+        auto sp = sketch::createSpline(s, {{0, 0}, {.02, 0}, {.02, .02}}, 2);
+        auto &e = s.entity(sp);
+        auto vertex = end ? e.poles.last() : e.poles.first();
+        auto line = s.line(vertex, s.point(end ? sketch::Vec2{.04, .02} : sketch::Vec2{0, .04}));
+        auto before = s.map();
+        for (bool pointSelection : {false, true}) {
+            auto request = fields(
+                {{"mode", "Fillet"}, {"source", pointSelection ? vertex : sp}, {"radius", .002}});
+            if (!pointSelection)
+                request.insert(QStringLiteral("boundaries"), QCborArray{line});
+            auto out = candidate(s, request);
+            CHECK(out.entity(sp).poles == s.entity(sp).poles);
+            near(sketch::length(sketch::curveValue(out, out.entity(sp), .5),
+                                sketch::curveValue(s, s.entity(sp), .5)),
+                 0, 1e-12);
+            auto arc =
+                out.entity(out.edits.last().toMap().value("descendants").toArray()[2].toString());
+            auto c = out.entity(arc.a).point;
+            auto [a, b] = sketch::curveRange(out.entity(sp));
+            auto u = end ? b : a;
+            auto contact = sketch::curveValue(out, out.entity(sp), u);
+            near(sketch::length(contact, c), .002, 1e-9);
+            auto d = sketch::curveDerivative(out, out.entity(sp), u);
+            near((contact.x - c.x) * d.x + (contact.y - c.y) * d.y, 0, 1e-10);
+        }
+        CHECK(s.map() == before);
+    }
+    // Arc/spline dispatch and conic endpoint selection use real curve contacts.
+    {
+        sketch::Sketch s;
+        auto sp = sketch::createSpline(s, {{0, 0}, {.02, 0}}, 1);
+        auto arc = s.arc(s.point({.01, 0}), .01, 0, 1.5707963267948966);
+        candidate(s, fields({{"mode", "Fillet"},
+                             {"source", sp},
+                             {"boundaries", QCborArray{arc}},
+                             {"radius", .002}}));
+        sketch::Sketch conic;
+        auto ellipse = sketch::createEllipse(conic, {0, 0}, {.02, 0}, {0, .01}, true);
+        auto p = conic.point({.02, 0});
+        conic.line(p, conic.point({.04, 0}));
+        auto out = candidate(conic, fields({{"mode", "Fillet"}, {"source", p}, {"radius", .002}}));
+        CHECK(out.entity(ellipse).a == conic.entity(ellipse).a);
+        CHECK(out.entity(ellipse).b == conic.entity(ellipse).b);
+    }
+    {
+        sketch::Sketch s;
+        auto line = s.line(s.point({0, 0}), s.point({.01, 0}));
+        s.line(s.point({.02, 0}), s.point({.01, 0}));
+        s.line(s.point({.02, 0}), s.point({.03, 0}));
+        sketch::createSpline(s, {{.1, .1}, {.12, .1}}, 1);
+        auto out = candidate(s, fields({{"mode", "Offset entities"},
+                                        {"source", line},
+                                        {"chain", true},
+                                        {"distance", .002}}));
+        CHECK(out.edits.last().toMap().value("descendants").toArray().size() == 3);
+        sketch::Sketch circle;
+        auto c = circle.circle(circle.point({0, 0}), .01);
+        candidate(
+            circle,
+            fields(
+                {{"mode", "Offset entities"}, {"source", c}, {"chain", true}, {"distance", .002}}));
+    }
+    {
+        sketch::Sketch s;
+        auto line = s.line(s.point({0, 0}), s.point({.02, 0}));
+        auto arc = s.arc(s.point({.02, .01}), .01, -1.5707963267948966, 1.5707963267948966);
+        auto out = candidate(s, fields({{"mode", "Offset entities"},
+                                        {"source", line},
+                                        {"chain", QCborArray{arc}},
+                                        {"distance", .002}}));
+        auto ids = out.edits.last().toMap().value("descendants").toArray();
+        auto l = out.entity(ids[0].toString()), a = out.entity(ids[1].toString());
+        near(sketch::length(out.entity(l.b).point, sketch::curveValue(out, a, a.start)), 0, 1e-10);
+        for (auto cap : {"Line", "Arc"}) {
+            auto capped = candidate(s, fields({{"mode", "Offset entities"},
+                                               {"source", arc},
+                                               {"distance", .002},
+                                               {"bidirectional", true},
+                                               {"cap_ends", cap}}));
+            CHECK(capped.edits.last().toMap().value("descendants").toArray().size() == 4);
+        }
+    }
+    {
+        sketch::Sketch s;
+        auto line = s.line(s.point({0, 0}), s.point({.01, 0}));
+        auto sp = sketch::createSpline(s, {{.02, -.01}, {.02, .01}}, 1);
+        auto out = candidate(s, fields({{"mode", "Dynamic extend"},
+                                        {"source", line},
+                                        {"boundaries", QCborArray{sp}},
+                                        {"pick_x", .009},
+                                        {"pick_y", 0.}}));
+        near(out.entity(out.entity(line).b).point.x, .02, 1e-10);
+        auto diagonal = sketch::createSpline(s, {{0, -.01}, {.02, .01}}, 1);
+        s.entity(s.entity(line).b).point = {.04, 0};
+        auto boundary = s.line(s.point({.03, -.01}), s.point({.03, .01}));
+        out = candidate(s, fields({{"mode", "Trim away outside"},
+                                   {"source", line},
+                                   {"boundaries", QCborArray{diagonal, boundary}},
+                                   {"pick_x", .02},
+                                   {"pick_y", 0.}}));
+        near(sketch::length(out.entity(out.entity(line).a).point,
+                            out.entity(out.entity(line).b).point),
+             .02, 1e-10);
+    }
+    {
+        sketch::Sketch s;
+        auto ellipse = sketch::createEllipse(s, {0, 0}, {.02, 0}, {0, .01});
+        auto p = sketch::curveValue(s, s.entity(ellipse), .3),
+             d = sketch::curveDerivative(s, s.entity(ellipse), .3);
+        double n = std::hypot(d.x, d.y);
+        d = {d.x / n * .03, d.y / n * .03};
+        auto line = s.line(s.point({p.x - d.x, p.y - d.y}), s.point({p.x + d.x, p.y + d.y}));
+        auto out = candidate(s, fields({{"mode", "Trim to closest"},
+                                        {"source", line},
+                                        {"boundaries", QCborArray{ellipse}},
+                                        {"pick_x", p.x + d.x * .5},
+                                        {"pick_y", p.y + d.y * .5}}));
+        near(sketch::length(out.entity(out.entity(line).b).point, p), 0, 1e-9);
+    }
+    {
+        sketch::Sketch s;
+        auto p = s.point({0, 0}), line = s.line(p, s.point({.04, 0}));
+        auto other = s.line(p, s.point({.02, .04 * std::sin(3.141592653589793 / 3)}));
+        auto out = candidate(s, fields({{"mode", "Chamfer"},
+                                        {"source", line},
+                                        {"boundaries", QCborArray{other}},
+                                        {"method", "Angle distance"},
+                                        {"distance1", .01},
+                                        {"angle", 3.141592653589793 / 6}}));
+        auto e = out.entity(out.edits.last().toMap().value("descendants").toArray()[2].toString());
+        auto a = out.entity(e.a).point, b = out.entity(e.b).point;
+        near(std::atan2(b.y - a.y, a.x - b.x), 3.141592653589793 / 6, 1e-10);
+        rejects([&] {
+            candidate(s, fields({{"mode", "Fillet"},
+                                 {"source", line},
+                                 {"boundaries", QCborArray{other}},
+                                 {"radius", .1}}));
+        });
+        rejects([&] {
+            candidate(s, fields({{"mode", "Chamfer"},
+                                 {"source", line},
+                                 {"boundaries", QCborArray{other}},
+                                 {"distance", .1}}));
+        });
+    }
+    {
+        sketch::Sketch s;
+        auto p = s.point({.01, .02});
+        sketch::Constraint fixed;
+        fixed.kind = "Fixed";
+        fixed.a = p;
+        fixed.value = .01;
+        fixed.second = .02;
+        s.constraints.push_back(fixed);
+        auto r = sketch::previewLineEdit(
+            s, fields({{"mode", "Move"}, {"source", p}, {"delta_x", .01}, {"delta_y", 0.}}));
+        CHECK(r.value("affected_constraints").toArray().size() == 1);
+        auto solved = sketch::solve(sketch::Sketch::parse(r.value("candidate").toMap()));
+        CHECK(solved.valid);
+        near(solved.sketch.entity(p).point.x, .02, 1e-10);
+        auto l = s.line(p, s.point({.03, .02})), axis = s.line(s.point({0, 0}), s.point({0, .04}));
+        auto out = candidate(
+            s, fields({{"mode", "Mirror"}, {"source", l}, {"mirror_line", axis}, {"copy", false}}));
+        near(out.entity(out.entity(l).a).point.x, -.01, 1e-10);
+        auto copy = candidate(s, fields({{"mode", "Copy"},
+                                         {"entities", QCborArray{l, p}},
+                                         {"delta_x", .03},
+                                         {"delta_y", 0.}}));
+        auto ids = copy.edits.last().toMap().value("descendants").toArray();
+        CHECK(copy.entity(ids[0].toString()).a == ids[1].toString());
+    }
+    {
+        sketch::Sketch s;
+        auto c = s.circle(s.point({.02, 0}), .001);
+        auto out = candidate(s, fields({{"mode", "Circular pattern"},
+                                        {"source", c},
+                                        {"count", 3},
+                                        {"equal_spacing", false},
+                                        {"spacing", 1.5707963267948966}}));
+        auto ids = out.edits.last().toMap().value("descendants").toArray();
+        near(out.entity(out.entity(ids[1].toString()).a).point.x, -.02, 1e-10);
+        for (double count : {1e100, 1073741825., 2.5, -1.})
+            rejects([&] {
+                candidate(s, fields({{"mode", "Linear pattern"},
+                                     {"source", c},
+                                     {"count1", count},
+                                     {"count2", 4}}));
+            });
+        auto sp = sketch::createSpline(s, {{0, .01}, {.02, .01}}, 1);
+        rejects([&] {
+            candidate(s, fields({{"mode", "Linear pattern"},
+                                 {"entities", QCborArray{c, sp}},
+                                 {"count1", 2}}));
+        });
+        auto tangent = s.line(s.point({.019, -.02}), s.point({.019, .02}));
+        rejects([&] {
+            candidate(s, fields({{"mode", "Power trim"},
+                                 {"source", c},
+                                 {"boundaries", QCborArray{tangent}},
+                                 {"pick_x", .021},
+                                 {"pick_y", 0.}}));
+        });
+    }
+}
 } // namespace
 int main(int argc, char **argv) {
     QCoreApplication app(argc, argv);
     return run([] {
+        editingRegressions();
         analytical();
         extensionAndBoundaries();
         constraints();

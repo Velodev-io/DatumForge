@@ -1,0 +1,4 @@
+Analyzed src/geometry/occt/SketchCurve.cpp
+Analyzed src/sketch/LineEditing.cpp
+Analyzed tests/core_modeling/editing.cpp
+Analyzed apps/desktop/SketchPanel.cpp

@@ -56,3 +56,32 @@ Native keyboard/property selection and pointer pick workflows, mm/in units,
 preview/cancel, disclosure, draft/durable undo, save/reopen and worker restart are
 required. Other OS/device/resource/installed gates and
 6.1b/6.4c/7.4c remain unchanged. Stop before Module 11; no commit or push.
+
+## 14 November editing repair
+
+The [repair evidence](../testing/core-modeling-cm2-editing-repair.md) records the
+review follow-up. Advanced-curve intersections and tangent fillet contacts use the
+existing worker OCCT adapter. Spline/conic fillets retain poles, center/focus and
+weights and trim only their parameter range. A curve pair must have one shared
+endpoint; ambiguous or unsupported closed-curve fillets are refused. Finite
+contacts must leave a nondegenerate retained operand.
+
+Offset chains use ordered, oriented line/arc edges and consistent left-side signed
+distance (circles use radial distance). Mixed line/arc joins and arc end caps are
+computed from exact geometry. Disconnected selections, ambiguous branches,
+construction-group edits and consumed edges are refused. Automatic traversal
+ignores unrelated unsupported curve types; selecting one still refuses the edit.
+
+Angle-distance chamfers measure the requested angle from the first operand toward
+the corner, using the actual included angle. Pattern counts must be whole numbers
+within the existing instance cap before integer conversion. Non-equal circular
+spacing uses `spacing`, or `angle` as its per-instance step when spacing is absent.
+Unsupported pattern operands are refused as a complete request. Each copied
+selection/instance preserves shared point identities. These are geometry copies;
+source relations are not cloned (Dynamic mirror retains its explicit symmetric
+relations). In-place transforms/mirror preserve entity identities and disclose
+relations affected by changed geometry before the existing Apply acknowledgement.
+A single-hit circle Power trim is refused as ambiguous.
+
+This repair does not add native controls for the broader worker edit modes, certify
+course acceptance, or close deferred platform/device/resource gates.

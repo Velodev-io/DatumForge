@@ -271,7 +271,8 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     editForm->setFieldGrowthPolicy(QFormLayout::AllNonFixedFieldsGrow);
     auto *help = new QLabel(
         "Choose a line and boundaries, then pick an interval or endpoint half. Empty boundaries "
-        "use all curves. Rectangle/slot members and conic/spline boundaries are unsupported.");
+        "use all curves. Conic/spline boundaries are supported; edit rectangle/slot members as a "
+        "group.");
     help->setWordWrap(true);
     editForm->addRow(help);
     lineEditMode = new QComboBox;

@@ -1,0 +1,15 @@
+{
+  "status": "Pass",
+  "scope": "CM2 editing review repair on available macOS development build",
+  "ctest": {
+    "passed": 97,
+    "failed": 0,
+    "disabled": 1
+  },
+  "analysis_translation_units": 4,
+  "source_hashes_match": true,
+  "native_interaction": "Not run",
+  "physical_8gb": "Not run",
+  "windows_linux": "Not run",
+  "module11": "Not started"
+}

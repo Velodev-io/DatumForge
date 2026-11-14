@@ -751,3 +751,9 @@ rebuild/history/reopen workflows. Its [execution record](core-modeling-cm4-e.md)
 retains failed attempts and distinguishes development/native verification from
 full course/platform/device/resource acceptance. CM5 and Module 11 remain outside
 this task.
+
+The 14 November [CM2 editing review repair](core-modeling-cm2-editing-repair.md)
+fixes evaluated curve endpoints, exact advanced-curve fillets/intersections,
+oriented offsets and caps, chamfer geometry, constraint disclosure, copied point
+identity and pattern input limits. Its scoped checks and acceptance limits are
+recorded separately; broader native controls and deferred gates remain open.

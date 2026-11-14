@@ -2,6 +2,7 @@
 #include "ArcGeometry.hpp"
 #include "Constructions.hpp"
 #include "Curves.hpp"
+#include "geometry/occt/SketchCurve.hpp"
 #include <algorithm>
 #include <cmath>
 
@@ -91,34 +92,8 @@ std::vector<double> lineIntersections(const Sketch &s, const Entity &line, const
                 hits.push_back(root);
         }
     } else if (advancedCurve(boundary.kind)) {
-        auto [u0, u1] = curveRange(boundary);
-        int steps = 64;
-        double prevF = 0;
-        Vec2 prevPt = curveValue(s, boundary, u0);
-        prevF = cross(sub(prevPt, a), d) / size;
-        for (int i = 1; i <= steps; ++i) {
-            double u = u0 + (u1 - u0) * (double(i) / steps);
-            Vec2 curPt = curveValue(s, boundary, u);
-            double curF = cross(sub(curPt, a), d) / size;
-            if ((prevF <= 0 && curF >= 0) || (prevF >= 0 && curF <= 0)) {
-                double ua = u0 + (u1 - u0) * (double(i - 1) / steps), ub = u;
-                for (int iter = 0; iter < 16; ++iter) {
-                    double um = 0.5 * (ua + ub);
-                    Vec2 pm = curveValue(s, boundary, um);
-                    double fm = cross(sub(pm, a), d) / size;
-                    if (prevF * fm <= 0)
-                        ub = um;
-                    else
-                        ua = um;
-                }
-                double uRoot = 0.5 * (ua + ub);
-                Vec2 hitPt = curveValue(s, boundary, uRoot);
-                double t = dot(sub(hitPt, a), d) / dot(d, d);
-                if (apparent || (t >= -eps && t <= 1.0 + eps))
-                    hits.push_back(t);
-            }
-            prevF = curF;
-        }
+        for (auto p : geometry::sketchIntersections(s, line, boundary, true))
+            hits.push_back(dot(sub(p, a), d) / dot(d, d));
     }
     return hits;
 }
@@ -403,28 +378,10 @@ QCborMap previewPowerTrim(const Sketch &source, const QCborMap &request) {
         std::vector<double> hitAngles;
         for (auto bid : boundaryIds) {
             auto bEnt = source.entity(bid);
-            if (bEnt.kind == "Line") {
-                auto hits = circleLineIntersections(center, radius, source.entity(bEnt.a).point,
-                                                    source.entity(bEnt.b).point, true);
-                for (auto pt : hits) {
-                    hitAngles.push_back(
-                        std::fmod(std::atan2(pt.y - center.y, pt.x - center.x) + 2 * tau, tau));
-                }
-            } else if (bEnt.kind == "Circle" || bEnt.kind == "Arc") {
-                auto bCenter = source.entity(bEnt.a).point;
-                auto hits = circleCircleIntersections(center, radius, bCenter, bEnt.radius);
-                for (auto pt : hits) {
-                    if (bEnt.kind == "Arc") {
-                        double bAng = std::fmod(std::atan2(pt.y - bCenter.y, pt.x - bCenter.x) -
-                                                    bEnt.start + 2 * tau,
-                                                tau);
-                        if (bAng > bEnt.sweep + 1e-8)
-                            continue;
-                    }
-                    hitAngles.push_back(
-                        std::fmod(std::atan2(pt.y - center.y, pt.x - center.x) + 2 * tau, tau));
-                }
-            }
+            check(bEnt.kind != "Point", "InvalidInput", "Curve boundary required");
+            for (auto pt : geometry::sketchIntersections(source, e, bEnt))
+                hitAngles.push_back(
+                    std::fmod(std::atan2(pt.y - center.y, pt.x - center.x) + 2 * tau, tau));
         }
         check(!hitAngles.empty(), "ReferenceMissing", "No intersection on circle/arc to trim");
         std::sort(hitAngles.begin(), hitAngles.end());
@@ -441,10 +398,9 @@ QCborMap previewPowerTrim(const Sketch &source, const QCborMap &request) {
         QCborArray descendants;
 
         if (e.kind == "Circle") {
-            if (hitAngles.size() == 1) {
-                auto arcId = candidate.arc(e.a, radius, hitAngles[0], tau - 1e-6, e.construction);
-                descendants.append(arcId);
-            } else {
+            check(hitAngles.size() > 1, "ReferenceAmbiguous",
+                  "Circle trim requires two distinct intersections");
+            {
                 int trimIdx = -1;
                 int n = int(hitAngles.size());
                 for (int i = 0; i < n; ++i) {
@@ -659,12 +615,16 @@ QCborMap previewFillet(const Sketch &source, const QCborMap &request) {
             if (e.kind == "Line" && (e.a == id1 || e.b == id1))
                 connected.append(e.id);
             else if (e.kind == "Arc" &&
-                     (length(arcPoint(source.entity(e.a).point, e.radius, e.start), pt) < 1e-5 ||
+                     (length(arcPoint(source.entity(e.a).point, e.radius, e.start), pt) < 1e-9 ||
                       length(arcPoint(source.entity(e.a).point, e.radius, e.start + e.sweep), pt) <
-                          1e-5))
+                          1e-9))
                 connected.append(e.id);
-            else if (advancedCurve(e.kind) && (e.a == id1 || e.b == id1))
-                connected.append(e.id);
+            else if (advancedCurve(e.kind) && e.kind != "Ellipse") {
+                auto [a, b] = curveRange(e);
+                if (length(curveValue(source, e, a), pt) < 1e-9 ||
+                    length(curveValue(source, e, b), pt) < 1e-9)
+                    connected.append(e.id);
+            }
         }
         check(connected.size() == 2, "InvalidInput", "Point must connect exactly two curves");
         id1 = connected[0];
@@ -679,6 +639,9 @@ QCborMap previewFillet(const Sketch &source, const QCborMap &request) {
     check(!constructionOf(source, id1) && !constructionOf(source, id2), "UnsupportedOperation",
           "Construction groups must be edited as a group");
 
+    for (auto e : {e1, e2})
+        check(e.kind == "Line" || e.kind == "Arc" || (advancedCurve(e.kind) && e.kind != "Ellipse"),
+              "UnsupportedOperation", "Fillet requires open curves");
     double r = number(request, "radius");
     check(r >= 1e-9 && r <= 1e3, "InvalidInput", "Fillet radius must be between 1 nm and 1 km");
     bool shared = request.value("shared_radius").toBool();
@@ -753,28 +716,23 @@ QCborMap previewFillet(const Sketch &source, const QCborMap &request) {
             }
         }
         V = bestV;
-    } else if (advancedCurve(e1.kind)) {
-        if (!e1.a.isEmpty() && !e2.a.isEmpty() && e1.a == e2.a)
-            V = source.entity(e1.a).point;
-        else if (!e1.a.isEmpty() && !e2.b.isEmpty() && e1.a == e2.b)
-            V = source.entity(e1.a).point;
-        else if (!e1.b.isEmpty() && !e2.a.isEmpty() && e1.b == e2.a)
-            V = source.entity(e1.b).point;
-        else if (!e1.b.isEmpty() && !e2.b.isEmpty() && e1.b == e2.b)
-            V = source.entity(e1.b).point;
-        else
-            V = source.entity(e1.a).point;
-    } else if (advancedCurve(e2.kind)) {
-        if (!e2.a.isEmpty() && !e1.a.isEmpty() && e2.a == e1.a)
-            V = source.entity(e2.a).point;
-        else if (!e2.a.isEmpty() && !e1.b.isEmpty() && e2.a == e1.b)
-            V = source.entity(e2.a).point;
-        else if (!e2.b.isEmpty() && !e1.a.isEmpty() && e2.b == e1.a)
-            V = source.entity(e2.b).point;
-        else if (!e2.b.isEmpty() && !e1.b.isEmpty() && e2.b == e1.b)
-            V = source.entity(e2.b).point;
-        else
-            V = source.entity(e2.a).point;
+    } else {
+        check((e1.kind == "Line" || e1.kind == "Arc" || advancedCurve(e1.kind)) &&
+                  (e2.kind == "Line" || e2.kind == "Arc" || advancedCurve(e2.kind)) &&
+                  e1.kind != "Ellipse" && e2.kind != "Ellipse",
+              "UnsupportedOperation", "Fillet requires two open curves");
+        auto [a, b] = curveRange(e1);
+        auto [c, d] = curveRange(e2);
+        std::vector<Vec2> corners;
+        for (double u : {a, b})
+            for (double v : {c, d}) {
+                auto p = curveValue(source, e1, u);
+                if (length(p, curveValue(source, e2, v)) < 1e-9 &&
+                    (corners.empty() || length(corners.front(), p) > 1e-9))
+                    corners.push_back(p);
+            }
+        check(corners.size() == 1, "ReferenceAmbiguous", "Select curves with one shared endpoint");
+        V = corners.front();
     }
 
     auto getOutgoing = [&](const Entity &e) -> Vec2 {
@@ -810,7 +768,19 @@ QCborMap previewFillet(const Sketch &source, const QCborMap &request) {
     Vec2 bisector = unit(add(u1, u2));
     Vec2 C = add(V, mul(bisector, r / std::sin(halfAngle)));
 
-    bool hasArc = (e1.kind == "Arc" || e2.kind == "Arc");
+    bool exactAdvanced = advancedCurve(e1.kind) || advancedCurve(e2.kind);
+    double contact1 = 0, contact2 = 0;
+    if (exactAdvanced) {
+        auto solutions = geometry::sketchFillets(source, e1, e2, r);
+        check(!solutions.empty(), "InvalidGeometry", "No finite tangent fillet exists");
+        auto best = std::min_element(solutions.begin(), solutions.end(), [&](auto &a, auto &b) {
+            return length(a.center, C) < length(b.center, C);
+        });
+        C = best->center;
+        contact1 = best->first;
+        contact2 = best->second;
+    }
+    bool hasArc = !exactAdvanced && (e1.kind == "Arc" || e2.kind == "Arc");
     if (hasArc) {
         auto getOffsetLines = [&](const Entity &lineEnt) -> std::vector<std::pair<Vec2, Vec2>> {
             auto pA = source.entity(lineEnt.a).point;
@@ -882,6 +852,16 @@ QCborMap previewFillet(const Sketch &source, const QCborMap &request) {
         for (auto h : hits) {
             Vec2 candT1 = (e1.kind == "Line") ? lineContact(e1, h) : arcContact(e1, h);
             Vec2 candT2 = (e2.kind == "Line") ? lineContact(e2, h) : arcContact(e2, h);
+            auto inside = [&](const Entity &e, Vec2 point) {
+                if (e.kind != "Arc")
+                    return true;
+                auto center = source.entity(e.a).point;
+                double u = std::fmod(
+                    std::atan2(point.y - center.y, point.x - center.x) - e.start + 2 * tau, tau);
+                return u > 1e-9 / e.radius && u < e.sweep - 1e-9 / e.radius;
+            };
+            if (!inside(e1, candT1) || !inside(e2, candT2))
+                continue;
             if (length(candT1, candT2) < 1e-9)
                 continue;
             if (std::abs(length(h, candT1) - r) > 1e-9 || std::abs(length(h, candT2) - r) > 1e-9)
@@ -912,14 +892,12 @@ QCborMap previewFillet(const Sketch &source, const QCborMap &request) {
             Vec2 pMinus = sub(Ca, mul(u, e.radius));
             return std::abs(length(C, pPlus) - r) <= std::abs(length(C, pMinus) - r) ? pPlus
                                                                                      : pMinus;
-        } else if (advancedCurve(e.kind)) {
-            return add(V, mul(getOutgoing(e), tDist));
         }
         return V;
     };
 
-    Vec2 T1 = getContactPoint(e1);
-    Vec2 T2 = getContactPoint(e2);
+    Vec2 T1 = exactAdvanced ? curveValue(source, e1, contact1) : getContactPoint(e1);
+    Vec2 T2 = exactAdvanced ? curveValue(source, e2, contact2) : getContactPoint(e2);
 
     check(std::abs(length(C, T1) - r) < 1e-9, "InvalidGeometry",
           "Fillet does not contact first operand");
@@ -936,7 +914,7 @@ QCborMap previewFillet(const Sketch &source, const QCborMap &request) {
             Vec2 rad = unit(sub(T, Ca));
             operandTangent = {-rad.y, rad.x};
         } else {
-            return;
+            operandTangent = unit(curveDerivative(source, e, e.id == id1 ? contact1 : contact2));
         }
         check(std::abs(dot(filletRad, operandTangent)) < 1e-3, "InvalidGeometry",
               "Fillet is not tangent to operand");
@@ -954,6 +932,9 @@ QCborMap previewFillet(const Sketch &source, const QCborMap &request) {
     auto trimOperand = [&](Entity &e, QString ptId, Vec2 ptPos) {
         if (e.kind == "Line") {
             auto a = source.entity(e.a).point, b = source.entity(e.b).point;
+            auto far = length(a, V) < length(b, V) ? b : a;
+            check(dot(sub(ptPos, V), sub(far, V)) > 0 && length(ptPos, V) < length(far, V) - 1e-9,
+                  "InvalidGeometry", "Fillet consumes the retained line");
             if (length(a, V) < length(b, V)) {
                 affected.insert(e.a);
                 e.a = ptId;
@@ -964,6 +945,9 @@ QCborMap previewFillet(const Sketch &source, const QCborMap &request) {
         } else if (e.kind == "Arc") {
             auto Ca = source.entity(e.a).point;
             double tAng = std::fmod(std::atan2(ptPos.y - Ca.y, ptPos.x - Ca.x) + 2 * tau, tau);
+            double parameter = std::fmod(tAng - e.start + 2 * tau, tau);
+            check(parameter > 1e-9 / e.radius && parameter < e.sweep - 1e-9 / e.radius,
+                  "InvalidGeometry", "Fillet contact must lie inside the finite arc");
             double a0 = std::fmod(e.start + 2 * tau, tau);
             double a1 = std::fmod(e.start + e.sweep + 2 * tau, tau);
             Vec2 p0 = add(Ca, {e.radius * std::cos(a0), e.radius * std::sin(a0)});
@@ -978,25 +962,13 @@ QCborMap previewFillet(const Sketch &source, const QCborMap &request) {
                 e.sweep = sw;
             }
         } else if (advancedCurve(e.kind)) {
-            auto [u0, u1] = curveRange(e);
-            Vec2 p0 = curveValue(source, e, u0);
-            Vec2 p1 = curveValue(source, e, u1);
-            if (length(p0, V) <= length(p1, V)) {
-                affected.insert(e.a);
-                e.a = ptId;
-                if (e.kind == "Spline" && !e.poles.empty()) {
-                    affected.insert(e.poles[0]);
-                    e.poles[0] = ptId;
-                }
-            } else {
-                if (e.kind == "Spline" && !e.poles.empty()) {
-                    affected.insert(e.poles.last());
-                    e.poles.last() = ptId;
-                } else if (!e.b.isEmpty()) {
-                    affected.insert(e.b);
-                    e.b = ptId;
-                }
-            }
+            auto [a, b] = curveRange(e);
+            double u = e.id == id1 ? contact1 : contact2;
+            if (length(curveValue(source, e, a), V) <= length(curveValue(source, e, b), V))
+                e.start = u;
+            else
+                b = u;
+            e.sweep = b - e.start;
         }
     };
 
@@ -1090,7 +1062,7 @@ QCborMap previewChamfer(const Sketch &source, const QCborMap &request) {
         d1 = number(request, "distance1");
         double theta = number(request, "angle");
         check(theta > 1e-4 && theta < 3.1415, "InvalidInput", "Chamfer angle out of valid range");
-        d2 = d1 * std::tan(theta);
+        d2 = d1; // Recomputed below using the actual corner angle.
     } else {
         check(false, "InvalidInput", "Unknown chamfer method");
     }
@@ -1107,6 +1079,14 @@ QCborMap previewChamfer(const Sketch &source, const QCborMap &request) {
 
     Vec2 u1 = unit(t1 > 0.5 ? sub(a1, V) : sub(b1, V));
     Vec2 u2 = unit(t2 > 0.5 ? sub(a2, V) : sub(b2, V));
+    if (method == "Angle distance") {
+        double theta = number(request, "angle");
+        double alpha = std::acos(std::clamp(dot(u1, u2), -1.0, 1.0));
+        check(theta + alpha < tau / 2, "InvalidInput", "Chamfer angle cannot meet the second line");
+        d2 = d1 * std::sin(theta) / std::sin(alpha + theta);
+    }
+    check(d1 < length(t1 > .5 ? a1 : b1, V) - 1e-9 && d2 < length(t2 > .5 ? a2 : b2, V) - 1e-9,
+          "InvalidGeometry", "Chamfer consumes a retained line");
     Vec2 P1 = add(V, mul(u1, d1));
     Vec2 P2 = add(V, mul(u2, d2));
 
@@ -1148,46 +1128,52 @@ QCborMap previewChamfer(const Sketch &source, const QCborMap &request) {
     return fields({{"candidate", candidate.map()}, {"affected_constraints", disclosure}});
 }
 
+std::pair<Vec2, Vec2> endpoints(const Sketch &s, const Entity &e) {
+    auto [a, b] = curveRange(e);
+    return {curveValue(s, e, a), curveValue(s, e, b)};
+}
+
 QStringList collectChain(const Sketch &s, const QString &startId) {
+    auto &seed = s.entity(startId);
+    check(seed.kind == "Line" || seed.kind == "Arc" || seed.kind == "Circle",
+          "UnsupportedOperation", "Offset chain requires lines, arcs or a single circle");
     QStringList chain{startId};
+    if (seed.kind == "Circle")
+        return chain;
     QSet<QString> visited{startId};
-
-    auto getEndpoints = [&](const QString &eid) -> std::pair<Vec2, Vec2> {
-        auto &ent = s.entity(eid);
-        if (ent.kind == "Line")
-            return {s.entity(ent.a).point, s.entity(ent.b).point};
-        if (ent.kind == "Arc")
-            return {arcPoint(s.entity(ent.a).point, ent.radius, ent.start),
-                    arcPoint(s.entity(ent.a).point, ent.radius, ent.start + ent.sweep)};
-        return {s.entity(ent.a).point, s.entity(ent.b).point};
-    };
-
-    bool grew = true;
-    while (grew) {
-        grew = false;
-        auto [firstStart, firstEnd] = getEndpoints(chain.front());
-        auto [lastStart, lastEnd] = getEndpoints(chain.back());
-
-        if (chain.size() > 1 && length(lastEnd, firstStart) < 1e-5)
+    auto [front, back] = endpoints(s, seed);
+    for (;;) {
+        if (chain.size() > 1 && length(front, back) < 1e-9)
             break;
-
-        for (auto &other : s.entities) {
-            if (other.kind == "Point" || visited.contains(other.id))
+        QString match;
+        Vec2 next;
+        bool prepend = false;
+        for (auto &e : s.entities) {
+            if (visited.contains(e.id) || (e.kind != "Line" && e.kind != "Arc"))
                 continue;
-            if (other.kind != "Line" && other.kind != "Arc" && !advancedCurve(other.kind))
+            auto [a, b] = endpoints(s, e);
+            bool atBack = length(a, back) < 1e-9 || length(b, back) < 1e-9;
+            bool atFront = length(a, front) < 1e-9 || length(b, front) < 1e-9;
+            if (!atBack && !atFront)
                 continue;
-            auto [oStart, oEnd] = getEndpoints(other.id);
-            if (length(lastEnd, oStart) < 1e-5 || length(lastEnd, oEnd) < 1e-5) {
-                chain.append(other.id);
-                visited.insert(other.id);
-                grew = true;
-                break;
-            } else if (length(firstStart, oEnd) < 1e-5 || length(firstStart, oStart) < 1e-5) {
-                chain.prepend(other.id);
-                visited.insert(other.id);
-                grew = true;
-                break;
-            }
+            // Grow one end at a time; two candidates at that end are ambiguous.
+            if (!match.isEmpty() && prepend != !atBack)
+                continue;
+            check(match.isEmpty(), "ReferenceAmbiguous", "Offset chain branches at a vertex");
+            match = e.id;
+            prepend = !atBack;
+            auto joint = prepend ? front : back;
+            next = length(a, joint) < 1e-9 ? b : a;
+        }
+        if (match.isEmpty())
+            break;
+        visited.insert(match);
+        if (prepend) {
+            chain.prepend(match);
+            front = next;
+        } else {
+            chain.append(match);
+            back = next;
         }
     }
     return chain;
@@ -1200,190 +1186,173 @@ QCborMap previewOffset(const Sketch &source, const QCborMap &request) {
             allowed.insert(QLatin1String(k));
     wire::keys(request, allowed);
     auto id = wire::text(request, "source");
-    double d = number(request, "distance");
-    check(d >= 1e-9 && d <= 1e3, "InvalidInput", "Offset distance must be within 1 nm and 1 km");
-    bool reverse = request.value("reverse").toBool();
+    double distance = number(request, "distance");
+    check(distance >= 1e-9 && distance <= 1e3, "InvalidInput", "Offset distance out of range");
     bool bidi = request.value("bidirectional").toBool();
-    QString capEnds = request.value("cap_ends").toString();
-    if (capEnds.isEmpty())
-        capEnds = "None";
-    check(capEnds == "None" || bidi, "InvalidInput",
-          "End caps are only available for bidirectional offsets");
-    check(capEnds == "None" || capEnds == "Line" || capEnds == "Arc", "InvalidInput",
-          "Invalid cap ends type");
-    bool makeConst = request.value("make_construction").toBool();
-
-    QStringList chainIds{id};
-    if (request.contains(QStringLiteral("chain"))) {
-        if (request.value("chain").isArray()) {
-            for (auto v : request.value("chain").toArray())
-                if (v.isString() && !chainIds.contains(v.toString()))
-                    chainIds.append(v.toString());
-        } else if (request.value("chain").toBool()) {
-            chainIds = collectChain(source, id);
+    auto caps = request.value("cap_ends").toString();
+    if (caps.isEmpty())
+        caps = "None";
+    check(caps == "None" || caps == "Line" || caps == "Arc", "InvalidInput", "Unknown cap type");
+    check(caps == "None" || bidi, "InvalidInput", "Caps require bidirectional offset");
+    QStringList ids{id};
+    auto chain = request.value("chain");
+    if (chain.isArray()) {
+        for (auto v : chain.toArray()) {
+            check(v.isString(), "InvalidInput", "Chain entity ID required");
+            if (!ids.contains(v.toString()))
+                ids.append(v.toString());
         }
-    }
-
-    for (auto cid : chainIds) {
+    } else if (chain.toBool())
+        ids = collectChain(source, id);
+    for (auto cid : ids) {
         auto &e = source.entity(cid);
-        check(e.kind != "Spline", "UnsupportedOperation",
-              "Offset entities cannot be used on fit splines or splines");
-        check(e.kind == "Line" || e.kind == "Circle" || e.kind == "Arc", "UnsupportedOperation",
-              "Offset entities supports lines, circles, and arcs");
-        for (auto editVal : source.edits) {
-            auto em = editVal.toMap();
-            if (wire::text(em, "mode") == "Offset entities") {
-                for (auto descId : em.value("descendants").toArray()) {
-                    check(descId.toString() != cid, "UnsupportedOperation",
-                          "Offset entities cannot be used on already offset geometry");
-                }
-            }
+        check(e.kind == "Line" || e.kind == "Arc" || (ids.size() == 1 && e.kind == "Circle"),
+              "UnsupportedOperation", "Offset supports line/arc chains or a single circle");
+        check(!constructionOf(source, cid), "UnsupportedOperation",
+              "Edit construction groups together");
+        for (auto v : source.edits) {
+            auto edit = v.toMap();
+            if (edit.value("mode").toString() == "Offset entities")
+                for (auto child : edit.value("descendants").toArray())
+                    check(child.toString() != cid, "UnsupportedOperation",
+                          "Cannot offset an existing offset");
         }
     }
-
-    bool isClosed = false;
-    if (chainIds.size() > 2) {
-        auto &firstE = source.entity(chainIds.front());
-        auto &lastE = source.entity(chainIds.back());
-        Vec2 pFirst = firstE.kind == "Line"
-                          ? source.entity(firstE.a).point
-                          : arcPoint(source.entity(firstE.a).point, firstE.radius, firstE.start);
-        Vec2 pLast = lastE.kind == "Line" ? source.entity(lastE.b).point
-                                          : arcPoint(source.entity(lastE.a).point, lastE.radius,
-                                                     lastE.start + lastE.sweep);
-        if (length(pFirst, pLast) < 1e-5)
-            isClosed = true;
+    std::vector<bool> forward(ids.size(), true);
+    if (ids.size() > 1) {
+        auto [a, b] = endpoints(source, source.entity(ids[0]));
+        auto [c, d] = endpoints(source, source.entity(ids[1]));
+        forward[0] = length(b, c) < 1e-9 || length(b, d) < 1e-9;
+        Vec2 previous = forward[0] ? b : a;
+        for (int i = 1; i < ids.size(); ++i) {
+            auto [u, v] = endpoints(source, source.entity(ids[i]));
+            check(length(previous, u) < 1e-9 || length(previous, v) < 1e-9, "InvalidInput",
+                  "Selected offset chain must be connected and ordered");
+            forward[i] = length(previous, u) < 1e-9;
+            previous = forward[i] ? v : u;
+        }
     }
-
+    auto orientedEnds = [&](const Sketch &s, QString eid, int index) {
+        auto pair = endpoints(s, s.entity(eid));
+        if (!forward[index])
+            std::swap(pair.first, pair.second);
+        return pair;
+    };
+    auto first = orientedEnds(source, ids.front(), 0).first;
+    auto last = orientedEnds(source, ids.back(), ids.size() - 1).second;
+    bool closed = source.entity(ids.front()).kind == "Circle" || length(first, last) < 1e-9;
     auto candidate = source;
     QCborArray descendants;
-    std::vector<double> sides =
-        bidi ? std::vector<double>{d, -d} : std::vector<double>{reverse ? -d : d};
-
-    std::vector<Vec2> posStarts, posEnds, negStarts, negEnds;
-    for (double side : sides) {
-        struct SideLine {
-            QString id;
-            int chainIndex;
-        };
-        std::vector<SideLine> sideLines;
-        Vec2 prevContact{0, 0};
-        bool hasPrev = false;
-        for (int cIdx = 0; cIdx < chainIds.size(); ++cIdx) {
-            auto cid = chainIds[cIdx];
-            auto &e = source.entity(cid);
+    std::vector<QStringList> outputs;
+    for (double side :
+         bidi ? std::vector<double>{distance, -distance}
+              : std::vector<double>{request.value("reverse").toBool() ? -distance : distance}) {
+        QStringList out;
+        for (int i = 0; i < ids.size(); ++i) {
+            auto e = source.entity(ids[i]);
             if (e.kind == "Line") {
-                auto a = source.entity(e.a).point, b = source.entity(e.b).point;
-                if (hasPrev && length(b, prevContact) < 1e-5)
-                    std::swap(a, b);
-                prevContact = b;
-                hasPrev = true;
-                auto dir = sub(b, a);
-                auto norm = unit(Vec2{-dir.y, dir.x});
-                Vec2 aPrime = add(a, mul(norm, side));
-                Vec2 bPrime = add(b, mul(norm, side));
-                auto pa = candidate.point(aPrime);
-                auto pb = candidate.point(bPrime);
-                auto lid = candidate.line(pa, pb);
-                descendants.append(lid);
-                sideLines.push_back({lid, cIdx});
-                if (side > 0) {
-                    posStarts.push_back(aPrime);
-                    posEnds.push_back(bPrime);
-                } else {
-                    negStarts.push_back(aPrime);
-                    negEnds.push_back(bPrime);
-                }
-            } else if (e.kind == "Circle" || e.kind == "Arc") {
-                double rPrime = e.radius + side;
-                check(rPrime > 1e-9, "InvalidGeometry",
-                      "Offset would create self-intersecting or degenerate geometry");
-                if (e.kind == "Circle") {
-                    auto cidOut = candidate.circle(e.a, rPrime);
-                    descendants.append(cidOut);
-                } else {
-                    auto aidOut = candidate.arc(e.a, rPrime, e.start, e.sweep);
-                    descendants.append(aidOut);
-                }
+                auto [a, b] = endpoints(source, e);
+                auto dir = unit(sub(b, a));
+                auto delta = mul(Vec2{-dir.y, dir.x}, forward[i] ? side : -side);
+                out.append(
+                    candidate.line(candidate.point(add(a, delta)), candidate.point(add(b, delta))));
+            } else {
+                double radius =
+                    e.radius + (e.kind == "Circle" ? side : (forward[i] ? -side : side));
+                check(radius > 1e-9, "InvalidGeometry", "Offset radius is degenerate");
+                out.append(e.kind == "Circle" ? candidate.circle(e.a, radius)
+                                              : candidate.arc(e.a, radius, e.start, e.sweep));
             }
         }
-        if (sideLines.size() > 1) {
-            int numEdges = int(sideLines.size());
-            int cornerCount = isClosed ? numEdges : (numEdges - 1);
-            for (int k = 0; k < cornerCount; ++k) {
-                int next = (k + 1) % numEdges;
-                if (!isClosed && sideLines[next].chainIndex != sideLines[k].chainIndex + 1)
-                    continue;
-                if (isClosed &&
-                    sideLines[next].chainIndex != (sideLines[k].chainIndex + 1) % chainIds.size())
-                    continue;
-                auto id1 = sideLines[k].id;
-                auto id2 = sideLines[next].id;
-                auto pA1 = candidate.entity(candidate.entity(id1).a).point;
-                auto pB1 = candidate.entity(candidate.entity(id1).b).point;
-                auto pA2 = candidate.entity(candidate.entity(id2).a).point;
-                auto pB2 = candidate.entity(candidate.entity(id2).b).point;
-                auto d1 = sub(pB1, pA1), d2 = sub(pB2, pA2);
-                double den = cross(d1, d2);
-                if (std::abs(den) > 1e-12 * length(pA1, pB1) * length(pA2, pB2)) {
-                    double t1 = cross(sub(pA2, pA1), d2) / den;
-                    Vec2 corner = add(pA1, mul(d1, t1));
-                    auto ptCorner = candidate.point(corner);
-                    candidate.entity(id1).b = ptCorner;
-                    candidate.entity(id2).a = ptCorner;
-                    if (side > 0) {
-                        posEnds[k] = corner;
-                        posStarts[next] = corner;
-                    } else {
-                        negEnds[k] = corner;
-                        negStarts[next] = corner;
-                    }
-                }
+        auto setEnd = [&](int i, bool start, Vec2 p, QString point) {
+            auto eid = out[i];
+            auto e = candidate.entity(eid);
+            bool nativeStart = start == forward[i];
+            if (e.kind == "Line") {
+                if (nativeStart)
+                    candidate.entity(eid).a = point;
+                else
+                    candidate.entity(eid).b = point;
+            } else {
+                auto center = candidate.entity(e.a).point;
+                double angle = std::atan2(p.y - center.y, p.x - center.x);
+                auto &arc = candidate.entity(eid);
+                if (nativeStart) {
+                    arc.sweep = std::fmod(e.start + e.sweep - angle + 2 * tau, tau);
+                    arc.start = angle;
+                } else
+                    arc.sweep = std::fmod(angle - e.start + 2 * tau, tau);
+            }
+        };
+        for (int i = 0; i < (closed && ids.size() > 1 ? ids.size() : ids.size() - 1); ++i) {
+            int j = (i + 1) % ids.size();
+            auto e = candidate.entity(out[i]), f = candidate.entity(out[j]);
+            auto joint = orientedEnds(source, ids[i], i).second;
+            std::vector<Vec2> hits;
+            if (e.kind == "Line" && f.kind == "Line") {
+                auto [a, b] = endpoints(candidate, e);
+                auto [c, d] = endpoints(candidate, f);
+                auto u = sub(b, a), v = sub(d, c);
+                double den = cross(u, v);
+                if (std::abs(den) > 1e-12 * length(a, b) * length(c, d))
+                    hits.push_back(add(a, mul(u, cross(sub(c, a), v) / den)));
+                else if (length(orientedEnds(candidate, out[i], i).second,
+                                orientedEnds(candidate, out[j], j).first) < 1e-9)
+                    hits.push_back(orientedEnds(candidate, out[i], i).second);
+            } else if (e.kind == "Line" || f.kind == "Line") {
+                auto line = e.kind == "Line" ? e : f, arc = e.kind == "Arc" ? e : f;
+                auto [a, b] = endpoints(candidate, line);
+                hits =
+                    circleLineIntersections(candidate.entity(arc.a).point, arc.radius, a, b, false);
+            } else
+                hits = circleCircleIntersections(candidate.entity(e.a).point, e.radius,
+                                                 candidate.entity(f.a).point, f.radius);
+            check(!hits.empty(), "InvalidGeometry", "Offset curves cannot be joined");
+            auto hit = *std::min_element(hits.begin(), hits.end(), [&](auto a, auto b) {
+                return length(a, joint) < length(b, joint);
+            });
+            auto shared = candidate.point(hit);
+            setEnd(i, false, hit, shared);
+            setEnd(j, true, hit, shared);
+        }
+        for (int i = 0; i < out.size(); ++i) {
+            if (source.entity(ids[i]).kind == "Line") {
+                auto [a, b] = endpoints(source, source.entity(ids[i]));
+                auto [c, d] = endpoints(candidate, candidate.entity(out[i]));
+                check(dot(sub(b, a), sub(d, c)) > 1e-18, "InvalidGeometry",
+                      "Offset consumes a line");
+            }
+            descendants.append(out[i]);
+        }
+        outputs.push_back(out);
+    }
+    if (bidi && !closed && caps != "None") {
+        for (bool start : {true, false}) {
+            int i = start ? 0 : ids.size() - 1;
+            auto positive = orientedEnds(candidate, outputs[0][i], i);
+            auto negative = orientedEnds(candidate, outputs[1][i], i);
+            auto a = start ? positive.first : positive.second,
+                 b = start ? negative.first : negative.second;
+            if (caps == "Line")
+                descendants.append(candidate.line(candidate.point(a), candidate.point(b)));
+            else {
+                auto &e = source.entity(ids[i]);
+                auto [u, v] = curveRange(e);
+                auto dir = unit(curveDerivative(source, e, (start == forward[i]) ? u : v));
+                dir = mul(dir, (start == forward[i]) ? -1 : 1);
+                auto center = mul(add(a, b), .5);
+                double angle = std::atan2(a.y - center.y, a.x - center.x);
+                double middle = angle + tau / 4;
+                if (dot(Vec2{std::cos(middle), std::sin(middle)}, dir) < 0)
+                    angle = std::atan2(b.y - center.y, b.x - center.x);
+                descendants.append(candidate.arc(candidate.point(center, true), length(a, center),
+                                                 angle, tau / 2));
             }
         }
     }
-
-    if (!isClosed && bidi && capEnds != "None" && !posStarts.empty() && !negStarts.empty()) {
-        auto p1 = candidate.point(posStarts.front()), p2 = candidate.point(negStarts.front());
-        auto q1 = candidate.point(posEnds.back()), q2 = candidate.point(negEnds.back());
-        if (capEnds == "Line") {
-            descendants.append(candidate.line(p1, p2));
-            descendants.append(candidate.line(q1, q2));
-        } else if (capEnds == "Arc") {
-            auto capArc = [&](Vec2 ptA, Vec2 ptB, Vec2 outwardDir) {
-                Vec2 center = mul(add(ptA, ptB), 0.5);
-                double rad = length(ptA, center);
-                double angA = std::atan2(ptA.y - center.y, ptA.x - center.x);
-                double angB = std::atan2(ptB.y - center.y, ptB.x - center.x);
-                double sweep = std::fmod(angB - angA + 2.0 * tau, tau);
-                double midAng = std::atan2(outwardDir.y, outwardDir.x);
-                double midSweep = std::fmod(midAng - angA + 2.0 * tau, tau);
-                if (midSweep > sweep) {
-                    angA = angB;
-                    sweep = tau - sweep;
-                }
-                auto cPt = candidate.point(center, true);
-                return candidate.arc(cPt, rad, angA, sweep);
-            };
-            auto aFront = source.entity(source.entity(chainIds.front()).a).point;
-            auto bFront = source.entity(source.entity(chainIds.front()).b).point;
-            Vec2 dirFront = unit(sub(bFront, aFront));
-            auto aBack = source.entity(source.entity(chainIds.back()).a).point;
-            auto bBack = source.entity(source.entity(chainIds.back()).b).point;
-            Vec2 dirBack = unit(sub(bBack, aBack));
-            descendants.append(capArc(posStarts.front(), negStarts.front(), mul(dirFront, -1.0)));
-            descendants.append(capArc(posEnds.back(), negEnds.back(), dirBack));
-        }
-    }
-
-    if (makeConst) {
-        for (auto cid : chainIds) {
-            for (auto &e : candidate.entities)
-                if (e.id == cid)
-                    e.construction = true;
-        }
-    }
-
+    if (request.value("make_construction").toBool())
+        for (auto cid : ids)
+            candidate.entity(cid).construction = true;
     candidate.edits.append(fields({{"id", newId()},
                                    {"mode", "Offset entities"},
                                    {"source", id},
@@ -1393,11 +1362,39 @@ QCborMap previewOffset(const Sketch &source, const QCborMap &request) {
     return fields({{"candidate", candidate.map()}, {"affected_constraints", QCborArray{}}});
 }
 
+struct PointCopies {
+    Sketch &candidate;
+    const Sketch &source;
+    QMap<QString, QString> ids;
+    QString point(QString id, Vec2 p) {
+        if (!ids.contains(id)) {
+            check(candidate.entities.size() < 256, "ResourceLimit",
+                  "Copied geometry exceeds sketch limit");
+            ids[id] = candidate.point(p, source.entity(id).construction);
+        }
+        return ids[id];
+    }
+};
+QSet<QString> changedGeometry(const Sketch &source, const Sketch &candidate) {
+    QSet<QString> affected;
+    for (auto &e : source.entities) {
+        auto &after = candidate.entity(e.id);
+        if ((e.kind == "Point" && length(e.point, after.point) > 1e-14) ||
+            e.radius != after.radius || e.start != after.start || e.sweep != after.sweep)
+            affected.insert(e.id);
+    }
+    for (auto &e : source.entities)
+        for (auto id : controlPoints(e))
+            if (affected.contains(id))
+                affected.insert(e.id);
+    return affected;
+}
+
 QCborMap previewPattern(const Sketch &source, const QCborMap &request) {
     auto mode = wire::text(request, "mode");
     QSet<QString> allowed{"mode"};
     for (auto k : {"source", "entities", "angle1", "spacing1", "count1", "angle2", "spacing2",
-                   "count2", "center_x", "center_y", "angle", "count", "equal_spacing"})
+                   "count2", "center_x", "center_y", "angle", "count", "equal_spacing", "spacing"})
         if (request.contains(QLatin1String(k)))
             allowed.insert(QLatin1String(k));
     wire::keys(request, allowed);
@@ -1409,12 +1406,31 @@ QCborMap previewPattern(const Sketch &source, const QCborMap &request) {
         entities.append(wire::text(request, "source"));
     }
     check(!entities.empty(), "InvalidInput", "Pattern entities required");
+    QSet<QString> selected;
+    for (auto id : entities) {
+        check(!selected.contains(id), "InvalidInput", "Distinct selected entities required");
+        check(!constructionOf(source, id), "UnsupportedOperation",
+              "Edit construction groups together");
+        source.entity(id);
+        selected.insert(id);
+    }
+    for (auto id : entities) {
+        auto &e = source.entity(id);
+        check(e.kind == "Line" || e.kind == "Arc" || e.kind == "Circle", "UnsupportedOperation",
+              "Patterns support lines, arcs and circles");
+    }
+    auto countValue = [&](QString key, int fallback, int minimum) {
+        double value = number(request, key, fallback, false);
+        check(value >= minimum && value <= 64 && value == std::floor(value), "ResourceLimit",
+              "Pattern counts must be bounded whole numbers");
+        return int(value);
+    };
     auto candidate = source;
     QCborArray descendants;
 
     if (mode == "Linear pattern") {
-        int c1 = std::max(1, int(number(request, "count1", 2, false)));
-        int c2 = std::max(1, int(number(request, "count2", 1, false)));
+        int c1 = countValue("count1", 2, 1);
+        int c2 = countValue("count2", 1, 1);
         check(c1 * c2 > 1 && c1 * c2 <= 64, "ResourceLimit",
               "Pattern total instances must be between 2 and 64");
         double s1 = number(request, "spacing1", 0.01, false);
@@ -1429,27 +1445,28 @@ QCborMap previewPattern(const Sketch &source, const QCborMap &request) {
                 if (i == 0 && j == 0)
                     continue;
                 Vec2 shift = add(mul(dir1, i), mul(dir2, j));
+                PointCopies copies{candidate, source, {}};
                 for (auto eid : entities) {
                     auto e = source.entity(eid);
                     if (e.kind == "Line") {
                         auto p1 = add(source.entity(e.a).point, shift);
                         auto p2 = add(source.entity(e.b).point, shift);
-                        descendants.append(candidate.line(candidate.point(p1), candidate.point(p2),
-                                                          e.construction));
+                        descendants.append(candidate.line(copies.point(e.a, p1),
+                                                          copies.point(e.b, p2), e.construction));
                     } else if (e.kind == "Circle") {
                         auto center = add(source.entity(e.a).point, shift);
                         descendants.append(
-                            candidate.circle(candidate.point(center), e.radius, e.construction));
+                            candidate.circle(copies.point(e.a, center), e.radius, e.construction));
                     } else if (e.kind == "Arc") {
                         auto center = add(source.entity(e.a).point, shift);
-                        descendants.append(candidate.arc(candidate.point(center), e.radius, e.start,
-                                                         e.sweep, e.construction));
+                        descendants.append(candidate.arc(copies.point(e.a, center), e.radius,
+                                                         e.start, e.sweep, e.construction));
                     }
                 }
             }
         }
     } else {
-        int count = std::max(2, int(number(request, "count", 4, false)));
+        int count = countValue("count", 4, 2);
         check(count <= 64, "ResourceLimit", "Circular pattern count at most 64");
         double sweep = number(request, "angle", tau, false);
         Vec2 center{number(request, "center_x", 0.0, false),
@@ -1463,25 +1480,26 @@ QCborMap previewPattern(const Sketch &source, const QCborMap &request) {
             else
                 dTheta = sweep / (count - 1);
         } else {
-            dTheta = number(request, "spacing", sweep / count, false);
+            dTheta = number(request, "spacing", sweep, false);
         }
 
         for (int k = 1; k < count; ++k) {
             double angle = k * dTheta;
+            PointCopies copies{candidate, source, {}};
             for (auto eid : entities) {
                 auto e = source.entity(eid);
                 if (e.kind == "Line") {
                     auto p1 = rotatePoint(source.entity(e.a).point, center, angle);
                     auto p2 = rotatePoint(source.entity(e.b).point, center, angle);
-                    descendants.append(
-                        candidate.line(candidate.point(p1), candidate.point(p2), e.construction));
+                    descendants.append(candidate.line(copies.point(e.a, p1), copies.point(e.b, p2),
+                                                      e.construction));
                 } else if (e.kind == "Circle") {
                     auto cPt = rotatePoint(source.entity(e.a).point, center, angle);
                     descendants.append(
-                        candidate.circle(candidate.point(cPt), e.radius, e.construction));
+                        candidate.circle(copies.point(e.a, cPt), e.radius, e.construction));
                 } else if (e.kind == "Arc") {
                     auto cPt = rotatePoint(source.entity(e.a).point, center, angle);
-                    descendants.append(candidate.arc(candidate.point(cPt), e.radius,
+                    descendants.append(candidate.arc(copies.point(e.a, cPt), e.radius,
                                                      std::remainder(e.start + angle, tau), e.sweep,
                                                      e.construction));
                 }
@@ -1518,6 +1536,14 @@ QCborMap previewMirror(const Sketch &source, const QCborMap &request) {
         entities.append(wire::text(request, "source"));
     }
     check(!entities.empty(), "InvalidInput", "Mirror entities required");
+    QSet<QString> selected;
+    for (auto id : entities) {
+        check(!selected.contains(id), "InvalidInput", "Distinct selected entities required");
+        check(!constructionOf(source, id), "UnsupportedOperation",
+              "Edit construction groups together");
+        source.entity(id);
+        selected.insert(id);
+    }
     bool copy = !request.contains(QStringLiteral("copy")) || request.value("copy").toBool();
     check(mode != "Dynamic mirror" || copy, "InvalidInput",
           "Dynamic mirror requires copy mode to maintain symmetric relations");
@@ -1526,6 +1552,34 @@ QCborMap previewMirror(const Sketch &source, const QCborMap &request) {
     if (mode == "Dynamic mirror" && !ml.construction) {
         candidate.entity(mirrorLineId).construction = true;
     }
+    if (!copy) {
+        QSet<QString> points;
+        QCborArray descendants;
+        for (auto id : entities) {
+            auto &e = candidate.entity(id);
+            check(!constructionOf(source, id), "UnsupportedOperation",
+                  "Edit construction groups together");
+            for (auto point : controlPoints(e))
+                points.insert(point);
+            if (e.kind == "Arc")
+                e.start = std::remainder(2 * std::atan2(ld.y, ld.x) - e.start - e.sweep, tau);
+            check(!advancedCurve(e.kind), "UnsupportedOperation",
+                  "Mirror supports points, lines, circles and arcs");
+            descendants.append(id);
+        }
+        for (auto id : points)
+            candidate.entity(id).point = reflectPoint(source.entity(id).point, lp, ld);
+        auto [disclosure, removed] =
+            discloseConstraints(candidate, changedGeometry(source, candidate));
+        candidate.edits.append(fields({{"id", newId()},
+                                       {"mode", mode},
+                                       {"source", entities.front()},
+                                       {"descendants", descendants},
+                                       {"removed_constraints", removed}}));
+        candidate.validate();
+        return fields({{"candidate", candidate.map()}, {"affected_constraints", disclosure}});
+    }
+    PointCopies copies{candidate, source, {}};
     QCborArray descendants;
     for (auto eid : entities) {
         auto e = source.entity(eid);
@@ -1534,7 +1588,7 @@ QCborMap previewMirror(const Sketch &source, const QCborMap &request) {
         if (e.kind == "Line") {
             auto p1 = reflectPoint(source.entity(e.a).point, lp, ld);
             auto p2 = reflectPoint(source.entity(e.b).point, lp, ld);
-            auto pt1 = candidate.point(p1), pt2 = candidate.point(p2);
+            auto pt1 = copies.point(e.a, p1), pt2 = copies.point(e.b, p2);
             descendants.append(candidate.line(pt1, pt2, e.construction));
             if (mode == "Dynamic mirror") {
                 Constraint sym1, sym2;
@@ -1550,7 +1604,7 @@ QCborMap previewMirror(const Sketch &source, const QCborMap &request) {
             }
         } else if (e.kind == "Circle") {
             auto cPt = reflectPoint(source.entity(e.a).point, lp, ld);
-            auto newPtId = candidate.point(cPt);
+            auto newPtId = copies.point(e.a, cPt);
             auto newCircleId = candidate.circle(newPtId, e.radius, e.construction);
             descendants.append(newCircleId);
             if (mode == "Dynamic mirror") {
@@ -1566,7 +1620,7 @@ QCborMap previewMirror(const Sketch &source, const QCborMap &request) {
             double theta = std::atan2(ld.y, ld.x);
             double endAngle = e.start + e.sweep;
             double refStart = std::remainder(2.0 * theta - endAngle, tau);
-            auto newPtId = candidate.point(cPt);
+            auto newPtId = copies.point(e.a, cPt);
             auto newArcId = candidate.arc(newPtId, e.radius, refStart, e.sweep, e.construction);
             descendants.append(newArcId);
             if (mode == "Dynamic mirror") {
@@ -1610,8 +1664,17 @@ QCborMap previewTransform(const Sketch &source, const QCborMap &request) {
         entities.append(wire::text(request, "source"));
     }
     check(!entities.empty(), "InvalidInput", "Transform entities required");
+    QSet<QString> selected;
+    for (auto id : entities) {
+        check(!selected.contains(id), "InvalidInput", "Distinct selected entities required");
+        check(!constructionOf(source, id), "UnsupportedOperation",
+              "Edit construction groups together");
+        source.entity(id);
+        selected.insert(id);
+    }
 
     auto candidate = source;
+    PointCopies copies{candidate, source, {}};
     QCborArray descendants;
     if (mode == "Move" || mode == "Copy") {
         Vec2 shift{number(request, "delta_x"), number(request, "delta_y")};
@@ -1646,20 +1709,20 @@ QCborMap previewTransform(const Sketch &source, const QCborMap &request) {
                 auto e = source.entity(eid);
                 if (e.kind == "Point") {
                     auto p = add(e.point, shift);
-                    descendants.append(candidate.point(p, e.construction));
+                    descendants.append(copies.point(e.id, p));
                 } else if (e.kind == "Line") {
                     auto p1 = add(source.entity(e.a).point, shift);
                     auto p2 = add(source.entity(e.b).point, shift);
-                    descendants.append(
-                        candidate.line(candidate.point(p1), candidate.point(p2), e.construction));
+                    descendants.append(candidate.line(copies.point(e.a, p1), copies.point(e.b, p2),
+                                                      e.construction));
                 } else if (e.kind == "Circle") {
                     auto c = add(source.entity(e.a).point, shift);
                     descendants.append(
-                        candidate.circle(candidate.point(c), e.radius, e.construction));
+                        candidate.circle(copies.point(e.a, c), e.radius, e.construction));
                 } else if (e.kind == "Arc") {
                     auto c = add(source.entity(e.a).point, shift);
-                    descendants.append(candidate.arc(candidate.point(c), e.radius, e.start, e.sweep,
-                                                     e.construction));
+                    descendants.append(candidate.arc(copies.point(e.a, c), e.radius, e.start,
+                                                     e.sweep, e.construction));
                 } else if (advancedCurve(e.kind)) {
                     auto cCopy = e;
                     cCopy.id = newId();
@@ -1669,8 +1732,7 @@ QCborMap previewTransform(const Sketch &source, const QCborMap &request) {
                         for (auto ptId : e.poles) {
                             if (!copiedPoles.contains(ptId)) {
                                 auto &srcPt = source.entity(ptId);
-                                copiedPoles[ptId] =
-                                    candidate.point(add(srcPt.point, shift), srcPt.construction);
+                                copiedPoles[ptId] = copies.point(ptId, add(srcPt.point, shift));
                             }
                             ctrl.push_back(copiedPoles[ptId]);
                         }
@@ -1678,10 +1740,8 @@ QCborMap previewTransform(const Sketch &source, const QCborMap &request) {
                         cCopy.a = ctrl.empty() ? QString{} : ctrl[0];
                         cCopy.b = QString{};
                     } else {
-                        cCopy.a = candidate.point(add(source.entity(e.a).point, shift),
-                                                  source.entity(e.a).construction);
-                        cCopy.b = candidate.point(add(source.entity(e.b).point, shift),
-                                                  source.entity(e.b).construction);
+                        cCopy.a = copies.point(e.a, add(source.entity(e.a).point, shift));
+                        cCopy.b = copies.point(e.b, add(source.entity(e.b).point, shift));
                     }
                     candidate.entities.push_back(cCopy);
                     descendants.append(cCopy.id);
@@ -1697,19 +1757,19 @@ QCborMap previewTransform(const Sketch &source, const QCborMap &request) {
                 auto e = source.entity(eid);
                 if (e.kind == "Point") {
                     auto p = rotatePoint(e.point, center, angle);
-                    descendants.append(candidate.point(p, e.construction));
+                    descendants.append(copies.point(e.id, p));
                 } else if (e.kind == "Line") {
                     auto p1 = rotatePoint(source.entity(e.a).point, center, angle);
                     auto p2 = rotatePoint(source.entity(e.b).point, center, angle);
-                    descendants.append(
-                        candidate.line(candidate.point(p1), candidate.point(p2), e.construction));
+                    descendants.append(candidate.line(copies.point(e.a, p1), copies.point(e.b, p2),
+                                                      e.construction));
                 } else if (e.kind == "Circle") {
                     auto cPt = rotatePoint(source.entity(e.a).point, center, angle);
                     descendants.append(
-                        candidate.circle(candidate.point(cPt), e.radius, e.construction));
+                        candidate.circle(copies.point(e.a, cPt), e.radius, e.construction));
                 } else if (e.kind == "Arc") {
                     auto cPt = rotatePoint(source.entity(e.a).point, center, angle);
-                    descendants.append(candidate.arc(candidate.point(cPt), e.radius,
+                    descendants.append(candidate.arc(copies.point(e.a, cPt), e.radius,
                                                      std::remainder(e.start + angle, tau), e.sweep,
                                                      e.construction));
                 } else if (advancedCurve(e.kind)) {
@@ -1721,8 +1781,8 @@ QCborMap previewTransform(const Sketch &source, const QCborMap &request) {
                         for (auto ptId : e.poles) {
                             if (!copiedPoles.contains(ptId)) {
                                 auto &srcPt = source.entity(ptId);
-                                copiedPoles[ptId] = candidate.point(
-                                    rotatePoint(srcPt.point, center, angle), srcPt.construction);
+                                copiedPoles[ptId] =
+                                    copies.point(ptId, rotatePoint(srcPt.point, center, angle));
                             }
                             ctrl.push_back(copiedPoles[ptId]);
                         }
@@ -1731,11 +1791,9 @@ QCborMap previewTransform(const Sketch &source, const QCborMap &request) {
                         cCopy.b = QString{};
                     } else {
                         cCopy.a =
-                            candidate.point(rotatePoint(source.entity(e.a).point, center, angle),
-                                            source.entity(e.a).construction);
+                            copies.point(e.a, rotatePoint(source.entity(e.a).point, center, angle));
                         cCopy.b =
-                            candidate.point(rotatePoint(source.entity(e.b).point, center, angle),
-                                            source.entity(e.b).construction);
+                            copies.point(e.b, rotatePoint(source.entity(e.b).point, center, angle));
                     }
                     candidate.entities.push_back(cCopy);
                     descendants.append(cCopy.id);
@@ -1783,19 +1841,19 @@ QCborMap previewTransform(const Sketch &source, const QCborMap &request) {
                 auto e = source.entity(eid);
                 if (e.kind == "Point") {
                     auto p = add(base, mul(sub(e.point, base), factor));
-                    descendants.append(candidate.point(p, e.construction));
+                    descendants.append(copies.point(e.id, p));
                 } else if (e.kind == "Line") {
                     auto p1 = add(base, mul(sub(source.entity(e.a).point, base), factor));
                     auto p2 = add(base, mul(sub(source.entity(e.b).point, base), factor));
-                    descendants.append(
-                        candidate.line(candidate.point(p1), candidate.point(p2), e.construction));
+                    descendants.append(candidate.line(copies.point(e.a, p1), copies.point(e.b, p2),
+                                                      e.construction));
                 } else if (e.kind == "Circle") {
                     auto cPt = add(base, mul(sub(source.entity(e.a).point, base), factor));
-                    descendants.append(
-                        candidate.circle(candidate.point(cPt), e.radius * factor, e.construction));
+                    descendants.append(candidate.circle(copies.point(e.a, cPt), e.radius * factor,
+                                                        e.construction));
                 } else if (e.kind == "Arc") {
                     auto cPt = add(base, mul(sub(source.entity(e.a).point, base), factor));
-                    descendants.append(candidate.arc(candidate.point(cPt), e.radius * factor,
+                    descendants.append(candidate.arc(copies.point(e.a, cPt), e.radius * factor,
                                                      e.start, e.sweep, e.construction));
                 } else if (advancedCurve(e.kind)) {
                     auto cCopy = e;
@@ -1806,9 +1864,8 @@ QCborMap previewTransform(const Sketch &source, const QCborMap &request) {
                         for (auto ptId : e.poles) {
                             if (!copiedPoles.contains(ptId)) {
                                 auto &srcPt = source.entity(ptId);
-                                copiedPoles[ptId] =
-                                    candidate.point(add(base, mul(sub(srcPt.point, base), factor)),
-                                                    srcPt.construction);
+                                copiedPoles[ptId] = copies.point(
+                                    ptId, add(base, mul(sub(srcPt.point, base), factor)));
                             }
                             ctrl.push_back(copiedPoles[ptId]);
                         }
@@ -1816,12 +1873,10 @@ QCborMap previewTransform(const Sketch &source, const QCborMap &request) {
                         cCopy.a = ctrl.empty() ? QString{} : ctrl[0];
                         cCopy.b = QString{};
                     } else {
-                        cCopy.a = candidate.point(
-                            add(base, mul(sub(source.entity(e.a).point, base), factor)),
-                            source.entity(e.a).construction);
-                        cCopy.b = candidate.point(
-                            add(base, mul(sub(source.entity(e.b).point, base), factor)),
-                            source.entity(e.b).construction);
+                        cCopy.a = copies.point(
+                            e.a, add(base, mul(sub(source.entity(e.a).point, base), factor)));
+                        cCopy.b = copies.point(
+                            e.b, add(base, mul(sub(source.entity(e.b).point, base), factor)));
                     }
                     if (ellipseCurve(e.kind))
                         cCopy.radius *= factor;
@@ -1870,13 +1925,15 @@ QCborMap previewTransform(const Sketch &source, const QCborMap &request) {
         }
     }
 
+    auto affected = changedGeometry(source, candidate);
+    auto [disclosure, removed] = discloseConstraints(candidate, affected);
     candidate.edits.append(fields({{"id", newId()},
                                    {"mode", mode},
                                    {"source", entities.front()},
                                    {"descendants", descendants},
-                                   {"removed_constraints", QCborArray{}}}));
+                                   {"removed_constraints", removed}}));
     candidate.validate();
-    return fields({{"candidate", candidate.map()}, {"affected_constraints", QCborArray{}}});
+    return fields({{"candidate", candidate.map()}, {"affected_constraints", disclosure}});
 }
 
 } // namespace
