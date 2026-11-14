@@ -73,12 +73,20 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
             [this](QVector3D origin, QVector3D direction, double depthMM, bool reverse) {
                 viewport->setExtrudeManipulator(origin, direction, depthMM, reverse);
             });
+    connect(featurePanel, &FeaturePanel::requestDraftManipulator, this,
+            [this](QVector3D origin, QVector3D normal, double angleDeg) {
+                viewport->setDraftManipulator(origin, normal, angleDeg);
+            });
     connect(featurePanel, &FeaturePanel::clearManipulatorRequested, this,
             [this] { viewport->clearManipulators(); });
     connect(viewport, &Viewport::depthManipulatorMoved, featurePanel,
             &FeaturePanel::setDepthFromManipulator);
     connect(viewport, &Viewport::depthManipulatorReleased, featurePanel,
             &FeaturePanel::setDepthFinishedFromManipulator);
+    connect(viewport, &Viewport::draftManipulatorMoved, featurePanel,
+            &FeaturePanel::setDraftAngleFromManipulator);
+    connect(viewport, &Viewport::draftManipulatorReleased, featurePanel,
+            &FeaturePanel::setDraftAngleFinishedFromManipulator);
     connect(tree, &QTreeWidget::itemDoubleClicked, this, [this](QTreeWidgetItem *item, int) {
         auto id = item->data(0, Qt::UserRole + 5).toString();
         if (!id.isEmpty() && !sketchPanel->active()) {
@@ -359,6 +367,13 @@ void MainWindow::refresh() {
         commands.get("save")->setToolTip("Publish a standalone project snapshot");
     }
     refreshCommandTabs();
+    if (auto *cancelAction = findChild<QAction *>("cancelFeatureAction")) {
+        bool panelActive = (drawingPanel && drawingPanel->active()) ||
+                           (assemblyPanel && assemblyPanel->active()) ||
+                           (historyPanel && historyPanel->active()) ||
+                           (featurePanel && featurePanel->active());
+        cancelAction->setEnabled(panelActive);
+    }
     if (s.projectOpen) {
         refreshProjectUI();
         return;

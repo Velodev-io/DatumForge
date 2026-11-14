@@ -154,13 +154,18 @@ class WorkflowContractsCM5 : public QObject {
         s.window->findChild<QCheckBox *>("featureDirection2Enable")->setChecked(true);
         s.window->findChild<QDoubleSpinBox *>("featureDepth2")->setValue(15);
 
-        // Viewport depth manipulator interaction
+        // Viewport depth and draft manipulator interaction
         auto *viewport = s.window->sceneView();
         QVERIFY(viewport);
         viewport->dragExtrudeDepthHandle(5.0); // drag handle +5 mm
         QCOMPARE(s.window->findChild<QDoubleSpinBox *>("featureDepth")->value(), 15.0);
         viewport->dragExtrudeDepthHandle(-5.0); // restore to 10 mm
         QCOMPARE(s.window->findChild<QDoubleSpinBox *>("featureDepth")->value(), 10.0);
+
+        viewport->dragDraftAngleHandle(5.0); // drag draft handle +5 deg (to 40 deg)
+        QCOMPARE(s.window->findChild<QDoubleSpinBox *>("featureDraftAngle")->value(), 40.0);
+        viewport->dragDraftAngleHandle(-5.0); // restore to 35 deg
+        QCOMPARE(s.window->findChild<QDoubleSpinBox *>("featureDraftAngle")->value(), 35.0);
 
         // Preview
         panel->preview();
@@ -366,6 +371,22 @@ class WorkflowContractsCM5 : public QObject {
         // Cut half of the top 10mm (40 x 20 x 10 mm³ = 8000 mm³ cut)
         double volAfterCut1 = s.volume();
         near(volAfterCut1, totalBlockVol - 0.04 * 0.02 * 0.01, 1e-7);
+
+        // Edit cut feature to flip cut side
+        auto cutIntents = s.document().value("modeling").toMap().value("intents").toArray();
+        QCOMPARE(cutIntents.size(), 2);
+        panel->begin({}, cutIntents[1].toMap().value("id").toString());
+        QVERIFY(panel->active());
+        auto *flipCheck = s.window->findChild<QCheckBox *>("featureFlipSide");
+        QVERIFY(flipCheck);
+        flipCheck->setChecked(true);
+        panel->preview();
+        QVERIFY(wait([&] {
+            return s.window->findChild<QPushButton *>("acceptFeatureButton")->isEnabled();
+        }));
+        panel->finish();
+        QVERIFY(s.idle());
+        near(s.volume(), totalBlockVol - 0.04 * 0.02 * 0.01, 1e-7);
     }
 
     void revolveModesAndAngles() {
@@ -463,6 +484,14 @@ class WorkflowContractsCM5 : public QObject {
                 break;
             }
         }
+        // Viewport draft manipulator interaction
+        auto *viewport = s.window->sceneView();
+        QVERIFY(viewport);
+        viewport->dragDraftAngleHandle(2.0);
+        QCOMPARE(s.window->findChild<QDoubleSpinBox *>("draftStandaloneAngle")->value(), 7.0);
+        viewport->dragDraftAngleHandle(-2.0);
+        QCOMPARE(s.window->findChild<QDoubleSpinBox *>("draftStandaloneAngle")->value(), 5.0);
+
         auto *facesCombo = s.window->findChild<QComboBox *>("draftFaces");
         bool previewOk = false;
         for (int i = 0; i < facesCombo->count(); ++i) {
@@ -490,6 +519,15 @@ class WorkflowContractsCM5 : public QObject {
         QVERIFY(panel->active());
         auto *repairBtn = s.window->findChild<QPushButton *>("featureRepairSupports");
         QVERIFY(repairBtn);
+        repairBtn->click();
+        QVERIFY(wait([&] { return !s.client->outstanding(); }));
+        auto *repairCombo = s.window->findChild<QComboBox *>("featureRepairCandidate");
+        QVERIFY(repairCombo);
+        QVERIFY(repairCombo->count() > 0);
+        auto *applyRepairBtn = s.window->findChild<QPushButton *>("featureApplyRepair");
+        QVERIFY(applyRepairBtn);
+        applyRepairBtn->click();
+        QVERIFY(wait([&] { return !s.client->outstanding(); }));
         panel->discard();
         QVERIFY(!panel->active());
     }
@@ -520,8 +558,11 @@ class WorkflowContractsCM5 : public QObject {
         }));
         QVERIFY(s.client->mesh());
 
-        // Cancel restores clean state and clears preview mesh
-        panel->discard();
+        // Cancel via Escape shortcut action restores clean state and clears preview mesh
+        auto *cancelAction = s.window->findChild<QAction *>("cancelFeatureAction");
+        QVERIFY(cancelAction);
+        QVERIFY(cancelAction->isEnabled());
+        cancelAction->trigger();
         QVERIFY(!panel->active());
         QVERIFY(!s.client->mesh());
         QVERIFY(s.document().value("modeling").toMap().value("intents").toArray().empty());
@@ -530,22 +571,31 @@ class WorkflowContractsCM5 : public QObject {
     void nativeEffectiveScales_data() {
         QTest::addColumn<double>("dpr");
         QTest::addColumn<QString>("units");
-        QTest::newRow("100% mm") << 1.0 << QString("mm");
-        QTest::newRow("125% mm") << 1.25 << QString("mm");
-        QTest::newRow("150% in") << 1.50 << QString("in");
-        QTest::newRow("175% mm") << 1.75 << QString("mm");
-        QTest::newRow("200% in") << 2.00 << QString("in");
+        QTest::addColumn<bool>("inclinedPlane");
+        QTest::newRow("100% mm") << 1.0 << QString("mm") << false;
+        QTest::newRow("125% mm") << 1.25 << QString("mm") << true;
+        QTest::newRow("150% in") << 1.50 << QString("in") << false;
+        QTest::newRow("175% mm") << 1.75 << QString("mm") << true;
+        QTest::newRow("200% in") << 2.00 << QString("in") << false;
     }
 
     void nativeEffectiveScales() {
         QFETCH(double, dpr);
         QFETCH(QString, units);
+        QFETCH(bool, inclinedPlane);
         SessionCM5 s;
         QVERIFY(s.start(units, dpr));
         double u = domain::toSI(1, "length", units);
 
         sketch::Sketch sq;
         sq.name = "ScaleTestProfile";
+        if (inclinedPlane) {
+            sq.frame.origin = {0.01, 0.02, 0.03};
+            double c = std::cos(std::numbers::pi / 4.0);
+            double sn = std::sin(std::numbers::pi / 4.0);
+            sq.frame.u = {c, 0, sn};
+            sq.frame.v = {0, 1, 0};
+        }
         sq.rectangle({0, 0}, {.02, .02});
         s.client->projectCommand("SetSketches",
                                  sketch::fields({{"sketches", sketch::encode({sq})}}));
@@ -564,6 +614,10 @@ class WorkflowContractsCM5 : public QObject {
         QVERIFY(wait([&] {
             return s.window->findChild<QPushButton *>("acceptFeatureButton")->isEnabled();
         }));
+        // Verify visible mesh bounds
+        QVERIFY(s.client->mesh());
+        QVERIFY(!s.client->mesh()->vertices.isEmpty());
+        QVERIFY(s.client->mesh()->maximum != s.client->mesh()->minimum);
         panel->finish();
         QVERIFY(s.idle());
 
@@ -598,6 +652,14 @@ class WorkflowContractsCM5 : public QObject {
         QVERIFY(s.idle());
 
         near(s.volume(), 0.03 * 0.02 * 0.01, 1e-8);
+
+        // Undo and redo check
+        s.window->command("undo")->trigger();
+        QVERIFY(s.idle());
+        QVERIFY(s.document().value("modeling").toMap().value("intents").toArray().empty());
+        s.window->command("redo")->trigger();
+        QVERIFY(s.idle());
+        QCOMPARE(s.document().value("modeling").toMap().value("intents").toArray().size(), 1);
 
         // 1. Upstream mutation: change sketch rectangle to 40x20 via associative support model
         sketch::Sketch mutated;

@@ -150,11 +150,14 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
         auto chosen = repairCandidate->currentData().value<QCborMap>();
         if (chosen.isEmpty())
             return;
+        QString text = chosen.value("topology").toString().isEmpty()
+                           ? chosen.value("object").toString()
+                           : chosen.value("topology").toString();
         if (draft.kind == "Draft") {
-            draftNeutral->addItem(chosen.value("object").toString(), QVariant::fromValue(chosen));
-            draftNeutral->setCurrentIndex(draftNeutral->count() - 1);
+            draftFaces->addItem(text, QVariant::fromValue(chosen));
+            draftFaces->setCurrentIndex(draftFaces->count() - 1);
         } else {
-            dir1Reference->addItem(chosen.value("object").toString(), QVariant::fromValue(chosen));
+            dir1Reference->addItem(text, QVariant::fromValue(chosen));
             dir1Reference->setCurrentIndex(dir1Reference->count() - 1);
         }
         invalidate();
@@ -268,11 +271,26 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
         if (!editing)
             return;
         repairCandidate->clear();
-        for (auto val : resolution.value("candidates").toArray()) {
-            auto ref = val.toMap();
-            repairCandidate->addItem(
-                QString("%1: %2").arg(ref.value("role").toString(), ref.value("object").toString()),
-                QVariant::fromValue(ref));
+        QCborArray list = resolution.contains(QStringLiteral("replacements"))
+                              ? resolution.value(QStringLiteral("replacements")).toArray()
+                              : resolution.value(QStringLiteral("candidates")).toArray();
+        for (auto val : list) {
+            if (val.isMap()) {
+                auto ref = val.toMap();
+                auto role = ref.value("role").toString();
+                auto topo = ref.value("topology").toString();
+                auto obj = ref.value("object").toString();
+                QString label = QString("%1: %2").arg(role, topo.isEmpty() ? obj : topo);
+                repairCandidate->addItem(label, QVariant::fromValue(ref));
+            } else if (val.isString()) {
+                QString token = val.toString();
+                domain::GeometryReference r;
+                r.object = draft.id;
+                r.role = token.startsWith("vertex/") ? "Vertex" : "Face";
+                r.topology = token;
+                repairCandidate->addItem(QString("%1: %2").arg(r.role, token),
+                                         QVariant::fromValue(r.map()));
+            }
         }
         if (repairCandidate->count() > 0) {
             form->setRowVisible(repairCandidate, true);
@@ -287,14 +305,12 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
                 auto cand = definitionModeling();
                 QString path = "direction1/reference";
                 if (draft.kind == "Draft")
-                    path = "neutral";
-                client->projectCommand(
-                    "ModelingReferenceCandidates",
-                    fields({{"model", model.map()},
-                            {"intents",
-                             candidateIntents.empty() ? QCborArray{cand} : candidateIntents},
-                            {"owner", cand.value("id").toString()},
-                            {"path", path}}));
+                    path = "faces/0";
+                client->projectCommand("ModelingReferenceCandidates",
+                                       fields({{"model", model.map()},
+                                               {"intents", definitionsModeling()},
+                                               {"owner", cand.value("id").toString()},
+                                               {"path", path}}));
             } catch (const std::exception &e) {
                 diagnostic->setText(e.what());
             }
@@ -934,6 +950,31 @@ void FeaturePanel::begin(QString kind, QString editId) {
             origin[2]->setValue(m[2].toDouble() / unit());
     }
 
+    auto matchRef = [](QComboBox *box, const QCborMap &targetRef) {
+        if (targetRef.isEmpty() || !box)
+            return;
+        QString tTopo = targetRef.value("topology").toString();
+        QString tEnt = targetRef.value("entity").toString();
+        QString tObj = targetRef.value("object").toString();
+        QString tRole = targetRef.value("role").toString();
+        for (int i = 0; i < box->count(); ++i) {
+            auto m = box->itemData(i).value<QCborMap>();
+            if (!tTopo.isEmpty() && m.value("topology").toString() == tTopo) {
+                box->setCurrentIndex(i);
+                return;
+            }
+            if (!tEnt.isEmpty() && m.value("entity").toString() == tEnt) {
+                box->setCurrentIndex(i);
+                return;
+            }
+            if (!tObj.isEmpty() && m.value("object").toString() == tObj &&
+                (tRole.isEmpty() || m.value("role").toString() == tRole)) {
+                box->setCurrentIndex(i);
+                return;
+            }
+        }
+    };
+
     if (isModeling && !modelingDraft.isEmpty()) {
         auto p = modelingDraft;
         if (p.contains(QStringLiteral("operation")))
@@ -942,6 +983,14 @@ void FeaturePanel::begin(QString kind, QString editId) {
             reverseDirection->setChecked(p.value("reverse").toBool());
         if (p.contains(QStringLiteral("flip_side")))
             flipSide->setChecked(p.value("flip_side").toBool());
+
+        if (p.contains(QStringLiteral("target")) && !p.value("target").isNull()) {
+            auto tgt = p.value("target").toMap();
+            auto bId = tgt.value("body").toString();
+            int idx = target->findData(bId);
+            if (idx >= 0)
+                target->setCurrentIndex(idx);
+        }
 
         if (p.contains(QStringLiteral("profile"))) {
             auto prof = p.value("profile").toMap();
@@ -958,6 +1007,8 @@ void FeaturePanel::begin(QString kind, QString editId) {
             startMode->setCurrentText(st.value("mode").toString());
             if (st.contains(QStringLiteral("distance")))
                 startOffset->setValue(st.value("distance").toDouble() / unit());
+            if (st.contains(QStringLiteral("reference")))
+                matchRef(startReference, st.value("reference").toMap());
         }
 
         if (p.contains(QStringLiteral("direction1"))) {
@@ -970,6 +1021,8 @@ void FeaturePanel::begin(QString kind, QString editId) {
                 else
                     depth->setValue(d1.value("value").toDouble() / unit());
             }
+            if (d1.contains(QStringLiteral("reference")))
+                matchRef(dir1Reference, d1.value("reference").toMap());
             if (d1.contains(QStringLiteral("draft"))) {
                 auto dr = d1.value("draft").toMap();
                 double deg = dr.value("angle").toDouble() * 180.0 / std::numbers::pi;
@@ -990,6 +1043,8 @@ void FeaturePanel::begin(QString kind, QString editId) {
                 else
                     depth2->setValue(d2.value("value").toDouble() / unit());
             }
+            if (d2.contains(QStringLiteral("reference")))
+                matchRef(dir2Reference, d2.value("reference").toMap());
             if (d2.contains(QStringLiteral("draft"))) {
                 auto dr = d2.value("draft").toMap();
                 double deg = dr.value("angle").toDouble() * 180.0 / std::numbers::pi;
@@ -997,6 +1052,10 @@ void FeaturePanel::begin(QString kind, QString editId) {
                 draft2Angle->setValue(deg);
                 draft2Outward->setChecked(dr.value("outward").toBool());
             }
+        }
+
+        if (kind == "Revolve" && p.contains(QStringLiteral("axis"))) {
+            matchRef(revolveAxis, p.value("axis").toMap());
         }
 
         if (p.contains(QStringLiteral("thin"))) {
@@ -1018,6 +1077,15 @@ void FeaturePanel::begin(QString kind, QString editId) {
                                                std::numbers::pi);
             if (p.contains(QStringLiteral("outward")))
                 draftStandaloneOutward->setChecked(p.value("outward").toBool());
+            if (p.contains(QStringLiteral("neutral")))
+                matchRef(draftNeutral, p.value("neutral").toMap());
+            if (p.contains(QStringLiteral("pull")))
+                matchRef(draftPull, p.value("pull").toMap());
+            if (p.contains(QStringLiteral("faces"))) {
+                auto faces = p.value("faces").toArray();
+                if (!faces.isEmpty())
+                    matchRef(draftFaces, faces[0].toMap());
+            }
         }
     } else if (!isModeling && !editId.isEmpty()) {
         auto p = draft.parameters;
@@ -1072,6 +1140,11 @@ void FeaturePanel::begin(QString kind, QString editId) {
     previewButton->show();
     cancelButton->show();
     fieldsForKind();
+    if (repairButton) {
+        repairButton->setVisible(editing && (document.contains(QStringLiteral("model_supports")) ||
+                                             document.contains(QStringLiteral("modeling"))));
+        repairButton->setEnabled(editing && !client->outstanding() && !commitPending);
+    }
     invalidate();
     updateManipulator();
     diagnostic->setText(kind == "Fillet" || kind == "Chamfer"
@@ -1212,9 +1285,18 @@ QCborMap FeaturePanel::definitionModeling() const {
         QCborArray facesArray;
         if (draftFaces->currentData().canConvert<QCborArray>())
             facesArray = draftFaces->currentData().value<QCborArray>();
-        else if (draftFaces->currentData().canConvert<QCborMap>())
-            facesArray = QCborArray{draftFaces->currentData().value<QCborMap>()};
-        else if (!modelingDraft.isEmpty() && modelingDraft.contains(QStringLiteral("faces")))
+        else if (draftFaces->currentData().canConvert<QCborMap>()) {
+            auto currentFace = draftFaces->currentData().value<QCborMap>();
+            if (!modelingDraft.isEmpty() && modelingDraft.contains(QStringLiteral("faces"))) {
+                auto existingFaces = modelingDraft.value("faces").toArray();
+                if (!existingFaces.isEmpty() && existingFaces[0].toMap() == currentFace)
+                    facesArray = existingFaces;
+                else
+                    facesArray = QCborArray{currentFace};
+            } else {
+                facesArray = QCborArray{currentFace};
+            }
+        } else if (!modelingDraft.isEmpty() && modelingDraft.contains(QStringLiteral("faces")))
             facesArray = modelingDraft.value("faces").toArray();
         m.insert(QStringLiteral("faces"), facesArray);
 
@@ -1518,6 +1600,8 @@ void FeaturePanel::discard() {
     accept->hide();
     previewButton->hide();
     cancelButton->hide();
+    if (repairButton)
+        repairButton->hide();
     form->setRowVisible(repairCandidate, false);
     form->setRowVisible(applyRepairButton, false);
     emit clearManipulatorRequested();
@@ -1526,7 +1610,25 @@ void FeaturePanel::discard() {
 }
 
 void FeaturePanel::updateManipulator() {
-    if (!editing || draft.kind != "Extrude") {
+    if (!editing) {
+        emit clearManipulatorRequested();
+        return;
+    }
+    if (draft.kind == "Draft") {
+        QVector3D orig(0, 0, 0);
+        QVector3D norm(0, 0, 1);
+        double angleDeg = draftStandaloneAngle ? draftStandaloneAngle->value() : 5.0;
+        emit requestDraftManipulator(orig, norm, angleDeg);
+        return;
+    }
+    if (draft.kind == "Revolve") {
+        QVector3D orig(0, 0, 0);
+        QVector3D norm(0, 1, 0);
+        double revAngle = angle ? angle->value() : 360.0;
+        emit requestDraftManipulator(orig, norm, revAngle);
+        return;
+    }
+    if (draft.kind != "Extrude") {
         emit clearManipulatorRequested();
         return;
     }
@@ -1553,9 +1655,15 @@ void FeaturePanel::updateManipulator() {
                 QVector3D vVec(float(v[0].toDouble()), float(v[1].toDouble()),
                                float(v[2].toDouble()));
                 norm = QVector3D::crossProduct(uVec, vVec).normalized();
+                if (norm.isNull())
+                    norm = QVector3D(0, 0, 1);
             }
             break;
         }
+    }
+    if (draftEnable && draftEnable->isChecked()) {
+        double dAngle = draftAngle ? draftAngle->value() : 0.0;
+        emit requestDraftManipulator(orig, norm, dAngle);
     }
     double depthMM = depth->value() * (unit() * 1000.0);
     bool reverse = reverseDirection->isChecked();
@@ -1573,6 +1681,30 @@ void FeaturePanel::setDepthFromManipulator(double depthMM) {
 
 void FeaturePanel::setDepthFinishedFromManipulator(double depthMM) {
     setDepthFromManipulator(depthMM);
+    if (editing) {
+        preview();
+    }
+}
+
+void FeaturePanel::setDraftAngleFromManipulator(double angleDeg) {
+    if (!editing)
+        return;
+    if (draft.kind == "Revolve") {
+        if (angle && std::abs(angle->value() - angleDeg) > 1e-4)
+            angle->setValue(angleDeg);
+    } else if (draft.kind == "Draft") {
+        if (draftStandaloneAngle && std::abs(draftStandaloneAngle->value() - angleDeg) > 1e-4)
+            draftStandaloneAngle->setValue(angleDeg);
+    } else {
+        if (draftEnable && !draftEnable->isChecked())
+            draftEnable->setChecked(true);
+        if (draftAngle && std::abs(draftAngle->value() - angleDeg) > 1e-4)
+            draftAngle->setValue(angleDeg);
+    }
+}
+
+void FeaturePanel::setDraftAngleFinishedFromManipulator(double angleDeg) {
+    setDraftAngleFromManipulator(angleDeg);
     if (editing) {
         preview();
     }

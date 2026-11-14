@@ -116,10 +116,13 @@ class FeaturePanel : public QWidget {
     }
     void setDepthFromManipulator(double depthMM);
     void setDepthFinishedFromManipulator(double depthMM);
+    void setDraftAngleFromManipulator(double angleDeg);
+    void setDraftAngleFinishedFromManipulator(double angleDeg);
 
   signals:
     void editingChanged();
     void requestManipulator(QVector3D origin, QVector3D direction, double depthMM, bool reverse);
+    void requestDraftManipulator(QVector3D origin, QVector3D normal, double angleDeg);
     void clearManipulatorRequested();
 };
 } // namespace cad
