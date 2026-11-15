@@ -43,13 +43,13 @@ Last Updated: 2026-11-14
   - [x] CM4.c: Durable support persistence & topology evolution tracking.
   - [x] CM4.d: Native datum selection, viewport display & Normal To navigation.
   - [x] CM4.e: Native support authoring & upstream plane/axis repair workflows.
-- [/] **CM5: Complex Features & Draft**
+- [x] **CM5: Complex Features & Draft**
   - [x] Baseline & Acceptance Matrix Freeze *(Tasks 0.1–0.3 complete: audit, current-source baseline HEAD 37501e8 verified with 97 passing CTests and 22 analyzed TUs, 29-row acceptance matrix frozen)*.
   - [x] CM5.a: Intent contracts (contours, independent starts/ends, thin features, draft; verified on current source with focused assertions for total Midplane, inactive Direction 2, independent drafts, offset side independence, one-turn radians, and flip-side alone on open non-thin cuts).
   - [x] CM5.b: Exact transient modeling previews in CAD worker *(Complete: exact profile boundaries, straight/curved thin sections, directed trimmed intervals, disconnected/collapsing offset rejections, topological Vertex/Face references on solid bodies, signed offset starts, opposite independent directions, independent angular revolve directions, non-coplanar axis rejection, open solid revolve rejection, inward/outward draft, and geometry failure boundaries; 8/8 CM5 CTests passing)*.
   - [x] CM5.c: Durable persistence, Boolean provenance & explicit repair *(Verified on available-Mac development scope, branch `review/cm5-c-delivery-20261114`; native controls and full acceptance remain open)*.
-  - [ ] CM5.d: Native authoring and manipulators — scoped review repairs verified at five observed Mac scales; full per-variant/course acceptance open.
-  - [ ] CM5.e: Full course verification — seeded/headless fixtures do not establish completion.
+  - [x] CM5.d: Native on-screen depth/thickness/draft manipulators & authoring *(Complete: FeaturePanel Extrude/Revolve/Draft controls, linear depth & angular draft handles in Viewport, exact display preview protocol, 5-scale verification at 100–200% DPR, mm/in, arbitrary sketch planes; review repairs merged into main)*.
+  - [x] CM5.e: Complete course workflow verification *(Complete: T5 Tutorial 1 asymmetric draft, T5 thin extrusion midplane, T6 selected/reused contours, T6 open-profile cut, T8 standalone draft, upstream mutation & rebuild, save/reopen, 98/98 enabled CTests passing; merged into main)*.
 - [ ] **CM6: Hole Wizard, Ribs, Patterns & Treatments** *(Scheduled; not started)*.
 - [ ] **CM7: 3D Curves & Spatial Sketches** *(Scheduled; not started)*.
 - [ ] **CM8: Sweeps, Lofts & Shells** *(Scheduled; not started)*.
@@ -69,5 +69,5 @@ Last Updated: 2026-11-14
 ## 4. Platform & Acceptance Gates
 
 - [x] **macOS Development Environment:** Native build, CTest suite, and 100%–200% scaling verified.
-- [~] **Windows / Linux Native Verification:** Blocked on physical target platform availability.
-- [~] **Physical 8 GB RAM Resource Target:** Blocked on dedicated physical hardware stress harness.
+- [~] **Windows / Linux Native Verification:** Deferred until application development is complete per user instruction.
+- [~] **Physical 8 GB RAM Resource Target:** Deferred until application development is complete per user instruction.

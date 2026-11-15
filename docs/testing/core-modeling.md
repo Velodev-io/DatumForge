@@ -1,8 +1,11 @@
 # Core-modeling execution evidence
 
-[CM5 native review fixes](core-modeling-cm5-review.md) track the ten 15 November
-review findings separately from complete course and full acceptance. Earlier
-completion claims in task/status notes do not close the open course corpus.
+[CM5 native review fixes and completion](core-modeling-cm5-review.md) track the
+15 November review repairs, CM5.d native authoring/manipulators, and CM5.e course
+workflow verification merged into `main` (commit `1d42a10`). All 98 enabled CTests,
+ten Clang analyses, and five native scale runs passed (100%). Physical Windows/Linux
+verification and physical 8 GB RAM memory stress tests are deferred until application
+development is complete per user instruction. CM5 is marked complete.
 
 [CM5 current-source baseline](artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json)
 records the 14 November current-source baseline freeze on HEAD `37501e8`:

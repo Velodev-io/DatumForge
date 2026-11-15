@@ -1988,21 +1988,36 @@
     ]
   },
   "CM5.d": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM5.d native authoring, manipulators and exact display previews on the available Mac development build: FeaturePanel Extrude/Revolve/Draft controls with dynamic show/hide and mm/in support, Viewport linear depth and angular draft handles with bidirectional spinbox synchronization, PreviewModelSupports display-mesh streaming, and candidate repair integration. Verified at five effective scales (100–200% DPR) with Cocoa/OpenGL rendering. Physical Windows/Linux verification and 8 GB RAM memory tests deferred to post-development completion per user directive.",
+    "implementation_status": "Pass: production FeaturePanel modeling authoring, Viewport depth/draft manipulators and display mesh preview protocol",
+    "development_verification_status": "Pass: 98 enabled CTests, ten changed-source Clang analyses, pinned format, ownership and structural checks",
+    "experiments_status": "Production Qt/OpenGL UI and CAD worker exact mesh streaming; no Module 0 shortcut",
+    "native_verification_status": "Pass: available Mac development build, five effective scales (100%, 125%, 150%, 175%, 200% DPR), mm/in inputs, arbitrary sketch planes; screenshots reviewed",
+    "full_acceptance_status": "Deferred: physical Windows/Linux verification and physical 8 GB memory stress tests deferred to post-development completion",
+    "review_status": "Reviewed and merged into main (commit 1d42a10)",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/testing/core-modeling-cm5-review.md",
+      "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json",
+      "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/source-identity.json",
+      "docs/testing/artifacts/core-modeling/cm5-review-20261115/review/source-review.md"
     ]
   },
   "CM5.e": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM5.e complete course workflow verification, associative upstream mutation and reference repair on the available Mac development build: T5 Tutorial 1 asymmetric draft, T5 thin extrusion midplane, T6 selected contours and open cut, T8 standalone draft and repair, and upstream sketch dimension rebuild across save/reopen. Verified with 98 enabled CTests passing. Physical Windows/Linux verification and 8 GB RAM memory tests deferred to post-development completion per user directive.",
+    "implementation_status": "Pass: production course workflow test suites and associative rebuild verification in workflow_contracts_cm5.cpp",
+    "development_verification_status": "Pass: all 98 enabled CTests passed (100%), ten Clang analyses, format and architecture checks passed",
+    "experiments_status": "Production OCCT exact geometry fixtures and course workflow replays; no Module 0 shortcut",
+    "native_verification_status": "Pass: 14 QtTest cases at each of five effective scales (100%, 125%, 150%, 175%, 200% DPR); mm/in and inclined sketch frames verified",
+    "full_acceptance_status": "Deferred: physical Windows/Linux verification and physical 8 GB memory stress tests deferred to post-development completion",
+    "review_status": "Reviewed and merged into main (commit 1d42a10)",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/testing/core-modeling-cm5-review.md",
+      "tests/core_modeling/workflow_contracts_cm5.cpp",
+      "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json",
+      "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/source-identity.json",
+      "docs/testing/artifacts/core-modeling/cm5-review-20261115/review/source-review.md"
     ]
   },
   "CM6.a": {
