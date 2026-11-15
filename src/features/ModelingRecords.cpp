@@ -4,22 +4,36 @@ using domain::check;
 namespace {
 QStringList referencePath(QString path) {
     check(QStringList{"start/reference", "direction1/reference", "direction2/reference", "axis",
-                      "target/source", "neutral", "pull"}
+                      "plane", "target/source", "neutral", "pull", "reference", "placement/face",
+                      "termination/reference", "reference_face", "edge"}
                   .contains(path) ||
-              QRegularExpression("^faces/([0-9]|[12][0-9]|3[01])$").match(path).hasMatch(),
+              QRegularExpression("^(faces|edges|faces1|faces2|side_faces1|center_faces|side_faces2|"
+                                 "seed/faces)/([0-9]|[12][0-9]|3[01])$")
+                  .match(path)
+                  .hasMatch() ||
+              QRegularExpression("^radii/([0-9]|[12][0-9]|3[01])/edge$").match(path).hasMatch(),
           "InvalidInput", "Choose an explicit modeling reference path");
     return path.split('/');
 }
 QCborValue at(const QCborMap &intent, const QStringList &parts) {
     auto value = intent.value(parts[0]);
     if (parts.size() == 2) {
-        if (parts[0] == "faces") {
-            check(value.isArray() && parts[1].toInt() < value.toArray().size(), "InvalidInput",
-                  "Draft face slot missing");
+        if (value.isArray()) {
+            check(parts[1].toInt() < value.toArray().size(), "InvalidInput",
+                  "Array reference slot missing");
             value = value.toArray()[parts[1].toInt()];
         } else {
             check(value.isMap(), "InvalidInput", "Modeling reference path missing");
             value = value.toMap().value(parts[1]);
+        }
+    } else if (parts.size() == 3) {
+        check(value.isMap() || value.isArray(), "InvalidInput", "Modeling nested path missing");
+        if (value.isArray()) {
+            check(parts[1].toInt() < value.toArray().size(), "InvalidInput",
+                  "Array reference slot missing");
+            value = value.toArray()[parts[1].toInt()].toMap().value(parts[2]);
+        } else {
+            value = value.toMap().value(parts[1]).toArray()[parts[2].toInt()];
         }
     }
     check(value.isMap(), "InvalidInput", "Typed modeling reference missing");
@@ -51,14 +65,28 @@ QCborArray replaceIntentReference(const QCborArray &intents, QString owner, QStr
         at(m, parts);
         if (parts.size() == 1)
             m.insert(parts[0], replacement.map());
-        else if (parts[0] == "faces") {
-            auto faces = m.value("faces").toArray();
-            faces[parts[1].toInt()] = replacement.map();
-            m.insert(QStringLiteral("faces"), faces);
-        } else {
-            auto map = m.value(parts[0]).toMap();
-            map.insert(parts[1], replacement.map());
-            m.insert(parts[0], map);
+        else if (parts.size() == 2) {
+            if (m.value(parts[0]).isArray()) {
+                auto arr = m.value(parts[0]).toArray();
+                arr[parts[1].toInt()] = replacement.map();
+                m.insert(parts[0], arr);
+            } else {
+                auto map = m.value(parts[0]).toMap();
+                map.insert(parts[1], replacement.map());
+                m.insert(parts[0], map);
+            }
+        } else if (parts.size() == 3) {
+            if (parts[0] == "radii") {
+                auto arr = m.value("radii").toArray();
+                auto item = arr[parts[1].toInt()].toMap();
+                item.insert(QStringLiteral("edge"), replacement.map());
+                arr[parts[1].toInt()] = item;
+                m.insert(QStringLiteral("radii"), arr);
+            } else if (parts[0] == "seed" && parts[1] == "faces") {
+                auto arr = m.value("seed").toArray();
+                arr[parts[2].toInt()] = replacement.map();
+                m.insert(QStringLiteral("seed"), arr);
+            }
         }
         result[i] = ModelingIntent::parse(m).map();
     }
@@ -86,9 +114,11 @@ void validateModelingRecords(const QCborMap &m) {
         check(!seen.contains(id), "InvalidProject", "Duplicate modeling identity");
         seen.insert(id);
         wire::keys(p, {"feature", "kind", "operation", "target", "outputs", "history"});
+        bool directOp = f.value("kind") == "Draft" || f.value("kind") == "Fillet" ||
+                        f.value("kind") == "Chamfer" || f.value("kind") == "CosmeticThread";
         check(p.value("feature") == f.value("id") && p.value("kind") == f.value("kind") &&
                   p.value("operation") ==
-                      (f.value("kind") == "Draft" ? QCborValue("Draft") : f.value("operation")) &&
+                      (directOp ? QCborValue(f.value("kind")) : f.value("operation")) &&
                   p.value("target") == f.value("target") && p.value("outputs").isArray() &&
                   p.value("history").isArray(),
               "InvalidProject", "Modeling provenance disagrees with original intent");

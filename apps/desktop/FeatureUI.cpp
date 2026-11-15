@@ -33,15 +33,11 @@ void MainWindow::refreshFeatures() {
                    !active.value("modeling").toMap().value("intents").toArray().empty()) ||
                   (active.contains(QStringLiteral("model_supports")) &&
                    !active.value("model_supports").toMap().value("features").toArray().empty());
-    for (auto id : {"extrude", "revolve", "draft", "fillet", "chamfer", "hole", "pattern",
-                    "circularPattern", "mirror"}) {
-        bool profile = QString(id) == "extrude" || QString(id) == "revolve";
-        bool unsupported = !active.value("modeling").toMap().value("intents").toArray().empty() &&
-                           !profile && QString(id) != "draft";
-        available(id,
-                  !unsupported && part && idle && !sketchEdit && !edit &&
-                      (profile ? sketches : solids),
-                  profile ? "Accept a closed Part sketch first"
+    for (auto id : {"extrude", "revolve", "draft", "fillet", "chamfer", "hole", "rib", "pattern",
+                    "circularPattern", "mirror", "thread"}) {
+        bool profile = QString(id) == "extrude" || QString(id) == "revolve" || QString(id) == "rib";
+        available(id, part && idle && !sketchEdit && !edit && (profile ? sketches : solids),
+                  profile ? "Accept a Part sketch first"
                           : "Requires an accepted Part solid and no active command");
     }
     findChild<QAction *>("cancelFeatureAction")

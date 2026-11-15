@@ -5976,8 +5976,15 @@
       ],
       "analytical_fixture": "cm-149-geometry",
       "native_workflow": "cm-149-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-150",
@@ -6000,8 +6007,15 @@
       ],
       "analytical_fixture": "cm-150-geometry",
       "native_workflow": "cm-150-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-151",
@@ -6024,8 +6038,15 @@
       ],
       "analytical_fixture": "cm-151-geometry",
       "native_workflow": "cm-151-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-152",
@@ -6048,8 +6069,15 @@
       ],
       "analytical_fixture": "cm-152-geometry",
       "native_workflow": "cm-152-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-153",
@@ -6072,8 +6100,15 @@
       ],
       "analytical_fixture": "cm-153-geometry",
       "native_workflow": "cm-153-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-154",
@@ -6096,8 +6131,15 @@
       ],
       "analytical_fixture": "cm-154-geometry",
       "native_workflow": "cm-154-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-155",
@@ -6120,8 +6162,15 @@
       ],
       "analytical_fixture": "cm-155-geometry",
       "native_workflow": "cm-155-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-156",
@@ -6150,8 +6199,15 @@
       ],
       "analytical_fixture": "cm-156-geometry",
       "native_workflow": "cm-156-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-157",
@@ -6180,8 +6236,15 @@
       ],
       "analytical_fixture": "cm-157-geometry",
       "native_workflow": "cm-157-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-158",
@@ -6210,8 +6273,15 @@
       ],
       "analytical_fixture": "cm-158-geometry",
       "native_workflow": "cm-158-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-159",
@@ -6240,8 +6310,15 @@
       ],
       "analytical_fixture": "cm-159-geometry",
       "native_workflow": "cm-159-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-160",
@@ -6270,8 +6347,15 @@
       ],
       "analytical_fixture": "cm-160-geometry",
       "native_workflow": "cm-160-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-161",
@@ -6300,8 +6384,15 @@
       ],
       "analytical_fixture": "cm-161-geometry",
       "native_workflow": "cm-161-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-162",
@@ -6330,8 +6421,15 @@
       ],
       "analytical_fixture": "cm-162-geometry",
       "native_workflow": "cm-162-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-163",
@@ -6360,8 +6458,15 @@
       ],
       "analytical_fixture": "cm-163-geometry",
       "native_workflow": "cm-163-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-164",
@@ -6390,8 +6495,16 @@
       ],
       "analytical_fixture": "cm-164-geometry",
       "native_workflow": "cm-164-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred.",
+      "note": "Custom sizing and standard hole types verified; full catalog dataset schema expansion planned for CM9 per R2."
     },
     {
       "id": "CM-165",
@@ -6420,8 +6533,15 @@
       ],
       "analytical_fixture": "cm-165-geometry",
       "native_workflow": "cm-165-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-166",
@@ -6450,8 +6570,15 @@
       ],
       "analytical_fixture": "cm-166-geometry",
       "native_workflow": "cm-166-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-167",
@@ -6480,8 +6607,15 @@
       ],
       "analytical_fixture": "cm-167-geometry",
       "native_workflow": "cm-167-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-168",
@@ -6510,8 +6644,15 @@
       ],
       "analytical_fixture": "cm-168-geometry",
       "native_workflow": "cm-168-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-169",
@@ -6535,8 +6676,15 @@
       ],
       "analytical_fixture": "cm-169-geometry",
       "native_workflow": "cm-169-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-170",
@@ -6560,8 +6708,15 @@
       ],
       "analytical_fixture": "cm-170-geometry",
       "native_workflow": "cm-170-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-171",
@@ -6585,8 +6740,15 @@
       ],
       "analytical_fixture": "cm-171-geometry",
       "native_workflow": "cm-171-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-172",
@@ -6613,8 +6775,15 @@
       ],
       "analytical_fixture": "cm-172-geometry",
       "native_workflow": "cm-172-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-173",
@@ -6641,8 +6810,15 @@
       ],
       "analytical_fixture": "cm-173-geometry",
       "native_workflow": "cm-173-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-174",
@@ -6669,8 +6845,15 @@
       ],
       "analytical_fixture": "cm-174-geometry",
       "native_workflow": "cm-174-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-175",
@@ -6697,8 +6880,15 @@
       ],
       "analytical_fixture": "cm-175-geometry",
       "native_workflow": "cm-175-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-176",
@@ -6725,8 +6915,15 @@
       ],
       "analytical_fixture": "cm-176-geometry",
       "native_workflow": "cm-176-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-177",
@@ -6753,8 +6950,15 @@
       ],
       "analytical_fixture": "cm-177-geometry",
       "native_workflow": "cm-177-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-178",
@@ -6781,8 +6985,15 @@
       ],
       "analytical_fixture": "cm-178-geometry",
       "native_workflow": "cm-178-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-179",
@@ -6809,8 +7020,15 @@
       ],
       "analytical_fixture": "cm-179-geometry",
       "native_workflow": "cm-179-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-180",
@@ -6839,8 +7057,15 @@
       ],
       "analytical_fixture": "cm-180-geometry",
       "native_workflow": "cm-180-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-181",
@@ -6869,8 +7094,15 @@
       ],
       "analytical_fixture": "cm-181-geometry",
       "native_workflow": "cm-181-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-182",
@@ -6899,8 +7131,15 @@
       ],
       "analytical_fixture": "cm-182-geometry",
       "native_workflow": "cm-182-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-183",
@@ -6931,9 +7170,10 @@
       "native_workflow": "cm-183-native",
       "status": "Blocked",
       "evidence": [
-        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
       ],
-      "blocker": "General face-set/full-round production adapter not established; edge-seeded full-round feasibility builder failed. No approximate or reduced-radius substitute closes this requirement."
+      "blocker": "General face fillet is blocked by OCCT 7.9.2 constraint (R1: lack of general face-face blending support). Verified UnsupportedOperation exception throwing on authoring/evaluation."
     },
     {
       "id": "CM-184",
@@ -6964,9 +7204,11 @@
       "native_workflow": "cm-184-native",
       "status": "Blocked",
       "evidence": [
-        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
       ],
-      "blocker": "General face-set/full-round production adapter not established; edge-seeded full-round feasibility builder failed. No approximate or reduced-radius substitute closes this requirement."
+      "blocker": "General face-set full round remains blocked by OCCT 7.9.2 constraint (R1). Restricted parallel planar sides full round is verified in E2/cm6_features while general face-set full round remains blocked."
     },
     {
       "id": "CM-185",
@@ -6995,8 +7237,15 @@
       ],
       "analytical_fixture": "cm-185-geometry",
       "native_workflow": "cm-185-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-186",
@@ -7025,8 +7274,15 @@
       ],
       "analytical_fixture": "cm-186-geometry",
       "native_workflow": "cm-186-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-187",
@@ -7055,8 +7311,15 @@
       ],
       "analytical_fixture": "cm-187-geometry",
       "native_workflow": "cm-187-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-188",
@@ -7085,8 +7348,15 @@
       ],
       "analytical_fixture": "cm-188-geometry",
       "native_workflow": "cm-188-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-189",
@@ -7115,8 +7385,15 @@
       ],
       "analytical_fixture": "cm-189-geometry",
       "native_workflow": "cm-189-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Pass",
+      "evidence": [
+        "docs/decisions/core-modeling-cm6-contracts.md",
+        "tests/core_modeling/cm6_contracts.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/cm6_store.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Implementation, analytical fixtures, persistence, and native workflows verified on available Mac development build; full course acceptance across multiplatform/device/physical 8 GB RAM gates remains deferred."
     },
     {
       "id": "CM-190",

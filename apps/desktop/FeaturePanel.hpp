@@ -80,6 +80,72 @@ class FeaturePanel : public QWidget {
     QDoubleSpinBox *draftStandaloneAngle = nullptr;
     QCheckBox *draftStandaloneOutward = nullptr;
 
+    // CM6 Controls
+    // Hole Wizard
+    QComboBox *holeFamily = nullptr;
+    QComboBox *holePlacementFace = nullptr;
+    QComboBox *holePlacementSketch = nullptr;
+    QDoubleSpinBox *holeDiameter = nullptr;
+    QDoubleSpinBox *holeDepth = nullptr;
+    QDoubleSpinBox *holeCounterboreDia = nullptr;
+    QDoubleSpinBox *holeCounterboreDepth = nullptr;
+    QDoubleSpinBox *holeCountersinkDia = nullptr;
+    QDoubleSpinBox *holeCountersinkAngle = nullptr;
+    QDoubleSpinBox *holeDrillAngle = nullptr;
+    QComboBox *holeTermination = nullptr;
+
+    // Treatments: Fillet & Chamfer
+    QComboBox *filletMethod = nullptr;
+    QDoubleSpinBox *filletRadius = nullptr;
+    QCheckBox *filletPropagateTangent = nullptr;
+    QComboBox *filletEdges = nullptr;
+
+    QComboBox *chamferMethod = nullptr;
+    QDoubleSpinBox *chamferDistance = nullptr;
+    QDoubleSpinBox *chamferDistance2 = nullptr;
+    QDoubleSpinBox *chamferAngle = nullptr;
+    QCheckBox *chamferFlip = nullptr;
+    QComboBox *chamferEdges = nullptr;
+
+    // Rib
+    QDoubleSpinBox *ribThickness = nullptr;
+    QComboBox *ribSide = nullptr;
+    QComboBox *ribDirection = nullptr;
+    QCheckBox *ribFlipMaterial = nullptr;
+
+    // Repetition: LinearPattern, CircularPattern, Mirror
+    QComboBox *patSeedKind = nullptr;
+    QComboBox *patSeed = nullptr;
+    QComboBox *linearDir1Ref = nullptr;
+    QDoubleSpinBox *linearSpacing1 = nullptr;
+    QSpinBox *linearCount1 = nullptr;
+    QCheckBox *linearReverse1 = nullptr;
+    QComboBox *linearDir2Ref = nullptr;
+    QDoubleSpinBox *linearSpacing2 = nullptr;
+    QSpinBox *linearCount2 = nullptr;
+    QCheckBox *linearReverse2 = nullptr;
+
+    QComboBox *circAxisRef = nullptr;
+    QSpinBox *circCount = nullptr;
+    QCheckBox *circEqualSpacing = nullptr;
+    QDoubleSpinBox *circAngle = nullptr;
+    QCheckBox *circReverse = nullptr;
+
+    QComboBox *mirrorPlaneRef = nullptr;
+
+    // Cosmetic Thread
+    QComboBox *threadEdgeRef = nullptr;
+    QLineEdit *threadDesignation = nullptr;
+    QComboBox *threadStandard = nullptr;
+    QComboBox *threadType = nullptr;
+    QLineEdit *threadSize = nullptr;
+    QCheckBox *threadInternal = nullptr;
+    QDoubleSpinBox *threadMajorDia = nullptr;
+    QDoubleSpinBox *threadMinorDia = nullptr;
+    QDoubleSpinBox *threadPitch = nullptr;
+    QComboBox *threadTermination = nullptr;
+    QCheckBox *threadShadedDisplay = nullptr;
+
     // Repair controls
     QComboBox *repairCandidate = nullptr;
     QPushButton *repairButton = nullptr;

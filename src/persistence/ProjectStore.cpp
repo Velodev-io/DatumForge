@@ -37,8 +37,10 @@ const QString associatedDimensionManifest = dimensionManifest + ";sketch-associa
 const QString interactionManifest = associatedDimensionManifest + ";sketch-interactions=1";
 const QString supportManifest = interactionManifest + ";model-supports=1";
 const QString modelingManifest = supportManifest + ";modeling-intents=1";
+const QString cm6Manifest = modelingManifest + ";cm6-features=1";
 int manifestRequirement(QString value) {
-    return value == modelingManifest              ? 10
+    return value == cm6Manifest                   ? 11
+           : value == modelingManifest            ? 10
            : value == supportManifest             ? 9
            : value == interactionManifest         ? 8
            : value == associatedDimensionManifest ? 7
@@ -62,8 +64,21 @@ int sketchRequirement(const QCborValue &value) {
              map.contains(QStringLiteral("attachments")) &&
              map.contains(QStringLiteral("conversions"))))
             result = 9;
-        if (map.value("modeling").isMap())
+        if (map.value("modeling").isMap()) {
             result = 10;
+            auto modelingMap = map.value("modeling").toMap();
+            if (modelingMap.value("intents").isArray()) {
+                for (auto item : modelingMap.value("intents").toArray()) {
+                    auto kind = item.toMap().value("kind").toString();
+                    if (QStringList{"Hole", "CosmeticThread", "Rib", "LinearPattern",
+                                    "CircularPattern", "Mirror", "Fillet", "Chamfer"}
+                            .contains(kind)) {
+                        result = 11;
+                        break;
+                    }
+                }
+            }
+        }
         if (map.contains(QStringLiteral("entities")) &&
             map.contains(QStringLiteral("constraints")) && map.value("version").toInteger() >= 2)
             result = std::max(result, int(map.value("version").toInteger()));
@@ -243,7 +258,7 @@ void compatible(Database &db) {
                       assemblyManifest, drawingManifest, coreManifest, constructionManifest,
                       primitiveManifest, editManifest, dimensionManifest,
                       associatedDimensionManifest, interactionManifest, supportManifest,
-                      modelingManifest}
+                      modelingManifest, cm6Manifest}
               .contains(db.scalar("SELECT manifest FROM project_meta").toString()),
           "IncompatibleSchema",
           "Unsupported semantic/object encoding; original file was not changed");
@@ -573,7 +588,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                   QStringList{assemblyManifest, drawingManifest, coreManifest, constructionManifest,
                               primitiveManifest, editManifest, dimensionManifest,
                               associatedDimensionManifest, interactionManifest, supportManifest,
-                              modelingManifest}
+                              modelingManifest, cm6Manifest}
                       .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
               "InvalidProject", "Invalid assembly collection owner/manifest");
         auto m = assembly::Model::parse(decode(row[2]));
@@ -596,7 +611,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                   QStringList{drawingManifest, coreManifest, constructionManifest,
                               primitiveManifest, editManifest, dimensionManifest,
                               associatedDimensionManifest, interactionManifest, supportManifest,
-                              modelingManifest}
+                              modelingManifest, cm6Manifest}
                       .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
               "InvalidProject", "Invalid drawing collection owner/manifest");
         auto model = drawing::Model::parse(decode(row[3]));
@@ -656,7 +671,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                               drawingManifest, coreManifest, constructionManifest,
                               primitiveManifest, editManifest, dimensionManifest,
                               associatedDimensionManifest, interactionManifest, supportManifest,
-                              modelingManifest}
+                              modelingManifest, cm6Manifest}
                       .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
               "InvalidProject", "Invalid feature collection context or manifest");
         auto collection = decode(row[0]);
@@ -666,6 +681,19 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
             validateModelCollection(collection);
             check(!collection.contains(QStringLiteral("modeling")) || semanticRequirement >= 10,
                   "IncompatibleSchema", "Modeling intent reader manifest required");
+            if (collection.contains(QStringLiteral("modeling"))) {
+                for (auto intent :
+                     collection.value("modeling").toMap().value("intents").toArray()) {
+                    auto kind = intent.toMap().value("kind").toString();
+                    if (QStringList{"Hole", "CosmeticThread", "Rib", "LinearPattern",
+                                    "CircularPattern", "Mirror", "Fillet", "Chamfer"}
+                            .contains(kind)) {
+                        check(semanticRequirement >= 11, "IncompatibleSchema",
+                              "CM6 feature reader manifest required");
+                        break;
+                    }
+                }
+            }
             for (auto intent : collection.value("modeling").toMap().value("intents").toArray()) {
                 auto id = intent.toMap().value("id").toString();
                 check(!sketchIds.contains(id), "InvalidProject", "Modeling identity collision");
@@ -717,7 +745,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                     QStringList{exchangeManifest, assemblyManifest, drawingManifest, coreManifest,
                                 constructionManifest, primitiveManifest, editManifest,
                                 dimensionManifest, associatedDimensionManifest, interactionManifest,
-                                supportManifest, modelingManifest}
+                                supportManifest, modelingManifest, cm6Manifest}
                         .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
                 "IncompatibleSchema", "History manifest required");
             check(collection.value("stale").isBool(), "InvalidProject",
@@ -1691,11 +1719,11 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
                         "definition=excluded.definition",
                         {entity, encode(collection)});
             db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN "
-                    "(?,?,?,?,?,?,?,?,?,?,?,?)",
+                    "(?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     {historyManifest, exchangeManifest, assemblyManifest, drawingManifest,
                      coreManifest, constructionManifest, primitiveManifest, editManifest,
                      dimensionManifest, associatedDimensionManifest, interactionManifest,
-                     supportManifest, modelingManifest});
+                     supportManifest, modelingManifest, cm6Manifest});
         } else if (type == "set_features") {
             auto a = d.value("features").toArray();
             buildPart(*db, profileSketches(wire::text(d, "document"), a), a, &resultCache);
@@ -1722,12 +1750,12 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
                     "definition=excluded.definition",
                     {entity, bytes});
             db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN "
-                    "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     {sketchManifest, featureManifest, historyManifest, exchangeManifest,
                      assemblyManifest, drawingManifest, coreManifest, constructionManifest,
                      primitiveManifest, editManifest, dimensionManifest,
                      associatedDimensionManifest, interactionManifest, supportManifest,
-                     modelingManifest});
+                     modelingManifest, cm6Manifest});
         } else if (type == "set_parameter")
             db->run("INSERT INTO parameters VALUES(?,?,?,?) ON CONFLICT(owner,name) DO UPDATE SET "
                     "dimension=excluded.dimension,value_si=excluded.value_si",
@@ -1775,9 +1803,10 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
     // history may still contain extended sketches even when the active state does not.
     auto required = std::max(retainedRequirement, sketchRequirement(d));
     if (required >= 2)
-        db->run("UPDATE project_meta SET manifest=?", {required >= 10  ? modelingManifest
-                                                       : required >= 9 ? supportManifest
-                                                       : required >= 8 ? interactionManifest
+        db->run("UPDATE project_meta SET manifest=?", {required >= 11   ? cm6Manifest
+                                                       : required >= 10 ? modelingManifest
+                                                       : required >= 9  ? supportManifest
+                                                       : required >= 8  ? interactionManifest
                                                        : required >= 7 ? associatedDimensionManifest
                                                        : required >= 6 ? dimensionManifest
                                                        : required >= 5 ? editManifest
@@ -2415,7 +2444,7 @@ void ProjectStore::migrationCopy(QString source, QString destination, const Boun
     check(prior != drawingManifest && prior != coreManifest && prior != constructionManifest &&
               prior != primitiveManifest && prior != editManifest && prior != dimensionManifest &&
               prior != associatedDimensionManifest && prior != interactionManifest &&
-              prior != supportManifest && prior != modelingManifest,
+              prior != supportManifest && prior != modelingManifest && prior != cm6Manifest,
           "IncompatibleSchema", "Project already uses the current semantic manifest");
     spaceFor(QFileInfo(destination).absolutePath(), QFileInfo(source).size() * 2);
     QTemporaryFile staged(QFileInfo(destination).absolutePath() + "/.cad-migration-XXXXXX");
@@ -2544,13 +2573,14 @@ QCborMap ProjectStore::importGeometry(const wire::Envelope &request, QString pat
     auto after = deltaFor(edit, before);
     auto next = revision() + 1;
     apply(after, next);
-    db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN (?,?,?,?,?,?,?,?,?)",
+    db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN (?,?,?,?,?,?,?,?,?,?,?)",
             {db->scalar("SELECT count(*) FROM drawing_views").toInt() > 0
                  ? drawingManifest
                  : (db->scalar("SELECT count(*) FROM occurrences").toInt() > 0 ? assemblyManifest
                                                                                : exchangeManifest),
              coreManifest, constructionManifest, primitiveManifest, editManifest, dimensionManifest,
-             associatedDimensionManifest, interactionManifest, supportManifest, modelingManifest});
+             associatedDimensionManifest, interactionManifest, supportManifest, modelingManifest,
+             cm6Manifest});
     auto cursor = db->scalar("SELECT history_cursor FROM project_meta").toLongLong();
     db->run("DELETE FROM history WHERE position>?", {cursor});
     db->run("UPDATE project_meta SET revision=?,history_cursor=?", {next, cursor + 1});

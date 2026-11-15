@@ -3,7 +3,7 @@
 Living checklist maintained across sessions.
 Format: `[ ]` not started, `[/]` in progress, `[x]` done, `[~]` deferred/blocked.
 
-Last Updated: 2026-11-14
+Last Updated: 2026-11-15
 
 ---
 
@@ -50,7 +50,12 @@ Last Updated: 2026-11-14
   - [x] CM5.c: Durable persistence, Boolean provenance & explicit repair *(Verified on available-Mac development scope, branch `review/cm5-c-delivery-20261114`; native controls and full acceptance remain open)*.
   - [x] CM5.d: Native on-screen depth/thickness/draft manipulators & authoring *(Complete: FeaturePanel Extrude/Revolve/Draft controls, linear depth & angular draft handles in Viewport, exact display preview protocol, 5-scale verification at 100–200% DPR, mm/in, arbitrary sketch planes; review repairs merged into main)*.
   - [x] CM5.e: Complete course workflow verification *(Complete: T5 Tutorial 1 asymmetric draft, T5 thin extrusion midplane, T6 selected/reused contours, T6 open-profile cut, T8 standalone draft, upstream mutation & rebuild, save/reopen, 98/98 enabled CTests passing; merged into main)*.
-- [ ] **CM6: Hole Wizard, Ribs, Patterns & Treatments** *(Scheduled; not started)*.
+- [x] **CM6: Hole Wizard, Ribs, Patterns & Treatments**
+  - [x] CM6.a: Intent contracts (Hole, CosmeticThread, Rib, LinearPattern, CircularPattern, Mirror, Fillet, Chamfer; bounds & reference paths; 100% contracts CTests pass).
+  - [x] CM6.b: Exact engine adapters in OCCT (Treatments, Holes, Repetition, Ribs; analytical oracles; 100% features CTests pass).
+  - [x] CM6.c: Durable persistence, cm6Manifest requirement 11, roundtrip reopen and repair.
+  - [x] CM6.d: Native UI controls in FeaturePanel, WorkspaceChrome, and MainWindow (Rib, CosmeticThread, Hole, Fillet, Chamfer, LinearPattern, CircularPattern, Mirror).
+  - [x] CM6.e: Workflow verifications (Tutorial 1 bracket, Tutorial 2 revolve/thread/fillet, Tutorial 3 chamfer/fullround/face fillet, 5-scale DPI, persistence & upstream mutation replay; 100% CTests pass).
 - [ ] **CM7: 3D Curves & Spatial Sketches** *(Scheduled; not started)*.
 - [ ] **CM8: Sweeps, Lofts & Shells** *(Scheduled; not started)*.
 - [ ] **CM9: Offline Catalogs, Materials & Evaluation Tools** *(Scheduled; not started)*.

@@ -80,9 +80,10 @@ void MainWindow::buildCommandTabs() {
     for (auto pair :
          {std::pair{"revolve", "Revolve"}, std::pair{"draft", "Draft"},
           std::pair{"fillet", "Fillet"}, std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"},
-          std::pair{"pattern", "Linear pattern"}, std::pair{"circularPattern", "Circular pattern"},
-          std::pair{"mirror", "Mirror"}})
-        add(pair.first, pair.second, "Exact features are planned after workspace UI (4.1/4.2)");
+          std::pair{"rib", "Rib"}, std::pair{"pattern", "Linear pattern"},
+          std::pair{"circularPattern", "Circular pattern"}, std::pair{"mirror", "Mirror"},
+          std::pair{"thread", "Cosmetic thread"}})
+        add(pair.first, pair.second, "Exact modeling intent");
     auto *toolbar = addToolBar("CommandManager");
     toolbar->setObjectName("commandManager");
     toolbar->setMovable(false);
@@ -107,8 +108,9 @@ void MainWindow::buildCommandTabs() {
         }
         commandTabs->addTab(bar, name);
     };
-    page("Features", {"sketch", "sketch.edit", "", "extrude", "revolve", "draft", "", "fillet",
-                      "chamfer", "hole", "pattern", "circularPattern", "mirror"});
+    page("Features",
+         {"sketch", "sketch.edit", "", "extrude", "revolve", "draft", "rib", "", "fillet",
+          "chamfer", "hole", "thread", "", "pattern", "circularPattern", "mirror"});
     page("Sketch", {"sketch",
                     "sketch.edit",
                     "",

@@ -253,8 +253,8 @@ class WorkflowContractsCM5 : public QObject {
                             s.window->findChild<QLabel *>("featureDiagnostic")->text()));
         panel->finish();
         QVERIFY(s.idle());
-        QVERIFY(!s.window->command("fillet")->isEnabled());
-        panel->begin("Fillet");
+        QVERIFY(!s.window->command("history")->isEnabled());
+        panel->begin("LegacyFeature");
         QVERIFY(!panel->active());
         auto revision = s.client->state().revision;
         panel->begin("Extrude");

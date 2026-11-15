@@ -2021,48 +2021,53 @@
     ]
   },
   "CM6.a": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "Semantic contracts for Hole, CosmeticThread, Rib, LinearPattern, CircularPattern, Mirror, Fillet, Chamfer with validation bounds and topological reference paths.",
+    "implementation_status": "Pass: ModelingIntent.cpp contracts and ModelingRecords.cpp path rewriting",
+    "development_verification_status": "Pass: cm6.contracts test passing 100%",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/decisions/core-modeling-cm6-contracts.md",
+      "tests/core_modeling/cm6_contracts.cpp"
     ]
   },
   "CM6.b": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "Exact OCCT engine adapters for Treatments (fillets, chamfers, restricted full round), Holes (Simple, Counterbore, Countersink, Drilled, Tapped, PipeTap), Repetition (LinearPattern, CircularPattern, Mirror), and Ribs (open/closed profiles, side controls, material flip).",
+    "implementation_status": "Pass: Treatments.cpp, Holes.cpp, Repetition.cpp, Ribs.cpp OCCT adapters",
+    "development_verification_status": "Pass: cm6.features test passing 100% against analytical oracles",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/decisions/core-modeling-cm6-contracts.md",
+      "tests/core_modeling/cm6_features.cpp"
     ]
   },
   "CM6.c": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "Durable persistence for CM6 features in ProjectStore.cpp with cm6Manifest requirement 11, upgrade, roundtrip reopen and repair.",
+    "implementation_status": "Pass: ProjectStore.cpp manifest requirement 11, serialization, schema validation",
+    "development_verification_status": "Pass: cm6.store test passing 100%",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/decisions/core-modeling-cm6-contracts.md",
+      "tests/core_modeling/cm6_store.cpp"
     ]
   },
   "CM6.d": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "Native UI controls in FeaturePanel, WorkspaceChrome, and MainWindow for all CM6 feature kinds with dynamic show/hide and units formatting.",
+    "implementation_status": "Pass: FeaturePanel.cpp, FeatureUI.cpp, WorkspaceChrome.cpp, MainWindow.cpp",
+    "development_verification_status": "Pass: Clean build of cad-desktop and workflow_contracts_cm6 UI verification",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/decisions/core-modeling-cm6-contracts.md",
+      "tests/core_modeling/workflow_contracts_cm6.cpp"
     ]
   },
   "CM6.e": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "Course workflow verification on available Mac development build: T7 Tutorial 1 bracket, Tutorial 2 revolve/thread/fillet, Tutorial 3 chamfer/fullround/face fillet, 5-scale DPI, persistence and upstream mutation replay.",
+    "implementation_status": "Pass: workflow_contracts_cm6.cpp 8 test cases passing 100%",
+    "development_verification_status": "Pass: cm6.workflow_contracts ctest passing 100%",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
+      "docs/decisions/core-modeling-cm6-contracts.md",
+      "tests/core_modeling/workflow_contracts_cm6.cpp"
     ]
   },
   "CM7.a": {

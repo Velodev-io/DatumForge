@@ -24,12 +24,15 @@ struct Reader {
         auto r = domain::GeometryReference::parse(object(m, key));
         bool curve = r.role == "Curve" || r.role == "Edge";
         bool selector = !r.endpoint.isEmpty() || r.parameter.has_value();
-        bool valid = category == "Plane" ? r.role == "Plane" || r.role == "Face"
-                     : category == "Point"
-                         ? r.role == "Point" || r.role == "Vertex" || (curve && selector)
-                     : category == "Axis" ? r.role == "Axis" || (curve && !selector)
-                     : category == "Body" ? r.role == "Object"
-                                          : r.role == category;
+        bool valid =
+            category == "Plane"    ? r.role == "Plane" || r.role == "Face"
+            : category == "Point"  ? r.role == "Point" || r.role == "Vertex" || (curve && selector)
+            : category == "Axis"   ? r.role == "Axis" || (curve && !selector)
+            : category == "Body"   ? r.role == "Object"
+            : category == "Thread" ? r.role == "Edge" || r.role == "Face" || r.role == "Curve"
+            : category == "Direction" ? r.role == "Axis" || r.role == "Edge" || r.role == "Curve" ||
+                                            r.role == "Plane" || r.role == "Face"
+                                      : r.role == category;
         domain::check(valid, "InvalidInput", "Wrong modeling reference role: " + key);
         node.references.push_back(r);
         if (category == "Body" || r.role == "Face" || r.role == "Edge" || r.role == "Vertex")
@@ -194,6 +197,377 @@ ModelingIntent ModelingIntent::parse(const QCborMap &m) {
         domain::check(number(m, "angle", 1e-8, std::numbers::pi / 2) < std::numbers::pi / 2,
                       "InvalidInput", "Draft angle must be below pi/2");
         boolean(m, "outward");
+    } else if (kind == "Hole") {
+        wire::keys(m, {"version", "id", "kind", "operation", "target", "family", "placement",
+                       "sizing", "termination"});
+        domain::check(wire::text(m, "operation") == "Cut", "UnsupportedOperation",
+                      "Hole operation must be Cut");
+        reader.body(object(m, "target"));
+        auto family = wire::text(m, "family");
+        domain::check(QStringList{"Simple", "Counterbore", "Countersink", "Drilled", "Tapped",
+                                  "PipeTap", "LegacySimple", "LegacySimpleDrilled",
+                                  "LegacyCounterboreDrill", "LegacyCountersinkDrill",
+                                  "LegacyTapered"}
+                          .contains(family),
+                      "UnsupportedOperation", "Unsupported hole family: " + family);
+        auto placement = object(m, "placement");
+        wire::keys(placement, {"face", "sketch", "points"});
+        reader.reference(placement, "face", "Face");
+        auto sketchId = domain::id(wire::text(placement, "sketch"));
+        reader.kind(sketchId, "Sketch");
+        domain::GeometryReference skRef;
+        skRef.object = sketchId;
+        reader.node.references.push_back(skRef);
+        domain::check(placement.value("points").isArray(), "InvalidInput",
+                      "Hole placement points required");
+        auto pts = placement.value("points").toArray();
+        domain::check(!pts.empty() && pts.size() <= 64, "ResourceLimit",
+                      "Select 1–64 hole placement points");
+        QSet<QString> seenPts;
+        for (auto ptVal : pts) {
+            auto ptId = domain::id(wire::text(sketch::fields({{"p", ptVal}}), "p"));
+            domain::check(!seenPts.contains(ptId), "InvalidInput",
+                          "Duplicate hole placement point");
+            seenPts.insert(ptId);
+            domain::GeometryReference ptRef;
+            ptRef.object = sketchId;
+            ptRef.role = "Point";
+            ptRef.entity = ptId;
+            reader.node.references.push_back(ptRef);
+        }
+        auto sizing = object(m, "sizing");
+        auto smode = wire::text(sizing, "mode");
+        domain::check(smode == "Custom" || smode == "Catalog", "UnsupportedOperation",
+                      "Unsupported sizing mode");
+        QSet<QString> szKeys{"mode", "diameter", "depth"};
+        double dia = number(sizing, "diameter", 1e-8, 1000);
+        double depth = number(sizing, "depth", 1e-8, 1000);
+        if (family == "Counterbore" || family == "LegacyCounterboreDrill") {
+            szKeys.unite({"counterbore_diameter", "counterbore_depth"});
+            number(sizing, "counterbore_diameter", dia, 1000);
+            number(sizing, "counterbore_depth", 1e-8, depth);
+        }
+        if (family == "Countersink" || family == "LegacyCountersinkDrill") {
+            szKeys.unite({"countersink_diameter", "countersink_angle"});
+            number(sizing, "countersink_diameter", dia, 1000);
+            number(sizing, "countersink_angle", 1e-4, std::numbers::pi - 1e-4);
+        }
+        if (family == "Drilled" || family == "LegacySimpleDrilled" ||
+            family == "LegacyCounterboreDrill" || family == "LegacyCountersinkDrill") {
+            szKeys.insert("drill_angle");
+            number(sizing, "drill_angle", 1e-4, std::numbers::pi - 1e-4);
+        }
+        if (family == "Tapered" || family == "LegacyTapered" || family == "PipeTap") {
+            szKeys.insert("taper_angle");
+            number(sizing, "taper_angle", 1e-4, std::numbers::pi / 2 - 1e-4);
+        }
+        if (family == "Tapped" || family == "PipeTap") {
+            szKeys.unite({"tap_drill_diameter", "thread"});
+            number(sizing, "tap_drill_diameter", 1e-8, dia);
+            auto thread = object(sizing, "thread");
+            wire::keys(thread, {"cosmetic", "designation", "pitch", "depth"});
+            boolean(thread, "cosmetic");
+            domain::label(wire::text(thread, "designation"));
+            number(thread, "pitch", 1e-8, 1000);
+            number(thread, "depth", 1e-8, depth);
+        }
+        if (smode == "Catalog") {
+            szKeys.unite({"dataset", "standard", "type", "size", "fit"});
+            wire::text(sizing, "dataset");
+            wire::text(sizing, "standard");
+            wire::text(sizing, "type");
+            wire::text(sizing, "size");
+            wire::text(sizing, "fit");
+        }
+        wire::keys(sizing, szKeys);
+        auto term = object(m, "termination");
+        auto tmode = wire::text(term, "mode");
+        auto dref = wire::text(term, "depth_reference");
+        domain::check(dref == "Shoulder" || dref == "Tip", "InvalidInput",
+                      "Depth reference must be Shoulder or Tip");
+        QSet<QString> tmKeys{"mode", "depth_reference"};
+        if (tmode == "Blind" || tmode == "ThroughAll" || tmode == "UpToNext") {
+        } else if (tmode == "UpToVertex" || tmode == "UpToSurface") {
+            tmKeys.insert("reference");
+            reader.reference(term, "reference", tmode == "UpToVertex" ? "Point" : "Plane");
+        } else if (tmode == "OffsetFromSurface") {
+            tmKeys.unite({"reference", "offset", "offset_reverse"});
+            reader.reference(term, "reference", "Plane");
+            number(term, "offset", 0, 1000);
+            boolean(term, "offset_reverse");
+        } else
+            throw domain::Error("UnsupportedOperation",
+                                "Unsupported hole termination mode: " + tmode);
+        wire::keys(term, tmKeys);
+    } else if (kind == "CosmeticThread") {
+        wire::keys(m, {"version", "id", "kind", "target", "reference", "designation", "standard",
+                       "type", "size", "thread_type", "major_diameter", "minor_diameter", "pitch",
+                       "termination"});
+        reader.body(object(m, "target"));
+        reader.reference(m, "reference", "Thread");
+        domain::label(wire::text(m, "designation"));
+        wire::text(m, "standard");
+        wire::text(m, "type");
+        wire::text(m, "size");
+        auto tt = wire::text(m, "thread_type");
+        domain::check(tt == "Internal" || tt == "External", "InvalidInput",
+                      "Thread type must be Internal or External");
+        double major = number(m, "major_diameter", 1e-8, 1000);
+        number(m, "minor_diameter", 1e-8, major);
+        number(m, "pitch", 1e-8, 1000);
+        auto term = object(m, "termination");
+        auto tmode = wire::text(term, "mode");
+        if (tmode == "Blind") {
+            wire::keys(term, {"mode", "depth"});
+            number(term, "depth", 1e-8, 1000);
+        } else if (tmode == "ThroughAll" || tmode == "UpToNext") {
+            wire::keys(term, {"mode"});
+        } else
+            throw domain::Error("UnsupportedOperation", "Unsupported thread termination: " + tmode);
+    } else if (kind == "Rib") {
+        wire::keys(m, {"version", "id", "kind", "operation", "target", "profile", "thickness",
+                       "side", "direction", "flip_material"});
+        domain::check(wire::text(m, "operation") == "Add", "UnsupportedOperation",
+                      "Rib operation must be Add");
+        reader.body(object(m, "target"));
+        reader.profile(object(m, "profile"));
+        number(m, "thickness", 1e-8, 1000);
+        auto side = wire::text(m, "side");
+        domain::check(side == "Both" || side == "First" || side == "Second", "InvalidInput",
+                      "Rib side must be Both, First, or Second");
+        auto dir = wire::text(m, "direction");
+        domain::check(dir == "Parallel" || dir == "Normal", "InvalidInput",
+                      "Rib direction must be Parallel or Normal");
+        boolean(m, "flip_material");
+    } else if (kind == "LinearPattern" || kind == "CircularPattern") {
+        bool linear = kind == "LinearPattern";
+        auto op = wire::text(m, "operation");
+        domain::check(QStringList{"NewBody", "Add", "Cut"}.contains(op), "UnsupportedOperation",
+                      "Unsupported pattern Boolean operation");
+        if (op == "NewBody")
+            domain::check(m.value("target").isNull(), "InvalidInput", "NewBody has no target");
+        else
+            reader.body(object(m, "target"));
+        auto skind = wire::text(m, "seed_kind");
+        domain::check(skind == "Feature" || skind == "Face" || skind == "Body", "InvalidInput",
+                      "Seed kind must be Feature, Face, or Body");
+        if (skind == "Feature") {
+            auto seedId = domain::id(wire::text(m, "seed"));
+            reader.kind(seedId, "Feature");
+            domain::GeometryReference r;
+            r.object = seedId;
+            reader.node.references.push_back(r);
+        } else if (skind == "Body") {
+            reader.body(object(m, "seed"));
+        } else {
+            domain::check(m.value("seed").isArray(), "InvalidInput", "Face seeds required");
+            auto faces = m.value("seed").toArray();
+            domain::check(!faces.empty() && faces.size() <= 32, "ResourceLimit",
+                          "Select 1–32 face seeds");
+            for (auto f : faces)
+                reader.reference(sketch::fields({{"f", f}}), "f", "Face");
+        }
+        if (linear) {
+            wire::keys(m, {"version", "id", "kind", "operation", "target", "seed_kind", "seed",
+                           "direction1", "direction2"});
+            auto d1 = object(m, "direction1");
+            wire::keys(d1, {"reference", "spacing", "count", "reverse"});
+            reader.reference(d1, "reference", "Direction");
+            number(d1, "spacing", 1e-8, 1000);
+            int count1 = wire::integer(d1, "count");
+            domain::check(count1 >= 1 && count1 <= 32, "InvalidInput",
+                          "Pattern count must be 1–32");
+            boolean(d1, "reverse");
+            int total = count1;
+            if (!m.value("direction2").isNull()) {
+                auto d2 = object(m, "direction2");
+                wire::keys(d2, {"reference", "spacing", "count", "reverse"});
+                reader.reference(d2, "reference", "Direction");
+                number(d2, "spacing", 1e-8, 1000);
+                int count2 = wire::integer(d2, "count");
+                domain::check(count2 >= 1 && count2 <= 32, "InvalidInput",
+                              "Pattern count must be 1–32");
+                boolean(d2, "reverse");
+                total *= count2;
+            }
+            domain::check(total <= 1024, "ResourceLimit",
+                          "Total pattern instances exceed limit 1024");
+        } else {
+            wire::keys(m, {"version", "id", "kind", "operation", "target", "seed_kind", "seed",
+                           "axis", "count", "equal_spacing", "angle", "reverse"});
+            reader.reference(m, "axis", "Axis");
+            int count = wire::integer(m, "count");
+            domain::check(count >= 1 && count <= 360, "InvalidInput",
+                          "Circular pattern count must be 1–360");
+            boolean(m, "equal_spacing");
+            number(m, "angle", 1e-8, 2 * std::numbers::pi);
+            boolean(m, "reverse");
+        }
+    } else if (kind == "Mirror") {
+        wire::keys(m,
+                   {"version", "id", "kind", "operation", "target", "seed_kind", "seed", "plane"});
+        auto op = wire::text(m, "operation");
+        domain::check(QStringList{"NewBody", "Add", "Cut"}.contains(op), "UnsupportedOperation",
+                      "Unsupported mirror Boolean operation");
+        if (op == "NewBody")
+            domain::check(m.value("target").isNull(), "InvalidInput", "NewBody has no target");
+        else
+            reader.body(object(m, "target"));
+        reader.reference(m, "plane", "Plane");
+        auto skind = wire::text(m, "seed_kind");
+        domain::check(skind == "Feature" || skind == "Face" || skind == "Body", "InvalidInput",
+                      "Seed kind must be Feature, Face, or Body");
+        if (skind == "Feature") {
+            auto seedId = domain::id(wire::text(m, "seed"));
+            reader.kind(seedId, "Feature");
+            domain::GeometryReference r;
+            r.object = seedId;
+            reader.node.references.push_back(r);
+        } else if (skind == "Body") {
+            reader.body(object(m, "seed"));
+        } else {
+            domain::check(m.value("seed").isArray(), "InvalidInput", "Face seeds required");
+            auto faces = m.value("seed").toArray();
+            domain::check(!faces.empty() && faces.size() <= 32, "ResourceLimit",
+                          "Select 1–32 face seeds");
+            for (auto f : faces)
+                reader.reference(sketch::fields({{"f", f}}), "f", "Face");
+        }
+    } else if (kind == "Fillet") {
+        auto target = reader.body(object(m, "target"));
+        boolean(m, "propagate_tangent");
+        auto method = wire::text(m, "method");
+        if (method == "Constant") {
+            wire::keys(m, {"version", "id", "kind", "target", "method", "propagate_tangent",
+                           "radius", "edges"});
+            number(m, "radius", 1e-8, 1000);
+            domain::check(m.value("edges").isArray(), "InvalidInput", "Fillet edges required");
+            auto edges = m.value("edges").toArray();
+            domain::check(!edges.empty() && edges.size() <= 32, "ResourceLimit",
+                          "Select 1–32 fillet edges");
+            for (auto e : edges) {
+                auto r = reader.reference(sketch::fields({{"e", e}}), "e", "Edge");
+                domain::check(r.object == target.object, "InvalidInput",
+                              "Fillet edges must be members of the target stage");
+            }
+        } else if (method == "MultipleRadius") {
+            wire::keys(m,
+                       {"version", "id", "kind", "target", "method", "propagate_tangent", "radii"});
+            domain::check(m.value("radii").isArray(), "InvalidInput", "Multiple radii required");
+            auto radii = m.value("radii").toArray();
+            domain::check(!radii.empty() && radii.size() <= 32, "ResourceLimit",
+                          "Select 1–32 fillet radii");
+            for (auto item : radii) {
+                auto map = item.toMap();
+                wire::keys(map, {"edge", "radius"});
+                auto r = reader.reference(map, "edge", "Edge");
+                domain::check(r.object == target.object, "InvalidInput",
+                              "Fillet edges must be members of the target stage");
+                number(map, "radius", 1e-8, 1000);
+            }
+        } else if (method == "Variable") {
+            wire::keys(m, {"version", "id", "kind", "target", "method", "propagate_tangent", "edge",
+                           "control_points", "transition"});
+            auto r = reader.reference(m, "edge", "Edge");
+            domain::check(r.object == target.object, "InvalidInput",
+                          "Variable fillet edge must be a member of the target stage");
+            domain::check(m.value("control_points").isArray(), "InvalidInput",
+                          "Variable fillet control points required");
+            auto pts = m.value("control_points").toArray();
+            domain::check(pts.size() >= 2 && pts.size() <= 32, "ResourceLimit",
+                          "Select 2–32 variable fillet control points");
+            for (auto pt : pts) {
+                auto ptMap = pt.toMap();
+                wire::keys(ptMap, {"parameter", "radius"});
+                number(ptMap, "parameter", 0, 1);
+                number(ptMap, "radius", 1e-8, 1000);
+            }
+            auto tr = wire::text(m, "transition");
+            domain::check(tr == "Smooth" || tr == "Linear", "InvalidInput",
+                          "Transition must be Smooth or Linear");
+        } else if (method == "Face") {
+            wire::keys(m, {"version", "id", "kind", "target", "method", "propagate_tangent",
+                           "faces1", "faces2", "radius"});
+            number(m, "radius", 1e-8, 1000);
+            for (QString fset : {"faces1", "faces2"}) {
+                domain::check(m.value(fset).isArray(), "InvalidInput",
+                              "Face set required: " + fset);
+                auto farr = m.value(fset).toArray();
+                domain::check(!farr.empty() && farr.size() <= 32, "ResourceLimit",
+                              "Select 1–32 faces: " + fset);
+                for (auto f : farr) {
+                    auto r = reader.reference(sketch::fields({{"f", f}}), "f", "Face");
+                    domain::check(r.object == target.object, "InvalidInput",
+                                  "Face fillet faces must be members of the target stage");
+                }
+            }
+        } else if (method == "FullRound") {
+            wire::keys(m, {"version", "id", "kind", "target", "method", "propagate_tangent",
+                           "side_faces1", "center_faces", "side_faces2"});
+            for (QString fset : {"side_faces1", "center_faces", "side_faces2"}) {
+                domain::check(m.value(fset).isArray(), "InvalidInput",
+                              "Face set required: " + fset);
+                auto farr = m.value(fset).toArray();
+                domain::check(!farr.empty() && farr.size() <= 32, "ResourceLimit",
+                              "Select 1–32 faces: " + fset);
+                for (auto f : farr) {
+                    auto r = reader.reference(sketch::fields({{"f", f}}), "f", "Face");
+                    domain::check(r.object == target.object, "InvalidInput",
+                                  "Full-round faces must be members of the target stage");
+                }
+            }
+        } else
+            throw domain::Error("UnsupportedOperation", "Unsupported fillet method: " + method);
+    } else if (kind == "Chamfer") {
+        auto target = reader.body(object(m, "target"));
+        boolean(m, "propagate_tangent");
+        domain::check(m.value("edges").isArray(), "InvalidInput", "Chamfer edges required");
+        auto edges = m.value("edges").toArray();
+        domain::check(!edges.empty() && edges.size() <= 32, "ResourceLimit",
+                      "Select 1–32 chamfer edges");
+        for (auto e : edges) {
+            auto r = reader.reference(sketch::fields({{"e", e}}), "e", "Edge");
+            domain::check(r.object == target.object, "InvalidInput",
+                          "Chamfer edges must be members of the target stage");
+        }
+        auto method = wire::text(m, "method");
+        if (method == "EqualDistance") {
+            wire::keys(m, {"version", "id", "kind", "target", "method", "edges",
+                           "propagate_tangent", "distance"});
+            number(m, "distance", 1e-8, 1000);
+        } else if (method == "DistanceDistance") {
+            QSet<QString> keys{
+                "version",           "id",        "kind",      "target", "method", "edges",
+                "propagate_tangent", "distance1", "distance2", "flip"};
+            if (m.contains(QStringLiteral("reference_face")) &&
+                !m.value("reference_face").isNull()) {
+                keys.insert("reference_face");
+                auto r = reader.reference(m, "reference_face", "Face");
+                domain::check(r.object == target.object, "InvalidInput",
+                              "Reference face must be member of target stage");
+            }
+            wire::keys(m, keys);
+            number(m, "distance1", 1e-8, 1000);
+            number(m, "distance2", 1e-8, 1000);
+            boolean(m, "flip");
+        } else if (method == "AngleDistance") {
+            QSet<QString> keys{
+                "version",           "id",       "kind",  "target", "method", "edges",
+                "propagate_tangent", "distance", "angle", "flip"};
+            if (m.contains(QStringLiteral("reference_face")) &&
+                !m.value("reference_face").isNull()) {
+                keys.insert("reference_face");
+                auto r = reader.reference(m, "reference_face", "Face");
+                domain::check(r.object == target.object, "InvalidInput",
+                              "Reference face must be member of target stage");
+            }
+            wire::keys(m, keys);
+            number(m, "distance", 1e-8, 1000);
+            domain::check(number(m, "angle", 1e-8, std::numbers::pi / 2) < std::numbers::pi / 2,
+                          "InvalidInput", "Chamfer angle must be below pi/2");
+            boolean(m, "flip");
+        } else
+            throw domain::Error("UnsupportedOperation", "Unsupported chamfer method: " + method);
     } else {
         domain::check(kind == "Extrude" || kind == "Revolve", "UnsupportedOperation",
                       "Unsupported modeling intent kind");

@@ -117,11 +117,11 @@ The authorized drawing slice is limited to the plan; Module 11 remains excluded.
 
 ### CM6 — Holes, ribs, repetition and treatments
 
-- [ ] **CM6.a:** Define Hole Wizard families/positions, cosmetic threads, rib controls, pattern selections and treatment variants.
-- [ ] **CM6.b:** Implement custom and catalog-driven holes, ribs, two-direction patterns, feature/face/body repetition, advanced fillets and chamfers with propagation.
-- [ ] **CM6.c:** Retain standard/version/resolved values and thread metadata; do not model cosmetic threads as helical solids.
-- [ ] **CM6.d:** Add native position sketches, selection filters and treatment previews.
-- [ ] **CM6.e:** Use nontrivial per-variant fixtures; simple cuts/edge fillets do not close Hole Wizard/face/full-round coverage. Catalog coverage depends on CM9.
+- [x] **CM6.a:** Define Hole Wizard families/positions, cosmetic threads, rib controls, pattern selections and treatment variants. Production kernel-free versioned intent contracts and available-Mac development verification passed: [CM6 contracts decision](decisions/core-modeling-cm6-contracts.md). `cm6_contracts` passed 100%.
+- [x] **CM6.b:** Implement custom and catalog-driven holes, ribs, two-direction patterns, feature/face/body repetition, advanced fillets and chamfers with propagation. Production exact OCCT adapters (`Treatments`, `Holes`, `Repetition`, `Ribs`) and analytical fixtures passed: `cm6_features` passed 100%. General face fillet (CM-183) and general face-set full round (CM-184) documented as Blocked per OCCT 7.9.2 constraint (R1); restricted parallel planar sides full round verified (E2).
+- [x] **CM6.c:** Retain standard/version/resolved values and thread metadata; do not model cosmetic threads as helical solids. Durable persistence in `ProjectStore.cpp` with `cm6Manifest` requirement 11, upgrade and reference repair passed: `cm6_store` passed 100%.
+- [x] **CM6.d:** Add native position sketches, selection filters and treatment previews. FeaturePanel controls for Hole, Fillet, Chamfer, Rib, LinearPattern, CircularPattern, Mirror, CosmeticThread, toolbar actions and menu wiring in MainWindow built cleanly and verified.
+- [x] **CM6.e:** Use nontrivial per-variant fixtures; simple cuts/edge fillets do not close Hole Wizard/face/full-round coverage. Catalog coverage depends on CM9. Complete course workflows (T7 Tutorial 1 bracket, Tutorial 2 revolve/thread/fillet, Tutorial 3 chamfer/fullround/face fillet, 5-scale DPI, persistence & upstream mutation replay) verified in `workflow_contracts_cm6.cpp`: 100% CTests pass.
 
 ### CM7 — Spatial sketches and derived curves
 
