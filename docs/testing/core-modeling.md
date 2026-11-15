@@ -1,5 +1,9 @@
 # Core-modeling execution evidence
 
+[CM5 native review fixes](core-modeling-cm5-review.md) track the ten 15 November
+review findings separately from complete course and full acceptance. Earlier
+completion claims in task/status notes do not close the open course corpus.
+
 [CM5 current-source baseline](artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json)
 records the 14 November current-source baseline freeze on HEAD `37501e8`:
 CMake configure, build, 97 enabled CTests, focused CM5 tests, SQL placeholder/binding

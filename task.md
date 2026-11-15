@@ -258,6 +258,11 @@ Primary files: `src/features/ModelingRecords.*`,
 
 ## CM5.d — native authoring, manipulators and exact display previews
 
+The earlier completion annotations below are historical claims from the reviewed
+commits. The [15 November review-fix record](docs/testing/core-modeling-cm5-review.md)
+supersedes their acceptance conclusions. Course examples and full per-variant
+native acceptance remain open; scoped review fixes do not close those gates.
+
 Use the current FeaturePanel/PropertyManager, command registry, model tree,
 SupportEditor reference workflows, Viewport camera/picking and protocol mesh path.
 Split a CM5-specific panel/helper only if the existing panel cannot contain this
@@ -376,7 +381,7 @@ agree. New native tests plus affected workspace/CM4/legacy regressions pass.
 
 ## CM5.e — course, upstream-change and final verification
 
-- [x] **e.1 — Freeze the actual course fixtures and oracles.** Read the retained
+- [ ] **e.1 — Freeze the actual course fixtures and oracles.** Read the retained
   T5/T6/T8 source pages and dimensions, including images where text omits geometry.
   Use the actual T5 Tutorial 1 profile for independent Direction 1 = 10 mm,
   draft = 35 degrees and Direction 2 = 15 mm, draft = 0 degrees. Confirm inward/
@@ -393,7 +398,7 @@ agree. New native tests plus affected workspace/CM4/legacy regressions pass.
       - T6 selected contours and reuse: multi-region sketch reused across multiple features without consumption.
       - T6 open-profile cut: open line sketch cutting across base block with `flip_side = false`, removing exactly `40*20*10 = 8000 mm³`.
       - T8 standalone draft: planar box side face drafted 5 deg outward with principal Z pull axis.
-- [x] **e.2 — Replay each course workflow natively.** Build through the tools,
+- [ ] **e.2 — Replay each course workflow natively.** Build through the tools,
   exercise the handles and fields, Accept, inspect exact output and saved intents,
   undo/redo and save/reopen. Start with isolated feature fixtures if prerequisite
   sketch creation is missing; label those as seeded workflows. Record a source-
@@ -424,7 +429,7 @@ agree. New native tests plus affected workspace/CM4/legacy regressions pass.
     - Pinned clang-format and whitespace check passed across 265 sources.
     - Clang static analysis passed on all modified units (`FeaturePanel.cpp`, `MainWindow.cpp`, `ProjectUI.cpp`, `Viewport.cpp`, `Client.cpp`, `ProjectStore.cpp`).
     - Architecture, isolation, specification structure, and core modeling requirements checks passed.
-- [x] **e.5 — Close coverage and deliver reviewable tasks.** Update each of the
+- [ ] **e.5 — Close coverage and deliver reviewable tasks.** Update each of the
   29 rows with actual analytical/native test references and separate implementation,
   engine, storage, native and full-acceptance outcomes. Reconcile CORE_MODELING,
   docs/README, execution summaries and build commands. Keep failed attempts and
@@ -527,7 +532,7 @@ merge or cherry-pick unrelated work merely to simplify the branch view. Commit
 and push only scoped, successfully verified task work; confirm origin branch SHA.
 This planning change itself does not complete a lettered module task.
 
-**Plan status — COMPLETE:** All milestones in `task.md` (Section 0, CM5.a, CM5.b, CM5.c, CM5.d, and CM5.e) have been implemented and verified. All 98 enabled CTests pass (100%), Clang static analysis passes across all affected translation units, all architecture, isolation, and core modeling checks pass. Review branch `review/cm5-d-20261114` ready for delivery under standing authorization. Preserved gates 6.1b/6.4c/7.4c remain deferred/blocked. Stop before Module 11.
+**Plan status — In progress:** The 15 November review identified native selection, body-stage, repair and manipulator defects. Their scoped repairs are recorded separately; complete course verification remains open. Earlier completion annotations are historical claims, not acceptance. See [the review-fix record](docs/testing/core-modeling-cm5-review.md).
 
 **Planning limits:** No product code, schema or dependency change is needed for
 this request. No build, CTest, native hardware/platform test or remote branch

@@ -1,0 +1,51 @@
+********* Start testing of WorkflowContractsCM5 *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 27.2.1
+PASS   : WorkflowContractsCM5::initTestCase()
+PASS   : WorkflowContractsCM5::savedParametersAndPointerRegression()
+QWARN  : WorkflowContractsCM5::typedInputsAndParameterHandles() Before newProject: ready= true  outstanding= 0
+QWARN  : WorkflowContractsCM5::typedInputsAndParameterHandles() After newProject: outstanding= 1  phase= 0
+QWARN  : WorkflowContractsCM5::typedInputsAndParameterHandles() Wait result= true  projectOpen= true  activeDoc= "0ed29290-7e79-4481-bda2-ae025eb9dc69"  message= ""
+PASS   : WorkflowContractsCM5::typedInputsAndParameterHandles()
+QWARN  : WorkflowContractsCM5::asymmetricDraftRectangleFixture() Before newProject: ready= true  outstanding= 0
+QWARN  : WorkflowContractsCM5::asymmetricDraftRectangleFixture() After newProject: outstanding= 1  phase= 0
+QWARN  : WorkflowContractsCM5::asymmetricDraftRectangleFixture() Wait result= true  projectOpen= true  activeDoc= "61e11eec-c4fe-432b-b53a-1243ededb0d4"  message= ""
+PASS   : WorkflowContractsCM5::asymmetricDraftRectangleFixture()
+QWARN  : WorkflowContractsCM5::thinExtrusionRectangleFixture() Before newProject: ready= true  outstanding= 0
+QWARN  : WorkflowContractsCM5::thinExtrusionRectangleFixture() After newProject: outstanding= 1  phase= 0
+QWARN  : WorkflowContractsCM5::thinExtrusionRectangleFixture() Wait result= true  projectOpen= true  activeDoc= "e762a715-8bdb-48ad-a195-ed471ad1d463"  message= ""
+PASS   : WorkflowContractsCM5::thinExtrusionRectangleFixture()
+QWARN  : WorkflowContractsCM5::t6SelectedContoursAndReuse() Before newProject: ready= true  outstanding= 0
+QWARN  : WorkflowContractsCM5::t6SelectedContoursAndReuse() After newProject: outstanding= 1  phase= 0
+QWARN  : WorkflowContractsCM5::t6SelectedContoursAndReuse() Wait result= true  projectOpen= true  activeDoc= "7a38e74f-d017-4f76-9509-c32e168b1bb4"  message= ""
+PASS   : WorkflowContractsCM5::t6SelectedContoursAndReuse()
+QWARN  : WorkflowContractsCM5::t6OpenProfileCut() Before newProject: ready= true  outstanding= 0
+QWARN  : WorkflowContractsCM5::t6OpenProfileCut() After newProject: outstanding= 1  phase= 0
+QWARN  : WorkflowContractsCM5::t6OpenProfileCut() Wait result= true  projectOpen= true  activeDoc= "6124a602-4cc1-46a9-b3c4-06fe634f0e2a"  message= ""
+PASS   : WorkflowContractsCM5::t6OpenProfileCut()
+QWARN  : WorkflowContractsCM5::revolveModesAndAngles() Before newProject: ready= true  outstanding= 0
+QWARN  : WorkflowContractsCM5::revolveModesAndAngles() After newProject: outstanding= 1  phase= 0
+QWARN  : WorkflowContractsCM5::revolveModesAndAngles() Wait result= true  projectOpen= true  activeDoc= "6504c7c0-179a-47d4-ab3d-d24d72371abc"  message= ""
+PASS   : WorkflowContractsCM5::revolveModesAndAngles()
+QWARN  : WorkflowContractsCM5::t8StandaloneDraftAndRepair() Before newProject: ready= true  outstanding= 0
+QWARN  : WorkflowContractsCM5::t8StandaloneDraftAndRepair() After newProject: outstanding= 1  phase= 0
+QWARN  : WorkflowContractsCM5::t8StandaloneDraftAndRepair() Wait result= true  projectOpen= true  activeDoc= "9d897329-efa1-4b7c-934e-62cc19043d14"  message= ""
+PASS   : WorkflowContractsCM5::t8StandaloneDraftAndRepair()
+QWARN  : WorkflowContractsCM5::draftLifecycleAndCancel() Before newProject: ready= true  outstanding= 0
+QWARN  : WorkflowContractsCM5::draftLifecycleAndCancel() After newProject: outstanding= 1  phase= 0
+QWARN  : WorkflowContractsCM5::draftLifecycleAndCancel() Wait result= true  projectOpen= true  activeDoc= "db3ee3f2-2f47-419e-8f54-5511880fa048"  message= ""
+PASS   : WorkflowContractsCM5::draftLifecycleAndCancel()
+QWARN  : WorkflowContractsCM5::nativeEffectiveScales(mm) Before newProject: ready= true  outstanding= 0
+QWARN  : WorkflowContractsCM5::nativeEffectiveScales(mm) After newProject: outstanding= 1  phase= 0
+QWARN  : WorkflowContractsCM5::nativeEffectiveScales(mm) Wait result= true  projectOpen= true  activeDoc= "ea2f5088-b990-4762-af1e-0a5e94e5fb00"  message= ""
+PASS   : WorkflowContractsCM5::nativeEffectiveScales(mm)
+QWARN  : WorkflowContractsCM5::nativeEffectiveScales(inch-inclined) Before newProject: ready= true  outstanding= 0
+QWARN  : WorkflowContractsCM5::nativeEffectiveScales(inch-inclined) After newProject: outstanding= 1  phase= 0
+QWARN  : WorkflowContractsCM5::nativeEffectiveScales(inch-inclined) Wait result= true  projectOpen= true  activeDoc= "61c1edab-cebb-4d0e-b392-f73b28734b35"  message= ""
+PASS   : WorkflowContractsCM5::nativeEffectiveScales(inch-inclined)
+QWARN  : WorkflowContractsCM5::upstreamMutationAndReopen() Before newProject: ready= true  outstanding= 0
+QWARN  : WorkflowContractsCM5::upstreamMutationAndReopen() After newProject: outstanding= 1  phase= 0
+QWARN  : WorkflowContractsCM5::upstreamMutationAndReopen() Wait result= true  projectOpen= true  activeDoc= "2554b26c-b724-4709-9bf5-afe92910c542"  message= ""
+PASS   : WorkflowContractsCM5::upstreamMutationAndReopen()
+PASS   : WorkflowContractsCM5::cleanupTestCase()
+Totals: 14 passed, 0 failed, 0 skipped, 0 blacklisted, 22074ms
+********* Finished testing of WorkflowContractsCM5 *********

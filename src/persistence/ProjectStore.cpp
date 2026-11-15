@@ -4,6 +4,7 @@
 #include "features/ModelingRecords.hpp"
 #include "geometry/occt/ModelingFeatures.hpp"
 #include "geometry/occt/Part.hpp"
+#include "geometry/occt/SupportReferences.hpp"
 #include "geometry/occt/Supports.hpp"
 #include "sketch/Solver.hpp"
 #include <BRep_Builder.hxx>
@@ -12,6 +13,8 @@
 #include <QFile>
 #include <QSaveFile>
 #include <QTemporaryFile>
+#include <TopExp.hxx>
+#include <TopTools_IndexedMapOfShape.hxx>
 #include <TopoDS_Compound.hxx>
 #include <exception>
 namespace cad::storage {
@@ -1001,6 +1004,123 @@ QCborMap ProjectStore::previewSupports(QString document, const QCborMap &definit
         map.insert(QStringLiteral("_display_bytes"), packed.bytes);
     }
     return map;
+}
+QCborMap ProjectStore::modelingInputs(QString document, const QCborMap &definition,
+                                      const QCborArray &intents,
+                                      const exchange::Control &control) const {
+    check(db && db->scalar("SELECT type FROM documents WHERE id=?", {document}) == "Part",
+          "UnsupportedOperation", "Modeling inspection requires a Part");
+    auto model = model::SupportDefinition::parse(definition);
+    check(model.document == "Self" || model.document == document, "StaleSession",
+          "Model document changed");
+    model.document = document;
+    auto evaluated = geometry::evaluateModeling(
+        model, intents,
+        [&](const QCborArray &sketches, const QCborArray &features) {
+            return buildPart(*db, sketches, features, &resultCache);
+        },
+        control);
+    QCborArray bodies, references;
+    for (const auto &body : evaluated.part.bodies) {
+        QString source;
+        for (auto it = evaluated.order.crbegin(); it != evaluated.order.crend(); ++it) {
+            auto stage = evaluated.part.stages.value(*it);
+            if (stage.IsNull())
+                continue;
+            TopTools_IndexedMapOfShape solids;
+            TopExp::MapShapes(stage, TopAbs_SOLID, solids);
+            if (stage.IsSame(body.shape) || solids.Contains(body.shape)) {
+                source = *it;
+                break;
+            }
+        }
+        check(!source.isEmpty(), "ReferenceMissing", "Current producing body stage unavailable");
+        domain::GeometryReference reference;
+        reference.object = source;
+        bodies.append(values({{"source", reference.map()}, {"body", body.id}}));
+        for (auto kind : {TopAbs_FACE, TopAbs_EDGE, TopAbs_VERTEX}) {
+            TopTools_IndexedMapOfShape shapes;
+            TopExp::MapShapes(body.shape, kind, shapes);
+            for (int i = 1; i <= shapes.Extent(); ++i) {
+                reference.role = kind == TopAbs_FACE   ? "Face"
+                                 : kind == TopAbs_EDGE ? "Edge"
+                                                       : "Vertex";
+                reference.topology = geometry::supportToken(shapes(i));
+                references.append(reference.map());
+            }
+        }
+    }
+    geometry::SupportReferences scene;
+    scene.document = document;
+    scene.planes = evaluated.planes;
+    scene.axes = evaluated.axes;
+    scene.stages = evaluated.part.stages;
+    for (const auto &sketch : evaluated.sketches)
+        scene.sketches.insert(sketch.id, sketch);
+    QCborArray geometry;
+    auto operands = references;
+    for (const auto &sketch : evaluated.sketches) {
+        domain::GeometryReference ref;
+        ref.object = sketch.id;
+        ref.role = "Plane";
+        operands.append(ref.map());
+        for (const auto &entity : sketch.entities) {
+            if (entity.kind != "Line" && entity.kind != "Point")
+                continue;
+            ref.role = entity.kind == "Point" ? "Point" : "Curve";
+            ref.entity = entity.id;
+            operands.append(ref.map());
+        }
+    }
+    for (auto it = evaluated.planes.cbegin(); it != evaluated.planes.cend(); ++it) {
+        domain::GeometryReference ref;
+        ref.object = it.key();
+        ref.role = "Plane";
+        operands.append(ref.map());
+    }
+    for (auto it = evaluated.axes.cbegin(); it != evaluated.axes.cend(); ++it) {
+        domain::GeometryReference ref;
+        ref.object = it.key();
+        ref.role = "Axis";
+        operands.append(ref.map());
+    }
+    for (auto value : operands) {
+        auto ref = domain::GeometryReference::parse(value.toMap());
+        try {
+            sketch::Vec3 origin, direction, u{1, 0, 0};
+            if (ref.role == "Face" || ref.role == "Plane") {
+                auto frame = scene.plane(ref);
+                origin = frame.origin;
+                u = frame.u;
+                direction = geometry::coordinates(
+                    geometry::vector(frame.u).Crossed(geometry::vector(frame.v)));
+            } else if (ref.role == "Vertex" || ref.role == "Point") {
+                origin = geometry::siPoint(scene.point(ref));
+                direction = {0, 0, 1};
+            } else {
+                auto axis = scene.axis(ref);
+                origin = axis.origin;
+                direction = axis.direction;
+            }
+            geometry.append(values({{"reference", ref.map()},
+                                    {"origin", features::array(origin)},
+                                    {"direction", features::array(direction)},
+                                    {"u", features::array(u)}}));
+        } catch (const domain::Error &error) {
+            if (error.code != "UnsupportedOperation" && error.code != "InvalidGeometry" &&
+                error.code != "InvalidInput")
+                throw;
+        }
+    }
+    auto reply = values({{"version", 1},
+                         {"revision", revision()},
+                         {"bodies", bodies},
+                         {"references", references},
+                         {"geometry", geometry},
+                         {"sketches", sketch::encode(evaluated.sketches)}});
+    check(QCborValue(reply).toCbor().size() <= qsizetype(limits::control), "ResourceLimit",
+          "Modeling inputs exceed control admission");
+    return reply;
 }
 QCborMap ProjectStore::modelingReferenceCandidates(QString document, const QCborMap &definition,
                                                    const QCborArray &intents, QString ownerId,

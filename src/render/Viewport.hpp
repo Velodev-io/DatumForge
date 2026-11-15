@@ -37,7 +37,7 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     QVector3D manipulatorOrigin;
     QVector3D manipulatorDirection;
     double manipulatorDepth = 10.0;
-    double manipulatorAngle = 0.0;
+    double manipulatorAngle = 0.0, manipulatorMaximum = 89.9;
     bool manipulatorReverse = false;
     bool manipulatorDragging = false;
     bool initialized = false, failed = false, stale = false, orthographic = false;
@@ -93,7 +93,8 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     }
     void setExtrudeManipulator(QVector3D origin, QVector3D direction, double depthMM,
                                bool reverse = false);
-    void setDraftManipulator(QVector3D origin, QVector3D normal, double angleDeg);
+    void setDraftManipulator(QVector3D origin, QVector3D normal, double angleDeg,
+                             double maximum = 89.9);
     void clearManipulators();
     bool hasManipulator() const {
         return manipulatorActive;

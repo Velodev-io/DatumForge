@@ -62,6 +62,32 @@ void workerContract() {
     CHECK(worker.run(command("DisplayPart", fields({{"deflection_mm", .2}})))
               .value("part_empty")
               .toBool());
+    auto inputsCommand =
+        command("ModelingInputs", fields({{"model", d.map()}, {"intents", QCborArray{f}}}));
+    auto inputs = worker.run(inputsCommand).value("modeling_inputs").toMap();
+    CHECK(inputs.value("bodies").toArray().size() == 1);
+    CHECK(inputs.value("bodies").toArray()[0].toMap().value("source").toMap().value("object") ==
+          f.value("id"));
+    int vertices = 0;
+    for (auto value : inputs.value("references").toArray()) {
+        auto ref = domain::GeometryReference::parse(value.toMap());
+        CHECK(ref.object == f.value("id").toString());
+        if (ref.role == "Vertex")
+            ++vertices;
+    }
+    CHECK(vertices == 8);
+    CHECK(worker.revision() == revision);
+    auto staleInputs = inputsCommand;
+    staleInputs.revision = revision - 1;
+    error("StaleRevision", [&] { worker.run(staleInputs); });
+    auto badInputs = inputsCommand;
+    badInputs.payload.insert(QStringLiteral("intents"), false);
+    rejects([&] { worker.run(badInputs); });
+    error("Canceled", [&] {
+        exchange::Control cancel;
+        cancel.canceled = [] { return true; };
+        worker.run(inputsCommand, cancel);
+    });
     auto displayPreview = command("PreviewModelSupports", fields({{"model", d.map()},
                                                                   {"intents", QCborArray{f}},
                                                                   {"display", true},

@@ -231,7 +231,7 @@ void Client::pump() {
                     "DisplayDrawing", "PreviewDrawing", "DisplayAssembly", "PreviewAssembly",
                     "PreviewModelSupports", "SetModelSupports", "ResolveSupportReference",
                     "ResolveModelingReference", "SupportReferenceCandidates",
-                    "ModelingReferenceCandidates", "SupportGeometry"}
+                    "ModelingReferenceCandidates", "ModelingInputs", "SupportGeometry"}
             .contains(e.command))
         pending[e.request].deadline = clock.elapsed() + 120000;
     if (!QStringList{"QueryOperation", "GrantFile", "RecoverProject", "ListRecoveries",
@@ -417,13 +417,14 @@ void Client::receive(const QCborMap &m) {
                                  "PreviewModelSupports",
                                  "SupportReferenceCandidates",
                                  "ModelingReferenceCandidates",
+                                 "ModelingInputs",
                                  "SupportGeometry"}
                          .contains(e.command);
     if ((reference && !visibleResult(projection, e, revision)) || e.epoch != projection.epoch) {
         // An obsolete heavy preview still owns the worker until its terminal
         // reply. Retiring it on Progress would admit another computation early.
         if ((e.command == "PreviewModelSupports" || e.command == "SupportGeometry" ||
-             e.command == "ModelingReferenceCandidates") &&
+             e.command == "ModelingReferenceCandidates" || e.command == "ModelingInputs") &&
             m.value("status").toString() == "Progress")
             return;
         pending.erase(found);
@@ -469,7 +470,7 @@ void Client::receive(const QCborMap &m) {
         projection.message =
             wire::text(diagnostics, "code") + ": " + wire::text(diagnostics, "message");
         projection.job = status;
-        if (e.command == "SupportGeometry") {
+        if (e.command == "SupportGeometry" || e.command == "ModelingInputs") {
             // Inspection failure cannot invalidate an accepted solid or its revision.
             pending.erase(found);
             emit changed();
@@ -634,6 +635,53 @@ void Client::receive(const QCborMap &m) {
             projection.job = "Datum geometry ready";
             emit supportGeometry(result);
         }
+        emit changed();
+        pump();
+        return;
+    }
+    if (e.command == "ModelingInputs") {
+        wire::keys(data, {"modeling_inputs"});
+        wire::require(data.value("modeling_inputs").isMap(), "Modeling inputs map required");
+        auto input = data.value("modeling_inputs").toMap();
+        wire::keys(input, {"version", "revision", "bodies", "references", "geometry", "sketches"});
+        wire::require(wire::integer(input, "version") == 1 &&
+                          wire::integer(input, "revision") == revision,
+                      "Modeling inputs version/revision");
+        for (auto key : {"bodies", "references", "geometry", "sketches"})
+            wire::require(input.value(QString::fromLatin1(key)).isArray(),
+                          "Typed input array required");
+        wire::require(input.value("bodies").toArray().size() <= 10 &&
+                          input.value("references").toArray().size() <= 8192 &&
+                          input.value("sketches").toArray().size() <= 16,
+                      "Input admission");
+        for (auto value : input.value("references").toArray())
+            domain::GeometryReference::parse(value.toMap());
+        for (auto value : input.value("bodies").toArray()) {
+            auto body = value.toMap();
+            wire::keys(body, {"source", "body"});
+            wire::require(domain::GeometryReference::parse(body.value("source").toMap()).role ==
+                              "Object",
+                          "Body source role");
+            domain::id(body.value("body").toString());
+        }
+        wire::require(input.value("geometry").toArray().size() <= 8192,
+                      "Display geometry admission");
+        for (auto value : input.value("geometry").toArray()) {
+            auto entry = value.toMap();
+            wire::keys(entry, {"reference", "origin", "direction", "u"});
+            domain::GeometryReference::parse(entry.value("reference").toMap());
+            for (auto key : {"origin", "direction", "u"}) {
+                auto a = entry.value(QString::fromLatin1(key)).toArray();
+                wire::require(a.size() == 3, "Display vector cardinality");
+                for (auto coordinate : a)
+                    wire::require((coordinate.isDouble() || coordinate.isInteger()) &&
+                                      std::isfinite(coordinate.toDouble()),
+                                  "Finite display coordinate");
+            }
+        }
+        sketch::parse(input.value("sketches").toArray());
+        pending.erase(found);
+        emit modelingInputs(input);
         emit changed();
         pump();
         return;
@@ -1202,6 +1250,7 @@ void Client::cancelExchange() {
                         "ResolveModelingReference",
                         "SupportReferenceCandidates",
                         "ModelingReferenceCandidates",
+                        "ModelingInputs",
                         "SupportGeometry"}
                 .contains(value.request.command)) {
             auto e = request("CancelJob",

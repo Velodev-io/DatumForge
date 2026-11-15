@@ -1,0 +1,57 @@
+[1/54] Automatic MOC for target cm4_workflow_contracts
+[2/53] Automatic MOC for target module4_contracts
+[3/52] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[4/52] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[5/52] Linking CXX executable module1_contracts
+[6/52] Building CXX object CMakeFiles/cm4_workflow_contracts.dir/tests/core_modeling/workflow_contracts.cpp.o
+[7/52] Linking CXX executable module2_storage
+[8/52] Linking CXX executable module2_contracts
+[9/52] Linking CXX executable module2_fault_worker
+[10/52] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[11/52] Linking CXX executable module3_persistence
+[12/52] Linking CXX executable module3_input
+[13/52] Linking CXX executable module3_contracts
+[14/52] Linking CXX executable module4_workspace
+[15/52] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[16/52] Linking CXX executable module4_contracts
+[17/52] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[18/52] Linking CXX executable module5_persistence
+[19/52] Linking CXX executable module5_contracts
+[20/52] Linking CXX executable module5_b2
+[21/52] Linking CXX executable module6_contracts
+[22/52] Linking CXX executable module6_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_exchange.a'
+[23/52] Linking CXX executable module7_persistence
+[24/52] Linking CXX executable module7_b3
+[25/52] Linking CXX executable module7_contracts
+[26/52] Linking CXX executable module8_drawing
+[27/52] Linking CXX executable module8_contracts
+[28/52] Linking CXX executable module9_interaction
+[29/52] Linking CXX executable module10_fault_worker
+[30/52] Linking CXX executable module10_hardening
+[31/52] Linking CXX executable module10_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a'
+[32/52] Linking CXX executable cm1_relations
+[33/52] Linking CXX executable cm1_contracts
+[34/52] Linking CXX executable cm5_store
+[35/52] Linking CXX executable cm5_repair
+[36/52] Linking CXX executable cm4_store
+[37/52] Linking CXX executable cm4_support_store
+[38/52] Linking CXX executable cm4_datum_contracts
+[39/52] Linking CXX executable cm4_support_contracts
+[40/52] Linking CXX executable cm4_workflow_contracts
+[41/52] Linking CXX executable cm1_rectangles
+[42/52] Linking CXX executable cm1_slots
+[43/52] Linking CXX executable cm1_curves
+[44/52] Linking CXX executable cm1_pierce
+[45/52] Linking CXX executable cm1_intent
+[46/52] Linking CXX executable cm2_editing
+[47/52] Linking CXX executable cm3_dimensions
+[48/52] Linking CXX executable cm3_associated_dimensions
+[49/52] Linking CXX executable cm3_dimension_contracts
+[50/52] Linking CXX executable cm3_completion_contracts
+[51/52] Linking CXX executable cm3_completion
+[52/52] Linking CXX executable cm2_contracts

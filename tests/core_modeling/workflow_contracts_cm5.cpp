@@ -1,16 +1,21 @@
 #include "../support/modal.hpp"
 #include "FeaturePanel.hpp"
 #include "MainWindow.hpp"
+#include "ModelingFixture.hpp"
 #include "SketchPanel.hpp"
 #include "SupportEditor.hpp"
 #include "features/ModelingIntent.hpp"
 #include "model/SupportEditing.hpp"
 #include "render/Viewport.hpp"
 #include "sketch/Curves.hpp"
+#include <QDialogButtonBox>
 #include <QFile>
+#include <QMouseEvent>
 #include <QSettings>
 #include <QSignalSpy>
+#include <QSurfaceFormat>
 #include <QTemporaryDir>
+#include <QTimer>
 #include <QTreeWidget>
 #include <QtTest>
 #include <numbers>
@@ -26,7 +31,7 @@ bool wait(std::function<bool()> ready) {
     return ready();
 }
 
-inline void near(double actual, double expected, double tolerance) {
+inline void checkNear(double actual, double expected, double tolerance) {
     QVERIFY2(std::abs(actual - expected) <= tolerance,
              qPrintable(QString("Expected %1, got %2 (diff %3 > %4)")
                             .arg(expected, 0, 'g', 12)
@@ -66,6 +71,12 @@ struct SessionCM5 {
         window = std::make_unique<MainWindow>(root.filePath("settings.ini"), nullptr, root.path());
         window->resize(1400, 900);
         window->show();
+        if (qEnvironmentVariableIsSet("CAD_NATIVE_TEST")) {
+            bool ok = false;
+            double expected = qEnvironmentVariable("CAD_EXPECTED_DPR").toDouble(&ok);
+            if (!ok || std::abs(window->devicePixelRatioF() - expected) > .01)
+                return false;
+        }
         client = window->workerClient();
         if (!wait([&] { return client && client->ready(); }))
             return false;
@@ -117,12 +128,197 @@ class WorkflowContractsCM5 : public QObject {
 
   private slots:
     void initTestCase() {
-        qputenv("QT_QPA_PLATFORM", "offscreen");
+        if (qEnvironmentVariableIsSet("CAD_NATIVE_TEST"))
+            QVERIFY(QGuiApplication::platformName() == "cocoa");
     }
 
-    void t5Tutorial1AsymmetricDraft() {
+    void savedParametersAndPointerRegression() {
+        Client client;
+        sketch::Sketch sketch;
+        sketch.rectangle({0, 0}, {.03, .02});
+        auto intent = modeling_fixture::extrude(sketch.id);
+        auto direction = modeling_fixture::blind();
+        direction.remove(QStringLiteral("value"));
+        direction.insert(QStringLiteral("mode"), "OffsetFromSurface");
+        direction.insert(QStringLiteral("reference"),
+                         support_fixture::ref(sketch.id, "Plane").map());
+        direction.insert(QStringLiteral("offset"), .003);
+        direction.insert(QStringLiteral("offset_reverse"), true);
+        intent.insert(QStringLiteral("direction1"), direction);
+        auto doc =
+            sketch::fields({{"id", QUuid::createUuid().toString(QUuid::WithoutBraces)},
+                            {"units", "mm"},
+                            {"sketches", sketch::encode({sketch})},
+                            {"features", QCborArray{}},
+                            {"model_supports", modeling_fixture::base({sketch}).map()},
+                            {"modeling", sketch::fields({{"intents", QCborArray{intent}}})}});
+        FeaturePanel panel(&client);
+        panel.install(doc, true);
+        panel.begin({}, intent.value("id").toString());
+        QCOMPARE(panel.findChild<QDoubleSpinBox *>("featureSurfaceOffset")->value(), 3.0);
+        QVERIFY(panel.findChild<QCheckBox *>("featureOffsetReverse")->isChecked());
+        panel.discard();
+        auto largeOffset = intent;
+        auto largeDirection = direction;
+        largeDirection.insert(QStringLiteral("offset"), 3.0);
+        largeOffset.insert(QStringLiteral("direction1"), largeDirection);
+        doc.insert(QStringLiteral("modeling"),
+                   sketch::fields({{"intents", QCborArray{largeOffset}}}));
+        panel.install(doc, true);
+        panel.begin({}, largeOffset.value("id").toString());
+        QCOMPARE(panel.findChild<QDoubleSpinBox *>("featureSurfaceOffset")->value(), 3000.0);
+        panel.discard();
+        auto second = direction;
+        second.insert(QStringLiteral("offset"), .005);
+        second.insert(QStringLiteral("offset_reverse"), false);
+        intent.insert(QStringLiteral("direction2"), second);
+        doc.insert(QStringLiteral("modeling"), sketch::fields({{"intents", QCborArray{intent}}}));
+        panel.install(doc, true);
+        panel.begin({}, intent.value("id").toString());
+        QCOMPARE(panel.findChild<QDoubleSpinBox *>("featureSurfaceOffset2")->value(), 5.0);
+        QVERIFY(!panel.findChild<QCheckBox *>("featureOffsetReverse2")->isChecked());
+        panel.discard();
+        auto revolved = intent;
+        revolved.insert(QStringLiteral("kind"), "Revolve");
+        revolved.insert(QStringLiteral("direction1"),
+                        sketch::fields({{"mode", "Midplane"}, {"value", std::numbers::pi}}));
+        revolved.insert(QStringLiteral("direction2"), QCborValue(nullptr));
+        auto axis = support_fixture::ref(sketch.id, "Curve", sketch.entities[0].id);
+        revolved.insert(QStringLiteral("axis"), axis.map());
+        doc.insert(QStringLiteral("modeling"), sketch::fields({{"intents", QCborArray{revolved}}}));
+        panel.install(doc, true);
+        panel.begin({}, revolved.value("id").toString());
+        QCOMPARE(panel.findChild<QComboBox *>("featureRevolveExtent")->currentText(),
+                 QString("Midplane"));
+        panel.discard();
+        auto owner = QUuid::createUuid().toString(QUuid::WithoutBraces);
+        auto wanted = support_fixture::ref(owner, "Face");
+        wanted.topology = "face/" + QString(64, 'b');
+        auto first = wanted;
+        first.topology = "face/" + QString(64, 'a');
+        intent.insert(QStringLiteral("start"),
+                      sketch::fields({{"mode", "Surface"}, {"reference", wanted.map()}}));
+        doc.insert(QStringLiteral("modeling"), sketch::fields({{"intents", QCborArray{intent}}}));
+        panel.install(doc, true);
+        panel.begin({}, intent.value("id").toString());
+        client.modelingInputs(sketch::fields({{"bodies", QCborArray{}},
+                                              {"references", QCborArray{first.map(), wanted.map()}},
+                                              {"sketches", sketch::encode({sketch})}}));
+        QCOMPARE(
+            panel.findChild<QComboBox *>("featureStartReference")->currentData().value<QCborMap>(),
+            wanted.map());
+        panel.discard();
+        Viewport viewport;
+        viewport.resize(640, 480);
+        viewport.setDraftManipulator({}, {0, 0, 1}, 10);
+        QSignalSpy moved(&viewport, &Viewport::draftManipulatorMoved);
+        auto start = viewport.project({});
+        QMouseEvent press(QEvent::MouseButtonPress, start, start, Qt::LeftButton, Qt::LeftButton,
+                          Qt::NoModifier);
+        QApplication::sendEvent(&viewport, &press);
+        auto end = start + QPointF(10, 0);
+        for (int i = 0; i < 2; ++i) {
+            QMouseEvent move(QEvent::MouseMove, end, end, Qt::NoButton, Qt::LeftButton,
+                             Qt::NoModifier);
+            QApplication::sendEvent(&viewport, &move);
+        }
+        QCOMPARE(moved.size(), 2);
+        QCOMPARE(moved[0][0].toDouble(), moved[1][0].toDouble());
+        viewport.setDraftManipulator({}, {0, 1, 0}, 180, 360);
+        viewport.dragDraftAngleHandle(10);
+        QCOMPARE(moved.last()[0].toDouble(), 190.0);
+    }
+
+    void typedInputsAndParameterHandles() {
         SessionCM5 s;
-        QVERIFY(s.start("mm"));
+        if (!s.start() || !s.client) {
+            QFAIL("Disposable worker session failed to start");
+            return;
+        }
+        sketch::Sketch profile;
+        profile.rectangle({0, 0}, {.02, .02});
+        s.client->projectCommand("SetSketches",
+                                 sketch::fields({{"sketches", sketch::encode({profile})}}));
+        QVERIFY(s.idle());
+        auto *panel = s.window->findChild<FeaturePanel *>();
+        s.window->command("extrude")->trigger();
+        QVERIFY(s.idle());
+        QVERIFY(panel->isModelingActive());
+        auto ready = [&] {
+            return s.window->findChild<QPushButton *>("acceptFeatureButton")->isEnabled();
+        };
+        panel->preview();
+        QVERIFY2(wait(ready),
+                 qPrintable(s.client->state().message + " / " +
+                            s.window->findChild<QLabel *>("featureDiagnostic")->text()));
+        panel->finish();
+        QVERIFY(s.idle());
+        QVERIFY(!s.window->command("fillet")->isEnabled());
+        panel->begin("Fillet");
+        QVERIFY(!panel->active());
+        auto revision = s.client->state().revision;
+        panel->begin("Extrude");
+        QVERIFY(s.idle());
+        s.window->findChild<QCheckBox *>("featureDirection2Enable")->setChecked(true);
+        s.window->findChild<QDoubleSpinBox *>("featureDepth2")->setValue(20);
+        auto *handles = s.window->findChild<QComboBox *>("featureHandleParameter");
+        handles->setCurrentText("Direction 2 depth");
+        s.window->sceneView()->dragExtrudeDepthHandle(5);
+        QCOMPARE(s.window->findChild<QDoubleSpinBox *>("featureDepth2")->value(), 25.0);
+        QCOMPARE(s.window->findChild<QDoubleSpinBox *>("featureDepth")->value(), 10.0);
+        QVERIFY(s.idle());
+        panel->discard();
+        QVERIFY(s.idle());
+        panel->begin("Extrude");
+        QVERIFY(s.idle());
+        s.window->findChild<QComboBox *>("featureThinMode")->setCurrentText("TwoDirection");
+        s.window->findChild<QDoubleSpinBox *>("featureThickness2")->setValue(2);
+        handles->setCurrentText("Thickness 2");
+        s.window->sceneView()->dragExtrudeDepthHandle(1);
+        QCOMPARE(s.window->findChild<QDoubleSpinBox *>("featureThickness2")->value(), 3.0);
+        QCOMPARE(s.window->findChild<QDoubleSpinBox *>("featureThickness1")->value(), 1.0);
+        QVERIFY(s.idle());
+        panel->discard();
+        QVERIFY(s.idle());
+        panel->begin("Extrude");
+        QVERIFY(s.idle());
+        s.window->findChild<QComboBox *>("featureStartMode")->setCurrentText("Vertex");
+        auto *start = s.window->findChild<QComboBox *>("featureStartReference");
+        for (int i = 0; i < start->count(); ++i)
+            if (start->itemData(i).value<QCborMap>().value("role") == "Vertex") {
+                start->setCurrentIndex(i);
+                break;
+            }
+        QCOMPARE(start->currentData().value<QCborMap>().value("role").toString(),
+                 QString("Vertex"));
+        panel->preview();
+        QVERIFY2(wait(ready),
+                 qPrintable(s.client->state().message + " / " +
+                            s.window->findChild<QLabel *>("featureDiagnostic")->text()));
+        panel->discard();
+        QVERIFY(s.idle());
+        panel->begin("Extrude");
+        QVERIFY(s.idle());
+        s.window->findChild<QComboBox *>("featureStartMode")->setCurrentText("Offset");
+        s.window->findChild<QDoubleSpinBox *>("featureStartOffset")->setValue(-5);
+        s.window->findChild<QComboBox *>("featureExtent")->setCurrentText("UpToBody");
+        auto *end = s.window->findChild<QComboBox *>("featureDir1Reference");
+        QCOMPARE(end->currentData().value<QCborMap>().value("role").toString(), QString("Object"));
+        panel->preview();
+        QVERIFY2(wait(ready),
+                 qPrintable(s.client->state().message + " / " +
+                            s.window->findChild<QLabel *>("featureDiagnostic")->text()));
+        panel->discard();
+        QVERIFY(s.idle());
+        QCOMPARE(s.client->state().revision, revision);
+    }
+
+    void asymmetricDraftRectangleFixture() {
+        SessionCM5 s;
+        if (!s.start("mm") || !s.client) {
+            QFAIL("Disposable worker session failed to start");
+            return;
+        }
         sketch::Sketch rect;
         rect.name = "Tutorial1Profile";
         rect.rectangle({0, 0}, {.03, .02}); // 30 mm x 20 mm
@@ -138,6 +334,7 @@ class WorkflowContractsCM5 : public QObject {
         auto *panel = s.window->findChild<FeaturePanel *>();
         QVERIFY(panel);
         panel->begin("Extrude");
+        QVERIFY(s.idle());
         QVERIFY(panel->active());
         QVERIFY(panel->isModelingActive());
 
@@ -162,6 +359,8 @@ class WorkflowContractsCM5 : public QObject {
         viewport->dragExtrudeDepthHandle(-5.0); // restore to 10 mm
         QCOMPARE(s.window->findChild<QDoubleSpinBox *>("featureDepth")->value(), 10.0);
 
+        s.window->findChild<QComboBox *>("featureHandleParameter")
+            ->setCurrentText("Direction 1 draft");
         viewport->dragDraftAngleHandle(5.0); // drag draft handle +5 deg (to 40 deg)
         QCOMPARE(s.window->findChild<QDoubleSpinBox *>("featureDraftAngle")->value(), 40.0);
         viewport->dragDraftAngleHandle(-5.0); // restore to 35 deg
@@ -189,8 +388,8 @@ class WorkflowContractsCM5 : public QObject {
         QCOMPARE(f1.value("operation").toString(), QString("NewBody"));
         QCOMPARE(f1.value("direction1").toMap().value("value").toDouble(), 0.010);
         QCOMPARE(f1.value("direction2").toMap().value("value").toDouble(), 0.015);
-        near(f1.value("direction1").toMap().value("draft").toMap().value("angle").toDouble(),
-             35 * std::numbers::pi / 180.0, 1e-10);
+        checkNear(f1.value("direction1").toMap().value("draft").toMap().value("angle").toDouble(),
+                  35 * std::numbers::pi / 180.0, 1e-10);
         QVERIFY(f1.value("direction1").toMap().value("draft").toMap().value("outward").toBool());
 
         // Verify volume matches independent geometry:
@@ -203,13 +402,14 @@ class WorkflowContractsCM5 : public QObject {
         double volDir1 = h1 / 3.0 * (A0 + A1 + std::sqrt(A0 * A1));
         double volDir2 = 0.03 * 0.02 * 0.015;
         double expectedVol = volDir1 + volDir2;
-        near(s.volume(), expectedVol, 1e-7);
+        checkNear(s.volume(), expectedVol, 1e-7);
 
         // Tree integration: double-click intent to edit
         auto *tree = s.window->findChild<QTreeWidget *>("modelTree");
         QVERIFY(tree);
         auto intentId = f1.value("id").toString();
         panel->begin({}, intentId);
+        QVERIFY(s.idle());
         QVERIFY(panel->active());
         QCOMPARE(s.window->findChild<QDoubleSpinBox *>("featureDepth")->value(), 10.0);
         QCOMPARE(s.window->findChild<QDoubleSpinBox *>("featureDepth2")->value(), 15.0);
@@ -217,9 +417,12 @@ class WorkflowContractsCM5 : public QObject {
         QVERIFY(!panel->active());
     }
 
-    void t5ThinExtrusionMidplane() {
+    void thinExtrusionRectangleFixture() {
         SessionCM5 s;
-        QVERIFY(s.start("mm"));
+        if (!s.start("mm") || !s.client) {
+            QFAIL("Disposable worker session failed to start");
+            return;
+        }
         sketch::Sketch rect;
         rect.name = "ThinProfile";
         rect.rectangle({0, 0}, {.04, .02}); // 40 mm x 20 mm
@@ -233,6 +436,7 @@ class WorkflowContractsCM5 : public QObject {
 
         auto *panel = s.window->findChild<FeaturePanel *>();
         panel->begin("Extrude");
+        QVERIFY(s.idle());
         auto *profile = s.window->findChild<QComboBox *>("featureProfile");
         profile->setCurrentIndex(profile->findData(rect.id));
 
@@ -256,12 +460,15 @@ class WorkflowContractsCM5 : public QObject {
         // Area = 40*20 - 34*14 = 800 - 476 = 324 mm²
         // Volume = 324 mm² * 20 mm = 6480 mm³ = 6.48e-6 m³
         double expectedVol = (0.04 * 0.02 - 0.034 * 0.014) * 0.02;
-        near(s.volume(), expectedVol, 1e-8);
+        checkNear(s.volume(), expectedVol, 1e-8);
     }
 
     void t6SelectedContoursAndReuse() {
         SessionCM5 s;
-        QVERIFY(s.start("mm"));
+        if (!s.start("mm") || !s.client) {
+            QFAIL("Disposable worker session failed to start");
+            return;
+        }
         sketch::Sketch multi;
         multi.name = "MultiRegion";
         multi.rectangle({0, 0}, {.04, .03}); // 40x30 outer
@@ -279,6 +486,7 @@ class WorkflowContractsCM5 : public QObject {
 
         // Feature 1: Selected region (outer rectangle with circle hole)
         panel->begin("Extrude");
+        QVERIFY(s.idle());
         auto *profile = s.window->findChild<QComboBox *>("featureProfile");
         profile->setCurrentIndex(profile->findData(multi.id));
         s.window->findChild<QDoubleSpinBox *>("featureDepth")->setValue(10);
@@ -292,10 +500,28 @@ class WorkflowContractsCM5 : public QObject {
 
         // Feature 2: Reuse SAME sketch without consuming it! Extrude cylinder from hole
         panel->begin("Extrude");
+        QVERIFY(s.idle());
         profile->setCurrentIndex(profile->findData(multi.id));
         s.window->findChild<QComboBox *>("featureOperation")->setCurrentText("Add");
         s.window->findChild<QDoubleSpinBox *>("featureDepth")->setValue(20);
 
+        s.window->findChild<QComboBox *>("featureProfileMode")->setCurrentText("SelectedRegions");
+        bool selectedThroughDialog = false;
+        QTimer::singleShot(0, [&] {
+            auto *dialog = qobject_cast<QDialog *>(QApplication::activeModalWidget());
+            if (!dialog)
+                return;
+            auto *curves = dialog->findChild<QComboBox *>("featureContourCurve");
+            dialog->findChild<QPushButton *>("featureContourAddRegion")->click();
+            for (int i = 0; i < curves->count(); ++i)
+                if (curves->itemText(i).startsWith("Circle"))
+                    curves->setCurrentIndex(i);
+            dialog->findChild<QPushButton *>("featureContourAddCurve")->click();
+            selectedThroughDialog = true;
+            dialog->findChild<QDialogButtonBox *>()->button(QDialogButtonBox::Ok)->click();
+        });
+        s.window->findChild<QPushButton *>("featureSelectRegions")->click();
+        QVERIFY(selectedThroughDialog);
         panel->preview();
         QVERIFY(wait([&] {
             return s.window->findChild<QPushButton *>("acceptFeatureButton")->isEnabled();
@@ -306,13 +532,38 @@ class WorkflowContractsCM5 : public QObject {
         auto doc = s.document();
         auto intents = doc.value("modeling").toMap().value("intents").toArray();
         QCOMPARE(intents.size(), 2);
+        QCOMPARE(intents[1].toMap().value("profile").toMap().value("mode").toString(),
+                 QString("SelectedRegions"));
+        QCOMPARE(intents[1].toMap().value("profile").toMap().value("regions").toArray().size(), 1);
+        checkNear(s.volume(),
+                  (.04 * .03 - std::numbers::pi * .005 * .005) * .01 +
+                      std::numbers::pi * .005 * .005 * .02,
+                  1e-10);
+        // A third Boolean must name the stage after the second operation.
+        panel->begin("Extrude");
+        QVERIFY(s.idle());
+        profile->setCurrentIndex(profile->findData(multi.id));
+        s.window->findChild<QComboBox *>("featureOperation")->setCurrentText("Add");
+        s.window->findChild<QDoubleSpinBox *>("featureDepth")->setValue(25);
+        panel->preview();
+        QVERIFY(wait([&] {
+            return s.window->findChild<QPushButton *>("acceptFeatureButton")->isEnabled();
+        }));
+        panel->finish();
+        QVERIFY(s.idle());
+        auto third = s.document().value("modeling").toMap().value("intents").toArray()[2].toMap();
+        QCOMPARE(third.value("target").toMap().value("source").toMap().value("object"),
+                 intents[1].toMap().value("id"));
         // Sketch remains intact in document
         QCOMPARE(doc.value("sketches").toArray().size(), 1);
     }
 
     void t6OpenProfileCut() {
         SessionCM5 s;
-        QVERIFY(s.start("mm"));
+        if (!s.start("mm") || !s.client) {
+            QFAIL("Disposable worker session failed to start");
+            return;
+        }
 
         // Base box sketch
         sketch::Sketch baseSketch;
@@ -337,6 +588,7 @@ class WorkflowContractsCM5 : public QObject {
         auto *panel = s.window->findChild<FeaturePanel *>();
         // 1. Create base solid block 40x40x20 mm³
         panel->begin("Extrude");
+        QVERIFY(s.idle());
         s.window->findChild<QComboBox *>("featureProfile")
             ->setCurrentIndex(
                 s.window->findChild<QComboBox *>("featureProfile")->findData(baseSketch.id));
@@ -349,10 +601,11 @@ class WorkflowContractsCM5 : public QObject {
         QVERIFY(s.idle());
 
         double totalBlockVol = 0.04 * 0.04 * 0.02; // 3.2e-5 m³
-        near(s.volume(), totalBlockVol, 1e-8);
+        checkNear(s.volume(), totalBlockVol, 1e-8);
 
         // 2. Open-profile cut with flip_side = false cutting into block (-Z)
         panel->begin("Extrude");
+        QVERIFY(s.idle());
         s.window->findChild<QComboBox *>("featureProfile")
             ->setCurrentIndex(
                 s.window->findChild<QComboBox *>("featureProfile")->findData(cutSketch.id));
@@ -370,12 +623,13 @@ class WorkflowContractsCM5 : public QObject {
 
         // Cut half of the top 10mm (40 x 20 x 10 mm³ = 8000 mm³ cut)
         double volAfterCut1 = s.volume();
-        near(volAfterCut1, totalBlockVol - 0.04 * 0.02 * 0.01, 1e-7);
+        checkNear(volAfterCut1, totalBlockVol - 0.04 * 0.02 * 0.01, 1e-7);
 
         // Edit cut feature to flip cut side
         auto cutIntents = s.document().value("modeling").toMap().value("intents").toArray();
         QCOMPARE(cutIntents.size(), 2);
         panel->begin({}, cutIntents[1].toMap().value("id").toString());
+        QVERIFY(s.idle());
         QVERIFY(panel->active());
         auto *flipCheck = s.window->findChild<QCheckBox *>("featureFlipSide");
         QVERIFY(flipCheck);
@@ -386,12 +640,15 @@ class WorkflowContractsCM5 : public QObject {
         }));
         panel->finish();
         QVERIFY(s.idle());
-        near(s.volume(), totalBlockVol - 0.04 * 0.02 * 0.01, 1e-7);
+        checkNear(s.volume(), totalBlockVol - 0.04 * 0.02 * 0.01, 1e-7);
     }
 
     void revolveModesAndAngles() {
         SessionCM5 s;
-        QVERIFY(s.start("mm"));
+        if (!s.start("mm") || !s.client) {
+            QFAIL("Disposable worker session failed to start");
+            return;
+        }
         sketch::Sketch s1;
         s1.name = "RevolveSketch";
         // Rectangle from x=10 to x=20, y=0 to y=10 (offset from Y axis)
@@ -410,6 +667,7 @@ class WorkflowContractsCM5 : public QObject {
 
         auto *panel = s.window->findChild<FeaturePanel *>();
         panel->begin("Revolve");
+        QVERIFY(s.idle());
         QVERIFY(panel->active());
         s.window->findChild<QComboBox *>("featureProfile")
             ->setCurrentIndex(s.window->findChild<QComboBox *>("featureProfile")->findData(s1.id));
@@ -432,12 +690,15 @@ class WorkflowContractsCM5 : public QObject {
         // Annular half-cylinder: R_inner=10mm, R_outer=20mm, H=10mm, angle=pi
         // Volume = pi/2 * (R_outer^2 - R_inner^2) * H = pi/2 * (400 - 100) * 10 = 1500 * pi mm³
         double expectedVol = std::numbers::pi / 2.0 * (0.02 * 0.02 - 0.01 * 0.01) * 0.01;
-        near(s.volume(), expectedVol, 1e-8);
+        checkNear(s.volume(), expectedVol, 1e-8);
     }
 
     void t8StandaloneDraftAndRepair() {
         SessionCM5 s;
-        QVERIFY(s.start("mm"));
+        if (!s.start("mm") || !s.client) {
+            QFAIL("Disposable worker session failed to start");
+            return;
+        }
         sketch::Sketch baseSketch;
         baseSketch.name = "BoxBase";
         baseSketch.rectangle({0, 0}, {.02, .01}); // 20x10 mm
@@ -459,6 +720,7 @@ class WorkflowContractsCM5 : public QObject {
         auto *panel = s.window->findChild<FeaturePanel *>();
         // Base box H=10 mm
         panel->begin("Extrude");
+        QVERIFY(s.idle());
         s.window->findChild<QComboBox *>("featureProfile")
             ->setCurrentIndex(
                 s.window->findChild<QComboBox *>("featureProfile")->findData(baseSketch.id));
@@ -472,10 +734,10 @@ class WorkflowContractsCM5 : public QObject {
 
         // Standalone Draft
         panel->begin("Draft");
+        QVERIFY(s.idle());
         QVERIFY(panel->active());
         s.window->findChild<QDoubleSpinBox *>("draftStandaloneAngle")->setValue(5);
         s.window->findChild<QCheckBox *>("draftStandaloneOutward")->setChecked(true);
-        auto *neutralCombo = s.window->findChild<QComboBox *>("draftNeutral");
         auto *pullCombo = s.window->findChild<QComboBox *>("draftPull");
         for (int i = 0; i < pullCombo->count(); ++i) {
             auto d = pullCombo->itemData(i).value<QCborMap>();
@@ -514,27 +776,64 @@ class WorkflowContractsCM5 : public QObject {
         QCOMPARE(intents.size(), 2);
         QCOMPARE(intents[1].toMap().value("kind").toString(), QString("Draft"));
 
-        // Test repair workflow: begin edit on draft
+        // A missing face must be repaired through the actual pending native draft.
+        auto acceptedRevision = s.client->state().revision;
+        auto originalFace = intents[1].toMap().value("faces").toArray()[0].toMap();
         panel->begin({}, intents[1].toMap().value("id").toString());
-        QVERIFY(panel->active());
-        auto *repairBtn = s.window->findChild<QPushButton *>("featureRepairSupports");
-        QVERIFY(repairBtn);
-        repairBtn->click();
-        QVERIFY(wait([&] { return !s.client->outstanding(); }));
+        QVERIFY(s.idle());
+        auto missing = originalFace;
+        missing.insert(QStringLiteral("topology"), "face/" + QString(64, '0'));
+        facesCombo->addItem("Missing reference", QVariant::fromValue(missing));
+        facesCombo->setCurrentIndex(facesCombo->count() - 1);
+        panel->preview();
+        QVERIFY(s.idle());
+        QCOMPARE(s.client->state().phase, Phase::Failed);
+        QCOMPARE(s.client->state().revision, acceptedRevision);
+        s.window->findChild<QComboBox *>("featureRepairPath")->setCurrentText("faces/0");
+        s.window->findChild<QPushButton *>("featureRepairSupports")->click();
+        QVERIFY(s.idle());
         auto *repairCombo = s.window->findChild<QComboBox *>("featureRepairCandidate");
-        QVERIFY(repairCombo);
-        QVERIFY(repairCombo->count() > 0);
-        auto *applyRepairBtn = s.window->findChild<QPushButton *>("featureApplyRepair");
-        QVERIFY(applyRepairBtn);
-        applyRepairBtn->click();
-        QVERIFY(wait([&] { return !s.client->outstanding(); }));
-        panel->discard();
+        int replacement = -1;
+        for (int i = 0; i < repairCombo->count(); ++i)
+            if (repairCombo->itemData(i).value<QCborMap>().value("topology") ==
+                originalFace.value("topology"))
+                replacement = i;
+        QVERIFY(replacement >= 0);
+        repairCombo->setCurrentIndex(replacement);
+        s.window->findChild<QPushButton *>("featureApplyRepair")->click();
+        QVERIFY(wait([&] {
+            return s.window->findChild<QPushButton *>("acceptFeatureButton")->isEnabled();
+        }));
+        // The original face is restored exactly; change angle to create a real revision.
+        s.window->findChild<QDoubleSpinBox *>("draftStandaloneAngle")->setValue(6);
+        panel->preview();
+        QVERIFY(wait([&] {
+            return s.window->findChild<QPushButton *>("acceptFeatureButton")->isEnabled();
+        }));
+        panel->finish();
+        QVERIFY(s.idle());
         QVERIFY(!panel->active());
+        QCOMPARE(s.client->state().revision, acceptedRevision + 1);
+        auto repaired =
+            s.document().value("modeling").toMap().value("intents").toArray()[1].toMap();
+        QCOMPARE(repaired.value("faces").toArray()[0].toMap(), originalFace);
+        auto saved = s.files.filePath("repaired.cadproj");
+        s.client->saveProject(saved, true);
+        QVERIFY(s.idle());
+        s.client->closeProject();
+        QVERIFY(s.idle());
+        s.client->openProject(saved);
+        QVERIFY(s.idle());
+        QCOMPARE(s.document().value("modeling").toMap().value("intents").toArray()[1].toMap(),
+                 repaired);
     }
 
     void draftLifecycleAndCancel() {
         SessionCM5 s;
-        QVERIFY(s.start("mm"));
+        if (!s.start("mm") || !s.client) {
+            QFAIL("Disposable worker session failed to start");
+            return;
+        }
         sketch::Sketch rect;
         rect.name = "LifecycleProfile";
         rect.rectangle({0, 0}, {.02, .02});
@@ -548,6 +847,7 @@ class WorkflowContractsCM5 : public QObject {
 
         auto *panel = s.window->findChild<FeaturePanel *>();
         panel->begin("Extrude");
+        QVERIFY(s.idle());
         s.window->findChild<QComboBox *>("featureProfile")
             ->setCurrentIndex(
                 s.window->findChild<QComboBox *>("featureProfile")->findData(rect.id));
@@ -572,11 +872,11 @@ class WorkflowContractsCM5 : public QObject {
         QTest::addColumn<double>("dpr");
         QTest::addColumn<QString>("units");
         QTest::addColumn<bool>("inclinedPlane");
-        QTest::newRow("100% mm") << 1.0 << QString("mm") << false;
-        QTest::newRow("125% mm") << 1.25 << QString("mm") << true;
-        QTest::newRow("150% in") << 1.50 << QString("in") << false;
-        QTest::newRow("175% mm") << 1.75 << QString("mm") << true;
-        QTest::newRow("200% in") << 2.00 << QString("in") << false;
+        double actual = qEnvironmentVariableIsSet("CAD_NATIVE_TEST")
+                            ? qEnvironmentVariable("CAD_EXPECTED_DPR").toDouble()
+                            : 1.0;
+        QTest::newRow("mm") << actual << QString("mm") << false;
+        QTest::newRow("inch-inclined") << actual << QString("in") << true;
     }
 
     void nativeEffectiveScales() {
@@ -584,7 +884,12 @@ class WorkflowContractsCM5 : public QObject {
         QFETCH(QString, units);
         QFETCH(bool, inclinedPlane);
         SessionCM5 s;
-        QVERIFY(s.start(units, dpr));
+        if (!s.start(units, dpr) || !s.client) {
+            QFAIL("Disposable worker session failed to start");
+            return;
+        }
+        if (qEnvironmentVariableIsSet("CAD_NATIVE_TEST"))
+            QCOMPARE(s.window->devicePixelRatioF(), dpr);
         double u = domain::toSI(1, "length", units);
 
         sketch::Sketch sq;
@@ -606,6 +911,7 @@ class WorkflowContractsCM5 : public QObject {
 
         auto *panel = s.window->findChild<FeaturePanel *>();
         panel->begin("Extrude");
+        QVERIFY(s.idle());
         s.window->findChild<QComboBox *>("featureProfile")
             ->setCurrentIndex(s.window->findChild<QComboBox *>("featureProfile")->findData(sq.id));
         s.window->findChild<QDoubleSpinBox *>("featureDepth")->setValue(.010 / u);
@@ -621,12 +927,22 @@ class WorkflowContractsCM5 : public QObject {
         panel->finish();
         QVERIFY(s.idle());
 
-        near(s.volume(), 0.02 * 0.02 * 0.01, 1e-8);
+        checkNear(s.volume(), 0.02 * 0.02 * 0.01, 1e-8);
+        auto artifacts = qEnvironmentVariable("CAD_ARTIFACT_DIR");
+        if (!artifacts.isEmpty()) {
+            QVERIFY(wait([&] {
+                return s.window->sceneView()->graphicsDescription().contains("initialized 1");
+            }));
+            QVERIFY(s.window->grab().save(artifacts + "/" + units + ".png"));
+        }
     }
 
     void upstreamMutationAndReopen() {
         SessionCM5 s;
-        QVERIFY(s.start("mm"));
+        if (!s.start("mm") || !s.client) {
+            QFAIL("Disposable worker session failed to start");
+            return;
+        }
         sketch::Sketch rect;
         rect.name = "MutateProfile";
         rect.rectangle({0, 0}, {.03, .02});
@@ -640,6 +956,7 @@ class WorkflowContractsCM5 : public QObject {
 
         auto *panel = s.window->findChild<FeaturePanel *>();
         panel->begin("Extrude");
+        QVERIFY(s.idle());
         s.window->findChild<QComboBox *>("featureProfile")
             ->setCurrentIndex(
                 s.window->findChild<QComboBox *>("featureProfile")->findData(rect.id));
@@ -651,7 +968,7 @@ class WorkflowContractsCM5 : public QObject {
         panel->finish();
         QVERIFY(s.idle());
 
-        near(s.volume(), 0.03 * 0.02 * 0.01, 1e-8);
+        checkNear(s.volume(), 0.03 * 0.02 * 0.01, 1e-8);
 
         // Undo and redo check
         s.window->command("undo")->trigger();
@@ -673,7 +990,7 @@ class WorkflowContractsCM5 : public QObject {
         QVERIFY(s.idle());
 
         // Solid automatically followed upstream geometry!
-        near(s.volume(), 0.04 * 0.02 * 0.01, 1e-8);
+        checkNear(s.volume(), 0.04 * 0.02 * 0.01, 1e-8);
 
         // 2. Save project and reopen
         auto path = s.files.filePath("cm5_native.cadproj");
@@ -690,9 +1007,18 @@ class WorkflowContractsCM5 : public QObject {
         QVERIFY(doc.contains(QStringLiteral("modeling")));
         auto intents = doc.value("modeling").toMap().value("intents").toArray();
         QCOMPARE(intents.size(), 1);
-        near(s.volume(), 0.04 * 0.02 * 0.01, 1e-8);
+        checkNear(s.volume(), 0.04 * 0.02 * 0.01, 1e-8);
     }
 };
 
-QTEST_MAIN(WorkflowContractsCM5)
+int main(int argc, char **argv) {
+    QSurfaceFormat format;
+    format.setVersion(3, 3);
+    format.setProfile(QSurfaceFormat::CoreProfile);
+    format.setDepthBufferSize(24);
+    QSurfaceFormat::setDefaultFormat(format);
+    QApplication app(argc, argv);
+    WorkflowContractsCM5 tests;
+    return QTest::qExec(&tests, argc, argv);
+}
 #include "workflow_contracts_cm5.moc"

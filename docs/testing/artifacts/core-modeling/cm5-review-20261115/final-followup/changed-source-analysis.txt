@@ -1,0 +1,10 @@
+Analyzed src/protocol/Client.cpp
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed src/render/Viewport.cpp
+Analyzed apps/desktop/FeaturePanel.cpp
+Analyzed apps/desktop/FeatureUI.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/persistence/ProjectStore.cpp
+Analyzed tests/module4/contracts.cpp
+Analyzed tests/core_modeling/modeling_contracts.cpp
+Analyzed tests/core_modeling/workflow_contracts_cm5.cpp

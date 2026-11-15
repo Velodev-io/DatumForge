@@ -216,6 +216,7 @@ class Worker : public QObject {
                             "SupportReferenceCandidates",
                             "ResolveSupportReference",
                             "ModelingReferenceCandidates",
+                            "ModelingInputs",
                             "ResolveModelingReference",
                             "SupportGeometry"}
                     .contains(e.command))

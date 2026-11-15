@@ -1,0 +1,62 @@
+Analyzed src/protocol/Client.cpp
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed src/render/Viewport.cpp
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1423:22: warning: Potential leak of memory pointed to by 'r' [cplusplus.NewDeleteLeaks]
+ 1423 |     for (auto region : currentRegions) {
+      |                      ^
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1400:9: note: Assuming field 'editing' is true
+ 1400 |     if (!editing || !isModeling)
+      |         ^~~~~~~~
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1400:9: note: Left side of '||' is false
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1400:21: note: Assuming field 'isModeling' is true
+ 1400 |     if (!editing || !isModeling)
+      |                     ^~~~~~~~~~~
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1400:5: note: Taking false branch
+ 1400 |     if (!editing || !isModeling)
+      |     ^
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1423:22: note: Assuming the condition is false
+ 1423 |     for (auto region : currentRegions) {
+      |                      ^
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1424:19: note: Memory is allocated
+ 1424 |         auto *r = new QTreeWidgetItem(tree, {"Region"});
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1425:28: note: Assuming the condition is false
+ 1425 |         for (auto boundary : region.toArray()) {
+      |                            ^
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1423:22: note: Potential leak of memory pointed to by 'r'
+ 1423 |     for (auto region : currentRegions) {
+      |                      ^
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1425:28: warning: Potential leak of memory pointed to by 'b' [cplusplus.NewDeleteLeaks]
+ 1425 |         for (auto boundary : region.toArray()) {
+      |                            ^
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1400:9: note: Assuming field 'editing' is true
+ 1400 |     if (!editing || !isModeling)
+      |         ^~~~~~~~
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1400:9: note: Left side of '||' is false
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1400:21: note: Assuming field 'isModeling' is true
+ 1400 |     if (!editing || !isModeling)
+      |                     ^~~~~~~~~~~
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1400:5: note: Taking false branch
+ 1400 |     if (!editing || !isModeling)
+      |     ^
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1423:22: note: Assuming the condition is false
+ 1423 |     for (auto region : currentRegions) {
+      |                      ^
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1425:28: note: Assuming the condition is false
+ 1425 |         for (auto boundary : region.toArray()) {
+      |                            ^
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1426:23: note: Memory is allocated
+ 1426 |             auto *b = new QTreeWidgetItem(r, {r->childCount() == 0 ? "Outer boundary" : "Hole"});
+      |                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1426:47: note: Assuming the condition is false
+ 1426 |             auto *b = new QTreeWidgetItem(r, {r->childCount() == 0 ? "Outer boundary" : "Hole"});
+      |                                               ^~~~~~~~~~~~~~~~~~~~
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1426:47: note: '?' condition is false
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1427:27: note: Assuming the condition is false
+ 1427 |             for (auto use : boundary.toArray())
+      |                           ^
+/private/tmp/datumforge-cm5-review-20261115/apps/desktop/FeaturePanel.cpp:1425:28: note: Potential leak of memory pointed to by 'b'
+ 1425 |         for (auto boundary : region.toArray()) {
+      |                            ^
+2 warnings generated.
+Fail: analyzer reported an error or warning in apps/desktop/FeaturePanel.cpp

@@ -79,7 +79,8 @@ class Contracts : public QObject {
         auto click = [&](QString name) {
             auto *b = w.findChild<QPushButton *>(name);
             QVERIFY2(b, qPrintable(name));
-            QVERIFY2(b->isEnabled(), qPrintable(name + " disabled: " + c->state().message));
+            QVERIFY2(wait([&] { return b->isEnabled(); }),
+                     qPrintable(name + " disabled: " + c->state().message));
             b->click();
         };
         auto spin = [&](QString name, double value) {
@@ -142,7 +143,16 @@ class Contracts : public QObject {
         QCOMPARE(c->state().revision, rev);
         QVERIFY(doc(c).value("features").toArray().empty());
         QVERIFY(!c->mesh());
-        w.command("extrude")->trigger();
+        // Retain coverage of legacy downstream tools after the CM5 first-feature preview.
+        auto legacyBase = fixture4::B1{}.base;
+        legacyBase.parameters.insert(QStringLiteral("sketch"),
+                                     sketches[0].toMap().value("id").toString());
+        legacyBase.parameters.insert(QStringLiteral("depth"), .009);
+        c->projectCommand("SetFeatures",
+                          sketch::fields({{"features", features::encode({legacyBase})}}));
+        QVERIFY(settle());
+        panel->begin({}, legacyBase.id);
+        spin("featureDepth", 10);
         preview();
         accept();
         QVERIFY(w.sceneView()->isVisible());

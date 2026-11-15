@@ -472,7 +472,7 @@ void Viewport::mouseMoveEvent(QMouseEvent *e) {
                 float t = float((e->position().x() - originProj.x()) * screenAxis.x() +
                                 (e->position().y() - originProj.y()) * screenAxis.y()) /
                           lenSq;
-                double newDepth = qMax(0.1, manipulatorDepth * double(t));
+                double newDepth = qMax(1e-5, manipulatorDepth * double(t));
                 manipulatorDepth = newDepth;
                 emit depthManipulatorMoved(newDepth);
                 update();
@@ -480,7 +480,8 @@ void Viewport::mouseMoveEvent(QMouseEvent *e) {
             }
         } else if (manipulatorKind == "Draft") {
             double delta = double(e->position().x() - previous.x()) * 0.5;
-            manipulatorAngle = qBound(0.0, manipulatorAngle + delta, 89.9);
+            previous = e->position().toPoint();
+            manipulatorAngle = qBound(0.0, manipulatorAngle + delta, manipulatorMaximum);
             emit draftManipulatorMoved(manipulatorAngle);
             update();
             return;
@@ -539,12 +540,14 @@ void Viewport::setExtrudeManipulator(QVector3D origin, QVector3D direction, doub
     manipulatorReverse = reverse;
     update();
 }
-void Viewport::setDraftManipulator(QVector3D origin, QVector3D normal, double angleDeg) {
+void Viewport::setDraftManipulator(QVector3D origin, QVector3D normal, double angleDeg,
+                                   double maximum) {
     manipulatorActive = true;
     manipulatorKind = "Draft";
     manipulatorOrigin = origin;
     manipulatorDirection = normal.isNull() ? QVector3D(0, 0, 1) : normal.normalized();
     manipulatorAngle = angleDeg;
+    manipulatorMaximum = maximum;
     manipulatorReverse = false;
     update();
 }
@@ -557,13 +560,13 @@ void Viewport::clearManipulators() {
 void Viewport::dragExtrudeDepthHandle(double deltaMM) {
     if (!manipulatorActive || manipulatorKind != "Depth")
         return;
-    manipulatorDepth = qMax(0.1, manipulatorDepth + deltaMM);
+    manipulatorDepth = qMax(1e-5, manipulatorDepth + deltaMM);
     emit depthManipulatorMoved(manipulatorDepth);
     emit depthManipulatorReleased(manipulatorDepth);
     update();
 }
 void Viewport::dragDraftAngleHandle(double deltaDeg) {
-    manipulatorAngle = qBound(0.0, manipulatorAngle + deltaDeg, 89.9);
+    manipulatorAngle = qBound(0.0, manipulatorAngle + deltaDeg, manipulatorMaximum);
     emit draftManipulatorMoved(manipulatorAngle);
     emit draftManipulatorReleased(manipulatorAngle);
     update();

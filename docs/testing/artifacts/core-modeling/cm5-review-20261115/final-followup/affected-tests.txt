@@ -1,0 +1,29 @@
+Test project /private/tmp/datumforge-cm5-review-20261115/build/macos-debug
+      Start 30: module4.workspace
+ 1/12 Test #30: module4.workspace ................   Passed    1.34 sec
+      Start 34: module4.lifecycle
+ 2/12 Test #34: module4.lifecycle ................   Passed    3.67 sec
+      Start 60: cm5.intent
+ 3/12 Test #60: cm5.intent .......................   Passed    0.04 sec
+      Start 61: cm5.profiles
+ 4/12 Test #61: cm5.profiles .....................   Passed    0.14 sec
+      Start 62: cm5.features
+ 5/12 Test #62: cm5.features .....................   Passed    1.00 sec
+      Start 63: cm5.worker
+ 6/12 Test #63: cm5.worker .......................   Passed    0.23 sec
+      Start 64: cm5.transport
+ 7/12 Test #64: cm5.transport ....................   Passed    1.20 sec
+      Start 65: cm5.records
+ 8/12 Test #65: cm5.records ......................   Passed    0.02 sec
+      Start 66: cm5.store
+ 9/12 Test #66: cm5.store ........................   Passed    1.22 sec
+      Start 67: cm5.repair
+10/12 Test #67: cm5.repair .......................   Passed    1.44 sec
+      Start 80: cm4.workflow_contracts
+11/12 Test #80: cm4.workflow_contracts ...........   Passed   24.45 sec
+      Start 81: cm5.workflow_contracts
+12/12 Test #81: cm5.workflow_contracts ...........   Passed    8.46 sec
+
+100% tests passed, 0 tests failed out of 12
+
+Total Test time (real) =  43.23 sec

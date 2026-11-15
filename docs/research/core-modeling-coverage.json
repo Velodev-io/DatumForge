@@ -4458,11 +4458,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: startsAndLimits and directed extrusion",
       "exact_test_functions": [
@@ -4470,7 +4472,7 @@
         "tests/core_modeling/modeling_features.cpp:startsAndLimits()",
         "tests/core_modeling/modeling_store.cpp:main()"
       ],
-      "native_case": "FeatureUI::extrudeSketchPlaneStart",
+      "native_case": "WorkflowContractsCM5::typedInputsAndParameterHandles; nativeEffectiveScales",
       "expected_result": "Extrusion starts exactly at sketch plane Z=0; volume = L * W * depth; bounds match oriented sketch frame",
       "upstream_repair_scenario": "Arbitrary angled datum/face support movement rebuilds extrusion along new plane normal without coordinate drift",
       "prerequisites": "Planar sketch support datum/face (CM4.a), closed profile wire (CM1)"
@@ -4507,11 +4509,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Not run for the complete native variant",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: startsAndLimits; curvedLimits; failureBoundaries; full face/start variants remain open",
       "exact_test_functions": [
@@ -4519,7 +4523,7 @@
         "tests/core_modeling/modeling_features.cpp:startsAndLimits()",
         "tests/core_modeling/modeling_features.cpp:curvedLimits()"
       ],
-      "native_case": "FeatureUI::extrudeSurfaceStart",
+      "native_case": "Not run: full native variant; engine-only evidence remains separate",
       "expected_result": "Extrusion station starts on selected planar/curved face; cap trimmed to face boundary; independent volume = profile_area * depth",
       "upstream_repair_scenario": "Upstream solid body face movement shifts start station; missing face triggers explicit candidate inspection and repair",
       "prerequisites": "Prior solid body with selectable face reference (CM5.b/c)"
@@ -4556,18 +4560,20 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: point-like Vertex start; full topological vertex corpus remains open",
       "exact_test_functions": [
         "tests/core_modeling/feature_intent.cpp:modeContracts()",
         "tests/core_modeling/modeling_features.cpp:startsAndLimits()"
       ],
-      "native_case": "FeatureUI::extrudeVertexStart",
+      "native_case": "WorkflowContractsCM5::typedInputsAndParameterHandles",
       "expected_result": "Start plane projected through selected topological vertex normal to extrusion direction; exact station",
       "upstream_repair_scenario": "Vertex station moved upstream rebuilds feature at new station; deleted vertex preserves accepted state with actionable diagnostic",
       "prerequisites": "Prior topological vertex reference on separate body or datum"
@@ -4604,18 +4610,20 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Not run for the complete native variant",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: signed Offset start",
       "exact_test_functions": [
         "tests/core_modeling/feature_intent.cpp:modeContracts()",
         "tests/core_modeling/modeling_features.cpp:startsAndLimits()"
       ],
-      "native_case": "FeatureUI::extrudeOffsetStart",
+      "native_case": "Not run: full native variant; engine-only evidence remains separate",
       "expected_result": "Signed distance offset along extrusion axis before start; start station = offset; depth independent of offset distance",
       "upstream_repair_scenario": "Reversing extrusion direction or inverting offset sign maintains independent parameter values; zero offset rejected",
       "prerequisites": "Base sketch plane or selected surface start reference"
@@ -4655,11 +4663,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: Blind extrusion",
       "exact_test_functions": [
@@ -4667,7 +4677,7 @@
         "tests/core_modeling/modeling_features.cpp:startsAndLimits()",
         "tests/core_modeling/modeling_features.cpp:booleansAndBodies()"
       ],
-      "native_case": "FeatureUI::extrudeBlind",
+      "native_case": "WorkflowContractsCM5::typedInputsAndParameterHandles; asymmetricDraftRectangleFixture",
       "expected_result": "Extruded length equals depth value; volume = profile_area * depth; viewport handle edits parameter directly",
       "upstream_repair_scenario": "Parameter editing via spinbox or manipulator updates pending preview; undo/redo restores exact volume",
       "prerequisites": "Valid closed profile and positive finite depth parameter"
@@ -4707,11 +4717,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: total Midplane depth and drafted halves",
       "exact_test_functions": [
@@ -4719,7 +4731,7 @@
         "tests/core_modeling/modeling_features.cpp:startsAndLimits()",
         "tests/core_modeling/modeling_features.cpp:draftedDirections()"
       ],
-      "native_case": "FeatureUI::extrudeMidplane",
+      "native_case": "WorkflowContractsCM5::thinExtrusionRectangleFixture",
       "expected_result": "Total depth split symmetrically: depth/2 along normal, depth/2 along negative normal; Direction 2 controls inactive",
       "upstream_repair_scenario": "Selecting Midplane disables Direction 2; switching back to Blind restores Direction 2 configuration",
       "prerequisites": "Planar profile and positive total depth value"
@@ -4759,18 +4771,20 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Not run for the complete native variant",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: point-like UpToVertex termination",
       "exact_test_functions": [
         "tests/core_modeling/feature_intent.cpp:modeContracts()",
         "tests/core_modeling/modeling_features.cpp:startsAndLimits()"
       ],
-      "native_case": "FeatureUI::extrudeUpToVertex",
+      "native_case": "Not run: full native variant; engine-only evidence remains separate",
       "expected_result": "Termination planar station matches selected vertex projected along direction; no fixed depth substitution",
       "upstream_repair_scenario": "Target vertex moved upstream updates termination station; vertex behind start station rejected as invalid limit",
       "prerequisites": "Target topological vertex reference on separate body or datum"
@@ -4810,15 +4824,17 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "feasibility": {
         "scope": "Narrow isolated seed only; see per-probe limits. No production/native/persistence completion implied.",
         "evidence": "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
       },
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Not run for the complete native variant",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: inclined, changed upstream, planar and spherical limits; exact cap coverage",
       "exact_test_functions": [
@@ -4826,7 +4842,7 @@
         "tests/core_modeling/modeling_features.cpp:startsAndLimits()",
         "tests/core_modeling/modeling_features.cpp:curvedLimits()"
       ],
-      "native_case": "FeatureUI::extrudeUpToSurface",
+      "native_case": "Not run: full native variant; engine-only evidence remains separate",
       "expected_result": "End cap trimmed exactly to target planar/curved face; cap topology matches target face curvature",
       "upstream_repair_scenario": "Target surface moved or curved radius modified updates extrusion cap; non-intersecting surface refused",
       "prerequisites": "Target face reference spanning profile projection footprint"
@@ -4866,11 +4882,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Not run for the complete native variant",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: normal surface offset in both directions",
       "exact_test_functions": [
@@ -4878,7 +4896,7 @@
         "tests/core_modeling/modeling_features.cpp:startsAndLimits()",
         "tests/core_modeling/modeling_features.cpp:curvedLimits()"
       ],
-      "native_case": "FeatureUI::extrudeOffsetFromSurface",
+      "native_case": "Not run: full native variant; engine-only evidence remains separate",
       "expected_result": "End cap terminates at normal offset distance from reference surface; both normal offset sides supported",
       "upstream_repair_scenario": "Reversing extrusion direction leaves surface normal offset side independent; offset exceeding distance refused",
       "prerequisites": "Target face reference and positive offset distance"
@@ -4918,18 +4936,20 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: UpToBody Add and drafted cap",
       "exact_test_functions": [
         "tests/core_modeling/feature_intent.cpp:modeContracts()",
         "tests/core_modeling/modeling_features.cpp:booleansAndBodies()"
       ],
-      "native_case": "FeatureUI::extrudeUpToBody",
+      "native_case": "WorkflowContractsCM5::typedInputsAndParameterHandles",
       "expected_result": "Extrusion terminates on first encountered surface of explicit producing-stage body; merges or remains separate body",
       "upstream_repair_scenario": "Target body boundary moved upstream updates limit; deleted target body preserves pending state with diagnostic",
       "prerequisites": "Explicit target body reference in producing stage"
@@ -4969,11 +4989,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Not run for the complete native variant",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: UpToNext Add and drafted cap",
       "exact_test_functions": [
@@ -4981,7 +5003,7 @@
         "tests/core_modeling/modeling_features.cpp:startsAndLimits()",
         "tests/core_modeling/modeling_features.cpp:booleansAndBodies()"
       ],
-      "native_case": "FeatureUI::extrudeUpToNext",
+      "native_case": "Not run: full native variant; engine-only evidence remains separate",
       "expected_result": "Terminates on first admissible intersected boundary of explicit target body in extrusion direction",
       "upstream_repair_scenario": "Obstructing geometry added/removed changes termination station; no intersection returns actionable failure",
       "prerequisites": "Intersecting target solid body along direction vector"
@@ -5021,11 +5043,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Not run for the complete native variant",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: ThroughAll cut",
       "exact_test_functions": [
@@ -5033,7 +5057,7 @@
         "tests/core_modeling/modeling_features.cpp:startsAndLimits()",
         "tests/core_modeling/modeling_features.cpp:openCuts()"
       ],
-      "native_case": "FeatureUI::extrudeThroughAll",
+      "native_case": "Not run: full native variant; engine-only evidence remains separate",
       "expected_result": "Cut passes completely through target body bounds along direction; removed volume equals profile * body intersection",
       "upstream_repair_scenario": "Target body resized upstream automatically re-cuts through enlarged target without depth limit",
       "prerequisites": "Cut operation and intersecting target body"
@@ -5073,18 +5097,20 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: independent 10/15 mm directions and draft",
       "exact_test_functions": [
         "tests/core_modeling/feature_intent.cpp:modeContracts()",
         "tests/core_modeling/modeling_features.cpp:draftedDirections()"
       ],
-      "native_case": "FeatureUI::extrudeIndependentDirection2",
+      "native_case": "WorkflowContractsCM5::asymmetricDraftRectangleFixture (rectangle fixture only)",
       "expected_result": "Direction 1 depth=10 mm, draft=35 deg; Direction 2 depth=15 mm, draft=0 deg (T5 Tutorial 1 course model); exact volume",
       "upstream_repair_scenario": "Modifying Direction 2 parameters does not alter Direction 1 depth or draft angle; independent manipulators",
       "prerequisites": "Active Direction 2 checkbox in non-Midplane mode"
@@ -5124,11 +5150,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Not run for the complete native variant",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: reverse extrusion and revolve directions",
       "exact_test_functions": [
@@ -5136,7 +5164,7 @@
         "tests/core_modeling/modeling_features.cpp:startsAndLimits()",
         "tests/core_modeling/modeling_features.cpp:revolves()"
       ],
-      "native_case": "FeatureUI::extrudeReverseDirection",
+      "native_case": "Not run: full native variant; engine-only evidence remains separate",
       "expected_result": "Extrusion/revolve vector flips 180 degrees (-Normal); signed depth remains positive; viewport handle flips axis",
       "upstream_repair_scenario": "Reversing preserves depth magnitude and draft settings; preview mesh updates immediately",
       "prerequisites": "Active extrude or revolve intent"
@@ -5176,11 +5204,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Not run for the complete native variant",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: inward/outward, Midplane and reference/body-terminated draft",
       "exact_test_functions": [
@@ -5188,7 +5218,7 @@
         "tests/core_modeling/modeling_features.cpp:draftedDirections()",
         "tests/core_modeling/modeling_features.cpp:curvedLimits()"
       ],
-      "native_case": "FeatureUI::extrudeDraftInwardOutward",
+      "native_case": "Not run: full native variant; engine-only evidence remains separate",
       "expected_result": "Draft angle expands (outward) or contracts (inward) profile area along depth; cap area = base_area * (1 +/- tan(angle)*depth/r)^2",
       "upstream_repair_scenario": "Excessive inward draft causing self-intersection/collapse triggers validation refusal without crash",
       "prerequisites": "Draft angle in (0, pi/2) radians"
@@ -5228,18 +5258,20 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "Contracts defined; functioning native manipulator remains CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Not run: live depth/draft manipulator remains CM5.d/e",
       "exact_test_functions": [
         "tests/core_modeling/modeling_contracts.cpp:workerContract()",
         "tests/core_modeling/modeling_contracts.cpp:transportContract()"
       ],
-      "native_case": "Viewport::dragExtrudeDepthHandle / dragDraftAngleHandle",
+      "native_case": "WorkflowContractsCM5::savedParametersAndPointerRegression; typedInputsAndParameterHandles",
       "expected_result": "Pointer drag along extrusion normal updates depth in real-time; transient mesh preview published; exact commit on Accept",
       "upstream_repair_scenario": "Escape or Cancel restores accepted mesh; invalid input prevents commit and retains interactive draft",
       "prerequisites": "CM5.d display preview protocol and viewport pick handle"
@@ -5278,11 +5310,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: full/partial/Midplane revolve and exact derived axis",
       "exact_test_functions": [
@@ -5290,7 +5324,7 @@
         "tests/core_modeling/modeling_features.cpp:revolves()",
         "tests/core_modeling/modeling_features.cpp:derivedAxis()"
       ],
-      "native_case": "FeatureUI::revolveSolid",
+      "native_case": "WorkflowContractsCM5::revolveModesAndAngles (half turn only)",
       "expected_result": "Swept solid about coplanar axis; full 2pi = torus/cylinder volume = 2pi*R_centroid*Area; angle in [0, 2pi]",
       "upstream_repair_scenario": "Non-coplanar axis rejected; angle > 2pi refused; axis reference change updates revolution center",
       "prerequisites": "Closed profile and coplanar linear axis/sketch line"
@@ -5329,11 +5363,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Not run for the complete native variant",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: revolved annular cut with independent volume",
       "exact_test_functions": [
@@ -5341,7 +5377,7 @@
         "tests/core_modeling/modeling_features.cpp:revolves()",
         "tests/core_modeling/modeling_features.cpp:booleansAndBodies()"
       ],
-      "native_case": "FeatureUI::revolveCut",
+      "native_case": "Not run: full native variant; engine-only evidence remains separate",
       "expected_result": "Annular cut boolean difference against target body; removed volume matches swept profile intersection",
       "upstream_repair_scenario": "Profile outside target body produces no volume change warning; target body edit rebuilds cut",
       "prerequisites": "Intersecting target body and valid revolve profile and axis"
@@ -5380,18 +5416,20 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: inward/outward rectangle and circular wall bands",
       "exact_test_functions": [
         "tests/core_modeling/feature_intent.cpp:modeContracts()",
         "tests/core_modeling/modeling_profiles.cpp:thinSections()"
       ],
-      "native_case": "FeatureUI::extrudeThinOneDirection",
+      "native_case": "WorkflowContractsCM5::thinExtrusionRectangleFixture",
       "expected_result": "Offset band along profile normal on one side; wall thickness equals specified thickness; area = perimeter * t",
       "upstream_repair_scenario": "Reversing thickness side flips inner/outer offset; thickness collapsing inner loop refused",
       "prerequisites": "Open or closed sketch wire"
@@ -5430,11 +5468,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Not run for the complete native variant",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: total Midplane thickness; cm5.features: open thin revolve",
       "exact_test_functions": [
@@ -5442,7 +5482,7 @@
         "tests/core_modeling/modeling_profiles.cpp:thinSections()",
         "tests/core_modeling/modeling_features.cpp:revolves()"
       ],
-      "native_case": "FeatureUI::extrudeThinMidplane",
+      "native_case": "Not run: full native variant; engine-only evidence remains separate",
       "expected_result": "Total wall thickness split t/2 inwards, t/2 outwards from base profile curve; distinct from extrusion depth Midplane",
       "upstream_repair_scenario": "Combines orthogonally with Blind, Midplane, or reference depth extents; parameters remain independent",
       "prerequisites": "Base sketch wire and positive wall thickness"
@@ -5481,18 +5521,20 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: independent 1/2 mm thickness and exact bounds",
       "exact_test_functions": [
         "tests/core_modeling/feature_intent.cpp:modeContracts()",
         "tests/core_modeling/modeling_profiles.cpp:thinSections()"
       ],
-      "native_case": "FeatureUI::extrudeThinTwoDirection",
+      "native_case": "WorkflowContractsCM5::typedInputsAndParameterHandles (field/handle independence only)",
       "expected_result": "Inner thickness t1 and outer thickness t2 independent; total wall = t1 + t2; exact offset boundaries",
       "upstream_repair_scenario": "Edit t1 independently of t2; save/reopen preserves both values without collapsing to symmetric",
       "prerequisites": "Base sketch wire and independent positive thickness values"
@@ -5531,11 +5573,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: closed rectangle/circle thin walls",
       "exact_test_functions": [
@@ -5543,7 +5587,7 @@
         "tests/core_modeling/modeling_profiles.cpp:thinSections()",
         "tests/core_modeling/modeling_features.cpp:startsAndLimits()"
       ],
-      "native_case": "FeatureUI::extrudeClosedThinProfile",
+      "native_case": "WorkflowContractsCM5::thinExtrusionRectangleFixture",
       "expected_result": "Annular solid tube; T5 3 mm inward example with 20 mm Midplane depth; inner and outer wall faces valid",
       "upstream_repair_scenario": "Sketch dimension changes update tube cross section; thickness exceeding minimum curvature radius refused",
       "prerequisites": "Closed profile (rectangle/circle)"
@@ -5582,11 +5626,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Not run for the complete native variant",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: open section closure; cm5.features: open thin revolve",
       "exact_test_functions": [
@@ -5594,7 +5640,7 @@
         "tests/core_modeling/modeling_profiles.cpp:thinSections()",
         "tests/core_modeling/modeling_features.cpp:revolves()"
       ],
-      "native_case": "FeatureUI::extrudeOpenThinProfile",
+      "native_case": "Not run: full native variant; engine-only evidence remains separate",
       "expected_result": "End-capped planar ribbon solid; end caps normal to wire endpoints; volume = wire_length * t * depth",
       "upstream_repair_scenario": "Self-intersecting offset ribbon rejected; editing wire length updates solid length",
       "prerequisites": "Open sketch curve chain"
@@ -5633,18 +5679,20 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Not run for the complete native variant",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: closed and open thin revolve volume equations",
       "exact_test_functions": [
         "tests/core_modeling/feature_intent.cpp:modeContracts()",
         "tests/core_modeling/modeling_features.cpp:revolves()"
       ],
-      "native_case": "FeatureUI::revolveThin",
+      "native_case": "Not run: full native variant; engine-only evidence remains separate",
       "expected_result": "Revolved thin section about axis; open/closed sections; wall thickness verified; Pappus-Guldinus volume check",
       "upstream_repair_scenario": "Axis crossing open wire or offset band rejected; angle parameter updates revolution sector",
       "prerequisites": "Open or closed wire and coplanar non-intersecting axis"
@@ -5683,18 +5731,20 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: selected regions/holes, adjacent union, overlap and touching-hole refusal",
       "exact_test_functions": [
         "tests/core_modeling/feature_intent.cpp:profileContracts()",
         "tests/core_modeling/modeling_profiles.cpp:selectedRegions()"
       ],
-      "native_case": "FeatureUI::extrudeSelectedContours",
+      "native_case": "WorkflowContractsCM5::t6SelectedContoursAndReuse (circle region only)",
       "expected_result": "Selected individual cells/holes from complex intersecting sketch; stable region descriptors; disjoint or adjacent union",
       "upstream_repair_scenario": "Overlapping or touching hole selections rejected with diagnostic; modifying non-selected sketch curve preserves selected cell",
       "prerequisites": "Multi-region planar sketch"
@@ -5733,11 +5783,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.profiles: repeated selection preserves original sketch semantics; durable reuse remains CM5.c/e",
       "exact_test_functions": [
@@ -5745,7 +5797,7 @@
         "tests/core_modeling/modeling_store.cpp:main()",
         "tests/core_modeling/modeling_repair.cpp:main()"
       ],
-      "native_case": "FeatureUI::reuseSketchRegions",
+      "native_case": "WorkflowContractsCM5::t6SelectedContoursAndReuse",
       "expected_result": "Single sketch feeds multiple Extrude/Revolve features; each feature references distinct or shared cells; sketch unconsumed",
       "upstream_repair_scenario": "Editing shared sketch updates all dependent features atomically; deleting one feature leaves sketch and sibling intact",
       "prerequisites": "Shared sketch with multiple regions"
@@ -5784,18 +5836,20 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: exact open cut curtain with ThroughAll/blind extent",
       "exact_test_functions": [
         "tests/core_modeling/feature_intent.cpp:profileContracts()",
         "tests/core_modeling/modeling_features.cpp:openCuts()"
       ],
-      "native_case": "FeatureUI::cutOpenProfile",
+      "native_case": "WorkflowContractsCM5::t6OpenProfileCut (blind cut)",
       "expected_result": "Open curve extended across target body creates unambiguous partition curtain; material removed on designated side",
       "upstream_repair_scenario": "Open curve that does not completely cross target body boundary refused with actionable error",
       "prerequisites": "Target body and open sketch wire spanning target"
@@ -5834,18 +5888,20 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: both explicit open cut sides",
       "exact_test_functions": [
         "tests/core_modeling/feature_intent.cpp:profileContracts()",
         "tests/core_modeling/modeling_features.cpp:openCuts()"
       ],
-      "native_case": "FeatureUI::cutFlipSide",
+      "native_case": "WorkflowContractsCM5::t6OpenProfileCut (saved side flag and volume)",
       "expected_result": "Toggling flipSide removes opposite partition of target body; volume_side1 + volume_side2 = original_body_volume",
       "upstream_repair_scenario": "Flip state preserved across save/reopen; undo/redo restores flipped partition",
       "prerequisites": "Open-profile cut on target body"
@@ -5880,11 +5936,13 @@
         "docs/decisions/core-modeling-cm5-persistence.md",
         "docs/testing/core-modeling-cm5-c.md",
         "docs/testing/artifacts/core-modeling/cm5-c-20261103/verification/20261103T171243.072151Z/verification.json",
-        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json"
+        "docs/testing/artifacts/core-modeling/cm5-baseline-20261114/verification/20261114T130849.538779Z/verification.json",
+        "docs/testing/core-modeling-cm5-review.md",
+        "docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/verification.json"
       ],
       "contract_status": "Pass: CM5.a versioned semantic parameter/reference contracts on available Mac; exact geometry and native workflow not verified",
-      "implementation_status": "CM5.a contracts, CM5.b scoped exact worker engine and CM5.c durable persistence/repair implemented; new native controls remain CM5.d",
-      "native_verification_status": "Not run: CM5.d/e",
+      "implementation_status": "CM5.a-c plus reviewed native authoring; documented exact geometry limits and full source-course acceptance remain open",
+      "native_verification_status": "Pass for named scoped native cases at five observed Cocoa scales; full per-variant/source-course acceptance remains open",
       "full_acceptance_status": "Blocked: whole source-course/platform/device/installed/resource acceptance",
       "engine_verification_status": "Pass for scoped engine fixtures only: cm5.features: planar and cylindrical standalone draft; broader analytic/tangent corpus remains open",
       "exact_test_functions": [
@@ -5892,7 +5950,7 @@
         "tests/core_modeling/modeling_features.cpp:standaloneDraft()",
         "tests/core_modeling/modeling_repair.cpp:main()"
       ],
-      "native_case": "FeatureUI::draftStandalone",
+      "native_case": "WorkflowContractsCM5::t8StandaloneDraftAndRepair (planar face only)",
       "expected_result": "Draft applied to existing body faces using neutral plane and pull direction; face angle modified by specified degrees",
       "upstream_repair_scenario": "Deleted face reference triggers explicit candidate repair; invalid draft causing self-intersection refused",
       "prerequisites": "Existing solid body, neutral plane, pull direction, selected faces"

@@ -1,5 +1,10 @@
 # Source builds and commands
 
+CM5 review repairs: `python3 tools/verify_cm5_review.py --native` records current
+source identity, full regressions, affected-source analyses and five observed
+Cocoa/OpenGL scales. See [scope and evidence](../docs/testing/core-modeling-cm5-review.md).
+Full course/platform/device/resource acceptance remains open.
+
 CM5 current-source baseline on HEAD 37501e8: `python3 tools/verify_cm5_baseline.py`
 records CMake configure, build, focused CM5 CTests, the full enabled CTest suite,
 SQL persistence recheck, pinned formatting, all 22 CM5/HEAD translation units' Clang

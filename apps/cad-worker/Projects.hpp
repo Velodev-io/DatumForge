@@ -75,6 +75,7 @@ class Projects {
                            "ResolveSupportReference",
                            "ResolveModelingReference",
                            "ModelingReferenceCandidates",
+                           "ModelingInputs",
                            "SetFeatures",
                            "PreviewHistory",
                            "CommitHistory",
@@ -219,6 +220,17 @@ class Projects {
                                         store->supportReferenceCandidates(
                                             e.context.document, p.value("model").toMap(),
                                             wire::text(p, "owner"), int(slot), control)}});
+            }
+            if (e.command == "ModelingInputs") {
+                wire::keys(p, {"model", "intents"});
+                check(e.revision == store->revision(), "StaleRevision",
+                      "Model changed before input inspection");
+                check(p.value("model").isMap() && p.value("intents").isArray(), "InvalidInput",
+                      "Typed model and intents required");
+                return sketch::fields(
+                    {{"modeling_inputs",
+                      store->modelingInputs(e.context.document, p.value("model").toMap(),
+                                            p.value("intents").toArray(), control)}});
             }
             if (e.command == "ModelingReferenceCandidates") {
                 wire::keys(p, {"model", "intents", "owner", "path"});

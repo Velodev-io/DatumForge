@@ -140,3 +140,5 @@ structural checks; all 280 source/configuration hashes matched. New definitions
 are not yet exposed through native authoring or on-screen manipulators; CM5.d–e
 and full course/platform/device/resource acceptance remain open/Blocked. Deferred
 gates and Module 11 are unchanged.
+
+CM5 native review defects have [scoped repairs and available-Mac verification](testing/core-modeling-cm5-review.md): a full 98-test regression run, affected ownership/test-harness follow-up, ten Clang analyses and five observed Cocoa/OpenGL scales. Reference/body-stage selection, contour boundaries, parameter round trips, native handles and explicit pending repair are covered. Complete source-course and platform/device/resource acceptance remain open; this does not close CM5.d/e or start Module 11.

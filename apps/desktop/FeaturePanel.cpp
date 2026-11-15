@@ -1,9 +1,15 @@
 #include "FeaturePanel.hpp"
 #include "SupportEditor.hpp"
+#include "features/ModelingRecords.hpp"
 #include "model/SupportEditing.hpp"
+#include <QDialogButtonBox>
 #include <QGroupBox>
 #include <QHBoxLayout>
+#include <QListWidget>
 #include <QScrollArea>
+#include <QSignalBlocker>
+#include <QStandardItemModel>
+#include <QTreeWidget>
 #include <QVBoxLayout>
 #include <numbers>
 namespace cad {
@@ -108,17 +114,19 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
     offsetReverse = check("featureOffsetReverse", "Reverse surface offset");
     dir1Reference = combo("featureDir1Reference", "Direction 1 reference");
     draftEnable = check("featureDraftEnable", "Draft On/Off");
-    draftAngle = spin("featureDraftAngle", "Draft angle (degrees)", 0, 0, 89.9);
+    draftAngle = spin("featureDraftAngle", "Draft angle (degrees)", 0, 0, 89.99999999);
     draftOutward = check("featureDraftOutward", "Draft outward");
     direction2Enable = check("featureDirection2Enable", "Direction 2");
     extent2 = combo("featureExtent2", "Direction 2 end condition");
     extent2->addItems({"Blind", "UpToVertex", "UpToSurface", "OffsetFromSurface", "UpToBody",
                        "UpToNext", "ThroughAll"});
     depth2 = spin("featureDepth2", "Direction 2 depth", 10, 1e-6, 1e6);
-    reverseDirection2 = check("featureReverse2", "Reverse direction 2");
+    surfaceOffset2 = spin("featureSurfaceOffset2", "Direction 2 surface offset", 0, 0, 1000);
+    offsetReverse2 = check("featureOffsetReverse2", "Reverse Direction 2 surface offset");
     dir2Reference = combo("featureDir2Reference", "Direction 2 reference");
     draft2Enable = check("featureDraft2Enable", "Direction 2 Draft On/Off");
-    draft2Angle = spin("featureDraft2Angle", "Direction 2 draft angle (degrees)", 0, 0, 89.9);
+    draft2Angle =
+        spin("featureDraft2Angle", "Direction 2 draft angle (degrees)", 0, 0, 89.99999999);
     draft2Outward = check("featureDraft2Outward", "Direction 2 draft outward");
     thinMode = combo("featureThinMode", "Thin feature");
     thinMode->addItems({"Solid", "OneDirection", "Midplane", "TwoDirection"});
@@ -130,14 +138,62 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
     revolveExtent->addItems({"Blind", "Midplane", "TwoDirection"});
     angle2 = spin("featureAngle2", "Direction 2 angle (degrees)", 0, 0, 360);
 
+    handleParameter = combo("featureHandleParameter", "Viewport handle");
+    connect(handleParameter, &QComboBox::currentIndexChanged, this,
+            &FeaturePanel::updateManipulator);
+
     // Standalone Draft controls
     draftNeutral = combo("draftNeutral", "Neutral plane / face");
     draftPull = combo("draftPull", "Pull direction axis / edge");
     draftFaces = combo("draftFaces", "Faces to draft");
-    draftStandaloneAngle = spin("draftStandaloneAngle", "Draft angle (degrees)", 5, 0.001, 89.9);
+    draftStandaloneAngle = spin("draftStandaloneAngle", "Draft angle (degrees)", 5, 0, 89.99999999);
     draftStandaloneOutward = check("draftStandaloneOutward", "Draft outward");
 
+    selectDraftFaces = new QPushButton("Select faces to draft…");
+    selectDraftFaces->setObjectName("featureSelectDraftFaces");
+    form->addRow(selectDraftFaces);
+    connect(selectDraftFaces, &QPushButton::clicked, this, [this] {
+        QDialog dialog(this);
+        dialog.setObjectName("featureDraftFacesDialog");
+        dialog.setWindowTitle("Faces to draft");
+        auto *layout = new QVBoxLayout(&dialog);
+        auto *list = new QListWidget;
+        list->setObjectName("featureDraftFaceList");
+        layout->addWidget(list);
+        auto selected = definitionModeling().value("faces").toArray();
+        for (int i = 0; i < draftFaces->count(); ++i) {
+            auto ref = draftFaces->itemData(i).value<QCborMap>();
+            if (ref.value("role") != "Face")
+                continue;
+            auto *item = new QListWidgetItem(draftFaces->itemText(i), list);
+            item->setData(Qt::UserRole, QVariant::fromValue(ref));
+            item->setCheckState(selected.contains(ref) ? Qt::Checked : Qt::Unchecked);
+        }
+        auto *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+        layout->addWidget(buttons);
+        connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+        connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+        if (dialog.exec() != QDialog::Accepted)
+            return;
+        QCborArray faces;
+        for (int i = 0; i < list->count(); ++i)
+            if (list->item(i)->checkState() == Qt::Checked)
+                faces.append(list->item(i)->data(Qt::UserRole).value<QCborMap>());
+        draftFaces->addItem(QString("Selected faces (%1)").arg(faces.size()),
+                            QVariant::fromValue(faces));
+        draftFaces->setCurrentIndex(draftFaces->count() - 1);
+    });
+    selectRegions = new QPushButton("Select contour boundaries…");
+    selectRegions->setObjectName("featureSelectRegions");
+    form->addRow(selectRegions);
+    connect(selectRegions, &QPushButton::clicked, this, &FeaturePanel::chooseRegions);
+    connect(client, &Client::modelingInputs, this, &FeaturePanel::installModelingInputs);
     // Repair controls
+    repairPath = combo("featureRepairPath", "Reference to repair");
+    repairPath->addItems({"direction1/reference", "start/reference", "direction2/reference", "axis",
+                          "neutral", "pull", "target/source"});
+    for (int i = 0; i < 32; ++i)
+        repairPath->addItem(QString("faces/%1").arg(i));
     repairCandidate = combo("featureRepairCandidate", "Repair candidate");
     applyRepairButton = new QPushButton("Apply repair");
     applyRepairButton->setObjectName("featureApplyRepair");
@@ -150,18 +206,26 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
         auto chosen = repairCandidate->currentData().value<QCborMap>();
         if (chosen.isEmpty())
             return;
-        QString text = chosen.value("topology").toString().isEmpty()
-                           ? chosen.value("object").toString()
-                           : chosen.value("topology").toString();
-        if (draft.kind == "Draft") {
-            draftFaces->addItem(text, QVariant::fromValue(chosen));
-            draftFaces->setCurrentIndex(draftFaces->count() - 1);
-        } else {
-            dir1Reference->addItem(text, QVariant::fromValue(chosen));
-            dir1Reference->setCurrentIndex(dir1Reference->count() - 1);
+        try {
+            domain::check(
+                repairResolution.value("revision").toInteger() == client->state().revision &&
+                    repairIntents == definitionsModeling() &&
+                    repairPath->currentText() == repairResolution.value("path").toString() &&
+                    repairResolution.value("replacements").toArray().contains(chosen),
+                "StaleRevision", "Inspect the current draft again before repair");
+            auto replaced = features::replaceIntentReference(
+                repairIntents, draft.id, repairResolution.value("path").toString(),
+                domain::GeometryReference::parse(chosen));
+            auto metadata = document.value("modeling").toMap();
+            metadata.insert(QStringLiteral("intents"), replaced);
+            document.insert(QStringLiteral("modeling"), metadata);
+            auto owner = draft.id;
+            editing = false;
+            previewAfterInputs = true;
+            begin({}, owner);
+        } catch (const std::exception &e) {
+            diagnostic->setText(e.what());
         }
-        invalidate();
-        preview();
     });
     for (auto *c : {profileMode, startMode, extent, extent2, thinMode, operation, revolveExtent})
         connect(c, &QComboBox::currentIndexChanged, this, [this] { fieldsForKind(); });
@@ -271,6 +335,7 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
         if (!editing)
             return;
         repairCandidate->clear();
+        repairResolution = resolution;
         QCborArray list = resolution.contains(QStringLiteral("replacements"))
                               ? resolution.value(QStringLiteral("replacements")).toArray()
                               : resolution.value(QStringLiteral("candidates")).toArray();
@@ -303,12 +368,11 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
             try {
                 auto model = model::editableSupports(document);
                 auto cand = definitionModeling();
-                QString path = "direction1/reference";
-                if (draft.kind == "Draft")
-                    path = "faces/0";
+                QString path = repairPath->currentText();
+                repairIntents = definitionsModeling();
                 client->projectCommand("ModelingReferenceCandidates",
                                        fields({{"model", model.map()},
-                                               {"intents", definitionsModeling()},
+                                               {"intents", repairIntents},
                                                {"owner", cand.value("id").toString()},
                                                {"path", path}}));
             } catch (const std::exception &e) {
@@ -409,6 +473,7 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
             previewButton->hide();
             cancelButton->hide();
             diagnostic->setText("Accepted · recoverable semantic revision");
+            emit clearManipulatorRequested();
             emit editingChanged();
         }
     });
@@ -465,6 +530,14 @@ static domain::GeometryReference makeRef(QString object, QString role, QString e
 }
 
 void FeaturePanel::fieldsForKind() {
+    form->setRowVisible(surfaceOffset2, isModeling && direction2Enable->isChecked() &&
+                                            extent2->currentText() == "OffsetFromSurface");
+    form->setRowVisible(offsetReverse2, isModeling && direction2Enable->isChecked() &&
+                                            extent2->currentText() == "OffsetFromSurface");
+    form->setRowVisible(selectDraftFaces, isModeling && draft.kind == "Draft");
+    form->setRowVisible(selectRegions, isModeling && profileMode->currentText() != "AllClosed");
+    form->setRowVisible(repairPath, isModeling);
+    form->setRowVisible(handleParameter, isModeling);
     auto kind = draft.kind;
     bool isExtrude = (kind == "Extrude");
     bool isRevolve = (kind == "Revolve");
@@ -515,7 +588,6 @@ void FeaturePanel::fieldsForKind() {
             show(direction2Enable, false);
             show(extent2, false);
             show(depth2, false);
-            show(reverseDirection2, false);
             show(dir2Reference, false);
             show(draft2Enable, false);
             show(draft2Angle, false);
@@ -585,7 +657,6 @@ void FeaturePanel::fieldsForKind() {
             if (isRevolve) {
                 show(extent2, false);
                 show(depth2, false);
-                show(reverseDirection2, false);
                 show(dir2Reference, false);
                 show(draft2Enable, false);
                 show(draft2Angle, false);
@@ -596,7 +667,6 @@ void FeaturePanel::fieldsForKind() {
                 show(extent2, dir2On);
                 auto ext2 = extent2->currentText();
                 show(depth2, dir2On && ext2 == "Blind");
-                show(reverseDirection2, dir2On);
                 bool dir2RefNeeded = dir2On && (ext2 == "UpToVertex" || ext2 == "UpToSurface" ||
                                                 ext2 == "OffsetFromSurface" || ext2 == "UpToBody");
                 show(dir2Reference, dir2RefNeeded);
@@ -651,7 +721,6 @@ void FeaturePanel::fieldsForKind() {
         show(direction2Enable, false);
         show(extent2, false);
         show(depth2, false);
-        show(reverseDirection2, false);
         show(dir2Reference, false);
         show(draft2Enable, false);
         show(draft2Angle, false);
@@ -672,9 +741,42 @@ void FeaturePanel::fieldsForKind() {
 
     if (auto *label = qobject_cast<QLabel *>(form->labelForField(size)))
         label->setText(isHole ? "Diameter" : kind == "Chamfer" ? "Equal distance" : "Radius");
+    auto filterReferences = [&](QComboBox *box, QString mode) {
+        if (!isModeling)
+            return;
+        auto *items = qobject_cast<QStandardItemModel *>(box->model());
+        int first = -1;
+        for (int i = 0; i < box->count(); ++i) {
+            auto ref = box->itemData(i).value<QCborMap>();
+            auto role = ref.value("role").toString();
+            bool point = role == "Vertex" || role == "Point" ||
+                         ((role == "Curve" || role == "Edge") &&
+                          (ref.contains(QStringLiteral("endpoint")) ||
+                           ref.contains(QStringLiteral("parameter"))));
+            bool valid =
+                mode == "UpToBody"                           ? role == "Object"
+                : (mode == "Vertex" || mode == "UpToVertex") ? point
+                : (mode == "Surface" || mode == "UpToSurface" || mode == "OffsetFromSurface")
+                    ? (role == "Face" || role == "Plane")
+                    : true;
+            if (items && items->item(i))
+                items->item(i)->setEnabled(valid);
+            if (valid && first < 0)
+                first = i;
+        }
+        if (!installing && items && items->item(box->currentIndex()) &&
+            !items->item(box->currentIndex())->isEnabled())
+            box->setCurrentIndex(first);
+    };
+    filterReferences(startReference, startMode->currentText());
+    filterReferences(dir1Reference, extent->currentText());
+    filterReferences(dir2Reference, extent2->currentText());
+    startOffset->setRange(-1000 / unit(), 1000 / unit());
+    for (auto *offset : {surfaceOffset, surfaceOffset2})
+        offset->setRange(0, 1000 / unit());
     auto units = document.value("units").toString();
-    for (auto *w :
-         {size, depth, depth2, spacing, thickness1, thickness2, startOffset, surfaceOffset})
+    for (auto *w : {size, depth, depth2, spacing, thickness1, thickness2, startOffset,
+                    surfaceOffset, surfaceOffset2})
         if (w)
             w->setSuffix(" " + units);
     for (auto *w : origin)
@@ -685,17 +787,24 @@ void FeaturePanel::fieldsForKind() {
 void FeaturePanel::begin(QString kind, QString editId) {
     if (editing || document.empty() || client->outstanding())
         return;
+    bool advanced = kind == "Extrude" || kind == "Revolve" || kind == "Draft";
+    if (editId.isEmpty() && !advanced &&
+        !document.value("modeling").toMap().value("intents").toArray().empty()) {
+        diagnostic->setText("This legacy operation cannot follow CM5 solid intents.");
+        return;
+    }
     installing = true;
     candidate = {};
     candidateIntents = {};
     currentRegions = {};
+    inputSketches = {};
+    inputGeometry = {};
 
     bool hasLegacyFeatures =
         !document.value("features").toArray().empty() ||
         (!document.value("model_supports").toMap().value("features").toArray().empty());
     bool hasModeling = document.contains(QStringLiteral("modeling")) &&
                        !document.value("modeling").toMap().value("intents").toArray().empty();
-    bool hasSupports = document.contains(QStringLiteral("model_supports"));
 
     isModeling = false;
     modelingDraft = {};
@@ -725,7 +834,7 @@ void FeaturePanel::begin(QString kind, QString editId) {
             isModeling = true;
         } else if (hasModeling) {
             isModeling = true;
-        } else if (hasSupports && !hasLegacyFeatures) {
+        } else if (advanced && !hasLegacyFeatures) {
             isModeling = true;
         } else {
             isModeling = false;
@@ -869,34 +978,6 @@ void FeaturePanel::begin(QString kind, QString editId) {
         }
     }
 
-    for (auto bId : result.value("bodies").toArray()) {
-        auto bid = bId.toString();
-        auto bRef = makeRef(bid, "Body");
-        addRef(dir1Reference, "Body " + bid.right(6), bRef);
-        addRef(dir2Reference, "Body " + bid.right(6), bRef);
-    }
-
-    for (auto topVal : result.value("topology").toArray()) {
-        auto top = topVal.toMap();
-        auto token = top.value("token").toString();
-        auto bId = top.value("body").toString();
-        if (bId.isEmpty() && result.value("bodies").toArray().size() > 0)
-            bId = result.value("bodies").toArray()[0].toString();
-        if (token.startsWith("face/")) {
-            auto r = makeRef(bId, "Face", {}, token);
-            addRef(startReference, "Face " + token.right(8), r);
-            addRef(dir1Reference, "Face " + token.right(8), r);
-            addRef(dir2Reference, "Face " + token.right(8), r);
-            addRef(draftNeutral, "Face " + token.right(8), r);
-            addRef(draftFaces, "Face " + token.right(8), r);
-        } else if (token.startsWith("vertex/")) {
-            auto r = makeRef(bId, "Vertex", {}, token);
-            addRef(startReference, "Vertex " + token.right(8), r);
-            addRef(dir1Reference, "Vertex " + token.right(8), r);
-            addRef(dir2Reference, "Vertex " + token.right(8), r);
-        }
-    }
-
     // Default values
     operation->setCurrentText(
         (kind == "Extrude" || kind == "Revolve" || kind == "Mirror" || kind.endsWith("Pattern"))
@@ -912,7 +993,6 @@ void FeaturePanel::begin(QString kind, QString editId) {
     count->setValue(2);
     through->setChecked(true);
     reverseDirection->setChecked(false);
-    reverseDirection2->setChecked(false);
     draftEnable->setChecked(false);
     draftAngle->setValue(0);
     draftOutward->setChecked(false);
@@ -929,6 +1009,8 @@ void FeaturePanel::begin(QString kind, QString editId) {
     startMode->setCurrentText("SketchPlane");
     startOffset->setValue(0);
     surfaceOffset->setValue(0);
+    surfaceOffset2->setValue(0);
+    offsetReverse2->setChecked(false);
     offsetReverse->setChecked(false);
 
     for (int i = 0; i < 3; ++i) {
@@ -953,26 +1035,14 @@ void FeaturePanel::begin(QString kind, QString editId) {
     auto matchRef = [](QComboBox *box, const QCborMap &targetRef) {
         if (targetRef.isEmpty() || !box)
             return;
-        QString tTopo = targetRef.value("topology").toString();
-        QString tEnt = targetRef.value("entity").toString();
-        QString tObj = targetRef.value("object").toString();
-        QString tRole = targetRef.value("role").toString();
         for (int i = 0; i < box->count(); ++i) {
-            auto m = box->itemData(i).value<QCborMap>();
-            if (!tTopo.isEmpty() && m.value("topology").toString() == tTopo) {
-                box->setCurrentIndex(i);
-                return;
-            }
-            if (!tEnt.isEmpty() && m.value("entity").toString() == tEnt) {
-                box->setCurrentIndex(i);
-                return;
-            }
-            if (!tObj.isEmpty() && m.value("object").toString() == tObj &&
-                (tRole.isEmpty() || m.value("role").toString() == tRole)) {
+            if (box->itemData(i).value<QCborMap>() == targetRef) {
                 box->setCurrentIndex(i);
                 return;
             }
         }
+        box->addItem("Original reference (requires validation)", QVariant::fromValue(targetRef));
+        box->setCurrentIndex(box->count() - 1);
     };
 
     if (isModeling && !modelingDraft.isEmpty()) {
@@ -1014,7 +1084,9 @@ void FeaturePanel::begin(QString kind, QString editId) {
         if (p.contains(QStringLiteral("direction1"))) {
             auto d1 = p.value("direction1").toMap();
             auto mode = d1.value("mode").toString();
-            extent->setCurrentText(mode);
+            (kind == "Revolve" ? revolveExtent : extent)->setCurrentText(mode);
+            surfaceOffset->setValue(d1.value("offset").toDouble() / unit());
+            offsetReverse->setChecked(d1.value("offset_reverse").toBool());
             if (mode == "Blind" || mode == "Midplane") {
                 if (kind == "Revolve")
                     angle->setValue(d1.value("value").toDouble() * 180.0 / std::numbers::pi);
@@ -1026,7 +1098,7 @@ void FeaturePanel::begin(QString kind, QString editId) {
             if (d1.contains(QStringLiteral("draft"))) {
                 auto dr = d1.value("draft").toMap();
                 double deg = dr.value("angle").toDouble() * 180.0 / std::numbers::pi;
-                draftEnable->setChecked(deg > 1e-6);
+                draftEnable->setChecked(deg > 0);
                 draftAngle->setValue(deg);
                 draftOutward->setChecked(dr.value("outward").toBool());
             }
@@ -1037,6 +1109,8 @@ void FeaturePanel::begin(QString kind, QString editId) {
             direction2Enable->setChecked(true);
             auto mode = d2.value("mode").toString();
             extent2->setCurrentText(mode);
+            surfaceOffset2->setValue(d2.value("offset").toDouble() / unit());
+            offsetReverse2->setChecked(d2.value("offset_reverse").toBool());
             if (mode == "Blind") {
                 if (kind == "Revolve")
                     angle2->setValue(d2.value("value").toDouble() * 180.0 / std::numbers::pi);
@@ -1048,7 +1122,7 @@ void FeaturePanel::begin(QString kind, QString editId) {
             if (d2.contains(QStringLiteral("draft"))) {
                 auto dr = d2.value("draft").toMap();
                 double deg = dr.value("angle").toDouble() * 180.0 / std::numbers::pi;
-                draft2Enable->setChecked(deg > 1e-6);
+                draft2Enable->setChecked(deg > 0);
                 draft2Angle->setValue(deg);
                 draft2Outward->setChecked(dr.value("outward").toBool());
             }
@@ -1147,6 +1221,18 @@ void FeaturePanel::begin(QString kind, QString editId) {
     }
     invalidate();
     updateManipulator();
+    if (isModeling) {
+        repairPath->setCurrentText(kind == "Draft" ? "faces/0" : "direction1/reference");
+        QCborArray prefix;
+        for (auto value : document.value("modeling").toMap().value("intents").toArray()) {
+            if (value.toMap().value("id") == draft.id)
+                break;
+            prefix.append(value);
+        }
+        client->projectCommand(
+            "ModelingInputs",
+            fields({{"model", model::editableSupports(document).map()}, {"intents", prefix}}));
+    }
     diagnostic->setText(kind == "Fillet" || kind == "Chamfer"
                             ? "Select an edge in the current 3D result, then Preview."
                             : "Lengths use " + document.value("units").toString() +
@@ -1233,6 +1319,207 @@ QCborArray FeaturePanel::definitions() const {
     if (!found)
         all.append(f.map());
     return all;
+}
+
+void FeaturePanel::installModelingInputs(QCborMap input) {
+    if (!editing || !isModeling)
+        return;
+    installing = true;
+    auto priorTarget = target->currentData();
+    target->clear();
+    target->addItem("None", QString());
+    for (auto value : input.value("bodies").toArray()) {
+        auto body = value.toMap();
+        target->addItem("Body " + body.value("body").toString().right(8),
+                        QVariant::fromValue(body));
+    }
+    auto wanted = priorTarget.canConvert<QCborMap>() ? priorTarget.value<QCborMap>()
+                                                     : modelingDraft.value("target").toMap();
+    int selected = -1;
+    for (int i = 1; i < target->count(); ++i) {
+        auto body = target->itemData(i).value<QCborMap>();
+        if (body == wanted || body.value("body").toString() == priorTarget.toString())
+            selected = i;
+    }
+    target->setCurrentIndex(selected >= 0 ? selected : target->count() > 1 ? 1 : 0);
+    if (!wanted.empty() && selected < 0 && !modelingDraft.empty()) {
+        target->addItem("Original target (requires validation)", QVariant::fromValue(wanted));
+        target->setCurrentIndex(target->count() - 1);
+    }
+    for (auto *box : {startReference, dir1Reference, dir2Reference, revolveAxis, draftNeutral,
+                      draftPull, draftFaces}) {
+        auto previous = box->currentData().value<QCborMap>();
+        for (auto value : input.value("references").toArray()) {
+            auto ref = value.toMap();
+            auto role = ref.value("role").toString();
+            bool plane = box == startReference || box == dir1Reference || box == dir2Reference ||
+                         box == draftNeutral;
+            bool point = box == startReference || box == dir1Reference || box == dir2Reference;
+            bool axis = box == revolveAxis || box == draftPull;
+            if ((role == "Face" && (plane || box == draftFaces)) || (role == "Vertex" && point) ||
+                (role == "Edge" && axis))
+                box->addItem(role + " " + ref.value("topology").toString().right(8),
+                             QVariant::fromValue(ref));
+        }
+        if (box == dir1Reference || box == dir2Reference)
+            for (auto value : input.value("bodies").toArray()) {
+                auto ref = value.toMap().value("source").toMap();
+                box->addItem("Body " + value.toMap().value("body").toString().right(8),
+                             QVariant::fromValue(ref));
+                box->setItemData(box->count() - 1, value.toMap().value("body").toString(),
+                                 Qt::UserRole + 1);
+            }
+        if (!previous.empty()) {
+            QString wantedBody;
+            if (previous.value("role") == "Object") {
+                auto direction =
+                    modelingDraft.value(box == dir1Reference ? "direction1" : "direction2").toMap();
+                wantedBody = direction.value("body").toString();
+            }
+            for (int i = 0; i < box->count(); ++i)
+                if (box->itemData(i).value<QCborMap>() == previous &&
+                    (wantedBody.isEmpty() ||
+                     box->itemData(i, Qt::UserRole + 1).toString() == wantedBody)) {
+                    box->setCurrentIndex(i);
+                    break;
+                }
+        }
+    }
+    inputSketches = input.value("sketches").toArray();
+    inputGeometry = input.value("geometry").toArray();
+    installing = false;
+    fieldsForKind();
+    invalidate();
+    if (previewAfterInputs) {
+        previewAfterInputs = false;
+        preview();
+    }
+}
+
+void FeaturePanel::chooseRegions() {
+    if (!editing || !isModeling)
+        return;
+    QDialog dialog(this);
+    dialog.setWindowTitle("Select exact contour boundaries");
+    dialog.setObjectName("featureContourDialog");
+    auto *layout = new QVBoxLayout(&dialog);
+    auto *help =
+        new QLabel("Add regions, their outer boundary first, then holes. Add curves in traversal "
+                   "order. Exact Preview validates closure, intersections and containment.");
+    help->setWordWrap(true);
+    layout->addWidget(help);
+    auto *tree = new QTreeWidget;
+    tree->setObjectName("featureContourTree");
+    tree->setHeaderLabels({"Region / boundary / curve", "From", "To", "Reverse"});
+    layout->addWidget(tree);
+    auto addUse = [&](QTreeWidgetItem *boundary, QCborMap use) {
+        auto *row =
+            new QTreeWidgetItem(boundary, {use.value("entity").toString(),
+                                           QString::number(use.value("from").toDouble(), 'g', 16),
+                                           QString::number(use.value("to").toDouble(), 'g', 16),
+                                           use.value("reverse").toBool() ? "yes" : "no"});
+        row->setData(0, Qt::UserRole, QVariant::fromValue(use));
+    };
+    for (auto region : currentRegions) {
+        auto *r = new QTreeWidgetItem(QStringList{"Region"});
+        tree->addTopLevelItem(r);
+        for (auto boundary : region.toArray()) {
+            auto *b =
+                new QTreeWidgetItem(QStringList{r->childCount() == 0 ? "Outer boundary" : "Hole"});
+            r->addChild(b);
+            for (auto use : boundary.toArray())
+                addUse(b, use.toMap());
+        }
+    }
+    auto *curves = new QComboBox;
+    curves->setObjectName("featureContourCurve");
+    for (auto value : document.value("sketches").toArray()) {
+        auto sketch = value.toMap();
+        if (sketch.value("id").toString() != profile->currentData().toString())
+            continue;
+        for (auto entity : sketch.value("entities").toArray()) {
+            auto e = entity.toMap();
+            if (e.value("kind") != "Point" && !e.value("construction").toBool())
+                curves->addItem(e.value("kind").toString() + " " +
+                                    e.value("id").toString().right(8),
+                                e.value("id").toString());
+        }
+    }
+    layout->addWidget(curves);
+    auto *from = new QDoubleSpinBox, *to = new QDoubleSpinBox;
+    for (auto *spin : {from, to}) {
+        spin->setDecimals(8);
+        spin->setRange(0, 1);
+        layout->addWidget(spin);
+    }
+    from->setPrefix("From ");
+    to->setPrefix("To ");
+    to->setValue(1);
+    auto *reverse = new QCheckBox("Reverse traversal");
+    layout->addWidget(reverse);
+    auto addButton = [&](QString label, QString name, auto callback) {
+        auto *button = new QPushButton(label);
+        button->setObjectName(name);
+        layout->addWidget(button);
+        connect(button, &QPushButton::clicked, &dialog, callback);
+    };
+    addButton("Add region", "featureContourAddRegion", [&] {
+        auto *r = new QTreeWidgetItem(QStringList{"Region"});
+        tree->addTopLevelItem(r);
+        auto *b = new QTreeWidgetItem(r, {"Outer boundary"});
+        tree->setCurrentItem(b);
+        tree->expandAll();
+    });
+    addButton("Add hole", "featureContourAddHole", [&] {
+        auto *item = tree->currentItem();
+        if (!item)
+            return;
+        while (item->parent())
+            item = item->parent();
+        auto *b = new QTreeWidgetItem(item, {"Hole"});
+        tree->setCurrentItem(b);
+        tree->expandAll();
+    });
+    addButton("Add selected curve", "featureContourAddCurve", [&] {
+        auto *b = tree->currentItem();
+        if (!b || curves->currentData().toString().isEmpty() || from->value() >= to->value())
+            return;
+        if (b->parent() && b->parent()->parent())
+            b = b->parent();
+        if (!b->parent()) {
+            if (!b->childCount())
+                return;
+            b = b->child(0);
+        }
+        addUse(b, fields({{"entity", curves->currentData().toString()},
+                          {"from", from->value()},
+                          {"to", to->value()},
+                          {"reverse", reverse->isChecked()}}));
+        tree->expandAll();
+    });
+    addButton("Remove selected item", "featureContourRemove", [&] { delete tree->currentItem(); });
+    auto *buttons = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    layout->addWidget(buttons);
+    connect(buttons, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(buttons, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+    tree->expandAll();
+    dialog.resize(620, 620);
+    if (dialog.exec() != QDialog::Accepted)
+        return;
+    QCborArray selected;
+    for (int i = 0; i < tree->topLevelItemCount(); ++i) {
+        QCborArray region;
+        auto *r = tree->topLevelItem(i);
+        for (int j = 0; j < r->childCount(); ++j) {
+            QCborArray boundary;
+            auto *b = r->child(j);
+            for (int k = 0; k < b->childCount(); ++k)
+                boundary.append(b->child(k)->data(0, Qt::UserRole).value<QCborMap>());
+            region.append(boundary);
+        }
+        selected.append(region);
+    }
+    setSelectedRegions(selected);
 }
 
 QCborMap FeaturePanel::definitionModeling() const {
@@ -1408,7 +1695,10 @@ QCborMap FeaturePanel::definitionModeling() const {
                 dir1Reference->currentData().canConvert<QCborMap>()
                     ? dir1Reference->currentData().value<QCborMap>().value("object").toString()
                     : dir1Reference->currentData().toString();
-            d1.insert(QStringLiteral("body"), bodyId);
+            d1.insert(QStringLiteral("body"),
+                      dir1Reference->currentData(Qt::UserRole + 1).toString().isEmpty()
+                          ? bodyId
+                          : dir1Reference->currentData(Qt::UserRole + 1).toString());
         } else if (ext1 == "OffsetFromSurface") {
             d1.insert(QStringLiteral("offset"), surfaceOffset->value() * u);
             d1.insert(QStringLiteral("offset_reverse"), offsetReverse->isChecked());
@@ -1452,10 +1742,13 @@ QCborMap FeaturePanel::definitionModeling() const {
                                             .value("object")
                                             .toString()
                                       : dir2Reference->currentData().toString();
-                    d2.insert(QStringLiteral("body"), bodyId);
+                    d2.insert(QStringLiteral("body"),
+                              dir2Reference->currentData(Qt::UserRole + 1).toString().isEmpty()
+                                  ? bodyId
+                                  : dir2Reference->currentData(Qt::UserRole + 1).toString());
                 } else if (ext2 == "OffsetFromSurface") {
-                    d2.insert(QStringLiteral("offset"), surfaceOffset->value() * u);
-                    d2.insert(QStringLiteral("offset_reverse"), offsetReverse->isChecked());
+                    d2.insert(QStringLiteral("offset"), surfaceOffset2->value() * u);
+                    d2.insert(QStringLiteral("offset_reverse"), offsetReverse2->isChecked());
                 }
             }
             QCborMap d2Draft;
@@ -1595,6 +1888,7 @@ void FeaturePanel::discard() {
     if (!editing || commitPending)
         return;
     editing = false;
+    previewAfterInputs = false;
     validPreview = false;
     inputs->hide();
     accept->hide();
@@ -1610,103 +1904,150 @@ void FeaturePanel::discard() {
 }
 
 void FeaturePanel::updateManipulator() {
-    if (!editing) {
+    if (!editing || !isModeling) {
         emit clearManipulatorRequested();
         return;
     }
-    if (draft.kind == "Draft") {
-        QVector3D orig(0, 0, 0);
-        QVector3D norm(0, 0, 1);
-        double angleDeg = draftStandaloneAngle ? draftStandaloneAngle->value() : 5.0;
-        emit requestDraftManipulator(orig, norm, angleDeg);
-        return;
-    }
-    if (draft.kind == "Revolve") {
-        QVector3D orig(0, 0, 0);
-        QVector3D norm(0, 1, 0);
-        double revAngle = angle ? angle->value() : 360.0;
-        emit requestDraftManipulator(orig, norm, revAngle);
-        return;
-    }
-    if (draft.kind != "Extrude") {
-        emit clearManipulatorRequested();
-        return;
-    }
-    auto profileSketchId = profile->currentData().toString();
-    if (profileSketchId.isEmpty()) {
-        emit clearManipulatorRequested();
-        return;
-    }
-    QVector3D orig(0, 0, 0);
-    QVector3D norm(0, 0, 1);
-    for (auto sVal : document.value("sketches").toArray()) {
-        auto sk = sVal.toMap();
-        if (sk.value("id").toString() == profileSketchId) {
-            auto f = sk.value("frame").toMap();
-            auto o = f.value("origin").toArray();
-            auto u = f.value("u").toArray();
-            auto v = f.value("v").toArray();
-            if (o.size() == 3)
-                orig = QVector3D(float(o[0].toDouble() * 1000.), float(o[1].toDouble() * 1000.),
-                                 float(o[2].toDouble() * 1000.));
-            if (u.size() == 3 && v.size() == 3) {
-                QVector3D uVec(float(u[0].toDouble()), float(u[1].toDouble()),
-                               float(u[2].toDouble()));
-                QVector3D vVec(float(v[0].toDouble()), float(v[1].toDouble()),
-                               float(v[2].toDouble()));
-                norm = QVector3D::crossProduct(uVec, vVec).normalized();
-                if (norm.isNull())
-                    norm = QVector3D(0, 0, 1);
+    QString selected = handleParameter->currentText();
+    {
+        QSignalBlocker block(handleParameter);
+        handleParameter->clear();
+        if (draft.kind == "Draft")
+            handleParameter->addItem("Draft angle");
+        else if (draft.kind == "Revolve") {
+            handleParameter->addItem("Direction 1 angle");
+            if (direction2Enable->isChecked() && revolveExtent->currentText() != "Midplane")
+                handleParameter->addItem("Direction 2 angle");
+        } else if (draft.kind == "Extrude") {
+            if (extent->currentText() == "Blind" || extent->currentText() == "Midplane")
+                handleParameter->addItem("Direction 1 depth");
+            if (draftEnable->isChecked())
+                handleParameter->addItem("Direction 1 draft");
+            if (direction2Enable->isChecked() && extent->currentText() != "Midplane") {
+                if (extent2->currentText() == "Blind")
+                    handleParameter->addItem("Direction 2 depth");
+                if (draft2Enable->isChecked())
+                    handleParameter->addItem("Direction 2 draft");
             }
-            break;
         }
+        if (draft.kind != "Draft" && thinMode->currentText() != "Solid") {
+            handleParameter->addItem("Thickness 1");
+            if (thinMode->currentText() == "TwoDirection")
+                handleParameter->addItem("Thickness 2");
+        }
+        int index = handleParameter->findText(selected);
+        if (index >= 0)
+            handleParameter->setCurrentIndex(index);
     }
-    if (draftEnable && draftEnable->isChecked()) {
-        double dAngle = draftAngle ? draftAngle->value() : 0.0;
-        emit requestDraftManipulator(orig, norm, dAngle);
+    auto parameter = handleParameter->currentText();
+    handleField = nullptr;
+    angularHandle = parameter.contains("angle", Qt::CaseInsensitive) ||
+                    parameter.contains("draft", Qt::CaseInsensitive);
+    if (parameter == "Draft angle")
+        handleField = draftStandaloneAngle;
+    else if (parameter == "Direction 1 angle")
+        handleField = angle;
+    else if (parameter == "Direction 2 angle")
+        handleField = angle2;
+    else if (parameter == "Direction 1 draft")
+        handleField = draftAngle;
+    else if (parameter == "Direction 2 draft")
+        handleField = draft2Angle;
+    else if (parameter == "Direction 1 depth")
+        handleField = depth;
+    else if (parameter == "Direction 2 depth")
+        handleField = depth2;
+    else if (parameter == "Thickness 1")
+        handleField = thickness1;
+    else if (parameter == "Thickness 2")
+        handleField = thickness2;
+    if (!handleField) {
+        emit clearManipulatorRequested();
+        return;
     }
-    double depthMM = depth->value() * (unit() * 1000.0);
-    bool reverse = reverseDirection->isChecked();
-    emit requestManipulator(orig, norm, depthMM, reverse);
+    QVector3D orig, normal(0, 0, 1), u(1, 0, 0);
+    for (auto value :
+         inputSketches.empty() ? document.value("sketches").toArray() : inputSketches) {
+        auto sketch = value.toMap();
+        if (sketch.value("id").toString() != profile->currentData().toString())
+            continue;
+        auto frame = sketch.value("frame").toMap();
+        auto read = [](QCborArray a, double scale) {
+            return a.size() == 3
+                       ? QVector3D(float(a[0].toDouble() * scale), float(a[1].toDouble() * scale),
+                                   float(a[2].toDouble() * scale))
+                       : QVector3D();
+        };
+        orig = read(frame.value("origin").toArray(), 1000);
+        u = read(frame.value("u").toArray(), 1);
+        normal = QVector3D::crossProduct(u, read(frame.value("v").toArray(), 1)).normalized();
+        break;
+    }
+    auto geometryFor = [&](QComboBox *box) {
+        auto wanted = box->currentData().value<QCborMap>();
+        for (auto value : inputGeometry)
+            if (value.toMap().value("reference").toMap() == wanted)
+                return value.toMap();
+        return QCborMap{};
+    };
+    auto readVector = [](QCborValue value, double scale) {
+        auto a = value.toArray();
+        return a.size() == 3
+                   ? QVector3D(float(a[0].toDouble() * scale), float(a[1].toDouble() * scale),
+                               float(a[2].toDouble() * scale))
+                   : QVector3D();
+    };
+    if (draft.kind == "Revolve" || draft.kind == "Draft") {
+        auto axisGeometry = geometryFor(draft.kind == "Revolve" ? revolveAxis : draftPull);
+        auto support = draft.kind == "Draft" ? geometryFor(draftNeutral) : axisGeometry;
+        if (!support.empty())
+            orig = readVector(support.value("origin"), 1000);
+        if (!axisGeometry.empty())
+            normal = readVector(axisGeometry.value("direction"), 1);
+    } else if (startMode->currentText() == "Vertex" || startMode->currentText() == "Surface") {
+        auto start = geometryFor(startReference);
+        if (start.empty()) {
+            emit clearManipulatorRequested();
+            return;
+        }
+        auto point = readVector(start.value("origin"), 1000);
+        auto stationNormal =
+            startMode->currentText() == "Vertex" ? normal : readVector(start.value("direction"), 1);
+        auto denominator = QVector3D::dotProduct(normal, stationNormal);
+        if (std::abs(denominator) < 1e-7) {
+            emit clearManipulatorRequested();
+            return;
+        }
+        orig += normal * (QVector3D::dotProduct(point - orig, stationNormal) / denominator);
+    }
+    if (startMode->currentText() == "Offset")
+        orig += normal * float(startOffset->value() * unit() * 1000);
+    if (parameter.startsWith("Thickness"))
+        normal = u;
+    bool reverse = reverseDirection->isChecked() != parameter.startsWith("Direction 2");
+    if (angularHandle)
+        emit requestDraftManipulator(orig, normal, handleField->value(), handleField->maximum());
+    else
+        emit requestManipulator(orig, normal, handleField->value() * unit() * 1000, reverse);
 }
 
 void FeaturePanel::setDepthFromManipulator(double depthMM) {
-    if (!editing || !depth)
-        return;
-    double val = depthMM / (unit() * 1000.0);
-    if (std::abs(depth->value() - val) > 1e-4) {
-        depth->setValue(val);
-    }
+    if (editing && handleField && !angularHandle)
+        handleField->setValue(depthMM / (unit() * 1000));
 }
-
 void FeaturePanel::setDepthFinishedFromManipulator(double depthMM) {
     setDepthFromManipulator(depthMM);
-    if (editing) {
+    if (editing)
         preview();
-    }
 }
-
 void FeaturePanel::setDraftAngleFromManipulator(double angleDeg) {
-    if (!editing)
-        return;
-    if (draft.kind == "Revolve") {
-        if (angle && std::abs(angle->value() - angleDeg) > 1e-4)
-            angle->setValue(angleDeg);
-    } else if (draft.kind == "Draft") {
-        if (draftStandaloneAngle && std::abs(draftStandaloneAngle->value() - angleDeg) > 1e-4)
-            draftStandaloneAngle->setValue(angleDeg);
-    } else {
-        if (draftEnable && !draftEnable->isChecked())
-            draftEnable->setChecked(true);
-        if (draftAngle && std::abs(draftAngle->value() - angleDeg) > 1e-4)
-            draftAngle->setValue(angleDeg);
-    }
+    if (editing && handleField && angularHandle)
+        handleField->setValue(angleDeg);
 }
-
 void FeaturePanel::setDraftAngleFinishedFromManipulator(double angleDeg) {
     setDraftAngleFromManipulator(angleDeg);
-    if (editing) {
+    if (editing)
         preview();
-    }
 }
+
 } // namespace cad

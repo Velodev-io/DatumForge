@@ -1,0 +1,68 @@
+{
+  "status": "Fail: changed-source-analysis",
+  "scope": "CM5 review fixes: native authoring, typed input inspection, repair and parameter controls",
+  "host": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+  "steps": [
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 4.264486374999251
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 438.0504970000002
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.3564402909996716
+    },
+    {
+      "name": "changed-source-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "/private/tmp/datumforge-cm5-review-20261115/docs/testing/artifacts/core-modeling/cm5-review-20261115/verification/20261115T045527.463720Z/analysis-commands.json"
+      ],
+      "exit_code": 1,
+      "seconds": 32.39414066599966
+    }
+  ],
+  "module_11_started": false,
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "blocked_acceptance": [
+    "Physical input devices and assistive technologies",
+    "Installed/signed builds",
+    "Windows/Linux",
+    "Full resource and whole-course acceptance corpus"
+  ],
+  "physical_ram_bytes": 8589934592,
+  "verification_harness_update": {
+    "path": "tools/verify_cm5_review.py",
+    "before": "5423a883f37d61cd385badd13c52ba4daac8b2761d18c396d75f3fd08af96e00",
+    "after": "00c7f8766d581c86faadb908cd9bb2bdbf49f0ac9360ea38c271df806eebf9cc",
+    "reason": "Use lexical compile paths to exclude shared dependency symlink; application, tests, headers and build configuration unchanged from full passing CTest run."
+  }
+}

@@ -74,8 +74,8 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
                 viewport->setExtrudeManipulator(origin, direction, depthMM, reverse);
             });
     connect(featurePanel, &FeaturePanel::requestDraftManipulator, this,
-            [this](QVector3D origin, QVector3D normal, double angleDeg) {
-                viewport->setDraftManipulator(origin, normal, angleDeg);
+            [this](QVector3D origin, QVector3D normal, double angleDeg, double maximum) {
+                viewport->setDraftManipulator(origin, normal, angleDeg, maximum);
             });
     connect(featurePanel, &FeaturePanel::clearManipulatorRequested, this,
             [this] { viewport->clearManipulators(); });

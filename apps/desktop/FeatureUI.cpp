@@ -36,14 +36,20 @@ void MainWindow::refreshFeatures() {
     for (auto id : {"extrude", "revolve", "draft", "fillet", "chamfer", "hole", "pattern",
                     "circularPattern", "mirror"}) {
         bool profile = QString(id) == "extrude" || QString(id) == "revolve";
-        available(id, part && idle && !sketchEdit && !edit && (profile ? sketches : solids),
+        bool unsupported = !active.value("modeling").toMap().value("intents").toArray().empty() &&
+                           !profile && QString(id) != "draft";
+        available(id,
+                  !unsupported && part && idle && !sketchEdit && !edit &&
+                      (profile ? sketches : solids),
                   profile ? "Accept a closed Part sketch first"
                           : "Requires an accepted Part solid and no active command");
     }
     findChild<QAction *>("cancelFeatureAction")
         ->setEnabled(edit || (assemblyPanel && assemblyPanel->active()));
     if (commands.get("history"))
-        available("history", part && idle && !edit && !sketchEdit && solids,
+        available("history",
+                  active.value("modeling").toMap().value("intents").toArray().empty() && part &&
+                      idle && !edit && !sketchEdit && solids,
                   "Requires an accepted Part history and no active command");
     if (!part)
         return;

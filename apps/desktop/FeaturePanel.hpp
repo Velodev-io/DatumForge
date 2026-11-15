@@ -19,12 +19,17 @@ class FeaturePanel : public QWidget {
     features::Feature draft;
     QCborArray candidate;
     bool editing = false, validPreview = false, installing = false, commitPending = false;
-    bool supportPreviewPending = false;
+    bool supportPreviewPending = false, previewAfterInputs = false;
 
     bool isModeling = false;
     QCborMap modelingDraft;
     QCborArray candidateIntents;
-    QCborArray currentRegions;
+    QCborArray currentRegions, repairIntents, inputSketches, inputGeometry;
+    QCborMap repairResolution;
+    QComboBox *repairPath = nullptr;
+    QPushButton *selectRegions = nullptr, *selectDraftFaces = nullptr;
+    void chooseRegions();
+    void installModelingInputs(QCborMap input);
 
     QFormLayout *form;
     QWidget *inputs, *evaluation;
@@ -38,14 +43,17 @@ class FeaturePanel : public QWidget {
     QPushButton *accept, *previewButton, *cancelButton;
 
     // CM5 Controls
+    QComboBox *handleParameter = nullptr;
+    QDoubleSpinBox *handleField = nullptr;
+    bool angularHandle = false;
     QComboBox *profileMode = nullptr;
     QCheckBox *flipSide = nullptr;
     QComboBox *startMode = nullptr;
     QDoubleSpinBox *startOffset = nullptr;
     QComboBox *startReference = nullptr;
     QCheckBox *reverseDirection = nullptr;
-    QDoubleSpinBox *surfaceOffset = nullptr;
-    QCheckBox *offsetReverse = nullptr;
+    QDoubleSpinBox *surfaceOffset = nullptr, *surfaceOffset2 = nullptr;
+    QCheckBox *offsetReverse = nullptr, *offsetReverse2 = nullptr;
     QComboBox *dir1Reference = nullptr;
     QCheckBox *draftEnable = nullptr;
     QDoubleSpinBox *draftAngle = nullptr;
@@ -53,7 +61,6 @@ class FeaturePanel : public QWidget {
     QCheckBox *direction2Enable = nullptr;
     QComboBox *extent2 = nullptr;
     QDoubleSpinBox *depth2 = nullptr;
-    QCheckBox *reverseDirection2 = nullptr;
     QComboBox *dir2Reference = nullptr;
     QCheckBox *draft2Enable = nullptr;
     QDoubleSpinBox *draft2Angle = nullptr;
@@ -122,7 +129,8 @@ class FeaturePanel : public QWidget {
   signals:
     void editingChanged();
     void requestManipulator(QVector3D origin, QVector3D direction, double depthMM, bool reverse);
-    void requestDraftManipulator(QVector3D origin, QVector3D normal, double angleDeg);
+    void requestDraftManipulator(QVector3D origin, QVector3D normal, double angleDeg,
+                                 double maximum = 89.9);
     void clearManipulatorRequested();
 };
 } // namespace cad
