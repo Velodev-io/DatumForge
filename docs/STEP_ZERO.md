@@ -79,7 +79,7 @@ Step Zero is **Module 0** in [TECH_SPEC](TECH_SPEC.md). Follow the earlier plann
 
 ## 0.10 — Required module tests
 
-- [ ] **0.10a — T-00-SETUP:** Reproduce the minimal slice from a clean checkout using pins and documented commands. Expected: deterministic dependency selection, successful available-platform builds, and a correctly failing harness probe.
+- [x] **0.10a — T-00-SETUP:** Reproduce the minimal slice from a clean checkout using pins and documented commands. Expected: deterministic dependency selection, successful available-platform builds, and a correctly failing harness probe.
 - [x] **0.10b — T-00-ISOLATION:** Run fixtures in disposable roots and inspect touched paths. Expected: production projects/recovery and existing research remain untouched; no real data/secrets tracked.
 - [x] **0.10c — T-00-NATIVE:** Run shell/mesh/picking/measurement/worker-restart experiments. Expected: correct entity mapping, bounded transfer, stale reply rejection, and a still-responsive shell.
 - [x] **0.10d — T-00-CAD:** Run solver/geometry/topology/mate spikes with known valid and invalid cases. Expected: correct invariants, explicit ambiguous/conflict states, and unchanged prior model on failure.
@@ -90,4 +90,19 @@ Step Zero is **Module 0** in [TECH_SPEC](TECH_SPEC.md). Follow the earlier plann
 
 **Pass criteria:** Applicable spikes and setup tests pass on available targets; blocking architecture failures are resolved. Cross-platform feasibility remains incomplete while a required platform is untested. Partial foundation work may proceed on verified targets if it does not depend on the unresolved decision; release support may not be claimed.
 
-**Completion check:** A reproducible native slice, proven command/persistence ownership, viable geometry/solver/reference approach, bounded resource transport, isolated tests, and explicit support/decision records exist. Every required test has actual evidence. **Current result: Blocked — partial available-target evidence; Module 1 requires explicit user approval.**
+**Completion check:** A reproducible native slice, proven command/persistence ownership, viable geometry/solver/reference approach, bounded resource transport, isolated tests, and explicit support/decision records exist. Every required test has actual evidence. **Current result: Blocked — remaining platform/release feasibility gaps. Module 1 was subsequently authorized by the user on 19 October 2026; see testing/module-1.md.**
+
+
+On 22 October 2026 the user explicitly authorized independent Modules 8–10 work
+in order on the available Mac, preserving all existing feasibility blockers and
+Module 6.1b/6.4c/7.4c deferrals. See their module reports. This does not check any
+remaining Module 0 gate or authorize Module 11.
+
+The later 22 October arc follow-up preserves the same ownership and evidence constraints: see [all-arc comparison](testing/module-3-all-arcs.md) for inspected EDP course provenance, supported solver graph and independently scoped Mac verification. It closes no remaining Module 0 gate.
+
+## Core-modeling feasibility follow-up
+
+Version 0.1 extension: CM0 experiments belong under `tests/core_modeling/`, remain
+nonproduction executables, use pinned libraries and do not certify later adapters.
+See [tasks](CORE_MODELING.md) and [evidence](testing/core-modeling.md). A blocked
+geometry/data prerequisite must be recorded while independent work continues.

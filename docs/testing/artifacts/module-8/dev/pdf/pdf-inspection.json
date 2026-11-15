@@ -1,0 +1,22 @@
+{
+  "limits" : "Page geometry, extractable text, raster absence and native rendering; visual review recorded separately. Geometric scale is asserted against actual production vector path coordinates in C++.",
+  "pages" : [
+    {
+      "height_points" : 595,
+      "page" : 1,
+      "page_rounding_tolerance_points" : 0.5,
+      "text" : "80.000 mm\nB1 bracket | third-angle | Scale 0.5 | mm",
+      "width_points" : 842
+    },
+    {
+      "height_points" : 595,
+      "page" : 2,
+      "page_rounding_tolerance_points" : 0.5,
+      "text" : "BOM - Part ID \/ Quantity\n102a131d-ce4a-4899-918e-c59c2a5cafb5 \/ 10\n17bbbf83-fc64-4815-8ce7-240acfc0d041 \/ 10\n4947b5a8-752a-4983-9764-d1d5f098a097 \/ 10\n64c44ac7-6530-4006-b5be-b248afd844d0 \/ 10\n927c9605-2fe3-4d7e-8ed9-699618951d23 \/ 10\n935ef8a8-3f6b-452e-9821-897f7bb6d2a7 \/ 10\n9812daad-137b-4ff6-b21a-3c604f035219 \/ 10\n9e2187e1-2e45-401c-bb06-6a11de7d966b \/ 10\na1ad23f4-f4f7-4e5c-81d9-526a02b9a96d \/ 10\nfa795571-c2f0-4c3d-80dc-0a2bfe19fb1b \/ 10\nB3 assembly BOM | third-angle | Scale 0.075 | mm",
+      "width_points" : 842
+    }
+  ],
+  "raster_images" : 0,
+  "renderer" : "macOS PDFKit",
+  "status" : "Pass"
+}

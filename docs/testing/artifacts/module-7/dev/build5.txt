@@ -1,0 +1,38 @@
+[1/87] Linking CXX static library libcad_planegcs.a
+[2/87] Building CXX object CMakeFiles/cad_assembly_geometry.dir/src/assembly/Geometry.cpp.o
+[3/87] Building CXX object CMakeFiles/cad_geometry.dir/src/geometry/occt/ReferenceScene.cpp.o
+[4/87] Building CXX object CMakeFiles/cad_assembly_solver.dir/src/assembly/Solver.cpp.o
+[5/87] Linking CXX static library libcad_assembly_solver.a
+[6/87] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[7/87] Linking CXX static library libcad_sketch_solver.a
+[8/87] Linking CXX static library libcad_assembly_geometry.a
+[9/87] Automatic MOC for target cad_desktop_ui
+[10/87] Linking CXX static library libcad_geometry.a
+[11/87] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+FAILED: [code=1] CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/src/sqlite" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o -MF CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o.d -o CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp:949:11: error: use of undeclared identifier 'elseif'
+  949 |         } elseif (type == "set_feature_state") {
+      |           ^~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp:949:47: error: expected ';' after expression
+  949 |         } elseif (type == "set_feature_state") {
+      |                                               ^
+      |                                               ;
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp:966:11: error: expected expression
+  966 |         } else if (type == "set_features") {
+      |           ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp:997:9: error: expected expression
+  997 |         else if (type == "remove_parameter")
+      |         ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp:1000:9: error: expected expression
+ 1000 |         else if (type == "attach_object")
+      |         ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp:1002:9: error: expected expression
+ 1002 |         else if (type == "detach_object")
+      |         ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp:1005:9: error: expected expression
+ 1005 |         else
+      |         ^
+7 errors generated.
+[12/87] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+ninja: build stopped: subcommand failed.

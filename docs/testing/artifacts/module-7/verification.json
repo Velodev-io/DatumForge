@@ -1,0 +1,215 @@
+{
+  "scope": "Module 7 available-Mac rigid assemblies; stop before Module 8",
+  "status": "Pass: requested available-Mac checks; broader acceptance Blocked",
+  "artifacts": "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.5264133750170004
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 65.29724283301039
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 174.33052329201018
+    },
+    {
+      "name": "b3-memory",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module7_b3",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/b3-measured.json"
+      ],
+      "exit_code": 0,
+      "seconds": 13.903683792013908
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.6256471249798778
+    },
+    {
+      "name": "static-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/static_analysis.py",
+        "build/macos-debug/compile_commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 253.48154074998456
+    },
+    {
+      "name": "ownership",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.20718533301260322
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.21901608299231157
+    },
+    {
+      "name": "native-assembly-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module7_contracts",
+        "nativeAssembly"
+      ],
+      "exit_code": 0,
+      "seconds": 9.62249129198608
+    },
+    {
+      "name": "native-assembly-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module7_contracts",
+        "nativeAssembly"
+      ],
+      "exit_code": 0,
+      "seconds": 8.778269333997741
+    },
+    {
+      "name": "native-assembly-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module7_contracts",
+        "nativeAssembly"
+      ],
+      "exit_code": 0,
+      "seconds": 9.111398000008194
+    },
+    {
+      "name": "native-assembly-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module7_contracts",
+        "nativeAssembly"
+      ],
+      "exit_code": 0,
+      "seconds": 9.36541950001265
+    },
+    {
+      "name": "native-assembly-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module7_contracts",
+        "nativeAssembly"
+      ],
+      "exit_code": 0,
+      "seconds": 9.471930750005413
+    },
+    {
+      "name": "native-module6-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module6_contracts",
+        "nativeExchange"
+      ],
+      "exit_code": 0,
+      "seconds": 4.403317624994088
+    },
+    {
+      "name": "native-module5-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module5_contracts",
+        "nativeHistory"
+      ],
+      "exit_code": 0,
+      "seconds": 4.593985290994169
+    },
+    {
+      "name": "native-module4-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_contracts",
+        "nativeFeatures"
+      ],
+      "exit_code": 0,
+      "seconds": 11.381743875012035
+    },
+    {
+      "name": "native-module3-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "exit_code": 0,
+      "seconds": 8.065502459008712
+    },
+    {
+      "name": "native-module2-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module2_contracts",
+        "nativeDocuments"
+      ],
+      "exit_code": 0,
+      "seconds": 3.4540241660142783
+    },
+    {
+      "name": "native-module1-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction"
+      ],
+      "exit_code": 0,
+      "seconds": 2.5038016670150682
+    },
+    {
+      "name": "clean-reproduction",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/clean_reproduce.py",
+        "--module",
+        "7",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/clean-reproduction-details.txt"
+      ],
+      "exit_code": 0,
+      "seconds": 243.45132549997652
+    }
+  ],
+  "host": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "physical_ram_bytes": 8589934592,
+    "cpu": "Apple M2"
+  },
+  "blocked": [
+    "Windows/Linux/other GPU/minimum macOS/installed builds",
+    "Physical-device and assistive-technology acceptance",
+    "Unique shared/GPU memory and arbitrary adversarial kernel peak allocation guarantees",
+    "Full B3 physical-memory/FPS budgets and large industrial corpus",
+    "Drawing closure (Module 8)",
+    "Native OS file-picker automation (Qt pickers are exercised on Cocoa)",
+    "Physical full-volume/power-loss storage matrix"
+  ]
+}

@@ -1,0 +1,20 @@
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::nativeSketches() QOpenGLShader::compile(Vertex): ERROR: 0:1: '' :  version '330' is not supported
+ERROR: 0:1: '' : syntax error: #version
+ERROR: 0:2: 'layout' : syntax error: syntax error
+
+QWARN  : Contracts::nativeSketches() *** Problematic Vertex shader source code ***
+#version 330 core
+#define lowp
+#define mediump
+#define highp
+#line 1
+layout(location=0) in vec3 position; uniform mat4 matrix; void main(){gl_Position=matrix*vec4(position,1.0);}
+
+***
+PASS   : Contracts::nativeSketches()
+PASS   : Contracts::cleanupTestCase()
+Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted, 3650ms
+********* Finished testing of Contracts *********

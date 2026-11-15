@@ -1,0 +1,5 @@
+[1/6] Automatic MOC for target module6_contracts
+[2/5] Building CXX object CMakeFiles/module6_exchange.dir/tests/module6/exchange.cpp.o
+[3/5] Linking CXX executable module6_exchange
+[4/5] Building CXX object CMakeFiles/module6_contracts.dir/tests/module6/contracts.cpp.o
+[5/5] Linking CXX executable module6_contracts

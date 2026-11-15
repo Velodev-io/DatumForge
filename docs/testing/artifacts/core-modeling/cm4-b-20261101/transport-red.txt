@@ -1,0 +1,14 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 68: cm4.support_transport
+1/1 Test #68: cm4.support_transport ............***Failed    1.27 sec
+QSignalSpy: No such signal: 'modelSupportsPreview(QCborMap)'
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/support_contracts.cpp:87: results.isValid()
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   1.27 sec
+
+The following tests FAILED:
+	 68 - cm4.support_transport (Failed)
+Errors while running CTest

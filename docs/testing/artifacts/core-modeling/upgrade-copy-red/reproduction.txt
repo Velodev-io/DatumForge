@@ -1,0 +1,5 @@
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+FAIL: /tmp/datumforge-upgrade-copy-red.cpp:163: upgradeRefused

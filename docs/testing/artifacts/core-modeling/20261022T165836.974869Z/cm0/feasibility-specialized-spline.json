@@ -1,0 +1,50 @@
+{
+    "blocked_count": 1,
+    "experiments": [
+        {
+            "probe": "full_round_seed",
+            "reason": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/feasibility.cpp:75: f.IsDone()",
+            "status": "Blocked"
+        },
+        {
+            "measurements": {
+                "expected_mm3": 1626,
+                "limit": "Planar asymmetric walls; curved multi-thickness requires further fixtures",
+                "volume_mm3": 1626
+            },
+            "probe": "multi_thickness",
+            "status": "Pass"
+        },
+        {
+            "measurements": {
+                "limit": "Full rectangular profile to changed inclined plane, not arbitrary curved surfaces or all end conditions",
+                "volumes_mm3": [
+                    4799.999999999999,
+                    5599.999999999999
+                ]
+            },
+            "probe": "surface_termination",
+            "status": "Pass"
+        },
+        {
+            "measurements": {
+                "limit": "Linear centerline with two circular sections; curved centerline/guide/connector correspondence remains unproven",
+                "volume_mm3": 5497.787143782139
+            },
+            "probe": "guided_loft_seed",
+            "status": "Pass"
+        },
+        {
+            "measurements": {
+                "changed_control_y": 2.3333333333333344,
+                "limit": "Clamped cubic point constraint; arbitrary rational/trim/tangent combinations not certified",
+                "point_x": 4.25,
+                "point_y": 2
+            },
+            "probe": "constrained_spline",
+            "status": "Pass"
+        }
+    ],
+    "general_face_blend": "Blocked: face-set blend is not established by edge-seeded fillet API/probe",
+    "scope": "CM0 isolated feasibility, not production acceptance"
+}

@@ -1,0 +1,17 @@
+Verified qtbase 6.10.0
+Verified occt 7.9.2
+Verified eigen 3.4.0
+Verified sqlite 3.50.4
+Verified ninja 1.13.1
+Verified boost 1.86.0
+Verified planegcs/Constraints.cpp FreeCAD-1.0.2
+Verified planegcs/Constraints.h FreeCAD-1.0.2
+Verified planegcs/GCS.cpp FreeCAD-1.0.2
+Verified planegcs/GCS.h FreeCAD-1.0.2
+Verified planegcs/Geo.cpp FreeCAD-1.0.2
+Verified planegcs/Geo.h FreeCAD-1.0.2
+Verified planegcs/SubSystem.cpp FreeCAD-1.0.2
+Verified planegcs/SubSystem.h FreeCAD-1.0.2
+Verified planegcs/Util.h FreeCAD-1.0.2
+Verified planegcs/qp_eq.cpp FreeCAD-1.0.2
+Verified planegcs/qp_eq.h FreeCAD-1.0.2

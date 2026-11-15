@@ -1,0 +1,7 @@
+[1/6] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[2/6] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[3/6] Linking CXX static library libcad_persistence.a
+[4/6] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[5/6] Building CXX object CMakeFiles/cm5_contracts.dir/tests/core_modeling/modeling_contracts.cpp.o
+[6/6] Linking CXX executable cm5_contracts

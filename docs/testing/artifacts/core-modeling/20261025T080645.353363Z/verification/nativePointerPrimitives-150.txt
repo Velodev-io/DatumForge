@@ -1,0 +1,39 @@
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Slot" "Straight" drag false
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "Straight Slot · choose start center · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Slot" "Straight" drag true
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "Straight Slot · choose start center · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Slot" "Centerpoint Straight" drag false
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "Centerpoint Straight Slot · choose center · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Slot" "Centerpoint Straight" drag true
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "Centerpoint Straight Slot · choose center · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Slot" "3 Point Arc" drag false
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "3 Point Arc Slot · choose start center · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Slot" "3 Point Arc" drag true
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "3 Point Arc Slot · choose start center · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Slot" "Centerpoint Arc" drag false
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "Centerpoint Arc Slot · choose center · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Slot" "Centerpoint Arc" drag true
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "Centerpoint Arc Slot · choose center · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Ellipse" "" drag false
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "Ellipse · choose center · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Ellipse" "" drag true
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "Ellipse · choose center · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "EllipticalArc" "" drag false
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "EllipticalArc · choose center · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "EllipticalArc" "" drag true
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "EllipticalArc · choose center · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Parabola" "" drag false
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "Parabola · choose focus · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Parabola" "" drag true
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "Parabola · choose focus · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Spline" "" drag false
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "Spline · add control points · Enter to complete · Esc to cancel"
+QINFO  : Contracts::nativePointerPrimitives() Pointer primitive "Spline" "" drag true
+QINFO  : Contracts::nativePointerPrimitives() Creation status "Sketch 1 · Editing" "Spline · add control points · Enter to complete · Esc to cancel"
+PASS   : Contracts::nativePointerPrimitives()
+PASS   : Contracts::cleanupTestCase()
+Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted, 9338ms
+********* Finished testing of Contracts *********

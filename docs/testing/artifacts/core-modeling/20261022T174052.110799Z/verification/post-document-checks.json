@@ -1,0 +1,11 @@
+{
+  "status": "Pass",
+  "checked_utc": "2026-10-22T17:53:43.560912+00:00",
+  "scope": "Post-evidence documentation/cache/link/deferred-gate integrity and verification input hashes; no extra product acceptance implied",
+  "unchanged_verified_inputs": 183,
+  "retained_cache_files": 52,
+  "unchanged_head": "d1fce435b1e9e4f05b7f36fab6392f870fedd8d7",
+  "branch": "feature/core-modeling-expansion",
+  "specification_report_sha256": "2dd94af049d9803c3fb435d03426790631314fbe144693631008ddfa8235d3da",
+  "whole_expansion_complete": false
+}

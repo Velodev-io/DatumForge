@@ -1,0 +1,7 @@
+{
+  "command": [
+    "/tmp/datumforge-cm-probes/build/cm0"
+  ],
+  "exit_code": 1,
+  "scope": "Isolated CM0 executable linked to pinned local dependencies; no production capability claim"
+}

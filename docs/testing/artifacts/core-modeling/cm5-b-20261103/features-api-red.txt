@@ -1,0 +1,18 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.8s)
+-- Generating done (0.7s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/10] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/10] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/10] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/10] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[5/10] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[6/10] Building CXX object CMakeFiles/cm5_features.dir/tests/core_modeling/modeling_features.cpp.o
+FAILED: [code=1] CMakeFiles/cm5_features.dir/tests/core_modeling/modeling_features.cpp.o
+/usr/bin/c++ -DCAD_SOURCE_ROOT="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/cm5_features.dir/tests/core_modeling/modeling_features.cpp.o -MF CMakeFiles/cm5_features.dir/tests/core_modeling/modeling_features.cpp.o.d -o CMakeFiles/cm5_features.dir/tests/core_modeling/modeling_features.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_features.cpp:2:10: fatal error: 'geometry/occt/ModelingFeatures.hpp' file not found
+    2 | #include "geometry/occt/ModelingFeatures.hpp"
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+[7/10] Linking CXX static library libcad_planegcs.a
+ninja: build stopped: subcommand failed.

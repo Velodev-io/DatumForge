@@ -1,0 +1,27 @@
+{
+  "scope": "All three arc tools, endpoint relations and EDP line/normal-arc workflow; available-Mac scope; Module 11 unstarted",
+  "status": "Interrupted before completion: additional stored-angle guard identified during review",
+  "host": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 1.2730424579931423,
+      "log": "configure.txt"
+    }
+  ],
+  "blocked": [
+    "Physical mouse/trackpad and assistive technology",
+    "Other platforms, installed builds and full 8 GB resource budgets"
+  ],
+  "not_run": [
+    "New clean-source/dependency rebuild; prior run retained separately",
+    "Ellipse/spline tangent sources and complete SolidWorks parity; source geometry types unavailable"
+  ]
+}

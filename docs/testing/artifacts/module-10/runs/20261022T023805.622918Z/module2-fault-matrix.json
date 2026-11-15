@@ -1,0 +1,183 @@
+{
+  "scope": "Production storage library on actual local files/processes; physical power loss and Windows/Linux are Blocked",
+  "cases": [
+    {
+      "case": "Part: exit before_commit",
+      "status": "Pass",
+      "seconds": 1.1967500409809873
+    },
+    {
+      "case": "Part: exit after_commit",
+      "status": "Pass",
+      "seconds": 0.6081568340014201
+    },
+    {
+      "case": "Part: exit snapshot_chunk",
+      "status": "Pass",
+      "seconds": 0.5880690829944797
+    },
+    {
+      "case": "Part: exit snapshot_validated",
+      "status": "Pass",
+      "seconds": 0.5897588330262806
+    },
+    {
+      "case": "Part: exit before_publication",
+      "status": "Pass",
+      "seconds": 0.60125966600026
+    },
+    {
+      "case": "Part: exit after_publication",
+      "status": "Pass",
+      "seconds": 0.6024127500131726
+    },
+    {
+      "case": "Part: exit save_recorded",
+      "status": "Pass",
+      "seconds": 0.6004965830070432
+    },
+    {
+      "case": "Assembly: exit before_commit",
+      "status": "Pass",
+      "seconds": 0.5740826670080423
+    },
+    {
+      "case": "Assembly: exit after_commit",
+      "status": "Pass",
+      "seconds": 0.568118625000352
+    },
+    {
+      "case": "Assembly: exit snapshot_chunk",
+      "status": "Pass",
+      "seconds": 0.5845194580033422
+    },
+    {
+      "case": "Assembly: exit snapshot_validated",
+      "status": "Pass",
+      "seconds": 0.5846834580006544
+    },
+    {
+      "case": "Assembly: exit before_publication",
+      "status": "Pass",
+      "seconds": 0.6021726249891799
+    },
+    {
+      "case": "Assembly: exit after_publication",
+      "status": "Pass",
+      "seconds": 0.613499667000724
+    },
+    {
+      "case": "Assembly: exit save_recorded",
+      "status": "Pass",
+      "seconds": 0.6139534579997417
+    },
+    {
+      "case": "Drawing: exit before_commit",
+      "status": "Pass",
+      "seconds": 0.56255966599565
+    },
+    {
+      "case": "Drawing: exit after_commit",
+      "status": "Pass",
+      "seconds": 0.5607079589972273
+    },
+    {
+      "case": "Drawing: exit snapshot_chunk",
+      "status": "Pass",
+      "seconds": 0.5798572080093436
+    },
+    {
+      "case": "Drawing: exit snapshot_validated",
+      "status": "Pass",
+      "seconds": 0.5860531250073109
+    },
+    {
+      "case": "Drawing: exit before_publication",
+      "status": "Pass",
+      "seconds": 0.5960679999843705
+    },
+    {
+      "case": "Drawing: exit after_publication",
+      "status": "Pass",
+      "seconds": 0.5965194999880623
+    },
+    {
+      "case": "Drawing: exit save_recorded",
+      "status": "Pass",
+      "seconds": 0.6002135000017006
+    },
+    {
+      "case": "SIGKILL before_commit",
+      "status": "Pass",
+      "seconds": 0.5653233339835424
+    },
+    {
+      "case": "SIGKILL after_commit",
+      "status": "Pass",
+      "seconds": 0.5591666249965783
+    },
+    {
+      "case": "SIGKILL before_publication",
+      "status": "Pass",
+      "seconds": 0.5978504579979926
+    },
+    {
+      "case": "SIGKILL after_publication",
+      "status": "Pass",
+      "seconds": 0.5954674580134451
+    },
+    {
+      "case": "live writer: symlink alias",
+      "status": "Pass",
+      "seconds": 0.46865358398645185
+    },
+    {
+      "case": "live writer: hardlink alias",
+      "status": "Pass",
+      "seconds": 0.4724609160039108
+    },
+    {
+      "case": "writer identity survives snapshot replacement and old hardlink",
+      "status": "Pass",
+      "seconds": 0.5129981659993064
+    },
+    {
+      "case": "future schema refused unchanged",
+      "status": "Pass",
+      "seconds": 0.34517474999302067
+    },
+    {
+      "case": "missing required object refused unchanged",
+      "status": "Pass",
+      "seconds": 0.3464371250011027
+    },
+    {
+      "case": "altered schema trigger refused unchanged",
+      "status": "Pass",
+      "seconds": 0.35042491598869674
+    },
+    {
+      "case": "invalid semantic history refused unchanged",
+      "status": "Pass",
+      "seconds": 0.3451548750163056
+    },
+    {
+      "case": "real SQLITE_FULL from page quota",
+      "status": "Pass",
+      "seconds": 0.3608867499860935
+    },
+    {
+      "case": "real denied destination write",
+      "status": "Pass",
+      "seconds": 0.5797461250040215
+    },
+    {
+      "case": "migration stages a copy and refuses unsupported converter",
+      "status": "Pass",
+      "seconds": 0.34188674998586066
+    }
+  ],
+  "status": "Pass",
+  "count": 35,
+  "physical_disk_exhaustion": "Not run; SQLite page quota produces actual SQLITE_FULL without filling user storage"
+}

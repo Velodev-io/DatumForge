@@ -1,0 +1,51 @@
+[1/53] Automatic MOC for target cad_desktop_ui
+[2/52] Building CXX object CMakeFiles/module1_adversary.dir/tests/module1/adversary.cpp.o
+[3/52] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[4/52] Building CXX object CMakeFiles/slice_worker.dir/tests/native/slice_worker.cpp.o
+[5/52] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[6/52] Linking CXX static library libcad_desktop_ui.a
+[7/52] Linking CXX executable slice_worker
+[8/52] Linking CXX executable module1_adversary
+[9/52] Automatic MOC for target module2_contracts
+[10/52] Automatic MOC for target module1_contracts
+[11/52] Building CXX object CMakeFiles/harness_probe.dir/tests/unit/harness_probe.cpp.o
+[12/52] Automatic MOC for target module4_workspace
+[13/51] Building CXX object CMakeFiles/protocol_spike.dir/tests/integration/protocol_spike.cpp.o
+[14/51] Building CXX object CMakeFiles/storage_spike.dir/tests/integration/storage_spike.cpp.o
+[15/51] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[16/51] Building CXX object CMakeFiles/cad_spike.dir/tests/integration/cad_spike.cpp.o
+[17/51] Building CXX object CMakeFiles/slice_desktop.dir/tests/native/slice_desktop.cpp.o
+[18/51] Building CXX object CMakeFiles/mate_spike.dir/tests/integration/mate_spike.cpp.o
+[19/51] Building CXX object CMakeFiles/cad-desktop.dir/apps/desktop/main.cpp.o
+[20/51] Building CXX object CMakeFiles/module2_domain.dir/tests/module2/domain.cpp.o
+[21/51] Building CXX object CMakeFiles/module2_storage.dir/tests/module2/storage.cpp.o
+[22/51] Building CXX object CMakeFiles/module2_fault_worker.dir/tests/module2/fault_worker.cpp.o
+[23/51] Building CXX object CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o
+[24/51] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[25/51] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[26/51] Building CXX object CMakeFiles/module1_contracts.dir/module1_contracts_autogen/mocs_compilation.cpp.o
+[27/51] Building CXX object CMakeFiles/module3_expressions.dir/tests/module3/expressions.cpp.o
+[28/51] Building CXX object CMakeFiles/module2_contracts.dir/module2_contracts_autogen/mocs_compilation.cpp.o
+[29/51] Building CXX object CMakeFiles/module1_contracts.dir/tests/module1/contracts.cpp.o
+[30/51] Building CXX object CMakeFiles/module2_contracts.dir/tests/module2/contracts.cpp.o
+[31/51] Linking CXX executable harness_probe
+[32/51] Linking CXX executable protocol_spike
+[33/51] Linking CXX executable storage_spike
+[34/51] Linking CXX executable cad_spike
+[35/51] Linking CXX executable solver_spike
+[36/51] Linking CXX executable mate_spike
+[37/51] Linking CXX executable slice_desktop.app/Contents/MacOS/slice_desktop
+[38/51] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[39/51] Linking CXX executable module1_contracts
+[40/51] Linking CXX executable module2_domain
+[41/51] Linking CXX executable module2_storage
+[42/51] Linking CXX executable module2_contracts
+[43/51] Linking CXX executable module2_fault_worker
+[44/51] Linking CXX executable module2_dispatch
+[45/51] Linking CXX executable module3_persistence
+[46/51] Linking CXX executable module3_input
+[47/51] Linking CXX executable module3_contracts
+[48/51] Linking CXX executable module3_solver
+[49/51] Linking CXX executable module3_expressions
+[50/51] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[51/51] Linking CXX executable module4_workspace

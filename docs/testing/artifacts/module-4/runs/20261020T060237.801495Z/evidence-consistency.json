@@ -1,0 +1,89 @@
+{
+  "status": "Pass",
+  "scope": "Input repairs and authorized workspace 4.0 only; full product/platform gates remain Blocked",
+  "run": "docs/testing/artifacts/module-4/runs/20261020T060237.801495Z",
+  "current_source_matches_tested_inputs": true,
+  "source_aggregate_sha256": "983ae15d49115bf3193f6b2c56dbc90810d35032db85365b0d5b41f2c37875c9",
+  "fixture_B1_sha256": "253e1a78dd30735dcdfe16fce3d1843b87123e747b1f4a31b68744cdc5811a52",
+  "pinned_dependencies_unchanged_from_module_2": {
+    "cmake/dependencies.lock.json": "f8bef677dd2d82978d1be6666ff9ae5535b151b1f9fce9ccdd2325134ef2c336",
+    "cmake/tools.lock.json": "dfd04751f6b7d7991125c8cb66135150b863d67ef4dee266384403bc2b6cc612",
+    "cmake/patches/qt-6.10.0-arm-yield.patch": "b47fd041cbcaf1c74491f17d53a54b0ebb2bb45466c3239afa72713ee7a9bf10"
+  },
+  "enabled_ctest_entries": 27,
+  "fresh_source_enabled_ctest_entries": 27,
+  "native": [
+    {
+      "effective_scale_percent": 100,
+      "DPR": 1,
+      "platform": "cocoa",
+      "graphics": "OpenGL 4.1; DPR 1; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "input_event_processing": {
+        "list_rebuilds_during_drag": 0,
+        "max_ms": 16.33575,
+        "p95_event_to_paint_ms": 14.086833,
+        "samples": 60,
+        "source": "Application-dispatched mouse events plus event processing; not physical trackpad latency or SRS acceptance",
+        "worker_commands_during_drag": 0
+      }
+    },
+    {
+      "effective_scale_percent": 125,
+      "DPR": 1.25,
+      "platform": "cocoa",
+      "graphics": "OpenGL 4.1; DPR 1.25; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "input_event_processing": {
+        "list_rebuilds_during_drag": 0,
+        "max_ms": 16.150333,
+        "p95_event_to_paint_ms": 13.554666,
+        "samples": 60,
+        "source": "Application-dispatched mouse events plus event processing; not physical trackpad latency or SRS acceptance",
+        "worker_commands_during_drag": 0
+      }
+    },
+    {
+      "effective_scale_percent": 150,
+      "DPR": 1.5,
+      "platform": "cocoa",
+      "graphics": "OpenGL 4.1; DPR 1.5; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "input_event_processing": {
+        "list_rebuilds_during_drag": 0,
+        "max_ms": 16.113333,
+        "p95_event_to_paint_ms": 12.93975,
+        "samples": 60,
+        "source": "Application-dispatched mouse events plus event processing; not physical trackpad latency or SRS acceptance",
+        "worker_commands_during_drag": 0
+      }
+    },
+    {
+      "effective_scale_percent": 175,
+      "DPR": 1.75,
+      "platform": "cocoa",
+      "graphics": "OpenGL 4.1; DPR 1.75; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "input_event_processing": {
+        "list_rebuilds_during_drag": 0,
+        "max_ms": 16.115333,
+        "p95_event_to_paint_ms": 11.694958,
+        "samples": 60,
+        "source": "Application-dispatched mouse events plus event processing; not physical trackpad latency or SRS acceptance",
+        "worker_commands_during_drag": 0
+      }
+    },
+    {
+      "effective_scale_percent": 200,
+      "DPR": 2,
+      "platform": "cocoa",
+      "graphics": "OpenGL 4.1; DPR 2; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+      "input_event_processing": {
+        "list_rebuilds_during_drag": 0,
+        "max_ms": 16.0675,
+        "p95_event_to_paint_ms": 11.589292,
+        "samples": 60,
+        "source": "Application-dispatched mouse events plus event processing; not physical trackpad latency or SRS acceptance",
+        "worker_commands_during_drag": 0
+      }
+    }
+  ],
+  "git_commit": "None: uncommitted initial repository",
+  "branch": "historical/module-3"
+}

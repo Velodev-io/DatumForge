@@ -1,0 +1,6 @@
+(lldb) target create "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts"
+Current executable set to '/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts' (arm64).
+(lldb) settings set -- target.run-args  "curveTools"
+(lldb) settings set target.disable-aslr false
+(lldb) settings set target.env-vars QT_QPA_PLATFORM=offscreen
+(lldb) run

@@ -1,0 +1,53 @@
+[1/49] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/49] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/49] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/49] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[5/49] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[6/49] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[7/49] Linking CXX static library libcad_planegcs.a
+[8/49] Linking CXX static library libcad_sketch_solver.a
+[9/49] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[10/49] Linking CXX executable solver_spike
+[11/49] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[12/49] Linking CXX executable module1_contracts
+[13/49] Linking CXX executable module2_storage
+[14/49] Linking CXX executable module2_contracts
+[15/49] Linking CXX executable module2_fault_worker
+[16/49] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[17/49] Building CXX object CMakeFiles/cm0_feasibility.dir/tests/core_modeling/feasibility.cpp.o
+[18/49] Linking CXX executable module3_input
+[19/49] Linking CXX executable module3_persistence
+[20/49] Linking CXX executable module3_solver
+[21/49] Linking CXX executable module3_contracts
+[22/49] Linking CXX executable module4_workspace
+[23/49] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[24/49] Linking CXX executable module4_contracts
+[25/49] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[26/49] Linking CXX executable module5_persistence
+[27/49] Linking CXX executable module5_b2
+[28/49] Linking CXX executable module5_contracts
+[29/49] Linking CXX executable module6_persistence
+[30/49] Linking CXX executable module6_contracts
+[31/49] Linking CXX executable module7_persistence
+[32/49] Linking CXX executable module7_b3
+[33/49] Linking CXX executable module7_contracts
+[34/49] Linking CXX executable module8_drawing
+[35/49] Linking CXX executable module8_contracts
+[36/49] Linking CXX executable module9_interaction
+[37/49] Linking CXX executable module10_fault_worker
+[38/49] Linking CXX executable cm0_feasibility
+[39/49] Linking CXX executable module10_hardening
+[40/49] Linking CXX executable cm1_contracts
+[41/49] Linking CXX executable cm1_relations
+[42/49] Linking CXX executable cm1_rectangles
+[43/49] Linking CXX executable cm1_slots
+[44/49] Linking CXX executable cm1_curves
+[45/49] Linking CXX executable cm1_pierce
+[46/49] Linking CXX executable cm1_intent
+[47/49] Linking CXX executable cm2_editing
+[48/49] Linking CXX executable cm3_dimensions
+[49/49] Linking CXX executable cm2_contracts

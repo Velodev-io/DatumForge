@@ -1,0 +1,81 @@
+{
+  "checked_at_utc": "2026-10-20T14:55:01.932673+00:00",
+  "scope": "Frozen publication snapshots on the available Mac; no complete cross-platform or hardware acceptance claim",
+  "publication": {
+    "destination": "https://github.com/Velodev-io/DatumForge.git",
+    "initial_remote": "Empty",
+    "history_strategy": "New feature commits from saved file trees; no pre-existing commits to cherry-pick",
+    "branches_stacked": true,
+    "commit_count_before_validation_record": 10,
+    "dry_run_push": "Pass",
+    "actual_push": "Pass for source commits; remote hashes and fresh fetch verified after the validation-record commit",
+    "initial_atomic_push": "Pass: all eight branches created with upstream tracking",
+    "source_snapshot_commits": {
+      "main": "6e5e5cc9ab83a0d87202789ae3a09c8885546cc5",
+      "feature/native-workbench": "c3cf61e1d753369cdea2eaa84c7fd237790f934d",
+      "feature/document-persistence": "6e754f2fb031e024fd0d949ef84ca2782f57176b",
+      "feature/parametric-sketches": "d9efb1d6de9aa2ba6a094a0eab477918f5dafa27",
+      "feature/sketch-input": "89387c552af4da830cdf8d13dac91c7a99ef91a3",
+      "feature/modeling-workspace": "e283e672a64ac626a91db5d34e590246679bdcd2",
+      "feature/solid-modeling": "512e7153eba8f10ea1ab13cb3dc331d408572033",
+      "feature/model-evaluation-wip": "1cb15232b508d57dece26c42bbaa8e0c0b7b87bf"
+    }
+  },
+  "source_checks": {
+    "credential_pattern_scan": "Pass for text files in every publication snapshot; pattern scan is not a comprehensive secret audit",
+    "excluded_attribution_scan": "Pass for every publication commit",
+    "generated_dependencies_and_builds": "Excluded",
+    "files_over_github_100_mib_limit": [],
+    "research_integrity": "Pass: all 97 baseline research files unchanged",
+    "source_whitespace": "Pass; original research, archived logs, Markdown hard line breaks and patch context preserved",
+    "git_object_connectivity": "Pass",
+    "branch_dependency_chain": "Pass"
+  },
+  "documentation_checks": {
+    "main": "Pass",
+    "native": "Pass",
+    "persistence": "Pass",
+    "workbench": "Pass",
+    "input": "Pass",
+    "workspace": "Pass",
+    "solids": "Pass",
+    "evidence": "Pass",
+    "closeout": "Pass",
+    "current": "Pass"
+  },
+  "solid_modeling": {
+    "commit": "512e7153eba8f10ea1ab13cb3dc331d408572033",
+    "configure": "Pass",
+    "build": "Pass",
+    "format": "Pass",
+    "ctest": {
+      "status": "Pass",
+      "passed": 31,
+      "failed": 0,
+      "disabled": [
+        "harness.deliberate_failure"
+      ],
+      "seconds": 47.65
+    },
+    "ui_worker_ownership": "Pass",
+    "remote_guard_authorized_origin": "Pass",
+    "remote_guard_unapproved_destination": "Rejected as required",
+    "clang_static_analysis": "Pass: 48 project-owned translation units analyzed without reported warnings/errors",
+    "tested_source": "The evidence snapshot and final solid-modeling branch have identical application, test and build sources; later changes are documentation only"
+  },
+  "model_evaluation_wip": {
+    "commit": "1cb15232b508d57dece26c42bbaa8e0c0b7b87bf",
+    "status": "Incomplete; not merge-ready",
+    "configure": "Pass",
+    "build": "Fail",
+    "build_failure": "apps/desktop/HistoryPanel.cpp:21 passes QCborValueRef to QComboBox::addItem where QVariant is required",
+    "format": "Fail",
+    "tests": "Not run because the frozen snapshot does not build",
+    "later_working_files": "Source files continued changing during publication; newer edits were preserved locally and are not part of this frozen publication"
+  },
+  "limits": [
+    "Earlier feature branches retain historical evidence; only the final solid-modeling source was freshly built and tested during publication.",
+    "Headless/native transport tests do not certify physical trackpads, other displays, Windows/Linux or full workload budgets.",
+    "No GitHub Actions workflow is included; remote branch hashes and a fresh fetch are verified after pushing."
+  ]
+}

@@ -1,0 +1,7 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 61: cm5.profiles
+1/1 Test #61: cm5.profiles .....................   Passed    0.68 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   0.68 sec

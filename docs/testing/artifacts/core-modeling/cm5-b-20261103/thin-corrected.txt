@@ -1,0 +1,15 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 61: cm5.profiles
+1/1 Test #61: cm5.profiles .....................***Failed    0.66 sec
+selected regions passed
+closed inward rectangle passed
+FAIL: expected 64.000000, observed 56.000000, tolerance 0.000000
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.66 sec
+
+The following tests FAILED:
+	 61 - cm5.profiles (Failed)
+Errors while running CTest

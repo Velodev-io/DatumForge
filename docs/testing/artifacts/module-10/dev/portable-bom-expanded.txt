@@ -1,0 +1,7 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 46: module8.drawing
+1/1 Test #46: module8.drawing ..................   Passed   58.26 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =  58.26 sec

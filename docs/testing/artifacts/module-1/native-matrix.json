@@ -1,0 +1,32 @@
+[
+  {
+    "effective_percent": 100,
+    "qt_scale_factor": ".5",
+    "physical_display": "Mac Retina native DPR 2",
+    "exit_code": 0
+  },
+  {
+    "effective_percent": 125,
+    "qt_scale_factor": ".625",
+    "physical_display": "Mac Retina native DPR 2",
+    "exit_code": 0
+  },
+  {
+    "effective_percent": 150,
+    "qt_scale_factor": ".75",
+    "physical_display": "Mac Retina native DPR 2",
+    "exit_code": 0
+  },
+  {
+    "effective_percent": 175,
+    "qt_scale_factor": ".875",
+    "physical_display": "Mac Retina native DPR 2",
+    "exit_code": 0
+  },
+  {
+    "effective_percent": 200,
+    "qt_scale_factor": null,
+    "physical_display": "Mac Retina native DPR 2",
+    "exit_code": 0
+  }
+]

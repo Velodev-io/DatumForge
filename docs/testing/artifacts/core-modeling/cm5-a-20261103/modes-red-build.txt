@@ -1,0 +1,8 @@
+[1/2] Building CXX object CMakeFiles/cm5_intent.dir/tests/core_modeling/feature_intent.cpp.o
+FAILED: [code=1] CMakeFiles/cm5_intent.dir/tests/core_modeling/feature_intent.cpp.o
+/usr/bin/c++ -DCAD_SOURCE_ROOT="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_CORE_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/cm5_intent.dir/tests/core_modeling/feature_intent.cpp.o -MF CMakeFiles/cm5_intent.dir/tests/core_modeling/feature_intent.cpp.o.d -o CMakeFiles/cm5_intent.dir/tests/core_modeling/feature_intent.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/feature_intent.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/feature_intent.cpp:50:5: error: 'auto' deduced as 'QCborMap' in declaration of 'original' and deduced as 'QString' in declaration of 'source'
+   50 |     auto original = extrude(sketch), source = newId();
+      |     ^               ~~~~~~~~~~~~~~~           ~~~~~~~
+1 error generated.
+ninja: build stopped: subcommand failed.

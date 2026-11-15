@@ -1,0 +1,28 @@
+{
+  "scope": "Targeted regression after exact no-op drag fix; full verification still required",
+  "checks": [
+    {
+      "name": "no-op-green",
+      "command": [
+        "build/macos-debug/cm1_rectangles"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "lifecycle-green",
+      "command": [
+        "build/macos-debug/module4_contracts",
+        "lifecycle"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "workflows-green",
+      "command": [
+        "build/macos-debug/cm1_contracts",
+        "rectangles"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

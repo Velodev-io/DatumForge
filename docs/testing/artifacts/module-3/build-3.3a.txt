@@ -1,0 +1,4 @@
+[1/4] Building CXX object CMakeFiles/module3_expressions.dir/tests/module3/expressions.cpp.o
+[2/4] Building CXX object CMakeFiles/cad_expressions.dir/src/domain/Expressions.cpp.o
+[3/4] Linking CXX static library libcad_expressions.a
+[4/4] Linking CXX executable module3_expressions

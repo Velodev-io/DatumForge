@@ -1,0 +1,21 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.4s)
+-- Generating done (0.2s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/18] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/18] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/18] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/18] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[5/18] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[6/18] Linking CXX static library libcad_planegcs.a
+[7/18] Linking CXX static library libcad_sketch_solver.a
+[8/18] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[9/18] Linking CXX static library libcad_part.a
+[10/18] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/SupportReferences.cpp.o
+[11/18] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Datums.cpp.o
+[12/18] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Convert.cpp.o
+[13/18] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Supports.cpp.o
+[14/18] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingProfiles.cpp.o
+[15/18] Linking CXX static library libcad_support_geometry.a
+[16/18] Building CXX object CMakeFiles/cm5_profiles.dir/tests/core_modeling/modeling_profiles.cpp.o
+[17/18] Linking CXX executable cm5_profiles

@@ -1,0 +1,535 @@
+{
+  "scope": "CM0 recorded feasibility and implemented CM1 rectangles/slots/conics/splines/relations/Pierce, CM2 straight-line trim/extend and the CM3 driving/reference/component-dimension editor slice on the available Mac; other CM2 methods, external-geometry operands and full milestone acceptance remain open",
+  "status": "Fail",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.6191389999949024
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 13.501661166999838
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 338.21913537499495
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.9552482080034679
+    },
+    {
+      "name": "static-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "build/macos-debug/compile_commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 406.6349334580009
+    },
+    {
+      "name": "architecture",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/20261028T031935.641987Z/verification/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.18810825000400655
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.24098837499332149
+    },
+    {
+      "name": "coverage",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_core_modeling.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07273916700069094
+    },
+    {
+      "name": "specifications",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "docs/scripts/check_specs.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.13092095799947856
+    },
+    {
+      "name": "native-relations-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRelations"
+      ],
+      "exit_code": 0,
+      "seconds": 20.301231582998298
+    },
+    {
+      "name": "native-rectangles-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRectangles"
+      ],
+      "exit_code": 0,
+      "seconds": 16.561838916997658
+    },
+    {
+      "name": "nativeSlotTools-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeSlotTools"
+      ],
+      "exit_code": 0,
+      "seconds": 12.720487083999615
+    },
+    {
+      "name": "nativeCurveTools-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeCurveTools"
+      ],
+      "exit_code": 0,
+      "seconds": 9.860151624998252
+    },
+    {
+      "name": "nativePierceTools-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativePierceTools"
+      ],
+      "exit_code": 0,
+      "seconds": 2.8038119169941638
+    },
+    {
+      "name": "nativePointerPrimitives-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativePointerPrimitives"
+      ],
+      "exit_code": 0,
+      "seconds": 8.439038500000606
+    },
+    {
+      "name": "native-dimensions-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 12.859176917001605
+    },
+    {
+      "name": "native-line-editing-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm2_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 12.914564291997522
+    },
+    {
+      "name": "native-workspace-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_workspace",
+        "nativeWorkspace"
+      ],
+      "exit_code": 0,
+      "seconds": 1.9350066659972072
+    },
+    {
+      "name": "native-arcs-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "exit_code": 0,
+      "seconds": 4.756726540996169
+    },
+    {
+      "name": "native-relations-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRelations"
+      ],
+      "exit_code": 0,
+      "seconds": 19.40579604099912
+    },
+    {
+      "name": "native-rectangles-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRectangles"
+      ],
+      "exit_code": 0,
+      "seconds": 15.727200959001493
+    },
+    {
+      "name": "nativeSlotTools-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeSlotTools"
+      ],
+      "exit_code": 0,
+      "seconds": 12.151010542002041
+    },
+    {
+      "name": "nativeCurveTools-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeCurveTools"
+      ],
+      "exit_code": 0,
+      "seconds": 10.12566424999386
+    },
+    {
+      "name": "nativePierceTools-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativePierceTools"
+      ],
+      "exit_code": 0,
+      "seconds": 2.8190349580036127
+    },
+    {
+      "name": "nativePointerPrimitives-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativePointerPrimitives"
+      ],
+      "exit_code": 0,
+      "seconds": 8.546991249997518
+    },
+    {
+      "name": "native-dimensions-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 13.532159666006919
+    },
+    {
+      "name": "native-line-editing-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm2_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 13.31251241699647
+    },
+    {
+      "name": "native-relations-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRelations"
+      ],
+      "exit_code": 0,
+      "seconds": 20.904946624999866
+    },
+    {
+      "name": "native-rectangles-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRectangles"
+      ],
+      "exit_code": 0,
+      "seconds": 16.9502734159978
+    },
+    {
+      "name": "nativeSlotTools-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeSlotTools"
+      ],
+      "exit_code": 0,
+      "seconds": 12.397123915994598
+    },
+    {
+      "name": "nativeCurveTools-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeCurveTools"
+      ],
+      "exit_code": 0,
+      "seconds": 10.270604582998203
+    },
+    {
+      "name": "nativePierceTools-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativePierceTools"
+      ],
+      "exit_code": 0,
+      "seconds": 2.687295666000864
+    },
+    {
+      "name": "nativePointerPrimitives-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativePointerPrimitives"
+      ],
+      "exit_code": 0,
+      "seconds": 8.487030958000105
+    },
+    {
+      "name": "native-dimensions-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 15.613687292003306
+    },
+    {
+      "name": "native-line-editing-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm2_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 14.500780499998655
+    },
+    {
+      "name": "native-relations-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRelations"
+      ],
+      "exit_code": 0,
+      "seconds": 24.845554082996387
+    },
+    {
+      "name": "native-rectangles-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRectangles"
+      ],
+      "exit_code": 0,
+      "seconds": 20.57062925000355
+    },
+    {
+      "name": "nativeSlotTools-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeSlotTools"
+      ],
+      "exit_code": 0,
+      "seconds": 14.81817691699689
+    },
+    {
+      "name": "nativeCurveTools-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeCurveTools"
+      ],
+      "exit_code": 0,
+      "seconds": 12.383698249999725
+    },
+    {
+      "name": "nativePierceTools-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativePierceTools"
+      ],
+      "exit_code": 0,
+      "seconds": 3.224027999996906
+    },
+    {
+      "name": "nativePointerPrimitives-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativePointerPrimitives"
+      ],
+      "exit_code": 0,
+      "seconds": 9.551621416998387
+    },
+    {
+      "name": "native-dimensions-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm3_dimension_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 17.623893541000143
+    },
+    {
+      "name": "native-line-editing-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm2_contracts",
+        "native"
+      ],
+      "exit_code": 0,
+      "seconds": 15.56191320799553
+    },
+    {
+      "name": "native-relations-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRelations"
+      ],
+      "exit_code": 0,
+      "seconds": 25.96138591699855
+    },
+    {
+      "name": "native-rectangles-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeRectangles"
+      ],
+      "exit_code": 0,
+      "seconds": 21.41099883300194
+    },
+    {
+      "name": "nativeSlotTools-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeSlotTools"
+      ],
+      "exit_code": 0,
+      "seconds": 15.752200625000114
+    },
+    {
+      "name": "nativeCurveTools-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm1_contracts",
+        "nativeCurveTools"
+      ],
+      "exit_code": 1,
+      "seconds": 15.625255667000602
+    }
+  ],
+  "host": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "physical_ram_bytes": 8589934592,
+    "cpu": "Apple M2"
+  },
+  "native_requested": true,
+  "blocked": [
+    "Full-round/general face blending not established",
+    "Projected-edge/external-vertex CM1 operands depend on CM4; broader per-variant failure/resource acceptance, remaining CM2 editing modes, other CM3 dimensions/inference/drag and CM4-CM9 remain open",
+    "Full physical 8 GB, installed, other-platform, physical-device and assistive-technology acceptance not run"
+  ],
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false,
+  "original_source_revalidation": {
+    "status": "Pass",
+    "scope": "Optional original T2-T8 PDF hash validation; unavailable originals do not stop independent CAD checks",
+    "command": [
+      "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "tools/check_core_modeling.py",
+      "--sources",
+      "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY"
+    ],
+    "exit_code": 0
+  },
+  "feasibility": {
+    "command": [
+      "build/macos-debug/cm0_feasibility"
+    ],
+    "exit_code": 1,
+    "results": {
+      "blocked_count": 1,
+      "experiments": [
+        {
+          "probe": "full_round_seed",
+          "reason": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/feasibility.cpp:75: f.IsDone()",
+          "status": "Blocked"
+        },
+        {
+          "measurements": {
+            "expected_mm3": 1626,
+            "limit": "Planar asymmetric walls; curved multi-thickness requires further fixtures",
+            "volume_mm3": 1626
+          },
+          "probe": "multi_thickness",
+          "status": "Pass"
+        },
+        {
+          "measurements": {
+            "limit": "Full rectangular profile to changed inclined plane, not arbitrary curved surfaces or all end conditions",
+            "volumes_mm3": [
+              4799.999999999999,
+              5599.999999999999
+            ]
+          },
+          "probe": "surface_termination",
+          "status": "Pass"
+        },
+        {
+          "measurements": {
+            "limit": "Linear centerline with two circular sections; this seed does not establish curved guides or connector correspondence",
+            "volume_mm3": 5497.787143782139
+          },
+          "probe": "guided_loft_seed",
+          "status": "Pass"
+        },
+        {
+          "measurements": {
+            "changed_control_y": 2.3333333333333344,
+            "limit": "Clamped cubic point constraint; arbitrary rational/trim/tangent combinations not certified",
+            "point_x": 4.25,
+            "point_y": 2
+          },
+          "probe": "constrained_spline",
+          "status": "Pass"
+        },
+        {
+          "measurements": {
+            "limit": "Quarter-circle centerline and auxiliary guide with two circular sections; feasibility tolerance only, not SRS acceptance or arbitrary connectors",
+            "probe_tolerance_mm3": 0.1,
+            "reference_mm3": 937.6124181034891,
+            "volume_mm3": 937.6128380301338
+          },
+          "probe": "curved_guided_loft",
+          "status": "Pass"
+        }
+      ],
+      "general_face_blend": "Blocked: face-set blend is not established by edge-seeded fillet API/probe",
+      "scope": "CM0 isolated feasibility, not production acceptance"
+    },
+    "meaning": "Probe failures remain Blocked; successful seeds are not production feature acceptance"
+  }
+}

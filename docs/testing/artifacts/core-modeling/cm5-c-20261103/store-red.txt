@@ -1,0 +1,13 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 66: cm5.store
+1/1 Test #66: cm5.store ........................***Failed    0.83 sec
+FAIL: missing/unknown fields
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.84 sec
+
+The following tests FAILED:
+	 66 - cm5.store (Failed)
+Errors while running CTest

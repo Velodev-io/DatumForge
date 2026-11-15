@@ -1,0 +1,23 @@
+{
+  "status": "Pass: selected native visual review",
+  "scope": "Two native preview captures only; not exhaustive layout/device/platform acceptance",
+  "images": [
+    {
+      "path": "native-100/native-rectangle-3-Point-Center-mm-preview.png",
+      "sha256": "7d51f72ef70e481a399b3efaa92686f3825650430301bc4bd9aba3550f5af056"
+    },
+    {
+      "path": "native-200/native-rectangle-Parallelogram-mm-preview.png",
+      "sha256": "f1d2d0bac8e09481103b54224d496dd8ae6a104ba5c1121b8605be21f52eec49"
+    }
+  ],
+  "observations": [
+    "100% three-point center preview displays a complete rotated perimeter and construction diagonals, center/size/rotation properties and Apply/Delete controls",
+    "200% parallelogram preview displays the complete skewed perimeter with base/side length, rotation and side angle controls",
+    "Native PropertyManager remains scrollable; long numeric values use horizontal scrolling in existing input fields"
+  ],
+  "limits": [
+    "Persistent dimension-label placement and on-canvas dimension editing remain CM3",
+    "Physical pointer/device study, other platform fonts and assistive technology not verified"
+  ]
+}

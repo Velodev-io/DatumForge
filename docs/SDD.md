@@ -163,6 +163,13 @@ Drawing annotations and mates consume this same reference service with occurrenc
 
 ## 7. Sketch and assembly solving
 
+The implemented Module 3 adapter, supported combinations, semantic collection
+format, tolerance/diagnostic policy and limits are recorded in
+[the sketch ADR](decisions/module-3-sketches.md), with actual results in
+[Module 3 evidence](testing/module-3.md). Those scoped results do not close the
+platform, installed-build or full workload acceptance gates.
+
+
 The sketch adapter maps our stable entity/constraint IDs to PlaneGCS-owned numerical variables. It controls variable lifetime, scale normalization, convergence settings, and diagnostic translation. Persist semantic entities and accepted values, not raw solver memory. Unsupported constraint/entity combinations must be unavailable with a reason.
 
 Validate residuals, finite values, radii, degeneracy, and intended constraint satisfaction after solve. Degrees of freedom and redundant/conflicting sets should be recomputed when needed; a raw equation count is insufficient. Dragging uses temporary objectives and a previous accepted solution to reduce branch flips. Cancel restores the pre-drag state.
@@ -222,6 +229,8 @@ Use `QMainWindow`, dock widgets, actions, model/view trees, and reusable propert
 | Central viewport | Geometry, previews, dimensions, direct manipulation | Revision-aware selection; clear committed vs preview appearance |
 | Right task pane | Libraries/materials/view resources | Optional, lazy-loaded, collapsible |
 | Bottom | Documents, edit mode, units, save/rebuild/job status | Text labels and icons; color is supplementary |
+
+Implementation staging: [TECH_SPEC 4.0](TECH_SPEC.md#40--align-the-native-modeling-workspace-before-adding-solid-tools) owns the early SolidWorks-style Features/Sketch/Evaluate command tabs, left PropertyManager/tree switch, and overall modeling layout, before exact feature UI is added. Module 9 completes consistency, familiar/simplified modes and accessibility across document types. Module 3 input repair adds stable model-space camera/anchors, optional grid, screen-distance point snapping, native gesture paths, direct shape properties/handles and bounded draft undo. Module 4.0 implements the command tabs and left PropertyManager in the available-Mac development build; [workspace evidence](testing/module-4.md) records verification and missing platform/device checks. No complete SolidWorks parity or full requirement acceptance is claimed. The subsequent explicit Module 4 authorization covers exact features; [part adapter decisions](decisions/module-4-features.md) record schemas, ownership, storage, provenance and supported cases. Stop before Module 5.
 
 Property panels share title/help, accept/cancel, selection roles, collapsible sections, unit-aware values, and preview feedback. Their actual inputs differ by command. Some measurement and dimension tools are nonmodal; do not make every tool a blocking dialog. Confirmation behavior, keyboard focus, and Escape semantics are specified in TECH_SPEC.
 
@@ -286,3 +295,74 @@ The design decisions below remain proposals for production. Module 0 pins, exper
 Unit tests cover math, units, reference resolution, and serialization. Real-kernel tests cover shape validity and geometric invariants. Real temporary SQLite/filesystem tests cover persistence and process-kill recovery. Native UI tests cover selection, focus, workflows, accessibility, and installed integration. Visual review covers placement/scaling, not numerical correctness.
 
 Cross-process tests inject stale replies, lost acknowledgments, malformed buffers, worker exit, and cancel/commit races. Dependency upgrades rerun geometry, reference, recovery, and resource corpora. See [traceability](TRACEABILITY.md) and each TECH_SPEC module for required evidence. Module 0 results are prototype evidence only; product acceptance remains Not run.
+
+
+## 16. Modules 8–10 implementation refinements
+
+The worker's drawing service uses exact HLR, SI measured anchors, explicit dangling
+states and a kernel-free vector sheet projection. See [drawing contracts](decisions/module-8-drawings.md).
+[Interaction contracts](decisions/module-9-interaction.md) define shared actions,
+native keyboard behavior, accessible names, local settings and bounded diagnostics.
+[Recovery contracts](decisions/module-10-recovery.md) define the serialized heavy
+job thread, cancellation/commit cut, historical-manifest copy upgrades and stale
+socket-batch restart protection. The architecture remains offline, native and one
+exact writer. Full platform/accessibility/resource/installed-build gates stay open.
+
+Centerpoint Arc interaction refinement (22 October 2026): the UI holds transient world-space center/start anchors and an unwrapped signed pointer sweep, paints local radius/angle feedback, and emits one completed validated semantic arc. Clockwise construction is canonicalized to existing positive-sweep storage; no authoritative schema or exact-writer change is required. Pending primitives cannot be Preview/Finish accepted. [Interaction evidence](testing/module-3-centerpoint-arc.md).
+
+Arc graph refinement (22 October 2026): the shared Arc flyout selects Centerpoint,
+3 Point or Tangent. Bounded UI construction math is transient and kernel-free;
+no pointer-motion requests or exact writes occur. Tangent/normal joins add
+`ArcTangent`/`ArcNormal` constraints with stable arc/source IDs and endpoint
+selectors; `ArcCoincident` connects a continuing line support point to the arc.
+The serial worker maps joins to PlaneGCS endpoint/coincidence and angle rules,
+counts synthetic endpoints toward the 256-variable cap, and checks independent
+residuals and branch continuity. Synthetic endpoints are solver-only and are never
+persisted. Existing positive-sweep geometry and record layout remain unchanged;
+the new constraint kinds require a current reader. No older-reader compatibility
+or general ellipse/spline tangency is claimed. [Comparison and evidence](testing/module-3-all-arcs.md).
+
+## 16. Core-modeling extension architecture
+
+Version 0.1 extension: [CM0–CM9](CORE_MODELING.md) introduces versioned typed
+references and a graph spanning sketches/datums/derived curves/features, while
+retaining existing SQLite tables and worker-owned exact computation/writes.
+Atomic model-edit previews/acceptance, surface-versus-solid result kinds and bounded
+replaceable previews are required contracts. They are not implemented merely by
+this design entry. Historical accepted semantics remain readable; new semantics
+require a new compatibility manifest and source-preserving copy upgrades.
+
+The implemented CM1 [relation](decisions/core-modeling-relations.md) and
+[rectangle](decisions/core-modeling-rectangles.md) slices retain that ownership.
+Rectangle groups persist typed member/shape-relation identities in sketch schema
+3 with the additive `sketch-groups=1` manifest. Group membership never uses display
+indices. UI draft construction math uses Qt/domain values; PlaneGCS solving and
+accepted writes stay worker-owned. These slices do not implement the later
+unified dependency graph or multi-collection ModelEdit protocol.
+
+CM4.a adds the shared kernel-free [typed-reference/model graph contract](decisions/core-modeling-cm4-graph.md)
+and connects existing feature-history and Pierce dependency validation. Sketches,
+datum planes/axes, derived curves and features have distinct node kinds; graph
+validation rejects mixed-kind cycles, missing/wrong-role sources and transitive
+history violations. Source-sketch hashes invalidate consuming feature results.
+Exact datum/support evaluation, durable support collections and multi-collection
+ModelEdit remain CM4.b–e/shared follow-on work. [Scoped evidence](testing/core-modeling-cm4-a.md).
+
+CM4.b implements [exact transient support evaluation](decisions/core-modeling-cm4-supports.md):
+typed datum/attachment/conversion definitions feed the mixed graph, then the sole
+worker resolves exact feature-stage topology, evaluates frames, projects exact
+rational curves and rebuilds feature prefixes. `PreviewModelSupports` publishes
+bounded semantic results without authoritative writes. Generated-member
+declarations are checked against recomputation; missing/ambiguous references fail.
+CM4.c owns durable support schemas and evolution/repair; CM4.d owns native UI.
+[Engine evidence](testing/core-modeling-cm4-b.md) retains numerical/lifecycle limits.
+
+The [CM1 schema-4 continuation](decisions/core-modeling-cm1-primitives.md) keeps
+rational/conic control definitions and Slot member identities in the semantic
+model. A worker-only exact-curve adapter is shared by profile construction and
+Pierce intersection. The desktop caches at most 129 display points per admitted
+curve, separate from exact objects. Pierce records document scope, source sketch
+and entity UUIDs, semantic curve role and a parameter interval. Dependency order
+is validated before solving; missing, cyclic or ambiguous references require
+repair. Existing SetSketches accepts the entire sketch collection atomically;
+it does not substitute for the future multi-collection ModelEdit protocol.

@@ -1,0 +1,6 @@
+Command: ['build/macos-debug/cm4_support_convert']
+Ellipse volume: 3.1455317614497903e-06, analytic: 3.1415926535897938e-06
+Adaptive volume: 3.1687260122768957e-06, estimated relative error: 4.5474735088646403e-16
+FAIL: expected 0.000003, observed 0.000003, tolerance 0.000000
+
+Exit: 1

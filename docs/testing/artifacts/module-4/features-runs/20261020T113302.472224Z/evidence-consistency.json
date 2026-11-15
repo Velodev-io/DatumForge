@@ -1,0 +1,21 @@
+{
+  "status": "Pass",
+  "scope": "Final frozen source inputs, native results, unchanged dependency/tool/patch/B1 pins and branch; not release acceptance",
+  "source_sha256": "2047d1d8d3dc99a8f16953f023c1368631b21641cf072d4cd4b48f3ffbcafdd3",
+  "changed_inputs": [],
+  "unchanged_pins": [
+    "cmake/dependencies.lock.json",
+    "cmake/tools.lock.json",
+    "cmake/patches/qt-6.10.0-arm-yield.patch",
+    "tests/fixtures/B1.json"
+  ],
+  "native_effective_scales": [
+    100,
+    125,
+    150,
+    175,
+    200
+  ],
+  "physical_device_matrix": "Blocked",
+  "full_resource_budgets": "Blocked"
+}

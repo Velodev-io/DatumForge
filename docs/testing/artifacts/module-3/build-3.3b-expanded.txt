@@ -1,0 +1,8 @@
+[1/7] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[2/7] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[3/7] Linking CXX executable module3_solver
+[4/7] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[5/7] Linking CXX static library libcad_persistence.a
+[6/7] Linking CXX executable module3_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_sketch_model.a'
+[7/7] Linking CXX executable cad-worker

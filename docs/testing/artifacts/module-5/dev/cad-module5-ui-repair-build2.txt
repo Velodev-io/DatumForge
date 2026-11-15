@@ -1,0 +1,6 @@
+[1/8] Automatic MOC for target cad_desktop_ui
+[2/7] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o
+[3/7] Linking CXX static library libcad_desktop_ui.a
+[4/7] Automatic MOC for target module5_contracts
+[5/6] Building CXX object CMakeFiles/module5_contracts.dir/tests/module5/contracts.cpp.o
+[6/6] Linking CXX executable module5_contracts

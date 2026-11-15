@@ -1,0 +1,7 @@
+[1/11] Automatic MOC for target cad_client
+[2/9] Automatic MOC for target cad_desktop_ui
+[3/7] Linking CXX executable cad-worker
+[4/7] Automatic MOC for target module3_contracts
+[5/7] Building CXX object CMakeFiles/module3_contracts.dir/module3_contracts_autogen/mocs_compilation.cpp.o
+[6/7] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[7/7] Linking CXX executable module3_contracts

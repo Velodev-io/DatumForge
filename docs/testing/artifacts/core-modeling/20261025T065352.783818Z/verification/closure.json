@@ -1,0 +1,11 @@
+{
+  "status": "Pass",
+  "scope": "Final documentation, coverage, whitespace and source-preservation checks only; see scoped CM1 verification",
+  "frozen_source_inputs": 199,
+  "source_sha256": "233b98bb7c4e84c7e44eb12f2ec44e87e36cc0392081a7a75d1bd1f2e0b2b06e",
+  "source_hashes_still_match": true,
+  "deferred_gates_unchanged": true,
+  "module_11_started": false,
+  "module_12_started": false,
+  "commit_or_push_performed": false
+}

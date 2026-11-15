@@ -1,0 +1,26 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.4s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/28] Automatic MOC for target cad_client
+[2/26] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/26] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/26] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/26] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[6/26] Automatic MOC for target cad_desktop_ui
+[7/25] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[8/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[9/25] Linking CXX static library libcad_planegcs.a
+[10/25] Linking CXX static library libcad_sketch_solver.a
+[11/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[12/25] Linking CXX executable cad-worker
+[13/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[14/25] Linking CXX static library libcad_desktop_ui.a
+[15/25] Automatic MOC for target module3_input
+[16/24] Automatic MOC for target module3_contracts
+[17/23] Linking CXX executable module3_input
+[18/23] Linking CXX executable module3_contracts
+[19/23] Automatic MOC for target module4_workspace
+[20/23] Building CXX object CMakeFiles/module4_workspace.dir/module4_workspace_autogen/mocs_compilation.cpp.o
+[21/23] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[22/23] Linking CXX executable module4_workspace

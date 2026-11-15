@@ -1,0 +1,31 @@
+{
+  "scope": "Small B4 box workflow and cancellation fixture; explicit test/worker family sampled at 100 ms",
+  "results": [
+    {
+      "effective_scale_percent": 100,
+      "sampled_sum_physical_footprint_bytes_max": 146572848,
+      "samples": 40
+    },
+    {
+      "effective_scale_percent": 125,
+      "sampled_sum_physical_footprint_bytes_max": 255231536,
+      "samples": 32
+    },
+    {
+      "effective_scale_percent": 150,
+      "sampled_sum_physical_footprint_bytes_max": 319440480,
+      "samples": 33
+    },
+    {
+      "effective_scale_percent": 175,
+      "sampled_sum_physical_footprint_bytes_max": 473646640,
+      "samples": 34
+    },
+    {
+      "effective_scale_percent": 200,
+      "sampled_sum_physical_footprint_bytes_max": 590005880,
+      "samples": 36
+    }
+  ],
+  "limits": "Conservative family sum may double count shared pages; includes the kernel-linked test harness; short peaks may be missed; no unique GPU/shared accounting or full B4 budget acceptance."
+}

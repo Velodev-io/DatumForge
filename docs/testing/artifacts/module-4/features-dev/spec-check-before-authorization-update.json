@@ -1,0 +1,52 @@
+{
+  "scope": "Documentation structure only; no product acceptance tests executed",
+  "checked_at_utc": "2026-10-20T11:33:18.986918+00:00",
+  "status": "fail",
+  "product_implementation": "Modules 1-3 foundation plus authorized 4.0 workspace UI; exact features 4.1 onward unimplemented",
+  "product_acceptance_tests": "Modules 1-3 and workspace 4.0 subsets exercised on Mac; full R1 requirements remain Not run or Blocked",
+  "documents": {
+    "README.md": {
+      "sha256": "80f9bd0e883712cd695eee1e9b9f856a879f9f2df067cc2bde4b81a955680e7e",
+      "lines": 52,
+      "words": 817
+    },
+    "SRS.md": {
+      "sha256": "65f4ce25ad055a91afe9dd7fe60cebef59bc2f398025764c7bf7e2a57b99723e",
+      "lines": 203,
+      "words": 3025
+    },
+    "SDD.md": {
+      "sha256": "bea0b8acc0843e21a6917ac0bdf2134bfde9fe2e7c3bd7eb57d99010dfafcd63",
+      "lines": 297,
+      "words": 4119
+    },
+    "TECH_SPEC.md": {
+      "sha256": "98dbe7c85b5fe870e5dfa0db7a5075e0086b76ac1bd72e3772dc30832b56457c",
+      "lines": 645,
+      "words": 7270
+    },
+    "STEP_ZERO.md": {
+      "sha256": "23b189ab422dbc1fed57aa6f171b9d794228add57bc056bf1eeeb98d6062bb8e",
+      "lines": 93,
+      "words": 1831
+    },
+    "TRACEABILITY.md": {
+      "sha256": "6a39e2ca8e389ab7c59ade9601bbba24fd3ceaccf45ede29eb5c9254c96a8bf1",
+      "lines": 88,
+      "words": 1256
+    },
+    "REFERENCES.md": {
+      "sha256": "87ef5d0b1a19549f3cd4248b7ba09234f22883a4cbeb4f12e89b8c0e74e3bc71",
+      "lines": 45,
+      "words": 544
+    }
+  },
+  "requirements": 56,
+  "traceability_rows": 56,
+  "modules": 13,
+  "unchecked_engineering_tasks": 94,
+  "completed_engineering_tasks": 65,
+  "errors": [
+    "Partial Module 4 authorization must explicitly permit only 4.0a-c and stop before 4.1a"
+  ]
+}

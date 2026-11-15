@@ -1,0 +1,3 @@
+[1/3] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/ModelingIntent.cpp.o
+[2/3] Linking CXX static library libcad_feature_model.a
+[3/3] Linking CXX executable cm5_intent

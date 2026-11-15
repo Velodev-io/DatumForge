@@ -1,0 +1,282 @@
+{
+  "scope": "Modules 8-10 ordered implementation and available-Mac verification; stop before Module 11",
+  "status": "Superseded: native visual review found enabled drawing draft controls outside Edit mode",
+  "artifacts": "docs/testing/artifacts/module-10/runs/20261022T024906.202286Z",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.6015242080029566
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 78.46411962501588
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 261.5058765409922
+    },
+    {
+      "name": "pdf-inspection",
+      "command": [
+        "swift",
+        "-module-cache-path",
+        "/private/tmp/cad-pdf-swift-cache",
+        "tools/inspect_drawing_pdf.swift",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-10/runs/20261022T024906.202286Z/module8-B5.pdf",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-10/runs/20261022T024906.202286Z/pdf"
+      ],
+      "exit_code": 0,
+      "seconds": 1.9030507499992382
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.7219721250003204
+    },
+    {
+      "name": "static-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/static_analysis.py",
+        "build/macos-debug/compile_commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 306.82638312500785
+    },
+    {
+      "name": "ownership",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-10/runs/20261022T024906.202286Z/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.13251108300755732
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1870689169736579
+    },
+    {
+      "name": "offline",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/offline_workflows.py",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-10/runs/20261022T024906.202286Z/offline"
+      ],
+      "exit_code": 0,
+      "seconds": 180.31379766701139
+    },
+    {
+      "name": "native-module8-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module8_contracts",
+        "nativeDrawing"
+      ],
+      "exit_code": 0,
+      "seconds": 4.7879649579990655
+    },
+    {
+      "name": "native-module9-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module9_interaction",
+        "nativeInteraction"
+      ],
+      "exit_code": 0,
+      "seconds": 1.7598476249841042
+    },
+    {
+      "name": "native-module8-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module8_contracts",
+        "nativeDrawing"
+      ],
+      "exit_code": 0,
+      "seconds": 3.7732217920129187
+    },
+    {
+      "name": "native-module9-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module9_interaction",
+        "nativeInteraction"
+      ],
+      "exit_code": 0,
+      "seconds": 1.7503727079892997
+    },
+    {
+      "name": "native-module8-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module8_contracts",
+        "nativeDrawing"
+      ],
+      "exit_code": 0,
+      "seconds": 4.03288587499992
+    },
+    {
+      "name": "native-module9-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module9_interaction",
+        "nativeInteraction"
+      ],
+      "exit_code": 0,
+      "seconds": 1.8336916249827482
+    },
+    {
+      "name": "native-module8-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module8_contracts",
+        "nativeDrawing"
+      ],
+      "exit_code": 0,
+      "seconds": 3.9516499580058735
+    },
+    {
+      "name": "native-module9-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module9_interaction",
+        "nativeInteraction"
+      ],
+      "exit_code": 0,
+      "seconds": 1.951117290998809
+    },
+    {
+      "name": "native-module8-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module8_contracts",
+        "nativeDrawing"
+      ],
+      "exit_code": 0,
+      "seconds": 4.3296193330024835
+    },
+    {
+      "name": "native-module9-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module9_interaction",
+        "nativeInteraction"
+      ],
+      "exit_code": 0,
+      "seconds": 2.0076208749960642
+    },
+    {
+      "name": "native-module7-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module7_contracts",
+        "nativeAssembly"
+      ],
+      "exit_code": 0,
+      "seconds": 10.323495541990269
+    },
+    {
+      "name": "native-module6-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module6_contracts",
+        "nativeExchange"
+      ],
+      "exit_code": 0,
+      "seconds": 4.345178791001672
+    },
+    {
+      "name": "native-module5-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module5_contracts",
+        "nativeHistory"
+      ],
+      "exit_code": 0,
+      "seconds": 4.937341582990484
+    },
+    {
+      "name": "native-module4-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_contracts",
+        "nativeFeatures"
+      ],
+      "exit_code": 0,
+      "seconds": 12.447760208015097
+    },
+    {
+      "name": "native-module3-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "exit_code": 0,
+      "seconds": 8.44400391599629
+    },
+    {
+      "name": "native-module2-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module2_contracts",
+        "nativeDocuments"
+      ],
+      "exit_code": 0,
+      "seconds": 3.5311441250087228
+    },
+    {
+      "name": "native-module1-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction"
+      ],
+      "exit_code": 0,
+      "seconds": 2.5609598330047447
+    }
+  ],
+  "host": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "physical_ram_bytes": 8589934592,
+    "cpu": "Apple M2"
+  },
+  "blocked": [
+    "Prior Module 6.1b and 6.4c deferred parser/resource/platform gates",
+    "Prior Module 7.4c full resource/platform gate",
+    "Windows/Linux/minimum macOS/other GPU/installed release builds",
+    "VoiceOver/NVDA/Orca and physical device acceptance",
+    "Full physical/shared/GPU/FPS and retention budgets (Module 11 not started)",
+    "Physical full-volume/power-loss and other native filesystem matrix"
+  ],
+  "stopped_processes": [
+    96455,
+    98413,
+    98846,
+    98847,
+    99361,
+    99362,
+    99363,
+    99364,
+    99365,
+    99366
+  ]
+}

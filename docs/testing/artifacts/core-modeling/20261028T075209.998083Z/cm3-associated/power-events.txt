@@ -1,0 +1,162 @@
+2026-10-28 13:03:38 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:36%) 2 secs    
+2026-10-28 13:03:40 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:36%) 658 secs  
+2026-10-28 13:14:38 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:36%) 11 secs   
+2026-10-28 13:14:49 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 294 secs  
+2026-10-28 13:19:43 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:35%) 6 secs    
+2026-10-28 13:19:49 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 11 secs   
+2026-10-28 13:20:00 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:35%) 5 secs    
+2026-10-28 13:20:05 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 21 secs   
+2026-10-28 13:20:26 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:35%) 6 secs    
+2026-10-28 13:20:32 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 61 secs   
+2026-10-28 13:21:33 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:35%) 5 secs    
+2026-10-28 13:21:38 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 25 secs   
+2026-10-28 13:22:03 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:35%) 5 secs    
+2026-10-28 13:22:08 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 147 secs  
+2026-10-28 13:24:35 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:35%) 8 secs    
+2026-10-28 13:24:43 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 9 secs    
+2026-10-28 13:24:52 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:35%) 41 secs   
+2026-10-28 13:25:33 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 936 secs  
+2026-10-28 13:41:09 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:35%) 22 secs   
+2026-10-28 13:41:31 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 1 secs    
+2026-10-28 13:41:32 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:35%) 6 secs    
+2026-10-28 13:41:38 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 3 secs    
+2026-10-28 13:41:41 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:35%) 5 secs    
+2026-10-28 13:41:46 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 24 secs   
+2026-10-28 13:42:10 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:35%) 6 secs    
+2026-10-28 13:42:16 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 7 secs    
+2026-10-28 13:42:23 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:35%) 7 secs    
+2026-10-28 13:42:30 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 283 secs  
+2026-10-28 13:47:13 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:35%) 7 secs    
+2026-10-28 13:47:20 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 208 secs  
+2026-10-28 13:50:48 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:35%) 8 secs    
+2026-10-28 13:50:56 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:35%) 850 secs  
+2026-10-28 14:05:06 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:35%) 13 secs   
+2026-10-28 14:05:19 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 4 secs    
+2026-10-28 14:05:23 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:34%) 5 secs    
+2026-10-28 14:05:28 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 7 secs    
+2026-10-28 14:05:35 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:34%) 5 secs    
+2026-10-28 14:05:40 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 8 secs    
+2026-10-28 14:05:48 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:34%) 5 secs    
+2026-10-28 14:05:53 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 984 secs  
+2026-10-28 14:22:17 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:34%) 2 secs    
+2026-10-28 14:22:19 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 11 secs   
+2026-10-28 14:22:30 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:34%) 6 secs    
+2026-10-28 14:22:36 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 978 secs  
+2026-10-28 14:38:54 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:34%) 2 secs    
+2026-10-28 14:38:56 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 193 secs  
+2026-10-28 14:42:09 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:34%) 5 secs    
+2026-10-28 14:42:14 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 920 secs  
+2026-10-28 14:57:34 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:34%) 2 secs    
+2026-10-28 14:57:36 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 6 secs    
+2026-10-28 14:57:42 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:34%) 11 secs   
+2026-10-28 14:57:53 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 956 secs  
+2026-10-28 15:13:49 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:34%) 3 secs    
+2026-10-28 15:13:52 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 91 secs   
+2026-10-28 15:15:23 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:34%) 6 secs    
+2026-10-28 15:15:29 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 723 secs  
+2026-10-28 15:27:32 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:34%) 16 secs   
+2026-10-28 15:27:48 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 57 secs   
+2026-10-28 15:28:45 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:34%) 9 secs    
+2026-10-28 15:28:54 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 737 secs  
+2026-10-28 15:41:11 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:34%) 6 secs    
+2026-10-28 15:41:17 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 112 secs  
+2026-10-28 15:43:09 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:34%) 5 secs    
+2026-10-28 15:43:14 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 177 secs  
+2026-10-28 15:46:11 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:34%) 6 secs    
+2026-10-28 15:46:17 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 54 secs   
+2026-10-28 15:47:11 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:34%) 6 secs    
+2026-10-28 15:47:17 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:34%) 1040 secs 
+2026-10-28 16:04:37 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:34%) 2 secs    
+2026-10-28 16:04:39 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 137 secs  
+2026-10-28 16:06:56 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:33%) 5 secs    
+2026-10-28 16:07:01 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 15 secs   
+2026-10-28 16:07:16 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:33%) 5 secs    
+2026-10-28 16:07:21 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 1011 secs 
+2026-10-28 16:24:12 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:33%) 2 secs    
+2026-10-28 16:24:14 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 964 secs  
+2026-10-28 16:40:18 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:33%) 2 secs    
+2026-10-28 16:40:20 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 229 secs  
+2026-10-28 16:44:09 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:33%) 6 secs    
+2026-10-28 16:44:15 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 204 secs  
+2026-10-28 16:47:39 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:33%) 6 secs    
+2026-10-28 16:47:45 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 1078 secs 
+2026-10-28 17:05:43 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:33%) 2 secs    
+2026-10-28 17:05:45 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 900 secs  
+2026-10-28 17:20:45 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:33%) 2 secs    
+2026-10-28 17:20:47 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 778 secs  
+2026-10-28 17:33:45 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:33%) 6 secs    
+2026-10-28 17:33:51 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 371 secs  
+2026-10-28 17:40:02 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:33%) 6 secs    
+2026-10-28 17:40:08 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 12 secs   
+2026-10-28 17:40:20 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:33%) 5 secs    
+2026-10-28 17:40:25 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 62 secs   
+2026-10-28 17:41:27 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:33%) 124 secs  
+2026-10-28 17:43:31 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 98 secs   
+2026-10-28 17:45:09 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:33%) 5 secs    
+2026-10-28 17:45:14 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 922 secs  
+2026-10-28 18:00:36 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:33%) 2 secs    
+2026-10-28 18:00:38 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 528 secs  
+2026-10-28 18:09:26 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:33%) 6 secs    
+2026-10-28 18:09:32 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 1054 secs 
+2026-10-28 18:27:06 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:33%) 2 secs    
+2026-10-28 18:27:08 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 945 secs  
+2026-10-28 18:42:53 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:33%) 2 secs    
+2026-10-28 18:42:55 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:33%) 194 secs  
+2026-10-28 18:46:09 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:33%) 5 secs    
+2026-10-28 18:46:14 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 900 secs  
+2026-10-28 19:01:14 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 11 secs   
+2026-10-28 19:01:25 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 515 secs  
+2026-10-28 19:10:00 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 121 secs  
+2026-10-28 19:12:01 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 650 secs  
+2026-10-28 19:22:51 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 5 secs    
+2026-10-28 19:22:56 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 335 secs  
+2026-10-28 19:28:31 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 5 secs    
+2026-10-28 19:28:36 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 202 secs  
+2026-10-28 19:31:58 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 122 secs  
+2026-10-28 19:34:00 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 47 secs   
+2026-10-28 19:34:47 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 121 secs  
+2026-10-28 19:36:48 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 323 secs  
+2026-10-28 19:42:11 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:32%) 6 secs    
+2026-10-28 19:42:17 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 291 secs  
+2026-10-28 19:47:08 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 8 secs    
+2026-10-28 19:47:16 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 15 secs   
+2026-10-28 19:47:31 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 5 secs    
+2026-10-28 19:47:36 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 128 secs  
+2026-10-28 19:49:44 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 5 secs    
+2026-10-28 19:49:49 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 83 secs   
+2026-10-28 19:51:12 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 6 secs    
+2026-10-28 19:51:18 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 120 secs  
+2026-10-28 19:53:18 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 6 secs    
+2026-10-28 19:53:24 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 11 secs   
+2026-10-28 19:53:35 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 5 secs    
+2026-10-28 19:53:40 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 964 secs  
+2026-10-28 20:09:44 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/SleepService Using BATT (Charge:32%) 2 secs    
+2026-10-28 20:09:46 +0530 Sleep               	Entering Sleep state due to 'Sleep Service Back to Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 311 secs  
+2026-10-28 20:14:57 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 121 secs  
+2026-10-28 20:16:58 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 964 secs  
+2026-10-28 20:33:02 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 6 secs    
+2026-10-28 20:33:08 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 5 secs    
+2026-10-28 20:33:13 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 6 secs    
+2026-10-28 20:33:19 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 3 secs    
+2026-10-28 20:33:22 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 5 secs    
+2026-10-28 20:33:27 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 881 secs  
+2026-10-28 20:48:08 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to NUB.SPMI0.SW3 nub-spmi0.0x02 rtc/Maintenance Using BATT (Charge:32%) 6 secs    
+2026-10-28 20:48:14 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 31 secs   
+2026-10-28 20:48:45 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty bluetooth-pcie/ Using BATT (Charge:32%) 6 secs    
+2026-10-28 20:48:51 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 13 secs   
+2026-10-28 20:49:04 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 5 secs    
+2026-10-28 20:49:09 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 7 secs    
+2026-10-28 20:49:16 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 5 secs    
+2026-10-28 20:49:21 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 15 secs   
+2026-10-28 20:49:36 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty bluetooth-pcie/ Using BATT (Charge:32%) 6 secs    
+2026-10-28 20:49:42 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 4 secs    
+2026-10-28 20:49:46 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty bluetooth-pcie/ Using BATT (Charge:32%) 6 secs    
+2026-10-28 20:49:52 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 2 secs    
+2026-10-28 20:49:54 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty bluetooth-pcie/ Using BATT (Charge:32%) 5 secs    
+2026-10-28 20:49:59 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 17 secs   
+2026-10-28 20:50:16 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 5 secs    
+2026-10-28 20:50:21 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 26 secs   
+2026-10-28 20:50:47 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 6 secs    
+2026-10-28 20:50:53 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 124 secs  
+2026-10-28 20:52:57 +0530 DarkWake            	DarkWake from Deep Idle [CDNP] : due to smc.sysState.Wake(0x70070000) wifibt SMC.OutboxNotEmpty/ Using BATT (Charge:32%) 6 secs    
+2026-10-28 20:53:03 +0530 Sleep               	Entering Sleep state due to 'Maintenance Sleep':TCPKeepAlive=active Using Batt (Charge:32%) 1076 secs 

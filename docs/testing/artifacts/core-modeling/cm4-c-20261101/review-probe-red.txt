@@ -1,0 +1,2 @@
+earlier-stage direct reference: Split (expected Direct)
+converted-attachment inspection threw ReferenceMissing: Source topology is missing; choose a replacement explicitly (expected Missing inspection)

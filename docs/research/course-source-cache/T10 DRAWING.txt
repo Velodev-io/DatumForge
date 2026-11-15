@@ -1,0 +1,707 @@
+
+=== PDF PAGE 1 ===
+Tutorial 10
+Working with Drawing Views
+
+=== PDF PAGE 2 ===
+Learning Objectives
+After completing this tutorial, Student will be able to:
+• Generate standard drawing views
+• Generate different types of views
+• Generate the view of an assembly in the exploded state
+• Edit drawing views
+• Change the scale of the drawing views
+• Modify the hatch pattern of the section views
+• Add annotations to drawing views
+• Add reference dimensions to the drawing views
+• Add datum feature and surface finish symbols to the drawing views
+• Add geometric tolerance to the drawing views
+• Add Bill of Materials (BOM) to a drawing sheet
+• Add balloons to assembly
+THE DRAWING MODE
+After creating the solid models or assemblies, you need to generate the two-dimensional
+(2D) drawing views. These views are the lifeline of all manufacturing systems because at
+the shop floor or the machine floor, the machinist needs the 2D drawing for
+manufacturing. SOLIDWORKS provides a specialized environment, known as the
+Drawing mode, which has all the tools required to generate and modify the drawing views
+and add dimensions and annotations to them. In other words, you can create the final shop
+floor drawing in this mode.
+You can also sketch the 2D drawings in the Drawing mode of SOLIDWORKS using the
+sketching tools provided in this mode. In other words, there are two types of drafting
+methods available in SOLIDWORKS: Generative and Interactive. Generative drafting is a
+technique of generating the drawing views by using a solid model or an assembly.
+Interactive drafting is a technique of sketching the drawing views in the Drawing mode
+by using the sketching tools. In this tutorial, you will learn about generating the drawing
+views of parts or assemblies by using generative drafting method.
+One of the major advantages of working in SOLIDWORKS is that this software has
+bidirectional associative property. This property ensures that the modifications made in a
+
+=== PDF PAGE 3 ===
+model in the Part mode are reflected in the Assembly and Drawing modes, and vice
+versa.
+TUTORIALS
+Tutorial Exercise 1
+In this tutorial, you will generate the front view, top view, right view, aligned section view,
+detail view, and isometric view of the model created in Tutorial 5 of Tutorial 8. Use the
+Standard A4 Landscape sheet format for generating these views. (Expected time: 30 min)
+The following steps are required to complete this tutorial:
+a. Copy the part document of Tutorial 5 of Tutorial 8 in the folder of the current tutorial.
+b. Open the copied part document and start a new drawing document from the part
+document.
+c. Select the standard A4 landscape sheet format and generate the parent view, refer to
+Figure 10-4.
+d. Generate the projected views using the Projected View tool, refer to Figure 10-4.
+e. Generate the aligned section view using the Aligned Section View tool, refer to Figures
+10-5 through 10-7.
+f. Generate the detail view, refer to Figure 10-8.
+g. Save and close the drawing document.
+Copying and Opening the Part Document
+1. Create a folder with the name c10 in the SOLIDWORKS Tutorials directory and copy
+c08_tut05.sldprt from \Documents\SOLIDWORKS Tutorials\c08.
+2. Start SOLIDWORKS and open the part document that you copied in the c10 folder.
+Starting a New Drawing Document
+To generate the drawing views, you need to start a new drawing document. There are two
+
+=== PDF PAGE 4 ===
+methods to start a drawing document in SOLIDWORKS. The first method to start a
+drawing document is by using the New SOLIDWORKS Document dialog box and the
+second method is by using the option available in the Part or Assembly document.
+In this tutorial, you will start a new drawing document from the Part document. In this
+way, the model in the Part document is automatically selected and you can generate its
+drawing views.
+1. Choose the Make Drawing from Part/Assembly button from the New flyout of the
+Menu Bar, refer to Figure 10-1; the Sheet Format/Size dialog box is displayed, as shown
+in Figure 10-2.
+Figure 10-1 The Make Drawing from Part/Assembly button in the New flyout
+Figure 10-2 The initial screen of the drawing document with the Sheet Format/Size
+dialog box
+
+=== PDF PAGE 5 ===
+Tip
+As discussed earlier, you can also start a drawing document by using the New
+SOLIDWORKS Document dialog box. To do so, invoke the New SOLIDWORKS
+Document dialog box by choosing the New button from the Menu Bar. Next, choose the
+Drawing button and then the OK button from the dialog box.
+2. Clear the Only show standard formats check box, if it is selected by default. Next,
+select the A4 (ANSI) Landscape sheet from the list box in this dialog box and choose
+the OK button; a new drawing document is started with the standard A4 sheet and the
+View Palette task pane is displayed on its right, as shown in Figure 10-3. By default,
+the model of Tutorial 5 of Tutorial 8 is displayed in the View Palette task pane for
+generating the drawing views.
+The Sheet Format/Size dialog box is used to select the desired format and size of the
+sheet. You can select the predefined standard sheet size template from the list box of the
+dialog box. Also, you can customize the size of the sheet as per your requirement by
+selecting the Custom sheet size radio button. As soon as you select this radio button, the
+Width and Height edit boxes are enabled for entering the desired width and height of the
+sheet.
+Tip
+If you choose the Cancel button from the Sheet Format/Size dialog box, a blank custom
+sheet of 431.80 mm × 279.40 mm will be inserted in the drawing document.
+
+=== PDF PAGE 6 ===
+Figure 10-3 A new drawing document with the View Palette task pane
+Generating the Parent and Projected Views
+Before you proceed to generate the drawing views, you need to confirm whether the
+projection type for the current sheet is set to third angle.
+1. Click anywhere on the sheet to close the View Palette task pane. Select Sheet1 from
+the FeatureManager Design Tree and right-click on it; a shortcut menu is displayed.
+Next, choose the Properties option from the shortcut menu; the Sheet Properties
+dialog box is displayed.
+2. Select the Third angle radio button from the Type of projection area, if it is not
+selected by default, and then choose OK.
+3. Choose the View Palette tab to view the View Palette task pane.
+4. Select the Front view from the View Palette task pane, drag it to the middle left of the
+drawing sheet, and then drop the view at this location to place it, refer to Figure 10-4.
+The front view is generated and placed at this location. This view is generated at a 1:10
+scale. Note that the Projected View PropertyManager is invoked automatically and
+
+=== PDF PAGE 7 ===
+the preview of the projected view is attached to the cursor.
+5. Move the cursor to the top of the front view and specify a point to place the top view,
+refer to Figure 10-4. The top view of the model is generated and the preview of another
+projected view with the front view as the parent view is attached to the cursor.
+6. Similarly, move the cursor horizontally toward the right and then move it upward; the
+preview of the isometric view is displayed. Specify a point to place the isometric view.
+7. Choose the OK button from the Projected View PropertyManager to exit from it.
+The current location of the isometric view of the model is such that it may interfere with
+the aligned section view that you need to place next. Therefore, you need to move the
+isometric view close to the top right corner of the drawing sheet.
+8. Move the cursor over the isometric view; the bounding box of the view is displayed in
+orange color.
+9. Click the left mouse button to select the view; the border of the view is highlighted in a
+different color.
+10. Move the cursor over one of the borderlines of the view; the cursor changes to the
+move cursor.
+11. Press and hold the left mouse button and drag the view close to the upper right corner
+of the drawing sheet. The drawing sheet after generating and moving the isometric view
+is shown in Figure 10-4.
+Note
+In Figure 10-4, the display style of the front and top views is Hidden Lines Visible and the
+display style of isometric view is Hidden Lines Removed. To change the display style of a
+view, select it; the Drawing View PropertyManager will be displayed. Next, select the
+required display style from the Display Style rollout of the PropertyManager.
+
+=== PDF PAGE 8 ===
+Figure 10-4 Drawing sheet after generating the front, top, and isometric views
+Tip
+Up) toolbar.
+You can turn on/off the origins displayed in the drawing views by using the View (Heads-
+Generating the Aligned Section View
+Next, you need to generate the aligned section view using the Section View tool.
+1. Choose the Section View tool from the View Layout CommandManager; the Section
+View Assist PropertyManager is displayed, refer to Figure 10-5.
+
+=== PDF PAGE 9 ===
+Figure 10-5 The Section View Assist PropertyManager
+2. Choose the Aligned button from the Cutting Line rollout of the PropertyManager to
+create an aligned section view; the aligned section line is attached to the cursor. Also,
+you are prompted to specify the three points for defining the aligned section line.
+3. Click at the center of the Top view to specify the first point. You are prompted to
+specify the second point.
+4. Move the cursor in the vertically upward direction and click to specify the second point
+when the vertical symbol appears. As soon as you specify the second point, the first
+reference line of the aligned section line will be created, refer to Figure 10-6.
+5. Click to specify the second reference line, refer to Figure 10-6.
+
+=== PDF PAGE 10 ===
+Figure 10-6 Reference lines after specifying the dimension value of 150
+6. Choose the Edit sketch button from the Section View Assist PropertyManager; the
+sketching mode is activated.
+7. Choose the Smart Dimension tool from the Sketch CommandManager and specify
+the angle between the two reference lines as 150 degree. Figure 10-6 shows the two
+reference lines after specifying the angle of 150 degrees.
+8. Choose the Exit Sketch button available at the top right of the drawing area; the
+preview of the aligned section view is attached to the cursor.
+9. Move the cursor to the right of the top view and place the aligned section view, refer to
+Figure 10-7.
+10. Click anywhere on the sheet to deselect the selected view and exit from the
+PropertyManager. The sheet after generating the aligned section view is shown in
+Figure 10-7.
+Note
+When you generate the section view of an assembly or a component, a hatch pattern is
+applied to the sectioned portion of features or components. The hatch pattern is based on
+the material assigned to the components in the part document.
+
+=== PDF PAGE 11 ===
+Figure 10-7 Drawing sheet after generating the aligned section view
+Modifying the Hatch Pattern of the Aligned Section View
+The gap between the hatching lines in the aligned section view is large. Therefore, you
+need to modify the spacing.
+1. Select the hatch pattern from one of the sections in the aligned section view; the Area
+Hatch/Fill PropertyManager is displayed.
+The Area Hatch/Fill tool is used to modify the default hatch patterns.
+2. Clear the Material crosshatch check box; the Hatch Pattern, Hatch Pattern Scale,
+and Hatch Pattern Angle options are enabled.
+The Material crosshatch check box is selected to apply the hatch pattern based on the
+material assigned to the model. On clearing this check box, you can change the type of the
+hatch pattern.
+3. Make sure that the Hatch radio button is selected in the Properties rollout of the
+PropertyManager.
+
+=== PDF PAGE 12 ===
+The Hatch radio button is selected to apply the standard hatch patterns to the section view.
+On selecting this radio button, some options available in the Area Hatch/Fill
+PropertyManager are enabled to define the properties of the hatch pattern.
+4. Enter the value 1.5 in the Hatch Pattern Scale edit box and then exit the
+PropertyManager by choosing the OK button; the gap between the hatching lines in the
+aligned section view is changed accordingly.
+The Hatch Pattern Scale edit box is used to specify the scale factor of the standard hatch
+pattern selected from the Hatch Pattern drop-down list. When you change the scale
+factor using this edit box, the preview displayed in the Preview area updates dynamically.
+Generating the Detail View
+Next, you need to generate the detail view of the center circular feature of the model.
+Before doing so, you need to activate the view from which you will derive the detail view.
+1. Activate the aligned section view by selecting it. Next, choose the Detail View
+button from the View Layout CommandManager; the Detail View PropertyManager
+is displayed and you are prompted to sketch a circle to continue viewing the creation.
+Also, the cursor is replaced by the circle cursor.
+2. Draw a small circle on the center circular feature of the model in the aligned section
+view, refer to Figure 10-8. As you draw the circle, the detail view is attached to the
+cursor.
+3. Place the attached detail view on the right side of the drawing sheet above the title
+block, refer to Figure 10-8.
+4. Select the Use custom scale radio button in the Scale rollout of the Detail View
+PropertyManager. Then, select the 1:5 option from the drop-down list available below
+the Use custom scale radio button.
+5. Make sure that the Pin Position check box is selected in the Detail View rollout.
+Choose the OK button from the Detail View PropertyManager.
+The Pin position check box of the Detail View rollout of the PropertyManager is used to
+
+=== PDF PAGE 13 ===
+pin the position of the detail view. If you select the Full outline check box in this rollout,
+the detail view will be displayed with the complete outline of the closed profile.
+You may need to move the drawing view and its label such that the view does not overlap
+the title block. Figure 10-8 shows the final drawing sheet displayed after generating the
+detail view from the aligned section view.
+Figure 10-8 The detail view derived from the aligned section view
+Saving the Drawing
+1. Choose the Save button from the Menu Bar and save the drawing file with the name
+c10_tut01 at the location given below:
+\Documents\SOLIDWORKS Tutorials\c10\
+2. Choose File > Close from the SOLIDWORKS menus to close this document. Also,
+close the part file of Tutorial 5 of Tutorial 8.
+
+=== PDF PAGE 14 ===
+Tutorial Exercise 2
+In this tutorial, you will generate the drawing view of the Tool Vise assembly created in
+Tutorial 1 of Tutorial 9. You will generate the top view, section front view, and isometric
+view of the assembly in the exploded state. You will also generate the Bill of Materials
+(BOM) of the assembly and then add balloons to the isometric view in the exploded state.
+(Expected time: 45 min)
+The following steps are required to complete this tutorial:
+a. Copy the folder of the Tool Vise assembly from Tutorial 9 to the c10 folder.
+b. Create the exploded view of the Tool Vise assembly, refer to Figure 10-9.
+c. Start a new drawing document from the assembly document using A4 landscape sheet
+format and generate the top view, refer to Figure 10-10.
+d. Generate the section view using the Section View tool, refer to Figure 10-11.
+e. Generate the isometric view and change the state of the isometric view to the exploded
+state, refer to Figure 10-12.
+f. Set the anchor on the drawing sheet where the BOM will be attached.
+g. Generate BOM, refer to Figure 10-14.
+h. Add balloons to the isometric view, refer to Figure 10-15.
+i. Save and close the drawing and assembly documents.
+Copying the Folder of the Tool Vise Assembly
+First, you need to copy the folder of the Tool Vise assembly to the c10 folder.
+1. Copy the folder of the Tool Vise assembly from \Documents\SOLIDWORKS\c09 folder
+to the folder c10.
+Creating the Exploded View of the Assembly
+Before proceeding further to generate the drawing views of the assembly, you need to
+create the exploded state of the assembly in the Assembly mode.
+1. Open the Tool Vise assembly in SOLIDWORKS and create the exploded state as well
+as the explode lines by using the Exploded View and Explode Line Sketch tools
+
+=== PDF PAGE 15 ===
+respectively, as shown in Figure 10-9.
+Note
+In Figure 10-9, the rotated view of the Tool Vise assembly has been given for its clear
+visualization.
+It is recommended that whenever you create an exploded state of an assembly, you must
+revert to the collapsed state. If you save the assembly in the exploded state, then
+whenever you generate the drawing views of the assembly, the view will be generated in
+the exploded state.
+2. Right-click on the Tool Vise assembly in the FeatureManager Design Tree to invoke
+the shortcut menu. Next, choose the Collapse option from the shortcut menu displayed
+to unexplode the assembly.
+3. Save the assembly.
+Figure 10-9 Exploded view of the assembly with explode lines
+Starting a New Drawing Document from the Assembly Document
+
+=== PDF PAGE 16 ===
+As mentioned earlier, you can also start a drawing document from the assembly document.
+1. Choose New > Make Drawing from Part/Assembly from the Menu Bar; the Sheet
+Format/Size dialog box is displayed.
+2. Select the A4 (ANSI) Landscape sheet from the list box in this dialog box and choose
+the OK button; a new drawing document is started with the standard A4 sheet and the
+View Palette task pane is displayed automatically on the right side of the drawing area.
+By default, the Tool Vise assembly is selected for generating the drawing views.
+3. Select Sheet1 from the FeatureManager Design Tree and right-click on it; a shortcut
+menu is displayed.
+4. Choose the Properties option from the shortcut menu; the Sheet Properties dialog box
+is displayed.
+5. Select the Third angle radio button from the Type of projection area and choose the
+OK button to set the current projection type to the third angle projection.
+Generating the Top View
+After starting a new drawing document with the standard A4 sheet size, you need to
+generate the top view of the assembly by using the Model View tool.
+1. Choose the Model View button from the View Layout CommandManager; the Model
+View PropertyManager is displayed. As the Tool Vise assembly is already opened in the assembly document of
+the current session of SOLIDWORKS, its name is displayed in the Part/Assembly to Insert rollout
+of the PropertyManager.
+2. Double-click on Tool Vise in the Part/Assembly to Insert rollout of the
+PropertyManager; a rectangular box is attached to the cursor.
+3. Choose the Top button from the Standard views area in the Orientation rollout of the
+Model View PropertyManager.
+
+=== PDF PAGE 17 ===
+Tip
+You can change the orientation of the model view even after placing it. To do so, double-
+click on the required view; the Model View PropertyManager will be displayed. Select the
+required view from the Orientation rollout; the orientation of the view will be automatically
+modified.
+4. Select the Use custom scale radio button from the Scale rollout of the
+PropertyManager.
+5. Select the User Defined Route option from the drop-down list available below the Use
+custom scale radio-button. Note that as soon as you select this option from the drop-
+down list, the Scale edit box below it is enabled.
+6. Enter the value of the scale factor to 1:3 in the Scale edit box and then select the Preview
+check box from the Orientation rollout; the preview of the top view of the assembly is
+displayed inside the rectangle attached to the cursor.
+Note
+The views generated in the Drawing mode of SOLIDWORKS are automatically scaled on
+the basis of the size of the sheet. However, you can further modify the scale factor as
+discussed in the above steps, if required.
+In this tutorial, after generating the Top view, you need to generate the section front view,
+right view, and the isometric view of the assembly, instead of its projection views.
+Therefore, you need to clear the Auto-start projected view check box.
+7. Clear the Auto-start projected view check box in the Options rollout of the
+PropertyManager.
+If the Auto-start projected view check box is selected in the Options rollout of the
+PropertyManager, the Projected View tool will automatically be invoked to generate the
+projected view immediately after placing the model view.
+8. Choose the Hidden Lines Removed button from the Display Style rollout.
+9. Place the view close to the top left corner of the drawing sheet, refer to Figure 10-10.
+
+=== PDF PAGE 18 ===
+Click anywhere on the sheet to exit the PropertyManager.
+Figure 10-10 Top view generated using the Model View tool
+Creating the Sectioned Front View
+Next, you need to generate the sectioned front view that is derived from the top view.
+1. Choose the Section View tool from the View Layout CommandManager; the
+Section View Assist PropertyManager is displayed.
+2. Choose the Horizontal button from the Cutting Line rollout in the PropertyManager;
+the horizontal section line is attached to the cursor.
+3. Click at the center of the Tool Vise to specify the position of the cutting line; the
+Section View pop-up toolbar is displayed.
+4. Choose the OK button from the pop-up toolbar and then choose the OK button from the
+Section View window displayed next; you are prompted to specify the position for the
+section view.
+
+=== PDF PAGE 19 ===
+5. Move the cursor in downward direction and click to specify the position for the section
+view, as shown in Figure 10-11. Next, click anywhere in the drawing area.
+Figure 10-11 Section view generated using the Section View tool
+Tip
+While placing the section view, you will observe that the view is aligned to the direction of
+arrows on the section line. To remove this alignment, press and hold the CTRL key and
+move the view to the desired location. Now, select a point in the drawing sheet to place the
+view.
+Creating the Isometric View of the Assembly in the Exploded State
+The last view to be generated is the isometric view of the assembly in the exploded state.
+1. Choose the Model View button from the View Layout CommandManager; the Model
+View PropertyManager is displayed. As the Tool Vise assembly is already opened in
+the assembly document of the current session of SOLIDWORKS, its name is displayed
+in the Part/Assembly to Insert rollout of the PropertyManager.
+
+=== PDF PAGE 20 ===
+2. Double-click on Tool Vise in the Part/Assembly to Insert rollout of the
+PropertyManager; a rectangular box is attached to the cursor.
+3. Make sure that the Isometric button is chosen in the Orientation rollout of the
+PropertyManager.
+4. Set the scale factor of the drawing view to 1:3.
+5. Choose the Hidden Lines Removed button from the Display Style rollout. Next, click
+the left mouse button to place the view, refer to Figure 10-12.
+6. Right-click on the view to invoke the shortcut menu. Choose the Properties option
+from the shortcut menu; the Drawing View Properties dialog box is displayed.
+7. Select the Show in exploded state check box in the View Properties tab of the
+Drawing View Properties dialog box and choose the OK button.
+8. Move the views to place them in the drawing sheet, refer to Figure 10-12.
+
+=== PDF PAGE 21 ===
+Figure 10-12 Drawing sheet after generating the isometric view in the exploded state
+Setting the Anchor for the BOM
+Before generating the BOM, you need to set its anchor. The anchor is a point on the drawing
+sheet with which one of the corners of the BOM coincides. By default, the anchor is
+defined at the top left corner of the drawing sheet. But in this tutorial, you need to add
+the BOM on the top right corner of the drawing sheet. Therefore, you need to set the
+anchor before generating the BOM.
+1. Expand Sheet1 from the FeatureManager Design Tree and then expand Sheet
+Format1.
+2. Select the Bill of Materials Anchor1 option from the expanded Sheet Format1 node
+and then right-click to invoke a shortcut menu. Next, choose the Set Anchor option from
+it; the drawing views will disappear from the sheet.
+3. Specify the anchor point on the inner top right corner of the drawing sheet; a point is
+placed at the selected location. Select the Top Right button from the Table Position
+area in the Bill of Materials PropertyManager.
+
+=== PDF PAGE 22 ===
+After you specify the anchor point, the drawing views are displayed automatically in the
+sheet.
+Generating the BOM
+Next, you need to generate the BOM. The Bill of Materials (BOM) is a table that displays
+a list of components used in an assembly. This table can also be used to provide
+information related to the number of components in an assembly, their names, quantity,
+and any other information required to assemble the components. Remember that the
+sequence of parts displayed in the BOM depends on the sequence in which they were
+inserted in the assembly document. The BOM, placed in the drawing document, is
+parametric. Therefore, if you add or delete a part from the assembly in the assembly
+document, the change will be reflected in the corresponding BOM in the drawing
+document. But before generating the BOM, you need to set its text parameters.
+1. Invoke the Document Properties - Drafting Standard dialog box. To do so, choose
+the Options button from the Menu Bar; the System Options - General dialog box is
+displayed. Next, choose the Document Properties tab from this dialog box.
+2. Choose Annotations > Notes from the area on the left of the dialog box. Next, choose
+the Font button from the Text area of the dialog box; the Choose Font dialog box is
+displayed.
+3. Select the Points radio button from the Height area and set the value of the font size to
+9 in the list box. Next, choose the OK button from the Choose Font dialog box.
+4. Similarly, change the text height of balloons to 12 points.
+
+=== PDF PAGE 23 ===
+Figure 10-13 The Bill of Materials tool in the Tables flyout
+5. Select the isometric drawing view from the drawing sheet and then click on the
+Annotation tab of the CommandManager to invoke the Annotation
+CommandManager.
+6. Choose the Bill of Materials tool from the Tables flyout of the Annotation
+CommandManager, refer to Figure 10-13; the Bill of Materials PropertyManager is
+displayed.
+7. Make sure that the Attach to anchor point check box is selected in the Table Position
+rollout of the PropertyManager.
+8. Accept all other default options of the Bill of Materials PropertyManager and then
+choose the OK button; the BOM is displayed in the drawing area at the default anchor
+point position, refer to Figure 10-14.
+Note that in your case the location of BOM in the drawing area may be different from the
+one shown in Figure 10-14. As discussed earlier, it depends upon the anchor point
+location. You can change the anchor point of the BOM table, as required. To do so,
+expand the Sheet format node by clicking on the expand sign available on its left.
+Next, right-click on the Bill of Material Anchor option from the expanded Sheet
+Format node; a shortcut menu is displayed. Now, choose the Set Anchor option from
+
+=== PDF PAGE 24 ===
+the shortcut menu; you will be prompted to specify the anchor point location. Click on
+the required location in the drawing sheet; the anchor point is specified at the specified
+location.
+You will notice that the Description column is also displayed in the BOM. As this column
+is not required, you need to delete it.
+9. Move the cursor over the Description heading and right-click on it; a shortcut menu is
+displayed. Choose Delete > Column from the shortcut menu; the column is deleted.
+The drawing sheet after generating the BOM and deleting the Description column is
+displayed, as shown in Figure 10-14.
+Figure 10-14 Drawing sheet after generating the BOM
+Adding Balloons to the Components
+After generating the BOM, you need to add balloons to the components.
+1. Select the isometric drawing view and then choose the AutoBalloon button from the
+Annotation CommandManager; the balloons are automatically added to all the
+
+=== PDF PAGE 25 ===
+components in the isometric view and the Auto Balloon PropertyManager is also
+displayed.
+The AutoBalloon tool is used to add the balloons automatically on the selected drawing
+view.
+Tip
+In SOLIDWORKS, you can also add balloons manually by using the Balloon tool. To do
+so, choose the Balloon tool from the Annotation CommandManager; the Balloon
+PropertyManager will be displayed. Set the properties of the balloon using the options in
+the Balloon Settings rollout of the PropertyManager. Next, select the components from the
+assembly drawing view to add the balloons. If you select the face of a component, the
+balloon will have a filled circle at the attachment point. However, if you select an edge of
+the component, the balloon will have a closed filled arrow.
+2. Make sure that the Ignore multiple instances check box is selected in the Balloon
+Layout rollout of the PropertyManager to ignore the multiple instances of any
+component.
+3. Choose the Layout Balloons to Circular button from the Balloon Layout rollout; the
+preview of the balloons layout is changed to circular.
+If the balloons overlap any drawing view, BOM, and Title block, you need to move them
+to avoid intersections.
+4. Move the cursor over a balloon and then press the left mouse button. Next, drag the
+cursor toward the isometric view in the sheet such that balloon does not overlap any
+drawing view, BOM, and Title block of the sheet and then release the left mouse button.
+You can also individually shift any overlapping balloon later.
+5. Select the 2 Character option from the Size drop-down list in the Balloon Settings
+rollout. Next, choose OK to close this PropertyManager. Figure 10-15 shows the
+drawing sheet after adding the balloons.
+Saving the Drawing
+Next, you need to save the drawing file.
+
+=== PDF PAGE 26 ===
+1. Choose the Save button from the Menu Bar and save the drawing document with the
+name c10_tut02 at the location given below:
+\Documents\SOLIDWORKS Tutorials\c10\Tool Vise
+2. Close the drawing and assembly files.
+Figure 10-15 Final drawing sheet after adding balloons
+Tutorial Exercise 3
+In this tutorial, you will first open the drawing created in Tutorial 1 of this tutorial and
+then generate dimensions and add annotations to it. Next, you will change the display of
+the isometric view to the shaded mode. (Expected time: 30 min)
+The following steps are required to complete this tutorial:
+
+=== PDF PAGE 27 ===
+a. Open the drawing document created in Tutorial 1 of this tutorial and save it with a
+different name.
+b. Configure the font settings and generate the dimensions using the Model Items tool.
+c. Arrange the dimensions and delete the unwanted ones, refer to Figures 10-18 and 10-19.
+d. Add the datum symbol and geometric tolerance to the drawing views, refer to Figures
+10-20 and 10-21.
+e. Change the model display state of the drawing views, refer to Figure 10-22.
+Opening and Saving the Drawing Document
+You need to open the drawing document created in Tutorial 1 of this tutorial in the
+SOLIDWORKS window and save it with a different name.
+1. Open the c10_tut01.slddrw document from the folder of the current tutorial in the
+SOLIDWORKS window.
+2. Choose File > Save As from the SOLIDWORKS menus and save the document with
+the name c10_tut03 in the same folder. Figure 10-16 shows the drawing sheet in which
+you need to add dimensions and annotations.
+Figure 10-16 Drawing sheet for adding dimensions and annotations
+
+=== PDF PAGE 28 ===
+Applying the Document Settings
+Before generating the dimensions of the model, you need to configure the document
+settings. These settings will allow the dimensions and other annotations in the current
+sheet to be viewed properly.
+1. Invoke the Document Properties - Drafting Standard dialog box. Choose the
+Annotations > Notes from the area on the left.
+2. Choose the Font button from the Text area of the dialog box; the Choose Font dialog
+box is invoked.
+3. Select the Points radio button from the Height area and set the value of the font size to
+9 in the list box.
+4. Choose the OK button from the Choose Font dialog box.
+5. Choose the Dimensions option from the area on the left; the related options are
+displayed on the right.
+6. Set the values of height, width, and length of the arrows as 1, 3, and 6 in their respective
+edit boxes in the Arrows area.
+7. Choose Views > Section from the left of the dialog box; the related options are displayed
+on the right. Set the values of height, width, and length of the section arrows as 2, 4, and
+8 in their respective edit boxes in the Section/view size area.
+8. Choose the OK button from the Document Properties dialog box.
+Generating the Dimensions
+Next, you need to generate the dimensions using the Model Items tool.
+1. Select the top view of the drawing sheet. Next, choose the Model Items button from the
+Annotation CommandManager; the Model Items PropertyManager is displayed
+and the name of the selected view is displayed in the Source/Destination rollout.
+
+=== PDF PAGE 29 ===
+The Model Items tool is used to generate the annotations that are added while creating the
+model in the Part mode.
+Tip
+If you do not select any view for generating the dimensions using the Model Items tool, all
+dimensions will be displayed in all views. Sometimes, the dimensions may overlap each
+other. Therefore, you need to select the view in which you have to generate the dimensions
+and then you need to invoke the Model Items tool.
+2. Select the Entire model option from the Source drop-down list.
+The Entire model option is used to import the annotations of the entire model to the
+selected drawing view. However, the Selected feature option of the Source drop-down
+list is used to import the annotations only from the selected feature or features.
+3. Choose the OK button from the Model Items PropertyManager; the dimensions of
+the entire model, which can be displayed in the selected view, are generated.
+Note that the generated dimensions are scattered arbitrarily on the drawing sheet.
+Therefore, you need to arrange the dimensions by moving them to the required
+locations.
+4. Select all dimensions by dragging a window around them; the Dimension
+Palette rollover button will be displayed near the cursor.
+5. Move the cursor over this button; the Dimension Palette window is displayed, refer to
+Figure 10-17.
+
+=== PDF PAGE 30 ===
+Figure 10-17 The Dimension Palette window
+6. Choose the Auto Arrange Dimensions button from this palette; the dimensions will be
+arranged at equal distance. Now, click in the drawing sheet to exit the window.
+7. Select the dimensions one by one and drag them to the desired location, refer to Figure
+10-18. You can reverse the direction of arrowheads by clicking on the control points
+displayed on them. The diameter dimensions 85, 97, 108, and 160 need to be deleted
+from the top view because these dimensions need to be added in the detailed view of the
+drawing sheet later.
+8. Select the diameter dimension 85 from the top view of the drawing sheet and press the
+DELETE key; the selected dimension is deleted from the top view. Similarly, delete the
+diameter dimension values 97, 108, and 160. The drawing view after arranging the
+dimensions and deleting the diameter dimensions is shown in Figure 10-18.
+Note that if the dimension arrowheads are displayed as not filled, you need to change the
+arrowheads to filled arrowheads.
+9. Drag a window around all dimensions such that they are enclosed inside it. Next,
+release the left mouse button; all the dimensions are selected and the Dimension
+PropertyManager is displayed.
+10. Choose the Leaders tab and select the Filled Arrow option from the Style drop-down
+list in the Witness/Leader Display rollout. Choose OK to close the Dimension
+PropertyManager; the arrowheads are changed to the filled arrowheads.
+
+=== PDF PAGE 31 ===
+11. Select the detailed view from the drawing sheet and generate the dimensions using the
+Model Items tool in the Annotation CommandManager. Next, arrange the
+dimensions by using the Dimension Palette window.
+Figure 10-18 Top view after generating and arranging the dimensions
+12. Delete the unwanted dimensions from the view and then arrange the remaining
+dimensions by dragging them to the desired locations. The drawing view after arranging
+and deleting the dimensions is shown in Figure 10-19.
+
+=== PDF PAGE 32 ===
+Figure 10-19 Detail view after generating and arranging the dimensions
+Tip
+In SOLIDWORKS, you can also add reference dimensions to the drawing views in the
+Drawing mode by using the Smart Dimension tool, as discussed in the earlier tutorials.
+Adding the Datum Feature Symbol to the Drawing View
+After generating the dimensions, you need to add the datum feature symbol to the drawing
+view. The datum feature symbols are used as datum reference for adding the geometric
+tolerance to the drawing views.
+1. Select the edge of the outer cylindrical feature from the top view and then choose the
+Datum Feature button from the Annotation CommandManager; the Datum Feature
+PropertyManager is displayed and a datum callout is attached to the cursor.
+2. Place the datum feature symbol at an appropriate location, refer to Figure 10-20.
+3. Choose the OK button from the Datum Feature PropertyManager.
+
+=== PDF PAGE 33 ===
+Figure 10-20 Datum feature symbol added to the top view
+Adding the Geometric Tolerance to the Drawing View
+After defining the datum feature symbol, you need to add the geometric tolerance to the
+drawing view.
+1. Select the circular edge that has a diameter of 448 mm from the top view and then choose
+the Geometric Tolerance button from the Annotation CommandManager; the
+Properties dialog box is displayed. Also, a callout is attached to the cursor.
+The Properties dialog box is used to specify the parameters of the geometric tolerance.
+2. Select the down arrow in the Symbols drop-down list in the first row; the Symbols
+flyout is displayed.
+3. Choose the Concentricity option from this flyout and then enter 0.02 in the Tolerance
+1 edit box.
+4. Enter A in the Primary edit box to define the primary datum reference. Note that as you
+specify the parameters in the Properties dialog box, the preview of the geometric
+tolerance will be modified dynamically in the drawing sheet.
+5. Choose the OK button from the Properties dialog box; the geometric tolerance is
+
+=== PDF PAGE 34 ===
+attached to the selected circular edge. You may need to move the geometric tolerance, if
+it overlaps the dimensions. Figure 10-21 shows the drawing view after adding and
+rearranging the geometric tolerance.
+Figure 10-21 Geometric tolerance added to the drawing view
+Tip
+In SOLIDWORKS, you can add the surface finish symbols to the edges or the faces in the
+drawing views using the Surface Finish tool available in the Annotation
+CommandManager.
+You can also generate hole callouts for the holes that are created in the Part mode using
+the Simple Hole tool, the Hole Wizard tool, or the Extruded Cut tool.
+Changing the View Display Options
+After adding all annotations to the drawing views, you need to change the display setting
+of the isometric view.
+1. Select the isometric view in the drawing sheet; the Drawing View PropertyManager
+is displayed.
+2. Choose the Shaded With Edges button from the Display Style rollout of the
+PropertyManager; the display style of the isometric view is changed to Shaded With
+Edges display style. Figure 10-22 shows the final drawing sheet after changing the
+display view settings.
+
+=== PDF PAGE 35 ===
+3. Save and close the drawing document.
+Figure 10-22 Final drawing sheet
+Answer the following questions and then compare them to those given at the end of
+this tutorial:
+1. To start a new drawing document from the part document, choose the
+button from the New flyout.
+2. The detail view.check box available in the Detail View rollout of the Detail View
+PropertyManager is used to display the complete outline of the closed profile in the
+
+=== PDF PAGE 36 ===
+3. To change the scale of the drawing views, first select the drawing view and then select
+the radio button from the Scale rollout.
+4. The tool is used to add balloons automatically to the components of the
+assembly in the drawing view.
+5. The tool is used to create hole callouts.
+6. The Standard sheet size radio button is selected by default in the Sheet Format/Size
+dialog box. (T/F)
+7. If you want to use the empty sheet without any margin lines or a title block, then select
+the Display sheet format check box in the Sheet Format/Size dialog box. (T/F)
+8. In SOLIDWORKS, you cannot add annotations while creating the parts. (T/F)
+Answer the following questions:
+1. In which shape is the detail view boundary displayed by default?
+(a) Circle (b) Ellipse
+(c) Rectangle (d) None
+2. Which PropertyManager is invoked to add balloons manually to the selected drawing
+view?
+(a) AutoBalloon (b) Balloon
+(c) Properties (d) Center Mark
+3. The tool is used to add reference dimensions to the drawing views.
+
+=== PDF PAGE 37 ===
+4. The tool is used to add surface finish symbols to the drawing views.
+5. The dialog box is used to modify the hatch pattern of a section view.
+6. The check box needs to be cleared to modify the scale of the hatch pattern.
+7. In SOLIDWORKS, you cannot modify the hatch pattern angle. (T/F)
+8. In SOLIDWORKS, you can modify the hatch pattern scale. (T/F)
+EXERCISE
+Exercise 1
+In this exercise, you will generate the front view, top view, and isometric view in the
+exploded state of the assembly created in Exercise 1 of Tutorial 9. You will also generate
+the Bill of Materials (BOM) of the assembly and then add balloons to the isometric view
+in the exploded state, as shown in Figure 10-23. Use the Standard A4 Landscape sheet
+format for generating these views. (Expected time: 30 min)
+
+=== PDF PAGE 38 ===
+Figure 10-23 Drawing sheet for Exercise 1
+Answers to Self-Evaluation Test
+1. Make Drawing from Model/Assembly, 2. Full outline, 3. Use custom scale, 4.
+AutoBalloon, 5. Hole Callout 6. T, 7. T, 8. T

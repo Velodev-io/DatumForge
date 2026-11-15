@@ -1,0 +1,777 @@
+
+=== PDF PAGE 1 ===
+Tutorial 3
+Editing and Modifying Sketches
+
+=== PDF PAGE 2 ===
+Learning Objectives
+After completing this tutorial, Student will be able to:
+• Edit sketches using various editing tools
+• Create circular patterns of sketched entities
+• Create rectangular patterns of sketched entities
+• Modify sketched entities
+EDITING SKETCHED ENTITIES
+SOLIDWORKS provides you with a number of tools that can be used to edit the sketched
+entities. You can trim, extend, offset, or mirror the sketched entities using these tools. You
+can also perform various other editing operations by using these tools. Various editing
+operations and the tools used to perform them are discussed in this tutorial.
+Tutorial Exercise 1
+In this tutorial, you will create the base sketch of the model shown in Figure 3-1. The sketch
+of the model is shown in Figure 3-2. You will create the sketch of the base feature by using
+the sketch tools. Also, you will modify and edit the sketch using various modifying
+options. Do not create the center marks and centerlines, as they are for your reference only.
+(Expected time: 30 min)
+Figure 3-1 Solid model for Tutorial 1
+
+=== PDF PAGE 3 ===
+Figure 3-2 Sketch for Tutorial 1
+The following steps are required to complete this tutorial:
+a. Start SOLIDWORKS and then a new part document.
+b. Invoke the sketching environment.
+c. Modify the snap, grid, and units settings.
+d. Draw outer loop of the sketch, refer to Figures 3-5 through 3-11.
+e. Draw the inner cavity of the sketch by using the Circle and Circular Sketch Pattern
+tools, refer to Figure 3-12.
+f. Save the sketch.
+Starting SOLIDWORKS and a New SOLIDWORKS Document
+1. Start SOLIDWORKS by choosing Start > All Programs > SOLIDWORKS 2016 >
+SOLIDWORKS 2016 or by double-clicking on the shortcut icon of SOLIDWORKS
+2016 on the desktop of your computer; the SOLIDWORKS window is displayed.
+2. Choose the New tool from the Menu Bar; the New SOLIDWORKS Document dialog
+box is displayed.
+3. In this dialog box, the Part button is chosen by default. Choose the OK button from
+this dialog box; a new SOLIDWORKS part document is invoked.
+
+=== PDF PAGE 4 ===
+Invoking the Sketching Environment
+Next, you need to invoke the sketching environment.
+1. Choose the Sketch tab from the CommandManager. Next, choose the Sketch tool from
+the Sketch CommandManager; the Edit Sketch PropertyManager is invoked and you are prompted to select
+a plane to create the sketch. Also, the three default planes (Front Plane, Right Plane, and Top Plane) available
+in SOLIDWORKS are temporarily displayed on the screen.
+2. Select the Front Plane as the sketching plane; the sketching environment is invoked
+and the plane is oriented normal to the view.
+Modifying the Snap, Grid, and Unit Settings
+It is assumed that while installing SOLIDWORKS, you have selected the MMGS
+(millimeters, gram, second) option for measuring the length. Therefore, the length of
+an entity will be measured in millimeters in the current file. But, if you select some
+other unit at the time of installation, you need to change the linear and angular units
+before drawing the sketch. For this tutorial, you need to modify the grid and snap settings
+so that the cursor jumps through a distance of 10 mm.
+1. Choose the Unit system button located in the Status Bar; a flyout is displayed with a
+tick mark next to the unit system of the current document, as shown in Figure 3-3.
+Figure 3-3 The flyout showing the currently selected unit system
+2. Choose the Edit Document Units option from this flyout; the Document Properties -
+Units dialog box is displayed.
+Note
+If you have selected millimeters as the unit of measurement while installing
+SOLIDWORKS, you can skip step 3 in this section.
+
+=== PDF PAGE 5 ===
+3. Select the MMGS (millimeter, gram, second) in the Unit system area. Also, select the
+degrees option from the Angle area in the Units column.
+Note
+You can also select the required unit system for the current document by selecting the
+required unit system from the Unit system flyout directly. However, in this case, if you are
+in the sketcher environment, you will automatically exit from the sketcher environment.
+As evident from Figure 3-2, the dimensions in the sketch are multiples of 10. Therefore,
+you need to modify the grid and snap settings such that the cursor jumps through a
+distance of 10 mm.
+4. Select the Grid/Snap option on the left of the Document Properties - Units dialog box
+to display all the options related to the grid and snap. Also, note that the name of the
+dialog box is modified to the Document Properties - Grid/Snap dialog box.
+5. In this dialog box, set the value in the Major grid spacing and Minor-lines per major
+spinner to 100 and 10, respectively.
+6. Invoke the System Options - Relations/Snaps dialog box by choosing the Go To
+System Snaps button from the Document Properties - Grid/Snap dialog box. Next,
+make sure that the Grid check box is selected in it.
+7. Choose the OK button to exit from the dialog box.
+Now, when you move the cursor, the coordinates that are displayed closer to the lower
+right corner of the drawing area show an increment of 10 mm.
+As evident from Figure 3-2, the sketch consists of the outer loop and inner cavities. It is
+recommended that you create the outer loop of the sketch first and then the inner cavities.
+Drawing the Outer Loop of the Sketch
+The outer loop of the sketch will be drawn by using the Circle, Line, and Trim Entities
+
+=== PDF PAGE 6 ===
+tools.
+1. Choose the Circle tool from the Circle flyout in the Sketch CommandManager; the
+Circle PropertyManager is displayed with the Circle button chosen in the Circle Type
+rollout.
+Tip
+You can also choose an appropriate method to create a circle from the Circle Type rollout
+of the Circle PropertyManager. The Circle tool of this rollout is used to create a circle by
+specifying the center point of the circle and then defining its radius. The Perimeter Circle
+tool in this rollout is used to draw a circle by defining three points that lie on its periphery.
+2. Move the cursor toward the origin and specify the center point of the circle when it snaps
+to the origin and the symbol of coincident relation is displayed below the cursor.
+3. Move the cursor horizontally toward the right and click when the radius of the circle
+above the cursor shows the value 40.
+4. Right-click in the drawing area to invoke the shortcut menu. Now, choose the Select
+option from the shortcut menu to exit the Circle tool.
+5. Choose the Zoom to Area tool from the View (Heads-Up) toolbar. Press and hold the
+left mouse button and drag the cursor to define a window such that the sketched circle is placed in the window.
+Next, release the left mouse button to increase the display area of the sketch.
+The Zoom to Area tool is used to magnify a specified area of the drawing window. The
+portion of the drawing that is inside the magnified area can be viewed in the current
+window.
+6. Exit the tool by choosing the Select option from the shortcut menu that is displayed
+after right-clicking in the drawing area.
+7. Press the right mouse button and drag the cursor; the Mouse Gesture is displayed in the
+drawing area, refer to Figure 3-4. Move the cursor over the Circle tool; the Circle tool
+is invoked and the cursor is changed to a circle cursor.
+
+=== PDF PAGE 7 ===
+Note
+You can also invoke the Circle tool from the Sketch CommandManager, as discussed
+earlier.
+Figure 3-4 Tools displayed in the Mouse Gesture in the sketching environment
+In SOLIDWORKS, when you press the right mouse button and drag the cursor in a
+direction, a set of radially arranged tools are displayed. This action is called Mouse
+Gesture. After displaying the tools by using the Mouse Gesture, you can move the cursor
+over a particular tool to invoke it.
+By default, four tools are displayed in the Mouse Gesture. However, you can customize
+the Mouse Gesture and display eight tools. To customize the Mouse Gesture, invoke the
+Customize dialog box by choosing the Tools > Customize from the SOLIDWORKS
+menus and then choose the Mouse Gestures tab. Next, select the 8 gestures radio button
+from the top right corner of the dialog box to display the Mouse Gesture with 8 tools. The
+Enable mouse gestures check box in this dialog box is used to enable or disable the Mouse
+Gesture.
+You can also customize the commands of the Mouse Gesture. To do so, click on the
+respective field in the display area of the dialog box; a down arrow will be displayed.
+Next, click on the down arrow; a flyout will be displayed. Choose the required option
+from this flyout to assign the respective tool to the Mouse Gesture. To view only the
+commands that are assigned to the Mouse Gesture, select the Show only commands with
+mouse gestures assigned check box.
+Note
+The tools displayed by Mouse Gesture are different for different environments. For
+
+=== PDF PAGE 8 ===
+example, when you invoke the Mouse Gesture in the Part environment, it displays the tools
+of the Part environment. Similarly, when you invoke the Mouse Gesture in the Sketching
+environment, it displays the tools of the Sketch environment.
+8. Move the cursor to the location whose coordinates are 60, 0, 0 and specify the center
+point of the circle at this location by clicking the left mouse button.
+9. Move the cursor horizontally toward the right and click the left mouse button when the
+radius above the cursor shows 10 mm. Next, exit the tool by right-clicking in the drawing
+area and choosing the Select option from the shortcut menu. Figure 3-5 shows the sketch
+after drawing the circles of 80 mm and 20 mm diameters.
+Figure 3-5 Sketch after drawing circles
+10. Invoke the Line tool from the Mouse Gesture. To do so, press and hold the right
+mouse button and drag the cursor to a small distance; a set of sketching tools is displayed.
+Move the cursor over the Line tool; the Line tool is invoked and the cursor is converted
+into a line cursor.
+Note
+earlier.
+You can also invoke the Line tool from the Sketch CommandManager, as discussed
+11. Move the line cursor to the location whose coordinates are 60, 10, 0. Next, specify the
+start point of the line when the line cursor snaps to the circle of diameter 20 mm and
+displays the symbol of coincident relation below the line cursor.
+
+=== PDF PAGE 9 ===
+12. After specifying the first point of the line, move the line cursor horizontally toward the
+circle of diameter 80 mm; a rubber band line is attached to the cursor.
+13. Specify the end point of the line when the line cursor snaps to the circle of diameter 80
+mm and the symbol of coincident and horizontal relations are displayed below the line
+cursor.
+14. Right-click in the drawing area and choose the End Chain option from the shortcut
+menu; the current chain ends but the Line tool still remains active.
+Note
+When you terminate the process of drawing a line by double-clicking on the screen or by
+choosing the End Chain from the shortcut menu, the current chain would end. However,
+the Line tool would remain active.
+15. Move the line cursor to the location whose coordinates are 60, -10, 0. Now, specify the
+start point of the line when the line cursor snaps to the circle of diameter 20 mm and the
+symbol of coincident relation is displayed below the line cursor.
+16. Move the line cursor horizontally towards the circle of diameter 80 mm; a rubber band
+line is attached to the cursor.
+17. Specify the end point of the line when the line cursor snaps to the circle of diameter 80
+mm and the symbols of coincident and horizontal relations are displayed below the line
+cursor.
+18. Right-click in the drawing area and choose the Select option from the shortcut menu to
+exit the Line tool. Figure 3-6 shows the sketch after drawing the horizontal lines.
+Now, you need to trim the unwanted entities of the sketch by using the Trim Entities tool.
+19. Choose the Trim Entities tool from the Sketch CommandManager; the Trim
+PropertyManager is displayed on the left of the drawing area, refer to Figure 3-7.
+
+=== PDF PAGE 10 ===
+Figure 3-6 Sketch after drawing the lines
+Figure 3-7 The Trim PropertyManager
+The Trim Entities tool is used to trim the unwanted entities in a sketch. You can use this
+tool to trim a line, arc, ellipse, parabola, circle, spline, centerline intersecting another line,
+
+=== PDF PAGE 11 ===
+arc, ellipse, parabola, circle, spline, or centerline. You can also extend the sketched entities
+using the Trim Entities tool.
+The options of the Trim PropertyManager are discussed next.
+Message Rollout
+The Message rollout in the Trim PropertyManager informs you about the procedure
+of trimming and extending the sketched elements, depending upon the option selected in
+the Options rollout.
+Options Rollout
+The Options rollout displays all options that are used to trim the sketched entities.
+These options are discussed next.
+Power trim: When the Power trim button is chosen in the Options rollout, the
+Message rollout of the Trim PropertyManager will inform you about the procedure
+of trimming and extending the sketched elements. To trim the unwanted portion of a
+sketch using this option, press and hold the left mouse button and drag the cursor. You
+will notice that a gray-colored drag trace line is displayed along the path of the cursor.
+When you drag the cursor across the unwanted sketched entity, it will be trimmed and
+a small red-colored box will be displayed in its place. You can continue trimming the
+entities by dragging the cursor across them. After trimming all unwanted entities,
+release the left mouse button.
+To extend or shorten an entity dynamically when the Power trim button is chosen in
+the Trim PropertyManager, click once on the entity and then move the cursor; the
+entity will extend or shorten dynamically depending upon the direction of movement.
+Move the cursor up to a level to which the entity has to be extended or shortened. Press
+the left mouse button to complete the operation.
+To extend a line or a curve such that it intersects the other entity, select the first entity
+and then the second entity; the first entity will extend and intersects the second entity.
+While extending, if the first entity cannot intersect the second entity, then the first
+entity will extend up to the apparent intersection point.
+Note
+If the first entity cannot be extended to intersect the second entity, then a tooltip will be
+
+=== PDF PAGE 12 ===
+displayed stating that the selected entity cannot be extended to intersect the second entity.
+Corner: The Corner button in the Options rollout is used to trim or extend the
+sketched entities in such a way that the resulting entities form a corner. To trim the
+unwanted elements using this option, choose the Corner button from the Options
+rollout; you will be prompted to select an entity. Select the entity from the geometry
+area; you will be prompted to select another entity. When you move the cursor over
+the second entity, the preview of the resulting entity will be displayed in a different
+color. In the second entity, select the portion to be retained.
+You can also extend the entities using this tool. To do so, choose the Corner button
+from the Options rollout and select the entities to be extended; the selected entities
+will be extended to their apparent intersection.
+Trim away inside: The Trim away inside button in the Options rollout is used to
+trim the portion of the selected entity that lies inside two bounding entities. To do so,
+invoke the Trim PropertyManager and choose the Trim away inside button from
+the Options rollout; the Message rollout will be displayed informing you to select the
+two bounding entities, and then to select the entities to be trimmed. Select the
+bounding entities from the drawing area. Now, select the entities to be trimmed from
+the drawing area; the portion of the entity inside the bounding entities will be
+removed and the portion outside the bounding entities will be retained.
+Trim away outside: The Trim away outside button in the Options rollout is used to
+trim the portion of an entity outside the bounding entities. To do so, invoke the Trim
+PropertyManager and choose the Trim away outside button from the Options
+rollout; the Message rollout will inform you to select the two bounding entities, and
+then to select the entities to be trimmed.
+Trim to closest: The Trim to closest button is used to trim the selected entity to its
+closest intersection. To do so, invoke the Trim PropertyManager and then choose
+the Trim to closest button from the Options rollout; the cursor will be replaced by
+the trim cursor. Move the trim cursor near the portion of the sketched entity to be
+removed; the entity or the portion of the entity to be removed will be highlighted in
+orange. Press the left mouse button to remove the highlighted entity.
+You can also extend the sketched entities when the Trim to closest button is chosen
+in the Trim PropertyManager. To do so, move the trim cursor to the entity to be
+extended; the sketched entity will turn orange. Now, press the left mouse button and
+
+=== PDF PAGE 13 ===
+drag the cursor to the entity up to which it has to be extended. You will notice the
+preview of the extended entity. Release the left mouse button when the preview of the
+extended entity appears; the entity will be extended.
+20. Choose the Trim to closest button from the Options rollout of the Trim
+PropertyManager; the cursor is replaced by the trim cursor.
+21. Move the trim cursor near the sketched entities to be removed one by one. Refer to
+Figure 3-8 for the entities to be trimmed. Next, click the left mouse button to trim them.
+Figure 3-9 shows the sketch after trimming the entities.
+Figure 3-8 Entities to be trimmed
+Figure 3-9 Sketch after trimming the entities
+22. Next, choose the Close Dialog button from the Trim PropertyManager to exit it.
+23. Press the CTRL key and select both the horizontal lines and the arc of radius 10
+
+=== PDF PAGE 14 ===
+mm. Next, choose the Circular Sketch Pattern tool from the Linear Sketch Pattern
+flyout in the Sketch CommandManager; the Circular Pattern PropertyManager is
+displayed, refer to Figure 3-10 and the preview of the circular pattern with default
+settings is displayed in the drawing area.
+Also, you will notice that the center of the circular pattern is placed at the origin and an
+arrow is displayed, indicating that the origin is the center of the circular pattern. If
+required, you can modify the center of the circular pattern by setting the coordinates of
+the point in the Center X and Center Y spinners in the Parameters rollout of the
+PropertyManager. Alternatively, drag the arrow displayed at the center of the pattern to
+the required location.
+The Circular Sketch Pattern tool is used to create a circular pattern of the selected entities.
+You can also create linear pattern of the selected entities. To do so, you need to choose
+the Linear Sketch Pattern tool from the SketchCommandManager. Next, you need to
+define the first and second linear directions for creating the linear pattern. Also, you can
+define the number of instances in respective direction and spacing between each instance.
+Figure 3-10 The Circular Pattern PropertyManager
+
+=== PDF PAGE 15 ===
+Figure 3-11 Sketch after drawing the outer loop
+24. Set the value of the Number of Instances spinner to 6.
+25. Make sure that the Equal spacing check box is selected. Next, clear the Dimension
+radius and Dimension angular spacing check boxes.
+26. Select the Display instance count check box, if it is not selected by default. Accept
+the other default values and choose the OK button to create a pattern.
+The Display instance count check box is used to display the number of instances in the
+resulting sketch pattern.
+27. Trim the unwanted portion of the 80 mm diameter circle using the Trim Entities tool.
+You need to use the Trim to closest button for this trimming.
+28. Choose Close Dialog after trimming. The outer loop of the sketch is created, as shown
+in Figure 3-11.
+Drawing Inner Cavities of the Sketch
+As is evident from Figure 3-2, you need to create seven circles. Out of seven circles, six are
+to be of 10 mm diameter. Therefore, after drawing the first circle of 10 mm
+diameter, you need to create the other five circles of same diameter by creating a
+circular pattern of the parent circle.
+1. Invoke the Circle tool by using the Mouse Gesture. As soon as you invoke the Circle
+tool, the Circle PropertyManager is displayed.
+
+=== PDF PAGE 16 ===
+2. Select the center point of the 10 mm radius arc on the left quadrant of the larger circle
+as the center point of the new circle.
+3. Press and hold the CTRL key and draw a circle of radius close to 5. Make sure you
+press the CTRL key so that the cursor does not snap to the points or grid.
+4. Set 5 in the Radius spinner in the Circle PropertyManager. Next, choose the Close
+Dialog button to exit the Circle PropertyManager.
+Now, you need to create the other five instances of the circle by using the Circular Sketch
+Pattern.
+5. Choose the Circular Sketch Pattern tool from the Linear Sketch Pattern flyout in the
+Sketch CommandManager; the Circular Pattern PropertyManager is displayed and
+a preview of the circular pattern is displayed with an arrow at the center.
+6. Set 6 in the Number of Instances spinner.
+7. Make sure that the Equal spacing check box is selected. Next, clear the Dimension
+radius and Dimension angular spacing check boxes.
+8. Select the Display instance count check box. Accept the remaining default values and
+choose the OK button to create the pattern.
+9. Choose the Circle tool from the Sketch CommandManager; the Circle
+PropertyManager is invoked. Specify the center point of the circle at the origin. Next,
+press and hold the CTRL key and draw a circle of radius close to 25 mm.
+10. Enter 25 in the Radius spinner in the Circle PropertyManager. Next, choose the
+Close Dialog button to exit the Circle PropertyManager. The final sketch of the model
+is shown in Figure 3-12. In this figure, all relations are hidden for clarity.
+
+=== PDF PAGE 17 ===
+Figure 3-12 Final sketch
+Saving the Sketch
+1. Choose the Save button from the Menu Bar; the Save As dialog box is displayed.
+2. Browse to the SOLIDWORKS Tutorials folder, choose the New Folder button from the
+Save As dialog box, specify the name of the new folder as c03, and then press ENTER
+twice. Next, enter the name of the document as c03_tut01 in the File name edit box and
+choose the Save button; the document is saved at the location
+/Documents/SOLIDWORKS Tutorials/c03.
+3. Close the file by choosing File > Close from the SOLIDWORKS menus.
+Tutorial Exercise 2
+In this tutorial, you will create the base sketch of the model shown in Figure 3-13. The
+sketch of the model is shown in Figure 3-14. You will draw the sketch with a mirror line.
+The dimensions given in Figure 3-14 are for your reference only. (Expected time: 30
+min)
+
+=== PDF PAGE 18 ===
+Figure 3-13 Solid model for Tutorial 2
+Figure 3-14 Sketch for Tutorial 2
+The following steps are required to complete this tutorial:
+a. Start SOLIDWORKS and then a new part document.
+b. Invoke the sketching environment.
+c. Modify the snap, grid, and units settings.
+d. Create vertical centerline and convert it into a mirror line using the Dynamic Mirror
+tool.
+e. Create the left side sketch; the sketch will automatically be mirrored on the right side of
+the mirror line, refer to Figure 3-17.
+f. Apply fillets, refer to Figure 3-20.
+g. Apply chamfers, refer to Figure 3-23.
+h. Save the sketch.
+
+=== PDF PAGE 19 ===
+Starting SOLIDWORKS and a New SOLIDWORKS Document
+1. Start SOLIDWORKS and then invoke the New SOLIDWORKS Document dialog box
+by choosing the New tool from the Menu Bar. Next, invoke the Part environment.
+Invoking the Sketching Environment
+Now, you will invoke the sketching environment.
+1. Choose the Sketch tab from the CommandManager. Next, choose the Sketch tool
+from the Sketch CommandManager; the Edit Sketch PropertyManager is invoked and you are prompted
+to select the plane to create the sketch.
+2. Select the Front Plane; the sketching environment is invoked and the plane is oriented
+normal to the view.
+Modifying the Snap, Grid, and Unit Settings
+Before drawing the sketch, you need to modify the grid and snap settings to make the
+cursor jump through a distance of 5 mm.
+1. Choose the Options button from the Menu Bar; the System Option - General dialog
+box is displayed.
+2. Choose the Document Properties tab and select the Grid/Snap option from the area on
+the left of the dialog box. Set the values 50 and 10 in the Major grid spacing and the
+Minor-lines per major spinners, respectively.
+3. If on invoking the sketching environment, the grid is displayed, you can turn off its
+display by clearing the Display grid check box in the Grid area.
+4. Choose the Go To System Snaps button and select the Grid check box. Next, clear the
+Snap only when grid is displayed check box, if it is already selected.
+If you have selected a unit other than millimeter to measure the length while installing
+SOLIDWORKS, you need to select millimeter as the unit for the current drawing by
+
+=== PDF PAGE 20 ===
+following the next two steps.
+5. Choose the Document Properties tab and select the Units option from the area on the
+left of the Document Properties - Grid/Snap dialog box.
+6. Select the MMGS (millimeter, gram, second) radio button in the Unit system area.
+Next, select degrees from the drop-down list in the cell corresponding to the Angle row
+and the Unit column.
+7. After modifying the necessary settings, choose the OK button.
+The coordinates displayed close to the lower right corner of the SOLIDWORKS window
+show an increment of 5 mm when you move the cursor in the drawing area after exiting
+the dialog box.
+Drawing the Centerline and Converting it into a Mirror Line
+It is recommended that you draw symmetrical sketches about the centerline that is created
+by using the Centerline tool.
+1. Choose the Centerline tool from the Line flyout in the Sketch CommandManager;the
+Insert Line PropertyManager is displayed. Note that the For construction check box
+is selected in this PropertyManager.
+2. Move the line cursor toward the origin and specify the start point of the centerline when
+it snaps to the origin and the symbol of coincident relation is displayed above the cursor.
+3. Move the cursor vertically upward and specify the end point of the centerline when the
+length of the centerline is displayed above the cursor close to 110. You may have to zoom
+and pan the drawing to draw a line of this length.
+4. Press F to fit the drawing on the screen. Next, right-click and choose the Select option
+from the shortcut menu; the line cursor is replaced by the select cursor.
+5. Select the centerline and choose Tools > Sketch Tools > Dynamic Mirror from the
+SOLIDWORKS menus; the selected centerline is converted into mirror line and the
+
+=== PDF PAGE 21 ===
+dynamic mirror option is activated.
+You can confirm the creation of the mirror line and the activation of the dynamic mirror
+option by observing the symmetrical symbol displayed on both ends of the centerline.
+Drawing the Sketch
+Next, you need to draw the sketch of the model. You will draw the sketch on the left of the
+mirror line and the same sketch will be created automatically on the right side of the
+mirror line. The symmetrical relation is applied between the parent entity and the
+mirrored entity.
+1. Press the L key on the keyboard; the Line tool is invoked.
+2. Move the line cursor towards the origin and specify the start point of the line when it
+snaps to the origin and the symbol of coincident relation is displayed above the cursor.
+3. Move the cursor horizontally toward the left and specify the endpoint of the line when
+75 is displayed above the cursor.
+You will notice that as soon as you specify the endpoint of the line, a mirror image is
+automatically created on the right of the mirror line. The line drawn as the mirrored
+entity is merged with the line drawn on the left. Therefore, the entire line becomes a
+single entity. Remember that the lines will merge only if one of the endpoints of the line
+drawn is coincident with the mirror line.
+4. Move the cursor vertically upward and click to specify the endpoint of the line when the
+length of the line above the cursor shows the value 30.
+You will notice that as soon as you specify the endpoint of the line, a mirror image is
+created automatically on the other side of the mirror line.
+5. Move the cursor horizontally toward the right and click to specify the endpoint of the
+line when the length of the line above the cursor shows the value 50; a mirror image is
+created automatically on the other side of the mirror line.
+
+=== PDF PAGE 22 ===
+6. Move the cursor vertically upward and click to specify the endpoint of the line when the
+length of the line above the cursor shows the value 70; a mirror image is created
+automatically on the other side of the mirror line.
+7. Move the cursor horizontally toward the right and click to specify the endpoint of the
+line when the cursor snaps to the centerline; a mirror image is created automatically on
+the other side of the mirror line. The sketch after drawing the lines is shown in Figure 3-
+15.
+8. Right-click in the drawing area to display a shortcut menu. Next, choose the Select
+option from the shortcut menu to exit the Line tool.
+Note that the symmetrical symbol is still displayed on both ends of the centerline. It
+indicates that the dynamic mirror option is still activated. Since this tool is activated,
+you will create left side circle of the sketch and the right side circle will be created
+automatically.
+9. Choose the Circle tool from the Circle flyout in the Sketch CommandManager; the
+Circle PropertyManager is displayed, as shown in Figure 3-16.
+Figure 3-15 Sketch after drawing lines
+
+=== PDF PAGE 23 ===
+Figure 3-16 The Circle PropertyManager
+10. Move the cursor to the location whose coordinates are -55 mm, 15 mm, 0 mm and
+specify the center point of the circle at this location.
+11. Move the cursor horizontally toward right to draw a circle and click on the left mouse
+button when the radius of the circle above the cursor shows 10; a circle of 10 mm radius
+is drawn. Also, a mirror image is created automatically on the right side of the mirror
+line, refer to Figure 3-17.
+Figure 3-17 Sketch after drawing circles
+12. Exit the Circle tool by pressing the ESC key or choosing the Select option from the
+shortcut menu.
+Now, you need to disable the dynamic mirroring.
+13. Right-click in the drawing area and then choose Recent Commands > Dynamic
+Mirror Entities from the shortcut menu to disable dynamic mirroring.
+
+=== PDF PAGE 24 ===
+Filleting Sketched Entities
+Now, you need to fillet the sketched entities by using the Sketch Fillet tool.
+1. Choose the Sketch Fillet tool from the Sketch CommandManager; the Sketch
+FilletPropertyManager is displayed, as shown in Figure 3-18. Also, you are prompted to select the sketched
+entities or sketched vertex to be filleted.
+Figure 3-18 The Sketch Fillet PropertyManager
+The Sketch Fillet tool is used to create a fillet or a tangent arc at the intersection of two
+sketched entities. It trims or extends the entities to be filleted, depending on the geometry
+of the sketched entity. You can apply a fillet to two nonparallel lines, two arcs, two
+splines, an arc and a line, a spline and a line, or a spline and an arc. A fillet between two
+arcs and a line depends on the compatibility of the geometry to be extended or filleted
+along the given radius.
+2. Select the first set of entities to be filleted, refer to Figure 3-19; the preview of the fillet
+with the default radius is displayed. Next, select the second, third, and forth set of entities
+to be filleted one by one, refer to Figure 3-19.
+3. Set the value of the Fillet Radius spinner in the Fillet Parameters rollout of the
+PropertyManager to 10.
+4. Ensure that the Dimension each fillet check box in the Fillet Parameters rollout of the
+PropertyManager is cleared.
+
+=== PDF PAGE 25 ===
+If the Dimension each fillet check box is selected, it will apply dimensions individually to
+all set of entities to be filleted. Therefore, you can control the dimension of each entities of
+the selected set individually and create multiple fillets of different radii. However, if this
+check box is cleared, the dimensions will be applied to the last selected entity only and
+equal radii relation with the other entities of the selected set to be filleted. Therefore, while
+modifying the radii of the first set of entities, the radii of all the other set of entities will be
+modified automatically.
+Tip
+You can also select the vertex formed at the intersection of the two entities to be filleted.
+5. Choose the OK button twice from the Sketch Fillet PropertyManager to exit from it.
+The sketch after creating the fillets is shown in Figure 3-20.
+Figure 3-19 Sets of entities to be filleted
+Figure 3-20 Sketch after creating the fillets
+
+=== PDF PAGE 26 ===
+Chamfering Sketched Entities
+Now, you need to chamfer the sketched entities by using the Sketch Chamfer tool.
+1. Choose the Sketch Chamfer tool from the Sketch Fillet flyout in the Sketch
+CommandManager; the Sketch Chamfer PropertyManager is displayed, as shown
+in Figure 3-21.
+The Sketch Chamfer tool is used to apply a chamfer to the adjacent sketched entities at
+the point of intersection. A chamfer can be specified by two lengths or angle and length
+from the point of intersection. You can apply a chamfer between two nonparallel lines that
+may be intersecting or non-intersecting. The creation of a chamfer between two non-
+intersecting lines depends on the length of the lines and the chamfer distance.
+Figure 3-21 The Sketch Chamfer PropertyManager
+2. Make sure that the Distance-distance radio button and Equal distance check box are
+selected in the Chamfer Parameters rollout of the PropertyManager.
+The Distance-distance radio button allows you to create chamfer by specifying the
+distance value. If the Equal distance check box is selected, only the Distance 1 spinner is
+available in the PropertyManager to specify the distance value for creating chamfer. The
+distance entered in this spinner will also be applied as the distance of the second direction
+for creating chamfer. However, if you clear this check box, it allows you to specify two
+different distances for creating a chamfer. As soon as you clear the Equal distance check
+box, the Distance 2 spinner will also be displayed below the Distance 1 spinner of the
+Sketch Chamfer PropertyManager to set the value of the distance in the second
+direction.
+Tip
+
+=== PDF PAGE 27 ===
+You can also create a chamfer by specifying the angle and distance values. To do so, you
+need to select the Angle-distance radio button from the Sketch Chamfer
+PropertyManager. When you select this radio button, the Distance 1 and Distance 1
+Angle spinners will be activated in the PropertyManager where you can specify the
+distance and angle value for creating chamfer.
+3. Set the value of the Distance 1 spinner to 10. Next, select the first set of entities to be
+chamfered, refer to Figure 3-22; the SOLIDWORKS message window is displayed with
+the message that At least one sketch constraint is about to be lost. Chamfer anyway?.
+4. Choose the Yes button in the message window; the chamfer between the selected set of
+entities is created.
+5. Select the second set of entities to be chamfered and then exit the PropertyManager by
+choosing the OK button. Figure 3-23 shows the final sketch after creating the chamfers.
+Figure 3-22 Entities to be selected for chamfering
+
+=== PDF PAGE 28 ===
+Figure 3-23 Final sketch after creating chamfers
+Saving the Sketch
+1. Choose the Save button from the Menu Bar to invoke the Save As dialog box.
+2. Browse to the c03 folder and enter the name of the document as c03_tut02 in the File
+name edit box and choose the Save button.
+3. Press CTRL+W to close the file.
+Tutorial Exercise 3
+In this tutorial, you will create the base sketch of the model shown in Figure 3-24. The
+sketch of the model is shown in Figure 3-25. The dimensions in Figure 3-25 are given for
+your reference only. (Expected time: 30 min)
+
+=== PDF PAGE 29 ===
+Figure 3-24 Solid model for Tutorial 3
+Figure 3-25 Sketch for Tutorial 3
+The following steps are required to complete this tutorial:
+a. Start SOLIDWORKS and then a new part document.
+b. Invoke the sketching environment.
+c. Modify the snap, grid, and units settings.
+d. Draw the sketch, refer to Figure 3-26.
+e. Offset the entire sketch bidirectionally, refer to Figure 3-28.
+f. Save the sketch.
+Starting SOLIDWORKS and then a New SOLIDWORKS Document
+1. Start SOLIDWORKS and then invoke the Part environment by choosing the Part
+
+=== PDF PAGE 30 ===
+button from the New SOLIDWORKS Document dialog box.
+Invoking the Sketching Environment
+Next, you need to invoke the sketching environment by selecting the Front Plane as the
+sketching plane.
+1. Choose the Sketch tab from the CommandManager. Next, choose the Sketch tool
+from the Sketch CommandManager; the Edit Sketch PropertyManager is invoked
+and you are prompted to select the plane to create the sketch.
+2. Select the Front Plane; the sketching environment is invoked and the plane is oriented
+normal to the view.
+Modifying the Snap, Grid, and Unit Settings
+Before drawing the sketch, you need to modify the grid and snap settings to make the
+cursor jump through a distance of 5 mm.
+1. Invoke the Document Properties - Grid/Snap dialog box and then set the value as 50
+and 10 in the Major grid spacing and Minor-lines per major spinners, respectively.
+2. Make sure that the Grid check box is selected in the System Option - Relations/Snaps
+dialog box. Also, make sure that the unit system is set to MMGS (millimeter, gram,
+second) in the Document Properties - Units dialog box.
+3. After making the necessary settings, choose the OK button from the dialog box.
+The coordinates displayed close to the lower right corner of the SOLIDWORKS window
+show an increment of 5 mm when you move the cursor in the drawing area after exiting
+the dialog box.
+Drawing the Sketch
+Next, you need to draw the sketch using the sketch tools. In this tutorial, you will create
+the sketch by using the Line and Offset Entities tools. First, you will create a
+symmetric line for the sketch and then offset it bidirectionally. After offsetting the
+symmetric line, you need to convert it into a construction line.
+
+=== PDF PAGE 31 ===
+1. Invoke the Line tool and specify the start point of the line at the origin. Next, move the
+cursor horizontally toward right and specify the end point of the line when the length of
+the line displayed above the cursor is 15.
+2. Move the cursor vertically upward and specify the end point of the line when the length
+of the line displayed above the cursor is 20.
+3. Move the cursor horizontally toward the right and specify the end point of the line when
+the length of the line displayed above the cursor is 20.
+4. Move the cursor vertically downward and specify the end point of the line when the
+length of the line displayed above the cursor is 20.
+5. Move the cursor horizontally toward the right and specify the end point of the line when
+the length of the line displayed above the cursor is 70.
+6. Move the cursor vertically upward and specify the end point of the line when the length
+of the line displayed above the cursor is 20.
+7. Move the cursor horizontally toward the right and specify the end point of the line when
+the length of the line displayed above the cursor is 20.
+8. Move the cursor vertically downward and specify the end point of the line when the
+length of the line displayed above the cursor is 20.
+9. Move the cursor horizontally toward the right and specify the end point of the line when
+the length of the line displayed above the cursor is 15. Next, exit the Line tool. Figure
+3-26 shows the sketch after creating its symmetric line.
+
+=== PDF PAGE 32 ===
+Figure 3-26 The sketch after creating its symmetric line
+Offsetting the Entities
+Next, you need to offset the sketch in both directions of the sketched entities using the
+Offset Entities tool.
+1. Choose Offset Entities tool from the Sketch CommandManager; the Offset Entities
+PropertyManager is displayed, as shown in Figure 3-27. Also, you are prompted to
+select faces, edges, or curves to offset.
+Figure 3-27 The Offset Entities PropertyManager
+The Offset Entities tool is used to offset selected entities such as sketches, edges, or faces
+by a specified distance. This tool cannot be used on fit splines, already offset splines, or if
+the resultant is an intersecting geometry.
+
+=== PDF PAGE 33 ===
+2. Set the value of the Offset Distance spinner to 2.5 and then press ENTER.
+3. Make sure that the Select chain check box is selected in the Parameters rollout of the
+PropertyManager.
+The Select chain tool is used to select the entire chain of continuous sketched entities that
+are in contact with the selected entity. When you invoke the Offset Entities
+PropertyManager, the Select chain check box is selected by default. If you clear this
+check box, only the selected sketched entity will be offset.
+4. Select any one entity of the sketch from the drawing area; the entire sketch gets selected
+and the preview of the offset sketch is displayed in the drawing area. Note that, by default,
+the offset is in one direction.
+Now, you need to change the direction of the offset to both sides of the sketched entities.
+5. Select the Bi-directional check box from the Parameters rollout of the Offset Entities
+PropertyManager; the Cap ends check box is enabled in the PropertyManager. Also,
+the preview of the offset sketch is modified accordingly.
+The Bi-directional check box is used to create the offset of a selected entity in both
+directions of the sketched entity. If you select this check box, the Reverse check box that
+is used to flip the direction of the offset entity will not be displayed in the Parameters
+rollout of the PropertyManager.
+As is evident from Figure 3-25 that the ends of the sketch are closed with lines. Therefore,
+you need to close the ends of the sketch.
+6. Select the Cap ends check box from the Parameters rollout of the PropertyManager;
+the Arcs and Lines radio buttons are enabled below the check box.
+The Cap ends check box is available only if the Bi-directional check box is selected. This
+check box is used to close the ends of the bidirectionally offset entities. The Arcs and
+Lines radio buttons are used to specify the type of cap required to close the ends.
+7. Select the Lines radio button from the Parameters rollout of the PropertyManager; the
+
+=== PDF PAGE 34 ===
+preview of the offset sketch is modified accordingly.
+As discussed earlier, you need to convert the parent sketch into a construction sketch.
+8. Select the Base geometry check box under Construction geometry in the Parameters
+rollout of the PropertyManager.
+The Base geometry check box is used to convert the parent entity into a construction
+entity.
+9. Choose the OK button from the PropertyManager. The final sketch is shown in Figure
+3-28.
+Figure 3-28 The final sketch
+Saving the Sketch
+1. Choose the Save button from the Menu Bar to invoke the Save As dialog box.
+2. Browse to the c03 folder and enter the name of the document as c03_tut03 in the File
+name edit box and choose the Save button.
+The document is saved at the location /Documents/SOLIDWORKS Tutorials/c03.
+3. Close the file by choosing File > Close from the SOLIDWORKS menus.
+Answer the following questions and then compare them to those given at the end of
+this tutorial:
+
+=== PDF PAGE 35 ===
+1. The SOLIDWORKS.
+tool is used to create a circular pattern in the sketching environment of
+2. To modify a sketched circle, select it using the tool.
+3. The tool is used to invoke dynamic mirroring.
+4. The Trim Entities tool is also used to trim the sketched entities. (T/F)
+5. In the sketching environment, you can apply fillets to two parallel lines. (T/F)
+6. You can apply a fillet to two nonparallel and non-intersecting entities. (T/F)
+7. You cannot offset a single entity using the Offset Entities tool. (T/F)
+8. You can choose Insert > Customize Menu from the SOLIDWORKS menus to display
+the Customize dialog box. (T/F)
+9. You can select the vertex formed at the intersection of two entities to be filleted. (T/F)
+Answer the following questions:
+1. Which PropertyManager is displayed when you choose the Sketch Fillet tool from the
+Sketch CommandManager?
+(a) Sketch Fillet (b) Fillet
+(c) Surface Fillet (d) Sketching Fillet
+2. Which PropertyManager is displayed on the left of the drawing area when you choose
+the Sketch Chamfer tool from the Sketch Fillet flyout in the Sketch
+
+=== PDF PAGE 36 ===
+CommandManager?
+(a) Sketch Chamfer (b) Sketcher Chamfer
+(c) Sketching Chamfer (d) Chamfer
+3. Which of the following tools is used to create an automatic mirror line?
+(a) Dynamic Mirror Entities (b) Mirror
+(c) Automatic Mirror (d) None
+4. Which of the following tools is used to extend the sketch entities?
+(a) Split Entities (c) Break Curve (b) Extend Entities
+(d) Trim Curve
+5. Which of the following tools is used to create a circular pattern in SOLIDWORKS?
+(a) Pattern (c) Array (d) None
+(b) Circular Sketch Pattern
+6. You cannot extend the sketched entity using the Trim tool. (T/F)
+7. There are four type of slot tools available in SOLIDWORKS. (T/F)
+8. The sketched entities can be mirrored without using a centerline. (T/F)
+9. The Display instance count check box in the Circular Pattern PropertyManager is
+used to display the number of instances in the resulting sketch pattern. (T/F)
+
+=== PDF PAGE 37 ===
+Exercise 1
+Create the sketch of the model shown in figure 3-29. The sketch of the model is shown in
+figure 3-30.The solid model and dimensions are given for your reference only.
+(Expected time: 30 min)
+Figure 3-29 Solid model for Exercise 1
+Figure 3-30 Sketch for Exercise 1
+Exercise 2
+Create the sketch of the model shown in Figure 3-31. The sketch of the model is shown in
+Figure 3-32. Do not dimension the sketch. The solid model and dimensions are given for
+reference only. (Expected time: 30 min)
+
+=== PDF PAGE 38 ===
+Figure 3-31 Solid model for Exercise 2
+Figure 3-32 Sketch for Exercise 2
+Exercise 3
+Create the sketch of the model shown in Figure 3-33. The sketch of the model is shown in
+Figure 3-34. The solid model and dimensions are given only for your reference. Create the
+sketch on one side and then mirror it on the other side. Make sure you do not use the
+Dynamic Mirror tool to draw this sketch. This is because if you draw the sketch using this
+tool, some relations are applied to the sketch. These relations interfere while creating fillets.
+(Expected time: 30 min)
+
+=== PDF PAGE 39 ===
+Figure 3-33 Solid model for Exercise 3
+Figure 3-34 Sketch for Exercise 3
+Exercise 4
+Create the sketch of the model shown in Figure 3-35. The sketch of the model is shown in
+Figure 3-36. The solid model and dimensions are given for your reference only.(Expected
+time: 30 min)
+
+=== PDF PAGE 40 ===
+Figure 3-35 Solid model for Exercise 4
+Figure 3-36 Sketch for Exercise 4
+Answers to Self-Evaluation Test
+1. CIRCULAR SKETCH PATTERN, 2. SELECT, 3. DYNAMIC MIRROR ENTITIES, 4.
+T, 5. F, 6. T, 7. F, 8. F, 9. T

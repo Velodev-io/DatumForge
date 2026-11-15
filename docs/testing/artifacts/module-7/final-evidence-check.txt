@@ -1,0 +1,30 @@
+Pass: requested available-Mac checks; broader acceptance Blocked
+{
+  "scope": "Documentation structure only; no product acceptance tests executed",
+  "checked_at_utc": "2026-10-21T18:45:35.102467+00:00",
+  "status": "pass",
+  "product_implementation": "Modules 1-7 scoped implementation on the available Mac; see task and module evidence",
+  "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
+  "requirements": 56,
+  "traceability_rows": 56,
+  "modules": 13,
+  "unchecked_engineering_tasks": 63,
+  "completed_engineering_tasks": 96,
+  "errors": []
+}
+
+{
+  "status": "Pass",
+  "tested_source_sha256": "bdcb3bafcf4425e7e92242b2ac85117d52d63b88bf71ce5f7572c524de7fdf3a",
+  "all_recorded_source_inputs_unchanged": true,
+  "dependency_manifest_sha256": "f8bef677dd2d82978d1be6666ff9ae5535b151b1f9fce9ccdd2325134ef2c336",
+  "tool_manifest_sha256": "dfd04751f6b7d7991125c8cb66135150b863d67ef4dee266384403bc2b6cc612",
+  "qt_patch_sha256": "b47fd041cbcaf1c74491f17d53a54b0ebb2bb45466c3239afa72713ee7a9bf10",
+  "B3_recipe_sha256": "a34fcd90dc0994a6d6bf95414969a70630506cceab9a7acfdf7405cb6d8d3ecb",
+  "full_enabled_tests": 44,
+  "native_failed_or_skipped": 0,
+  "clean_enabled_tests": 44,
+  "release_acceptance": "Blocked; see module evidence",
+  "documentation_validation": "Pass: 56 requirements, 13 modules, 96 evidence-backed checked tasks",
+  "local_markdown_links": "Pass"
+}

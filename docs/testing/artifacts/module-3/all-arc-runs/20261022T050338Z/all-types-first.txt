@@ -1,0 +1,26 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 22: module3.input
+1/3 Test #22: module3.input ....................   Passed    0.85 sec
+    Start 26: module3.all_arcs
+2/3 Test #26: module3.all_arcs .................***Failed    0.05 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+Unknown test function: 'allArcTypes'.
+FAIL!  : Contracts::allArcTypes() Function not found: allArcTypes
+
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts -functions
+lists all available test functions.
+
+Totals: 0 passed, 1 failed, 0 skipped, 0 blacklisted, 1ms
+********* Finished testing of Contracts *********
+
+    Start 28: module3.solver
+3/3 Test #28: module3.solver ...................   Passed    0.08 sec
+
+67% tests passed, 1 tests failed out of 3
+
+Total Test time (real) =   0.99 sec
+
+The following tests FAILED:
+	 26 - module3.all_arcs (Failed)
+Errors while running CTest

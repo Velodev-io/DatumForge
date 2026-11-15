@@ -1,0 +1,26 @@
+Command: ['cmake', '--build', '--preset', 'macos-debug', '--target', 'cm4_support_model']
+[1/2] Building CXX object CMakeFiles/cm4_support_model.dir/tests/core_modeling/support_model.cpp.o
+[2/2] Linking CXX executable cm4_support_model
+FAILED: [code=1] cm4_support_model 
+: && /usr/bin/c++ -g -mmacosx-version-min=13.0 -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cm4_support_model.dir/tests/core_modeling/support_model.cpp.o -o cm4_support_model  -Wl,-rpath,"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib"  libcad_support_model.a  libcad_evaluation_plan.a  libcad_feature_model.a  libcad_sketch_model.a  libcad_model_graph.a  libcad_expressions.a  "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/lib/libQt6Core.6.10.0.dylib"  -framework IOKit  -framework DiskArbitration  -framework UniformTypeIdentifiers && :
+Undefined symbols for architecture arm64:
+  "cad::model::Conversion::parse(QCborMap const&)", referenced from:
+      main::$_0::operator()() const in support_model.cpp.o
+  "cad::model::SupportDefinition::parse(QCborMap const&)", referenced from:
+      main::$_0::operator()() const in support_model.cpp.o
+  "cad::model::Conversion::map() const", referenced from:
+      main::$_0::operator()() const in support_model.cpp.o
+      main::$_0::operator()() const::'lambda8'()::operator()() const in support_model.cpp.o
+  "cad::model::SupportDefinition::map() const", referenced from:
+      main::$_0::operator()() const in support_model.cpp.o
+  "cad::model::SupportDefinition::graph() const", referenced from:
+      main::$_0::operator()() const in support_model.cpp.o
+      main::$_0::operator()() const in support_model.cpp.o
+      main::$_0::operator()() const::'lambda5'()::operator()() const in support_model.cpp.o
+      main::$_0::operator()() const::'lambda6'()::operator()() const in support_model.cpp.o
+      main::$_0::operator()() const::'lambda7'()::operator()() const in support_model.cpp.o
+ld: symbol(s) not found for architecture arm64
+clang++: error: linker command failed with exit code 1 (use -v to see invocation)
+ninja: build stopped: subcommand failed.
+
+Exit: 1

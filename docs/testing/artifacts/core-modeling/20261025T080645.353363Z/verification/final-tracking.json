@@ -1,0 +1,10 @@
+{
+  "status": "Pass",
+  "scope": "Final documentation/coverage tracking, exact deferred records and frozen source recheck; no new product acceptance inferred",
+  "source_inputs_rechecked": 205,
+  "whole_cm2_status": "In progress",
+  "full_acceptance": "Blocked",
+  "commit_or_push_performed": false,
+  "module_11_started": false,
+  "module_12_started": false
+}

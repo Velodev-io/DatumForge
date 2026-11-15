@@ -1,0 +1,13 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 67: cm3.dimension_contracts
+1/4 Test #67: cm3.dimension_contracts ..........   Passed   12.03 sec
+    Start 68: cm3.dimension_identity
+2/4 Test #68: cm3.dimension_identity ...........   Passed    0.53 sec
+    Start 69: cm3.completion
+3/4 Test #69: cm3.completion ...................   Passed    0.88 sec
+    Start 70: cm3.completion_contracts
+4/4 Test #70: cm3.completion_contracts .........   Passed    3.28 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =  16.73 sec

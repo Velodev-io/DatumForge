@@ -1,0 +1,2 @@
+Analyzed src/features/ModelingIntent.cpp
+Analyzed tests/core_modeling/feature_intent.cpp

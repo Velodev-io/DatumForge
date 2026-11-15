@@ -1,0 +1,15 @@
+{
+  "status": "Resolved for current native retry; original failures retained",
+  "scope": "Native focus availability; no product correctness inference",
+  "observations": [
+    "Fresh 57-test CTest baseline and static/ownership checks passed",
+    "Existing nativeRelations failed qWaitForWindowActive with the directly launched executable",
+    "Temporary macOS app bundle via LaunchServices failed the same assertion",
+    "Session query showed a logged-in session and foreground Chrome; lock/console flags unavailable",
+    "Actual copied Mach-O app bundle also failed the unchanged activation assertion; launcher exit 0 was not a passing Qt result",
+    "User subsequently confirmed an unlocked normal desktop session",
+    "Current directly launched nativeRectangles passed at DPR 1; see ../native-unlocked-retry/result.json"
+  ],
+  "cause": "Original activation condition remains unexplained; no lock-state claim and no activation/DPR assertion weakened",
+  "next": "Fresh complete verification includes native relation, rectangle and arc regression at declared scales"
+}

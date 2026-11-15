@@ -1,0 +1,145 @@
+{
+  "status": "Pass: scoped CM5 review fixes and final follow-up; full acceptance remains Blocked",
+  "scope": "CM5 review repairs: final ownership/verification-harness follow-up",
+  "full_ctest_baseline": "docs/testing/artifacts/core-modeling/cm5-review-20261115/verification/20261115T045527.463720Z/ctest.txt",
+  "full_ctest_enabled_passed": 98,
+  "full_ctest_disabled": 1,
+  "changed_since_full_suite": [
+    "apps/desktop/FeaturePanel.cpp",
+    "tests/core_modeling/workflow_contracts_cm5.cpp",
+    "tools/verify_cm5_review.py"
+  ],
+  "change_reason": "Explicit Qt tree-item ownership transfer instead of constructor-only ownership; verifier lexical dependency path filtering. Test startup now explicitly refuses null sessions; an unused test variable was removed. No model, parser, protocol or storage semantics changed after the passing full run.",
+  "steps": [
+    {
+      "name": "affected-tests",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "-R",
+        "^(cm5\\.|module4\\.(lifecycle|workspace)|cm4\\.workflow_contracts)",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 43.26665725000021
+    },
+    {
+      "name": "changed-source-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "/private/tmp/datumforge-cm5-review-20261115/docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/analysis-commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 75.20102191699971
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.3215489579997666
+    },
+    {
+      "name": "architecture",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/private/tmp/datumforge-cm5-review-20261115/docs/testing/artifacts/core-modeling/cm5-review-20261115/final-followup/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.15012754100007442
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.26042254099957063
+    },
+    {
+      "name": "coverage",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_core_modeling.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.08131345799938572
+    },
+    {
+      "name": "specifications",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "docs/scripts/check_specs.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.08674537499973667
+    },
+    {
+      "name": "whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.04820937500062428
+    },
+    {
+      "name": "workflows-native-100",
+      "command": [
+        "/private/tmp/datumforge-cm5-review-20261115/build/macos-debug/cm5_workflow_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 19.047768082999937
+    },
+    {
+      "name": "workflows-native-125",
+      "command": [
+        "/private/tmp/datumforge-cm5-review-20261115/build/macos-debug/cm5_workflow_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 19.66164362500058
+    },
+    {
+      "name": "workflows-native-150",
+      "command": [
+        "/private/tmp/datumforge-cm5-review-20261115/build/macos-debug/cm5_workflow_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 20.784267375000127
+    },
+    {
+      "name": "workflows-native-175",
+      "command": [
+        "/private/tmp/datumforge-cm5-review-20261115/build/macos-debug/cm5_workflow_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 22.260710916999415
+    },
+    {
+      "name": "workflows-native-200",
+      "command": [
+        "/private/tmp/datumforge-cm5-review-20261115/build/macos-debug/cm5_workflow_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 20.919500457999675
+    }
+  ],
+  "module_11_started": false,
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "full_acceptance": "Blocked: full source-course/platform/device/installed/resource acceptance",
+  "source_unchanged": true
+}

@@ -1,0 +1,101 @@
+[1/78] Automatic MOC for target cad_client
+[2/78] Building CXX object CMakeFiles/cad_diagnostics.dir/src/diagnostics/Journal.cpp.o
+[3/78] Building CXX object CMakeFiles/cad_client.dir/cad_client_autogen/mocs_compilation.cpp.o
+[4/78] Linking CXX static library libcad_diagnostics.a
+[5/78] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[6/78] Linking CXX static library libcad_client.a
+[7/78] Automatic MOC for target cad_desktop_ui
+[8/78] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[9/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[10/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[11/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[12/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+[13/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[14/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[15/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[16/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+[17/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o
+[18/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ExchangeUI.cpp.o
+[19/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyUI.cpp.o
+[20/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyPanel.cpp.o
+[21/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DrawingUI.cpp.o
+[22/78] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DrawingPanel.cpp.o
+[23/78] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[24/78] Automatic MOC for target module10_contracts
+[25/77] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/InteractionUI.cpp.o
+[26/77] Linking CXX static library libcad_desktop_ui.a
+[27/77] Automatic MOC for target module1_contracts
+[28/76] Automatic MOC for target module2_contracts
+[29/75] Building CXX object CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o
+[30/75] Automatic MOC for target module3_contracts
+[31/74] Automatic MOC for target module4_workspace
+[32/73] Automatic MOC for target module5_contracts
+[33/72] Automatic MOC for target module4_contracts
+[34/71] Automatic MOC for target module6_contracts
+[35/70] Automatic MOC for target module7_contracts
+[36/69] Automatic MOC for target module9_interaction
+[37/68] Automatic MOC for target module8_contracts
+[38/67] Building CXX object CMakeFiles/module4_variants.dir/tests/module4/variants.cpp.o
+[39/67] Building CXX object CMakeFiles/module5_persistence.dir/tests/module5/persistence.cpp.o
+[40/67] Building CXX object CMakeFiles/module2_contracts.dir/tests/module2/contracts.cpp.o
+[41/67] Building CXX object CMakeFiles/module1_contracts.dir/tests/module1/contracts.cpp.o
+[42/67] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[43/67] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[44/67] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[45/67] Building CXX object CMakeFiles/module5_contracts.dir/tests/module5/contracts.cpp.o
+[46/67] Building CXX object CMakeFiles/module6_contracts.dir/tests/module6/contracts.cpp.o
+[47/67] Building CXX object CMakeFiles/module7_contracts.dir/tests/module7/contracts.cpp.o
+[48/67] Building CXX object CMakeFiles/module9_interaction.dir/tests/module9/interaction.cpp.o
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module9/interaction.cpp:34:111: warning: 'setActiveWindow' is deprecated: Use QWidget::activateWindow() instead. [-Wdeprecated-declarations]
+   34 |         w.activateWindow();w.setFocus();if(native)QVERIFY(QTest::qWaitForWindowActive(&w));else QApplication::setActiveWindow(&w);QTest::qWait(30);QTest::keySequence(&w,QKeySequence::Find);QVERIFY(wait([&]{return w.findChild<QDialog *>("commandPalette");}));auto *palette=w.findChild<QDialog *>("commandPalette");auto *query=palette->findChild<QLineEdit *>("paletteQuery");QTest::keyClicks(query,"drawing.edit");QTest::keyClick(query,Qt::Key_Return);QVERIFY(wait([&]{return w.findChild<DrawingPanel *>()->active();}));w.activateWindow();if(native)QVERIFY(QTest::qWaitForWindowActive(&w));else QApplication::setActiveWindow(&w);QTest::qWait(30);
+      |                                                                                                               ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qapplication.h:83:5: note: 'setActiveWindow' has been explicitly marked deprecated here
+   83 |     QT_DEPRECATED_VERSION_X_6_5("Use QWidget::activateWindow() instead.")
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:181:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_5'
+  181 | # define QT_DEPRECATED_VERSION_X_6_5(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module9/interaction.cpp:34:608: warning: 'setActiveWindow' is deprecated: Use QWidget::activateWindow() instead. [-Wdeprecated-declarations]
+   34 |         w.activateWindow();w.setFocus();if(native)QVERIFY(QTest::qWaitForWindowActive(&w));else QApplication::setActiveWindow(&w);QTest::qWait(30);QTest::keySequence(&w,QKeySequence::Find);QVERIFY(wait([&]{return w.findChild<QDialog *>("commandPalette");}));auto *palette=w.findChild<QDialog *>("commandPalette");auto *query=palette->findChild<QLineEdit *>("paletteQuery");QTest::keyClicks(query,"drawing.edit");QTest::keyClick(query,Qt::Key_Return);QVERIFY(wait([&]{return w.findChild<DrawingPanel *>()->active();}));w.activateWindow();if(native)QVERIFY(QTest::qWaitForWindowActive(&w));else QApplication::setActiveWindow(&w);QTest::qWait(30);
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qapplication.h:83:5: note: 'setActiveWindow' has been explicitly marked deprecated here
+   83 |     QT_DEPRECATED_VERSION_X_6_5("Use QWidget::activateWindow() instead.")
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:181:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_5'
+  181 | # define QT_DEPRECATED_VERSION_X_6_5(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+2 warnings generated.
+[49/67] Building CXX object CMakeFiles/module8_contracts.dir/tests/module8/contracts.cpp.o
+[50/67] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[51/67] Linking CXX executable module1_contracts
+[52/67] Linking CXX executable module2_contracts
+[53/67] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[54/67] Linking CXX executable module3_input
+[55/67] Linking CXX executable module3_contracts
+[56/67] Linking CXX executable module4_workspace
+[57/67] Linking CXX executable module4_contracts
+[58/67] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[59/67] Linking CXX executable module5_persistence
+[60/67] Linking CXX executable module5_contracts
+[61/67] Linking CXX executable module6_contracts
+[62/67] Linking CXX executable module7_contracts
+[63/67] Linking CXX executable module8_contracts
+[64/67] Building CXX object CMakeFiles/module10_contracts.dir/tests/module10/contracts.cpp.o
+[65/67] Linking CXX executable module9_privacy
+[66/67] Linking CXX executable module9_interaction
+[67/67] Linking CXX executable module10_contracts

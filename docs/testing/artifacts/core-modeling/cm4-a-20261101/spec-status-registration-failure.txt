@@ -1,0 +1,9 @@
+Command: python3 docs/scripts/check_specs.py --write-report
+First final status: fail
+Error: Checked core-modeling task lacks Pass evidence: CM4.a
+
+The CORE_MODELING.md checkbox had been updated before its task-status.json
+record. The validator correctly refused that mismatch. The CM4.a registry record
+was then updated with the scoped Pass status and actual verification artifacts.
+The final specifications.txt records the subsequent passing run. No production
+source changed during this documentation correction.

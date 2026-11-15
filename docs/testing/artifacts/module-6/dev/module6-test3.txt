@@ -1,0 +1,53 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 38: module6.exchange
+1/2 Test #38: module6.exchange .................   Passed    0.87 sec
+    Start 39: module6.persistence
+2/2 Test #39: module6.persistence ..............***Failed    0.89 sec
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-ufzHjH/original.step(350 ents)  Write  Done[0m
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-ufzHjH/.cad-export-OqAgic(350 ents)  Write  Done[0m
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-ufzHjH/.cad-export-jexqKU(350 ents)  Write  Done[0m
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 0                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-ufzHjH/.cad-export-yUVOGJ(353 ents)  Write  Done[0m
+[32;1mTotal number of loaded entities 53.
+[0m
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module6/persistence.cpp:77: store.project()==project && store.savedPath()==saved
+
+
+50% tests passed, 1 tests failed out of 2
+
+Total Test time (real) =   1.76 sec
+
+The following tests FAILED:
+	 39 - module6.persistence (Failed)
+Errors while running CTest

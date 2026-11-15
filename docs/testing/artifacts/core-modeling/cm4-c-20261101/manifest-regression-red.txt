@@ -1,0 +1,158 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 72: cm1.slots
+1/1 Test #72: cm1.slots ........................***Failed    0.72 sec
+Straight scale 0.001 dimensions 0
+Straight scale 0.001 dimensions 1
+Centerpoint Straight scale 0.001 dimensions 0
+Centerpoint Straight scale 0.001 dimensions 1
+3 Point Arc scale 0.001 dimensions 0
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+3 Point Arc scale 0.001 dimensions 1
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Centerpoint Arc scale 0.001 dimensions 0
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Centerpoint Arc scale 0.001 dimensions 1
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Straight scale 1 dimensions 0
+Straight scale 1 dimensions 1
+Centerpoint Straight scale 1 dimensions 0
+Centerpoint Straight scale 1 dimensions 1
+3 Point Arc scale 1 dimensions 0
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+3 Point Arc scale 1 dimensions 1
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Centerpoint Arc scale 1 dimensions 0
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Centerpoint Arc scale 1 dimensions 1
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Straight scale 1000 dimensions 0
+Straight scale 1000 dimensions 1
+Centerpoint Straight scale 1000 dimensions 0
+Centerpoint Straight scale 1000 dimensions 1
+3 Point Arc scale 1000 dimensions 0
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+3 Point Arc scale 1000 dimensions 1
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Centerpoint Arc scale 1000 dimensions 0
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Centerpoint Arc scale 1000 dimensions 1
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Persistence Straight Center to Center
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/slots.cpp:163: m.endsWith(";sketch-primitives=1")
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.73 sec
+
+The following tests FAILED:
+	 72 - cm1.slots (Failed)
+Errors while running CTest

@@ -1,0 +1,8 @@
+{
+    "list_rebuilds_during_drag": 0,
+    "max_ms": 16.203333,
+    "p95_event_to_paint_ms": 12.78025,
+    "samples": 60,
+    "source": "Application-dispatched mouse events plus event processing; not physical trackpad latency or SRS acceptance",
+    "worker_commands_during_drag": 0
+}

@@ -1,0 +1,18 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.7s)
+-- Generating done (0.3s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/19] Automatic MOC for target cad_client
+[2/17] Automatic MOC for target cad_desktop_ui
+[3/15] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/15] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[5/15] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[6/15] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[7/15] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[8/15] Linking CXX static library libcad_planegcs.a
+[9/15] Linking CXX static library libcad_sketch_solver.a
+[10/15] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[11/15] Automatic MOC for target module4_workspace
+[12/14] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[13/14] Linking CXX executable module4_workspace

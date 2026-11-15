@@ -1,0 +1,93 @@
+[1/106] Automatic MOC for target module1_contracts
+[2/105] Automatic MOC for target module2_contracts
+[3/104] Automatic MOC for target module3_input
+[4/103] Automatic MOC for target module4_workspace
+[5/102] Automatic MOC for target module3_contracts
+[6/101] Automatic MOC for target module5_contracts
+[7/100] Automatic MOC for target module6_contracts
+[8/99] Automatic MOC for target module7_contracts
+[9/98] Automatic MOC for target module8_contracts
+[10/97] Automatic MOC for target module9_interaction
+[11/96] Automatic MOC for target module10_contracts
+[12/95] Automatic MOC for target cm1_contracts
+[13/94] Automatic MOC for target module4_contracts
+[14/93] Automatic MOC for target cm3_dimension_contracts
+[15/92] Automatic MOC for target cm4_datum_contracts
+[16/91] Automatic MOC for target cm3_completion
+[17/90] Automatic MOC for target cm3_completion_contracts
+[18/89] Automatic MOC for target cm2_contracts
+[19/88] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[20/88] Building CXX object CMakeFiles/cm0_feasibility.dir/tests/core_modeling/feasibility.cpp.o
+[21/88] Building CXX object CMakeFiles/cm4_support_model.dir/tests/core_modeling/support_model.cpp.o
+[22/88] Building CXX object CMakeFiles/cm4_support_geometry.dir/tests/core_modeling/support_geometry.cpp.o
+[23/88] Building CXX object CMakeFiles/cm4_support_convert.dir/tests/core_modeling/support_convert.cpp.o
+[24/88] Building CXX object CMakeFiles/cm4_support_engine.dir/tests/core_modeling/support_engine.cpp.o
+[25/88] Building CXX object CMakeFiles/cm4_support_store.dir/tests/core_modeling/support_store.cpp.o
+[26/88] Building CXX object CMakeFiles/cm4_support_evolution.dir/tests/core_modeling/support_evolution.cpp.o
+[27/88] Building CXX object CMakeFiles/cm4_support_contracts.dir/tests/core_modeling/support_contracts.cpp.o
+[28/88] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[29/88] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[30/88] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[31/88] Building CXX object CMakeFiles/cm1_contracts.dir/tests/core_modeling/contracts.cpp.o
+[32/88] Building CXX object CMakeFiles/cm4_datum_contracts.dir/tests/core_modeling/datum_contracts.cpp.o
+[33/88] Building CXX object CMakeFiles/cm3_dimension_contracts.dir/tests/core_modeling/dimension_contracts.cpp.o
+[34/88] Building CXX object CMakeFiles/cm3_completion_contracts.dir/tests/core_modeling/completion_contracts.cpp.o
+[35/88] Linking CXX executable solver_spike
+[36/88] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[37/88] Linking CXX executable module1_contracts
+[38/88] Linking CXX executable module2_storage
+[39/88] Linking CXX executable module2_contracts
+[40/88] Linking CXX executable module2_fault_worker
+[41/88] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[42/88] Building CXX object CMakeFiles/cm2_contracts.dir/tests/core_modeling/editing_contracts.cpp.o
+[43/88] Linking CXX executable module3_persistence
+[44/88] Linking CXX executable module3_input
+[45/88] Linking CXX executable module3_contracts
+[46/88] Linking CXX executable module3_solver
+[47/88] Linking CXX executable module4_workspace
+[48/88] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[49/88] Linking CXX executable module4_contracts
+[50/88] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[51/88] Linking CXX executable module5_persistence
+[52/88] Linking CXX executable module5_b2
+[53/88] Linking CXX executable module5_contracts
+[54/88] Linking CXX executable module6_contracts
+[55/88] Linking CXX executable module6_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_exchange.a'
+[56/88] Linking CXX executable module7_persistence
+[57/88] Linking CXX executable module7_b3
+[58/88] Linking CXX executable module7_contracts
+[59/88] Linking CXX executable module8_drawing
+[60/88] Linking CXX executable module8_contracts
+[61/88] Linking CXX executable module9_interaction
+[62/88] Linking CXX executable module10_fault_worker
+[63/88] Linking CXX executable module10_hardening
+[64/88] Linking CXX executable cm0_feasibility
+[65/88] Linking CXX executable module10_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a'
+[66/88] Linking CXX executable cm1_relations
+[67/88] Linking CXX executable cm1_contracts
+[68/88] Linking CXX executable cm4_support_model
+[69/88] Linking CXX executable cm4_store
+[70/88] Linking CXX executable cm4_support_geometry
+[71/88] Linking CXX executable cm4_support_convert
+[72/88] Linking CXX executable cm4_support_engine
+[73/88] Linking CXX executable cm4_support_store
+[74/88] Linking CXX executable cm4_support_evolution
+[75/88] Linking CXX executable cm4_support_contracts
+[76/88] Linking CXX executable cm4_datum_contracts
+[77/88] Linking CXX executable cm1_rectangles
+[78/88] Linking CXX executable cm1_slots
+[79/88] Linking CXX executable cm1_curves
+[80/88] Linking CXX executable cm1_pierce
+[81/88] Linking CXX executable cm1_intent
+[82/88] Linking CXX executable cm2_editing
+[83/88] Linking CXX executable cm3_dimensions
+[84/88] Linking CXX executable cm3_associated_dimensions
+[85/88] Linking CXX executable cm3_dimension_contracts
+[86/88] Linking CXX executable cm3_completion
+[87/88] Linking CXX executable cm3_completion_contracts
+[88/88] Linking CXX executable cm2_contracts

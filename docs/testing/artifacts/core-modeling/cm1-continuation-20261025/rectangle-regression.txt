@@ -1,0 +1,36 @@
+Rectangle corpus Corner scale 0.001
+Rectangle corpus Center scale 0.001
+Rectangle corpus 3 Point Corner scale 0.001
+Rectangle corpus 3 Point Center scale 0.001
+Rectangle corpus Parallelogram scale 0.001
+Rectangle corpus Corner scale 1
+Rectangle corpus Center scale 1
+Rectangle corpus 3 Point Corner scale 1
+Rectangle corpus 3 Point Center scale 1
+Rectangle corpus Parallelogram scale 1
+Rectangle corpus Corner scale 1000
+Rectangle corpus Center scale 1000
+Rectangle corpus 3 Point Corner scale 1000
+Rectangle corpus 3 Point Center scale 1000
+Rectangle corpus Parallelogram scale 1000
+PASS
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants

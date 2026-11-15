@@ -1,0 +1,64 @@
+{
+  "status": "Fail",
+  "scope": "Complete verification after a native-harness repaint synchronization correction; production inputs exactly match the passing full suite",
+  "source_identity": "source-identity-after-test-sync.json",
+  "delta_from_full_suite": [
+    "tests/core_modeling/dimension_contracts.cpp"
+  ],
+  "steps": [
+    {
+      "name": "cm3-widget-repeat",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "-R",
+        "^cm3\\.dimension_contracts$",
+        "--repeat",
+        "until-fail:4",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 40.057055249999394
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.9556281249970198
+    },
+    {
+      "name": "changed-test-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/20261029T055300.331472Z/cm3-associated/test-analysis-commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 5.101943500005291
+    },
+    {
+      "name": "workspace-native-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_workspace",
+        "nativeWorkspace"
+      ],
+      "exit_code": 0,
+      "seconds": 2.5186424999992596
+    },
+    {
+      "name": "arcs-native-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "exit_code": 1,
+      "seconds": 3.9018502499966417
+    }
+  ],
+  "preflight_native_100": "native-100-after-test-sync/result.txt"
+}

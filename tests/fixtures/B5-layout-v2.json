@@ -1,0 +1,57 @@
+{
+  "evaluation": "Module 8 executable tests/module8/drawing.cpp",
+  "expected": {
+    "annotations": 1,
+    "bom_quantity": 100,
+    "paper_dimension_mm": 40,
+    "sheets": 2,
+    "views": 5
+  },
+  "id": "B5-layout-v2",
+  "kernel_length_unit": "mm",
+  "license": "CC0-1.0 for these synthetic fixture recipes only",
+  "recipe": {
+    "annotations": [
+      {
+        "type": "linear",
+        "value_mm": 80
+      }
+    ],
+    "projection": "third-angle",
+    "scale": "1:2",
+    "sheets": [
+      {
+        "size_mm": [
+          297,
+          210
+        ],
+        "source": "B1",
+        "views": [
+          "front",
+          "top",
+          "isometric"
+        ],
+        "scale": 0.5
+      },
+      {
+        "bom": true,
+        "size_mm": [
+          297,
+          210
+        ],
+        "source": "B3",
+        "views": [
+          "front",
+          "isometric"
+        ],
+        "scale": 0.075
+      }
+    ]
+  },
+  "seed": 19002026,
+  "semantic_length_unit": "m",
+  "source": "original project synthetic definitions",
+  "version": 2,
+  "parent_recipe_sha256": "094eeeb3c3dc473e5b94d8277bb455a0ae709cd8c0d0e686c13db945eee177d9",
+  "layout_rationale": "The frozen B3 spans roughly one meter; A4 at 1:2 cannot contain both full views and BOM. Preserve B5 v1 unchanged; Part sheet remains 1:2 (80 mm to 40 mm), assembly sheet uses 3:40 (0.075), with explicit page-bound admission."
+}

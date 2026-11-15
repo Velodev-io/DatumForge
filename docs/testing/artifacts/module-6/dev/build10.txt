@@ -1,0 +1,19 @@
+[1/20] Building CXX object CMakeFiles/cad_exchange.dir/src/exchange/Exchange.cpp.o
+[2/20] Linking CXX static library libcad_exchange.a
+[3/20] Linking CXX executable module6_exchange
+[4/20] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[5/20] Linking CXX static library libcad_persistence.a
+[6/20] Linking CXX executable cad-worker
+[7/20] Linking CXX executable module2_storage
+[8/20] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[9/20] Linking CXX executable module2_fault_worker
+[10/20] Linking CXX executable module2_dispatch
+[11/20] Linking CXX executable module3_persistence
+[12/20] Automatic MOC for target module6_contracts
+[13/19] Linking CXX executable module4_persistence
+[14/19] Linking CXX executable module4_variants
+[15/19] Linking CXX executable module5_persistence
+[16/19] Linking CXX executable module5_b2
+[17/19] Linking CXX executable module6_persistence
+[18/19] Building CXX object CMakeFiles/module6_contracts.dir/tests/module6/contracts.cpp.o
+[19/19] Linking CXX executable module6_contracts

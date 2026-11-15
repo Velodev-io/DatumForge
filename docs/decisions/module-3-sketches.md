@@ -1,0 +1,184 @@
+# Module 3 — sketch and expression adapter decisions
+
+Current scope note: subsequent explicit authorization covers Modules 8–10 and all three Arc methods. See [authorization](implementation-scope.json). Stop before Module 11; earlier evidence remains scoped to its original run.
+
+Date: 20 October 2026. Authorized scope: Module 3 and subsequent input repairs; workspace UI 4.0a–c
+was authorized separately. Stop before 4.1a exact features.
+[Evidence](../testing/module-3.md), [scope record](implementation-scope.json).
+
+## Semantic ownership and persistence
+
+Only the existing serial worker solves and commits sketches. The desktop holds
+bounded typed projections and draws 2D paths with Qt's native painter; it owns no
+PlaneGCS system, exact kernel object or database connection. The original mesh
+viewport remains available for the reference scene. No browser or service is added.
+
+A document's `sketch_entities` row is owned by its existing properties entity and
+contains a versioned collection of semantic sketches. Each sketch, point, curve and
+constraint has a canonical UUID, checked for uniqueness across the whole project.
+Shared point references connect polyline/rectangle edges. SQL does not index nested
+sketch entities individually in this adapter. This avoids changing schema v1 or
+rewriting existing Module 2 projects; future indexed dependency/materialization
+work must preserve these IDs and introduce an explicit compatible migration.
+
+The first sketch edit changes the semantic manifest to `sketch-v1`, adapter 1 and
+the pinned PlaneGCS revision. The new worker reads metadata-only Module 2 files;
+the old metadata-only worker refuses the new manifest. Existing saved files remain
+unchanged until an explicit save. Undo/redo stores bounded accepted semantic
+collections; no raw solver memory or BRep copies are journaled. Save As retains
+nested UUIDs inside a new project identity. Empty collections do not require a row.
+
+Initial admission: 16 sketches per Part document, 256 entities / 512 constraints /
+64 names per sketch, at most 256 numerical variables in one solve, 256 KiB of
+sketch semantics across the project. The document's encoded collection also cannot
+exceed 256 KiB. The full reply plus echoed request is checked against the control
+frame cap before commit. These are conservative implementation limits, not B2/B3
+capacity or resource-budget acceptance. History retains the existing disk/entry
+caps. Assembly and Drawing sketch editing remains unavailable.
+
+## Coordinates, primitives and selection
+
+Lengths persist in meters, angles in radians. Validated orthonormal support axes
+and an SI origin define XY/XZ/YZ or programmatically supplied planar frames. Points,
+connected lines/polylines, axis-aligned rectangles, center/radius circles and
+center/radius/start/positive-sweep arcs are supported, including construction flags.
+Arcs exclude a zero/full-turn sweep. Coordinates/radii are bounded to 1 km;
+line length/radius must exceed 1 nm. Display unit changes do not rescale geometry.
+
+The native property form and planar viewport edit the same bounded draft. The
+camera stores its model center and world scale independently of viewport size;
+screen/model conversion is inverse and resizing does not change world anchors.
+Fit includes complete circle/arc bounds. Point snapping uses eight logical screen
+pixels; an optional 1 mm grid is initially off. Typed coordinates bypass pointer
+snapping. Two-finger pixel scrolling pans, native pinch zooms at the cursor, mouse
+wheel zooms and Space + left drag/middle drag pans. Synthetic event tests establish
+these application paths, not physical-device delivery or system preference parity.
+
+Line/rectangle input supports two clicks or dragging; polyline shares endpoints.
+Circle input supports click-center/move/click-radius and press/drag/release with a
+live unit readout. Zero-radius completion adds no entity. Pointer movement holds
+only transient coordinates or updates the local semantic projection; no worker
+request or project write is queued per movement. Worker solve/preview occurs at a
+completed direct-edit gesture, property apply or explicit preview. Circle/arc
+numeric creation remains precise. Centerpoint Arc input now uses center → start/radius → end clicks with continuous
+preview, radius/angle/direction readout, and clockwise/counterclockwise pointer
+sweeps. First/second clicks are transient; only the final valid endpoint adds an
+undoable local arc. A clockwise construction is stored by reversing its endpoints
+into the existing positive-sweep model, without a schema change. Zero-radius,
+zero/full-turn sweeps stay pending; Escape or a tool switch drops the construction.
+Resize/pan/zoom preserve world anchors. Numeric input cancels any unfinished pointer
+construction and remains an independent precise path. The later all-arc follow-up
+adds start/end/bend 3 Point Arc and endpoint-based Tangent Arc with four
+intent directions, two curvature sides, and normal intent. Returning to the
+source endpoint resets intent. Sources are Line/Arc only; ambiguous shared
+endpoints require selecting the source curve. Chained Line moves away/returns to
+enter Arc, then resumes Line after completion. Tool switches drop unfinished
+input and retain completed geometry. The shared flyout remembers the method.
+
+Select mode exposes rectangle corners and circle radial handles. An isolated,
+axis-aligned four-line loop is recognized semantically without changing persistent
+IDs or adding a rectangle schema. Corner resizing retains the opposite corner;
+edge dragging translates the rectangle. Crossing/collapsing it is rejected.
+Connected networks may use ordinary point/line editing instead. New rectangles
+have four explicit horizontal/vertical relations, visible in the relation list;
+existing projects are not silently migrated. Circle/arc circumference dragging
+changes radius; center points translate their geometry. General line/point edits
+remain supported. Direct dragging conservatively refuses affected constraints
+other than horizontal/vertical and explains the controlling relation; arbitrary
+constraint-aware nonlinear dragging is not claimed. The worker independently
+solves and validates all submitted previews and accepted changes.
+
+Selection properties expose display-unit coordinates, circle/arc radius and
+isolated rectangle width/height; arc start/sweep remain numeric. Existing driving
+Radius/Length expressions are edited instead of being silently overridden.
+Delete removes dependent relations and unused support points. Draft Undo/Redo
+retains at most 40 semantic sketch copies; it does not change project revision.
+Accept remains one durable semantic operation; accepted project history retains
+the existing storage bounds and does not copy BReps.
+
+## Supported constraint combinations
+
+| Constraint | Supported entities and meaning |
+|---|---|
+| Fixed | One point; stored X/Y anchors, preserved during dragging |
+| Coincident | Two distinct point IDs; both coordinates equal |
+| Horizontal / Vertical | One line; equal endpoint Y / X |
+| Parallel / Perpendicular | Two distinct lines; normalized cross / dot residual |
+| Tangent | Line followed by circle; infinite supporting line tangent to circumference |
+| ArcTangent / ArcNormal | Arc endpoint coincident with a Line/Arc endpoint; outgoing tangent directions parallel / perpendicular |
+| ArcCoincident | Arc endpoint equal to a Line/Arc endpoint or Point; no angular relation |
+| Equal | Two lines (length) or two circles (radius) |
+| Length | One line; positive endpoint distance |
+| Distance | Two distinct points; positive Euclidean distance |
+| Angle | Two lines; directed angle from first to second, within ±360 degrees |
+| Radius | One circle or arc; positive radius |
+
+Unsupported combinations are disabled with a reason in the selection form and
+rejected independently by the worker. Fixed lines/circles use fixed endpoints or
+centers plus dimensions. Joined endpoint selectors are zero/one in the existing
+constraint `value`/`second` fields, with stable curve references and separate
+relation IDs. Point targets require selector zero. These new constraint kinds
+require the current reader; old projects are not migrated. The worker adds
+solver-only endpoint variables and ArcRules, counts them in the existing cap,
+then restores canonical start/sweep before residual/rank and persisted-geometry
+checks. Independent residuals include endpoint equality and tangent cross or
+normal dot products. Stored angles must agree with solved geometry; arc join
+branch flips are refused. General ellipse/spline constraints remain unavailable;
+free arc start/sweep variables remain visible in freedom counts.
+
+All variables and constants outlive the local PlaneGCS system. Coordinates are
+translated and normalized by the current sketch extent/radius (minimum scale
+1 micrometer). The pinned upstream solver is unchanged. DogLeg iteration counts
+are bounded at 100, without a sketch-size multiplier. Independent analytic
+residuals must be finite and at most 1e-7 in normalized length/angular quantities.
+Post-solve geometry is checked again for radius/line degeneracy and finite bounds.
+Freedom is derived from the numerical Jacobian rank (pivot threshold 1e-7), not
+constraint count. PlaneGCS redundant/partially-redundant/conflict tags map back to
+persistent constraint IDs. Conflicting or failed candidates cannot be committed.
+Stored accepted geometry/expressions are revalidated on read; no silent repair is
+performed. Standard fixture analytic checks have tighter independent expectations;
+this adapter policy does not close the full NFR-008 acceptance gate.
+
+Dragging starts from the accepted coordinates and uses the edited seed. When
+constraints have not changed, a line-direction branch flip is rejected with an
+explicit smaller-step/edit-constraints message. Cancellation restores the entire
+accepted collection. Tangent side continuity is checked separately. No claim is
+made that this bounded adapter implements arbitrary nonlinear branch navigation.
+
+## Expressions and editing transactions
+
+The parsed arithmetic language supports literals with units (`mm`, `cm`, `m`,
+`in`, `deg`, `rad`, `kg`, `g`), names, `pi`, `+ - * / ^`, parentheses, `abs`, `sqrt`,
+`sin/cos/tan`, `asin/acos/atan`, and two-argument `min/max`. Multiplication is
+explicit except a numeric literal followed by a unit. Powers require an integer
+scalar exponent within ±8. Dimensions track length, angle and mass independently.
+Names are sketch-local; document metadata parameters are not implicit dependencies.
+Limits remain 4 KiB text, 256 AST nodes and 32 parse/name nesting levels. Cycles,
+unknown/reserved names, mismatched dimensions, nonfinite/domain failures and
+nonpositive length/radius dimensions are rejected without general code evaluation.
+
+Preview evaluates disposable candidates in the worker. Accept recomputes against
+the current project revision and durably commits once. Invalid drafts remain
+editable with textual status/constraint identification. Cancel invalidates the
+preview generation, so a late reply cannot restore a canceled draft. Unrelated
+project operations are disabled while editing; application close explicitly asks
+to discard a draft. A pending commit cannot be described as canceled. Enter accepts
+only a solved preview with viewport focus; Enter in a value editor does not commit.
+Escape first cancels pending circle/vertex input and retains completed draft
+geometry; otherwise it leaves the drawing tool and clears selection without
+discarding completed geometry. The explicit Cancel Sketch button discards the
+whole edit. Every accepted dimension edit, constraint deletion,
+undo and redo is one durable semantic operation.
+
+## Remaining decisions and gates
+
+Windows/Linux, Intel/minimum macOS, installed builds and native assistive-technology
+checks require their real environments. The available M2 has physical 8 GiB RAM;
+this is not a full 8 GB B0–B5 performance result. The application workflow uses no
+network service, but an OS-network-disabled run is separately Blocked until a
+controlled procedure is available. Additional snapping preferences, advanced arc
+constraints, reference-plane attachment to future solids, indexed feature history,
+and broad resource/performance acceptance remain explicit later work. Workspace UI 4.0a–c is authorized separately; 4.1a exact features
+was subsequently authorized; the current stop is before Module 11.
+
+Current arc comparison and test scope: [all-arc evidence](../testing/module-3-all-arcs.md). Original adapter/repair evidence remains historical and cannot certify this later source.

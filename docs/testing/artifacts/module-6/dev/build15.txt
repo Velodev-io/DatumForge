@@ -1,0 +1,12 @@
+[1/13] Automatic MOC for target cad_desktop_ui
+[2/12] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ExchangeUI.cpp.o
+[3/12] Linking CXX static library libcad_desktop_ui.a
+[4/12] Linking CXX executable module1_contracts
+[5/12] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[6/12] Linking CXX executable module2_contracts
+[7/12] Linking CXX executable module3_input
+[8/12] Linking CXX executable module3_contracts
+[9/12] Linking CXX executable module4_workspace
+[10/12] Linking CXX executable module4_contracts
+[11/12] Linking CXX executable module5_contracts
+[12/12] Linking CXX executable module6_contracts

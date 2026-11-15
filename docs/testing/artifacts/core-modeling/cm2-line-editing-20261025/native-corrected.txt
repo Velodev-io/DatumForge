@@ -1,0 +1,30 @@
+********* Start testing of EditingContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : EditingContracts::initTestCase()
+QINFO  : EditingContracts::native() Line edit workflow "Trim to closest" "mm"
+QINFO  : EditingContracts::native() Line edit workflow "Trim away inside" "mm"
+QWARN  : EditingContracts::native() QOpenGLShader::compile(Vertex): ERROR: 0:1: '' :  version '330' is not supported
+ERROR: 0:1: '' : syntax error: #version
+ERROR: 0:2: 'layout' : syntax error: syntax error
+
+QWARN  : EditingContracts::native() *** Problematic Vertex shader source code ***
+#version 330 core
+#define lowp
+#define mediump
+#define highp
+#line 1
+layout(location=0) in vec3 position; uniform mat4 matrix; void main(){gl_Position=matrix*vec4(position,1.0);}
+
+***
+QINFO  : EditingContracts::native() Line edit workflow "Trim away outside" "mm"
+QINFO  : EditingContracts::native() Line edit workflow "Dynamic extend" "mm"
+QINFO  : EditingContracts::native() Line edit workflow "Extend to apparent intersection" "mm"
+QINFO  : EditingContracts::native() Line edit workflow "Trim to closest" "in"
+QINFO  : EditingContracts::native() Line edit workflow "Trim away inside" "in"
+QINFO  : EditingContracts::native() Line edit workflow "Trim away outside" "in"
+QINFO  : EditingContracts::native() Line edit workflow "Dynamic extend" "in"
+QINFO  : EditingContracts::native() Line edit workflow "Extend to apparent intersection" "in"
+PASS   : EditingContracts::native()
+PASS   : EditingContracts::cleanupTestCase()
+Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted, 12384ms
+********* Finished testing of EditingContracts *********

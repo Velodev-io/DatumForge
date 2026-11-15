@@ -1,0 +1,178 @@
+{
+  "scope": "Centerpoint Arc selected by the user; available-Mac repair; Module 11 unstarted",
+  "status": "Pass: requested available-Mac checks; full acceptance Blocked",
+  "host": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 0.6736932920175605,
+      "log": "configure.txt"
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 79.85274758297601,
+      "log": "build.txt"
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 263.33072787499987,
+      "log": "ctest.txt"
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 0.7423619169858284,
+      "log": "format.txt"
+    },
+    {
+      "name": "changed-source-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/static_analysis.py",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-3/arc-runs/20261022T040046.253795Z/changed-compile-commands.json"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 29.08368516599876,
+      "log": "changed-source-analysis.txt"
+    },
+    {
+      "name": "architecture",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-3/arc-runs/20261022T040046.253795Z/architecture.json"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 0.14172833299380727,
+      "log": "architecture.txt"
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 0.2050044999923557,
+      "log": "research-isolation.txt"
+    },
+    {
+      "name": "native-arcs-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 3.1508405830245465,
+      "log": "native-arcs-100.txt"
+    },
+    {
+      "name": "native-sketch-regression-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 6.434700417012209,
+      "log": "native-sketch-regression-100.txt"
+    },
+    {
+      "name": "native-arcs-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 1.969786917004967,
+      "log": "native-arcs-125.txt"
+    },
+    {
+      "name": "native-arcs-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 2.14418891700916,
+      "log": "native-arcs-150.txt"
+    },
+    {
+      "name": "native-arcs-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 2.3623234590049833,
+      "log": "native-arcs-175.txt"
+    },
+    {
+      "name": "native-arcs-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 2.628693334001582,
+      "log": "native-arcs-200.txt"
+    },
+    {
+      "name": "native-sketch-regression-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 8.52187362499535,
+      "log": "native-sketch-regression-200.txt"
+    }
+  ],
+  "blocked": [
+    "Physical mouse/trackpad and assistive technology",
+    "Other platforms, installed builds and full 8 GB resource budgets"
+  ],
+  "not_run": [
+    "New clean-source/dependency rebuild; prior run retained separately",
+    "3 Point/Tangent Arc and automatic constraint parity: not implemented by this repair"
+  ]
+}

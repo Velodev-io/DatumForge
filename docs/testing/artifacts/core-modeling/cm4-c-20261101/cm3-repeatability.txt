@@ -1,0 +1,15 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 80: cm3.completion
+    Test #80: cm3.completion ...................   Passed    2.68 sec
+    Start 80: cm3.completion
+    Test #80: cm3.completion ...................   Passed    2.23 sec
+    Start 80: cm3.completion
+    Test #80: cm3.completion ...................   Passed    2.30 sec
+    Start 80: cm3.completion
+    Test #80: cm3.completion ...................   Passed    2.33 sec
+    Start 80: cm3.completion
+1/1 Test #80: cm3.completion ...................   Passed    2.15 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =  11.69 sec

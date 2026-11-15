@@ -1,0 +1,50 @@
+********* Start testing of CompletionContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : CompletionContracts::initTestCase()
+QINFO  : CompletionContracts::delayedModalReadiness(nested) Modal readiness 0 0 "" true true
+QINFO  : CompletionContracts::delayedModalReadiness(nested) Modal action entered ""
+0   cm3_completion_contracts            0x0000000104971f60 _ZZN3cad4test9whenModalEP7QObjectNSt3__18functionIFvP7QDialogEEE7QStringENUlvE_clEv + 1252
+1   cm3_completion_contracts            0x0000000104971a70 _ZZN9QtPrivate11FunctorCallINSt3__116integer_sequenceImJEEENS_4ListIJEEEvZN3cad4test9whenModalEP7QObjectNS1_8functionIFvP7QDialogEEE7QStringEUlvE_E4callERSG_PPvENKUlvE_clEv + 28
+2   cm3_completion_contracts            0x0000000104971a48 _ZN9QtPrivate15FunctorCallBase13call_internalIvZNS_11FunctorCallINSt3__116integer_sequenceImJEEENS_4ListIJEEEvZN3cad4test9whenModalEP7QObjectNS3_8functionIFvP7QDialogEEE7QStringEUlvE_E4callERSI_PPvEUlvE_EEvSM_OT0_ + 28
+3   cm3_completion_contracts            0x0000000104971a20 _ZN9QtPrivate11FunctorCallINSt3__116integer_sequenceImJEEENS_4ListIJEEEvZN3cad4test9whenModalEP7QObjectNS1_8functionIFvP7QDialogEEE7QStringEUlvE_E4callERSG_PPv + 40
+4   cm3_completion_contracts            0x0000000104971960 _ZN9QtPrivate15FunctorCallableIZN3cad4test9whenModalEP7QObjectNSt3__18functionIFvP7QDialogEEE7QStringEUlvE_JEE4callINS_4ListIJEEEvEEvRSC_PvPSI_ + 36
+5   cm3_completion_contracts            0x0000000104971888 _ZN9QtPrivate15QCallableObjectIZN3cad4test9whenModalEP7QObjectNSt3__18functionIFvP7QDialogEEE7QStringEUlvE_NS_4ListIJEEEvE4implEiPNS_15QSlotObjectBaseES4_PPvPb + 168
+6   libQt6Core.6.10.0.dylib             0x0000000106554c28 _Z10doActivateILb0EEvP7QObjectiPPv + 1384
+7   libQt6Core.6.10.0.dylib             0x0000000106568e80 _ZN6QTimer10timerEventEP11QTimerEvent + 216
+8   libQt6Core.6.10.0.dylib             0x000000010654c49c _ZN7QObject5eventEP6QEvent + 668
+9   libQt6Widgets.6.10.0.dylib          0x0000000105d9867c _ZN19QApplicationPrivate13notify_helperEP7QObjectP6QEvent + 336
+10  libQt6Widgets.6.10.0.dylib          0x0000000105d996fc _ZN12QApplication6notifyEP7QObjectP6QEvent + 468
+11  libQt6Core.6.10.0.dylib             0x0000000106502de4 _ZN16QCoreApplication9sendEventEP7QObjectP6QEvent + 168
+12  libQt6Core.6.10.0.dylib             0x0000000106697b28 _ZN14QTimerInfoList14activateTimersEv + 1392
+13  libqcocoa.dylib                     0x0000000105b348c4 _ZN28QCocoaEventDispatcherPrivate28activateTimersSourceCallbackEPv + 492
+14  CoreFoundation                      0x0000000184038f60 __CFRUNLOOP_IS_CALLING_OUT_TO_A_SOURCE0_PERFORM_FUNCTION__ + 28
+15  CoreFoundation                      0x0000000184038ef4 __CFRunLoopDoSource0 + 172
+16  CoreFoundation                      0x0000000184038c60 __CFRunLoopDoSources0 + 232
+17  CoreFoundation                      0x0000000184037884 __CFRunLoopRun + 820
+18  CoreFoundation                      0x000000018410a264 _CFRunLoopRunSpecificWithOptions + 532
+19  HIToolbox                           0x0000000190e23560 RunCurrentEventLoopInMode + 320
+20  HIToolbox                           0x0000000190e268bc ReceiveNextEventCommon + 488
+21  HIToolbox                           0x0000000190fb014c _BlockUntilNextEventMatchingListInMode + 48
+22  AppKit                              0x0000000188b1a3d0 _DPSBlockUntilNextEventMatchingListInMode + 228
+23  AppKit                              0x000000018846e084 _DPSNextEvent + 576
+24  AppKit                              0x000000018900396c -[NSApplication(NSEventRouting) _nextEventMatchingEventMask:untilDate:inMode:dequeue:] + 688
+25  AppKit                              0x0000000189003678 -[NSApplication(NSEventRouting) nextEventMatchingMask:untilDate:inMode:dequeue:] + 72
+26  libqcocoa.dylib                     0x0000000105b354f4 _ZN21QCocoaEventDispatcher13processEventsE6QFlagsIN10QEventLoop17ProcessEventsFlagEE + 2108
+27  libQt6Core.6.10.0.dylib             0x000000010650bda4 _ZN10QEventLoop4execE6QFlagsINS_17ProcessEventsFlagEE + 588
+28  libQt6Widgets.6.10.0.dylib          0x0000000105fc57f0 _ZN7QDialog4execEv + 508
+29  cm3_completion_contracts            0x000000010495e000 _ZN19CompletionContracts21delayedModalReadinessEv + 668
+30  cm3_completion_contracts            0x000000010495db44 _ZN19CompletionContracts18qt_static_metacallEP7QObjectN11QMetaObject4CallEiPPv + 120
+31  libQt6Core.6.10.0.dylib             0x000000010650dea4 _ZN18QMetaMethodInvoker10invokeImplE11QMetaMethodPvN2Qt14ConnectionTypeExPKPKvPKPKcPKPKN9QtPrivate18QMetaTypeInterfaceE + 1020
+32  libQt6Core.6.10.0.dylib             0x0000000106512b64 _ZN11QMetaMethod10invokeImplES_PvN2Qt14ConnectionTypeExPKPKvPKPKcPKPKN9QtPrivate18QMetaTypeInterfaceE + 84
+33  libQt6Test.6.10.0.dylib             0x000000010505e864 _ZNK5QTest11TestMethods16invokeTestOnDataEi + 392
+34  libQt6Test.6.10.0.dylib             0x000000010505f740 _ZNK5QTest11TestMethods10invokeTestEi13QLatin1StringRNSt3__18optionalINS_8WatchDogEEE + 1380
+35  libQt6Test.6.10.0.dylib             0x0000000105060624 _ZNK5QTest11TestMethods11invokeTestsEP7QObject + 792
+36  libQt6Test.6.10.0.dylib             0x00000001050611e0 _ZN5QTest4qRunEv + 1696
+37  libQt6Test.6.10.0.dylib             0x0000000105060928 _ZN5QTest5qExecEP7QObjectiPPc + 20
+38  cm3_completion_contracts            0x000000010495d9e4 main + 172
+39  dyld                                0x0000000183bb04e4 start + 6992
+QINFO  : CompletionContracts::delayedModalReadiness(nested) Modal action returned "" false
+PASS   : CompletionContracts::delayedModalReadiness(nested)
+PASS   : CompletionContracts::cleanupTestCase()
+Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted, 467ms
+********* Finished testing of CompletionContracts *********

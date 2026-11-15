@@ -1,0 +1,15 @@
+********* Start testing of WorkflowContractsCM5 *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 27.2.1
+PASS   : WorkflowContractsCM5::initTestCase()
+QWARN  : WorkflowContractsCM5::nativeEffectiveScales(mm) Before newProject: ready= true  outstanding= 0
+QWARN  : WorkflowContractsCM5::nativeEffectiveScales(mm) After newProject: outstanding= 1  phase= 0
+QWARN  : WorkflowContractsCM5::nativeEffectiveScales(mm) Wait result= true  projectOpen= true  activeDoc= "8f60298a-32a7-4443-bc48-a727e1f7bf64"  message= ""
+PASS   : WorkflowContractsCM5::nativeEffectiveScales(mm)
+QWARN  : WorkflowContractsCM5::nativeEffectiveScales(inch-inclined) Before newProject: ready= true  outstanding= 0
+QWARN  : WorkflowContractsCM5::nativeEffectiveScales(inch-inclined) After newProject: outstanding= 1  phase= 0
+QWARN  : WorkflowContractsCM5::nativeEffectiveScales(inch-inclined) Wait result= true  projectOpen= true  activeDoc= "58e456ac-24bb-4980-90fd-eff1638e5c1f"  message= ""
+PASS   : WorkflowContractsCM5::nativeEffectiveScales(inch-inclined)
+PASS   : WorkflowContractsCM5::savedParametersAndPointerRegression()
+PASS   : WorkflowContractsCM5::cleanupTestCase()
+Totals: 5 passed, 0 failed, 0 skipped, 0 blacklisted, 2705ms
+********* Finished testing of WorkflowContractsCM5 *********

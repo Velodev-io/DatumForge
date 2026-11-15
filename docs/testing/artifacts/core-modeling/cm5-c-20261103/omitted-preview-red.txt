@@ -1,0 +1,13 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 66: cm5.store
+1/1 Test #66: cm5.store ........................***Failed    1.01 sec
+FAIL: expected 0.000002, observed 0.000000, tolerance 0.000000
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   1.02 sec
+
+The following tests FAILED:
+	 66 - cm5.store (Failed)
+Errors while running CTest

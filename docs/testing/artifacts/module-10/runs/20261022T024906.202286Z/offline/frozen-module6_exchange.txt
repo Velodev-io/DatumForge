@@ -1,0 +1,77 @@
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-exchange-UWTzBJ/b4-STEP-mm.step(350 ents)  Write  Done[0m
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-exchange-UWTzBJ/b4-STEP-in.step(353 ents)  Write  Done[0m
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-exchange-UWTzBJ/b4-STEP-cm.step(350 ents)  Write  Done[0m
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-exchange-UWTzBJ/b4-STEP-m.step(350 ents)  Write  Done[0m
+[32;1mTotal number of loaded entities 52.
+[0m
+[32;1mTotal number of loaded entities 52.
+[0m
+[32;1mTotal number of loaded entities 52.
+[0m
+[32;1mTotal number of loaded entities 52.
+[0m
+[32;1mTotal number of loaded entities 52.
+[0m
+[32;1mTotal number of loaded entities 52.
+[0m
+[32;1mTotal number of loaded entities 52.
+[0m
+[32;1mTotal number of loaded entities 52.
+[0m
+[32;1mTotal number of loaded entities 52.
+[0m
+[32;1mTotal number of loaded entities 52.
+[0m
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-exchange-UWTzBJ/colored.step(361 ents)  Write  Done[0m
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 4                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-exchange-UWTzBJ/surface.step(94 ents)  Write  Done[0m
+[31;1m**** ERR StepFile : Undefined Parsing: Line 3: Incorrect syntax: unexpected DATA, expecting HEADER    ****[0m
+B4: 8 unit-tagged STEP/IGES round trips; 6 faces, 1 solid, 6000 mm3 / 2200 mm2; STL mm/in coordinates, malformed/oversized/expansion/cancel corpus passed
+PASS

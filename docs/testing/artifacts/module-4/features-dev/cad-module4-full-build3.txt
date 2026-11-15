@@ -1,0 +1,40 @@
+[1/69] Automatic MOC for target cad_desktop_ui
+[2/68] Linking CXX static library libcad_planegcs.a
+[3/68] Linking CXX static library libcad_sketch_solver.a
+[4/68] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[5/68] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[6/68] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[7/68] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[8/68] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+FAILED: [code=1] CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cad_desktop_ui_autogen/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtNetwork" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGLWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGL" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o -MF CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o.d -o CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop/FeaturePanel.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop/FeaturePanel.cpp:74:298: error: call to member function 'value' is ambiguous
+   74 |         auto p=draft.parameters;auto pick=[&](QComboBox*w,QString key){int i=w->findData(p.value(key).toString());if(i>=0)w->setCurrentIndex(i);};pick(profile,"sketch");pick(target,"target");pick(source,"source");operation->setCurrentText(p.value("operation").toString());extent->setCurrentText(p.value(kind=="Revolve"?"direction":"extent").toString());distribution->setCurrentText(p.value("distribution").toString());
+      |                                                                                                                                                                                                                                                                                                        ~~^~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcbormap.h:270:16: note: candidate function
+  270 |     QCborValue value(const QString & key) const
+      |                ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcbormap.h:272:16: note: candidate function
+  272 |     QCborValue value(const QCborValue &key) const
+      |                ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop/FeaturePanel.cpp:77:18: error: call to member function 'value' is ambiguous
+   77 |         auto o=p.value(kind=="Revolve"||kind=="CircularPattern"?"axis_origin":"origin").toArray();auto a=p.value(kind=="Mirror"?"normal":kind=="Revolve"||kind=="CircularPattern"?"axis_direction":"direction").toArray();
+      |                ~~^~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcbormap.h:270:16: note: candidate function
+  270 |     QCborValue value(const QString & key) const
+      |                ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcbormap.h:272:16: note: candidate function
+  272 |     QCborValue value(const QCborValue &key) const
+      |                ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop/FeaturePanel.cpp:77:108: error: call to member function 'value' is ambiguous
+   77 |         auto o=p.value(kind=="Revolve"||kind=="CircularPattern"?"axis_origin":"origin").toArray();auto a=p.value(kind=="Mirror"?"normal":kind=="Revolve"||kind=="CircularPattern"?"axis_direction":"direction").toArray();
+      |                                                                                                          ~~^~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcbormap.h:270:16: note: candidate function
+  270 |     QCborValue value(const QString & key) const
+      |                ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcbormap.h:272:16: note: candidate function
+  272 |     QCborValue value(const QCborValue &key) const
+      |                ^
+3 errors generated.
+[9/68] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+ninja: build stopped: subcommand failed.

@@ -1,0 +1,15 @@
+[0/1] Re-running CMake...
+-- Configuring done (3.2s)
+-- Generating done (1.3s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/5] Building CXX object CMakeFiles/cm5_intent.dir/tests/core_modeling/feature_intent.cpp.o
+[2/5] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/ModelingIntent.cpp.o
+[3/5] Linking CXX static library libcad_feature_model.a
+[4/5] Linking CXX executable cm5_intent
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 60: cm5.intent
+1/1 Test #60: cm5.intent .......................   Passed    1.34 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   1.35 sec

@@ -1,0 +1,62 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+      Start  1: harness.pass
+ 1/98 Test  #1: harness.pass .....................   Passed    0.03 sec
+      Start  2: harness.failure_reporting
+ 2/98 Test  #2: harness.failure_reporting ........   Passed    0.07 sec
+      Start  3: measurement.statistics
+ 3/98 Test  #3: measurement.statistics ...........   Passed    0.07 sec
+      Start  4: harness.deliberate_failure
+ 4/98 Test  #4: harness.deliberate_failure .......***Not Run (Disabled)   0.00 sec
+      Start  5: protocol.boundaries
+ 5/98 Test  #5: protocol.boundaries ..............   Passed    0.09 sec
+      Start  6: storage.crash_matrix
+ 6/98 Test  #6: storage.crash_matrix .............   Passed    0.65 sec
+      Start  7: cad.geometry_topology
+ 7/98 Test  #7: cad.geometry_topology ............   Passed    0.32 sec
+      Start  8: cad.sketch_solver
+ 8/98 Test  #8: cad.sketch_solver ................   Passed    0.81 sec
+      Start  9: cad.rigid_mates
+ 9/98 Test  #9: cad.rigid_mates ..................   Passed    0.27 sec
+      Start 10: native.process_transport
+10/98 Test #10: native.process_transport .........***Failed    0.11 sec
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/native/slice_desktop.cpp:183: server.listen(path)
+
+      Start 11: fixtures.determinism
+11/98 Test #11: fixtures.determinism .............   Passed    0.06 sec
+      Start 12: isolation.research
+12/98 Test #12: isolation.research ...............   Passed    0.23 sec
+      Start 13: module1.ownership
+13/98 Test #13: module1.ownership ................   Passed    0.10 sec
+      Start 14: module1.contracts
+14/98 Test #14: module1.contracts ................***Failed   10.73 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 27.2.0
+PASS   : Contracts::initTestCase()
+PASS   : Contracts::frameCorpus()
+PASS   : Contracts::transferCorpus()
+FAIL!  : Contracts::workerCorpus() 'raw.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module1/contracts.cpp(223)]
+FAIL!  : Contracts::clientLifecycle() 'waitUntil([&] { return client.ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module1/contracts.cpp(296)]
+FAIL!  : Contracts::clientFailureCorpus() 'waitUntil([&] { return client.state().phase == Phase::WorkerUnavailable; })' returned FALSE. (capability)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module1/contracts.cpp(357)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 4 passed, 3 failed, 0 skipped, 0 blacklisted, 10019ms
+********* Finished testing of Contracts *********
+
+      Start 15: module2.domain
+15/98 Test #15: module2.domain ...................   Passed    0.05 sec
+      Start 16: module2.storage
+16/98 Test #16: module2.storage ..................   Passed    2.36 sec
+      Start 17: module2.worker_lifecycle
+17/98 Test #17: module2.worker_lifecycle .........***Failed   10.61 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 27.2.0
+PASS   : Contracts::initTestCase()
+FAIL!  : Contracts::lifecycle() 'wait([&] { return c.ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module2/contracts.cpp(88)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 10011ms
+********* Finished testing of Contracts *********
+
+      Start 18: module2.crash_matrix

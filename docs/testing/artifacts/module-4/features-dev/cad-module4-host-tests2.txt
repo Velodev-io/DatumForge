@@ -1,0 +1,11 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 29: module4.geometry
+1/3 Test #29: module4.geometry .................   Passed    1.13 sec
+    Start 30: module4.persistence
+2/3 Test #30: module4.persistence ..............   Passed    2.98 sec
+    Start 31: module4.lifecycle
+3/3 Test #31: module4.lifecycle ................   Passed    5.07 sec
+
+100% tests passed, 0 tests failed out of 3
+
+Total Test time (real) =   9.19 sec

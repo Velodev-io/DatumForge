@@ -1,0 +1,7 @@
+Analyzed apps/desktop/ExchangeUI.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/persistence/ProjectStore.cpp
+Analyzed src/exchange/Exchange.cpp
+Analyzed tests/module6/exchange.cpp
+Analyzed tests/module6/persistence.cpp
+Analyzed tests/module6/contracts.cpp

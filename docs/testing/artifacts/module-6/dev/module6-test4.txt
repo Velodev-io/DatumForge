@@ -1,0 +1,36 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 38: module6.exchange
+1/3 Test #38: module6.exchange .................   Passed    1.00 sec
+    Start 39: module6.persistence
+2/3 Test #39: module6.persistence ..............   Passed    0.92 sec
+    Start 40: module6.contracts
+3/3 Test #40: module6.contracts ................***Failed   30.96 sec
+********* Start testing of ExchangeContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : ExchangeContracts::initTestCase()
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-PkWRmb/source.step(350 ents)  Write  Done[0m
+QWARN  : ExchangeContracts::lifecycle() QOpenGLWidget is not supported on this platform.
+QWARN  : ExchangeContracts::lifecycle() qt.qpa.fonts: Populating font family aliases took 34 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : ExchangeContracts::lifecycle() This plugin does not support propagateSizeHints()
+FAIL!  : ExchangeContracts::lifecycle() 'wait([&]{return c->ready();})' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module6/contracts.cpp(49)]
+PASS   : ExchangeContracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 30326ms
+********* Finished testing of ExchangeContracts *********
+
+
+67% tests passed, 1 tests failed out of 3
+
+Total Test time (real) =  32.88 sec
+
+The following tests FAILED:
+	 40 - module6.contracts (Failed)
+Errors while running CTest

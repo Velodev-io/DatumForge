@@ -1,0 +1,87 @@
+Analyzed tests/unit/harness_probe.cpp
+Analyzed tests/integration/protocol_spike.cpp
+Analyzed tests/integration/storage_spike.cpp
+Analyzed tests/integration/cad_spike.cpp
+Analyzed tests/integration/solver_spike.cpp
+Analyzed tests/integration/mate_spike.cpp
+Analyzed tests/native/slice_worker.cpp
+Analyzed tests/native/slice_desktop.cpp
+Analyzed src/protocol/Mesh.cpp
+Analyzed src/protocol/Client.cpp
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed apps/desktop/ProjectUI.cpp
+Analyzed src/render/Viewport.cpp
+Analyzed apps/desktop/WorkspaceChrome.cpp
+Analyzed apps/desktop/SketchPanel.cpp
+Analyzed src/render/SketchView.cpp
+Analyzed apps/desktop/FeaturePanel.cpp
+Analyzed apps/desktop/FeatureUI.cpp
+Analyzed apps/desktop/HistoryPanel.cpp
+Analyzed apps/desktop/ExchangeUI.cpp
+Analyzed src/geometry/occt/ReferenceScene.cpp
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/cad-worker/main.cpp:1:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/cad-worker/Projects.hpp:2:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/evaluation/Plan.hpp:2:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/features/Model.hpp:2:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/sketch/Sketch.hpp:2:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/domain/Documents.hpp:2:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/protocol/Envelope.hpp:2:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/protocol/Framing.hpp:4:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/QCborArray:1:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcborarray.h:8:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcborvalue.h:9:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcborcommon.h:8:
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qobjectdefs.h:646:9: warning: Potential leak of memory pointed to by 'callable' [cplusplus.NewDeleteLeaks]
+  646 |         return invokeMethodImpl(object, callable, type, h.parameterCount(), h.parameters.data(),
+      |         ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/cad-worker/main.cpp:85:13: note: Calling 'QMetaObject::invokeMethod'
+   85 |             QMetaObject::invokeMethod(
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~
+   86 |                 this,
+      |                 ~~~~~
+   87 |                 [this, e, data, code, message] {
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   88 |                     job.reset();
+      |                     ~~~~~~~~~~~~
+   89 |                     activeJob.reset();
+      |                     ~~~~~~~~~~~~~~~~~~
+   90 |                     if (code.isEmpty())
+      |                     ~~~~~~~~~~~~~~~~~~~
+   91 |                         finishProject(e, data);
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~
+   92 |                     else
+      |                     ~~~~
+   93 |                         failure(e, code, message);
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~
+   94 |                     if (!queue.empty()) {
+      |                     ~~~~~~~~~~~~~~~~~~~~~
+   95 |                         scheduled = true;
+      |                         ~~~~~~~~~~~~~~~~~
+   96 |                         QTimer::singleShot(0, this, [this] { next(); });
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   97 |                     }
+      |                     ~
+   98 |                 },
+      |                 ~~
+   99 |                 Qt::QueuedConnection);
+      |                 ~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qobjectdefs.h:505:16: note: Calling 'QMetaObject::invokeMethod'
+  505 |         return invokeMethod(object, std::forward<Func>(function), type, r,
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  506 |                             std::forward<Args>(args)...);
+      |                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qobjectdefs.h:491:16: note: Calling 'QMetaObject::invokeMethodCallableHelper'
+  491 |         return invokeMethodCallableHelper(object, std::forward<Func>(function), type, ret,
+      |                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  492 |                                           std::forward<Args>(args)...);
+      |                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qobjectdefs.h:644:25: note: Memory is allocated
+  644 |         auto callable = new QtPrivate::QCallableObject<std::decay_t<Func>, ActualArguments,
+      |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  645 |                 typename Callable::ReturnType>(std::forward<Func>(function));
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qobjectdefs.h:646:9: note: Potential leak of memory pointed to by 'callable'
+  646 |         return invokeMethodImpl(object, callable, type, h.parameterCount(), h.parameters.data(),
+      |         ^
+1 warning generated.
+Fail: analyzer reported an error or warning in apps/cad-worker/main.cpp

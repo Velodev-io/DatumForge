@@ -1,0 +1,147 @@
+{
+  "recorded_at_utc": "2026-10-19T15:34:01.053560+00:00",
+  "scope": "Module 1 reference workspace; not full R1 acceptance",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.45798304199706763
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 7.362998291995609
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 3.496724249998806
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.18767175001266878
+    },
+    {
+      "name": "static-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "build/macos-debug/compile_commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 56.443067333006184
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.18755349999992177
+    },
+    {
+      "name": "ownership",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-1/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.12703316699480638
+    },
+    {
+      "name": "native-run-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction",
+        "-o",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-1/native-scale100.txt,txt"
+      ],
+      "exit_code": 0,
+      "seconds": 3.037871916007134
+    },
+    {
+      "name": "native-run-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction",
+        "-o",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-1/native-scale125.txt,txt"
+      ],
+      "exit_code": 0,
+      "seconds": 2.336660375003703
+    },
+    {
+      "name": "native-run-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction",
+        "-o",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-1/native-scale150.txt,txt"
+      ],
+      "exit_code": 0,
+      "seconds": 2.254330417010351
+    },
+    {
+      "name": "native-run-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction",
+        "-o",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-1/native-scale175.txt,txt"
+      ],
+      "exit_code": 0,
+      "seconds": 2.3318032919924008
+    },
+    {
+      "name": "native-run-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction",
+        "-o",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-1/native-scale200.txt,txt"
+      ],
+      "exit_code": 0,
+      "seconds": 2.4064690829982283
+    },
+    {
+      "name": "measurement-summary",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/summarize_module1.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07758245899458416
+    }
+  ],
+  "native_requested": true,
+  "status": "Pass: requested available-host checks",
+  "Windows": "Blocked: host unavailable",
+  "Linux_X11_Wayland": "Blocked: hosts unavailable"
+}

@@ -1,0 +1,56 @@
+[
+  {
+    "directory": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug",
+    "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src\" -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/src/sqlite\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui\" -g -std=c++20 -mmacosx-version-min=13.0 -o CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o -c \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp\"",
+    "file": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp",
+    "output": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o"
+  },
+  {
+    "directory": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug",
+    "command": "/usr/bin/c++ -DQT_CORE_LIB -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang\" -g -std=c++20 -mmacosx-version-min=13.0 -o CMakeFiles/cad_model_graph.dir/src/domain/GeometryReference.cpp.o -c \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/domain/GeometryReference.cpp\"",
+    "file": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/domain/GeometryReference.cpp",
+    "output": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/CMakeFiles/cad_model_graph.dir/src/domain/GeometryReference.cpp.o"
+  },
+  {
+    "directory": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug",
+    "command": "/usr/bin/c++ -DQT_CORE_LIB -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang\" -g -std=c++20 -mmacosx-version-min=13.0 -o CMakeFiles/cad_model_graph.dir/src/evaluation/Graph.cpp.o -c \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/evaluation/Graph.cpp\"",
+    "file": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/evaluation/Graph.cpp",
+    "output": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/CMakeFiles/cad_model_graph.dir/src/evaluation/Graph.cpp.o"
+  },
+  {
+    "directory": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug",
+    "command": "/usr/bin/c++ -DQT_CORE_LIB -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang\" -g -std=c++20 -mmacosx-version-min=13.0 -o CMakeFiles/cad_sketch_model.dir/src/sketch/Dependencies.cpp.o -c \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/sketch/Dependencies.cpp\"",
+    "file": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/sketch/Dependencies.cpp",
+    "output": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/CMakeFiles/cad_sketch_model.dir/src/sketch/Dependencies.cpp.o"
+  },
+  {
+    "directory": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug",
+    "command": "/usr/bin/c++ -DQT_CORE_LIB -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/planegcs/src/planegcs\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/src/boost\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/src/eigen\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade\" -g -std=c++20 -mmacosx-version-min=13.0 -o CMakeFiles/cad_sketch_solver.dir/src/sketch/References.cpp.o -c \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/sketch/References.cpp\"",
+    "file": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/sketch/References.cpp",
+    "output": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/CMakeFiles/cad_sketch_solver.dir/src/sketch/References.cpp.o"
+  },
+  {
+    "directory": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug",
+    "command": "/usr/bin/c++ -DQT_CORE_LIB -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang\" -g -std=c++20 -mmacosx-version-min=13.0 -o CMakeFiles/cad_evaluation_plan.dir/src/evaluation/Plan.cpp.o -c \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/evaluation/Plan.cpp\"",
+    "file": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/evaluation/Plan.cpp",
+    "output": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/CMakeFiles/cad_evaluation_plan.dir/src/evaluation/Plan.cpp.o"
+  },
+  {
+    "directory": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug",
+    "command": "/usr/bin/c++ -DCAD_SOURCE_ROOT=\"\\\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\\\"\" -DQT_CORE_LIB -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src\" -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang\" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -o CMakeFiles/cm4_graph.dir/tests/core_modeling/graph.cpp.o -c \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/graph.cpp\"",
+    "file": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/graph.cpp",
+    "output": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/CMakeFiles/cm4_graph.dir/tests/core_modeling/graph.cpp.o"
+  },
+  {
+    "directory": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug",
+    "command": "/usr/bin/c++ -DCAD_SOURCE_ROOT=\"\\\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\\\"\" -DQT_CORE_LIB -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests\" -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang\" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -o CMakeFiles/cm4_plan.dir/tests/core_modeling/graph_plan.cpp.o -c \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/graph_plan.cpp\"",
+    "file": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/graph_plan.cpp",
+    "output": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/CMakeFiles/cm4_plan.dir/tests/core_modeling/graph_plan.cpp.o"
+  },
+  {
+    "directory": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug",
+    "command": "/usr/bin/c++ -DCAD_SOURCE_ROOT=\"\\\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\\\"\" -DQT_CORE_LIB -DQT_GUI_LIB -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests\" -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src\" -I\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/src/sqlite\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade\" -isystem \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui\" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -o CMakeFiles/cm4_store.dir/tests/core_modeling/graph_store.cpp.o -c \"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/graph_store.cpp\"",
+    "file": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/graph_store.cpp",
+    "output": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/CMakeFiles/cm4_store.dir/tests/core_modeling/graph_store.cpp.o"
+  }
+]

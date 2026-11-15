@@ -1,0 +1,54 @@
+{
+  "scope": "Development adapter and native-widget issues, not final acceptance",
+  "date": "2026-10-25",
+  "resolved": [
+    {
+      "issue": "Pinned Difference operand order",
+      "evidence": "slot-difference-red.txt",
+      "fix": "Use second-minus-first order; independent radius/width residuals unchanged"
+    },
+    {
+      "issue": "Pinned proportional Equal reduction between unknowns",
+      "evidence": "slot-overall-ratio-red.txt",
+      "fix": "Express diameter-radius=radius with a native Difference equation; no upstream changes"
+    },
+    {
+      "issue": "Return shortcut intercepts pending spline completion",
+      "evidence": "curve-ui-current.txt",
+      "fix": "Pending spline completion takes Return before Finish Sketch"
+    },
+    {
+      "issue": "Reentrant stale selection during draft undo",
+      "evidence": "curve-ui-reference-trace.txt",
+      "fix": "Rebuild model/list/selection before emitting preview invalidation; stale-selection relations fail closed"
+    },
+    {
+      "issue": "Coplanar curve/plane intersection has no discrete point result",
+      "evidence": "pierce-engine-initial.txt",
+      "fix": "Check exact support/line/control-plane overlap before intersection and report explicit ambiguity; never turn overlap into ordinary coincidence"
+    },
+    {
+      "issue": "Pierce repair lost selected relation during rebuild",
+      "evidence": "pierce-pointer-host.txt",
+      "fix": "Preserve constraint selection by semantic UUID through rebuild/preview so the next explicit repair targets the same relation"
+    },
+    {
+      "issue": "Pointer fixture calculated its first click before the new tool layout settled",
+      "evidence": "pointer-trace.txt",
+      "fix": "Wait for the native event loop/layout after choosing the tool, then derive screen coordinates from the current canvas; production geometry rules unchanged"
+    },
+    {
+      "issue": "Native slot dimension label overlap and redundant numeric-expression text",
+      "evidence": "../20261025T063157.053441Z/verification/visual-review.json",
+      "fix": "Bounded transient label separation and leaders; omit literal expression duplication; Qt shortest round-trip formatting and start-of-field display. Named expressions remain visible, with full values available in Properties."
+    }
+  ],
+  "debugger": "LLDB launch stalled; only owned debugger/reproduction processes were terminated. The targeted exception trace located updateRelations called reentrantly from discardSketchPreview during undoDraftEdit.",
+  "cleanup": "Temporary backtrace instrumentation removed from production source; raw development traces retained",
+  "verification": "Final corrected frozen source: ../20261025T065352.783818Z/verification/verification.json; 67 enabled CTests, 98-unit analysis and native DPR 1-2 matrix pass. Earlier superseded/failing logs remain historical evidence.",
+  "test_harness": {
+    "root_guard": "New test roots use the already permitted cad-module3 prefix and marker; production root refusal was not weakened",
+    "save_copy": "PortableCopy supplies its required new_project_id and Copied policy",
+    "sandbox": "Initial sandboxed Qt tests did not establish worker readiness. Host-side disposable-root executions with local IPC then passed. Those early readiness failures are retained, not geometry failures or pass evidence."
+  }
+}

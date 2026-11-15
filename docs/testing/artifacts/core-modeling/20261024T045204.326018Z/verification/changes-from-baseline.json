@@ -1,0 +1,27 @@
+{
+  "scope": "Frozen verification input changes since the pre-rectangle baseline; not a git diff or a claim of sole ownership of all file contents",
+  "baseline": "docs/testing/artifacts/core-modeling/20261023T170331.720328Z/verification/source-identity.json",
+  "current_aggregate_sha256": "a743c5b0492ff9b921e76c5807f96e7d6cb35914faeb2ab5ee8721153c5d0927",
+  "unchanged_head": "d1fce435b1e9e4f05b7f36fab6392f870fedd8d7",
+  "added": [
+    "src/sketch/Constructions.cpp",
+    "src/sketch/Constructions.hpp",
+    "tests/core_modeling/rectangles.cpp"
+  ],
+  "changed": [
+    "CMakeLists.txt",
+    "apps/desktop/SketchPanel.cpp",
+    "apps/desktop/SketchPanel.hpp",
+    "docs/scripts/check_specs.py",
+    "src/persistence/ProjectStore.cpp",
+    "src/render/SketchView.cpp",
+    "src/render/SketchView.hpp",
+    "src/sketch/Editing.cpp",
+    "src/sketch/Sketch.cpp",
+    "src/sketch/Sketch.hpp",
+    "tests/core_modeling/contracts.cpp",
+    "tests/module4/contracts.cpp",
+    "tools/verify_core_modeling.py"
+  ],
+  "removed": []
+}

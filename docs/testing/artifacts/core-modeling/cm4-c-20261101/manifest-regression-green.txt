@@ -1,0 +1,9 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 67: cm4.support_store
+1/2 Test #67: cm4.support_store ................   Passed    3.89 sec
+    Start 72: cm1.slots
+2/2 Test #72: cm1.slots ........................   Passed    2.20 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   6.10 sec

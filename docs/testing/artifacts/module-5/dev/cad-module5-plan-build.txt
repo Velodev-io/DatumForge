@@ -1,0 +1,11 @@
+[1/11] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Editing.cpp.o
+[2/11] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[3/11] Linking CXX static library libcad_sketch_model.a
+[4/11] Building CXX object CMakeFiles/cad_expressions.dir/src/domain/Expressions.cpp.o
+[5/11] Linking CXX static library libcad_expressions.a
+[6/11] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/Model.cpp.o
+[7/11] Linking CXX static library libcad_feature_model.a
+[8/11] Building CXX object CMakeFiles/cad_evaluation_plan.dir/src/evaluation/Plan.cpp.o
+[9/11] Linking CXX static library libcad_evaluation_plan.a
+[10/11] Building CXX object CMakeFiles/module5_plan.dir/tests/module5/plan.cpp.o
+[11/11] Linking CXX executable module5_plan

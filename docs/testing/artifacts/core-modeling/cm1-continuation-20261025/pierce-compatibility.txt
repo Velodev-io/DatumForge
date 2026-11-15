@@ -1,0 +1,40 @@
+Pierce Point 0.001
+Pierce Line 0.001
+Pierce Circle 0.001
+Pierce Arc 0.001
+Pierce Ellipse 0.001
+Pierce EllipticalArc 0.001
+Pierce Parabola 0.001
+Pierce Spline 0.001
+Pierce Point 1
+Pierce Line 1
+Pierce Circle 1
+Pierce Arc 1
+Pierce Ellipse 1
+Pierce EllipticalArc 1
+Pierce Parabola 1
+Pierce Spline 1
+Pierce Point 1000
+Pierce Line 1000
+Pierce Circle 1000
+Pierce Arc 1000
+Pierce Ellipse 1000
+Pierce EllipticalArc 1000
+Pierce Parabola 1000
+Pierce Spline 1000
+Persistence CreateDocument
+Persistence SetSketches
+Persistence SaveProject
+Persistence SetSketches
+Persistence SaveProject
+Persistence Undo
+Persistence SaveProject
+Persistence Redo
+Persistence SetFeatures
+Persistence SetSketches
+Persistence Undo
+Persistence Redo
+Persistence SetSketches
+Persistence SaveProject
+Persistence PortableCopy
+PASS

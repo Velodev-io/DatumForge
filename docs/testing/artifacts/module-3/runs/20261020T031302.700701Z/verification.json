@@ -1,0 +1,53 @@
+{
+  "scope": "Available-Mac Module 3; no installed-build or full SRS performance acceptance",
+  "status": "Fail",
+  "native_requested": true,
+  "artifacts": "docs/testing/artifacts/module-3/runs/20261020T031302.700701Z",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.5663248330092756
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 13.830809083010536
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 8,
+      "seconds": 18.68512541700329
+    }
+  ],
+  "blocked": [
+    "Windows/Linux native build/UI/filesystem matrix",
+    "Intel/minimum macOS/additional GPUs",
+    "installed packages/signing",
+    "OS-network-disabled workflow",
+    "full physical 8 GB B0\u2013B5 resource budgets"
+  ],
+  "host": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "physical_ram_bytes": 8589934592,
+    "cpu": "Apple M2"
+  }
+}

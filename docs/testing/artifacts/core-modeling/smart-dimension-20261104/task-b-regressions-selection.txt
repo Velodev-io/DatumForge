@@ -1,0 +1,21 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 30: module4.workspace
+1/8 Test #30: module4.workspace ................   Passed    1.43 sec
+    Start 31: module4.tool_selection
+2/8 Test #31: module4.tool_selection ...........   Passed    0.53 sec
+    Start 86: cm3.associated_dimensions
+3/8 Test #86: cm3.associated_dimensions ........   Passed    1.21 sec
+    Start 87: cm3.dimensions
+4/8 Test #87: cm3.dimensions ...................   Passed    0.56 sec
+    Start 88: cm3.dimension_contracts
+5/8 Test #88: cm3.dimension_contracts ..........   Passed   11.69 sec
+    Start 89: cm3.dimension_identity
+6/8 Test #89: cm3.dimension_identity ...........   Passed    0.75 sec
+    Start 90: cm3.completion
+7/8 Test #90: cm3.completion ...................   Passed    2.11 sec
+    Start 91: cm3.completion_contracts
+8/8 Test #91: cm3.completion_contracts .........   Passed   15.05 sec
+
+100% tests passed, 0 tests failed out of 8
+
+Total Test time (real) =  33.35 sec

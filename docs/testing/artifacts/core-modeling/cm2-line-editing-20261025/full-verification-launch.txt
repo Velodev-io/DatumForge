@@ -1,0 +1,6 @@
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/20261025T075641.079768Z/verification
+Running configure
+Running build
+Running isolated CM0 feasibility
+Running ctest
+Fail: ctest; see /Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/20261025T075641.079768Z/verification

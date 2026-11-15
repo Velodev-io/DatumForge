@@ -1,0 +1,61 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 68: cm3.dimension_identity
+1/1 Test #68: cm3.dimension_identity ...........***Failed    2.18 sec
+********* Start testing of DimensionContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : DimensionContracts::initTestCase()
+QWARN  : DimensionContracts::identity() QOpenGLWidget is not supported on this platform.
+QWARN  : DimensionContracts::identity() qt.qpa.fonts: Populating font family aliases took 112 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+FAIL!  : DimensionContracts::identity() Compared doubles are not the same (fuzzy compare)
+   Actual   (dimension.placement->x): 0.04 (0x1.47ae147ae147bp-5)
+   Expected (.07)                   : 0.07000000000000001 (0x1.1eb851eb851ecp-4)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp(123)]
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+QWARN  : DimensionContracts::identity() This plugin does not support propagateSizeHints()
+PASS   : DimensionContracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 1399ms
+********* Finished testing of DimensionContracts *********
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   2.19 sec
+
+The following tests FAILED:
+	 68 - cm3.dimension_identity (Failed)
+Errors while running CTest

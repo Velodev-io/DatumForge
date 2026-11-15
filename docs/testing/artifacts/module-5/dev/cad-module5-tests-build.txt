@@ -1,0 +1,23 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/20] Building CXX object CMakeFiles/cad_expressions.dir/src/domain/Expressions.cpp.o
+[2/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/20] Linking CXX static library libcad_expressions.a
+[6/20] Building CXX object CMakeFiles/cad_evaluation_plan.dir/src/evaluation/Plan.cpp.o
+[7/20] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[8/20] Linking CXX static library libcad_planegcs.a
+[9/20] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[10/20] Linking CXX static library libcad_evaluation_plan.a
+[11/20] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[12/20] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[13/20] Linking CXX static library libcad_sketch_solver.a
+[14/20] Linking CXX static library libcad_part.a
+[15/20] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[16/20] Linking CXX static library libcad_persistence.a
+[17/20] Linking CXX executable module5_engine
+[18/20] Building CXX object CMakeFiles/module5_persistence.dir/tests/module5/persistence.cpp.o
+[19/20] Linking CXX executable module5_persistence

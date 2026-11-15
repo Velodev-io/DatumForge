@@ -1,0 +1,157 @@
+{
+  "scope": "Available-Mac Module 3; no installed-build or full SRS performance acceptance",
+  "status": "Pass: requested available-Mac checks",
+  "native_requested": true,
+  "artifacts": "docs/testing/artifacts/module-3/runs/20261020T032053.836081Z",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.6703386659937678
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 11.842886375001399
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 19.668523165993975
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.40355512499809265
+    },
+    {
+      "name": "static-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "build/macos-debug/compile_commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 119.80406587499601
+    },
+    {
+      "name": "ownership",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-3/runs/20261020T032053.836081Z/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.12857937499938998
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1299876669945661
+    },
+    {
+      "name": "native-module3-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "exit_code": 0,
+      "seconds": 4.202674708998529
+    },
+    {
+      "name": "native-module3-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "exit_code": 0,
+      "seconds": 2.7950952499959385
+    },
+    {
+      "name": "native-module3-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "exit_code": 0,
+      "seconds": 2.914229667003383
+    },
+    {
+      "name": "native-module3-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "exit_code": 0,
+      "seconds": 3.0826569169876166
+    },
+    {
+      "name": "native-module3-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "nativeSketches"
+      ],
+      "exit_code": 0,
+      "seconds": 3.38677545900282
+    },
+    {
+      "name": "native-module2-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module2_contracts",
+        "nativeDocuments"
+      ],
+      "exit_code": 0,
+      "seconds": 2.9711395839985926
+    },
+    {
+      "name": "native-module1-regression",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction"
+      ],
+      "exit_code": 0,
+      "seconds": 2.4796767910011113
+    }
+  ],
+  "blocked": [
+    "Windows/Linux native build/UI/filesystem matrix",
+    "Intel/minimum macOS/additional GPUs",
+    "installed packages/signing",
+    "OS-network-disabled workflow",
+    "full physical 8 GB B0\u2013B5 resource budgets"
+  ],
+  "host": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "physical_ram_bytes": 8589934592,
+    "cpu": "Apple M2"
+  }
+}

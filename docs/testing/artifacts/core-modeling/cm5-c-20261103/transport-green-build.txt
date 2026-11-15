@@ -1,0 +1,8 @@
+[1/8] Automatic MOC for target cad_client
+[2/7] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[3/7] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[4/7] Linking CXX static library libcad_client.a
+[5/7] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[6/7] Building CXX object CMakeFiles/cm5_contracts.dir/tests/core_modeling/modeling_contracts.cpp.o
+[7/7] Linking CXX executable cm5_contracts

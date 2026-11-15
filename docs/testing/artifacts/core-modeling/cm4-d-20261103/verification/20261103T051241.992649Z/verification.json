@@ -1,0 +1,162 @@
+{
+  "status": "Pass: development-build scope; blocked acceptance remains separate",
+  "scope": "CM4.d accepted datum selection, visibility, worker inspection and Normal To",
+  "host": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "steps": [
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 4.337864291010192
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 417.26786604101653
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.3780130000086501
+    },
+    {
+      "name": "changed-source-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/cm4-d-20261103/verification/20261103T051241.992649Z/analysis-commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 74.311988750007
+    },
+    {
+      "name": "architecture",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/cm4-d-20261103/verification/20261103T051241.992649Z/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.12778891599737108
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.23931108400574885
+    },
+    {
+      "name": "coverage",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_core_modeling.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07723262498620898
+    },
+    {
+      "name": "specifications",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "docs/scripts/check_specs.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07708437502151355
+    },
+    {
+      "name": "datums-native-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm4_datum_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 7.283019333990524
+    },
+    {
+      "name": "workspace-native-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_workspace",
+        "nativeWorkspace"
+      ],
+      "exit_code": 0,
+      "seconds": 2.0936586250027176
+    },
+    {
+      "name": "datums-native-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm4_datum_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 6.3897830420173705
+    },
+    {
+      "name": "datums-native-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm4_datum_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 6.581741750007495
+    },
+    {
+      "name": "datums-native-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm4_datum_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 6.999200958001893
+    },
+    {
+      "name": "datums-native-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm4_datum_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 6.863271499983966
+    },
+    {
+      "name": "workspace-native-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_workspace",
+        "nativeWorkspace"
+      ],
+      "exit_code": 0,
+      "seconds": 2.469506333989557
+    }
+  ],
+  "module_11_started": false,
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "blocked_acceptance": [
+    "Physical input devices and assistive technologies",
+    "Installed/signed builds",
+    "Windows/Linux",
+    "Full resource and whole-course acceptance corpus"
+  ],
+  "physical_ram_bytes": 8589934592,
+  "native_verification": "Pass: available Mac, five effective scales, mm/in; synthetic Qt input only",
+  "cm4_e": "Open: full upstream support edit/repair/undo/reopen and course acceptance remain separate",
+  "source_unchanged": true
+}

@@ -1,0 +1,4 @@
+Command: ['build/macos-debug/cm4_plan']
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/graph_plan.cpp:12: code == expected
+
+Exit: 1

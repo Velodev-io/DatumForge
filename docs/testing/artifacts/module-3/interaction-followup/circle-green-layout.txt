@@ -1,0 +1,13 @@
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::pointerGestures() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::pointerGestures() qt.qpa.fonts: Populating font family aliases took 110 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support createPlatformOpenGLContext!
+QWARN  : Contracts::pointerGestures() QOpenGLWidget: Failed to create context
+PASS   : Contracts::pointerGestures()
+PASS   : Contracts::cleanupTestCase()
+Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted, 517ms
+********* Finished testing of Contracts *********

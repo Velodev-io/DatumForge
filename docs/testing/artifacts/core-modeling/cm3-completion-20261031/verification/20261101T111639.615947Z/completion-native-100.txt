@@ -1,0 +1,56 @@
+********* Start testing of CompletionContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : CompletionContracts::initTestCase()
+FAIL!  : CompletionContracts::proposalRestart(fullyDefine) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(142)]
+FAIL!  : CompletionContracts::proposalRestart(infer) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(142)]
+FAIL!  : CompletionContracts::proposalRestart(dimension) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(142)]
+FAIL!  : CompletionContracts::proposalRestart(ordinates) 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(142)]
+FAIL!  : CompletionContracts::dragRestart() 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(194)]
+FAIL!  : CompletionContracts::inferenceRecheckTangent() 'session.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(234)]
+FAIL!  : CompletionContracts::fullyDefineReview(mm) 'session.start(units)' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(290)]
+FAIL!  : CompletionContracts::fullyDefineReview(in) 'session.start(units)' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp(290)]
+PASS   : CompletionContracts::automaticInference()
+PASS   : CompletionContracts::confirmInference()
+PASS   : CompletionContracts::dragCancel(button-held)
+PASS   : CompletionContracts::dragCancel(released-request-pending)
+PASS   : CompletionContracts::dragLastValid()
+PASS   : CompletionContracts::constrainedCurvePointer()
+PASS   : CompletionContracts::dragFamilies(Line)
+PASS   : CompletionContracts::dragFamilies(Circle)
+PASS   : CompletionContracts::dragFamilies(Arc)
+PASS   : CompletionContracts::dragFamilies(Ellipse)
+PASS   : CompletionContracts::dragFamilies(EllipticalArc)
+PASS   : CompletionContracts::dragFamilies(Parabola)
+PASS   : CompletionContracts::dragFamilies(Spline)
+PASS   : CompletionContracts::dragFamilies(Rectangle)
+PASS   : CompletionContracts::dragFamilies(Slot)
+PASS   : CompletionContracts::dragFamilies(Path)
+QINFO  : CompletionContracts::constrainedPointerDrag() Drag release layout delta QPoint(0,292)
+QINFO  : CompletionContracts::constrainedPointerDrag() Drag preview endpoint 0.0353553 0.0353553
+PASS   : CompletionContracts::constrainedPointerDrag()
+PASS   : CompletionContracts::dragProtocol()
+PASS   : CompletionContracts::pathEditor(mm)
+PASS   : CompletionContracts::pathEditor(in)
+PASS   : CompletionContracts::ordinateSeries(shared-mm)
+PASS   : CompletionContracts::ordinateSeries(shared-in)
+PASS   : CompletionContracts::ordinateSeries(origin-mm)
+PASS   : CompletionContracts::ordinateSeries(origin-in)
+PASS   : CompletionContracts::ordinateSeries(reference-mm)
+PASS   : CompletionContracts::ordinateSeries(reference-in)
+PASS   : CompletionContracts::reverseCenterline()
+PASS   : CompletionContracts::reverseBlocked()
+PASS   : CompletionContracts::reverseAligned()
+PASS   : CompletionContracts::reverseComponent()
+PASS   : CompletionContracts::drawingMark()
+PASS   : CompletionContracts::increments()
+PASS   : CompletionContracts::cleanupTestCase()
+Totals: 34 passed, 8 failed, 0 skipped, 0 blacklisted, 62932ms
+********* Finished testing of CompletionContracts *********

@@ -1,0 +1,4 @@
+Command: ['build/macos-debug/cm4_support_model']
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/support/check.hpp:26: rejected
+
+Exit: 1

@@ -1,0 +1,139 @@
+[1/137] Automatic MOC for target cad_client
+[2/135] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/135] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/135] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/135] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[6/135] Building CXX object CMakeFiles/cad_drawing_geometry.dir/src/drawing/Geometry.cpp.o
+[7/135] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[8/135] Linking CXX static library libcad_planegcs.a
+[9/135] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Database.cpp.o
+[10/135] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[11/135] Linking CXX static library libcad_sketch_solver.a
+[12/135] Linking CXX static library libcad_exchange.a
+[13/135] Linking CXX static library libcad_drawing_geometry.a
+[14/135] Automatic MOC for target cad_desktop_ui
+[15/135] Linking CXX static library libcad_geometry.a
+[16/135] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[17/135] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[18/135] Linking CXX static library libcad_persistence.a
+[19/135] Building CXX object CMakeFiles/module1_adversary.dir/tests/module1/adversary.cpp.o
+[20/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[21/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[22/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[23/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+[24/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[25/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[26/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[27/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[28/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+[29/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o
+[30/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ExchangeUI.cpp.o
+[31/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyUI.cpp.o
+[32/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyPanel.cpp.o
+[33/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DrawingUI.cpp.o
+[34/135] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DrawingPanel.cpp.o
+[35/135] Linking CXX static library libcad_desktop_ui.a
+[36/135] Building CXX object CMakeFiles/slice_worker.dir/tests/native/slice_worker.cpp.o
+[37/135] Linking CXX executable module1_adversary
+[38/135] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[39/135] Linking CXX executable slice_worker
+[40/135] Automatic MOC for target module2_contracts
+[41/135] Automatic MOC for target module1_contracts
+[42/135] Automatic MOC for target module3_input
+[43/135] Automatic MOC for target module3_contracts
+[44/135] Automatic MOC for target module4_workspace
+[45/135] Automatic MOC for target module5_contracts
+[46/135] Automatic MOC for target module4_contracts
+[47/135] Automatic MOC for target module6_contracts
+[48/135] Automatic MOC for target module7_contracts
+[49/135] Building CXX object CMakeFiles/harness_probe.dir/tests/unit/harness_probe.cpp.o
+[50/135] Building CXX object CMakeFiles/protocol_spike.dir/tests/integration/protocol_spike.cpp.o
+[51/135] Building CXX object CMakeFiles/storage_spike.dir/tests/integration/storage_spike.cpp.o
+[52/135] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[53/135] Building CXX object CMakeFiles/cad_spike.dir/tests/integration/cad_spike.cpp.o
+[54/135] Building CXX object CMakeFiles/slice_desktop.dir/tests/native/slice_desktop.cpp.o
+[55/135] Building CXX object CMakeFiles/cad-desktop.dir/apps/desktop/main.cpp.o
+[56/135] Building CXX object CMakeFiles/mate_spike.dir/tests/integration/mate_spike.cpp.o
+[57/135] Building CXX object CMakeFiles/module2_domain.dir/tests/module2/domain.cpp.o
+[58/135] Building CXX object CMakeFiles/module2_storage.dir/tests/module2/storage.cpp.o
+[59/135] Building CXX object CMakeFiles/module2_fault_worker.dir/tests/module2/fault_worker.cpp.o
+[60/135] Building CXX object CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o
+[61/135] Building CXX object CMakeFiles/module3_model.dir/tests/module3/model.cpp.o
+[62/135] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[63/135] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[64/135] Building CXX object CMakeFiles/module3_expressions.dir/tests/module3/expressions.cpp.o
+[65/135] Building CXX object CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o
+[66/135] Building CXX object CMakeFiles/module4_persistence.dir/tests/module4/persistence.cpp.o
+[67/135] Building CXX object CMakeFiles/module4_variants.dir/tests/module4/variants.cpp.o
+[68/135] Building CXX object CMakeFiles/module5_plan.dir/tests/module5/plan.cpp.o
+[69/135] Building CXX object CMakeFiles/module5_engine.dir/tests/module5/engine.cpp.o
+[70/135] Building CXX object CMakeFiles/module5_persistence.dir/tests/module5/persistence.cpp.o
+[71/135] Building CXX object CMakeFiles/module5_b2.dir/tests/module5/b2.cpp.o
+[72/135] Building CXX object CMakeFiles/module6_exchange.dir/tests/module6/exchange.cpp.o
+[73/135] Building CXX object CMakeFiles/module7_model.dir/tests/module7/model.cpp.o
+[74/135] Building CXX object CMakeFiles/module6_persistence.dir/tests/module6/persistence.cpp.o
+[75/135] Building CXX object CMakeFiles/module7_geometry.dir/tests/module7/geometry.cpp.o
+[76/135] Building CXX object CMakeFiles/module7_persistence.dir/tests/module7/persistence.cpp.o
+[77/135] Building CXX object CMakeFiles/module7_b3.dir/tests/module7/b3.cpp.o
+[78/135] Building CXX object CMakeFiles/module1_contracts.dir/module1_contracts_autogen/mocs_compilation.cpp.o
+[79/135] Building CXX object CMakeFiles/module8_drawing.dir/tests/module8/drawing.cpp.o
+[80/135] Building CXX object CMakeFiles/module2_contracts.dir/module2_contracts_autogen/mocs_compilation.cpp.o
+[81/135] Building CXX object CMakeFiles/module1_contracts.dir/tests/module1/contracts.cpp.o
+[82/135] Building CXX object CMakeFiles/module3_input.dir/module3_input_autogen/mocs_compilation.cpp.o
+[83/135] Building CXX object CMakeFiles/module2_contracts.dir/tests/module2/contracts.cpp.o
+[84/135] Building CXX object CMakeFiles/module3_contracts.dir/module3_contracts_autogen/mocs_compilation.cpp.o
+[85/135] Building CXX object CMakeFiles/module3_input.dir/tests/module3/input.cpp.o
+[86/135] Building CXX object CMakeFiles/module4_workspace.dir/module4_workspace_autogen/mocs_compilation.cpp.o
+[87/135] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[88/135] Building CXX object CMakeFiles/module4_contracts.dir/module4_contracts_autogen/mocs_compilation.cpp.o
+[89/135] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[90/135] Building CXX object CMakeFiles/module5_contracts.dir/module5_contracts_autogen/mocs_compilation.cpp.o
+[91/135] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[92/135] Building CXX object CMakeFiles/module6_contracts.dir/module6_contracts_autogen/mocs_compilation.cpp.o
+[93/135] Building CXX object CMakeFiles/module5_contracts.dir/tests/module5/contracts.cpp.o
+[94/135] Building CXX object CMakeFiles/module7_contracts.dir/module7_contracts_autogen/mocs_compilation.cpp.o
+[95/135] Building CXX object CMakeFiles/module6_contracts.dir/tests/module6/contracts.cpp.o
+[96/135] Linking CXX executable harness_probe
+[97/135] Linking CXX executable protocol_spike
+[98/135] Linking CXX executable storage_spike
+[99/135] Linking CXX executable cad_spike
+[100/135] Linking CXX executable solver_spike
+[101/135] Linking CXX executable mate_spike
+[102/135] Linking CXX executable slice_desktop.app/Contents/MacOS/slice_desktop
+[103/135] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[104/135] Linking CXX executable module1_contracts
+[105/135] Linking CXX executable module2_domain
+[106/135] Linking CXX executable module2_storage
+[107/135] Linking CXX executable module2_contracts
+[108/135] Linking CXX executable module2_fault_worker
+[109/135] Building CXX object CMakeFiles/module7_contracts.dir/tests/module7/contracts.cpp.o
+[110/135] Linking CXX executable module3_model
+[111/135] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[112/135] Linking CXX executable module3_persistence
+[113/135] Linking CXX executable module3_input
+[114/135] Linking CXX executable module3_solver
+[115/135] Linking CXX executable module3_contracts
+[116/135] Linking CXX executable module3_expressions
+[117/135] Linking CXX executable module4_workspace
+[118/135] Linking CXX executable module4_geometry
+[119/135] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[120/135] Linking CXX executable module4_contracts
+[121/135] Linking CXX executable module5_plan
+[122/135] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[123/135] Linking CXX executable module5_engine
+[124/135] Linking CXX executable module5_persistence
+[125/135] Linking CXX executable module5_b2
+[126/135] Linking CXX executable module6_exchange
+[127/135] Linking CXX executable module5_contracts
+[128/135] Linking CXX executable module6_persistence
+[129/135] Linking CXX executable module7_model
+[130/135] Linking CXX executable module6_contracts
+[131/135] Linking CXX executable module7_geometry
+[132/135] Linking CXX executable module7_persistence
+[133/135] Linking CXX executable module7_contracts
+[134/135] Linking CXX executable module7_b3
+[135/135] Linking CXX executable module8_drawing

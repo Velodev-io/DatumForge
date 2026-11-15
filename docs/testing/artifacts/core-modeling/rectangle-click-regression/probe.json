@@ -1,0 +1,10 @@
+{
+  "scope": "Temporary tagged test-only instrumentation; no production code change",
+  "exit_code": 1,
+  "test_source_sha256": "e2aea5d920a703470e64dcd3dadbcc4374c9b7f9b56815880f7b0328b7ae3f79",
+  "hypotheses": [
+    "Selection layout changes canvas coordinates before release",
+    "Stationary click creates a drag preview",
+    "Worker state remains outstanding from earlier operation"
+  ]
+}

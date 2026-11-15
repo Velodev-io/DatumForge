@@ -1,0 +1,6 @@
+[1/8] Automatic MOC for target module4_workspace
+[2/7] Automatic MOC for target module3_contracts
+[3/6] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[4/6] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[5/6] Linking CXX executable module4_workspace
+[6/6] Linking CXX executable module3_contracts

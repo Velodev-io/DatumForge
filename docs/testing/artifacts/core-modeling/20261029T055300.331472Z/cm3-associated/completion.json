@@ -1,0 +1,91 @@
+{
+  "status": "Pass for the available-Mac CM3 dimension slice; retained legacy arc failure and full acceptance limits remain explicit",
+  "scope": "Centerline diameter, shared-datum per-point ordinates, circular ArcLength and prior dimension regressions",
+  "full_suite": {
+    "status": "Pass",
+    "enabled_passed": 73,
+    "failed": 0,
+    "disabled": [
+      "harness.deliberate_failure"
+    ],
+    "seconds": 349.22,
+    "record": "ctest.txt",
+    "source_identity": "source-identity.json"
+  },
+  "test_only_followup": {
+    "source_identity": "source-identity-after-test-sync.json",
+    "changed_files": [
+      "tests/core_modeling/dimension_contracts.cpp"
+    ],
+    "production_inputs_unchanged": true,
+    "correction": "Wait for paintEvent to publish a label hit rectangle, then arm the modal test timer immediately before clicking. Existing functional checks retained.",
+    "updated_widget_test_repeats_passed": 4,
+    "record": "verification-after-test-sync.json"
+  },
+  "static": {
+    "status": "Pass",
+    "scope": "Changed production/all CM3 test translation units, then reanalysis of the modified test; format, ownership, research, coverage and specification checks",
+    "records": [
+      "verification.json",
+      "verification-after-test-sync.json"
+    ]
+  },
+  "native": {
+    "status": "Pass for scoped workflows",
+    "scales_percent": [
+      100,
+      125,
+      150,
+      175,
+      200
+    ],
+    "units": [
+      "mm",
+      "in"
+    ],
+    "records": [
+      "native-100-after-test-sync/result.txt",
+      "native-matrix-completion.json"
+    ],
+    "endpoint_regressions": "Native workspace and arcs passed at 100% and 200%; one earlier arc-count failure is retained below"
+  },
+  "retained_failures": [
+    {
+      "record": "cm3-native-100.txt",
+      "meaning": "Label hit rectangle checked before paint completed; corrected only the test synchronization"
+    },
+    {
+      "record": "arcs-native-100-after-test-sync.txt",
+      "meaning": "Legacy arc expected two tangents but observed one. Cause unproven; no production change.",
+      "passing_followups": [
+        "arcs-native-100-isolated-recheck/result.txt",
+        "arc-100-recheck-2.txt",
+        "arc-100-recheck-3.txt",
+        "arcs-native-200-completion.txt"
+      ],
+      "limit": "Three consecutive isolated 100% passes and the 200% pass do not prove the original cause or full interaction repeatability acceptance"
+    }
+  ],
+  "previous_sleep_interrupted_scope": "../../20261028T075209.998083Z/cm3-associated/completion.json",
+  "prior_action_failure": "Did not reproduce in four awake preflight repeats, the full suite, or the four post-sync widget repeats; no production fix or sole-cause claim",
+  "source_unchanged_at_native_completion": true,
+  "visual_review": {
+    "status": "Pass for inspected canvas captures",
+    "images": [
+      "native-200-completion/cm3-CenterlineDiameter-mm.png",
+      "native-125-completion/cm3-ArcLength-in.png"
+    ],
+    "limit": "Canvas/label inspection; not physical input, installed-build or assistive-technology acceptance"
+  },
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false,
+  "remaining": [
+    "Multientity driving path length, grouped ordinate placement and other dimension controls",
+    "Inference/automatic relations, Fully Define, constrained dragging",
+    "Broad interaction repeatability, per-variant recovery, physical 8 GB resource, installed, Windows/Linux and physical input/accessibility acceptance"
+  ]
+}

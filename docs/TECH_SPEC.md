@@ -1,7 +1,7 @@
 # Technical Specification and Implementation Plan — Solidworks Clone
 
 **Version:** 0.1 · **Date:** 19 October 2026  
-**Status:** Module 0 feasibility experiments implemented/in verification; production modules and product acceptance remain unstarted.
+**Status:** Modules 1–3 available-Mac scope implemented and scoped verification recorded; cross-platform matrix Blocked. Module 4.0 workspace UI is implemented/verified for available-Mac scope; exact features 4.1–4.4 have available-Mac implementation and scoped evidence; Module 5 is verified for available-Mac scope; Module 6 has verified available-Mac Part exchange/copy scope; full resource/platform acceptance remains Blocked; Modules 7–12 have not started; full product acceptance remains pending.
 **Constraints:** Native macOS/Windows/Linux, local core, **8 GB system RAM minimum**.  
 **Authority:** [SRS](SRS.md) → [SDD](SDD.md) → contracts below → ordered modules. [Step Zero](STEP_ZERO.md) is Module 0.
 
@@ -212,30 +212,30 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 1.1 — Build the application frame
 
-- [ ] **1.1a:** Create the Qt main window, dock layout, document tabs, command registry, and persistent layout preferences; use original icons and clear unavailable-command reasons.
-- [ ] **1.1b:** Create explicit UI state for active document, edit mode, selection, command session, preview generation, and save/job status. Avoid an independent mutable model in each panel.
+- [x] **1.1a:** Create the Qt main window, dock layout, document tabs, command registry, and persistent layout preferences; use original icons and clear unavailable-command reasons.
+- [x] **1.1b:** Create explicit UI state for active document, edit mode, selection, command session, preview generation, and save/job status. Avoid an independent mutable model in each panel.
 
 #### 1.2 — Implement worker lifecycle and transport
 
-- [ ] **1.2a:** Start one CAD worker using private local IPC, negotiate versions/epoch, validate typed envelopes/limits, and expose correlated errors.
-- [ ] **1.2b:** Implement preview coalescing, bounded requests, operation-outcome query, disconnect/restart, and abandoned buffer cleanup. Worker death must leave the UI able to offer recovery.
+- [x] **1.2a:** Start one CAD worker using private local IPC, negotiate versions/epoch, validate typed envelopes/limits, and expose correlated errors.
+- [x] **1.2b:** Implement preview coalescing, bounded requests, operation-outcome query, disconnect/restart, and abandoned buffer cleanup. Worker death must leave the UI able to offer recovery.
 
 #### 1.3 — Implement the viewport boundary
 
-- [ ] **1.3a:** Display worker-generated meshes, instances, cameras, highlights, and selection IDs; route exact geometry queries to the worker.
-- [ ] **1.3b:** Support orbit/pan/zoom/fit/view modes, basic overlays, resize/docking, and stale-result rejection; measure the native slice on each available platform.
+- [x] **1.3a:** Display worker-generated meshes, instances, cameras, highlights, and selection IDs; route exact geometry queries to the worker.
+- [x] **1.3b:** Support orbit/pan/zoom/fit/view modes, basic overlays, resize/docking, and stale-result rejection; measure the native slice on each available platform.
 
 #### 1.4 — Required module tests
 
-- [ ] **1.4a — T-01, T-03, T-04, T-35, NFR-013 / T-53:** Verify shell placement, navigation, synchronized selection, explicit preview states, and architectural ownership on real native builds.
-- [ ] **1.4b — Protocol failure corpus:** Inject old epochs, out-of-order preview generations, lost acknowledgments, malformed control frames, invalid mesh indices, oversized allocation requests, and worker termination. Expect rejection/cleanup without UI model corruption.
+- [x] **1.4a — T-01, T-03, T-04, T-35, NFR-013 / T-53:** Verify shell placement, navigation, synchronized selection, explicit preview states, and architectural ownership on real native builds.
+- [x] **1.4b — Protocol failure corpus:** Inject old epochs, out-of-order preview generations, lost acknowledgments, malformed control frames, invalid mesh indices, oversized allocation requests, and worker termination. Expect rejection/cleanup without UI model corruption.
 - [ ] **1.4c — Native graphics matrix:** Verify picking/overlays at supported scales and X11/Wayland where applicable. Record actual Mac/Windows/Linux results separately; a box display is not part-modeling acceptance.
 
 **Test pass criteria:** A usable native shell renders correct revision-tagged data, rejects stale/malformed messages, and survives worker exit on every currently verified target.
 
 **Completion check:** UI/worker/render contracts work with real processes; untested platform rows remain pending.
 
-**Evidence:** `docs/testing/module-1.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-1.md`. **Current status:** 8 lettered tasks Pass on the available Mac reference-workspace scope; 1.4c Blocked pending other native platforms/hardware. Subsequent Module 2 work is recorded below.
 
 
 ### Module 2 — Document semantics, persistence, and recovery foundation
@@ -246,22 +246,22 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 2.1 — Implement documents and semantic transactions
 
-- [ ] **2.1a:** Implement part/assembly/drawing records, entities, typed parameters, units, revisions, and project identity; validate all incoming mutations in the worker.
-- [ ] **2.1b:** Add operation-id deduplication bound to request hash and revision. Implement document create/switch/close, command deltas, and basic undo/redo without retaining full BRep copies per edit.
+- [x] **2.1a:** Implement part/assembly/drawing records, entities, typed parameters, units, revisions, and project identity; validate all incoming mutations in the worker.
+- [x] **2.1b:** Add operation-id deduplication bound to request hash and revision. Implement document create/switch/close, command deltas, and basic undo/redo without retaining full BRep copies per edit.
 
 #### 2.2 — Implement working and saved storage
 
-- [ ] **2.2a:** Materialize schema/indexes/foreign keys, bounded object streams, private working DB, durable command commits, and authoritative-vs-cache object classification.
-- [ ] **2.2b:** Implement standalone snapshot publication, Save As, saved/current revision tracking, canonical writer locks, version rejection, and a migration-copy skeleton.
+- [x] **2.2a:** Materialize schema/indexes/foreign keys, bounded object streams, private working DB, durable command commits, and authoritative-vs-cache object classification.
+- [x] **2.2b:** Implement standalone snapshot publication, Save As, saved/current revision tracking, canonical writer locks, version rejection, and a migration-copy skeleton.
 
 #### 2.3 — Implement early recovery
 
-- [ ] **2.3a:** Recover committed semantic revisions after worker restart and offer saved versus recoverable versions on application restart.
-- [ ] **2.3b:** Add retained-root tracking for active jobs, history, and recovery; support storage errors without inventing success or deleting the previous valid project.
+- [x] **2.3a:** Recover committed semantic revisions after worker restart and offer saved versus recoverable versions on application restart.
+- [x] **2.3b:** Add retained-root tracking for active jobs, history, and recovery; support storage errors without inventing success or deleting the previous valid project.
 
 #### 2.4 — Required module tests
 
-- [ ] **2.4a — T-02, T-06–T-10:** Create all document kinds, persist identities and units, switch/close with unsaved changes, replay duplicate commands, and exercise undo/redo boundaries.
+- [x] **2.4a — T-02, T-06–T-10:** Create all document kinds, persist identities and units, switch/close with unsaved changes, replay duplicate commands, and exercise undo/redo boundaries.
 - [ ] **2.4b — T-07–T-08, T-34, T-39, NFR-011 / T-51:** Use real temporary SQLite/files to kill before/after working commit and saved-snapshot publication; expect exactly the documented durable/saved revision and intact originals.
 - [ ] **2.4c — Writer/schema/storage failures:** Try alias paths, a live second writer, newer schema, failed migration, disk full, denied write, and missing blob. Expect safe refusal and an actionable recovery path.
 
@@ -269,7 +269,7 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 **Completion check:** Document/persistence tests pass; later geometry and dependency acceptance is explicitly still pending.
 
-**Evidence:** `docs/testing/module-2.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-2.md`. **Current status:** 7 lettered tasks Pass for the documented available-Mac foundation; 2.4b/2.4c Blocked for full native platform completion despite passing Mac cases. Windows/Linux and physical power-loss checks remain Blocked. Module 3 was subsequently authorized; its separate evidence follows.
 
 
 ### Module 3 — Planar sketches, constraints, and expressions
@@ -280,64 +280,72 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 3.1 — Create planar sketch editing
 
-- [ ] **3.1a:** Implement support-plane coordinate frames, points/lines/polylines/rectangles/circles/arcs, construction flags, snapping, and persistent sketch IDs.
-- [ ] **3.1b:** Integrate viewport/entity selection, dimensions, context labels, keyboard cancellation, and command previews with semantic transactions.
+- [x] **3.1a:** Implement support-plane coordinate frames, points/lines/polylines/rectangles/circles/arcs, construction flags, snapping, and persistent sketch IDs.
+- [x] **3.1b:** Integrate viewport/entity selection, dimensions, truthful empty/edit context, tool-specific fields, and command previews with semantic transactions. Circle pointer input must press at the center, resize continuously while held, and finish into the local draft on release; Escape cancels the in-progress primitive or leaves the drawing tool while retaining completed draft geometry; explicit Cancel Sketch discards the whole edit. Line/polyline/rectangle input must show the pending segment or opposite corner before completion. Centerpoint Arc pointer input must click center, move/click start point and radius, then move/click end point with live unit-aware radius/sweep feedback in either direction. No semantic entity or worker request is created for unfinished pointer input; zero/full-turn sweeps are refused; Escape/tool changes cancel only that unfinished construction. 3 Point Arc must place start/end/bend with live curvature; Tangent Arc must begin at a selected line/arc endpoint, infer tangent or normal in four intent directions, allow returning to the endpoint to reset intent, and preview radius/sweep before completion. The Arc flyout shares registry actions and remembers the method. Chained Line must support move-away/return Arc transition and resume Line after completion. Numeric creation remains precise and separate from pointer snapping. Reopened on 20 October 2026 for a stable camera during viewport/dock resizing, screen-distance snapping with an optional grid, click/drag creation, trackpad pan/pinch, direct selection properties/handles, bounded draft undo/redo, and tool cancellation that preserves completed draft geometry.
 
 #### 3.2 — Integrate constraints and diagnosis
 
-- [ ] **3.2a:** Map supported constraint/entity combinations to solver variables with defined ownership; implement fixed, geometric, and dimensional constraints.
-- [ ] **3.2b:** Validate finite outputs, residuals, radii, degeneracy, degrees of freedom, redundancy/conflict reports, and drag branch continuity; preserve the accepted state on failure.
+- [x] **3.2a:** Map supported constraint/entity combinations to solver variables with defined ownership; implement fixed, geometric, and dimensional constraints. Arc endpoint joins must store stable curve IDs and endpoint selectors, map coincidence plus tangent/normal relations to the worker solver, and preserve those relations through save/reopen.
+- [x] **3.2b:** Validate finite outputs, residuals, radii, degeneracy, degrees of freedom, redundancy/conflict reports, and drag branch continuity; preserve the accepted state on failure. Include arc join branch continuity, auxiliary endpoint variables in the existing numerical cap, and stored start/sweep validation.
 
 #### 3.3 — Implement units and expressions
 
-- [ ] **3.3a:** Implement SI semantics, display-unit parsing/formatting, dimensional arithmetic, name references, AST limits, and cycle detection without general code evaluation.
-- [ ] **3.3b:** Make dimension editing, constraint deletion, undo/redo, save/reopen, and canceled dragging coherent operations.
+- [x] **3.3a:** Implement SI semantics, display-unit parsing/formatting, dimensional arithmetic, name references, AST limits, and cycle detection without general code evaluation.
+- [x] **3.3b:** Make dimension editing, constraint deletion, undo/redo, save/reopen, and canceled dragging coherent operations.
 
 #### 3.4 — Required module tests
 
-- [ ] **3.4a — T-12–T-16:** Run valid, underdefined, fully defined, redundant, contradictory, singular, and degenerate sketches; verify geometric residuals and declared diagnostics.
-- [ ] **3.4b — Unit/expression corpus:** Check mm/inch conversion, degrees/radians, mixed-unit arithmetic, invalid dimensions, negative radii, nonfinite numbers, cyclic names, and AST limits.
-- [ ] **3.4c — Native interaction and persistence:** Create B1 sketches through the UI; cancel a drag/edit, undo/redo, save/reopen, and verify identities/values. Check actual focus and keyboard behavior.
+- [x] **3.4a — T-12–T-16:** Run valid, underdefined, fully defined, redundant, contradictory, singular, and degenerate sketches; verify geometric residuals and declared diagnostics.
+- [x] **3.4b — Unit/expression corpus:** Check mm/inch conversion, degrees/radians, mixed-unit arithmetic, invalid dimensions, negative radii, nonfinite numbers, cyclic names, and AST limits.
+- [ ] **3.4c — Native interaction and persistence:** Create B1 sketches through the UI; cancel a drag/edit, undo/redo, save/reopen, and verify identities/values. Check actual focus and keyboard behavior. Exercise circle press/move/release at multiple radii, transient cancellation, zero-size refusal, tool switching, numeric creation, and line/rectangle live previews; verify no project revision changes before explicit sketch acceptance.
 
 **Test pass criteria:** Supported sketches solve and edit correctly; invalid/ambiguous numerical outcomes are exposed without changing accepted geometry.
 
 **Completion check:** B1 sketch stage works natively and offline with real solver and persistence evidence.
 
-**Evidence:** `docs/testing/module-3.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-3.md` and the separate interaction repair reports. **Current status:** 3.1b repairs and expanded direct-editing/draft-history checks Pass for available-Mac scope; see `docs/testing/module-3-input-repair.md` and the combined workspace run. Historical results remain scoped to their original coverage. 3.4c is Blocked for full native platform completion; actual Mac interaction evidence is recorded separately. Windows/Linux and OS-network-disabled acceptance remain Blocked. Later authorization initially covered 4.0a–c workspace UI; the subsequent explicit Module 4 instruction now covers 4.1a onward and stops before Module 5.
 
 
 ### Module 4 — Exact part features and measurement
 
-**Purpose:** Convert design definitions into valid precise solids with useful editing and measurement.  
+**Purpose:** Align the native modeling workspace, then convert design definitions into valid precise solids with useful editing and measurement.  
 **Prerequisites:** Module 3; prototype topology/history contract from Module 0. Full repair UX arrives in Module 5.  
-**Requirement/design anchors:** FR-017–FR-018, FR-022, FR-025; SDD §§6–8, 11.
+**Requirement/design anchors:** FR-001, FR-003–FR-005, FR-017–FR-018, FR-022, FR-025; SDD §§6–8, 10–11.
+
+#### 4.0 — Align the native modeling workspace before adding solid tools
+
+The user authorized the proposed implementation order on 20 October 2026: repair Module 3 interaction first, then execute 4.0a → 4.0b → 4.0c and verify available targets. That historical authorization covered workspace tasks only. The subsequent instruction explicitly authorizes all remaining Module 4 tasks, starting with 4.1a; stop before Module 5. Existing feature task IDs remain unchanged. See the implementation scope record.
+
+- [x] **4.0a:** Introduce SolidWorks-style **Features / Sketch / Evaluate command tabs** using the existing shared action registry, menus, search, shortcuts and real command availability. Group discoverable sketch tools and contextual commands with original icons and text. Unimplemented operations must remain unavailable with reasons; no decorative functioning controls. Preserve native macOS global menus and native Windows/Linux behavior.
+- [x] **4.0b:** Put the active **PropertyManager on the left**, sharing the manager region with the model/feature tree. Provide a command title, selection prompts, contextual fields, persistent accept/cancel and diagnostics. Show planes, origin and sketches under the active document, adding feature/history nodes as their engines arrive. Keep the central viewport dominant, the right resource Task Pane optional/collapsible, and documents/units/edit/save/job status along the bottom. Preserve stable IDs, tree state, keyboard focus and worker transaction ownership when switching panels.
+- [ ] **4.0c — T-01, T-03–T-05 layout acceptance:** Compare actual native screenshots and workflows against the preserved UI atlas and SDD §10. Verify command discovery, switching tree/PropertyManager, circle creation/edit/cancel, disabled reasons, pan/zoom/selection, document switching and save status at 1280×800 and 100/125/150/175/200% scaling. Test supported native platforms when available; mark unavailable environments Blocked. Record deliberate differences from SolidWorks and check for clipped controls, inaccessible actions and extra geometry/project writes.
 
 #### 4.1 — Implement extrusion and revolve
 
-- [ ] **4.1a:** Implement the exact R1 schemas for add/new-body/cut extrusion and revolve, profile validation, axis/direction/extent controls, and preview/commit.
-- [ ] **4.1b:** Validate units, body count, closure, self-intersection, tolerance growth, and kernel errors; preserve last committed geometry on rejected operations.
+- [x] **4.1a:** Implement the exact R1 schemas for add/new-body/cut extrusion and revolve, profile validation, axis/direction/extent controls, and preview/commit.
+- [x] **4.1b:** Validate units, body count, closure, self-intersection, tolerance growth, and kernel errors; preserve last committed geometry on rejected operations.
 
 #### 4.2 — Implement the remaining initial features
 
-- [ ] **4.2a:** Add constant-radius fillet, equal-distance chamfer, simple hole, linear/circular pattern, and mirror in the declared supported cases.
-- [ ] **4.2b:** Emit provenance/history maps for generated/modified/deleted topology as each operation is introduced. Unsupported variants stay unavailable with explanations.
+- [x] **4.2a:** Add constant-radius fillet, equal-distance chamfer, simple hole, linear/circular pattern, and mirror in the declared supported cases.
+- [x] **4.2b:** Emit provenance/history maps for generated/modified/deleted topology as each operation is introduced. Unsupported variants stay unavailable with explanations.
 
 #### 4.3 — Implement measurements and material density
 
-- [ ] **4.3a:** Query exact lengths/angles/radii/area/volume/bounds and optional density-based mass at an explicit result revision.
-- [ ] **4.3b:** Integrate feature parameter editing, previews, per-feature timing, cancel paths, and initial history transactions; retain worker ownership of exact BRep.
+- [x] **4.3a:** Query exact lengths/angles/radii/area/volume/bounds and optional density-based mass at an explicit result revision.
+- [x] **4.3b:** Integrate feature parameter editing, previews, per-feature timing, cancel paths, and initial history transactions; retain worker ownership of exact BRep.
 
 #### 4.4 — Required module tests
 
-- [ ] **4.4a — T-17–T-18, T-22, T-25:** Compare known boxes, cylinders, bracket dimensions/volume, hole counts, and supported feature outcomes to analytic expected values; verify exact output validity.
-- [ ] **4.4b — NFR-007–NFR-008 / T-47–T-48:** Change mesh detail and display mode; expect unchanged exact measurements/precise results. Test unit scales, tolerances, invalid radius and self-intersecting profiles.
+- [x] **4.4a — T-17–T-18, T-22, T-25:** Compare known boxes, cylinders, bracket dimensions/volume, hole counts, and supported feature outcomes to analytic expected values; verify exact output validity.
+- [x] **4.4b — NFR-007–NFR-008 / T-47–T-48:** Change mesh detail and display mode; expect unchanged exact measurements/precise results. Test unit scales, tolerances, invalid radius and self-intersecting profiles.
 - [ ] **4.4c — Native B1 vertical slice:** Sketch → extrude → cut/pattern → fillet → dimension edit → undo/redo → save/reopen → worker restart. Expect correct shape, parameters, and durable state.
 
-**Test pass criteria:** Every supported initial feature has valid, invalid, cancel, persistence, and analytic-invariant coverage.
+**Test pass criteria:** The 4.0 native command-tab/left-PropertyManager layout checks pass for declared targets, and every supported initial feature has valid, invalid, cancel, persistence, and analytic-invariant coverage.
 
-**Completion check:** B1 modeling slice passes; large history/reference mutation corpus is owned by Module 5.
+**Completion check:** The planned modeling layout and B1 modeling slice pass with native evidence; large history/reference mutation corpus is owned by Module 5.
 
-**Evidence:** `docs/testing/module-4.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-4.md`. **Current status:** 4.0a/4.0b Pass for available-Mac scope; 4.0c Blocked for full platform/device acceptance despite passing Cocoa workflows and screenshots at all five effective scales. 4.1a–4.4b Pass for the available-Mac scope in the task register. 4.4c has passing native B1 evidence at all five effective scales but remains Blocked for full native platform/device completion. Dependency graphs/reference repair are unstarted. Stop before Module 5 (5.1a).
 
 
 ### Module 5 — Dependencies, rebuilds, topology references, and repair
@@ -348,30 +356,30 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 5.1 — Implement dependency evaluation
 
-- [ ] **5.1a:** Build explicit feature/expression/reference dependencies; implement affected-descendant invalidation, cycle rejection, versioned fingerprints, and deterministic evaluation order.
-- [ ] **5.1b:** Implement rename/suppress/delete/reorder with impact preview, valid dependency constraints, and visibly stale last-valid results after failures.
+- [x] **5.1a:** Build explicit feature/expression/reference dependencies; implement affected-descendant invalidation, cycle rejection, versioned fingerprints, and deterministic evaluation order.
+- [x] **5.1b:** Implement rename/suppress/delete/reorder with impact preview, valid dependency constraints, and visibly stale last-valid results after failures.
 
 #### 5.2 — Implement reference evolution and repair
 
-- [ ] **5.2a:** Resolve semantic references using kernel history plus constrained geometry/context matching; represent split/merge/deleted and ambiguous outcomes explicitly.
-- [ ] **5.2b:** Build a repair workspace showing owner, former role, candidate geometry, and affected dependents; replacement is an explicit undoable command.
+- [x] **5.2a:** Resolve semantic references using kernel history plus constrained geometry/context matching; represent split/merge/deleted and ambiguous outcomes explicitly.
+- [x] **5.2b:** Build a repair workspace showing owner, former role, candidate geometry, and affected dependents; replacement is an explicit undoable command.
 
 #### 5.3 — Make history and caches coherent
 
-- [ ] **5.3a:** Bound immutable result caches, prevent stale-revision export/measurement, and preserve authoritative inputs during trimming.
-- [ ] **5.3b:** Complete B2 history, multi-document dependency changes, undo/redo retention, and recoverable semantic rebuild after worker restart.
+- [x] **5.3a:** Bound immutable result caches, prevent stale-revision export/measurement, and preserve authoritative inputs during trimming.
+- [x] **5.3b:** Complete B2 history, multi-document dependency changes, undo/redo retention, and recoverable semantic rebuild after worker restart.
 
 #### 5.4 — Required module tests
 
-- [ ] **5.4a — T-19–T-21:** Edit upstream dimensions, suppress/delete/reorder features, introduce cycles, and verify affected rebuild sets, stale markers, and unchanged unrelated branches.
-- [ ] **5.4b — Topology failure corpus:** Split/delete/merge faces, vary pattern counts, and create symmetric candidates. Expect correct supported history tracking and explicit ambiguity rather than arbitrary reassignment.
+- [x] **5.4a — T-19–T-21:** Edit upstream dimensions, suppress/delete/reorder features, introduce cycles, and verify affected rebuild sets, stale markers, and unchanged unrelated branches.
+- [x] **5.4b — Topology failure corpus:** Split/delete/merge faces, vary pattern counts, and create symmetric candidates. Expect correct supported history tracking and explicit ambiguity rather than arbitrary reassignment.
 - [ ] **5.4c — T-09, NFR-009, NFR-012 / T-49, T-52:** Run B2 edit/undo/redo and repeated equivalent rebuilds, compare invariants within tolerance, inspect retained roots and post-trim live objects.
 
 **Test pass criteria:** Dependency-invalid edits are rejected and topology changes produce correct references or explicit repair needs; no false-current result is published.
 
 **Completion check:** B2 semantic/rebuild correctness and topology mutation corpus pass with real engine evidence.
 
-**Evidence:** `docs/testing/module-5.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-5.md`. **Current status:** Feasible available-Mac implementation and verification complete; 5.1a–5.4b checked for that scope. 5.4c B2 correctness/cache subset Pass; total live-object/resource and full platform/device acceptance Blocked. Historical boundary superseded by explicit Module 6 and Module 7 authorization on 21 October 2026; stop before Module 8 / 8.1a.
 
 
 ### Module 6 — Neutral exchange and portable project copies
@@ -382,30 +390,30 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 6.1 — Implement background import
 
-- [ ] **6.1a:** Import STEP/IGES with units, provenance, source blob retention, shape validity, warnings, and explicit healing choices.
+- [x] **6.1a:** Import STEP/IGES with units, provenance, source blob retention, shape validity, warnings, and explicit healing choices.
 - [ ] **6.1b:** Expose bounded job progress/cancellation, source-size admission, parser failure, and peak memory behavior; preserve source files.
 
 #### 6.2 — Implement exports
 
-- [ ] **6.2a:** Export precise STEP/IGES from a declared valid revision and STL from explicit units/detail settings.
-- [ ] **6.2b:** Stream to temporary output and publish only on success; compare round-trip invariants and report unsupported/lost information.
+- [x] **6.2a:** Export precise STEP/IGES from a declared valid revision and STL from explicit units/detail settings.
+- [x] **6.2b:** Stream to temporary output and publish only on success; compare round-trip invariants and report unsupported/lost information.
 
 #### 6.3 — Implement dependency closure and portable copy
 
-- [ ] **6.3a:** Collect assembly/drawing/source dependencies by identity/revision, report missing references, and embed selected required definitions/blobs in a new snapshot.
-- [ ] **6.3b:** Make linked-versus-copied sources, new project identity, manifest, and overwrite behavior explicit; complete richer assembly/drawing cases in Modules 7–8.
+- [x] **6.3a:** Collect assembly/drawing/source dependencies by identity/revision, report missing references, and embed selected required definitions/blobs in a new snapshot.
+- [x] **6.3b:** Make linked-versus-copied sources, new project identity, manifest, and overwrite behavior explicit; complete richer assembly/drawing cases in Modules 7–8.
 
 #### 6.4 — Required module tests
 
-- [ ] **6.4a — T-23–T-24:** Run B4 STEP/IGES imports and exports with correct/wrong units, valid and defective geometry, cancellation, and translation warnings. No proprietary feature-history claim is allowed.
-- [ ] **6.4b — T-11:** Make a portable part project, remove original source locations, reopen the copy, and check manifest closure; repeat assembly/drawing coverage when those modules exist.
+- [x] **6.4a — T-23–T-24:** Run B4 STEP/IGES imports and exports with correct/wrong units, valid and defective geometry, cancellation, and translation warnings. No proprietary feature-history claim is allowed.
+- [x] **6.4b — T-11:** Make a portable part project, remove original source locations, reopen the copy, and check manifest closure; repeat assembly/drawing coverage when those modules exist.
 - [ ] **6.4c — T-38, NFR-016 / T-56:** Feed truncated, oversized, high-expansion, and parser-failure fixtures; inject disk full at export. Expect bounded rejection and preserved valid destinations.
 
 **Test pass criteria:** Supported exchange preserves declared invariants, reports translation limits, and handles failure without partial publication.
 
 **Completion check:** B4 exchange correctness passes; assembly/drawing dependency cases remain assigned to their later modules.
 
-**Evidence:** `docs/testing/module-6.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-6.md`. **Current status:** Available-Mac Part exchange/copy implementation and scoped verification complete. Tasks 6.1a, 6.2a–6.3b and 6.4a–b checked for that scope; 6.1b and 6.4c full parser/peak/resource/platform acceptance remain Blocked. Assembly closure is extended by the subsequent authorized Module 7; drawings stay with Module 8. Module 6.1b/6.4c remain deferred and Blocked. Historical stop superseded by explicit Modules 8–10 authorization on 22 October 2026; stop before Module 11 / 11.1a.
 
 
 ### Module 7 — Rigid assemblies, mates, loading, and interference
@@ -416,30 +424,30 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 7.1 — Implement occurrence and loading semantics
 
-- [ ] **7.1a:** Insert part/subassembly occurrences with stable IDs, shared definitions, transforms, grounding, and cycle checks.
-- [ ] **7.1b:** Implement distinct hidden/suppressed/unloaded/unresolved/stale states, coarse-first display, resolve on demand, and bounded definition caches.
+- [x] **7.1a:** Insert part/subassembly occurrences with stable IDs, shared definitions, transforms, grounding, and cycle checks.
+- [x] **7.1b:** Implement distinct hidden/suppressed/unloaded/unresolved/stale states, coarse-first display, resolve on demand, and bounded definition caches.
 
 #### 7.2 — Implement mates and update propagation
 
-- [ ] **7.2a:** Implement the declared rigid planar/axial mate set with solver freedom/conflict diagnostics, drag/preview/cancel, and deterministic accepted transforms.
-- [ ] **7.2b:** Propagate part changes to affected mates/results, support explicit component replacement/relink, and preserve occurrence context in references.
+- [x] **7.2a:** Implement the declared rigid planar/axial mate set with solver freedom/conflict diagnostics, drag/preview/cancel, and deterministic accepted transforms.
+- [x] **7.2b:** Propagate part changes to affected mates/results, support explicit component replacement/relink, and preserve occurrence context in references.
 
 #### 7.3 — Implement interference and portability
 
-- [ ] **7.3a:** Compute supported exact solid interference with touching/overlap/failure distinctions and result highlights.
-- [ ] **7.3b:** Complete assembly dependency-copy/BOM-source metadata and persistence/recovery of occurrences/mates; benchmark B3 while correctness is being developed.
+- [x] **7.3a:** Compute supported exact solid interference with touching/overlap/failure distinctions and result highlights.
+- [x] **7.3b:** Complete assembly dependency-copy/BOM-source metadata and persistence/recovery of occurrences/mates; benchmark B3 while correctness is being developed.
 
 #### 7.4 — Required module tests
 
-- [ ] **7.4a — T-26–T-29:** Build B3, verify independent occurrence transforms and shared definitions, ground/mate parts, check free motion, conflict cycles, broken references, replacement, and undo.
-- [ ] **7.4b — T-30:** Use known touching, disjoint, overlapping, and unsupported bodies; compare expected intersections and ensure failed evaluation is not reported as no interference.
+- [x] **7.4a — T-26–T-29:** Build B3, verify independent occurrence transforms and shared definitions, ground/mate parts, check free motion, conflict cycles, broken references, replacement, and undo.
+- [x] **7.4b — T-30:** Use known touching, disjoint, overlapping, and unsupported bodies; compare expected intersections and ensure failed evaluation is not reported as no interference.
 - [ ] **7.4c — T-11, T-28, NFR-002 / T-42:** Open portable assemblies without originals; measure loading/instance/cache behavior and verify unload/reload does not lose authoritative inputs.
 
 **Test pass criteria:** Supported mates and occurrence updates behave correctly, broken relationships are diagnosable, and sharing/loading reduces duplication without changing results.
 
 **Completion check:** B3 correctness, mate conflict corpus, portable assembly copy, and restart recovery pass.
 
-**Evidence:** `docs/testing/module-7.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-7.md`. **Current status:** Explicitly authorized on 21 October 2026; available-Mac implementation and verification complete; 7.1a–7.4b checked for that scope. 7.4c portable/cache correctness subset passes; full resource/platform acceptance remains Blocked. Historical stop superseded by explicit Modules 8–10 authorization on 22 October 2026; stop before Module 11 / 11.1a.
 
 
 ### Module 8 — Associative drawings, annotations, BOM, and PDF
@@ -450,30 +458,30 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 8.1 — Implement sheets and model views
 
-- [ ] **8.1a:** Create sheet sizes, scale, units, projection convention, and associative base/projected/isometric views with hidden-line processing.
-- [ ] **8.1b:** Track view-source revisions and update status; maintain physical sheet coordinates and current/stale semantics.
+- [x] **8.1a:** Create sheet sizes, scale, units, projection convention, and associative base/projected/isometric views with hidden-line processing.
+- [x] **8.1b:** Track view-source revisions and update status; maintain physical sheet coordinates and current/stale semantics.
 
 #### 8.2 — Implement dimensions and BOM
 
-- [ ] **8.2a:** Add supported dimensions, center marks, text, annotation anchors, and dangling-reference handling; distinguish display override from measured value.
-- [ ] **8.2b:** Generate BOM rows/quantities using an explicit occurrence/suppression policy and stable part identifiers.
+- [x] **8.2a:** Add supported dimensions, center marks, text, annotation anchors, and dangling-reference handling; distinguish display override from measured value.
+- [x] **8.2b:** Generate BOM rows/quantities using an explicit occurrence/suppression policy and stable part identifiers.
 
 #### 8.3 — Implement PDF and portable drawing projects
 
-- [ ] **8.3a:** Export vector paths/text at correct page size/scale; disclose any raster fallback and reject unsupported/stale-current claims.
-- [ ] **8.3b:** Complete drawing dependency closure, save/reopen/undo, and source-change update workflows with recoverable transactions.
+- [x] **8.3a:** Export vector paths/text at correct page size/scale; disclose any raster fallback and reject unsupported/stale-current claims.
+- [x] **8.3b:** Complete drawing dependency closure, save/reopen/undo, and source-change update workflows with recoverable transactions.
 
 #### 8.4 — Required module tests
 
-- [ ] **8.4a — T-31–T-33:** Run B5 and verify projections, sheet scale, measured lengths, dimension values, font/text rendering, BOM counts, and PDF page geometry.
-- [ ] **8.4b — Associativity and missing-source corpus:** Edit/delete source geometry and components; expect updated or explicitly dangling annotations, current/stale view status, and no silently reassigned dimensions.
-- [ ] **8.4c — T-11, AC-05:** Copy the complete drawing project, remove originals, reopen, update, export, and inspect the actual PDF. A screenshot-only print does not pass.
+- [x] **8.4a — T-31–T-33:** Run B5 and verify projections, sheet scale, measured lengths, dimension values, font/text rendering, BOM counts, and PDF page geometry.
+- [x] **8.4b — Associativity and missing-source corpus:** Edit/delete source geometry and components; expect updated or explicitly dangling annotations, current/stale view status, and no silently reassigned dimensions.
+- [x] **8.4c — T-11, AC-05:** Copy the complete drawing project, remove originals, reopen, update, export, and inspect the actual PDF. A screenshot-only print does not pass.
 
 **Test pass criteria:** B5 produces accurate associative views/annotations/BOM and a visually checked, scale-correct PDF.
 
 **Completion check:** Drawing model changes, broken references, portable copy, persistence, and PDF output pass end to end.
 
-**Evidence:** `docs/testing/module-8.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-8.md`. **Current status:** Available-Mac implementation and verification complete for the documented supported drawing scope; 8.1a–8.4c checked. Full platform/device/resource/installed acceptance remains Blocked.
 
 
 ### Module 9 — Unified interaction, accessibility, offline operation, and input safety
@@ -484,30 +492,30 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 9.1 — Unify command interactions
 
-- [ ] **9.1a:** Complete shared property-panel grammar, selection-role prompts, reasons for disabled controls, command search/aliases, and shortcut configuration.
-- [ ] **9.1b:** Implement familiar/simplified layouts using identical commands and model semantics; verify Enter/Escape/focus/transient-dialog behavior with real workflows.
+- [x] **9.1a:** Complete shared property-panel grammar, selection-role prompts, reasons for disabled controls, command search/aliases, and shortcut configuration across part, assembly and drawing commands. Build on the command tabs and left PropertyManager delivered in 4.0; do not defer the basic modeling layout until this module.
+- [x] **9.1b:** Complete familiar/simplified layouts using identical commands and model semantics; verify Enter/Escape/focus/transient-dialog behavior with real workflows. Recheck the 4.0 layout against the UI atlas across all document types, dock restoration, keyboard traversal and accessibility; preserve native platform conventions.
 
 #### 9.2 — Verify accessibility and platform conventions
 
-- [ ] **9.2a:** Provide accessible widget names/roles, keyboard traversal, non-color status cues, scalable controls, and readable selection/error states.
+- [x] **9.2a:** Provide accessible widget names/roles, keyboard traversal, non-color status cues, scalable controls, and readable selection/error states.
 - [ ] **9.2b:** Check Mac/Windows/Linux conventions, native file dialogs, dock layouts at 1280×800 logical resolution, and 100–200% scaling.
 
 #### 9.3 — Harden offline, validation, and diagnostics
 
-- [ ] **9.3a:** Run the actual core workflows with network disabled; remove required external assets, authentication, telemetry, and dev services.
-- [ ] **9.3b:** Bound/validate project/import/IPC/expression inputs; rotate/redact local logs, expose per-feature/job performance, and export diagnostics only on explicit user action.
+- [x] **9.3a:** Run the actual core workflows with network disabled; remove required external assets, authentication, telemetry, and dev services.
+- [x] **9.3b:** Bound/validate project/import/IPC/expression inputs; rotate/redact local logs, expose per-feature/job performance, and export diagnostics only on explicit user action.
 
 #### 9.4 — Required module tests
 
 - [ ] **9.4a — T-05, NFR-010 / T-50:** Run keyboard-only create/edit/repair/save workflows and actual native accessibility/scaling checks per platform; record untested assistive-technology combinations.
-- [ ] **9.4b — T-36–T-38, NFR-014 / T-54:** Complete AC-01–AC-05 offline, inspect diagnostics/redaction, and test malformed inputs without arbitrary command execution or silent uploads.
-- [ ] **9.4c — Native visual review:** Compare placement/workflows against the atlas where supported; verify clear prompts, current/stale/save states, and no active-looking unfinished controls.
+- [x] **9.4b — T-36–T-38, NFR-014 / T-54:** Complete AC-01–AC-05 offline, inspect diagnostics/redaction, and test malformed inputs without arbitrary command execution or silent uploads.
+- [x] **9.4c — Native visual review:** Compare placement/workflows against the atlas where supported; verify clear prompts, current/stale/save states, and no active-looking unfinished controls.
 
 **Test pass criteria:** Implemented workflows are operable offline and by keyboard with native visual/accessibility evidence and bounded unsafe-input handling.
 
 **Completion check:** AC-01–AC-05 UX/security checks pass on the declared support matrix; remaining native gaps block the relevant support claim.
 
-**Evidence:** `docs/testing/module-9.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-9.md`. **Current status:** Available-Mac implementation and scoped verification complete; 9.2b and 9.4a remain Blocked for full native/assistive-technology/device acceptance; other tasks checked for documented available-Mac scope.
 
 
 ### Module 10 — Recovery, migration, undo, and cancellation fault hardening
@@ -518,30 +526,30 @@ Drawing sheet coordinates use explicit physical units and view scale. Model dime
 
 #### 10.1 — Complete durable history and crash recovery
 
-- [ ] **10.1a:** Exercise durable operation deduplication, lost acknowledgments, retained undo/redo roots, worker restart, full-app restart, and recovery selection across parts/assemblies/drawings.
-- [ ] **10.1b:** Distinguish last explicitly saved from newer recoverable revision and prove garbage collection cannot remove required history/import/job objects.
+- [x] **10.1a:** Exercise durable operation deduplication, lost acknowledgments, retained undo/redo roots, worker restart, full-app restart, and recovery selection across parts/assemblies/drawings.
+- [x] **10.1b:** Distinguish last explicitly saved from newer recoverable revision and prove garbage collection cannot remove required history/import/job objects.
 
 #### 10.2 — Harden save, migration, and filesystem behavior
 
 - [ ] **10.2a:** Finish platform-specific atomic replacement/flush, standalone snapshot validation, Save As, backup retention, project lock/alias behavior, and low-disk admission.
-- [ ] **10.2b:** Migrate supported prior versions on copies; reject future/unsupported authoritative geometry versions, failed migrations, missing objects, and corrupted snapshots without overwriting originals.
+- [x] **10.2b:** Migrate supported prior versions on copies; reject future/unsupported authoritative geometry versions, failed migrations, missing objects, and corrupted snapshots without overwriting originals.
 
 #### 10.3 — Close concurrency and cancellation races
 
-- [ ] **10.3a:** Inject cancellation before/after compute, before durable commit, and before publication; define exactly one terminal outcome and clean staged resources.
-- [ ] **10.3b:** Kill stuck workers safely, discard old epoch messages, reconcile uncertain operations by ID, and resume from actual durable state without duplicate effects.
+- [x] **10.3a:** Inject cancellation before/after compute, before durable commit, and before publication; define exactly one terminal outcome and clean staged resources.
+- [x] **10.3b:** Kill stuck workers safely, discard old epoch messages, reconcile uncertain operations by ID, and resume from actual durable state without duplicate effects.
 
 #### 10.4 — Required module tests
 
-- [ ] **10.4a — T-08–T-10, T-34–T-35, T-39, NFR-011 / T-51:** Run a commit/save/recovery crash matrix for all document types; compare project revision, command count, geometry invariants, and saved destination hashes.
-- [ ] **10.4b — NFR-009, NFR-016 / T-49, T-56:** Run disk full, denied permissions, truncated DB/blob, lock aliases, migration failure, object GC, history cap, and repeated edit/undo/redo fixtures.
-- [ ] **10.4c — AC-06 and cancellation race corpus:** Force uncertain acknowledgments and old-process replies. Expect one durable command or a clear canceled outcome, no stale model overwrite, and no orphaned unbounded buffers.
+- [x] **10.4a — T-08–T-10, T-34–T-35, T-39, NFR-011 / T-51:** Run a commit/save/recovery crash matrix for all document types; compare project revision, command count, geometry invariants, and saved destination hashes.
+- [x] **10.4b — NFR-009, NFR-016 / T-49, T-56:** Run disk full, denied permissions, truncated DB/blob, lock aliases, migration failure, object GC, history cap, and repeated edit/undo/redo fixtures.
+- [x] **10.4c — AC-06 and cancellation race corpus:** Force uncertain acknowledgments and old-process replies. Expect one durable command or a clear canceled outcome, no stale model overwrite, and no orphaned unbounded buffers.
 
 **Test pass criteria:** Acknowledged durable work recovers and prior saved projects survive all specified injected failures; unresolved native/filesystem gaps remain explicit blockers.
 
 **Completion check:** Full B6 fault corpus, prior-version migration corpus, and recovery across parts/assemblies/drawings pass.
 
-**Evidence:** `docs/testing/module-10.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-10.md`. **Current status:** Available-Mac implementation and scoped verification complete; 10.2a full platform/filesystem acceptance remains Blocked; other tasks checked for documented available-Mac scope. Stop before Module 11 / 11.1a.
 
 
 ### Module 11 — Real 8 GB performance and cross-module acceptance
@@ -633,5 +641,55 @@ Keep test failures and unavailable environments visible. Visual screenshots, eng
 
 ## 8. Current implementation status
 
-Module 0 feasibility is underway; see [actual task evidence](testing/module-0.md). **Modules 1–12 and T-01–T-56 remain Not run.** Frozen fixture recipes do not imply evaluated production workloads. Spike results do not establish product recovery guarantees or SRS resource budgets. Documentation checks verify structure/evidence links only. Module 1 requires explicit user approval.
+Module 0 feasibility evidence remains in [module-0](testing/module-0.md). The user authorized Module 1 on 19 October 2026; see [Mac reference-workspace implementation and native evidence](testing/module-1.md). Its platform matrix remains Blocked. T-01/T-03/T-04/T-35/T-53 subsets have available-Mac evidence; full associated requirements remain Blocked and other product tests remain Not run. Module 2 document metadata, working/saved persistence, semantic undo/redo and recovery subsets are verified on the available Mac; see [Module 2 evidence](testing/module-2.md). Full associated requirement rows remain Blocked. Module 3 planar sketches, constraints, expressions and transactional editing have scoped available-Mac evidence in [Module 3](testing/module-3.md); full platform completion remains Blocked. Module 4.0 workspace UI is implemented/verified for available-Mac scope; exact features 4.1–4.4 now have available-Mac implementation and verified subsets in [Module 4](testing/module-4.md), with full native platform/device completion Blocked. Module 5 is verified for available-Mac scope; Module 6 has verified available-Mac Part exchange/copy scope; full resource/platform acceptance remains Blocked; Module 7 has verified available-Mac assembly/mate/interference/portable/recovery scope; 7.4c full resource/platform acceptance remains Blocked; Modules 8–10 were explicitly authorized on 22 October 2026 and are implemented and verified for available-Mac scope; stop before Module 11 / 11.1a. Modules 11–12 have not started. Frozen fixture recipes, reference display and small storage fixtures do not establish SRS resource budgets. Documentation checks verify structure/evidence links only.
 
+
+Centerpoint Arc interaction was explicitly repaired on 22 October 2026 after the user selected center → start → end. See [arc interaction evidence](testing/module-3-centerpoint-arc.md). Earlier full-suite source identities remain historical; this repair has separate source and validation evidence. Module 11 remains unstarted.
+
+All three Arc methods and the EDP Line/normal-arc exercise are covered by the [22 October arc follow-up](testing/module-3-all-arcs.md), extending 3.1b/3.2a/3.2b without starting Module 11. Earlier source identities remain historical.
+
+## 9. Core-modeling expansion between Modules 10 and 11
+
+Version 0.1 extension: execute [CM0–CM9 lettered tasks](CORE_MODELING.md) in order.
+[Coverage](research/core-modeling-coverage.json) and [evidence](testing/core-modeling.md)
+are additive; Modules 0–12 and their historical IDs are not renumbered. Full
+Module 11 resource/cross-module acceptance remains unstarted and blocked from
+release completion until the extension and retained gates are reconciled.
+
+CM1 implementation contracts: [planar relations](decisions/core-modeling-relations.md)
+and [five rectangle constructions](decisions/core-modeling-rectangles.md). Grouped
+rectangles use sketch schema 3 and the additional semantic manifest suffix;
+legacy schema 1/2 encodings remain unchanged for ungrouped sketches. Scope-specific
+verification is recorded separately from whole CM1 completion.
+
+CM1 schema-4 continuation: [primitive/reference contracts](decisions/core-modeling-cm1-primitives.md)
+add four typed slot constructions, exact conic/rational B-spline definitions,
+three-operand symmetry/intersection, parametric tangent contacts and cross-sketch
+Pierce. The additive `sketch-primitives=1` requirement covers active state and
+retained history. Pierce uses exact worker curve/plane intersections and an
+explicit parameter interval, evaluated in sketch dependency order. This is a
+sketch dependency subset; face-supported sketches, projected model edges, datums
+and general multi-collection ModelEdit remain scheduled in the broader roadmap.
+
+CM4.a structural integration: the [model graph contract](decisions/core-modeling-cm4-graph.md)
+defines typed geometry identities, five model node kinds, bounded traversal and
+cycle/history validation shared by feature planning and Pierce. Shared-profile
+gathering includes source-sketch closure, preserving existing cross-Part profiles.
+It adds no persisted datum/support schema or functioning datum controls; the
+remaining exact/persistence/native CM4 tasks stay open. [Evidence](testing/core-modeling-cm4-a.md).
+
+CM4.b adds [engine contracts](decisions/core-modeling-cm4-supports.md) for principal
+and derived planes/axes, face/datum attachments, exact Convert Entities and
+same-Part external sketch references, including rotate/scale construction.
+Versioned `PreviewModelSupports` is worker-owned and read-only; it preserves
+revision/context/epoch/generation fences and one-running/one-pending coalescing.
+No native datum tool or durable support collection is inferred. [CM4.b evidence](testing/core-modeling-cm4-b.md)
+separates exact engine verification from CM4.c–e and full acceptance.
+
+CM4.c adds [durable support contracts](decisions/core-modeling-cm4-persistence.md):
+original base definitions, atomic mixed-model commits, a sticky reader manifest,
+independently rebuilt reference evolution and explicit revision/fingerprint-gated
+topology repair. `SetModelSupports` preserves associations across saved/recoverable
+revisions and semantic undo; loose feature/sketch replacements on supported Parts
+are refused. [CM4.c evidence](testing/core-modeling-cm4-c.md) records verification
+separately from CM4.d native controls and CM4.e full acceptance.

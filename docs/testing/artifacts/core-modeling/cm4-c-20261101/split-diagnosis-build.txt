@@ -1,0 +1,2 @@
+[1/2] Building CXX object CMakeFiles/cm4_support_store.dir/tests/core_modeling/support_store.cpp.o
+[2/2] Linking CXX executable cm4_support_store

@@ -1,0 +1,12 @@
+********* Start testing of DimensionContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : DimensionContracts::initTestCase()
+QINFO  : DimensionContracts::native() Dimension workflow "Length" "mm" point diameter false
+QINFO  : DimensionContracts::native() Dimension workflow "Distance" "mm" point diameter false
+FAIL!  : DimensionContracts::native() '!rect.isEmpty()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp(166)]
+FAIL!  : DimensionContracts::native() '!reference.driving && reference.expression.isEmpty()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/dimension_contracts.cpp(263)]
+PASS   : DimensionContracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 2438ms
+********* Finished testing of DimensionContracts *********

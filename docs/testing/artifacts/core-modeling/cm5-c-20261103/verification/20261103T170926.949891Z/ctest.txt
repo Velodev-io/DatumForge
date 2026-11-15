@@ -1,0 +1,298 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+      Start  1: harness.pass
+ 1/98 Test  #1: harness.pass .....................   Passed    0.01 sec
+      Start  2: harness.failure_reporting
+ 2/98 Test  #2: harness.failure_reporting ........   Passed    0.08 sec
+      Start  3: measurement.statistics
+ 3/98 Test  #3: measurement.statistics ...........   Passed    0.08 sec
+      Start  4: harness.deliberate_failure
+ 4/98 Test  #4: harness.deliberate_failure .......***Not Run (Disabled)   0.00 sec
+      Start  5: protocol.boundaries
+ 5/98 Test  #5: protocol.boundaries ..............   Passed    0.07 sec
+      Start  6: storage.crash_matrix
+ 6/98 Test  #6: storage.crash_matrix .............   Passed    0.55 sec
+      Start  7: cad.geometry_topology
+ 7/98 Test  #7: cad.geometry_topology ............   Passed    0.26 sec
+      Start  8: cad.sketch_solver
+ 8/98 Test  #8: cad.sketch_solver ................   Passed    0.55 sec
+      Start  9: cad.rigid_mates
+ 9/98 Test  #9: cad.rigid_mates ..................   Passed    0.25 sec
+      Start 10: native.process_transport
+10/98 Test #10: native.process_transport .........   Passed    0.26 sec
+      Start 11: fixtures.determinism
+11/98 Test #11: fixtures.determinism .............   Passed    0.05 sec
+      Start 12: isolation.research
+12/98 Test #12: isolation.research ...............   Passed    0.21 sec
+      Start 13: module1.ownership
+13/98 Test #13: module1.ownership ................   Passed    0.12 sec
+      Start 14: module1.contracts
+14/98 Test #14: module1.contracts ................   Passed    2.14 sec
+      Start 15: module2.domain
+15/98 Test #15: module2.domain ...................   Passed    0.02 sec
+      Start 16: module2.storage
+16/98 Test #16: module2.storage ..................   Passed    2.42 sec
+      Start 17: module2.worker_lifecycle
+17/98 Test #17: module2.worker_lifecycle .........   Passed    2.01 sec
+      Start 18: module2.crash_matrix
+18/98 Test #18: module2.crash_matrix .............   Passed   23.12 sec
+      Start 19: module2.dispatch
+19/98 Test #19: module2.dispatch .................   Passed    1.15 sec
+      Start 20: module3.model
+20/98 Test #20: module3.model ....................   Passed    0.02 sec
+      Start 21: module3.persistence
+21/98 Test #21: module3.persistence ..............***Failed    1.11 sec
+FAIL: column index out of range
+
+      Start 22: module3.input
+22/98 Test #22: module3.input ....................   Passed    1.54 sec
+      Start 23: module3.shapeEditing
+23/98 Test #23: module3.shapeEditing .............***Failed   11.24 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::shapeEditing() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::shapeEditing() qt.qpa.fonts: Populating font family aliases took 109 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::shapeEditing() 'wait([&] { return ready(*c) && c->state().revision == revision + 1; })' returned FALSE. (StorageError: column index out of range)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(426)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 10550ms
+********* Finished testing of Contracts *********
+
+      Start 24: module3.gestures
+24/98 Test #24: module3.gestures .................***Failed   21.04 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QINFO  : Contracts::pointerGestures() Pointer gesture workflow in "mm"
+QWARN  : Contracts::pointerGestures() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::pointerGestures() qt.qpa.fonts: Populating font family aliases took 109 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support createPlatformOpenGLContext!
+QWARN  : Contracts::pointerGestures() QOpenGLWidget: Failed to create context
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::pointerGestures() 'wait([&] { return ready(*c) && c->state().revision == rev + 1; })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(652)]
+QINFO  : Contracts::pointerGestures() Pointer gesture workflow in "in"
+QWARN  : Contracts::pointerGestures() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support createPlatformOpenGLContext!
+QWARN  : Contracts::pointerGestures() QOpenGLWidget: Failed to create context
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::pointerGestures() 'wait([&] { return ready(*c) && c->state().revision == rev + 1; })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(652)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 20988ms
+********* Finished testing of Contracts *********
+
+      Start 25: module3.arcs
+25/98 Test #25: module3.arcs .....................***Failed   20.98 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::arcGestures() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::arcGestures() qt.qpa.fonts: Populating font family aliases took 111 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::arcGestures() 'wait([&] { return ready(*c) && c->state().revision == rev + 1; })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(366)]
+QWARN  : Contracts::arcGestures() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::arcGestures() 'wait([&] { return ready(*c) && c->state().revision == rev + 1; })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(366)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 20931ms
+********* Finished testing of Contracts *********
+
+      Start 26: module3.all_arcs
+26/98 Test #26: module3.all_arcs .................***Failed   21.01 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::allArcTypes() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::allArcTypes() qt.qpa.fonts: Populating font family aliases took 107 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::allArcTypes() 'wait([&] { return ready(*c) && c->state().revision == revision + 1; })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(206)]
+QWARN  : Contracts::allArcTypes() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::allArcTypes() 'wait([&] { return ready(*c) && c->state().revision == revision + 1; })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(206)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 20962ms
+********* Finished testing of Contracts *********
+
+      Start 27: module3.interaction
+27/98 Test #27: module3.interaction ..............***Failed   10.66 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::drafts() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::drafts() qt.qpa.fonts: Populating font family aliases took 109 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::drafts() 'wait([&] { return ready(*c) && c->state().revision == rev; })' returned FALSE. (StorageError: column index out of range)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(789)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 10613ms
+********* Finished testing of Contracts *********
+
+      Start 28: module3.solver
+28/98 Test #28: module3.solver ...................   Passed    0.71 sec
+      Start 29: module3.expressions
+29/98 Test #29: module3.expressions ..............   Passed    0.01 sec
+      Start 30: module4.workspace

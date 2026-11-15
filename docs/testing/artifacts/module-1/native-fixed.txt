@@ -1,0 +1,12 @@
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+FAIL!  : Contracts::nativeInteraction() Compared values are not the same
+   Actual   (restored.size()) : QSize(1440x811)
+   Expected (QSize(1440, 900)): QSize(1440x900)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module1/contracts.cpp(509)]
+QFATAL : Contracts::nativeInteraction() ASSERT failure in cad::Viewport: "Called object is not of the correct type (class destructor may have already run)", file /Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qobjectdefs_impl.h, line 106
+FAIL!  : Contracts::nativeInteraction() Received a fatal error.
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qobjectdefs_impl.h(106)]
+Totals: 1 passed, 1 failed, 0 skipped, 0 blacklisted, 2392ms
+********* Finished testing of Contracts *********

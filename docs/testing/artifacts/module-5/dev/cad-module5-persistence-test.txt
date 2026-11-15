@@ -1,0 +1,1 @@
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module5/persistence.cpp:16: resolution.value("state").toString()=="Candidate"

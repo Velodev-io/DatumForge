@@ -1,0 +1,54 @@
+[1/25] Automatic MOC for target cad_desktop_ui
+[2/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[3/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[4/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DrawingUI.cpp.o
+[5/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DrawingPanel.cpp.o
+[6/25] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/InteractionUI.cpp.o
+[7/25] Linking CXX static library libcad_desktop_ui.a
+[8/25] Automatic MOC for target module9_interaction
+[9/24] Automatic MOC for target module8_contracts
+[10/23] Building CXX object CMakeFiles/module9_interaction.dir/tests/module9/interaction.cpp.o
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module9/interaction.cpp:34:111: warning: 'setActiveWindow' is deprecated: Use QWidget::activateWindow() instead. [-Wdeprecated-declarations]
+   34 |         w.activateWindow();w.setFocus();if(native)QVERIFY(QTest::qWaitForWindowActive(&w));else QApplication::setActiveWindow(&w);QTest::qWait(30);QTest::keySequence(&w,QKeySequence::Find);QVERIFY(wait([&]{return w.findChild<QDialog *>("commandPalette");}));auto *palette=w.findChild<QDialog *>("commandPalette");auto *query=palette->findChild<QLineEdit *>("paletteQuery");QTest::keyClicks(query,"drawing.edit");QTest::keyClick(query,Qt::Key_Return);QVERIFY(wait([&]{return w.findChild<DrawingPanel *>()->active();}));w.activateWindow();if(native)QVERIFY(QTest::qWaitForWindowActive(&w));else QApplication::setActiveWindow(&w);QTest::qWait(30);
+      |                                                                                                               ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qapplication.h:83:5: note: 'setActiveWindow' has been explicitly marked deprecated here
+   83 |     QT_DEPRECATED_VERSION_X_6_5("Use QWidget::activateWindow() instead.")
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:181:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_5'
+  181 | # define QT_DEPRECATED_VERSION_X_6_5(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module9/interaction.cpp:34:608: warning: 'setActiveWindow' is deprecated: Use QWidget::activateWindow() instead. [-Wdeprecated-declarations]
+   34 |         w.activateWindow();w.setFocus();if(native)QVERIFY(QTest::qWaitForWindowActive(&w));else QApplication::setActiveWindow(&w);QTest::qWait(30);QTest::keySequence(&w,QKeySequence::Find);QVERIFY(wait([&]{return w.findChild<QDialog *>("commandPalette");}));auto *palette=w.findChild<QDialog *>("commandPalette");auto *query=palette->findChild<QLineEdit *>("paletteQuery");QTest::keyClicks(query,"drawing.edit");QTest::keyClick(query,Qt::Key_Return);QVERIFY(wait([&]{return w.findChild<DrawingPanel *>()->active();}));w.activateWindow();if(native)QVERIFY(QTest::qWaitForWindowActive(&w));else QApplication::setActiveWindow(&w);QTest::qWait(30);
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qapplication.h:83:5: note: 'setActiveWindow' has been explicitly marked deprecated here
+   83 |     QT_DEPRECATED_VERSION_X_6_5("Use QWidget::activateWindow() instead.")
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:181:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_5'
+  181 | # define QT_DEPRECATED_VERSION_X_6_5(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+2 warnings generated.
+[11/23] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[12/23] Building CXX object CMakeFiles/module8_contracts.dir/tests/module8/contracts.cpp.o
+[13/23] Linking CXX executable module1_contracts
+[14/23] Linking CXX executable module2_contracts
+[15/23] Linking CXX executable module3_input
+[16/23] Linking CXX executable module3_contracts
+[17/23] Linking CXX executable module4_workspace
+[18/23] Linking CXX executable module4_contracts
+[19/23] Linking CXX executable module5_contracts
+[20/23] Linking CXX executable module7_contracts
+[21/23] Linking CXX executable module6_contracts
+[22/23] Linking CXX executable module8_contracts
+[23/23] Linking CXX executable module9_interaction

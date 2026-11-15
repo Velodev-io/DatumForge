@@ -1,0 +1,13 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 67: cm4.support_store
+1/1 Test #67: cm4.support_store ................***Failed    2.26 sec
+FAIL: Expected ReferenceAmbiguous, got InvalidGeometry: Cut misses target, removes whole body or splits it
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   2.27 sec
+
+The following tests FAILED:
+	 67 - cm4.support_store (Failed)
+Errors while running CTest

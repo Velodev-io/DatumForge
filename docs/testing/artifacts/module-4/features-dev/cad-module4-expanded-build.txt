@@ -1,0 +1,44 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.4s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/50] Automatic MOC for target cad_client
+[2/48] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/48] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/48] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/48] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/Model.cpp.o
+[6/48] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[7/48] Linking CXX static library libcad_feature_model.a
+[8/48] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[9/48] Linking CXX static library libcad_planegcs.a
+[10/48] Linking CXX static library libcad_sketch_solver.a
+[11/48] Automatic MOC for target cad_desktop_ui
+[12/47] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[13/47] Linking CXX static library libcad_part.a
+[14/47] Linking CXX executable cad-worker
+[15/47] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[16/47] Linking CXX static library libcad_desktop_ui.a
+[17/47] Automatic MOC for target module1_contracts
+[18/46] Automatic MOC for target module2_contracts
+[19/45] Automatic MOC for target module3_input
+[20/44] Automatic MOC for target module3_contracts
+[21/43] Automatic MOC for target module4_workspace
+[22/42] Automatic MOC for target module4_contracts
+[23/41] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[24/41] Building CXX object CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o
+[25/41] Linking CXX executable solver_spike
+[26/41] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[27/41] Linking CXX executable module1_contracts
+[28/41] Linking CXX executable module2_storage
+[29/41] Linking CXX executable module2_contracts
+[30/41] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[31/41] Linking CXX executable module2_fault_worker
+[32/41] Linking CXX executable module2_dispatch
+[33/41] Linking CXX executable module3_persistence
+[34/41] Linking CXX executable module3_input
+[35/41] Linking CXX executable module3_contracts
+[36/41] Linking CXX executable module3_solver
+[37/41] Linking CXX executable module4_workspace
+[38/41] Linking CXX executable module4_geometry
+[39/41] Linking CXX executable module4_persistence
+[40/41] Linking CXX executable module4_contracts

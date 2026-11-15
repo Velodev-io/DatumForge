@@ -1,0 +1,6 @@
+[1/5] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[2/5] Linking CXX static library libcad_persistence.a
+[3/5] Linking CXX executable module5_persistence
+[4/5] Linking CXX executable module3_persistence
+[5/5] Linking CXX executable module6_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_exchange.a'

@@ -1,0 +1,21 @@
+[1/144] Automatic MOC for target cad_client
+[2/143] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/143] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/143] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/143] Building CXX object CMakeFiles/cad_drawing_paint.dir/src/drawing/Paint.cpp.o
+[6/143] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+FAILED: [code=1] CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cad_client_autogen/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtNetwork" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o -MF CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o.d -o CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/protocol/Client.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/protocol/Client.cpp:214:40: error: use of undeclared identifier 'command'; did you mean 'wire::Envelope::command'?
+  214 |         e.command == "PortableCopy" || command == "ExportDrawing")
+      |                                        ^~~~~~~
+      |                                        wire::Envelope::command
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/protocol/Envelope.hpp:31:13: note: 'wire::Envelope::command' declared here
+   31 |     QString command;
+      |             ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/protocol/Client.cpp:214:40: error: invalid use of non-static data member 'command'
+  214 |         e.command == "PortableCopy" || command == "ExportDrawing")
+      |                                        ^~~~~~~
+2 errors generated.
+[7/143] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+ninja: build stopped: subcommand failed.

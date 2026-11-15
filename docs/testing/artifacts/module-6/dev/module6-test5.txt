@@ -1,0 +1,41 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 38: module6.exchange
+1/3 Test #38: module6.exchange .................   Passed    0.87 sec
+    Start 39: module6.persistence
+2/3 Test #39: module6.persistence ..............   Passed    0.84 sec
+    Start 40: module6.contracts
+3/3 Test #40: module6.contracts ................***Failed    6.37 sec
+********* Start testing of ExchangeContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : ExchangeContracts::initTestCase()
+[32;1m
+*******************************************************************
+******        Statistics on Transfer (Write)                 ******[0m
+[32;1m
+*******************************************************************
+******        Transfer Mode = 0  I.E.  As Is       ******[0m
+[32;1m******        Transferring Shape, ShapeType = 2                      ******[0m
+[32;1m** WorkSession : Sending all data[0m
+[32;1m Step File Name : /var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-wxUTYC/source.step(350 ents)  Write  Done[0m
+QWARN  : ExchangeContracts::lifecycle() QOpenGLWidget is not supported on this platform.
+QWARN  : ExchangeContracts::lifecycle() qt.qpa.fonts: Populating font family aliases took 117 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : ExchangeContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : ExchangeContracts::lifecycle() This plugin does not support propagateSizeHints()
+QWARN  : ExchangeContracts::lifecycle() This plugin does not support propagateSizeHints()
+QINFO  : ExchangeContracts::lifecycle() File workflow "exchangeImport" "/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/cad-module6-files-wxUTYC/source.step"
+QWARN  : ExchangeContracts::lifecycle() This plugin does not support propagateSizeHints()
+QINFO  : ExchangeContracts::lifecycle() Workflow settled "exchangeImport" ""
+FAIL!  : ExchangeContracts::lifecycle() 'document(c).value("features").toArray().size()==1' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module6/contracts.cpp(71)]
+PASS   : ExchangeContracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 5809ms
+********* Finished testing of ExchangeContracts *********
+
+
+67% tests passed, 1 tests failed out of 3
+
+Total Test time (real) =   8.08 sec
+
+The following tests FAILED:
+	 40 - module6.contracts (Failed)
+Errors while running CTest

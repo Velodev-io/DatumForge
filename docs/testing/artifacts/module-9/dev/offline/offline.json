@@ -1,0 +1,64 @@
+{
+  "scope": "Actual available-Mac Part/sketch/history/exchange/assembly/drawing IPC workflows with OS-denied IPv4/IPv6 network; headless UI, not installed release",
+  "profile": "(version 1) (allow default) (deny network* (remote ip \"*:*\")) (deny network* (local ip \"*:*\"))",
+  "steps": [
+    {
+      "name": "network-denial-probe",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/tools/offline_workflows.py",
+        "--probe"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "module3",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module3_contracts",
+        "shapeEditing"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "module4",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_contracts",
+        "lifecycle"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "module5",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module5_contracts",
+        "lifecycle"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "module6",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module6_contracts",
+        "lifecycle"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "module7",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module7_contracts",
+        "lifecycle"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "module8",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module8_contracts",
+        "lifecycle"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "status": "Pass"
+}

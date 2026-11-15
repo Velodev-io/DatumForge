@@ -1,0 +1,13 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 62: cm5.features
+1/1 Test #62: cm5.features .....................***Failed    0.85 sec
+FAIL: Kernel produced an invalid shape
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.86 sec
+
+The following tests FAILED:
+	 62 - cm5.features (Failed)
+Errors while running CTest

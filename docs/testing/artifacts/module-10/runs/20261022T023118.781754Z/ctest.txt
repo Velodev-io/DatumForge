@@ -1,0 +1,72 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+      Start  1: harness.pass
+ 1/53 Test  #1: harness.pass .....................   Passed    0.59 sec
+      Start  2: harness.failure_reporting
+ 2/53 Test  #2: harness.failure_reporting ........   Passed    0.06 sec
+      Start  3: measurement.statistics
+ 3/53 Test  #3: measurement.statistics ...........   Passed    0.07 sec
+      Start  4: harness.deliberate_failure
+ 4/53 Test  #4: harness.deliberate_failure .......***Not Run (Disabled)   0.00 sec
+      Start  5: protocol.boundaries
+ 5/53 Test  #5: protocol.boundaries ..............   Passed    0.49 sec
+      Start  6: storage.crash_matrix
+ 6/53 Test  #6: storage.crash_matrix .............   Passed    0.97 sec
+      Start  7: cad.geometry_topology
+ 7/53 Test  #7: cad.geometry_topology ............   Passed    0.73 sec
+      Start  8: cad.sketch_solver
+ 8/53 Test  #8: cad.sketch_solver ................   Passed    0.45 sec
+      Start  9: cad.rigid_mates
+ 9/53 Test  #9: cad.rigid_mates ..................   Passed    0.74 sec
+      Start 10: native.process_transport
+10/53 Test #10: native.process_transport .........   Passed    0.30 sec
+      Start 11: fixtures.determinism
+11/53 Test #11: fixtures.determinism .............   Passed    0.05 sec
+      Start 12: isolation.research
+12/53 Test #12: isolation.research ...............   Passed    0.15 sec
+      Start 13: module1.ownership
+13/53 Test #13: module1.ownership ................   Passed    0.11 sec
+      Start 14: module1.contracts
+14/53 Test #14: module1.contracts ................   Passed    2.46 sec
+      Start 15: module2.domain
+15/53 Test #15: module2.domain ...................   Passed    0.48 sec
+      Start 16: module2.storage
+16/53 Test #16: module2.storage ..................   Passed    1.95 sec
+      Start 17: module2.worker_lifecycle
+17/53 Test #17: module2.worker_lifecycle .........   Passed    1.58 sec
+      Start 18: module2.crash_matrix
+18/53 Test #18: module2.crash_matrix .............   Passed   19.81 sec
+      Start 19: module2.dispatch
+19/53 Test #19: module2.dispatch .................   Passed    0.78 sec
+      Start 20: module3.model
+20/53 Test #20: module3.model ....................   Passed    0.49 sec
+      Start 21: module3.persistence
+21/53 Test #21: module3.persistence ..............   Passed    1.01 sec
+      Start 22: module3.input
+22/53 Test #22: module3.input ....................   Passed    1.00 sec
+      Start 23: module3.shapeEditing
+23/53 Test #23: module3.shapeEditing .............   Passed    1.58 sec
+      Start 24: module3.gestures
+24/53 Test #24: module3.gestures .................   Passed    1.78 sec
+      Start 25: module3.interaction
+25/53 Test #25: module3.interaction ..............   Passed    1.96 sec
+      Start 26: module3.solver
+26/53 Test #26: module3.solver ...................   Passed    0.53 sec
+      Start 27: module3.expressions
+27/53 Test #27: module3.expressions ..............   Passed    0.46 sec
+      Start 28: module4.workspace
+28/53 Test #28: module4.workspace ................   Passed    1.57 sec
+      Start 29: module4.geometry
+29/53 Test #29: module4.geometry .................   Passed    0.84 sec
+      Start 30: module4.persistence
+30/53 Test #30: module4.persistence ..............   Passed    1.81 sec
+      Start 31: module4.lifecycle
+31/53 Test #31: module4.lifecycle ................   Passed    3.23 sec
+      Start 32: module4.variants
+32/53 Test #32: module4.variants .................   Passed    1.83 sec
+      Start 33: module5.plan
+33/53 Test #33: module5.plan .....................   Passed    0.50 sec
+      Start 34: module5.engine
+34/53 Test #34: module5.engine ...................   Passed    0.69 sec
+      Start 35: module5.persistence
+35/53 Test #35: module5.persistence ..............   Passed    0.98 sec
+      Start 36: module5.b2

@@ -1,0 +1,7 @@
+{
+  "src/sketch/LineEditing.cpp": "bba922480eba360cba80c9a3db566c1e5243374bcd74644421bb337f5199a6e1",
+  "src/geometry/occt/SketchCurve.cpp": "049ede81c810c9f49c5214180224d01318f7b0f975133989d891f35dc8939e4f",
+  "src/geometry/occt/SketchCurve.hpp": "686d6069976b3876f4a65e92c796c1654136c46770a464432e474e378fe132dd",
+  "tests/core_modeling/editing.cpp": "5adf85f951c20ee845f75ca33cd8745e3b4d48d0e7d6c092d01a0c4685b4161c",
+  "apps/desktop/SketchPanel.cpp": "7955d722ca4aa333672ca04588aa675229c79b81c0adb0a5330ba8063ec2d5ef"
+}

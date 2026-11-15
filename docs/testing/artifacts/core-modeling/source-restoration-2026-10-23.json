@@ -1,0 +1,89 @@
+{
+  "status": "Pass",
+  "reported_local_date": "2026-10-23",
+  "verified_at_utc": "2026-10-23T16:59:49.903624+00:00",
+  "scope": "Source availability and byte identity only; no CAD behavior, diagram review or full milestone acceptance implied",
+  "source_folder": "/Users/binova/Downloads/T SHEETS FOR FACULTY ONLY",
+  "original_manifest": "docs/research/solidworks-training-sources.json",
+  "pdfs": [
+    {
+      "file": "T1 INTRODUCTION TO SW.pdf",
+      "bytes": 1722429,
+      "sha256": "c8e92773d3b4bb556ef60becb995ef7641bdae0ae86fba65d088942b569cbf09",
+      "original_sha256": "c8e92773d3b4bb556ef60becb995ef7641bdae0ae86fba65d088942b569cbf09",
+      "status": "Pass"
+    },
+    {
+      "file": "T2 PART IN 2D.pdf",
+      "bytes": 1998993,
+      "sha256": "6a854c645805cbae32d0c62555c0d7312f7f30c9954f793054d850609a27eca6",
+      "original_sha256": "6a854c645805cbae32d0c62555c0d7312f7f30c9954f793054d850609a27eca6",
+      "status": "Pass"
+    },
+    {
+      "file": "T3 EDITING PART.pdf",
+      "bytes": 1361702,
+      "sha256": "348d7b7fc9992a7d6093d880a177124deb0c9f9a06481a7dca406de4fb6859e6",
+      "original_sha256": "348d7b7fc9992a7d6093d880a177124deb0c9f9a06481a7dca406de4fb6859e6",
+      "status": "Pass"
+    },
+    {
+      "file": "T4 ADD RELATIONS.pdf",
+      "bytes": 1373660,
+      "sha256": "845d2d09a293a91c9f0d72772cb68eee94bdb5bcb654b9366ef8d696548e3c6d",
+      "original_sha256": "845d2d09a293a91c9f0d72772cb68eee94bdb5bcb654b9366ef8d696548e3c6d",
+      "status": "Pass"
+    },
+    {
+      "file": "T5 ADD PART FEATURES.pdf",
+      "bytes": 2391386,
+      "sha256": "cc5b2dae95fe306255d57935dcdd09faf7e548f56711fbac26f1b157b6cd44d9",
+      "original_sha256": "cc5b2dae95fe306255d57935dcdd09faf7e548f56711fbac26f1b157b6cd44d9",
+      "status": "Pass"
+    },
+    {
+      "file": "T6 REFERENCE GEOMETRY.pdf",
+      "bytes": 2608307,
+      "sha256": "04dfe23a4fca9b4e053c0c31e13e8efadb52fe6e2e2b3ddc4ec2b3d87335f7f2",
+      "original_sha256": "04dfe23a4fca9b4e053c0c31e13e8efadb52fe6e2e2b3ddc4ec2b3d87335f7f2",
+      "status": "Pass"
+    },
+    {
+      "file": "T7 MODELLING TOOLS.pdf",
+      "bytes": 2409858,
+      "sha256": "9679118a4e43832af5ca6c435fc079ced6bf1dd3b4e5a7b0482631f908e6aaaf",
+      "original_sha256": "9679118a4e43832af5ca6c435fc079ced6bf1dd3b4e5a7b0482631f908e6aaaf",
+      "status": "Pass"
+    },
+    {
+      "file": "T8 ADVANCE MODELLING TOOLS.pdf",
+      "bytes": 2805514,
+      "sha256": "f9e1c7ba43af615cbec623c755f44aead2b8a62cd545959492a24dff255e429a",
+      "original_sha256": "f9e1c7ba43af615cbec623c755f44aead2b8a62cd545959492a24dff255e429a",
+      "status": "Pass"
+    },
+    {
+      "file": "T9 ASSEMBLY PART 1 .pdf",
+      "bytes": 4332588,
+      "sha256": "a232c8c69bd5bf3fd890c063fbd3dc0d518ba81fbcd325e2cf774bd5b323e16a",
+      "original_sha256": "a232c8c69bd5bf3fd890c063fbd3dc0d518ba81fbcd325e2cf774bd5b323e16a",
+      "status": "Pass"
+    },
+    {
+      "file": "T9 ASSEMBLY PART 2.pdf",
+      "bytes": 8219616,
+      "sha256": "97cf6019da04fa8f7f30af8b31ca69b9bb00fdabbd272faaec69443d86f90a5c",
+      "original_sha256": "97cf6019da04fa8f7f30af8b31ca69b9bb00fdabbd272faaec69443d86f90a5c",
+      "status": "Pass"
+    },
+    {
+      "file": "T10 DRAWING.pdf",
+      "bytes": 2728282,
+      "sha256": "7769963671e6ebeda72a047b0adca5a518962502cb2ca6cf7da2fb789226d999",
+      "original_sha256": "7769963671e6ebeda72a047b0adca5a518962502cb2ca6cf7da2fb789226d999",
+      "status": "Pass"
+    }
+  ],
+  "count": 11,
+  "total_pages_from_matching_original_manifest": 448
+}

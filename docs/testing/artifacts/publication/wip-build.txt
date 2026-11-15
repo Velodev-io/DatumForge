@@ -1,0 +1,60 @@
+[1/115] Building CXX object CMakeFiles/cad_protocol.dir/src/protocol/Mesh.cpp.o
+[2/115] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[3/115] Linking CXX static library libcad_protocol.a
+[4/115] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Editing.cpp.o
+[5/115] Linking CXX static library libcad_sketch_model.a
+[6/115] Building CXX object CMakeFiles/cad_expressions.dir/src/domain/Expressions.cpp.o
+[7/115] Automatic MOC for target cad_client
+[8/115] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/Model.cpp.o
+[9/115] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[10/115] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[11/115] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[12/115] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[13/115] Linking CXX static library libcad_expressions.a
+[14/115] Linking CXX static library libcad_feature_model.a
+[15/115] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/qp_eq.cpp.o
+[16/115] Building CXX object CMakeFiles/cad_evaluation_plan.dir/src/evaluation/Plan.cpp.o
+[17/115] Building CXX object CMakeFiles/cad_client.dir/cad_client_autogen/mocs_compilation.cpp.o
+[18/115] Building C object CMakeFiles/cad_sqlite.dir/.deps/src/sqlite/sqlite3.c.o
+[19/115] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[20/115] Linking CXX static library libcad_planegcs.a
+[21/115] Linking CXX static library libcad_client.a
+[22/115] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[23/115] Linking CXX static library libcad_evaluation_plan.a
+[24/115] Linking C static library libcad_sqlite.a
+[25/115] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[26/115] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Database.cpp.o
+[27/115] Building CXX object CMakeFiles/cad_geometry.dir/src/geometry/occt/ReferenceScene.cpp.o
+[28/115] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[29/115] Linking CXX static library libcad_sketch_solver.a
+[30/115] Linking CXX static library libcad_part.a
+[31/115] Automatic MOC for target cad_desktop_ui
+[32/115] Linking CXX static library libcad_geometry.a
+[33/115] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[34/115] Building CXX object CMakeFiles/module1_adversary.dir/tests/module1/adversary.cpp.o
+[35/115] Linking CXX static library libcad_persistence.a
+[36/115] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[37/115] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[38/115] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[39/115] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+[40/115] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[41/115] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[42/115] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[43/115] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[44/115] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[45/115] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+[46/115] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o
+FAILED: [code=1] CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -I/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/apps/desktop -I/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/src -isystem /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/build/macos-debug/cad_desktop_ui_autogen/include -isystem /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/.deps/install/include/QtCore -isystem /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/.deps/install/include -isystem /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/.deps/install/mkspecs/macx-clang -isystem /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/.deps/install/include/QtGui -isystem /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/.deps/install/include/QtNetwork -isystem /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/.deps/install/include/QtWidgets -isystem /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/.deps/install/include/QtOpenGLWidgets -isystem /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/.deps/install/include/QtOpenGL -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o -MF CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o.d -o CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o -c /private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/apps/desktop/HistoryPanel.cpp
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/apps/desktop/HistoryPanel.cpp:21:190: error: no matching member function for call to 'addItem'
+   21 |     connect(client,&Client::referenceResolution,this,[this](QCborMap r){if(!editing)return;resolution=r;candidateList->clear();for(auto token:r.value("candidates").toArray())candidateList->addItem(token.toString(),token);diagnostic->setText("Reference: "+r.value("state").toString()+"\nOwner: "+feature->currentText()+"\nFormer edge: "+r.value("token").toString()+"\nAffected dependents: "+QString::number(r.value("affected").toArray().size())+"\nSelect a highlighted replacement explicitly; no candidate is committed automatically.");repair->setEnabled(candidateList->count()>0);});
+      |                                                                                                                                                                               ~~~~~~~~~~~~~~~^~~~~~~
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/.deps/install/include/QtWidgets/qcombobox.h:219:24: note: candidate function not viable: no known conversion from 'QCborValueRef' to 'const QVariant' for 2nd argument
+  219 | inline void QComboBox::addItem(const QString &atext, const QVariant &auserData)
+      |                        ^                             ~~~~~~~~~~~~~~~~~~~~~~~~~
+/private/var/folders/ng/w1mqjkyd24g7jm3h2wf4cwym0000gn/T/datumforge-publish-w1e9rebl/current/.deps/install/include/QtWidgets/qcombobox.h:221:24: note: candidate function not viable: no known conversion from 'QString' to 'const QIcon' for 1st argument
+  221 | inline void QComboBox::addItem(const QIcon &aicon, const QString &atext,
+      |                        ^       ~~~~~~~~~~~~~~~~~~
+1 error generated.
+[47/115] Building CXX object CMakeFiles/slice_worker.dir/tests/native/slice_worker.cpp.o
+ninja: build stopped: subcommand failed.

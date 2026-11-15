@@ -1,0 +1,1 @@
+zsh:166: no such file or directory: build/macos-debug/module3_solver

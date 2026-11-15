@@ -1,0 +1,47 @@
+{
+  "scope": "Modules 8-10 ordered implementation and available-Mac verification; stop before Module 11",
+  "status": "Superseded: stopped to add post-portable PDF export and frozen-fixture offline acceptance checks",
+  "artifacts": "docs/testing/artifacts/module-10/runs/20261022T023118.781754Z",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.6771242499817163
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 80.57125624999753
+    }
+  ],
+  "host": {
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "physical_ram_bytes": 8589934592,
+    "cpu": "Apple M2"
+  },
+  "blocked": [
+    "Prior Module 6.1b and 6.4c deferred parser/resource/platform gates",
+    "Prior Module 7.4c full resource/platform gate",
+    "Windows/Linux/minimum macOS/other GPU/installed release builds",
+    "VoiceOver/NVDA/Orca and physical device acceptance",
+    "Full physical/shared/GPU/FPS and retention budgets (Module 11 not started)",
+    "Physical full-volume/power-loss and other native filesystem matrix"
+  ],
+  "stopped_processes": [
+    92995,
+    93745,
+    94070
+  ]
+}

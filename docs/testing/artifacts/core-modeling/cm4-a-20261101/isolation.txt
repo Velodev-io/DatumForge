@@ -1,0 +1,4 @@
+Command: ['python3', 'tools/check_isolation.py']
+Pass: 97 research files unchanged; 5277 tracked/pending paths inspected; remote destinations checked
+
+Exit: 0

@@ -1,0 +1,823 @@
+
+=== PDF PAGE 1 ===
+Tutorial 2
+Drawing Sketches for Solid Models
+
+=== PDF PAGE 2 ===
+Learning Objectives
+After completing this tutorial, student will be able to:
+• Understand the importance of sketching environment
+• Open a new part document
+• Understand various terms used in the sketching environment
+• Use various sketching tools
+• Use the drawing display tools
+• Delete sketched entities
+THE SKETCHING ENVIRONMENT
+Most of the products designed by using SOLIDWORKS are a combination of sketched,
+placed, and derived features. The placed and derived features are created without drawing
+a sketch, but the sketched features require a sketch to be drawn first. Generally, the base
+feature of any design is a sketched feature and is created using the sketch. Therefore,
+while creating any design, the first and foremost requirement is to draw a sketch for the
+base feature. Once you have drawn the sketch, you can convert it into the base feature and
+then add the other sketched, placed, and derived features to complete the design. In this
+tutorial, you will learn to create the sketch for the base feature using the various sketching
+tools.
+In general terms, a sketch is defined as the basic contour of a feature. For example, the
+solid model of a spanner shown in Figure 2-1.
+Figure 2-1 Solid model of a spanner
+
+=== PDF PAGE 3 ===
+This spanner consists of a base feature, cut feature, mirror feature (cut on the back face),
+fillets, and an extruded text feature. The base feature of this spanner is shown in Figure 2-
+2. It is created using a single sketch drawn on the Front Plane, as shown in Figure 2-3.
+This sketch is drawn in the sketching environment using various sketching tools. Therefore,
+to draw the sketch of the base feature, first you need to invoke the sketching environment
+where you will draw the sketch.
+Figure 2-2 Base feature of the Spanner
+Figure 2-3 Sketch for the base feature of the Spanner
+Note
+The sketcher environment of SOLIDWORKS can be invoked at any time in the Part or
+Assembly mode. You will learn more about invoking sketcher environment later .
+
+=== PDF PAGE 4 ===
+
+
+=== PDF PAGE 5 ===
+Tutorial
+Tutorial Exercise 1
+In this tutorial, you will start a new part document in SOLIDWORKS 2016 and then
+invoke the sketcher environment to draw the sketch of the solid model shown in Figure 2-
+4. The sketch of the model is shown in Figure 2-5. While drawing the sketch, you will
+modify the Snap, Grid, and Units settings for the active document. Note that the solid model
+and dimensions given in the Figures 2-4 and 2-5 are for your reference only. You will learn
+to apply dimensions and creating solid models in the later tutorials. (Expected time: 30
+min)
+Figure 2-4 Solid model for Tutorial 1
+Figure 2-5 Sketch for Tutorial 1
+
+=== PDF PAGE 6 ===
+The following steps are required to complete this tutorial:
+a. Start SOLIDWORKS 2016 and then start a new part document.
+b. Invoke the sketching environment.
+c. Modify the settings of the snap, grid, units so that the cursor jumps through a distance
+of 5 mm.
+d. Draw the sketch using the Line tool, refer to Figure 2-15.
+e. Save the sketch and then close the file.
+Starting SOLIDWORKS 2016
+Once you have installed the SOLIDWORKS 2016, an icon is displayed on the windows
+desktop and a folder is added to the Start menu.
+1. Choose Start > SOLIDWORKS 2016 from the Start menu or double-click on the
+SOLIDWORKS 2016 icon on the desktop of your computer; the SOLIDWORKS 2016
+window will be displayed. If you are starting the SOLIDWORKS application for the
+first time after installing it, the SOLIDWORKS License Agreement dialog box will be
+displayed, as shown in Figure 2-6. Choose the Accept button from the dialog box; the
+SOLIDWORKS 2016 interface window will be displayed, as shown in Figure 2-7.
+
+=== PDF PAGE 7 ===
+Figure 2-6 The SOLIDWORKS License Agreement dialog box
+The initial interface of the SOLIDWORKS 2016 window consists of SOLIDWORKS
+menus, Menu Bar, and Task Pane, refer to Figure 2-7.
+
+=== PDF PAGE 8 ===
+Figure 2-7 The SOLIDWORKS window
+The Task Pane is displayed on the right in the SOLIDWORKS 2016 window. These Task
+Pane contain various options that are used to start a new file, open an existing file, browse
+the related links of SOLIDWORKS, and so on. Various Task Pane in SOLIDWORKS are
+discussed next.
+SOLIDWORKS Resources Task Pane
+By default, the SOLIDWORKS Resources task pane is displayed when you start a
+SOLIDWORKS session. Different options available in this task pane are discussed next.
+Getting Started Rollout: The options in this rollout are used to start a new
+document, open an existing document, learn the new features in this release of
+SOLIDWORKS and invoke the interactive help topics. If you are a new user of
+SOLIDWORKS, choose the Introducing SOLIDWORKS option to get an overview
+of SOLIDWORKS.
+SOLIDWORKS Tools Rollout: The options in this rollout are SOLIDWORKS files,
+SOLIDWORKS Rx, Compare My Score,Copy Settings Wizard and My Products.
+These options are used to control custom properties and attributes of the files.
+SOLIDWORKS Rx can be used to help diagnose issues with your computer.
+Community Rollout: The options in this rollout are used to invoke various
+SOLIDWORKS communities such as customer portal, discussion forum, user groups,
+and so on.
+Online Resources Rollout: The options in this rollout are used to invoke the
+discussion forum of SOLIDWORKS, subscription services, partner solutions,
+manufacturing network, and print 3D websites.
+Subscription Services Rollout: The options in this rollout are used to access various
+software releases, service packs, and value added resources provided by
+SOLIDWORKS Corporation and its global network.
+Tip of the Day Message Box: The Tip of the Day message box provides you with a
+useful tip that helps you make the full utilization of tools available in
+SOLIDWORKS. Click on the Next Tip text provided at the lower right corner of the
+Tip of the Day message box to view the next tip.
+
+=== PDF PAGE 9 ===
+Design Library Task Pane
+The Design Library task pane is invoked by choosing the Design Library tab from the
+Task Panes. This task pane is used to browse the default Design Library and the toolbox
+components available in SOLIDWORKS. Also, it allows you to access the 3D
+ContentCentral website. To access the toolbox components, you need to add Toolbox
+Add-Ins in your computer. To do so, choose Tools > Add-Ins from the SOLIDWORKS
+menu; the Add-Ins dialog box will be displayed. Select the SOLIDWORKS Toolbox
+Library check box in this dialog box and then choose OK. To access the 3D
+ContentCentral website, your computer needs to be connected to the Internet.
+File Explorer Task Pane
+The File Explorer task pane is used to explore the files and folders that are saved in the
+hard disk of your computer.
+View Palette Task Pane
+The View Palette task pane is used to drag and drop the drawing views into a drawing
+sheet.
+Appearances, Scenes, and Decals Task Pane
+The Appearances, Scenes, and Decals task pane is used to change the appearance of
+models or drawing display area. On choosing the Appearances, Scenes, and Decals tab
+from the Task Panes; the Appearances, Scenes, and Decals task pane will be invoked
+with three nodes: Appearances(color), Scenes, and Decals. The Appearances(color)
+node is used to change the appearance of a model. The Scenes node is used to change
+the background of the drawing area and the Decals node is used to apply decals to a
+model.
+Custom Properties Task Pane
+The Custom Properties task pane is displayed on choosing the Custom Properties tab
+from the Task Panes. This task pane is used to view the properties of the files.
+In SOLIDWORKS, the tools that are in the Standard toolbar are also available in the
+Menu Bar, as shown in Figure 2-8. This toolbar is available above the drawing area. When
+you move the cursor over the SOLIDWORKS logo at the top left corner of the display
+area, the SOLIDWORKS menus will be displayed as a cascading menu, as shown in Figure
+2-9. You can also fix this menu by choosing the push-pin button.
+
+=== PDF PAGE 10 ===
+Figure 2-8 The Menu Bar
+Figure 2-9 The SOLIDWORKS menus
+Starting a New Part Document in SOLIDWORKS 2016
+1. Select the New Document option from Getting Started rollout of the
+SOLIDWORKS Resources task pane to start a new part document in SOLIDWORKS
+2016; the New SOLIDWORKS Document dialog box will be displayed, as shown in
+Figure 2-10. You can also invoke this dialog box by choosing the New button from the
+Menu Bar.
+2. Make sure that the Part button is chosen in the New SOLIDWORKS Document
+dialog box. Next, choose the OK button to invoke the Part mode, refer to Figure 2-11.
+
+=== PDF PAGE 11 ===
+Figure 2-10 The New SOLIDWORKS Document dialog box
+Figure 2-11 The initial interface displayed on invoking the Part document
+Note
+To start a new assembly document, you need to choose the Assembly button and then the
+OK button from the New SOLIDWORKS Document dialog box. In an assembly
+document, you can assemble the components created in the part documents. You can also
+create components in the assembly documents. You will learn more about the assembly
+document in the later tutorials.
+To start a new drawing document, you need to choose the Drawing button and then the
+OK button from the New SOLIDWORKS Document dialog box. In a drawing document,
+you can generate or create different drawing views of the parts created in the part
+documents or the assemblies created in an assembly document. You will learn more about
+drawing document in the later tutorials.
+Whenever you start a new part document, by default, you are in the part modeling
+environment, but you need to start the design by first creating the sketch of the base
+feature. You need to invoke the sketcher environment to create the sketch of the model
+shown in the Figure 2-4.
+
+=== PDF PAGE 12 ===
+3. Click on the Sketch tab of the CommandManager to display the Sketch
+CommandManager tools.
+4. Choose the Sketch button from the Sketch CommandManager; the Edit Sketch
+PropertyManager is displayed on the left in the graphic area and you are prompted to
+select the sketching plane on which the sketch is to be created. Also, the three default
+planes (Front Plane, Right Plane, and Top Plane) are available in SOLIDWORKS,
+and are temporarily displayed on the screen, as shown in Figure 2-12.
+You can select a plane to draw the sketch of the base feature depending on the requirement
+of the design. The selected plane will automatically be oriented normal to the view, so
+that you can easily create the sketch. Also, the CommandManager will display various
+sketching tools to draw the sketch.
+Figure 2-12 The three default planes displayed on the interface
+5. Select the Front Plane from the graphics area; the sketching environment is invoked
+and the selected plane gets oriented normal to the view. You will notice that the red
+colored arrows are displayed at the center of the interface window, indicating that you
+are in the sketching environment. Also, the confirmation corner with the Exit Sketch
+and Cancel Sketch options at the upper right corner in the drawing area is displayed.
+The window display in the sketching environment of SOLIDWORKS is shown in
+Figure 2-13.
+
+=== PDF PAGE 13 ===
+Figure 2-13 Default interface display of a part document in the sketching environment
+Modifying the Snap, Grid, and Units Settings
+It is assumed that while installing SOLIDWORKS, you have selected the MMGS
+(millimeters, gram, second) option for measuring the length. Therefore, the length of
+an entity will be measured in millimeters in the current file. But, if you select some
+other unit at the time of installation, you need to change the linear and angular units
+before drawing the sketch. For this tutorial, you need to modify the grid and snap settings
+so that the cursor jumps through a distance of 5 mm.
+1. Choose the Options button from the Menu Bar; the System Options - General dialog
+box is displayed.
+2. Choose the Document Properties tab; the name in the dialog box changes to the
+Document Properties - Drafting Standard.
+Note
+If you have selected millimeters as the unit of measurement while installing
+SOLIDWORKS, skip steps 3 and 4 in this section.
+3. Select the Units option from the area on the left of the dialog box; the options related to
+linear and angular units are displayed.
+
+=== PDF PAGE 14 ===
+4. Select the MMGS (millimeter, gram, second) radio button in the Unit system area.
+Also, select the degrees option from the Angle area in the Unit column.
+Tip
+In SOLIDWORKS, you can also change the units for the current document by using the
+Unit system that is located towards right in the Status Bar, refer to Figure 2-11. To do so,
+click on the Unit system; a flyout will be displayed with a tick mark on the left of the
+activated unit system, refer to Figure 2-14. Now, you can select the required unit system
+for the activated unit system from this flyout. You can also invoke the Document Properties-
+Units dialog box by selecting the Edit Document Units from this flyout.
+Figure 2-14 The flyout showing the currently selected unit system
+Note
+Note that the short form of the current unit system of the activated document will be
+displayed in the Status Bar. For example, if the MMGS (millimeter, gram, second) is the
+current unit system then MMGS will be displayed in the Status Bar.
+As evident from Figure 2-5, the dimensions in the sketch are multiple of 5. Therefore, you
+need to modify the grid and snap settings so that the cursor jumps through a distance of
+5 mm.
+5. Select the Grid/Snap option from the area on the left in the dialog box; the options
+related to the grid and snap are displayed, also the name of the dialog box is modified to
+Document Properties - Grid/Snap.
+6. In this dialog box, set the value in the Major grid spacing and Minor-lines per major
+spinners to 50 and 10, respectively.
+
+=== PDF PAGE 15 ===
+Note
+The distance through which the cursor jumps depends on the ratio between the values in
+the Major grid spacing and Minor-lines per major spinners available in the Grid area.
+For example, if you want the coordinates to increment by 10 mm, you will have to set the
+ratio of the major and minor lines to 10. This can be done by setting the value of the
+Major grid spacing spinner to 100 and the Minor-lines per major spinner to 10.
+Similarly, to make the cursor jump through a distance of 5 mm, set the value of the Major
+grid spacing spinner to 50 and the Minor-lines per major spinner to 10.
+Tip
+If you want to display the grid in the sketching environment, select the Display grid check
+box from the Grid area of the Document Properties - Grid/Snap dialog box. Alternatively,
+choose Hide/Show Items > View Grid from the View (Heads-Up) toolbar.
+While drawing a sketched entity by snapping through grips, the grips symbol will be
+displayed below the cursor on the right.
+7. Make sure that the Grid check box is selected in the System Options - Relations/Snaps
+dialog box. To invoke this dialog box, choose the Go To System Snaps button from the
+Document Properties - Grid/Snap dialog box.
+8. Choose the OK button to exit the dialog box.
+Now, when you move the cursor, the coordinates displayed close to the lower right corner
+of the drawing area show an increment of 5 mm.
+Drawing the Sketch
+The sketch will be drawn using the Line tool. The arc in the sketch will also be drawn
+using the same tool. You need to start the drawing from the lower left corner of the sketch
+to be drawn.
+1. Choose the Line tool from the Sketch CommandManager; the arrow cursor is
+changed into line cursor. Also, the Insert Line PropertyManager is displayed at the
+left in the drawing area.
+
+=== PDF PAGE 16 ===
+The line cursor is actually a crosshairs-like cursor with a small inclined line below the
+crosshairs. You can also invoke the Line tool by pressing the L key.
+The line is the basic sketching entity available in SOLIDWORKS. In general terms, a line
+is defined as the shortest distance between two points.
+In SOLIDWORKS, the Line tool is used to draw a chain of continuous lines which is a
+default method of drawing lines. In this method, you have to specify the start point and the
+endpoint of the line using the left mouse button. As soon as you specify the start point of
+the line, the Insert Line PropertyManager will disappear and the Line Properties
+PropertyManager will be displayed. However, the options available in this
+PropertyManager are not activated at this stage. These options will be activated after the
+line is created. As soon as, you specify the end point of the line by using the left mouse
+button, a line will be drawn between two points. Now, when you move the cursor away
+from the end point of the line, you will notice that another line is attached with the cursor.
+It means that you can create a chain of continuous line one after other. You can end the
+process of drawing the continuous line by pressing the ESC key, by double-clicking on the
+screen, or by invoking the Select tool from the Menu Bar. You can also right-click to
+display the shortcut menu and choose the End chain or Select option to terminate the
+process of drawing the line.
+Note
+When you terminate the process of drawing a line by double-clicking on the screen or by
+choosing the End chain from the shortcut menu, the current chain ends but the Line tool
+still remains active. As a result, you can draw other lines. However, if you choose Select
+from the shortcut menu, the Line tool will be deactivated.
+You can also draw an individual line by using the Line tool. To do so, invoke the Line tool.
+Next, press and hold the left mouse button to specify the start point of the line and then
+drag the cursor toward the required direction. After getting the required direction and length,
+release the left mouse button.
+2. Move the line cursor to a point whose coordinates are 30 mm, 0 mm, and, 0 mm.
+3. Click at this point to specify the start point of the line; the Line Properties
+PropertyManager will be displayed.
+4. Move the cursor horizontally toward the right. Click again when the length of the line
+
+=== PDF PAGE 17 ===
+above the line cursor displays 60; a bottom horizontal line of 60 mm length is drawn.
+5. Move the line cursor vertically upward and click when the length of the line above the
+line cursor displays 35.
+6. Choose the Zoom to Fit button from the View (Heads-Up) toolbar to fit the sketch
+into the screen.
+Note
+You can invoke the drawing display tools when any other tool is active in the drawing
+area. After modifying the drawing display area, the tool that was active before invoking
+the drawing display tool will be restored and you can continue using that tool.
+7. Move the line cursor horizontally toward the left and press the left mouse button when
+the length of the line above the line cursor shows the value 10.
+8. Move the line cursor vertically downward and click when the length of the line above
+the line cursor is displayed as 10.
+9. Move the line cursor horizontally toward the left and click when the length of the line
+above the line cursor is displayed as 10.
+Next, you need to draw an arc normal to the last line. As mentioned earlier, you can also
+draw an arc using the Line tool. Drawing arcs using the Line tool is a recommended
+method to draw a sketch that is a combination of lines and arcs. This increases the
+productivity by reducing the time taken in invoking tools for drawing an arc and then
+invoking the Line tool to draw lines.
+10. Move the line cursor away from the endpoint of the last line and then move it back
+close to the endpoint; the arc mode is invoked. Also, the Line Properties
+PropertyManager disappears and the Arc PropertyManager is displayed at the left in
+the drawing area.
+11. Move the arc cursor vertically downward to the next grid point.
+12. Move the arc cursor toward the left.
+
+=== PDF PAGE 18 ===
+You will notice that a normal arc is being drawn and the angle and radius of the arc are
+displayed above the line cursor.
+13. Move the cursor to the left and click when the angle value on the arc cursor is displayed
+as 180 and the radius value is displayed as 10. An arc normal to the last line is drawn and
+again the line mode is invoked automatically.
+14. Move the line cursor horizontally toward the left and click when the length of the line
+on the line cursor is displayed as 10.
+15. Move the line cursor vertically upward and click when the length of the line on the
+line cursor is displayed as 10.
+16. Move the line cursor horizontally toward the left and click when the length of the line
+on the line cursor is displayed as 10.
+17. Move the line cursor to the start point of the first line and click when the orange circle
+is displayed.
+18. Press the ESC key to exit the Line tool.
+This completes the sketch. However, you need to modify the drawing display area such
+that the sketch fits the screen.
+19. Press the F key; the drawing display area is modified and sketch fits into the screen.
+The final sketch for Tutorial 1 with the grid display turned off is shown in Figure 2-15.
+
+=== PDF PAGE 19 ===
+Figure 2-15 Final sketch for Tutorial 1
+Note
+Figure 2-15 shows the relation symbols that are applied automatically while drawing the
+sketch. To control the display of relations on and off, choose the Hide/Show Items button
+in the View (Heads-Up) toolbar; the flyout will be displayed, refer to Figure 2-16. Next,
+choose the View Sketch Relations button which is a toggle button from this flyout.
+Figure 2-16 The Hide/Show Items flyout
+Saving the Sketch
+It is recommended that you create a separate folder to save the tutorial files of this book.
+You will create a folder with the name SOLIDWORKS Tutorials in the Documents
+folder and then create the sub-folder of each tutorial inside the SOLIDWORKS Tutorials
+folder. Next, you can save the tutorials of a tutorial in the folder of that tutorial.
+
+=== PDF PAGE 20 ===
+1. Choose the Save button from the Menu Bar to invoke the Save As dialog box. Create
+the SOLIDWORKS Tutorials folder inside the \Documents folder and then create the c02
+folder inside the SOLIDWORKS Tutorials folder.
+2. Enter c02_tut01 as the name of the document in the File name edit box. Choose the
+Save button to save the file at the location \Documents\SOLIDWORKS Tutorials\c02.
+3. Close the document by choosing File > Close from the SOLIDWORKS menus.
+
+=== PDF PAGE 21 ===
+Tutorial Exercise 2
+In this tutorial, you will draw the basic sketch of the revolved solid model shown in Figure
+2-17. The sketch of this model is shown in Figure 2-18. Do not dimension the sketch. The
+solid model and its dimensions are given for your reference only. (Expected time: 30
+min)
+Figure 2-17 Revolved solid model for Tutorial 1
+
+=== PDF PAGE 22 ===
+Figure 2-18 Sketch of the revolved solid model
+The following steps are required to complete this tutorial:
+a. Invoke a new part document.
+b. Invoke the sketching environment.
+c. Modify the settings of the snap, grid, and units settings so that the cursor jumps through
+a distance of 5 mm.
+d. Draw the sketch using the Line and Centerline tools, refer to Figure 2-21.
+e. Save the sketch and then close the file.
+Invoking a New Part Document
+1. Choose the New button from the Menu Bar to invoke the New SOLIDWORKS
+Document dialog box.
+2. In the New SOLIDWORKS Document dialog box, the Part button is chosen by
+default. Choose the OK button in this dialog box; a new SOLIDWORKS part document
+starts in part modeling environment.
+You need to invoke the sketching environment to draw the sketch.
+3. Choose the Sketch tab from the CommandManager and then the Sketch button
+from the Sketch CommandManager; the Edit Sketch PropertyManager is displayed
+and you are prompted to select a plane on which you want to draw the sketch.
+
+=== PDF PAGE 23 ===
+4. Select the Right Plane from the drawing area; the sketching environment is invoked
+and the plane gets oriented normal to the view. You will notice that the red colored arrows
+are now displayed at the center of the screen indicating that you are in the sketching
+environment.
+Modifying the Snap, Grid, and Units Settings
+It is assumed that while installing SOLIDWORKS, you have selected the MMGS
+(millimeters, gram, second) option for measuring the length. Therefore, the length of
+an entity will be measured in millimeters in the current file. But, if you select some
+other unit at the time of installation, you need to change the linear and angular units
+before drawing the sketch. For this tutorial, you need to modify the grid and snap settings
+so that the cursor jumps through a distance of 5 mm.
+1. Click on the Unit system that is located towards right in the Status Bar; a flyout is
+displayed with a tick mark next to the unit system of the current document, refer to Figure
+2-19.
+Figure 2-19 The flyout showing the currently selected unit system
+2. Choose the Edit Document Units option from this flyout; the Document Properties -
+Units dialog box is displayed.
+Note
+If you have selected millimeters as the unit of measurement while installing
+SOLIDWORKS, you can skip step 3.
+3. Select the MMGS (millimeter, gram, second) radio button in the Unit system area.
+Also, select the degrees option from the Angle area in the Units column.
+
+=== PDF PAGE 24 ===
+Note
+You can also select the required unit system directly for the current document by selecting
+the respective option from the unit system flyout. However, if you are in the sketching
+environment, on selecting the unit system from the unit system flyout, you will automatically
+exit the sketching environment.
+As evident from Figure 2-18, the dimensions in the sketch are multiples of 5. Therefore,
+you need to modify the grid and snap settings so that the cursor jumps through a
+distance of 5 mm.
+4. Select the Grid/Snap option from the area on the left of the Document Properties -
+Units dialog box to display the options related to the grid and snap. Also, note that
+name of the dialog box is modified to Document Properties - Grid/Snap.
+5. In this dialog box, set the value in the Major grid spacing and Minor-lines per major
+spinners to 50 and 10, respectively.
+6. Choose the Go To System Snap button from the dialog box; the name of the dialog box
+is modified to System Options - Relations/Snaps.
+7. Make sure that the Grid check box is selected in this dialog box. Next, choose the OK
+button to exit the dialog box.
+Now, when you move the cursor, the coordinates displayed close to the lower right corner
+of the drawing area show an increment of 5 mm.
+Drawing the Sketch
+As evident from the Figure 2-18, the sketch will be drawn using the Line tool and you need
+to start drawing the sketch from the lower left corner of the sketch. As the model of the
+sketch is a revolved feature, you first need to create its axis by using the Centerline tool,
+so that while converting the sketch you can use this as an axis of revolution. You will learn
+more about the revolve features in later tutorials.
+1. Click on the down arrow next to the Line tool; the Line flyout is displayed, refer to
+Figure 2-20.
+
+=== PDF PAGE 25 ===
+Figure 2-20 The Line flyout
+2. Choose the Centerline button form the Line flyout; the Insert Line PropertyManager
+is displayed at the left of the drawing area. Note that in the Options rollout of this
+PropertyManager, the For construction check box is selected.
+If the For construction check box of the Insert Line PropertyManager is selected, you
+can draw a construction line or a centerline. The construction lines or the centerlines are
+drawn only for the aid of sketching and are not considered while converting the sketches
+into features. You can draw a construction line similar to the sketched line by using the
+Centerline tool.
+3. Move the cursor towards the origin and specify the start point of the centerline when the
+cursor snaps to the origin and the coincident relation is displayed below the cursor.
+4. Move the cursor horizontally toward the left and specify the end point of the centerline
+when the length of the centerline above the cursor is displayed close to 120. Note that,
+you may need to scroll the wheel of the mouse to zoom in/out of the drawing. You can
+also invoke the Zoom In/Out tool by choosing the View > Modify > Zoom In/Out from
+the SOLIDWORKS menus to zoom in/out of the drawing.
+The Zoom In/Out tool is used to dynamically zoom in or out of the drawing. When you
+invoke this tool, cursor changes to zoom cursor. To zoom out of a drawing, press and hold
+the left mouse button and drag the cursor to the downward direction. Similarly, to zoom in
+a drawing, press and hold the left mouse button and drag the cursor in upward direction.
+As you drag the cursor, the drawing display area will be modified dynamically. After
+getting the desired view, exit this tool by right-clicking and choosing the Zoom In/Out
+button from the shortcut menu displayed.
+5. Right-click in the drawing area; a shortcut menu is displayed. Choose the Select option
+from it to exit the Centerline tool.
+6. Press the F key; the sketch is zoomed and it fits on the screen.
+
+=== PDF PAGE 26 ===
+7 . Choose the Line button from the Sketch CommandManager; the arrow cursor
+changes to line cursor. Also, the Insert Line PropertyManager is displayed on the left
+of the drawing area.
+Tip
+You can also draw a construction line using the Line tool. To do so, invoke the Insert Line
+PropertyManager by chosing the Line tool. Next, select the For construction check box
+from the Options rollout of the PropertyManager to draw the construction line.
+8. Move the line cursor to a location whose coordinates are 0 mm, 15 mm, and 0 mm.
+9. Left-click at this point and move the cursor horizontally toward the left. You will notice
+that the symbol of the Horizontal relation is displayed below the line cursor and the
+length and angle of the line are displayed above the line cursor.
+Note
+You will learn more about adding relations in the later tutorials.
+10. Left-click again when the length of the line above the line cursor is displayed as 120.
+The first horizontal line is drawn. As you are drawing continuous lines, the endpoint of the
+line drawn is automatically selected as the start point of the next line.
+11. Move the line cursor vertically upward. The symbol of the Vertical relation is
+displayed on the right of the line cursor and the length of the line is displayed above the
+line cursor. Click when the length of the line on the line cursor is displayed as 25.
+12. Move the cursor horizontally toward the right and click when the length of the line on
+the line cursor is displayed as 45.
+13. Move the line cursor vertically upward and press the left mouse button when the
+length of the line on the line cursor is displayed as 15.
+14. Move the line cursor horizontally toward the right and click when the length of the line
+on the line cursor is displayed as 40.
+
+=== PDF PAGE 27 ===
+15. Move the line cursor vertically upward and click when the length of the line on the
+line cursor is displayed as 15.
+16. Press F on the keyboard to fit the sketch on the screen.
+17. Move the line cursor horizontally toward the right and click when the length of the line
+on the line cursor is displayed as 40.
+18. Move the line cursor vertically upward and click when the length of the line on the
+line cursor is displayed as 15.
+19. Move the line cursor horizontally toward the right and press the left mouse button
+when the length of the line on the line cursor displays as 40.
+20. Move the line cursor vertically downward and click when the length of the line on the
+line cursor is displayed as 5.
+21. Move the line cursor horizontally toward the left and click when the length of the line
+on the line cursor is displayed as 35.
+22. Move the line cursor vertically downward and click when the length of the line on the
+line cursor is displayed as 15.
+23. Move the line cursor horizontally toward the left and click when the length of the line
+on the line cursor is displayed as 40.
+24. Move the line cursor vertically downward and click when the length of the line on the
+line cursor is displayed as 15.
+25. Move the line cursor horizontally toward the left and click when the length of the line
+on the line cursor is displayed as 40.
+26. Move the line cursor vertically downward and click when the length of the line on the
+line cursor is displayed as 20.
+
+=== PDF PAGE 28 ===
+27. Move the line cursor horizontally toward the right and click when the length of the line
+on the line cursor is displayed as 70.
+28. Move the line cursor vertically downward to the start point of the first line. Click when
+an orange or yellow circle is displayed; the final sketch for Tutorial 2 is created, as shown
+in Figure 2-21. In this figure, the grid display is turned off for clarity.
+29. Right-click and then choose Select from the shortcut menu displayed to exit the Line
+tool.
+Note
+The display of relations shown in Figure 2-21, can be turned on or off by choosing the
+View Sketch Relations button from the View (Heads-Up) > Hide/Show items flyout.
+Figure 2-21 Final sketch for Tutorial 2
+Tip
+In case, you have drawn wrong sketch entities, you can delete them. To do so, select the
+entities to be deleted by using the Select tool (cursor) and then press the DELETE key. You
+can select the entities individually or more than one by defining a window around the
+entities. When you select the entities, they turn light blue. When they turn light blue, press
+the DELETE key. You can also delete the sketched entities by selecting them and choosing
+the Delete option from the shortcut menu that is displayed on right-clicking.
+Saving the Sketch
+
+=== PDF PAGE 29 ===
+1. Choose the Save button from the Menu Bar to invoke the Save As dialog box. Create
+the SOLIDWORKS Tutorials folder inside the \Documents folder and then create the c02
+folder inside the SOLIDWORKS Tutorials folder, if it is not created in the Tutorial 1 of
+this tutorial.
+2. Enter c02_tut02 as the name of the document in the File name edit box and choose the
+Save button. The document is saved at the location \Documents\SOLIDWORKS
+Tutorials\c02.
+3. Close the document by choosing File > Close from the SOLIDWORKS menus.
+Tip
+If you save a file in the sketching environment and then open it next time by using the
+Open button available in the Menu Bar, it will open in the sketcher environment only.
+
+=== PDF PAGE 30 ===
+Tutorial Exercise 3
+In this tutorial, you will draw the basic sketch of the model shown in Figure 2-22. The
+sketch to be drawn is shown in Figure 2-23. Do not dimension the sketch; the solid model
+and its dimensions are given for your reference only. (Expected time: 30 min)
+Figure 2-22 Solid model for Tutorial 3
+
+=== PDF PAGE 31 ===
+Figure 2-23 Sketch for Tutorial 3
+The following steps are required to complete this tutorial:
+a. Invoke a new part document.
+b. Modify the settings of the snap, grid, and units settings so that the cursor jumps through
+a distance of 10 mm.
+c. Invoke the sketching environment.
+d. Draw the sketch using the sketching tools, refer to Figures 2-26 through 2-31.
+e. Save the sketch and then close the file.
+Invoking a New Part File
+1. Choose the New button from the Menu Bar; the New SOLIDWORKS Document
+dialog box is displayed with the Part button chosen by default.
+2. Choose the OK button from this dialog box; a new SOLIDWORKS part document is
+started.
+Now, you need to invoke the sketching environment, to draw the sketch of the model.
+3. Choose the Sketch button from the Sketch CommandManager; the Edit
+Sketch PropertyManager is displayed.
+4. Select the Front Plane from the drawing area; the sketching environment is invoked.
+
+=== PDF PAGE 32 ===
+Modifying the Snap, Grid, and Units Settings
+As the dimensions in the sketch are multiple of 10, you need to modify the grid and snap
+settings so that the cursor jumps through a distance of 10 mm.
+1. Click on the Unit system that is located in the Status Bar; a flyout is displayed with a
+tick mark next to the unit system of the current document, refer to Figure 2-24.
+Figure 2-24 The flyout showing the currently selected unit system
+2. Choose the Edit Document Units option from this flyout; the Document Properties -
+Units dialog box is displayed.
+Note
+If you have selected millimeter as the unit of measurement while installing
+SOLIDWORKS, you can skip step 3 in this section.
+3. Select the MMGS (millimeter, gram, second) radio button in the Unit system area.
+Also, select the degrees option from the Angle area in the Unit column.
+Note
+You can also directly select the required unit system for the current document by selecting
+the respective option from the Unit system flyout. However, in this case, if you are in the
+sketcher environment, you will automatically exit from the sketcher environment.
+As evident from Figure 2-23, the dimensions in the sketch are multiple of 10. Therefore,
+you need to modify the grid and snap settings so that the cursor jumps through a
+distance of 10 mm.
+
+=== PDF PAGE 33 ===
+4. Select the Grid/Snap option from the area on the left of the Document Properties -
+Units dialog box; the options related to the grid and snap are displayed. Also, note that
+the name of the dialog box is modified to Document Properties - Grid/Snap.
+5. In this dialog box, set the value in the Major grid spacing and Minor-lines per major
+spinners to 100 and 10, respectively.
+6. Choose the Go To System Snap button from the Document Properties - Grid/Snap
+dialog box; the name of the dialog box is modified to System Options -
+Relations/Snaps. Now, make sure that the Grid check box is selected in it.
+7. Choose the OK button to exit the dialog box.
+Now, when you move the cursor, the coordinates displayed close to the lower right corner
+of the drawing area are showing an increment of 10 mm.
+Drawing the Sketch
+In this tutorial, you need to draw the sketch in two parts. Initially, you need to draw the
+outer loop of the sketch which is a rectangle. Next, you need to draw the inner loops of
+the sketch which consist of four simple holes and an elongated hole.
+1. Choose the Corner Rectangle tool from the Rectangle flyout of the Sketch
+CommandManager to draw a rectangle by specifying the two diagonally opposite
+corners; the Rectangle PropertyManager is displayed on the left of the drawing area.
+Also, the arrow cursor changes to the rectangle cursor.
+In SOLIDWORKS, the tools that are used to draw rectangles are grouped together in
+the Rectangle flyout. To invoke this flyout, click on the down arrow located on the right
+of the Rectangle flyout, refer to Figure 2-25. From this flyout, you can select
+an appropriate method to draw a rectangle.
+
+=== PDF PAGE 34 ===
+Figure 2-25 The Rectangle flyout
+The Corner Rectangle tool is used to draw a rectangle by specifying the two diagonally
+opposite corners. To draw a rectangle by specifying the center and one of the corners, use
+the Center Rectangle tool. To draw a rectangle at an angle by specifying its three corners,
+use the 3 Point Corner Rectangle tool. In this case, the first two corners will define the
+length and angle of the rectangle and the third corner will define the width of the
+rectangle. Similarly, the 3 Point Center Rectangle tool of the Rectangle flyout is use to
+draw a centerpoint rectangle at an angle. The last tool of the Rectangle flyout is the
+Parallelogram tool. This tool is used to draw a parallelogram.
+Note
+You can also select an appropriate method to draw a rectangle from the Rectangle Type
+rollout of the Rectangle PropertyManager.
+2. Move the rectangle cursor toward the origin and specify the first corner of the rectangle
+when it snaps to the origin and the symbol of coincident relation is displayed below the
+cursor.
+Note
+You will learn more about adding relations to the sketch in the later tutorials.
+3. Move the cursor toward right direction and specify the second corner of the rectangle
+when the X and Y length value of the rectangle displayed above the cursor are 120 and
+100. Note that, you may need to scroll the wheel of the mouse to zoom in/out of the
+drawing. You can also invoke the Zoom In/Out tool by choosing the View > Modify >
+Zoom In/Out from the SOLIDWORKS menus to zoom in/out of the drawing.
+The Zoom In/Out tool is used to dynamically zoom in or out the drawing. When you
+invoke this tool, cursor changes to by zoom cursor. To zoom out of a drawing, press and
+hold the left mouse button and drag the cursor to downward direction. Similarly, to zoom
+in a drawing, press and hold the left mouse button and drag the cursor to upward direction.
+
+=== PDF PAGE 35 ===
+Now, when you drag the cursor, the drawing display area gets modified dynamically. After
+getting the desired view, exit this tool by right-clicking and choosing the Zoom In/Out
+button from the shortcut menu displayed.
+4. Exit the Corner Rectangle tool by right-clicking and choosing the Select option from
+the shortcut menu, displayed. Figure 2-26 shows the outer loop of the sketch drawn using
+the Corner Rectangle tool.
+You have drawn the outer loop of the sketch. Now, you need to draw the inner loops, which
+consist of four holes and an elongated hole. First, draw an elongated hole by using the
+Straight Slot tool and then the four holes by using the Circle tool.
+5. Choose the Straight Slot button from the Slot flyout of the Sketch CommandManager;
+the Slot PropertyManager is displayed on the left of the drawing area, refer to Figure 2-
+27.
+In SOLIDWORKS, the tools that are used to draw a slot profile are grouped together in
+the Slot flyout. To display this flyout, click on the down arrow located next to the
+Straight Slot tool; the Slot flyout will be displayed; as shown in Figure 2-28. From this
+flyout, you can choose the appropriate method to draw a slot profile. Alternatively, invoke
+the Slot PropertyManager by choosing the Straight Slot button from the Sketch
+CommandManager. Next, select an appropriate method to draw a slot profile from the
+Slot Type rollout.
+Figure 2-26 The outer loop of the sketch
+
+=== PDF PAGE 36 ===
+Figure 2-27 The Slot PropertyManager
+Figure 2-28 The Slot flyout
+Tip
+The tool selected from the Slot flyout will be displayed as default tool in the Sketch
+CommandManager.
+6. Make sure that the Straight Slot and Center to Center buttons are chosen in the Slot
+Type rollout of the Slot PropertyManager.
+
+=== PDF PAGE 37 ===
+The Slot Type rollout of the PropertyManager displays different types of methods to
+create a slot profile. You can choose the appropriate method from this rollout to draw a
+slot profile. The Center to Center button of this rollout is used to measure the slot length
+from its center to center. You can also choose the Overall Length button from this rollout
+to measure the overall length of the slot. Note that, by default the Add dimensions check
+box of this rollout is clear. If you select this check box, the current dimensions of the slot
+will be added to it automatically in the drawing area.
+7. Move the cursor to the location whose coordinates are 30 and 50 and then specify the
+first point of the slot at this location.
+Note
+The coordinates are displayed in the Status Bar that is located at the bottom of the
+drawing area.
+8. Move the cursor horizontally toward right. You will notice that the symbol of the
+horizontal relation is displayed below the cursor and the length and angle values are
+displayed above the cursor.
+9. Left-click when the length above the cursor shows the value 60; a reference slot is
+attached to the cursor.
+10. Specify a point in the drawing area, when the width value of the slot is displayed
+closer to 20 mm in the Parameters rollout of the Slot PropertyManager.
+The Parameters rollout of the Slot PropertyManager displays the parameters of the slot.
+The parameters displayed in this rollout will be enabled for modification once the slot is
+created.
+11. Set the value of the Slot Width spinner in the Parameters rollout of the
+PropertyManager to 20 mm.
+12. Exit the tool by right-clicking and choosing the Select option from the shortcut menu
+displayed. Figure 2-29 shows the sketch after creating the sketch of the elongated hole
+by using the Straight Slot tool.
+
+=== PDF PAGE 38 ===
+13. Choose the Circle tool from the Circle flyout of the Sketch CommandManager; the
+Circle PropertyManager is displayed on the left side of the drawing area. Also, the
+cursor is changed to a circle cursor.
+In SOLIDWORKS, there are two methods to draw circles. The first method is by
+specifying the center point of a circle and then defining its radius. The second method is
+drawing a circle by defining the three points that lie on its periphery. The tools used to
+create circle are grouped together in the Circle flyout in the Sketch CommandManager.
+To invoke this flyout, click on the down arrow located next to the Circle tool, refer to Figure
+2-30.
+Note
+You can also select an appropriate method to draw a circle from the Circle Type rollout of
+the Circle PropertyManager.
+Figure 2-29 The sketch after creating the elongated hole
+Figure 2-30 The Circle flyout
+14. Move the circle cursor to the location whose coordinates are 20 and 20 and then
+
+=== PDF PAGE 39 ===
+specify the center point of the circle at this location; the rubber band circle is attached
+with the circle cursor. The circle cursor consists of a crosshairs and a circle with snap
+grid below it.
+15. Move the circle cursor horizontally toward the right and click when the radius of the
+circle on the circle cursor is displayed as 10. The circle of radius 10 mm has been
+drawn. Note that the Circle tool is still active.
+16. Move the circle cursor to the location whose coordinates are 100 and 20 and then
+specify the center point of the circle at this location; the rubber band circle is attached
+with the circle cursor.
+17. Move the circle cursor horizontally toward the right and click when the radius of the
+circle on the circle cursor is displayed as 10. The circle of radius 10 mm has been
+drawn. Note that the circle tool is still active.
+18. Similarly, draw the other two circles. The coordinates of the center point of the other
+two circles are 20, 80 and 100, 80.
+19. Right-click in the drawing area; a shortcut menu is displayed. Choose the Select
+option from the shortcut menu to exit the Circle tool.
+20. Choose the Zoom to Fit (F) button from the View (Heads-Up) > Hide/Show items
+toolbar to fit the sketch on the screen. The final sketch with the display of relations turned
+on, is shown in Figure 2-31.
+Note
+To turn ON/OFF the display of relations, choose the View Sketch Relations button from
+the View (Heads-Up) flyout.
+
+=== PDF PAGE 40 ===
+Figure 2-31 Final sketch for Tutorial 3
+Saving the Sketch
+After creating the sketch, save it in the SOLIDWORKS Tutorials folder.
+1. Choose the Save button from the Menu Bar to invoke the Save As dialog box. Browse
+to the c02 folder inside the SOLIDWORKS Tutorials folder.
+2. Enter c02_tut03 as the name of the document in the File name edit box and choose the
+Save button. The document is saved at the location \Documents\SOLIDWORKS
+Tutorials\c02.
+3. Close the document by choosing File > Close from the SOLIDWORKS menus.
+Answer the following questions and then compare them to those given at the end of
+this tutorial:
+1. You can convert a sketched entity into a construction entity by selecting the
+check box provided in the PropertyManager.
+2. To draw a rectangle at an angle, you need to use the tool.
+
+=== PDF PAGE 41 ===
+3. You can also invoke the tool.
+tool or press the ESC key to exit the sketching
+4. In SOLIDWORKS, a rectangle is considered as a combination of individual
+.
+5. The base feature of any design is a sketched feature and is created by drawing a sketch.
+(T/F)
+6. You can invoke the arc mode using the Line tool. (T/F)
+7. If the value of the Major grid spacing and Minor-lines per major spinners is set to
+100 and 10, respectively, then the cursor will jump through a distance of 5 mm. (T/F)
+8. If you save a file in the sketching environment and then open it next time, it will open in
+the part modeling environment. (T/F)
+EXERCISES 1
+Draw the sketch of the model shown in Figure 2-32. The sketch to be drawn is shown in
+Figure 2-33. Do not dimension the sketch. The solid model and its dimensions are given
+for your reference only. (Expected time: 30 min)
+
+=== PDF PAGE 42 ===
+Figure 2-32 Solid model for Exercise 1
+Figure 2-33 Sketch for Exercise 1
+Exercise 2
+Draw the sketch of the model shown in Figure 2-34. The sketch to be drawn is shown in
+Figure 2-35. Do not dimension the sketch. The solid model and its dimensions are given
+for your reference only. (Expected time: 30 min)
+
+=== PDF PAGE 43 ===
+Figure 2-34 Solid model for Exercise 2
+Figure 2-35 Sketch for Exercise 2
+Exercise 3
+Draw the sketch of the model shown in Figure 2-36. The sketch to be drawn is shown in
+Figure 2-37. Do not dimension the sketch. The solid model and its dimensions are given
+for your reference only. (Expected time: 30 min)
+
+=== PDF PAGE 44 ===
+Figure 2-36 Solid model for Exercise 3
+Figure 2-37 Sketch for Exercise 3
+Answers to Self-Evaluation Test
+1. For construction, 2. Point Corner Rectangle, 3. Select, 4. lines 5. T, 6. T, 7. F, 8. F

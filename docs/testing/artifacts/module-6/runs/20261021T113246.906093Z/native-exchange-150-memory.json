@@ -1,0 +1,544 @@
+{
+  "method": "proc_pid_rusage v2; 100 ms sampling; explicit test process and its worker children",
+  "limits": "Test harness/worker sum is conservative and may double count shared allocations. Short phase peaks can be missed; no separate GPU or full B4 acceptance claim.",
+  "maximum_sampled_sum_physical_footprint_bytes": 319440480,
+  "samples": [
+    {
+      "elapsed_seconds": 0.012146166991442442,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 4390912,
+          "physical_footprint_bytes": 295104
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 0.12380645898520015,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 39075840,
+          "physical_footprint_bytes": 6505048
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 0.2446502499806229,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 77299712,
+          "physical_footprint_bytes": 17105760
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 0.365947291982593,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 92291072,
+          "physical_footprint_bytes": 25002872
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 0.4882494999910705,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 165576704,
+          "physical_footprint_bytes": 96519128
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 25280512,
+          "physical_footprint_bytes": 4063808
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 0.6056415839993861,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 176537600,
+          "physical_footprint_bytes": 133809112
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 29458432,
+          "physical_footprint_bytes": 5784128
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 0.727238708990626,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 196608000,
+          "physical_footprint_bytes": 149881840
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 29458432,
+          "physical_footprint_bytes": 5784128
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 0.8481548340059817,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 207749120,
+          "physical_footprint_bytes": 160941064
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 29458432,
+          "physical_footprint_bytes": 5784128
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 0.9684543749899603,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 207749120,
+          "physical_footprint_bytes": 160941064
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 29458432,
+          "physical_footprint_bytes": 5784128
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.0827433749800548,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 207749120,
+          "physical_footprint_bytes": 160941064
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 29458432,
+          "physical_footprint_bytes": 5784128
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.2040240000060294,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 197607424,
+          "physical_footprint_bytes": 153338888
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 29458432,
+          "physical_footprint_bytes": 5784128
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.3270334590051789,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 215252992,
+          "physical_footprint_bytes": 170918920
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 37322752,
+          "physical_footprint_bytes": 7193152
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.450115833984455,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 216743936,
+          "physical_footprint_bytes": 220054560
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 38764544,
+          "physical_footprint_bytes": 7619136
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.570744750002632,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 225492992,
+          "physical_footprint_bytes": 228820048
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 38764544,
+          "physical_footprint_bytes": 7619136
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.6916879999917,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 225509376,
+          "physical_footprint_bytes": 196445264
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 38764544,
+          "physical_footprint_bytes": 7619136
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.8128474589902908,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 225509376,
+          "physical_footprint_bytes": 196445264
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 38764544,
+          "physical_footprint_bytes": 7619136
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 1.9343904590059537,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 220987392,
+          "physical_footprint_bytes": 191890488
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 38764544,
+          "physical_footprint_bytes": 7619136
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 2.0675813340058085,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 219561984,
+          "physical_footprint_bytes": 311755808
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 39469056,
+          "physical_footprint_bytes": 7684672
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 2.189608541986672,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 230457344,
+          "physical_footprint_bytes": 203686944
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 39469056,
+          "physical_footprint_bytes": 7684672
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 2.311053291981807,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 230457344,
+          "physical_footprint_bytes": 203654176
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 39469056,
+          "physical_footprint_bytes": 7684672
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 2.432023792003747,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 230457344,
+          "physical_footprint_bytes": 203654176
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 39469056,
+          "physical_footprint_bytes": 7684672
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 2.5527502089971676,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 230457344,
+          "physical_footprint_bytes": 203654176
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 39469056,
+          "physical_footprint_bytes": 7684672
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 2.6739590840006713,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 222363648,
+          "physical_footprint_bytes": 198362144
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 39731200,
+          "physical_footprint_bytes": 7914048
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 2.7956527920032386,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 222461952,
+          "physical_footprint_bytes": 209437728
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 39747584,
+          "physical_footprint_bytes": 7930432
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 2.9080803749966435,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 222330880,
+          "physical_footprint_bytes": 198280224
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 39747584,
+          "physical_footprint_bytes": 7963200
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 3.0291576249874197,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 236683264,
+          "physical_footprint_bytes": 240354408
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 40288256,
+          "physical_footprint_bytes": 8241728
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 3.1517455840075854,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 236748800,
+          "physical_footprint_bytes": 207963240
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 40288256,
+          "physical_footprint_bytes": 8241728
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 3.271863874979317,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 236748800,
+          "physical_footprint_bytes": 207963240
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 40288256,
+          "physical_footprint_bytes": 8241728
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 3.3920321670011617,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 236748800,
+          "physical_footprint_bytes": 207307880
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 40288256,
+          "physical_footprint_bytes": 8241728
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 3.5080710839829408,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 232603648,
+          "physical_footprint_bytes": 218661944
+        },
+        {
+          "pid": 51022,
+          "status": "Pass",
+          "resident_bytes": 40353792,
+          "physical_footprint_bytes": 8241728
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 3.6292547089979053,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 232669184,
+          "physical_footprint_bytes": 218694712
+        },
+        {
+          "pid": 51056,
+          "status": "Pass",
+          "resident_bytes": 5767168,
+          "physical_footprint_bytes": 327848
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 3.7504636670055334,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 232734720,
+          "physical_footprint_bytes": 218793016
+        },
+        {
+          "pid": 51056,
+          "status": "Pass",
+          "resident_bytes": 37453824,
+          "physical_footprint_bytes": 7094824
+        }
+      ]
+    },
+    {
+      "elapsed_seconds": 3.872408750001341,
+      "processes": [
+        {
+          "pid": 51014,
+          "status": "Pass",
+          "resident_bytes": 232603648,
+          "physical_footprint_bytes": 213156920
+        },
+        {
+          "pid": 51056,
+          "status": "Pass",
+          "resident_bytes": 38846464,
+          "physical_footprint_bytes": 7488040
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+[1/55] Automatic MOC for target cad_client
+[2/53] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/53] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/53] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/53] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[6/53] Automatic MOC for target cad_desktop_ui
+[7/51] Automatic MOC for target module3_input
+[8/49] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[9/49] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[10/49] Linking CXX static library libcad_planegcs.a
+[11/49] Linking CXX static library libcad_sketch_solver.a
+[12/49] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[13/49] Automatic MOC for target module1_contracts
+[14/47] Automatic MOC for target module2_contracts
+[15/45] Automatic MOC for target module3_contracts
+[16/43] Automatic MOC for target module4_workspace
+[17/41] Building CXX object CMakeFiles/module7_geometry.dir/tests/module7/geometry.cpp.o
+[18/41] Automatic MOC for target module5_contracts
+[19/39] Automatic MOC for target module4_contracts
+[20/37] Automatic MOC for target module6_contracts
+[21/35] Linking CXX executable solver_spike
+[22/35] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[23/35] Linking CXX executable module2_storage
+[24/35] Linking CXX executable module2_fault_worker
+[25/35] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[26/35] Linking CXX executable module3_persistence
+[27/35] Linking CXX executable module3_solver
+[28/35] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[29/35] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[30/35] Linking CXX executable module5_persistence
+[31/35] Linking CXX executable module5_b2
+[32/35] Linking CXX executable module6_persistence
+[33/35] Building CXX object CMakeFiles/module7_persistence.dir/tests/module7/persistence.cpp.o
+[34/35] Linking CXX executable module7_geometry
+[35/35] Linking CXX executable module7_persistence

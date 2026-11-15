@@ -1,0 +1,13 @@
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 2 redundants
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/support/check.hpp:26: rejected

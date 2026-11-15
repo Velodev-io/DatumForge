@@ -1,0 +1,7 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 50: module9.interaction
+1/1 Test #50: module9.interaction ..............   Passed    1.85 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   1.85 sec

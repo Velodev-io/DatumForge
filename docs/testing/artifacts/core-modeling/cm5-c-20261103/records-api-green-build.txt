@@ -1,0 +1,16 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.4s)
+-- Generating done (0.2s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/5] Building CXX object CMakeFiles/cm5_records.dir/tests/core_modeling/modeling_records.cpp.o
+FAILED: [code=1] CMakeFiles/cm5_records.dir/tests/core_modeling/modeling_records.cpp.o 
+/usr/bin/c++ -DCAD_SOURCE_ROOT="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_CORE_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/cm5_records.dir/tests/core_modeling/modeling_records.cpp.o -MF CMakeFiles/cm5_records.dir/tests/core_modeling/modeling_records.cpp.o.d -o CMakeFiles/cm5_records.dir/tests/core_modeling/modeling_records.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_records.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_records.cpp:19:264: error: expected '}'
+   19 |         auto record=fields({{"version",1},{"intents",QCborArray{f}},{"provenance",QCborArray{fields({{"feature",f.value("id")},{"kind","Extrude"},{"operation","NewBody"},{"target",QCborValue(nullptr)},{"outputs",QCborArray{f.value("id")}},{"history",QCborArray{}})}}});
+      |                                                                                                                                                                                                                                                                        ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_records.cpp:19:101: note: to match this '{'
+   19 |         auto record=fields({{"version",1},{"intents",QCborArray{f}},{"provenance",QCborArray{fields({{"feature",f.value("id")},{"kind","Extrude"},{"operation","NewBody"},{"target",QCborValue(nullptr)},{"outputs",QCborArray{f.value("id")}},{"history",QCborArray{}})}}});
+      |                                                                                                     ^
+1 error generated.
+[2/5] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/ModelingRecords.cpp.o
+ninja: build stopped: subcommand failed.

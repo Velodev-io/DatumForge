@@ -1,0 +1,26 @@
+{
+  "scope": "CM0 fresh baseline, available Mac; no new native interaction or full performance acceptance",
+  "status": "Sandbox baseline interrupted",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "limitation": "Sandbox ctest interrupted after repeated QLocalServer listen failures; isolated host transport test passed. Host rerun is separate."
+}

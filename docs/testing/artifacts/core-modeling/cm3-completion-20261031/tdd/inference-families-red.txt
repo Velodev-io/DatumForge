@@ -1,0 +1,19 @@
+********* Start testing of Completion *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Completion::initTestCase()
+PASS   : Completion::inferenceFamilies(Horizontal)
+FAIL!  : Completion::inferenceFamilies(Vertical) 'std::any_of(proposed.constraints.begin(), proposed.constraints.end(), [&](auto &c) { return c.kind == kind; })' returned FALSE. (Missing Vertical proposal)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(56)]
+FAIL!  : Completion::inferenceFamilies(Coincident) 'std::any_of(proposed.constraints.begin(), proposed.constraints.end(), [&](auto &c) { return c.kind == kind; })' returned FALSE. (Missing Coincident proposal)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(56)]
+FAIL!  : Completion::inferenceFamilies(Midpoint) 'std::any_of(proposed.constraints.begin(), proposed.constraints.end(), [&](auto &c) { return c.kind == kind; })' returned FALSE. (Missing Midpoint proposal)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(56)]
+FAIL!  : Completion::inferenceFamilies(Intersection) 'std::any_of(proposed.constraints.begin(), proposed.constraints.end(), [&](auto &c) { return c.kind == kind; })' returned FALSE. (Missing Intersection proposal)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(56)]
+FAIL!  : Completion::inferenceFamilies(Perpendicular) 'std::any_of(proposed.constraints.begin(), proposed.constraints.end(), [&](auto &c) { return c.kind == kind; })' returned FALSE. (Missing Perpendicular proposal)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(56)]
+FAIL!  : Completion::inferenceFamilies(Tangent) 'std::any_of(proposed.constraints.begin(), proposed.constraints.end(), [&](auto &c) { return c.kind == kind; })' returned FALSE. (Missing Tangent proposal)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(56)]
+PASS   : Completion::cleanupTestCase()
+Totals: 3 passed, 6 failed, 0 skipped, 0 blacklisted, 14ms
+********* Finished testing of Completion *********

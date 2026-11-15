@@ -1,0 +1,21 @@
+[1/21] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/21] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/21] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/21] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[5/21] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[6/21] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[7/21] Linking CXX static library libcad_planegcs.a
+[8/21] Linking CXX executable solver_spike
+[9/21] Linking CXX static library libcad_sketch_solver.a
+[10/21] Linking CXX executable cad-worker
+[11/21] Linking CXX executable module2_storage
+[12/21] Linking CXX executable module2_fault_worker
+[13/21] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[14/21] Linking CXX executable module2_dispatch
+[15/21] Linking CXX executable module3_persistence
+[16/21] Linking CXX executable module3_solver
+[17/21] Linking CXX executable module4_persistence
+[18/21] Linking CXX executable module4_variants
+[19/21] Linking CXX executable module5_persistence
+[20/21] Linking CXX executable module5_b2
+[21/21] Linking CXX executable module6_persistence

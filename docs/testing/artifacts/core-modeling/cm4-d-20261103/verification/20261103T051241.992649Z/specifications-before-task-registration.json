@@ -1,0 +1,59 @@
+{
+  "scope": "Documentation structure only; no product acceptance tests executed",
+  "checked_at_utc": "2026-11-03T05:22:08.768319+00:00",
+  "status": "fail",
+  "product_implementation": "Modules 1-10 scoped implementation on the available Mac; CM0-CM9 authorized and incomplete, with selected CM1 primitives/relations, CM2 straight-line editing and CM3 dimension slices; full acceptance remains Blocked",
+  "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
+  "documents": {
+    "README.md": {
+      "sha256": "99d40bd11b1a18ea0742e0f4ded19838cbe7f11dc9edd80d79a8105178400a43",
+      "lines": 107,
+      "words": 1495
+    },
+    "SRS.md": {
+      "sha256": "4f678592b374aace92caf5d3b52bf74d550ffefee71369471f3b6efaffcb3efd",
+      "lines": 225,
+      "words": 3229
+    },
+    "SDD.md": {
+      "sha256": "5c688aef49e010c4ffaa3c60520f29701b0d41e3117799db2b90717f08015208",
+      "lines": 368,
+      "words": 4701
+    },
+    "TECH_SPEC.md": {
+      "sha256": "ab250c08d91e7fc70bf277fd75732ea55b7468c522012f7485f093408f5273b0",
+      "lines": 695,
+      "words": 8082
+    },
+    "STEP_ZERO.md": {
+      "sha256": "6167d9864b36d9d5e3d56763b02400d18ac0219859a9c8a21174fe0ed84b9ae2",
+      "lines": 108,
+      "words": 1950
+    },
+    "TRACEABILITY.md": {
+      "sha256": "8f9d79ddaee729614cf2093a77748524651675a91570d7c2f6ce8b731ad48292",
+      "lines": 150,
+      "words": 1786
+    },
+    "REFERENCES.md": {
+      "sha256": "9df2410a2d7dec2b39308e4058d1bcecf5ec65794bb693c8455b98230bc7f5bc",
+      "lines": 45,
+      "words": 550
+    },
+    "CORE_MODELING.md": {
+      "sha256": "33f7bdc10a1630c4ced50d31e89bf67b83c8d86069917ec1455cc3ae43c12d73",
+      "lines": 154,
+      "words": 1537
+    }
+  },
+  "requirements": 56,
+  "traceability_rows": 56,
+  "modules": 13,
+  "unchecked_engineering_tasks": 39,
+  "completed_engineering_tasks": 120,
+  "core_modeling_tasks": 50,
+  "completed_core_modeling_tasks": 7,
+  "errors": [
+    "Checked core-modeling task lacks Pass evidence: CM4.d"
+  ]
+}

@@ -1,0 +1,78 @@
+#include "model/Supports.hpp"
+#include "support/check.hpp"
+#include <QCoreApplication>
+using namespace cad;
+int main(int argc, char **argv) {
+    QCoreApplication app(argc, argv);
+    return run([] {
+        model::Datum datum;
+        datum.parameters = sketch::fields({{"distance", .055}, {"count", 1}});
+        sketch::Sketch base;
+        domain::GeometryReference ref;
+        ref.object = base.id;
+        ref.role = "Plane";
+        datum.references = {ref};
+        auto decoded = model::Datum::parse(datum.map());
+        CHECK(decoded.id == datum.id);
+        CHECK(decoded.kind == "DatumPlane");
+        CHECK(decoded.mode == "Offset");
+        near(decoded.parameters.value("distance").toDouble(), .055);
+        CHECK(decoded.outputs() == QStringList({datum.id}));
+        auto bad = datum;
+        bad.parameters.insert(QStringLiteral("count"), 0);
+        rejects([&] { bad.validate(); });
+        bad = datum;
+        bad.parameters.insert(QStringLiteral("count"), 33);
+        rejects([&] { bad.validate(); });
+        bad = datum;
+        bad.parameters.insert(QStringLiteral("distance"), 1001.);
+        rejects([&] { bad.validate(); });
+        bad = datum;
+        bad.references.clear();
+        rejects([&] { bad.validate(); });
+        bad = datum;
+        bad.mode = "NearestDisplayFace";
+        rejects([&] { bad.validate(); });
+        bad = datum;
+        bad.parameters.insert(QStringLiteral("display_index"), 0);
+        rejects([&] { bad.validate(); });
+        datum.parameters.insert(QStringLiteral("count"), 3);
+        auto outputs = datum.outputs();
+        CHECK(outputs.size() == 3);
+        CHECK(outputs[0] == datum.id && outputs[1] != outputs[0] && outputs[2] != outputs[1]);
+        CHECK(model::Datum::parse(datum.map()).outputs() == outputs);
+        model::SupportDefinition definition;
+        sketch::Sketch target;
+        definition.sketches = sketch::encode({base, target});
+        definition.datums = {datum};
+        model::Attachment attachment;
+        attachment.sketch = target.id;
+        attachment.reference = ref;
+        attachment.reference.object = outputs[1];
+        definition.attachments = {attachment};
+        definition.history = {base.id, outputs[0], outputs[1], outputs[2], target.id};
+        auto reopened = model::SupportDefinition::parse(definition.map());
+        CHECK(reopened.graph().dependencies(target.id) == QStringList({outputs[1]}));
+        CHECK(reopened.graph().descendants(base.id).contains(target.id));
+        auto broken = definition;
+        broken.history = {target.id, base.id, outputs[0], outputs[1], outputs[2]};
+        rejects([&] { broken.graph(); });
+        broken = definition;
+        broken.attachments.push_back(attachment);
+        rejects([&] { broken.graph(); });
+        broken = definition;
+        broken.attachments[0].reference.object = target.id;
+        rejects([&] { broken.graph(); });
+        model::Conversion conversion;
+        conversion.sketch = target.id;
+        conversion.sources = {ref};
+        conversion.sources[0].role = "Curve";
+        auto a = base.point({0, 0}), b = base.point({.01, 0});
+        conversion.sources[0].entity = base.line(a, b);
+        conversion.scale = .75;
+        auto copied = model::Conversion::parse(conversion.map());
+        near(copied.scale, .75);
+        conversion.scale = 0;
+        rejects([&] { conversion.map(); });
+    });
+}

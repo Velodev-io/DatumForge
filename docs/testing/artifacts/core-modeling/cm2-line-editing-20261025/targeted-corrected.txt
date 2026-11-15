@@ -1,0 +1,9 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 64: cm2.editing
+1/2 Test #64: cm2.editing ......................   Passed    1.77 sec
+    Start 65: cm2.editing_contracts
+2/2 Test #65: cm2.editing_contracts ............   Passed    9.29 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =  11.07 sec

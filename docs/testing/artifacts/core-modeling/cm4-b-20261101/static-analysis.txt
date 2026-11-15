@@ -1,0 +1,18 @@
+Command: ['python3', 'tools/static_analysis.py', 'docs/testing/artifacts/core-modeling/cm4-b-20261101/compile-commands.json']
+Analyzed src/protocol/Client.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/persistence/ProjectStore.cpp
+Analyzed src/geometry/occt/Part.cpp
+Analyzed src/evaluation/Plan.cpp
+Analyzed src/model/Supports.cpp
+Analyzed src/geometry/occt/SupportReferences.cpp
+Analyzed src/geometry/occt/Datums.cpp
+Analyzed src/geometry/occt/Convert.cpp
+Analyzed src/geometry/occt/Supports.cpp
+Analyzed tests/core_modeling/support_model.cpp
+Analyzed tests/core_modeling/support_geometry.cpp
+Analyzed tests/core_modeling/support_convert.cpp
+Analyzed tests/core_modeling/support_engine.cpp
+Analyzed tests/core_modeling/support_contracts.cpp
+
+Exit: 0

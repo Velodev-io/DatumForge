@@ -1,0 +1,37 @@
+{
+  "status": "Pass: sampling completed; full physical/shared/GPU/FPS budget acceptance Blocked",
+  "method": "proc_pid_rusage v2, 100 ms samples, explicit B3 harness or native test process and its worker children",
+  "limits": "Family sums may double count shared pages and miss short peaks. B3 test-process footprint is not whole-system memory or a separate GPU measurement. No SRS steady/peak/FPS budget pass follows.",
+  "measurements": [
+    {
+      "artifact": "b3-memory-memory.json",
+      "maximum_sampled_sum_physical_footprint_bytes": 34423384,
+      "sample_count": 120
+    },
+    {
+      "artifact": "native-assembly-100-memory.json",
+      "maximum_sampled_sum_physical_footprint_bytes": 128943592,
+      "sample_count": 82
+    },
+    {
+      "artifact": "native-assembly-125-memory.json",
+      "maximum_sampled_sum_physical_footprint_bytes": 155158016,
+      "sample_count": 75
+    },
+    {
+      "artifact": "native-assembly-150-memory.json",
+      "maximum_sampled_sum_physical_footprint_bytes": 194381384,
+      "sample_count": 78
+    },
+    {
+      "artifact": "native-assembly-175-memory.json",
+      "maximum_sampled_sum_physical_footprint_bytes": 258180656,
+      "sample_count": 80
+    },
+    {
+      "artifact": "native-assembly-200-memory.json",
+      "maximum_sampled_sum_physical_footprint_bytes": 301663816,
+      "sample_count": 81
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+[1/38] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/38] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/38] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/38] Building CXX object CMakeFiles/cad_diagnostics.dir/src/diagnostics/Journal.cpp.o
+[5/38] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[6/38] Linking CXX static library libcad_diagnostics.a
+[7/38] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[8/38] Linking CXX static library libcad_planegcs.a
+[9/38] Linking CXX static library libcad_sketch_solver.a
+[10/38] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[11/38] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[12/38] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[13/38] Linking CXX executable solver_spike
+[14/38] Linking CXX executable module1_contracts
+[15/38] Linking CXX executable module2_storage
+[16/38] Linking CXX executable module2_contracts
+[17/38] Linking CXX executable module2_fault_worker
+[18/38] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[19/38] Linking CXX executable module3_persistence
+[20/38] Linking CXX executable module3_input
+[21/38] Linking CXX executable module3_solver
+[22/38] Linking CXX executable module3_contracts
+[23/38] Linking CXX executable module4_workspace
+[24/38] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[25/38] Linking CXX executable module4_contracts
+[26/38] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[27/38] Linking CXX executable module5_persistence
+[28/38] Linking CXX executable module5_contracts
+[29/38] Linking CXX executable module5_b2
+[30/38] Linking CXX executable module6_contracts
+[31/38] Linking CXX executable module6_persistence
+[32/38] Linking CXX executable module7_persistence
+[33/38] Linking CXX executable module7_b3
+[34/38] Linking CXX executable module7_contracts
+[35/38] Linking CXX executable module8_drawing
+[36/38] Linking CXX executable module8_contracts
+[37/38] Linking CXX executable module9_privacy
+[38/38] Linking CXX executable module9_interaction

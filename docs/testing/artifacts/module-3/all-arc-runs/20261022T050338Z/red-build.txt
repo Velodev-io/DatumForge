@@ -1,0 +1,13 @@
+[1/6] Automatic MOC for target module3_input
+[2/5] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+FAILED: [code=1] CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o 
+/usr/bin/c++ -DCAD_SOURCE_ROOT="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_CORE_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -g -std=c++20 -arch arm64 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o -MF CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o.d -o CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/solver.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/solver.cpp:124:14: error: redefinition of 'line'
+  124 |         auto line = tangent.line(tangent.point({0, 0}), tangent.point({.02, 0}));
+      |              ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/solver.cpp:54:14: note: previous definition is here
+   54 |         auto line = joined.line(joined.point({-.02, 0}), joined.point({0, 0}));
+      |              ^
+1 error generated.
+[3/5] Building CXX object CMakeFiles/module3_input.dir/tests/module3/input.cpp.o
+ninja: build stopped: subcommand failed.

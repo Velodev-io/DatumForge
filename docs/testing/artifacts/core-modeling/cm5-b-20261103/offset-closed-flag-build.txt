@@ -1,0 +1,2 @@
+[1/2] Building CXX object CMakeFiles/cm5_profiles.dir/tests/core_modeling/modeling_profiles.cpp.o
+[2/2] Linking CXX executable cm5_profiles

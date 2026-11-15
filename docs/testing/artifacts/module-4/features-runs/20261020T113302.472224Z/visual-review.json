@@ -1,0 +1,18 @@
+{
+  "status": "Pass for reviewed available-Mac subset",
+  "reviewed": [
+    "native-100/features-editing.png",
+    "native-200/features-editing.png",
+    "native-100/features-B1.png"
+  ],
+  "observed": [
+    "Feature inputs have adequate form height; Preview/Accept/Cancel remain visible above scrolling",
+    "Project/unit/revision/draft overlay replaces reference-scene label",
+    "B1 after explicit 90 mm parent-width edit has four holes, rectangular cut, filleted corner and selected face",
+    "Model tree retains sketch and feature identities; current saved/draft context visible"
+  ],
+  "limits": [
+    "Intermediate scales have native interaction/visibility assertions, not separate manual visual review",
+    "Physical-device, alternate appearance, native accessibility and other platforms remain Blocked"
+  ]
+}

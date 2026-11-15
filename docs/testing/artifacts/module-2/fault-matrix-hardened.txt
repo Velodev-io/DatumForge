@@ -1,0 +1,36 @@
+Pass: Part: exit before_commit
+Pass: Part: exit after_commit
+Pass: Part: exit snapshot_chunk
+Pass: Part: exit snapshot_validated
+Pass: Part: exit before_publication
+Pass: Part: exit after_publication
+Pass: Part: exit save_recorded
+Pass: Assembly: exit before_commit
+Pass: Assembly: exit after_commit
+Pass: Assembly: exit snapshot_chunk
+Pass: Assembly: exit snapshot_validated
+Pass: Assembly: exit before_publication
+Pass: Assembly: exit after_publication
+Pass: Assembly: exit save_recorded
+Pass: Drawing: exit before_commit
+Pass: Drawing: exit after_commit
+Pass: Drawing: exit snapshot_chunk
+Pass: Drawing: exit snapshot_validated
+Pass: Drawing: exit before_publication
+Pass: Drawing: exit after_publication
+Pass: Drawing: exit save_recorded
+Pass: SIGKILL before_commit
+Pass: SIGKILL after_commit
+Pass: SIGKILL before_publication
+Pass: SIGKILL after_publication
+Pass: live writer: symlink alias
+Pass: live writer: hardlink alias
+Pass: writer identity survives snapshot replacement and old hardlink
+Pass: future schema refused unchanged
+Pass: missing required object refused unchanged
+Pass: altered schema trigger refused unchanged
+Pass: invalid semantic history refused unchanged
+Pass: real SQLITE_FULL from page quota
+Pass: real denied destination write
+Pass: migration stages a copy and refuses unsupported converter
+{"status": "Pass", "cases": 35}

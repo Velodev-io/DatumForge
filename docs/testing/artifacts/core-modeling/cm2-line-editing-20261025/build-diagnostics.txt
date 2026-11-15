@@ -1,0 +1,61 @@
+[1/60] Automatic MOC for target cad_client
+[2/59] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/EditHistory.cpp.o
+[3/59] Linking CXX static library libcad_sketch_model.a
+[4/59] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[5/59] Linking CXX executable module2_storage
+[6/59] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[7/59] Linking CXX static library libcad_client.a
+[8/59] Linking CXX executable module2_fault_worker
+[9/59] Automatic MOC for target cad_desktop_ui
+[10/58] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[11/58] Linking CXX executable module3_model
+[12/58] Linking CXX executable module3_persistence
+[13/58] Linking CXX executable module3_solver
+[14/58] Linking CXX executable module4_geometry
+[15/58] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[16/58] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[17/58] Linking CXX executable module5_plan
+[18/58] Linking CXX executable module5_engine
+[19/58] Linking CXX executable module5_persistence
+[20/58] Linking CXX executable module5_b2
+[21/58] Linking CXX executable module6_exchange
+[22/58] Linking CXX executable module6_persistence
+[23/58] Linking CXX executable module7_model
+[24/58] Linking CXX executable module7_geometry
+[25/58] Linking CXX executable module7_persistence
+[26/58] Linking CXX executable module7_b3
+[27/58] Linking CXX executable module8_drawing
+[28/58] Linking CXX executable module8_geometry
+[29/58] Linking CXX executable module9_privacy
+[30/58] Linking CXX executable module10_fault_worker
+[31/58] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[32/58] Linking CXX executable module10_hardening
+[33/58] Linking CXX executable module10_contracts
+[34/58] Linking CXX static library libcad_desktop_ui.a
+[35/58] Linking CXX executable cm1_relations
+[36/58] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[37/58] Linking CXX executable module1_contracts
+[38/58] Linking CXX executable module2_contracts
+[39/58] Linking CXX executable module3_input
+[40/58] Linking CXX executable module3_contracts
+[41/58] Automatic MOC for target cm2_contracts
+[42/57] Linking CXX executable module4_workspace
+[43/57] Linking CXX executable module4_contracts
+[44/57] Linking CXX executable module5_contracts
+[45/57] Linking CXX executable module6_contracts
+[46/57] Linking CXX executable module7_contracts
+[47/57] Linking CXX executable module8_contracts
+[48/57] Linking CXX executable module9_interaction
+[49/57] Linking CXX executable cm1_contracts
+[50/57] Linking CXX executable cm1_rectangles
+[51/57] Linking CXX executable cm1_slots
+[52/57] Linking CXX executable cm1_curves
+[53/57] Linking CXX executable cm1_pierce
+[54/57] Linking CXX executable cm1_intent
+[55/57] Linking CXX executable cm2_editing
+[56/57] Building CXX object CMakeFiles/cm2_contracts.dir/tests/core_modeling/editing_contracts.cpp.o
+[57/57] Linking CXX executable cm2_contracts

@@ -1,0 +1,25 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 65: cm3.associated_dimensions
+1/1 Test #65: cm3.associated_dimensions ........***Failed    0.83 sec
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+SolveFailure: Solved constraint residual exceeds declared tolerance
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/associated_dimensions.cpp:27: r.valid
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =   0.84 sec
+
+The following tests FAILED:
+	 65 - cm3.associated_dimensions (Failed)

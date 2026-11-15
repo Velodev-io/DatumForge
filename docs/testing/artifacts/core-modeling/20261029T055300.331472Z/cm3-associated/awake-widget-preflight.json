@@ -1,0 +1,21 @@
+{
+  "status": "Pass",
+  "scope": "Four consecutive offscreen worker/widget runs on the awake host; native checks remain separate",
+  "command": [
+    "/usr/bin/caffeinate",
+    "-di",
+    "ctest",
+    "--preset",
+    "macos-debug",
+    "-R",
+    "^cm3\\.dimension_contracts$",
+    "--repeat",
+    "until-fail:4",
+    "--output-on-failure"
+  ],
+  "log": "awake-widget-preflight.txt",
+  "repetitions_passed": 4,
+  "source_matches_previous_failed_run": true,
+  "source_identity": "source-identity.json",
+  "causal_limit": "The earlier action-enabled failure did not reproduce. This does not prove that suspension was its sole cause."
+}

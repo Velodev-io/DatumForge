@@ -1,0 +1,41 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.4s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/41] Automatic MOC for target cad_client
+[2/39] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/39] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/39] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/39] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/qp_eq.cpp.o
+[6/39] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[7/39] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Editing.cpp.o
+[8/39] Building CXX object CMakeFiles/cad_expressions.dir/src/domain/Expressions.cpp.o
+[9/39] Linking CXX static library libcad_planegcs.a
+[10/39] Linking CXX static library libcad_sketch_model.a
+[11/39] Building C object CMakeFiles/cad_sqlite.dir/.deps/src/sqlite/sqlite3.c.o
+[12/39] Linking CXX static library libcad_expressions.a
+[13/39] Linking C static library libcad_sqlite.a
+[14/39] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[15/39] Building CXX object CMakeFiles/cad_geometry.dir/src/geometry/occt/ReferenceScene.cpp.o
+[16/39] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Database.cpp.o
+[17/39] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[18/39] Linking CXX static library libcad_sketch_solver.a
+[19/39] Automatic MOC for target cad_desktop_ui
+[20/39] Linking CXX static library libcad_geometry.a
+[21/39] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[22/39] Linking CXX static library libcad_persistence.a
+[23/39] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[24/39] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[25/39] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[26/39] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[27/39] Linking CXX executable cad-worker
+[28/39] Building CXX object CMakeFiles/module3_model.dir/tests/module3/model.cpp.o
+[29/39] Linking CXX executable module3_model
+[30/39] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[31/39] Linking CXX static library libcad_desktop_ui.a
+[32/39] Automatic MOC for target module3_input
+[33/38] Linking CXX executable module3_input
+[34/38] Automatic MOC for target module3_contracts
+[35/38] Building CXX object CMakeFiles/module3_contracts.dir/module3_contracts_autogen/mocs_compilation.cpp.o
+[36/38] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[37/38] Linking CXX executable module3_contracts

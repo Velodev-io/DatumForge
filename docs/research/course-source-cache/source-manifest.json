@@ -1,0 +1,79 @@
+[
+  {
+    "characters": 42230,
+    "empty_pages": 0,
+    "file": "T1 INTRODUCTION TO SW.pdf",
+    "pages": 32,
+    "sha256": "c8e92773d3b4bb556ef60becb995ef7641bdae0ae86fba65d088942b569cbf09"
+  },
+  {
+    "characters": 49070,
+    "empty_pages": 1,
+    "file": "T2 PART IN 2D.pdf",
+    "pages": 44,
+    "sha256": "6a854c645805cbae32d0c62555c0d7312f7f30c9954f793054d850609a27eca6"
+  },
+  {
+    "characters": 47198,
+    "empty_pages": 0,
+    "file": "T3 EDITING PART.pdf",
+    "pages": 40,
+    "sha256": "348d7b7fc9992a7d6093d880a177124deb0c9f9a06481a7dca406de4fb6859e6"
+  },
+  {
+    "characters": 49147,
+    "empty_pages": 0,
+    "file": "T4 ADD RELATIONS.pdf",
+    "pages": 39,
+    "sha256": "845d2d09a293a91c9f0d72772cb68eee94bdb5bcb654b9366ef8d696548e3c6d"
+  },
+  {
+    "characters": 48535,
+    "empty_pages": 0,
+    "file": "T5 ADD PART FEATURES.pdf",
+    "pages": 49,
+    "sha256": "cc5b2dae95fe306255d57935dcdd09faf7e548f56711fbac26f1b157b6cd44d9"
+  },
+  {
+    "characters": 49888,
+    "empty_pages": 0,
+    "file": "T6 REFERENCE GEOMETRY.pdf",
+    "pages": 55,
+    "sha256": "04dfe23a4fca9b4e053c0c31e13e8efadb52fe6e2e2b3ddc4ec2b3d87335f7f2"
+  },
+  {
+    "characters": 48661,
+    "empty_pages": 0,
+    "file": "T7 MODELLING TOOLS.pdf",
+    "pages": 53,
+    "sha256": "9679118a4e43832af5ca6c435fc079ced6bf1dd3b4e5a7b0482631f908e6aaaf"
+  },
+  {
+    "characters": 43838,
+    "empty_pages": 0,
+    "file": "T8 ADVANCE MODELLING TOOLS.pdf",
+    "pages": 52,
+    "sha256": "f9e1c7ba43af615cbec623c755f44aead2b8a62cd545959492a24dff255e429a"
+  },
+  {
+    "characters": 14027,
+    "empty_pages": 1,
+    "file": "T9 ASSEMBLY PART 1 .pdf",
+    "pages": 21,
+    "sha256": "a232c8c69bd5bf3fd890c063fbd3dc0d518ba81fbcd325e2cf774bd5b323e16a"
+  },
+  {
+    "characters": 16807,
+    "empty_pages": 0,
+    "file": "T9 ASSEMBLY PART 2.pdf",
+    "pages": 25,
+    "sha256": "97cf6019da04fa8f7f30af8b31ca69b9bb00fdabbd272faaec69443d86f90a5c"
+  },
+  {
+    "characters": 41851,
+    "empty_pages": 0,
+    "file": "T10 DRAWING.pdf",
+    "pages": 38,
+    "sha256": "7769963671e6ebeda72a047b0adca5a518962502cb2ca6cf7da2fb789226d999"
+  }
+]

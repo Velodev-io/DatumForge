@@ -1,0 +1,13 @@
+{
+  "scope": "Documentation structure only; no product acceptance tests executed",
+  "checked_at_utc": "2026-10-21T11:28:40.297977+00:00",
+  "status": "pass",
+  "product_implementation": "Modules 1-6 scoped implementation on the available Mac; see task and module evidence",
+  "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
+  "requirements": 56,
+  "traceability_rows": 56,
+  "modules": 13,
+  "unchecked_engineering_tasks": 78,
+  "completed_engineering_tasks": 81,
+  "errors": []
+}

@@ -1,0 +1,34 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.5s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/17] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[2/17] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/17] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[4/17] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/qp_eq.cpp.o
+[5/17] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[6/17] Linking CXX static library libcad_planegcs.a
+[7/17] Building C object CMakeFiles/cad_sqlite.dir/.deps/src/sqlite/sqlite3.c.o
+[8/17] Linking C static library libcad_sqlite.a
+[9/17] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Database.cpp.o
+[10/17] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[11/17] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[12/17] Linking CXX static library libcad_sketch_solver.a
+[13/17] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+FAILED: [code=1] CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/src/sqlite" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o -MF CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o.d -o CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp:553:19: error: no matching function for call to 'values'
+  553 |         inverse = values({{"type", "set_features", "set_feature_state"},
+      |                   ^~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp:29:10: note: candidate function not viable: cannot convert initializer list argument to 'std::pair<QString, QCborValue>'
+   29 | QCborMap values(std::initializer_list<std::pair<QString, QCborValue>> fields) {
+      |          ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp:557:16: error: no matching function for call to 'values'
+  557 |         return values({{"type", "set_features", "set_feature_state"},
+      |                ^~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/persistence/ProjectStore.cpp:29:10: note: candidate function not viable: cannot convert initializer list argument to 'std::pair<QString, QCborValue>'
+   29 | QCborMap values(std::initializer_list<std::pair<QString, QCborValue>> fields) {
+      |          ^      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2 errors generated.
+[14/17] Building CXX object CMakeFiles/module4_persistence.dir/tests/module4/persistence.cpp.o
+ninja: build stopped: subcommand failed.

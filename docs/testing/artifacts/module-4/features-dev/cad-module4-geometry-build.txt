@@ -1,0 +1,11 @@
+[1/2] Building CXX object CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o
+FAILED: [code=1] CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o 
+/usr/bin/c++ -DCAD_SOURCE_ROOT="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o -MF CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o.d -o CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/geometry.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/geometry.cpp:57:203: error: expected '}'
+   57 |         features::Feature mirror; mirror.kind="Mirror"; mirror.parameters=fields({{"source",base.id},{"target",""},{"operation","NewBody"},{"origin",QCborArray{.1,0.,0.}},{"normal",QCborArray{1.,0.,0.}});
+      |                                                                                                                                                                                                           ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/geometry.cpp:57:82: note: to match this '{'
+   57 |         features::Feature mirror; mirror.kind="Mirror"; mirror.parameters=fields({{"source",base.id},{"target",""},{"operation","NewBody"},{"origin",QCborArray{.1,0.,0.}},{"normal",QCborArray{1.,0.,0.}});
+      |                                                                                  ^
+1 error generated.
+ninja: build stopped: subcommand failed.

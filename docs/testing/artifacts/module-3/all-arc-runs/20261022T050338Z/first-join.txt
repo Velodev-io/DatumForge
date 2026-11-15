@@ -1,0 +1,11 @@
+3.2b: redundancy/conflict IDs, independent residual/rank checks, drag continuity, anchors, singular/degenerate and multi-scale corpus
+3.2a: real pinned PlaneGCS rectangle/circle, normalized SI variables, fixed anchors, rank-based freedom, free arc angles
+PASS
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 1 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants
+Sketcher::RedundantSolving-DogLeg-
+Sketcher Redundant solving: 0 redundants

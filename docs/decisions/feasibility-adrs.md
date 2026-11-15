@@ -34,3 +34,12 @@ requires native renderer evidence and a production route decision. OD-06 initial
 caps in `tests/support/limits.hpp` are prototype gates with bounded pressure/eviction
 tests; full workload headroom calibration remains Module 11. OD-07/08 retain all
 unavailable hardware/accessibility/native installed checks. See [gate owners](deferred-gates.md).
+
+## Module 1 follow-up — 19 October 2026
+
+The user authorized Module 1. The Qt/OpenGL mesh boundary in ADR-06 is now the
+initial development implementation on the measured M2 Mac, using public Qt GL
+APIs, depth-aware CPU selection and worker-side exact queries. This does not
+resolve OD-04 for minimum macOS, Intel, other drivers or a Metal adapter.
+Bounded typed session IPC now lives under src/protocol; ADR-04 durable command
+ownership still requires Module 2. See [actual results and limitations](../testing/module-1.md).

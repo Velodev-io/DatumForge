@@ -1,0 +1,52 @@
+[
+  {
+    "effective_scale": 100,
+    "scale_factor": ".5",
+    "exit_code": 0,
+    "command": [
+      "/private/tmp/datumforge-cm5-review-20261115/build/macos-debug/cm5_workflow_contracts",
+      "nativeEffectiveScales",
+      "savedParametersAndPointerRegression"
+    ]
+  },
+  {
+    "effective_scale": 125,
+    "scale_factor": ".625",
+    "exit_code": 0,
+    "command": [
+      "/private/tmp/datumforge-cm5-review-20261115/build/macos-debug/cm5_workflow_contracts",
+      "nativeEffectiveScales",
+      "savedParametersAndPointerRegression"
+    ]
+  },
+  {
+    "effective_scale": 150,
+    "scale_factor": ".75",
+    "exit_code": 0,
+    "command": [
+      "/private/tmp/datumforge-cm5-review-20261115/build/macos-debug/cm5_workflow_contracts",
+      "nativeEffectiveScales",
+      "savedParametersAndPointerRegression"
+    ]
+  },
+  {
+    "effective_scale": 175,
+    "scale_factor": ".875",
+    "exit_code": 0,
+    "command": [
+      "/private/tmp/datumforge-cm5-review-20261115/build/macos-debug/cm5_workflow_contracts",
+      "nativeEffectiveScales",
+      "savedParametersAndPointerRegression"
+    ]
+  },
+  {
+    "effective_scale": 200,
+    "scale_factor": "1",
+    "exit_code": 0,
+    "command": [
+      "/private/tmp/datumforge-cm5-review-20261115/build/macos-debug/cm5_workflow_contracts",
+      "nativeEffectiveScales",
+      "savedParametersAndPointerRegression"
+    ]
+  }
+]

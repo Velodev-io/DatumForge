@@ -1,0 +1,846 @@
+
+=== PDF PAGE 1 ===
+Tutorial 7
+Advanced Modeling Tools
+
+=== PDF PAGE 2 ===
+Learning Objectives
+After completing this tutorial, you will be able to:
+• Create holes using the Simple Hole option
+• Create standard holes using the Hole Wizard tool
+• Apply external cosmetic threads
+• Apply simple and advanced fillets
+• Understand various selection methods
+• Chamfer the edges and vertices of a model
+ADVANCED MODELING TOOLS
+This tutorial discusses various advanced modeling tools available in SOLIDWORKS that
+assist you in creating an accurate design by capturing the design intent of a model. In
+previous tutorials, you have learned to create a hole using the Extruded Cut tool. In this
+tutorial, you will learn how to create holes using the Simple Hole and Hole Wizard tools.
+The Hole Wizard tool is used to create standard holes, classified based on the industrial
+standard, screw type, and size. This tool of SOLIDWORKS is one of the most used
+standard industrial virtual hole generation methods available in any CAD packages. You
+will also learn about some other advanced modeling tools such as the fillet, chamfer, mirror,
+and pattern.
+TUTORIALS
+Tutorial Exercise 1
+In this tutorial, you will create the model shown in Figure 7-1. The dimensions and views
+of the model are shown in the same figure. (Expected time: 30 min)
+
+=== PDF PAGE 3 ===
+Figure 7-1 Dimensions and views for Tutorial 1
+The following steps are required to complete this tutorial:
+a. Start a new SOLIDWORKS part document and create the base feature of the model on
+the Right Plane, refer to Figure 7-2.
+
+=== PDF PAGE 4 ===
+b. Create the second feature, which is an extrude feature, on the right planar face of the
+base feature, refer to Figures 7-4 and 7-5.
+c. Create the cut feature on the top planar face of the second feature, refer to Figures 7-6
+and 7-7.
+d. Create the mirror copy of the previously created cut feature, refer to Figure 7-8.
+e. Create the rib feature using the Rib tool, refer to Figure 7-13.
+f. Create a simple hole of diameter 10 mm using the Simple Hole tool, refer to Figures 7-
+15 and 7-16.
+g. Create a simple hole of diameter 14 mm using the Simple Hole tool, refer to Figure 7-
+17.
+h. Create a linear pattern of hole of 10 mm diameter, refer to Figures 7-18 and 7-19.
+i. Create a linear pattern of hole of 14 mm diameter, refer to Figure 7-20.
+j. Create a counterbore hole, refer to Figures 7-21 through 7-23.
+k. Create a linear pattern of counterbore hole, refer to Figure 7-24.
+l. Save the model.
+Creating the Base Feature
+1. Start a new SOLIDWORKS part document using the New SOLIDWORKS Document
+dialog box.
+2. Invoke the Extruded Boss/Base tool and select the Right Plane as the sketching plane.
+3. Draw the sketch of the base feature of the model, as shown in Figure 7-2.
+4. Exit the sketcher environment; the Boss-Extrude PropertyManager is displayed.
+5. Make sure that the Blind option is selected in the End Condition drop-down list of the
+Direction 1 rollout of the PropertyManager.
+6. Set the value of the Depth spinner to 13 mm. Next, choose the OK button from the
+PropertyManager; the base feature of the model is created. The isometric view of the
+model is shown in Figure 7-3.
+
+=== PDF PAGE 5 ===
+Figure 7-2 Sketch of the base feature
+Figure 7-3 Model after creating the base feature
+Creating the Extrude Feature
+The second feature of the model is also an extrude feature. The sketch of this extrude
+feature will be drawn on the Front Plane and extruded by using the Mid Plane option.
+1. Invoke the Extruded Boss/Base tool and select the Front Plane as the sketching plane.
+2. Draw the sketch of the second feature of the model, as shown in Figure 7-4.
+3. Exit the sketcher environment; the Boss-Extrude PropertyManager is displayed.
+
+=== PDF PAGE 6 ===
+4. Select the Mid Plane option from the End Condition drop-down list of the Direction 1
+rollout of the PropertyManager.
+5. Set the value of the Depth spinner to 60 mm. Next, choose the OK button from the
+PropertyManager; the extrude feature is created. The isometric view of the model after
+creating the second feature is shown in Figure 7-5.
+Figure 7-4 Sketch of the base feature
+Figure 7-5 Model after creating the base feature
+Creating the Cut Feature
+The third feature of the model is a cut feature. The sketch of the cut feature will be drawn
+on the top planar face of the second feature. This sketch will be extruded with the Through
+All option to create the cut feature.
+
+=== PDF PAGE 7 ===
+1. Invoke the Extruded Cut tool and select the top planar face of the second feature as the
+sketching plane.
+2. Orient the model normal to the sketching plane and draw the sketch for the cut feature
+using the sketching tools, refer to Figure 7-6.
+Note
+The sketch of the cut-extrude feature consists of two closed contours.
+Now, you will change the current display mode of the model to the Hidden Lines
+Visible mode for better visibility.
+3. Choose the Display Style button in the View (Heads-Up) toolbar; the Display Style
+flyout is displayed.
+SOLIDWORKS provides you with various predefined modes to display the model. In
+SOLIDWORKS, the display modes are grouped together in the Display Style flyout.
+4. Choose the Hidden Lines Visible button from the Display Style flyout; the current
+display mode of the model is changed to hidden lines visible mode, refer to Figure 7-7.
+The Hidden Lines Visible tool of the Display Style flyout is used to display the model in
+the wireframe mode with hidden edges of the model displayed as dashed lines.
+If you choose the Wireframe button from the Display Style flyout, all hidden edges of the
+model will be displayed along with the visible edges. Note that in a complex model, it is
+very difficult to recognize the visible lines and hidden lines, if the Wireframe mode is
+invoked. The Hidden Lines Removed tool of this flyout is used to display only the edges
+of the faces that are visible in the current view of the model. In this case, the hidden edges
+of the model will not be displayed. The Shaded With Edges mode is the default selected
+mode in which the model remains shaded and the edges of the visible faces of the model
+are displayed. The Shaded mode is similar to the Shaded With Edges mode with the only
+difference that in the Shaded mode the edges of the visible faces will not be displayed.
+
+=== PDF PAGE 8 ===
+Figure 7-6 Sketch of the cut-extrude feature
+Figure 7-7 Model displayed in the Hidden Lines Visible mode
+5. Exit the sketching environment; the Cut-Extrude PropertyManager is displayed.
+The preview of the cut feature is displayed in the drawing area.
+6. Change the view orientation to isometric.
+7. Right-click in the drawing area and choose Through All from the shortcut menu. Next,
+choose the OK button from the PropertyManager.
+8. Change the current display mode of the model to the Shaded With Edges display
+mode, as discussed earlier.
+
+=== PDF PAGE 9 ===
+The model after creating the cut feature is shown in Figure 7-8.
+Figure 7-8 Model after creating the cut feature
+Creating the Mirror Feature
+Now you need to create a mirror copy of the last created cut feature by using the Mirror
+tool.
+1. Choose the Mirror tool from the Features Command Manager; the Mirror Property
+Manager is displayed at the left of the drawing area, refer to Figure 7-9. Also, you
+are prompted to select a plane or a planar face about which the features will be mirrored,
+followed by the features to be mirrored.
+Figure 7-9 The Mirror PropertyManager
+
+=== PDF PAGE 10 ===
+The Mirror tool is used to mirror a selected feature, face, or body about a specified mirror
+plane, which can be a reference plane or a planar face.
+The Mirror Face/Plane rollout of the Mirror PropertyManager is used to specify a plane
+or planar face about which the features will be mirrored. The Features to Mirror rollout
+of the PropertyManager is used to select the features to be mirrored about the selected
+plane. The Faces to Mirror rollout of the PropertyManager is used to select the faces to
+be mirrored. Note that the faces selected to be mirrored about the selected plane or planar
+face must form a close body. In SOLIDWORKS, you can also select bodies to be mirrored
+by using the Bodies to Mirror rollout of the PropertyManager.
+Note
+By default, the Geometry Pattern check box is not selected in the Options rollout of the
+PropertyManager. Therefore, if you mirror a feature that is related to some other entity,
+the same relationship will be applied to the mirrored feature. Also, the Propagate visual
+properties check box in the Options rollout is selected by default. As a result, all the visual
+properties of the mirrored instance are the same as that of its parent feature or the parent
+body.
+2. Click on the + sign located on the left of the FeatureManager Design Tree, which is
+now displayed in the drawing area; the tree view expands and it displays three defaults
+planes and the list of all the features created in this model.
+3. Select the Front Plane as the mirroring plane from the FeatureManager Design Tree;
+the name of the selected plane is displayed in the Mirror Face/Plane selection area of
+the PropertyManager. Also, as soon as you select the mirroring plane, the Features to
+Mirror selection area of the PropertyManager is activated and you are prompted to
+select features to be mirrored.
+4. Select the previously created cut feature as the feature to be mirrored from the
+FeatureManager Design Tree; the preview of the mirrored feature is displayed in the
+drawing area. Also, the name of the selected feature is displayed in the Features to
+Mirror selection area of the PropertyManager.
+5. Choose the OK button from the Mirror PropertyManager; the mirrored feature of the
+selected feature is created. The isometric view of the model after creating the mirrored
+feature is shown in the Figure 7-10.
+
+=== PDF PAGE 11 ===
+Figure 7-10 Model after creating the mirrored feature
+Creating the Rib Feature
+The fifth feature of the model is a rib feature. The sketch of this rib feature will be created
+on the Front Plane.
+1. Invoke the sketcher environment by selecting the Front Plane as the sketching plane.
+2. Orient the model normal to the sketching plane and draw the sketch for the rib feature
+using the sketching tools, as shown in Figure 7-11.
+3. Choose the Rib tool from the Features CommandManager; the Rib
+PropertyManager is displayed, refer to Figure 7-12. Also, the preview of the rib
+feature is displayed in the drawing area.
+The Rib tool is used to create a rib feature. Ribs are defined as the thin-walled structures
+that are used to increase the strength of the entire structure of a component so that it does
+not fail under an increased load. In SOLIDWORKS, the ribs are created using an open
+sketch as well as a closed sketch.
+
+=== PDF PAGE 12 ===
+Figure 7-11 Sketch of the rib feature
+Figure 7-12 The Rib PropertyManager
+4. Make sure that the Both Sides button is chosen in the Thickness area of the
+Parameters rollout of the PropertyManager.
+The Thickness area in the Parameters rollout is used to specify the side of the sketch
+where the material is to be added as well as the thickness of the rib feature.
+Note
+By default, the Both Sides button is chosen in the Thickness area of the Parameters rollout
+of the PropertyManager. As a result, the rib will be created on both sides of the sketch.
+You can also choose the First Side or Second Side button from this area to create
+
+=== PDF PAGE 13 ===
+ribs on either sides of the sketch.
+5. Set the value of the Rib Thickness spinner to 13 mm.
+6. Make sure that the Parallel to Sketch button is chosen in the Extrusion direction area
+of the PropertyManager.
+The Extrusion direction area of the PropertyManager is used to specify the method of
+extrusion to be used for extruding a closed or open sketch. When you invoke the Rib
+PropertyManager, the option that is suitable for creating the rib feature will be activated
+by default.
+The Parallel to Sketch button in the Extrusion direction area of the PropertyManager is
+used to extrude the sketch in a direction that is parallel to both the sketch and the
+sketching plane. However, the Normal to Sketch button of this area is used to extrude the
+sketch in a direction that is normal to both the sketch and the sketching plane.
+7. Change the view orientation to isometric.
+8. Make sure that the arrow that is displayed with the preview of the rib feature in the
+drawing area points toward the planar face of the base feature.
+Note
+The direction of arrow shows the direction of material addition. You can reverse the
+direction of material addition by using the Flip material side check box of the
+PropertyManager. You can also left-click on the arrow displayed in the preview to reverse
+the direction.
+9. Choose the OK button from the PropertyManager; the rib feature is created, as shown
+in Figure 7-13.
+
+=== PDF PAGE 14 ===
+Figure 7-13 Model after creating the rib feature
+Creating the Hole Feature
+Now, you will create hole features of the model. You can create a hole using the Hole
+Wizard tool. However, in this tutorial, you will create hole features arbitrarily on the right
+planar face of the base feature by using the Simple Hole tool and position them later.
+Note
+In the previous tutorials, you learned to create holes by extruding a circle using the
+Extruded Cut tool. Now, you will learn how to create a hole feature using the Simple Hole
+tool. If you use this tool, you do not need to draw the sketch of the hole. The holes created
+using this tool act as placed features.
+1. Select the right planar face of the base feature as the placement plane for the hole
+feature.
+2. Choose Insert > Features > Simple from the SOLIDWORKS menus; the Hole
+PropertyManager is displayed, refer to Figure 7-14. Also, the preview of the hole
+feature is displayed in the drawing area with the default values.
+
+=== PDF PAGE 15 ===
+Figure 7-14 The Hole PropertyManager
+3. Select the Through All option from the End Condition drop-down list of the
+Direction 1 rollout in the PropertyManager to specify the feature termination. You can
+also right-click in the drawing area and select the Through All option from the shortcut
+menu displayed.
+4. Set the value of the Hole Diameter spinner to 10 mm in the Direction 1 rollout of the
+PropertyManager. Next, choose the OK button; the hole feature of the specified
+diameter is created arbitrarily on the right planar face of the base feature.
+Since the hole feature is placed arbitrarily on the right planar face of the base feature, you
+need to define its position.
+5. Select Hole1 from the FeatureManager Design Tree; a pop-up toolbar is displayed.
+6. Choose the Edit Sketch button from the pop-up toolbar; the sketcher environment is
+invoked. Now, apply required dimensions to locate the hole feature, refer to Figure 7-15.
+
+=== PDF PAGE 16 ===
+Figure 7-15 Placement for the hole feature
+7. Exit the sketcher environment. Next, press the CTRL + B keys or choose the Rebuild
+button from the Menu Bar to rebuild the model. The isometric view of the model after
+creating the hole feature is shown in Figure 7-16.
+Figure 7-16 Model after creating the first hole feature
+8. Use the same procedure as discussed above to create the second hole feature of
+diameter 14 mm on the top left corner of the right planar face of the base feature. Refer
+to Figure 7-1 for the placement of the second hole feature. The isometric view of the
+model after creating both hole features is shown in the Figure 7-17.
+
+=== PDF PAGE 17 ===
+Figure 7-17 Model after creating the second hole feature
+Patterning the Features
+After creating the hole features, you need to pattern them one by one using the Linear
+Pattern tool. First, you will create the linear pattern of the hole having 10 mm diameter
+and then you will create the linear pattern of the hole having 14 mm diameter.
+1. Choose the Linear Pattern tool from the Features CommandManager; the Linear
+Pattern PropertyManager is displayed. Also, you are prompted to select an edge or an
+axis for the direction reference.
+The Linear Pattern tool is used to create pattern instances of selected features in linear
+directions. Using this tool, you can create linear pattern of selected features, faces, and
+bodies.
+2. Select a vertical linear edge of the base feature as the first direction reference for creating
+the linear pattern of the hole having 10 mm diameter; the name of the selected edge is
+displayed in the Pattern Direction selection area of the Direction 1 rollout in the
+PropertyManager. Also, the Direction 1 callout is attached to the selected edge, refer
+to Figure 7-18.
+The callout has two edit boxes, one to define the number of instances and the other to
+define the spacing between two instances.
+As soon as you select the first direction reference, the Pattern Direction selection area of
+
+=== PDF PAGE 18 ===
+the Direction 2 rollout in the PropertyManager is activated. As a result, you are prompted
+to select an edge or an axis for the second direction reference.
+3. Set the value of the Spacing spinner to 43 and the Number of Instances spinner to 5 in
+the Direction 1 rollout of the PropertyManager.
+Tip
+You can also define the spacing between two instances and number of instances in one
+direction by using the respective edit boxes of the callout that is attached to the edge
+selected for defining the linear direction.
+4. Select a horizontal linear edge of the base feature as the second direction reference for
+creating the linear pattern of the hole which has 10 mm diameter; the name of the selected
+edge is displayed in the Pattern Direction selection area of the Direction 2 rollout in
+the PropertyManager. Also, the Direction 2 callout is attached to the selected edge, refer
+to Figure 7-18.
+5. Set the value of the Spacing spinner to 82 and the Number of Instances spinner to 2 in
+the Direction 1 rollout of the PropertyManager.
+As soon as you select the second direction reference, the Features to Pattern selection
+area of the Features to Pattern rollout in the PropertyManager is activated. As a result,
+you are prompted to select features to be patterned.
+6. Select Hole1 from the FeatureManager Design Tree which has diameter 10 mm as the
+feature to pattern; the name of the selected hole feature is displayed in the Features to
+Pattern selection area of the PropertyManager. Also, the preview of the linear pattern is
+displayed in the drawing area, refer to Figure 7-18.
+
+=== PDF PAGE 19 ===
+Figure 7-18 Preview of the linear pattern
+Note
+If needed, you can also reverse the pattern direction by choosing the Reverse Direction
+button available at the left of the End Condition drop-down list in the respective rollouts
+of the PropertyManager. Alternatively, you can click the left mouse button on the arrow
+whose direction needs to be reversed. The direction of arrow defines the direction of pattern
+creation.
+Tip
+In SOLIDWORKS, you can also skip some of the instances from the pattern by using the
+Instances to Skip rollout of the Linear Pattern PropertyManager. To do so, expand the
+Instances to Skip rollout of the PropertyManager; pink dots will be displayed at the
+center of all the pattern instances except the parent instance. Next, move the cursor to the
+pink dot of the instance to be skipped and then click on it; the preview of that instance will
+disappear from the drawing area. Also, the position of the skipped instance in the form of
+a matrix will be displayed in the Instances to Skip selection area of the PropertyManager.
+You can resume the skipped instance by again clicking on the dot or by deleting the name
+of the instance from the Instances to Skip selection area.
+7. Choose the OK button from the PropertyManager; the linear pattern of the selected hole
+feature is created, as shown in Figure 7-19.
+
+=== PDF PAGE 20 ===
+Figure 7-19 Model after patterning the hole feature that has 10 mm diameter
+8. Use the same procedure as discussed above to create the linear pattern of the hole that
+has 14 mm diameter. Refer to Figure 7-2 for the parameters to create the linear pattern.
+The isometric view of the model after creating linear patterns is shown in Figure 7-20.
+Figure 7-20 Model after patterning both the hole features
+Creating the Counterbore Hole
+Next, you need to create the counterbore hole of the model. First, you will create an
+instance of the counterbore hole by using the Hole Wizard tool and then pattern it by using
+the Linear Pattern tool.
+1. Choose the Hole Wizard tool from the Features CommandManager; the Hole
+
+=== PDF PAGE 21 ===
+Specification PropertyManager is displayed.
+The Hole Wizard tool is used to add standard holes such as the counterbore, countersink,
+drilled, tapped, and pipe tap holes. You can also add a user-defined counterbore drill hole,
+simple hole, simple drilled hole, tapered hole, and so on by using this tool. You can
+control all the parameters of the holes, including the termination options. You can also
+modify the holes according to your requirement after placing them.
+2. Choose the Counterbore button from the Hole Type rollout of the PropertyManager.
+The buttons in the Hole Type rollout of the PropertyManager are used to define the type
+of standard hole to be created.
+3. Select the ANSI Metric option from the Standard drop-down list of the Hole Type
+rollout PropertyManager.
+The Standard drop-down list of the Hole Type rollout of the PropertyManager is used to
+specify the industrial dimensioning and hole standards.
+4. Select the Socket Button Head Cap Screw - ANSI B18.3.4M option from the Type
+drop-down list of the Hole Type rollout.
+The Type drop-down list of the Hole Type rollout of the PropertyManager is used to
+define the type of fastener to be inserted in the hole.
+Note
+The standard holes that are created using the Hole Wizard tool depend on the type and the
+size of the fastener to be inserted in the hole.
+5. Select the M8 option from the Size drop-down list of the Hole Specifications rollout in
+the PropertyManager.
+The Size drop-down list of the Hole Specifications rollout is used to define the size of the
+fastener to be inserted in the hole that you are creating by using the Hole Wizard tool.
+
+=== PDF PAGE 22 ===
+6. Select the Show custom size check box to customize the size of the counterbore hole
+and then enter the following parameters:
+Through Hole Diameter: 8.5 mm Counterbore Diameter: 14 mm
+Counterbore Depth: 4.2 mm
+The Show custom sizing check box of the Hole Specifications rollout is used to create a
+user-defined hole feature.
+7. Make sure that the Through All option is selected in the End Condition drop-down list
+of the End Condition rollout in the PropertyManager.
+The End Condition drop-down list of the End Condition rollout in the PropertyManager
+is used to define the termination of the hole feature.
+After specifying the parameters for the counterbore hole, you need to define its placement
+position.
+8. Choose the Positions tab from the Hole Specification PropertyManager; you are
+prompted to select a face on which you want to place the hole.
+9. Select the top planar face of the second extruded feature as the placement face for the
+counterbore hole. As soon as you select the placement face, the preview of the hole
+feature is displayed attached with the cursor and you are prompted to use dimensions and
+other sketching tools to position the center of the holes.
+10. Click the left mouse button anywhere on the top planar face of the second extruded
+feature to define an arbitrary location for the placement of the hole feature, refer to Figure
+7-21.
+
+=== PDF PAGE 23 ===
+Figure 7-21 Preview of the counterbore hole
+11. Choose the Smart Dimension button from the Sketch CommandManager and apply
+the dimensions, refer to Figure 7-22. Next, exit the Smart Dimension tool.
+Figure 7-22 The preview of the counterbore hole after defining its placement position
+12. Choose OK from the Hole Position PropertyManager to end the feature creation and
+click anywhere in the drawing area. Figure 7-23 shows the model after creating the
+counterbore hole.
+Patterning the Counterbore Hole
+After creating the first instance of the counterbore hole, you need to pattern it by using the
+Linear Pattern tool to create other instances of the counterbore hole.
+
+=== PDF PAGE 24 ===
+1. Invoke the Linear Pattern PropertyManager by choosing the Linear Pattern button
+from the Features CommandManager and create a linear pattern of the counterbore
+hole, as shown in Figure 7-24. Refer to Figure 7-1 for its parameters.
+Figure 7-23 Model after creating the first instance of the counterbore hole
+Figure 7-24 Final model after creating all the features
+Saving the Model
+Next, you need to save the document.
+1. Choose the Save button from the Menu Bar and save the document with the name
+c07_tut01 at the location given next.
+\Documents\SOLIDWORKS Tutorials\c07
+
+=== PDF PAGE 25 ===
+2. Choose File > Close from the SOLIDWORKS menus to close the file.
+Tutorial Exercise 2
+In this tutorial, you will create the model shown in Figure 7-25. The dimensions of the
+model are shown in the same figure. Also, you will create a section view of the model using
+the Section View tool. (Expected time: 30 min)
+
+=== PDF PAGE 26 ===
+Figure 7-25 Dimensions and views for Tutorial 2
+The following steps are required to complete this tutorial:
+a. Create the base feature of the model by revolving the sketch, refer to Figures 7-26 and
+7-27.
+b. Create the cut feature, refer to Figure 7-28.
+c. Apply cosmetic threads, refer to Figure 7-30 and then change its display style to shaded
+cosmetic threads, refer to Figure 7-31.
+d. Add a fillet to the base feature, refer to Figure 7-34.
+e. Display the section view of the model, refer to Figure 7-35.
+f. Save the model.
+Creating the Base Feature
+The base feature of the model is a revolve feature.
+
+=== PDF PAGE 27 ===
+1. Start a new SOLIDWORKS part document and then invoke the sketcher environment
+by selecting the Front Plane as the sketching plane.
+2. Draw the sketch of the revolve feature, as shown in Figure 7-26.
+3. Invoke the Revolved Boss/Base tool and revolve the sketch by selecting its vertical
+centerline as the axis of revolution. The isometric view of the model after creating the
+revolved feature is shown in Figure 7-27.
+Figure 7-26 Sketch of the base feature
+Figure 7-27 Model after creating the base feature
+Creating the Cut Feature
+The second feature of the model is a cut feature. The sketch of the cut feature will be
+
+=== PDF PAGE 28 ===
+drawn on the Right Plane and then you will extrude it by using the Through All option in
+both the directions of the sketching plane.
+1. Invoke the Extruded Cut tool and select the Right Plane as the sketching plane to
+invoke the sketcher environment.
+2. Orient the model normal to the sketching plane and draw a circle of diameter 8 mm
+using the Circle tool. Refer to Figure 7-25 for the placement of the circle.
+3. Exit the sketching environment; the Cut-Extrude PropertyManager is displayed.
+Also, the preview of the cut feature is displayed in the drawing area with the default
+values of the Blind option.
+4. Change the view orientation to isometric. Next, select the Through All option from the
+End Conditon drop-down lists in the Direction 1 and Direction 2 rollouts.
+5. Choose the OK button from the PropertyManager; the cut feature is created, as shown
+in Figure 7-28.
+Figure 7-28 Model after creating the cut feature
+Applying Cosmetic Threads
+It is evident from Figure 7-25 that the cosmetic threads are required in the top inner circular
+edge of the model. The cosmetic threads are applied by using the Cosmetic Thread tool.
+These threads are used to schematically represent threads.
+
+=== PDF PAGE 29 ===
+1. Choose Insert > Annotations > Cosmetic Thread from the SOLIDWORKS menus;
+the Cosmetic Thread PropertyManager is displayed. Also, you are prompted to select
+the edges and set of parameters for applying the cosmetic threads.
+The Cosmetic Thread tool is used for schematic representation of threads in the circular
+face of the model.
+Note
+Generally, the creation of threads in a model is avoided as it results in a complex geometry.
+The views generated from the models having complex geometry are difficult to understand.
+Therefore, it is better to avoid creating threads in the model, and add the cosmetic threads
+instead. It is also recommended that you use the cosmetic threads to get the thread
+convention in the drawing views.
+2. Select the top circular inner edge of the model, refer to Figure 7-29; the name of the
+selected edge is displayed in the Circular Edges selection area of the PropertyManager.
+3. Select the ANSI Metric option from the Standard drop-down list of the
+PropertyManager.
+4. Select the Machine Threads option from the Type drop-down list of the
+PropertyManager.
+5. Make sure M42x3.0 is selected in the Size drop-down list and the Up to Next option is
+selected in the End Condition drop-down list of the PropertyManager.
+6. After defining all parameters for the cosmetic threads in the Cosmetic Thread
+PropertyManager, choose the OK button to exit it. The cosmetic threads are applied to
+the model and represented by a circle, as shown in Figure 7-30.
+
+=== PDF PAGE 30 ===
+Figure 7-29 Edge to be selected
+Figure 7-30 The model after applying cosmetic threads
+As it is evident from Figure 7-25 that the cosmetic threads are displayed in the shaded
+mode. Therefore, you also need to display the cosmetic threads in the shaded mode.
+7. Invoke the System Options - General dialog box by choosing the Options button from
+the Menu Bar.
+8. Choose the Document Properties tab from this dialog box; the System Options -
+General dialog box is changed to the Document Properties - Drafting Standard dialog
+box.
+9. Select the Detailing option from the left side area of the dialog box; the options related
+to the detailing are displayed on the right side of the dialog box.
+10. Select the Shaded cosmetic threads check box from the Display filter area of the
+dialog box.
+
+=== PDF PAGE 31 ===
+11. Choose the OK button from the dialog box; the cosmetic threads applied to the model
+are displayed in the shaded mode, as shown in Figure 7-31.
+Figure 7-31 Model after displaying the cosmetic threads in the shaded mode
+Tip
+You can also edit the cosmetic threads after applying them to the circular face of the model.
+To edit the cosmetic threads applied to a feature, expand the node corresponding to that
+feature in the FeatureManager Design Tree and then select the Cosmetic Thread; a pop-
+up toolbar will be displayed. Choose the Edit Feature option from the pop-up toolbar to
+display the Cosmetic Thread PropertyManager for editing the parameters of the
+selected cosmetic thread.
+Creating the Fillet Features
+After creating all the features, you need to add fillets to the model by using the Fillet tool.
+1. Choose the Fillet tool from the Features CommandManager; the Fillet
+PropertyManager is displayed, refer to Figure 7-32. Also, you are prompted to select
+edges, faces, features, or loops to create fillet.
+Note
+If on choosing the Fillet tool from the Features CommandManager, the FilletXpert
+PropertyManager is displayed then you need to choose the Manual button from it to
+
+=== PDF PAGE 32 ===
+display the Fillet PropertyManager.
+The Fillet tool is used to remove the sharp corners by adding or removing material from
+the corners based on the selected edge reference. In SOLIDWORKS, you can create
+different types of fillets such as constant radius fillet, variable radius fillet, face fillet, and
+full round fillet by selecting the respective radio buttons from the Fillet Type rollout of
+the Fillet PropertyManager.
+2. Make sure that the Constant size radio button is chosen in the Fillet Type rollout of the
+PropertyManager, as shown in Figure 7-32.
+3. Select the edges of the model from the drawing area, refer to Figure 7-33. You can
+select multiple edges for creating a set of fillet with same size. As soon as you select the
+edges of the model, the preview of the fillet with the default values and the radius
+callout are displayed in the drawing area.
+Figure 7-32 The partial view of the Fillet PropertyManager
+
+=== PDF PAGE 33 ===
+Figure 7-33 Edges to be selected
+Note
+You can also define different fillet radius for the edges by selecting the Multiple radius
+check box in the Fillet PropertyManager and specifying the appropriate radius.
+4. Set the value in the Radius spinner to 5 and choose the OK button from the Fillet
+PropertyManager. Figure 7-34 shows the model after adding the fillets.
+Displaying the Section View of the Model
+Next, you need to display the section view of the model. The section view of the model
+will be created using the Section View PropertyManager.
+1. Orient the model to the isometric view.
+2. Choose the Section View button from the View (Heads-Up) toolbar; the Section View
+PropertyManager is displayed with the Front Plane selected as the default section
+plane. As a result, the preview of the section view by using the Front Plane as the section
+plane is displayed in the drawing area along with the handle at the center of the section
+plane.
+You can manipulate the section plane by using the spinners available in the Section 1
+rollout of the PropertyManager. You can also drag the handle that is displayed at the
+
+=== PDF PAGE 34 ===
+center of the section plane for dynamically adjusting the offset distance of the section
+plane.
+Tip
+If you need to select the Right Plane or the Top Plane as the section plane, choose the
+respective buttons from the Section 1 rollout of the Section View PropertyManager.
+The Section View tool is used to display the section view of the model by cutting it using
+a plane or a face. You can also save the section view with a name to generate the section
+view directly on the drawing sheet in the drawing environment.
+3. Choose the OK button from the Section View PropertyManager to display the section
+view of the model. The section view of the model is shown in Figure 7-35.
+4. Again choose the Section View button from the View (Heads-Up) toolbar to return to
+the full view mode.
+Saving the Model
+1. Save the part document with the name c07_tut02 at the following location:
+\Documents\SOLIDWORKS Tutorials\c07
+2. Choose File> Close from the SOLIDWORKS menu to close the document.
+Figure 7-34 Model after applying the fillets
+
+=== PDF PAGE 35 ===
+Figure 7-35 Section view of the model
+Tutorial Exercise 3
+In this tutorial, you will create the model shown in Figure 7-36. The views and dimensions
+of the model are shown in Figure 7-37. You will first create a sketch of the top view of the
+model and then extrude it by selecting different contours in it. (Expected time: 45 min)
+Figure 7-36 Model for Tutorial 3
+
+=== PDF PAGE 36 ===
+Figure 7-37 Dimensions and views for Tutorial 3
+The following steps are required to complete this tutorial:
+a. Create the sketch of the top view of the model, refer to Figure 7-38.
+b. Invoke the Extrude Boss/Base tool and extrude the selected contour, refer to Figures 7-
+39 and 7-40.
+c. Select the other set of contours and extrude them to the required distance, refer to
+Figures 7-41 and 7-42.
+d. Select the other set of contours and extrude them to the required distance, refer to
+Figure 7-43.
+e. Create the full round fillets, refer to Figures 7-45 through 7-47.
+f. Create the user-defined hole by using the Hole Wizard tool, refer to Figure 7-49.
+g. Create the mirror image of the previously created user-defined hole, refer to Figure 7-
+50.
+h. Create the chamfer features, refer to Figure 7-54.
+i. Save the model.
+Creating the Sketch of the Model
+1. Start a new SOLIDWORKS part document using the New SOLIDWORKS Document
+dialog box.
+As mentioned in the tutorial description, you will draw the sketch of the top view of the
+
+=== PDF PAGE 37 ===
+model and extrude it by selecting its different contours. You can also create this model
+by creating a separate sketch for each sketch based feature and then converting them
+into features.
+2. Invoke the sketcher environment by selecting the Top Plane as the sketching plane and
+draw the sketch of the base feature, as shown in Figure 7-38. Exit the sketching
+environment.
+Figure 7-38 Sketch of the top view of the model
+Selecting and Extruding the Contours of the Sketch
+You need to use the contour selection method to create the model. Therefore, you first
+need to select one of the contours from the given sketch and then extrude it. For a better
+view, you can also orient the sketch to the isometric view.
+1. Choose the Isometric button from the View Orientation flyout in the View (Heads-
+Up) toolbar; the sketch is displayed in the isometric view.
+2. Right-click in the drawing area to invoke a shortcut menu. Expand the shortcut menu, if
+required. Next, choose the Contour Select Tool option from the shortcut menu; the select
+cursor is replaced by the contour selection cursor and the selection confirmation corner
+is displayed.
+3. Select the sketch and then select the close contour, refer to Figure 7-39.
+Note
+
+=== PDF PAGE 38 ===
+As evident from Figure 7-39, a centerline is dividing the contours of the sketch. You may
+need to press the CTRL key for selecting the close contours of the sketch.
+4. Choose the Extruded Boss/Base tool from the Features CommandManager; the Boss-
+Extrude PropertyManager is invoked and the preview of the base feature is displayed
+in the drawing area.
+Also, the name of the selected contour is displayed in the selection box of the Selected
+Contours rollout.
+5. Right-click in the drawing area to display the shortcut menu. Next, choose the Mid
+Plane option from it.
+6. Enter 15 in the Depth spinner and choose the OK button; the selected contour is
+extruded, as shown in Figure 7-40.
+Figure 7-39 The closed area selected as a contour
+
+=== PDF PAGE 39 ===
+Figure 7-40 Model after extruding the contour
+7. Select the sketch from the FeatureManager Design Tree and then right-click in the
+drawing area to invoke a shortcut menu. Next, choose the Contour Select Tool option
+from the shortcut menu.
+8. Select the close contour of the sketch, refer to Figure 7-41. Next, invoke the Extruded
+Boss/Base tool and extrude the sketch upto the depth of 22 mm by using the Mid Plane
+option, as shown in Figure 7-42.
+Figure 7-41 Contour selected for extrusion
+
+=== PDF PAGE 40 ===
+Figure 7-42 Model after extruding contours of the sketch
+9. Similarly, extrude the other contours of the sketch. The model after extruding all
+contours of the sketch is shown in Figure 7-43.
+Figure 7-43 Model after extruding all the contours of the sketch
+Creating the Fillet Features
+After creating the extrude features, you need to add full round fillets to the model.
+1. Choose the Fillet tool from the Features CommandManager; the Fillet
+PropertyManager is displayed.
+2. Select the Full round fillet radio button from the Fillet Type rollout of the
+
+=== PDF PAGE 41 ===
+PropertyManager; the Face Set 1, Center Face Set, and Face Set 2 selection areas are
+displayed in the Items To Fillet rollout of the PropertyManager. Note that the Face Set
+1 selection box is activated by default in this rollout.
+3. Select a face as the face set 1, refer to Figure 7-44.
+4. Click on the Center Face Set selection box to activate it. Now, select the side face of
+the model as the center face set, refer to Figure 7-44.
+5. Activate the Face Set 2 selection box and then select the face as the face set 2, refer to
+Figure 7-44. The preview of the full round fillet on the selected face sets is displayed in
+the drawing area with their respective callouts, as shown in Figure 7-45.
+Figure 7-44 Faces to be selected
+
+=== PDF PAGE 42 ===
+Figure 7-45 Preview of the full round fillet
+Note
+In Figure 7-44, the display state of the model has been changed to Hidden Lines Visible
+display state by choosing the Hidden Lines Visible button from the Display Style flyout of
+the View (Heads-Up) toolbar.
+6. Choose the OK button from the PropertyManager; the full round fillet is created, as
+shown in Figure 7-46.
+7. Similarly, create the full round fillets on the other side feature of the model, as shown in
+Figure 7-47.
+Figure 7-46 Model after creating the full round fillet on one side
+
+=== PDF PAGE 43 ===
+Figure 7-47 Model after creating full round fillet on the other side
+Creating the User-Defined Holes Using the Hole Wizard Tool
+Next, you will create a user-defined hole by using the Hole Wizard tool. First you will
+create a hole on one side of the model by using the Hole Wizard tool and then mirror it on
+the other side of the model by using the Mirror tool.
+1. Choose the Hole Wizard tool from the Features CommandManager; the Hole
+Specification PropertyManager is displayed.
+The Hole Wizard tool is used to create standard holes such as the counterbore, countersink,
+drilled, tapped, and pipe tap holes. You can also create a user-defined counterbore
+drill hole, simple hole, simple drilled hole, tapered hole, and so on by using this tool. You
+can control all the parameters of the holes, including the termination options. You can
+also modify the holes according to your requirement after placing them.
+2. Choose the Legacy Hole button from the Hole Type rollout of the PropertyManager.
+The Legacy Hole button is used to create a user-defined hole.
+3. Make sure that the Simple option is selected in the Type drop-down list of the
+PropertyManager.
+4. Double-click in the Value field of the Diameter in the Section Dimensions rollout of
+the PropertyManager; an edit box is displayed. Enter 10 in the edit box.
+5. Select Through All option from the End Condition drop-down list of the End
+
+=== PDF PAGE 44 ===
+Condition rollout of the PropertyManager.
+After specifying the parameter for the user-defined hole, you need to specify its placement
+position.
+6. Choose the Positions tab from the Hole Specification PropertyManager; you are
+prompted to select a face on which you want to place the hole.
+7. Select the planar face of the model as shown in Figure 7-48. As soon as you select the
+placement face, the preview of the hole feature is attached with the cursor and you are
+prompted to use dimensions and other sketching tools to position the center of the holes.
+8. Click the left mouse button on the planar face when the cursor snaps to the center point
+of the semi-circular edge of the feature and coincident relation is displayed below the
+cursor.
+Note
+If the cursor does not snap to the center point of the semi-circular edge, move the cursor
+toward the semi-circular edge to highlight its center point. When the center point is
+highlighted, click on it.
+9. Choose OK from the Hole Position PropertyManager to end the feature creation and
+click anywhere in the drawing area. Figure 7-49 shows the model after creating the user-
+defined hole.
+
+=== PDF PAGE 45 ===
+Figure 7-48 Face to be selected
+Figure 7-49 Model after creating the hole
+Mirroring the Feature
+Now, you need to create a mirror copy of the last created cut feature by using the
+Mirror tool.
+1. Choose the Mirror button from the Features CommandManager; the
+Mirror PropertyManager is displayed on the left of the drawing area. Also, you are
+prompted to select a plane or a planar face about which the features need to be mirrored.
+2. Select the Front Plane as the mirroring plane from the FeatureManager Design Tree
+and then select the previously created hole feature as the feature to be mirrored; the
+
+=== PDF PAGE 46 ===
+preview of the mirror feature is displayed in the drawing area.
+3. Choose the OK button from the PropertyManager; the mirror copy of the hole feature is
+created, as shown in Figure 7-50.
+Figure 7-50 Model after mirroring the hole
+Creating the Chamfer Features
+The next feature that you need to add to this model is a chamfer feature.
+1. Choose the Chamfer tool from the Fillet flyout of the Features CommandManager,
+refer to Figure 7-51; the Chamfer PropertyManager is displayed, refer to Figure 7-52.
+Figure 7-51 The Fillet flyout
+
+=== PDF PAGE 47 ===
+Figure 7-52 The Chamfer PropertyManager
+Chamfering is a process in which the sharp edges of the model are beveled in order to
+reduce the area of stress concentration. This process also eliminates the undesirable sharp
+edges and corners of the model.
+2. Select the Angle distance radio button from the Chamfer Parameters rollout of the
+PropertyManager.
+By default, the Angle distance radio button is selected. Therefore, after selecting the edge
+to be chamfered, the distance and angle callouts are displayed in the drawing area. Set the
+value of the distance and angle in the Distance and Angle spinners of the PropertyManager
+or enter the values directly in the Distance and Angle callouts. The Flip direction check
+box of the Chamfer PropertyManager is used to specify the direction of the distance
+measurement. You can also flip the direction by clicking on the arrow in the drawing area.
+If you select the Distance distance radio button from the Chamfer Parameters rollout,
+the Flip direction check box will be replaced by the Equal distance check box. Also, the
+Angle and Distance callouts will be replaced by the Distance 1 and Distance 2 callouts.
+Now, you can specify the chamfer distance by using these callouts. Also, if you select the
+Equal distance check box; the Distance 2 spinner will disappear from the Chamfer
+Parameters rollout.
+3. Set the value of the Distance spinner to 1.5 and the Angle spinner to 45 in the
+PropertyManager.
+
+=== PDF PAGE 48 ===
+4. Make sure that the Tangent propagation check box is selected in the PropertyManager.
+The Tangent propagation check box is selected by default. Therefore, the edges that are
+tangent to the selected edge are selected automatically.
+5. Select the edges of the model one by one to apply the chamfer, refer to Figure 7-53; the
+preview of the chamfer features is displayed in the drawing area.
+6. Choose the OK button from the PropertyManager. The isometric view of the final
+model after creating the chamfer features is shown in Figure 7-54.
+Figure 7-53 Edges to be selected
+
+=== PDF PAGE 49 ===
+Figure 7-54 Final model for Tutorial 3
+Saving the Model
+1. Save the part document with the name c07_tut03 at the location given next.
+\Documents\SOLIDWORKS Tutorials\c07
+2. Choose File > Close from the SOLIDWORKS menus to close the document.
+Answer the following questions and then compare them to those given at the end of
+this tutorial:
+1. If you want to specify different distances while creating a chamfer, clear the
+check box.
+2. The radio button is used to apply the full round fillet feature.
+3. The tool is used to create a rib feature.
+4. The tool is used for the schematic representation of threads on a circular
+face of the model.
+5. You can create standard counterbore, countersink, and tapped holes using the Hole
+PropertyManager. (T/F)
+6. The hole features created using the Hole Wizard tool and the Hole PropertyManager
+are not parametric. (T/F)
+7. You cannot define a user-defined hole using the Hole Wizard tool. (T/F)
+8. You cannot preselect the edges or faces for creating a fillet feature. (T/F)
+
+=== PDF PAGE 50 ===
+Answer the following questions:
+1. Which of the following options, when selected, does not require a radius to create a
+fillet feature?
+(a) Face fillet with hold line (c) Variable radius fillet (b) Constant radius fillet
+(d) Full round fillet
+2. Which PropertyManager is displayed by default when you choose the Hole Wizard
+button from the Features CommandManager?
+(a) Hole (b) Hole Definition
+(c) Hole Wizard (d) Hole Specification
+3. The option is used to add standard holes to a model.
+4. After specifying all parameters of a hole feature using the Hole Specification
+PropertyManager, the tab is chosen to specify the placement of the hole
+feature.
+5. The PropertyManager is used to modify the fillets created at corners.
+6. The button from the Hole Specifications rollout is used to define a
+standard drilled hole.
+7. By default, the PropertyManager.
+radio button is selected in the Chamfer
+8. The check box from the Display filter area of the Document Properties -
+Detailing dialog box is used to display cosmetic treads in shaded mode.
+
+=== PDF PAGE 51 ===
+EXERCISES
+Exercise 1
+Create the model shown in Figure 7-55. The views and dimensions of the model are
+shown in Figure 7-56. (Expected time: 30 min)
+Figure 7-55 Solid model for Exercise 1
+Figure 7-56 Views and dimensions for Exercise 1
+Exercise 2
+
+=== PDF PAGE 52 ===
+Create the model shown in Figure 7-57. The views and dimensions of the model are
+shown in Figure 7-58. (Expected time: 30 min)
+Figure 7-57 Solid model for Exercise 2
+Figure 7-58 Views and dimensions of the model for Exercise 2
+Answers to Self-Evaluation Test
+
+=== PDF PAGE 53 ===
+1. Equal distance, 2. Full round fillet, 3. Rib, 4. Cosmetic Thread, 5. F, 6. F, 7. F, 8. F

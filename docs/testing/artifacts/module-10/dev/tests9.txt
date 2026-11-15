@@ -1,0 +1,22 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 52: module10.hardening
+1/2 Test #52: module10.hardening ...............   Passed    2.41 sec
+    Start 53: module10.contracts
+2/2 Test #53: module10.contracts ...............***Failed    1.57 sec
+********* Start testing of FaultContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : FaultContracts::initTestCase()
+FAIL!  : FaultContracts::cancellationAndRestart() 'source.open(QIODevice::ReadOnly)' returned FALSE. (InvalidInput: Saved destinations must be outside private recovery storage)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module10/contracts.cpp(100)]
+PASS   : FaultContracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 1103ms
+********* Finished testing of FaultContracts *********
+
+
+50% tests passed, 1 tests failed out of 2
+
+Total Test time (real) =   3.99 sec
+
+The following tests FAILED:
+	 53 - module10.contracts (Failed)
+Errors while running CTest

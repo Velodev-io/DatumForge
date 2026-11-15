@@ -1,0 +1,4 @@
+[1/4] Building CXX object CMakeFiles/cm4_support_store.dir/tests/core_modeling/support_store.cpp.o
+[2/4] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[3/4] Linking CXX static library libcad_persistence.a
+[4/4] Linking CXX executable cm4_support_store

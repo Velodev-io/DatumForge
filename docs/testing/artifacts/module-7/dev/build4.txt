@@ -1,0 +1,26 @@
+[1/93] Automatic MOC for target cad_client
+[2/91] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/91] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/91] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/91] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[6/91] Building CXX object CMakeFiles/cad_assembly_geometry.dir/src/assembly/Geometry.cpp.o
+FAILED: [code=1] CMakeFiles/cad_assembly_geometry.dir/src/assembly/Geometry.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_assembly_geometry.dir/src/assembly/Geometry.cpp.o -MF CMakeFiles/cad_assembly_geometry.dir/src/assembly/Geometry.cpp.o.d -o CMakeFiles/cad_assembly_geometry.dir/src/assembly/Geometry.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/assembly/Geometry.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/assembly/Geometry.cpp:26:126: error: 'auto' deduced as 'gp_Pnt' in declaration of 'p' and deduced as 'gp_Dir' in declaration of 'd'
+   26 |  if(kind==TopAbs_FACE){BRepAdaptor_Surface s(TopoDS::Face(it.Current()));if(s.GetType()==GeomAbs_Plane){auto plane=s.Plane();auto p=plane.Location(),d=plane.Axis().Direction();f={"Plane",{p.X()/1000,p.Y()/1000,p.Z()/1000},{d.X(),d.Y(),d.Z()}};if(it.Current().Orientation()==TopAbs_REVERSED)for(auto &x:f.direction)x=-x;return f;}
+      |                                                                                                                              ^      ~~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/assembly/Geometry.cpp:27:66: error: 'auto' deduced as 'gp_Pnt' in declaration of 'p' and deduced as 'gp_Dir' in declaration of 'd'
+   27 |  if(s.GetType()==GeomAbs_Cylinder){auto axis=s.Cylinder().Axis();auto p=axis.Location(),d=axis.Direction();return {"Axis",{p.X()/1000,p.Y()/1000,p.Z()/1000},{d.X(),d.Y(),d.Z()}};}}
+      |                                                                  ^      ~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/assembly/Geometry.cpp:28:117: error: 'auto' deduced as 'gp_Pnt' in declaration of 'p' and deduced as 'gp_Dir' in declaration of 'd'
+   28 |  else {BRepAdaptor_Curve curve(TopoDS::Edge(it.Current()));if(curve.GetType()==GeomAbs_Line){auto axis=curve.Line();auto p=axis.Location(),d=axis.Direction();return {"Axis",{p.X()/1000,p.Y()/1000,p.Z()/1000},{d.X(),d.Y(),d.Z()}};}}
+      |                                                                                                                     ^      ~~~~~~~~~~~~~~~   ~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/assembly/Geometry.cpp:41:53: error: invalid use of incomplete type 'gp_Quaternion'
+   41 | gp_Trsf transformMM(Pose p){gp_Trsf t;t.SetRotation(gp_Quaternion(p.rotation[1],p.rotation[2],p.rotation[3],p.rotation[0]));t.SetTranslationPart(gp_Vec(p.translation[0]*1000,p.translation[1]*1000,p.translation[2]*1000));return t;}
+      |                                                     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade/gp_Trsf.hxx:30:7: note: forward declaration of 'gp_Quaternion'
+   30 | class gp_Quaternion;
+      |       ^
+4 errors generated.
+[7/91] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+ninja: build stopped: subcommand failed.

@@ -1,0 +1,394 @@
+{
+    "files": [
+        {
+            "after": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "before": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "bytes": 15416,
+            "engine": "OCCT 7.9.2;exchange=1",
+            "file_units": "millimetre",
+            "format": "STEP",
+            "healing": "None",
+            "name": "b4-STEP-mm.step",
+            "sha256": "707b0ac8df7d73a24ff82ba3869aea923dce29b047b334ade0c49f36170d81de",
+            "translator_warning_count": 0,
+            "units_choice": "File",
+            "warnings": [
+                "Imported geometry only; proprietary feature history is not recovered.",
+                "Names, colors, layers, PMI and assembly structure are not retained by this solid-body adapter."
+            ]
+        },
+        {
+            "after": {
+                "area_mm2": 2200.000000001195,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.000000100010798,
+                    20.0000000999962,
+                    30.000000100007
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000.0000000067375
+            },
+            "before": {
+                "area_mm2": 2200.000000001195,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.000000100010798,
+                    20.0000000999962,
+                    30.000000100007
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000.0000000067375
+            },
+            "bytes": 16229,
+            "engine": "OCCT 7.9.2;exchange=1",
+            "file_units": "INCH",
+            "format": "STEP",
+            "healing": "None",
+            "name": "b4-STEP-in.step",
+            "sha256": "9720222deeb220ca47adbe4754cb515d8e4c8d7fefd7f4160f56278992141cf3",
+            "translator_warning_count": 0,
+            "units_choice": "File",
+            "warnings": [
+                "Imported geometry only; proprietary feature history is not recovered.",
+                "Names, colors, layers, PMI and assembly structure are not retained by this solid-body adapter."
+            ]
+        },
+        {
+            "after": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "before": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "bytes": 15389,
+            "engine": "OCCT 7.9.2;exchange=1",
+            "file_units": "centimetre",
+            "format": "STEP",
+            "healing": "None",
+            "name": "b4-STEP-cm.step",
+            "sha256": "16ed476f0af8b2f30356eac87e4982bec57c754e0b26bcad50cb8edd4150cd66",
+            "translator_warning_count": 0,
+            "units_choice": "File",
+            "warnings": [
+                "Imported geometry only; proprietary feature history is not recovered.",
+                "Names, colors, layers, PMI and assembly structure are not retained by this solid-body adapter."
+            ]
+        },
+        {
+            "after": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "before": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "bytes": 15575,
+            "engine": "OCCT 7.9.2;exchange=1",
+            "file_units": "metre",
+            "format": "STEP",
+            "healing": "None",
+            "name": "b4-STEP-m.step",
+            "sha256": "c236f9540f5441781cae698d8405ccce1ceed5bdd8c93e0cf358457fa0f3d049",
+            "translator_warning_count": 0,
+            "units_choice": "File",
+            "warnings": [
+                "Imported geometry only; proprietary feature history is not recovered.",
+                "Names, colors, layers, PMI and assembly structure are not retained by this solid-body adapter."
+            ]
+        },
+        {
+            "after": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "before": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "bytes": 13365,
+            "engine": "OCCT 7.9.2;exchange=1",
+            "file_units": "MM",
+            "format": "IGES",
+            "healing": "None",
+            "name": "b4-IGES-mm.iges",
+            "sha256": "c1629e2d1b9060fb7203fd43e3d3be2390de9fe1048a715e4d2692ba4a419dd0",
+            "translator_warning_count": 0,
+            "units_choice": "File",
+            "warnings": [
+                "Imported geometry only; proprietary feature history is not recovered.",
+                "Names, colors, layers, PMI and assembly structure are not retained by this solid-body adapter."
+            ]
+        },
+        {
+            "after": {
+                "area_mm2": 2199.9999990679994,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.000000089799999,
+                    20.000000104999998,
+                    30.0000000948
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 5999.999994339999
+            },
+            "before": {
+                "area_mm2": 2199.9999990679994,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.000000089799999,
+                    20.000000104999998,
+                    30.0000000948
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 5999.999994339999
+            },
+            "bytes": 13770,
+            "engine": "OCCT 7.9.2;exchange=1",
+            "file_units": "INCH",
+            "format": "IGES",
+            "healing": "None",
+            "name": "b4-IGES-in.iges",
+            "sha256": "5cd67816ac091067ff6a68dd2aa1b1b3792f84cb8b72abbc4f434ee3fd9bf849",
+            "translator_warning_count": 0,
+            "units_choice": "File",
+            "warnings": [
+                "Imported geometry only; proprietary feature history is not recovered.",
+                "Names, colors, layers, PMI and assembly structure are not retained by this solid-body adapter."
+            ]
+        },
+        {
+            "after": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "before": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "bytes": 13365,
+            "engine": "OCCT 7.9.2;exchange=1",
+            "file_units": "CM",
+            "format": "IGES",
+            "healing": "None",
+            "name": "b4-IGES-cm.iges",
+            "sha256": "fe38b0cbac8fc2e1f370678c8f16d81f222e49c37dc4da03805f2e5acc6c89ad",
+            "translator_warning_count": 0,
+            "units_choice": "File",
+            "warnings": [
+                "Imported geometry only; proprietary feature history is not recovered.",
+                "Names, colors, layers, PMI and assembly structure are not retained by this solid-body adapter."
+            ]
+        },
+        {
+            "after": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "before": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "bytes": 13446,
+            "engine": "OCCT 7.9.2;exchange=1",
+            "file_units": "M",
+            "format": "IGES",
+            "healing": "None",
+            "name": "b4-IGES-m.iges",
+            "sha256": "d29ab8f8873ef9778ef42546f807731c3986afb900bfac53833c2cabea5747b5",
+            "translator_warning_count": 0,
+            "units_choice": "File",
+            "warnings": [
+                "Imported geometry only; proprietary feature history is not recovered.",
+                "Names, colors, layers, PMI and assembly structure are not retained by this solid-body adapter."
+            ]
+        },
+        {
+            "after": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "before": {
+                "area_mm2": 2200,
+                "bounds_mm": [
+                    -1e-07,
+                    -1e-07,
+                    -1e-07,
+                    10.0000001,
+                    20.0000001,
+                    30.0000001
+                ],
+                "faces": 6,
+                "solids": 1,
+                "volume_mm3": 6000
+            },
+            "bytes": 16085,
+            "engine": "OCCT 7.9.2;exchange=1",
+            "file_units": "metre",
+            "format": "STEP",
+            "healing": "None",
+            "name": "colored.step",
+            "sha256": "85dc8bb6de73805def38fcf0816062adee8c233414e8c9e113fe2dc507386e78",
+            "translator_warning_count": 0,
+            "units_choice": "File",
+            "warnings": [
+                "Imported geometry only; proprietary feature history is not recovered.",
+                "Names, colors, layers, PMI and assembly structure are not retained by this solid-body adapter."
+            ]
+        }
+    ],
+    "fixture": "B4 frozen 10/20/30 mm box recipe plus unit/colored/adversarial variants",
+    "limits": "Small analytic corpus; not full industrial corpus or physical-memory acceptance",
+    "status": "Pass"
+}

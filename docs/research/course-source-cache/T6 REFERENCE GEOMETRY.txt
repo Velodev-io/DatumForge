@@ -1,0 +1,863 @@
+
+=== PDF PAGE 1 ===
+Tutorial 6
+Creating Reference Geometries
+
+=== PDF PAGE 2 ===
+Learning Objectives
+After completing this tutorial, you will be able to:
+• Create a reference plane
+• Create a reference axis
+• Create a model using advanced Boss/Base option
+• Create a model using the contour selection method
+• Create a cut feature
+IMPORTANCE OF SKETCHING PLANES
+In the earlier tutorials, you created basic models by extruding or revolving the sketches.
+All those models were created on a single sketching plane, the Front Plane. But most
+mechanical designs consist of multiple sketched features, referenced geometries, and
+placed features. These features are integrated together to complete a model. Most of these
+features lie on different planes. When you start a new SOLIDWORKS document and
+invoke a sketching plane, you are prompted to select the plane on which you want to draw
+the sketch. On the basis of design requirements, you can select any plane to create the base
+feature. To create additional sketched features, you need to select an existing plane or a
+planar surface, or you need to create a plane that will be used as the sketching plane. For
+example, consider the model shown in Figure 6-1.
+Figure 6-1 A multifeatured model
+The base feature of this model is shown in Figure 6-2. The sketch for the base feature is
+drawn on the Top Plane. After creating the base feature, you need to create the other
+
+=== PDF PAGE 3 ===
+sketched features, placed features, and referenced features, refer to Figure 6-3. The boss
+features and cut features are the sketched features that require sketching planes where you
+can draw the sketches of the features.
+It is evident from Figure 6-3 that the features added to the base feature are not created on
+the same plane on which the sketch for the base feature is created. Therefore, to draw the
+sketches of other sketched features, you need to define other sketching planes.
+Figure 6-2 Base feature of the model
+Figure 6-3 Model after adding other features
+TUTORIALS
+
+=== PDF PAGE 4 ===
+Tutorial Exercise 1
+In this tutorial, you will create the model shown in Figure 6-4. The dimensions of the
+model are also given in the same figure. (Expected time: 30 min)
+Figure 6-4 Model and its different views for Tutorial 1
+It is clear from the above figures that the given model is a multi-featured model. It consists
+of various extrude and cut features. You need to create a separate sketch of each sketched
+feature for converting them into features.
+
+=== PDF PAGE 5 ===
+The following steps are required to complete this tutorial:
+a. Create the sketch of the base feature on the Right Plane and apply the required relations
+and dimensions to it, refer to Figure 6-5.
+b. Invoke the Extrude Boss/Base tool and create the base feature of the model, refer to
+Figure 6-6.
+c. Create the sketch of the second feature on the Right Plane and apply the required
+relations and dimensions to it, refer to Figure 6-7.
+d. Invoke the Extrude Boss/Base tool and extrude the sketch created for the second
+feature by using the Mid Plane option, refer to Figure 6-8.
+e. Create the third and fourth features of the model by using the Contour Selection
+method, refer to Figures 6-9 through 6-13.
+f. Create the fifth feature, which is a extruded cut feature, refer to Figures 6-14 and 6-15.
+g. Create a reference plane at an offset distance from the Front Plane for creating the
+sketch of the sixth feature, refer to Figure 6-18.
+h. Create the sixth feature of the model, which is also an extruded feature, refer to Figures
+6-19 and 6-20.
+i. Create a reference plane for creating the sketch of seventh and eighth features, refer to
+Figure 6-21.
+j. Create the seventh and eighth features of the model by using the Contour Selection
+method, refer to Figures 6-22 through 6-26.
+k. Save the document and then close it.
+Creating the Base Feature
+Now, you will create the base feature of the model, which is an extrude feature.
+1. Start a new SOLIDWORKS part document using the New SOLIDWORKS Document
+dialog box.
+2. Invoke the sketching environment by selecting the Right Plane as the sketching plane
+and then draw the sketch by using the Circle tool. Next, apply the required dimensions
+to it, as shown in Figure 6-5.
+3. Choose the Extruded Boss/Base tool from the Features CommandManager; the
+
+=== PDF PAGE 6 ===
+sketch is automatically oriented to the trimetric view and the Boss-Extrude
+PropertyManager is displayed. Also, the preview of the extrude feature, created using
+the default values, is displayed in the drawing area.
+Now, you will extrude the feature equally on both sides of the sketching plane.
+4. Right-click in the drawing area; a shortcut menu is displayed. Next, choose the Mid
+Plane option from it; the preview of the feature is modified and material is added equally
+in both directions of the sketching plane.
+You can also select the Mid Plane option from the End Condition drop-down list
+available in the Direction 1 rollout of the PropertyManager.
+5. Set the value of the Depth spinner to 70 mm and then choose the OK button from the
+PropertyManager. The base feature of the model is created.
+6. Change the view orientation of the base feature to isometric, if required. Figure 6-6
+shows the isometric view of the base feature created.
+Figure 6-5 Sketch of the base feature
+
+=== PDF PAGE 7 ===
+Figure 6-6 The base feature of the model
+Creating the Second Feature
+Now, you will create the second feature of the model, which is also an extrude feature. To
+create this feature, you need to first create its sketch on the Right Pane and then extrude
+it by using the Mid Plane option.
+1. Invoke the sketching environment by selecting the Right Plane as the sketching plane.
+Once the sketching environment is invoked, change the orientation normal to the
+sketching plane using the Normal To tool available in the View (Heads-Up) toolbar.
+2. Choose the Convert Entities tool from the Sketch CommandManager; the Convert
+Entities PropertyManager is displayed. Also, you are prompted to select the faces,
+edges or entities to convert.
+3. Select the outer cylindrical edge of the feature with diameter 56; the selected edge is
+highlighted in blue color.
+4. Choose the OK button from the PropertyManager; the selected entity is converted into a
+sketch and displayed in black color.
+5. Next, draw the remaining sketch entities of the feature and trim the unwanted entities.
+Figure 6-7 shows the final sketch. Make sure the sketch is fully defined.
+
+=== PDF PAGE 8 ===
+6. Invoke the Extruded Boss/Base tool and extrude the sketch upto a depth of 62 mm by
+using the Mid Plane option. Make sure that the Merge result check box is selected in
+the Boss-Extrude PropertyManager. Figure 6-8 shows the model after creating the
+second feature.
+As the Merge result check box is selected by default in the Boss-Extrude
+PropertyManager, the newly created extrude feature will merge with the parent feature.
+If you clear this check box, the extrude feature will not merge with the existing feature. As
+a result, another solid body will be created.
+Figure 6-7 Sketch of the second feature
+Figure 6-8 Model after creating the second feature
+
+=== PDF PAGE 9 ===
+Creating the Third and Fourth Features
+Now, you will create the third and fourth features of the model. In conventional method,
+you need to create separate sketches for both these features and then convert them one
+by one into features. In this tutorial, you will create a sketch and then convert it into
+features by selecting different contours of it.
+1. Invoke the sketching environment by selecting the Right Plane as the sketching plane
+and then draw the sketch, as shown in Figure 6-9. Do not exit the sketching environment.
+Next, you need to use the contour selection method to create the third and fourth features.
+2. Choose the Extruded Boss/Base tool from the Features CommandManager; the Boss-
+Extrude PropertyManager is displayed on the left side of the drawing area. Since
+the sketch consists of multiple close contours, the Select Contours rollout of the Boss-
+Extrude PropertyManager is invoked automatically and you are prompted to select a
+close or open contour. Also, the select cursor is replaced by the contour selection
+cursor.
+3. Move the contour selection cursor toward the bottom close contour of the sketch and
+then select it when it is highlighted, refer to Figure 6-10; the preview of the feature is
+displayed in the drawing area. Also, the name of the selected contour is displayed in the
+selection box of the Selected Contours rollout of the PropertyManager.
+4. Select the Mid Plane option from the End Condition drop-down list of the Direction 1
+rollout of the PropertyManager.
+
+=== PDF PAGE 10 ===
+Figure 6-9 Sketch with multiple contours
+Figure 6-10 The bottom contour of the sketch to be selected
+5. Set the value of the Depth spinner to 18 mm and then choose the OK button from the
+PropertyManager; the selected contour is extruded. Next, click anywhere in the drawing
+area to exit from the selection, if any. Figure 6-11 shows the model after creating the
+third feature.
+Now, you will create the fourth feature of the model by using the same sketch used for
+creating the third extrude feature.
+6. Click on the + sign available on the left of the Boss-Extrude3 (third extruded feature)
+node from the FeatureManager Design Tree; the node expands and the sketch of the
+third feature is displayed.
+As mentioned earlier, when you add features to the model using various modeling tools,
+the same features are also displayed in the FeatureManager Design Tree.
+7. Select the sketch of the third feature from the FeatureManager Design Tree.
+8. Choose the Extruded Boss/Base button from the Features CommandManager; the
+Boss-Extrude PropertyManager is displayed and the Selection Contours selection
+area of the Selection Contours rollout is activated in it.
+9. Move the cursor toward the closed contour of the sketch formed by two circles and then
+
+=== PDF PAGE 11 ===
+select it by clicking the left mouse button when it is highlighted, refer to Figure 6-12;
+the preview of the feature is displayed in the drawing area. Also, the name of the selected
+contour is displayed in the selection box of the Selected Contours rollout of the
+PropertyManager.
+Figure 6-11 Model after creating the third extrude feature by using the contour selection
+method
+Figure 6-12 Contour of the sketch to be selected
+10. Make sure that the Blind option is selected in the End Condition drop-down list in the
+Direction 1 rollout.
+11. Set the value of the Depth spinner to 12 in the Direction 1 rollout of the
+PropertyManager.
+12. Expand the Direction 2 rollout of the PropertyManager by selecting the check box
+
+=== PDF PAGE 12 ===
+available in its title bar.
+The Direction 2 rollout of the PropertyManager is used to extrude a sketch with different
+values in the second direction of the sketching plane. The options in this rollout are similar
+to those in the Direction 1 rollout.
+13. Make sure that the Blind option is selected in the End Condition drop-down list in the
+Direction 2 rollout.
+14. Set the value of the Depth spinner to 34 in the Direction 2 rollout. Next, choose the
+OK button from the PropertyManager; the extrude feature is created, as shown in Figure
+6-13.
+Figure 6-13 Model after creating the fourth extrude feature
+Creating the Fifth Feature
+The fifth feature of the model is a cut feature. Now, you will create a cut feature by using
+the Extruded Cut tool.
+1. Choose the Extruded Cut tool from the Features CommandManager; the
+Extrude PropertyManager is displayed on the left side of the drawing area and you
+are prompted to select a sketching plane.
+
+=== PDF PAGE 13 ===
+The Extruded Cut tool is used to remove the material from the model by extruding a
+sketch. In SOLIDWORKS, you can define a cut feature by extruding a sketch, revolving a
+sketch, sweeping a section along a path, lofting sections, or by using a surface.
+2. Click on the + sign located on the left of the FeatureManager Design Tree, which is
+now displayed in the drawing area. The tree view expands and it displays three default
+planes and the list of features created in this model.
+3. Select the Front Plane from the FeatureManager Design Tree as the sketching plane;
+the sketching environment is invoked.
+Now, you will change the current orientation of the model and make it normal to the view.
+4. Choose the View Orientation button from the View (Head-up) toolbar; the View
+Orientation flyout is displayed.
+5. Choose the Normal To button from the View Orientation flyout; the current
+orientation of the model is changed normal to the view.
+The Normal To tool is used to reorient the view normal to a selected face or plane.
+6. Draw the sketch of the cut feature by using the sketching tools and then apply required
+relations and dimensions to it, refer to Figure 6-14.
+7. Exit the sketcher environment by clicking on Exit Sketch from the Confirmation
+Corner available at the upper right corner of the drawing area. As soon as you exit the
+sketcher environment, the Cut-Extrude PropertyManager is displayed. Also, the
+preview of the cut feature is displayed in the drawing area.
+The options in the Cut-Extrude PropertyManager are the same as those discussed for
+the Boss-Extrude PropertyManager. The only difference is that the options of the Cut-
+Extrude PropertyManager are used to remove the material from the model.
+8. Select the Through All-Both option from the End Condition drop-down list in the
+Direction 1 rollouts of the PropertyManager.
+
+=== PDF PAGE 14 ===
+9. Choose the OK button from the PropertyManager. Figure 6-15 shows the isometric
+view of the model after creating the cut feature.
+Figure 6-14 Sketch for the cut feature
+Figure 6-15 Model after creating the cut feature
+Creating the Sixth Feature
+The sixth feature of the model is an extrude feature. The sketch of this extrude feature is
+created by using a reference plane created at an offset distance of 55 mm from the Front
+Plane.
+Generally, all engineering components or designs are multi-featured models. As discussed
+
+=== PDF PAGE 15 ===
+earlier, all features of a model are not created on the same plane on which the base feature
+is created. Therefore, you need to select one of the default planes or create a new plane
+that will be used as the sketching plane for the next feature. It is clear from the above
+discussion that you can use default planes as the sketching plane or you can create
+reference planes that can be used as the sketching plane.
+1. Choose the Plane tool from the Reference Geometry flyout in the Features
+CommandManager, as shown in Figure 6-16; the Plane PropertyManager is
+displayed, as shown in Figure 6-17.
+Figure 6-16 The Plane tool in the Reference Geometry flyout
+Figure 6-17 The Plane PropertyManager
+The Plane tool is used to create reference plane by choosing the respective constraints
+botton from the PropertyManager. With this tool you can create planes:
+• at an offset distance from an existing plane or a planar face
+
+=== PDF PAGE 16 ===
+• parallel to an existing plane or a planar face and passing through a point
+• at an angle to an existing plane or a planar face
+• passing through lines/points
+• normal to a curve
+• on a non-planar surface
+• in the middle of two faces/planes
+2. Click on the + sign located on the left of the FeatureManager Design Tree, which is
+now displayed in the graphics area; the tree view expands displaying three default
+planes and a list of features created in this model.
+3. Select the Front Plane from the FeatureManager Design Tree as the first reference;
+the preview of the reference plane is displayed in the drawing area. Also, some
+constraints are displayed in the First Reference rollout of the PropertyManager and the
+Offset distance button is chosen by default in it.
+As the Offset distance button is chosen by default in the First Reference rollout of the
+PropertyManager; the Distance spinner, the Flip check box, and the Number of planes
+to create spinner are enabled in the PropertyManager.
+4. Set the value of the Distance spinner to 55 in the First Reference rollout of the
+PropertyManager.
+5. Make sure that the value of the Number of planes to create spinner is set to 1.
+6. Ensure that a message Fully defined is displayed in the Message rollout of the Plane
+PropertyManager.
+7. Choose the OK button from the PropertyManager; the reference plane is created at an
+offset distance of 55 mm from the Front Plane, as shown in Figure 6-18.
+
+=== PDF PAGE 17 ===
+Figure 6-18 The plane is created at an offset distance from the Front Plane
+Now, you need to invoke the sketching environment by selecting the newly created plane
+as the sketching plane.
+8. Invoke the sketching environment by selecting the newly created plane as the sketching
+plane.
+9. Choose the Normal To button from the View Orientation flyout of the View (Heads-
+Up) toolbar; the current orientation of the model is changed normal to the view.
+10. Draw the sketch of the extrude feature and then apply required relations and
+dimensions to it, refer to Figure 6-19. Next, exit the sketcher environment.
+Figure 6-19 Sketch of the extrude feature
+11. Change the view orientation of the model to isometric by choosing the Isometric
+
+=== PDF PAGE 18 ===
+button from the View Orientation flyout.
+12. Choose the Extruded Boss/Base button from the Features CommandManager
+and then select the sketch from the graphic area; the preview of the extrude feature and
+the Boss-Extrude PropertyManager is displayed.
+13. Choose the Reverse Direction button available on the left of the End Condition drop-
+down in the Direction 1 rollout of the PropertyManager.
+The Reverse Direction button is used to reverse the direction of extrusion.
+14. Select the Up To Next option from the End Condition drop-down in the Direction 1
+rollout of the PropertyManager; the preview of the extrude feature is terminated at the
+next intersection.
+The Up To Next option is used to extrude the sketch from the sketching plane to the next
+surface that intersects the feature.
+15. Choose the OK button from the PropertyManager; the extrude feature is created.
+Next, you need to hide the reference plane.
+16. Select Plane1 from the FeatureManager Design Tree and do not move the cursor; a
+pop-up toolbar is displayed.
+17. Choose the Hide button from the pop-up toolbar; the selected reference plane (Plane1)
+is hidden in the graphic area. The model after creating the sixth feature and hiding the
+reference plane is shown in Figure 6-20.
+
+=== PDF PAGE 19 ===
+Figure 6-20 Model after creating the sixth feature
+Creating the Seventh and Eighth Features
+It is evident from Figure 6-4 that the seventh and eighth features are also extrude features.
+In conventional method, you first create a separate sketch for each sketched feature and
+then convert them into features. In this section, you will draw a single sketch and then
+extrude its close contours one by one by using the contour selection method to create
+the seventh and eighth features. Also, the sketch used for these features is created by
+using a reference plane, created at the middle of the planar faces of the fourth feature.
+1. Choose the Plane button from the Reference Geometry flyout in the Features
+CommandManager; the Plane PropertyManager is displayed.
+2. Select both the planar faces of the fourth feature one by one as the first and second
+references, respectively, refer to Figure 6-21. Note that as soon as you select the planar
+faces, the Mid Plane button is chosen automatically in the PropertyManager. Also, the
+preview of the reference plane is displayed in the middle of the selected planar faces,
+refer to Figure 6-21.
+3. Choose the OK button from the PropertyManager; the reference plane is created in the
+middle of the selected planar faces.
+Now, you will create a sketch for the seventh and eight features by selecting the newly
+created plane as the sketching plane.
+4. Invoke the sketching environment by selecting the newly created reference plane as the
+sketching plane. Next, change the orientation of the model normal to the view by using
+
+=== PDF PAGE 20 ===
+the Normal To button from the View Orientation flyout.
+5. Draw a sketch with multiple contours and then apply the required relations and
+dimensions to it, refer to Figure 6-22. Do not exit the sketcher environment.
+Figure 6-21 The planar faces selected for creating reference plane
+Figure 6-22 Sketch with multiple contours
+Next, you need to use the contour selection method to create the seventh and eighth
+features.
+6. Choose the Extruded Boss/Base tool from the Features CommandManager; the Boss-
+Extrude PropertyManager is displayed on the left of the drawing area. Since the sketch
+consists of multiple close contours, the Selected Contours rollout of the Boss- Extrude
+PropertyManager is invoked automatically and you are prompted to select a close or
+open contour. Also, the cursor is replaced by the contour selection cursor.
+
+=== PDF PAGE 21 ===
+7. Change the current orientation of the model to isometric by choosing the Isometric
+button from the View Orientation flyout.
+8. Move the contour selection cursor toward the close contour of the sketch and select it
+when it is highlighted, refer to Figure 6-23; the preview of the feature is displayed in the
+drawing area. Also, the name of the selected contour is displayed in the selection box of
+the Selected Contours rollout of the PropertyManager.
+9. Select the Mid Plane option from the End Condition drop-down list of the Direction 1
+rollout of the PropertyManager.
+10. Set the value of the Depth spinner to 42 and then choose the OK button from the
+PropertyManager; the selected contour is extruded. Next, click anywhere in the drawing
+area to exit selection, if any. Figure 6-24 shows the model after creating the seventh
+feature.
+Figure 6-23 Sketch with multiple contours
+
+=== PDF PAGE 22 ===
+Figure 6-24 The model after creating the seventh feature
+Now, you will create eighth feature of the model by using the same sketch that was used
+for creating the seventh extrude feature.
+11. Click on the + sign available on the left side of the previously created extrude feature
+(Boss-Extrude6) from the FeatureManager Design Tree; the node expands and the
+sketch of the feature is displayed.
+12. Select the sketch of the seventh feature from the FeatureManager Design Tree.
+13. Choose the Extruded Boss/Base tool from the Features CommandManager; the
+Boss-Extrude PropertyManager is displayed with the Selection Contours rollout
+invoked in it.
+14. Move the cursor toward the closed contour of the sketch formed by two circles of
+diameter 15 and 36, then click and select it when it is highlighted, refer to Figure 6-25.
+The preview of the feature is displayed in the drawing area. Also, the name of the selected
+contour is displayed in the selection box of the Selected Contours rollout of the
+PropertyManager.
+15. Select the Mid Plane option from the End Condition drop-down list of the Direction
+1 rollout of the PropertyManager.
+16. Set the value of the Depth spinner to 48 and then choose the OK button from the
+PropertyManager; the selected contour is extruded. Next, click anywhere in the drawing
+area to exit the selection, if any.
+
+=== PDF PAGE 23 ===
+17. Hide the reference plane in the drawing area. Figure 6-26 shows the final model after
+all features are created.
+Figure 6-25 Model after creating the third extrude feature by using the contour selection
+method
+Figure 6-26 Final model
+Saving the Model
+1. Choose the Save button from the Menu Bar and save the model with the name
+c06_tut01 at the location given below:
+\Documents\SOLIDWORKS Tutorials\c06\
+2. Choose File > Close from the SOLIDWORKS menus to close the document.
+
+=== PDF PAGE 24 ===
+Tutorial Exercise 2
+In this tutorial, you will create the model shown in Figure 6-27. You will use a combination
+of both the conventional modeling method and the contour selection method to create this
+model. The dimensions of the model are given in Figure 6-28. (Expected time: 30 min)
+Figure 6-27 Model for Tutorial 2
+
+=== PDF PAGE 25 ===
+Figure 6-28 Dimensions for Tutorial 2
+The following steps are required to complete this tutorial:
+a. Draw the sketch of the base feature of the model, refer to Figure 6-29.
+b. Invoke the Extruded Boss/Base tool and create the base feature of the model, refer to
+Figure 6-30.
+c. Create the second feature of the model that is a cut feature, refer to Figures 6-31 and 6-
+32.
+d. Create the third feature of the model that is also a cut feature, refer to Figures 6-33
+through 6-35.
+e. Create the fourth feature of the model, refer to Figure 6-36.
+f. Create the fifth feature of the model, refer to Figures 6-37 and 6-38.
+g. Create a reference plane at an angle for creating the sixth feature, refer to Figure 6-39.
+h. Create the sixth feature of the model that is an extrude feature, refer to Figures 6-40 and
+6-41.
+i. Create a reference axis by using the Axis tool, refer to Figure 6-42.
+
+=== PDF PAGE 26 ===
+j. Create a sketch for the revolve cut feature, refer to Figure 6-43.
+k. Invoke the Revolved Cut tool and remove the material by revolving the sketch around
+the reference axis, refer to Figure 6-44.
+l. Save and close the document.
+Creating the Base Feature
+You will create the base feature of the model which is an extrude feature. The sketch of
+the base feature is created on the Front Plane.
+1. Start a new SOLIDWORKS part document by using the New SOLIDWORKS
+Document dialog box.
+2. Invoke the sketching environment by selecting the Front Plane as the sketching plane
+and then draw the sketch, as shown in Figure 6-29.
+3. Choose the Extruded Boss/Base tool from the Features CommandManager; the
+sketch is automatically oriented to the trimetric view and the Boss-Extrude
+PropertyManager is displayed. Also, the preview of the extrude feature is displayed in
+the drawing area.
+Now you will extrude the feature equally on both sides of the sketching plane.
+4. Right-click in the drawing area; a shortcut menu is displayed. Next, choose the Mid
+Plane option from it; the preview of the feature is modified and material is added equally
+in both directions of the sketching plane.
+5. Set the value of the Depth spinner to 100 mm and then choose the OK button from the
+PropertyManager. The base feature of the model is created.
+6. Change the view orientation of the base feature to isometric. Figure 6-30 shows the
+isometric view of the base feature created.
+
+=== PDF PAGE 27 ===
+Figure 6-29 Sketch of the base feature
+Figure 6-30 The base feature of the model
+Creating the Second Feature
+The second feature of the model is a cut feature, which is created by using the open
+sketch.
+1. Invoke the sketching environment by selecting the right planar face of the base feature
+as the sketching plane and then draw the sketch of the cut feature, as shown in Figure 6-
+31.
+2. Invoke the Extruded Cut tool and then extrude the sketch by using the Through All
+option. Figure 6-32 shows the isometric view of the model after creating the cut feature.
+
+=== PDF PAGE 28 ===
+Note
+When you create a cut feature by extruding an open sketch, only the Through All &
+Through All - Both option will be available in the End Condition drop-down list of the
+Direction 1 and Direction 2 rollouts of the PropertyManager.
+Figure 6-31 Sketch of the cut feature
+Figure 6-32 Model after creating the cut feature
+Creating the Third Feature
+The third feature of the model is also a cut feature. The sketch of this cut feature is created
+on the front planar face of the model and extruded by using the Up To Vertex option.
+
+=== PDF PAGE 29 ===
+1. Invoke the sketching environment by selecting the front planar face of the model as the
+sketching plane and then draw the sketch, as shown in Figure 6-33. Do not exit the
+sketching environment.
+2. Choose the Extruded Cut button from the Features CommandManager; the Cut-
+Extrude PropertyManager is displayed on the left of the drawing area. Also, the
+preview of the model is displayed in the drawing area.
+3. Change the current view orientation of the model to isometric.
+4. Select the Up To Vertex option from the End Condition drop-down list in the
+PropertyManager; the Vertex selection area is displayed in the PropertyManager and
+you are prompted to select a vertex to terminate the extrusion of the cut feature.
+The Up To Vertex option is used to define the termination of a feature at a virtual plane
+that is parallel to the sketching plane and passes through the selected vertex. The vertex
+can be a point on an edge, a sketched point, or a reference point.
+5. Select the vertex of the model, as shown in Figure 6-34.
+6. Choose the OK button from the PropertyManager; the cut feature is created. The
+isometric view of the model after creating the cut feature is shown in Figure 6-35.
+Figure 6-33 Sketch of the cut feature
+
+=== PDF PAGE 30 ===
+Figure 6-34 Vertex to be selected
+Creating the Fourth Feature
+The fourth feature of the model is also a cut feature. The sketch of this cut feature is
+created on the right planar face of the model.
+1. Invoke the sketching environment by selecting the right planar face of the model as the
+sketching plane and draw the sketch of the cut feature. For dimensions of the cut
+feature, refer to Figure 6-28.
+2. Invoke the Extruded Cut tool and extrude the sketch by using the Through All option
+as the end condition. The isometric view of the model after creating the fourth feature is
+shown in Figure 6-36.
+Figure 6-35 Model after creating the third feature
+
+=== PDF PAGE 31 ===
+Figure 6-36 Model after creating the fourth feature
+Creating the Fifth Feature
+The fifth feature of the model is also an extrude feature. The sketch of this extrude feature
+is created on the Right Plane.
+1. Invoke the sketching environment by selecting the Right Plane as the sketching plane
+and then draw the sketch of the extrude feature, as shown in Figure 6-37. You may need
+to change the view normal to the viewing direction by using the Normal To tool.
+2. Choose the Extruded Boss/Base tool from the Features CommandManager; the Boss-
+Extrude PropertyManager is displayed. Also, the preview of the extrude feature is
+displayed in the drawing area.
+3. Change the current orientation of the model to isometric.
+Now, you will extrude the feature equally in both sides of the sketching plane.
+4. Right-click in the drawing area; a shortcut menu is displayed. Next, choose the Mid
+Plane option from it; the preview of the feature is modified and material is added equally
+in both directions of the sketching plane.
+5. Set the value of the Depth spinner to 12 mm and then choose the OK button from the
+PropertyManager; the extrude feature is created, as shown in Figure 6-38.
+
+=== PDF PAGE 32 ===
+Figure 6-37 Sketch of the extrude feature
+Figure 6-38 Model after creating the fifth feature
+Creating the Sixth Feature
+The sixth feature of the model is also an extrude feature. The sketch of this extrude feature
+is created by using a reference plane created at an angle of 20 degrees on the top planar
+face of the model and passing through the top back horizontal edge of the model.
+1. Choose the Plane button from the Reference Geometry flyout in the
+Features CommandManager; the Plane PropertyManager is displayed.
+2. Select the top planar face of the model as the first reference; the preview of the
+reference plane is displayed in the drawing area. Note that by default, the Offset
+
+=== PDF PAGE 33 ===
+distance button is chosen in the First Reference rollout. As a result, the preview of the
+reference plane is displayed at an offset distance.
+3. Choose the At angle button from the First Reference rollout of the PropertyManager;
+the Angle spinner is enabled.
+4. Set the value of the Angle spinner to 20 degrees in the First Reference rollout.
+5. Select the top back horizontal edge of the model as the second reference, refer to Figure
+6-39.
+6. Choose the OK button from the PropertyManager; the reference plane is created at an
+angle of 20 degrees.
+Now, you will create a sketch for the sixth feature by selecting the newly created plane as
+the sketching plane.
+7. Invoke the sketching environment by selecting the newly created reference plane as the
+sketching plane. Next, change the orientation normal to the view by using the Normal
+To button from the View Orientation flyout.
+8. Draw the sketch of the feature, refer to Figure 6-40. Next, extrude the sketch upto the
+next intersecting surface of the model by using the Up To Next option. The model after
+creating the sixth feature is shown in Figure 6-41.
+Figure 6-39 Edge selected as the second reference
+
+=== PDF PAGE 34 ===
+Figure 6-40 Sketch of the extrude feature
+Figure 6-41 Model after creating the sixth feature
+Creating the Seventh Feature
+The seventh feature of the model is a revolved cut feature which will be created by
+revolving the sketch around an axis. You first need to create reference axis by using the
+Axis tool and then revolve the sketch around it to remove the material.
+1. Choose the Axis button from the Reference Geometry flyout in
+the Features CommandManager, refer to Figure 6-42; the Axis PropertyManager is
+displayed.
+
+=== PDF PAGE 35 ===
+Figure 6-42 The Reference Geometry flyout
+The Axis tool is used to create a reference axis or a construction axis. These axes are
+parametric lines passing through a model, feature, or a reference entity. The reference axes
+are used to create reference planes, coordinates systems, circular patterns, and for applying
+mates in the assembly. These are also used as a reference while sketching or creating
+features.
+2. Choose the Cylindrical/Conical Face button from the Axis PropertyManager and
+then select the cylindrical surface of the previously created feature; the preview of the
+axis is displayed in the drawing area. Also, the name of the selected face is displayed in
+the Reference Entities selection area of the PropertyManager.
+The Cylindrical/Conical Face button of this PropertyManager is used to create a
+reference axis that passes through the centre of a cylindrical or conical face. If you choose
+the One Line/Edge/Axis button from the Axis PropertyManager, you can create a
+reference axis by selecting a sketched line or a construction line, an edge, or a temporary
+axis. The Two Planes button of this PropertyManager is used to create a reference axis at
+the intersection of two planes. You can also create a reference axis that passes through two
+points or two vertices by choosing the Two Points/Vertices button from the
+PropertyManager. To create a reference axis that passes through a point and is normal to
+the selected face/plane, you need to choose the Point and Face/Plane button from the Axis
+PropertyManager.
+3. Choose the OK button from the PropertyManager; the reference axis is created and
+displayed in the model as well as in the FeatureManager Design Tree.
+Now, you can use this reference axis as the axis of revolution to remove the material
+defined by the sketch geometry.
+
+=== PDF PAGE 36 ===
+4. Invoke the sketching environment by selecting the Right Plane as the sketching plane
+and draw the sketch of the revolve cut feature, as shown in Figure 6-43.
+Now, you will remove the material defined by the sketch geometry by using the Revolved
+Cut tool.
+5. Choose the Revolved Cut button from the Features CommandManager; the Cut-
+Revolve PropertyManager is displayed and you are prompted to select the axis of
+revolution.
+The Revolved Cut tool is used to remove the material by revolving a sketch around a
+selected axis. Similar to the revolved boss/base feature, you can define the revolution axis
+using a centerline, reference axis, or using an entity in the sketch.
+Figure 6-43 Sketch of the revolve cut feature
+6. Select the reference axis from the drawing area as the axis of revolution; the preview of
+the revolve cut feature is displayed in the drawing area.
+7. Change the current orientation of the model to isometric.
+8. Make sure that the Blind option is selected in the Revolve Type drop-down list in the
+Direction 1 rollout of the PropertyManager. Also, make sure that the value in the Angle
+spinner is set to 360 degrees.
+9. Choose the OK button from the Cut-Revolve PropertyManager; the revolve cut
+
+=== PDF PAGE 37 ===
+feature is created, refer to Figure 6-44.
+Figure 6-44 Final model for Tutorial 2
+10. Hide the reference axis by selecting it from the FeatureManager Design Tree and
+choosing the Hide button from the pop-up toolbar. Similarly, hide the reference plane
+created at an angle of 20 degrees. The final model after creating all the features is shown
+in Figure 6-44. The FeatureManager Design Tree displaying various features of the
+model is shown in Figure 6-45.
+
+=== PDF PAGE 38 ===
+Figure 6-45 The FeatureManager Design Tree
+Saving the Model
+1. Choose the Save button from the Menu Bar and save the model with the name
+c06_tut02 at the location given below:
+\Documents\SOLIDWORKS Tutorials\c06\
+2. Choose File > Close from the SOLIDWORKS menus to close the file.
+Tutorial Exercise 3
+In this tutorial, you will create a model whose dimensions are shown in Figure 6-46. The
+solid model is shown in Figure 6-47. (Expected Time: 30 min)
+
+=== PDF PAGE 39 ===
+Figure 6-46 Dimensions of the model
+Figure 6-47 Solid model for Tutorial 3
+The following steps are required to complete this tutorial:
+a. Create the base feature by extruding the sketch drawn on the Front Plane, refer to
+
+=== PDF PAGE 40 ===
+Figures 6-48 and 6-49.
+b. Extrude the sketch created on the Top Plane to create a cut feature, refer to Figures 6-
+50 through 6-52.
+c. Create a plane at an offset distance of 150 mm from the Top Plane.
+d. Draw a sketch on the newly created plane and extrude it to the selected surface, refer to
+Figures 6-53 and 6-54.
+e. Create a counterbore hole using the Revolved Cut tool, refer to Figures 6-55 and 6-56.
+f. Create holes using the extruded cut feature, refer to Figures 6-57 and 6-58.
+g. Save and close the document.
+Creating the Base Feature
+It is evident from the model that its base comprises a complex geometry. Therefore, you
+first need to create the base feature of the model and then apply the cut feature to get the
+desired shape. You need to create the base feature on the Front Plane which is the
+sketching plane. After drawing the sketch, you need to extrude it using the Mid Plane
+option to complete the feature creation.
+1. Start a new SOLIDWORKS part document and invoke the Extruded Boss/Base tool;
+you are prompted to select a plane.
+2. Select the Front Plane and then draw the sketch of the base feature. Apply the required
+relations and dimensions to the sketch, as shown in Figure 6-48.
+3. Exit the sketching environment; the Boss-Extrude PropertyManager and the preview
+of the base feature are displayed. Right-click in the drawing area and choose the Mid
+Plane option from the shortcut menu displayed.
+4. Set the value of the Depth spinner to 150 in the Boss-Extrude PropertyManager and
+then choose the OK button from it. The isometric view of the base feature of the model
+is shown in Figure 6-49.
+
+=== PDF PAGE 41 ===
+Figure 6-48 Sketch of the base feature
+Figure 6-49 Base feature of the solid model
+Creating the Cut Feature
+Now, you need to create a cut feature to get the required shape of the base feature. The
+sketch for this cut feature is created using a reference plane which is defined tangent to
+the curved face of the previous feature.
+1. Choose the Plane tool from the Reference Geometry flyout in the Features
+CommandManager; the Plane PropertyManager is displayed.
+2. Select the upper curved face of the existing feature as the first reference; the Tangent
+button is chosen automatically in the First Reference rollout. Now, move the cursor
+close to the midpoint of the curved edge of the upper curved face; the midpoint is
+highlighted in orange, see Figure 6-50. Select this point; the preview of the plane
+tangent to the curved face and passing through the midpoint of the curved edge is
+displayed. Next, choose the OK button from the PropertyManager; the reference plane
+is created.
+
+=== PDF PAGE 42 ===
+3. Draw the sketch for the cut feature using the standard sketching tools and then apply the
+required relations and dimensions to the sketch, as shown in Figure 6-51.
+4. Choose the Extruded Cut tool from the Features CommandManager to invoke the
+Cut-Extrude PropertyManager. Change the current view to the isometric view.
+You will notice that the direction of material removal is not the one as required. Therefore,
+you need to flip the direction.
+5. Select the Flip side to cut check box from the dialog box; the direction of the material
+removal is reversed in the preview.
+6. Right-click in the drawing area and choose the Through All option from the shortcut
+menu, and then choose the OK button from the Cut-Extrude PropertyManager.
+Figure 6-50 Selecting the midpoint to define the tangent plane
+Figure 6-51 Fully dimensioned sketch for the cut feature
+
+=== PDF PAGE 43 ===
+The reference plane is displayed in the graphic area. Therefore, you need to hide it.
+7. Left-click on Plane1 in the drawing area and choose Hide from the pop-up toolbar; the
+display of the reference plane is turned off. The model after adding the cut feature is
+shown in Figure 6-52.
+Figure 6-52 Cut feature added to the base feature
+Creating a Plane for the Extruded Feature
+After creating the base of the model, you need to create a plane at an offset distance of
+150 mm from the Top Plane. This newly created plane will be used as the sketching
+plane for the next feature.
+1. Choose the Plane tool from the Reference Geometry flyout in the Features
+CommandManager; the Plane PropertyManager is displayed.
+2. Click on the (+) sign located on the left of the FeatureManager Design Tree which is
+now displayed in the drawing area. The tree view expands, displaying the three default
+planes.
+3. Select the Top Plane as the first reference and choose the Offset distance button from
+the First Reference rollout; the Distance spinner, the Flip check box, and the Number
+
+=== PDF PAGE 44 ===
+of planes to create spinner are displayed in the Plane PropertyManager.
+4. Set the value of the Distance spinner to 150 and choose the OK button from the
+Plane PropertyManager; the required plane is created.
+Creating the Extruded Feature
+After creating the plane at an offset distance from the Top Plane, you need to draw the
+sketch for the next feature.
+1. Select the reference plane which you just created, if it is not already selected, and then
+invoke the sketching environment. Set the current view normal to the eye view.
+2. Draw a sketch of the circle and then apply the required relations to the sketch, as shown
+in Figure 6-53.
+3. Change the current view to isometric and invoke the Extruded Boss/Base tool.
+You will observe in the preview that the direction of the feature creation is opposite to the
+required direction. Therefore, you need to change the direction of the feature creation.
+4. Choose the Reverse Direction button on the left of the End Condition drop-down list
+to reverse the direction of feature creation; the preview of the feature changes
+dynamically.
+5. Right-click in the drawing area and choose the Up To Surface option from the shortcut
+menu displayed; you are prompted to select a face or a surface to specify the first
+direction. Also, the Face/Plane selection box is displayed below the End Condition
+drop-down list in the Direction 1 rollout.
+6. Select the upper curved surface of the model using the left mouse button. You will
+observe in the preview that the feature is extruded upto the selected surface.
+7. Choose the OK button from the Boss-Extrude PropertyManager.
+
+=== PDF PAGE 45 ===
+The plane is displayed in the drawing area. Therefore, you need to turn off its display.
+8. Select Plane2 from the FeatureManager Design Tree or from the drawing area and
+choose Hide from the pop-up toolbar. The model after creating the extruded feature is
+shown in Figure 6-54.
+Figure 6-53 Sketch created on the newly created plane
+Figure 6-54 Sketch extruded up to the selected surface
+Creating the Counterbore Hole
+Next, you need to create a counterbore hole. It will be created as a revolved cut feature
+by using a sketch drawn on the Front Plane.
+1. Invoke the sketching environment and select Front Plane as the sketching plane from
+the FeatureManager Design Tree. Next, orient the sketching plane normal to the view.
+
+=== PDF PAGE 46 ===
+2. Draw the sketch of the counterbore hole using the standard sketching tools. Add the
+required relations and then add the linear diameter dimensions, as shown in Figure 6-55.
+3. Set the current view to isometric and then choose the Revolved Cut tool from the
+Features CommandManager; the Cut-Revolve PropertyManager is displayed.
+It is evident from Figure 6-55 that the sketch contains a vertical centerline. Therefore,
+after invoking the Cut-Revolve PropertyManager, SOLIDWORKS has automatically
+selected the vertical centerline as the axis of revolution. As a result, the preview of the
+cut feature is displayed in the drawing area in temporary graphics. By default, the value
+of the angle in the Direction 1 Angle spinner is set to 360. Therefore, you do not need
+to set the value in the Angle spinner.
+4. Choose the OK button from the Cut-Revolve PropertyManager. Figure 6-56 shows
+the model after creating the revolved cut feature.
+Figure 6-55 Fully defined sketch for the counterbore hole
+
+=== PDF PAGE 47 ===
+Figure 6-56 Counterbore hole created using the Revolved Cut tool
+Creating Holes
+After creating all the features, you need to create holes using the extruded cut feature to
+complete the model. The sketch for the cut feature is to be drawn by using the top planar
+surface of the base feature as the sketching plane.
+1. Select the top planar surface of the base feature and invoke the sketching environment.
+Orient the model such that the selected face of the model is oriented normal to the view.
+2. Draw the sketch using the standard sketching tools and apply the required relations and
+dimensions to it, as shown in Figure 6-57.
+Figure 6-57 Fully defined sketch for the cut feature
+3. Change the current view to isometric. Choose the Extruded Cut tool from the Features
+CommandManager; the Cut-Extrude PropertyManager is displayed.
+
+=== PDF PAGE 48 ===
+4. Right-click and choose the Through All option from the shortcut menu displayed and
+choose the OK button from the Cut-Extrude PropertyManager. The final model is
+shown in Figure 6-58. The FeatureManager Design Tree displaying various features
+of the model is shown in Figure 6-59.
+Figure 6-58 Final model
+Figure 6-59 The FeatureManager Design Tree
+Saving the Model
+1. Choose the Save button from the Menu Bar and save the model with the name
+c06_tut03 at the location given below:
+\Documents\SOLIDWORKS Tutorials\c06\
+2. Choose File > Close from the SOLIDWORKS menus to close the file.
+
+=== PDF PAGE 49 ===
+Answer the following questions and then compare them to those given at the end of
+this tutorial:
+1. The option is used to extrude a sketch such that it is upto the next surface.
+2. The option in the End Condition drop-down list is used to terminate the
+extruded feature up to another body.
+3. You can use the option to create a reference axis that passes through the
+center point of a cylindrical or conical surface.
+4. When you draw a sketch for the first time in the sketching environment, the sketch is
+drawn on the default plane which is the Front Plane. (T/F)
+5. When you start a new SOLIDWORKS part document, SOLIDWORKS provides you
+with two default planes. (T/F)
+6. You need to choose the Plane button from the Features CommandManager to invoke
+the Plane PropertyManager. (T/F)
+7. You cannot create a plane at an offset distance from the selected planar face by using
+the Plane PropertyManager. (T/F)
+8. When you create a circular feature, a temporary axis is displayed automatically. (T/F)
+Answer the following questions:
+
+=== PDF PAGE 50 ===
+1. Which of the following check boxes needs to be selected while creating a feature in a
+single-body modeling?
+(a) Combine results (c) Merge results (b) Fix bodies
+(d) Union results
+2. Which of the following buttons is used to add a draft angle to a cut feature?
+(a) Add Draft (c) Draft On/Off (b) Create Draft
+(d) None of these
+3. Which of the following PropertyManagers is invoked to create a cut feature by
+extruding a sketch?
+(a) Extruded Cut (b) Extrude
+(c) Extrude-Cut (d) Cut
+4. Which of the following options is used to define the termination of feature creation at
+an offset distance of a selected surface?
+(a) Distance To Surface (c) Distance From Surface (b) Normal From Surface
+(d) Offset From Surface
+5. Which of the following options is used to define the termination of feature creation to
+selected surface?
+(a) To Surface (c) Up To Surface (b) Selected Surface
+(d) None of these
+6. The option will be available in the End Condition drop-down list only
+after creating a base feature.
+7. The check box is used to specify a side from where the material is
+
+=== PDF PAGE 51 ===
+removed.
+8. The check box is used to create an outward draft in a cut feature.
+EXERCISES
+Exercise 1
+Create the solid model shown in Figure 6-60. The dimensions of the model are given in
+the same figure. (Expected time: 30 min)
+
+=== PDF PAGE 52 ===
+Figure 6-60 Solid model and its dimensions for Exercise 1
+Exercise 2
+Create the model shown in Figure 6-61. The dimensions of the model are given in Figure
+6-62. (Expected time: 30 min)
+
+=== PDF PAGE 53 ===
+Figure 6-61 Solid model for Exercise 2
+Figure 6-62 Dimensions for the solid model
+Exercise 3
+Create the model shown in Figure 6-63. The dimensions of the model are given in the
+same figure. (Expected time: 30 min)
+
+=== PDF PAGE 54 ===
+Figure 6-63 The model and its dimensions for Exercise 3
+
+=== PDF PAGE 55 ===
+Answers to Self-Evaluation Test
+1. UP TO NEXT, 2. UP TO BODY, 3. CYLINDRICAL/CONICAL FACE, 4. F, 5. F, 6.
+T, 7. F, 8. F

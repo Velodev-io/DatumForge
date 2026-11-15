@@ -1,0 +1,145 @@
+[1/125] Automatic MOC for target module1_contracts
+[2/124] Automatic MOC for target module2_contracts
+[3/123] Automatic MOC for target module3_contracts
+[4/122] Automatic MOC for target module3_input
+[5/121] Automatic MOC for target module4_workspace
+[6/120] Automatic MOC for target module4_contracts
+[7/119] Automatic MOC for target module5_contracts
+[8/118] Automatic MOC for target module6_contracts
+[9/117] Automatic MOC for target module7_contracts
+[10/116] Automatic MOC for target module8_contracts
+[11/115] Automatic MOC for target module9_interaction
+[12/114] Automatic MOC for target module10_contracts
+[13/113] Automatic MOC for target cm1_contracts
+[14/112] Automatic MOC for target cm2_contracts
+[15/111] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[16/111] Building CXX object CMakeFiles/module2_storage.dir/tests/module2/storage.cpp.o
+[17/111] Building CXX object CMakeFiles/module2_fault_worker.dir/tests/module2/fault_worker.cpp.o
+[18/111] Building CXX object CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o
+[19/111] Building CXX object CMakeFiles/module3_model.dir/tests/module3/model.cpp.o
+[20/111] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[21/111] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[22/111] Building CXX object CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o
+[23/111] Building CXX object CMakeFiles/module4_persistence.dir/tests/module4/persistence.cpp.o
+[24/111] Building CXX object CMakeFiles/module5_plan.dir/tests/module5/plan.cpp.o
+[25/111] Building CXX object CMakeFiles/module4_variants.dir/tests/module4/variants.cpp.o
+[26/111] Building CXX object CMakeFiles/module5_engine.dir/tests/module5/engine.cpp.o
+[27/111] Building CXX object CMakeFiles/module5_persistence.dir/tests/module5/persistence.cpp.o
+[28/111] Building CXX object CMakeFiles/module5_b2.dir/tests/module5/b2.cpp.o
+[29/111] Building CXX object CMakeFiles/module6_exchange.dir/tests/module6/exchange.cpp.o
+[30/111] Building CXX object CMakeFiles/module7_model.dir/tests/module7/model.cpp.o
+[31/111] Building CXX object CMakeFiles/module6_persistence.dir/tests/module6/persistence.cpp.o
+[32/111] Building CXX object CMakeFiles/module7_geometry.dir/tests/module7/geometry.cpp.o
+[33/111] Building CXX object CMakeFiles/module7_persistence.dir/tests/module7/persistence.cpp.o
+[34/111] Building CXX object CMakeFiles/module7_b3.dir/tests/module7/b3.cpp.o
+[35/111] Building CXX object CMakeFiles/module8_drawing.dir/tests/module8/drawing.cpp.o
+[36/111] Building CXX object CMakeFiles/module8_geometry.dir/tests/module8/geometry.cpp.o
+[37/111] Building CXX object CMakeFiles/module9_privacy.dir/tests/module9/privacy.cpp.o
+[38/111] Building CXX object CMakeFiles/module10_fault_worker.dir/tests/module10/fault_worker.cpp.o
+[39/111] Building CXX object CMakeFiles/module10_hardening.dir/tests/module10/hardening.cpp.o
+[40/111] Building CXX object CMakeFiles/cm1_relations.dir/tests/core_modeling/relations.cpp.o
+[41/111] Building CXX object CMakeFiles/cm0_feasibility.dir/tests/core_modeling/feasibility.cpp.o
+[42/111] Building CXX object CMakeFiles/cm1_slots.dir/tests/core_modeling/slots.cpp.o
+[43/111] Building CXX object CMakeFiles/cm1_rectangles.dir/tests/core_modeling/rectangles.cpp.o
+[44/111] Building CXX object CMakeFiles/cm1_curves.dir/tests/core_modeling/curves.cpp.o
+[45/111] Building CXX object CMakeFiles/cm1_pierce.dir/tests/core_modeling/pierce.cpp.o
+[46/111] Building CXX object CMakeFiles/cm1_intent.dir/tests/core_modeling/intent.cpp.o
+[47/111] Building CXX object CMakeFiles/cm2_editing.dir/tests/core_modeling/editing.cpp.o
+[48/111] Building CXX object CMakeFiles/cm3_dimensions.dir/tests/core_modeling/dimensions.cpp.o
+[49/111] Building CXX object CMakeFiles/cm3_associated_dimensions.dir/tests/core_modeling/associated_dimensions.cpp.o
+[50/111] Building CXX object CMakeFiles/module3_input.dir/tests/module3/input.cpp.o
+[51/111] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[52/111] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[53/111] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[54/111] Building CXX object CMakeFiles/module5_contracts.dir/tests/module5/contracts.cpp.o
+[55/111] Building CXX object CMakeFiles/module6_contracts.dir/tests/module6/contracts.cpp.o
+[56/111] Building CXX object CMakeFiles/module7_contracts.dir/tests/module7/contracts.cpp.o
+[57/111] Building CXX object CMakeFiles/module8_contracts.dir/tests/module8/contracts.cpp.o
+[58/111] Building CXX object CMakeFiles/module9_interaction.dir/tests/module9/interaction.cpp.o
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module9/interaction.cpp:89:27: warning: 'setActiveWindow' is deprecated: Use QWidget::activateWindow() instead. [-Wdeprecated-declarations]
+   89 |             QApplication::setActiveWindow(&w);
+      |                           ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qapplication.h:83:5: note: 'setActiveWindow' has been explicitly marked deprecated here
+   83 |     QT_DEPRECATED_VERSION_X_6_5("Use QWidget::activateWindow() instead.")
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:181:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_5'
+  181 | # define QT_DEPRECATED_VERSION_X_6_5(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module9/interaction.cpp:102:27: warning: 'setActiveWindow' is deprecated: Use QWidget::activateWindow() instead. [-Wdeprecated-declarations]
+  102 |             QApplication::setActiveWindow(&w);
+      |                           ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qapplication.h:83:5: note: 'setActiveWindow' has been explicitly marked deprecated here
+   83 |     QT_DEPRECATED_VERSION_X_6_5("Use QWidget::activateWindow() instead.")
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:181:44: note: expanded from macro 'QT_DEPRECATED_VERSION_X_6_5'
+  181 | # define QT_DEPRECATED_VERSION_X_6_5(text) QT_DEPRECATED_X(text)
+      |                                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qtdeprecationmarkers.h:29:33: note: expanded from macro 'QT_DEPRECATED_X'
+   29 | #  define QT_DEPRECATED_X(text) Q_DECL_DEPRECATED_X(text)
+      |                                 ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcompilerdetection.h:1011:36: note: expanded from macro 'Q_DECL_DEPRECATED_X'
+ 1011 | #  define Q_DECL_DEPRECATED_X(x) [[deprecated(x)]]
+      |                                    ^
+2 warnings generated.
+[59/111] Building CXX object CMakeFiles/module10_contracts.dir/tests/module10/contracts.cpp.o
+[60/111] Building CXX object CMakeFiles/cm1_contracts.dir/tests/core_modeling/contracts.cpp.o
+[61/111] Linking CXX executable solver_spike
+[62/111] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[63/111] Linking CXX executable module1_contracts
+[64/111] Linking CXX executable module2_storage
+[65/111] Linking CXX executable module2_contracts
+[66/111] Linking CXX executable module2_fault_worker
+[67/111] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[68/111] Linking CXX executable module3_model
+[69/111] Building CXX object CMakeFiles/cm2_contracts.dir/tests/core_modeling/editing_contracts.cpp.o
+[70/111] Linking CXX executable module3_persistence
+[71/111] Linking CXX executable module3_input
+[72/111] Linking CXX executable module3_contracts
+[73/111] Linking CXX executable module3_solver
+[74/111] Linking CXX executable module4_workspace
+[75/111] Linking CXX executable module4_geometry
+[76/111] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[77/111] Linking CXX executable module4_contracts
+[78/111] Linking CXX executable module5_plan
+[79/111] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[80/111] Linking CXX executable module5_engine
+[81/111] Linking CXX executable module5_persistence
+[82/111] Linking CXX executable module5_b2
+[83/111] Linking CXX executable module6_exchange
+[84/111] Linking CXX executable module5_contracts
+[85/111] Linking CXX executable module6_persistence
+[86/111] Linking CXX executable module6_contracts
+[87/111] Linking CXX executable module7_model
+[88/111] Linking CXX executable module7_geometry
+[89/111] Linking CXX executable module7_persistence
+[90/111] Linking CXX executable module7_b3
+[91/111] Linking CXX executable module7_contracts
+[92/111] Linking CXX executable module8_drawing
+[93/111] Linking CXX executable module8_contracts
+[94/111] Linking CXX executable module9_privacy
+[95/111] Linking CXX executable module8_geometry
+[96/111] Linking CXX executable module9_interaction
+[97/111] Linking CXX executable module10_fault_worker
+[98/111] Linking CXX executable module10_hardening
+[99/111] Linking CXX executable module10_contracts
+[100/111] Linking CXX executable cm0_feasibility
+[101/111] Linking CXX executable cm1_contracts
+[102/111] Linking CXX executable cm1_relations
+[103/111] Linking CXX executable cm1_rectangles
+[104/111] Linking CXX executable cm1_slots
+[105/111] Linking CXX executable cm1_curves
+[106/111] Linking CXX executable cm1_pierce
+[107/111] Linking CXX executable cm1_intent
+[108/111] Linking CXX executable cm2_editing
+[109/111] Linking CXX executable cm3_dimensions
+[110/111] Linking CXX executable cm3_associated_dimensions
+[111/111] Linking CXX executable cm2_contracts

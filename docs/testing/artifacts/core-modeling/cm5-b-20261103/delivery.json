@@ -1,0 +1,18 @@
+{
+  "status": "Pass",
+  "verified_at_utc": "2026-11-03T15:31:50.121655+00:00",
+  "remote": "origin",
+  "branch": "review/cm5-b-20261103",
+  "verified_feature_commit": "81a596e477deacd20b5004bb0dd3fd4e3b70a7d1",
+  "remote_feature_sha": "81a596e477deacd20b5004bb0dd3fd4e3b70a7d1",
+  "verification_command": [
+    "git",
+    "ls-remote",
+    "--exit-code",
+    "origin",
+    "refs/heads/review/cm5-b-20261103"
+  ],
+  "merged": false,
+  "force_pushed": false,
+  "scope": "Feature commit remote identity verified before this documentation-only follow-up; final branch HEAD is checked again after pushing the follow-up."
+}

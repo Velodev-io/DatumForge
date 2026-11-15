@@ -1,0 +1,4 @@
+[1/4] Building CXX object CMakeFiles/module3_model.dir/tests/module3/model.cpp.o
+[2/4] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[3/4] Linking CXX static library libcad_sketch_model.a
+[4/4] Linking CXX executable module3_model

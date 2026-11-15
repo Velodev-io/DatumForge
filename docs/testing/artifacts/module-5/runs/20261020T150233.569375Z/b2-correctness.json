@@ -1,0 +1,19 @@
+{
+    "cache_before_trim": {
+        "budget_bytes": 268435456,
+        "computations": 200,
+        "entries": 128,
+        "estimated_bytes": 139354364,
+        "hits": 70000
+    },
+    "cycles": 100,
+    "elapsed_seconds": 90.057,
+    "exact_faces": 105,
+    "features": 100,
+    "fixture_sha256": "78873aabdd68715b7868b6a08c62871bb57f2fa7ec6bf82930f49df317e37fdb",
+    "initial_volume_mm3": 196889.82327294615,
+    "scope": "Correctness and bounded cache accounting; not physical memory/FPS/SRS budget acceptance",
+    "solids": 1,
+    "status": "Pass",
+    "visible_triangles": 14664
+}

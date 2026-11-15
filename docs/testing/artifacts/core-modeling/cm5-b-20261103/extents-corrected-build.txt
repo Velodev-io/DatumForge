@@ -1,0 +1,25 @@
+[1/4] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingExtents.cpp.o
+FAILED: [code=1] CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingExtents.cpp.o
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingExtents.cpp.o -MF CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingExtents.cpp.o.d -o CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingExtents.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/ModelingExtents.cpp'
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/ModelingExtents.cpp:1:
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/ModelingInternal.hpp:15:65: error: unknown type name 'TopoDS_Face'; did you mean 'TopoDS_Shape'?
+   15 | TopoDS_Shape draft(const TopoDS_Shape &shape, const std::vector<TopoDS_Face> &faces,
+      |                                                                 ^~~~~~~~~~~
+      |                                                                 TopoDS_Shape
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade/TopoDS_Shape.hxx:40:7: note: 'TopoDS_Shape' declared here
+   40 | class TopoDS_Shape
+      |       ^
+1 error generated.
+[2/4] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingFeatures.cpp.o
+FAILED: [code=1] CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingFeatures.cpp.o
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingFeatures.cpp.o -MF CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingFeatures.cpp.o.d -o CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingFeatures.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/ModelingFeatures.cpp'
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/ModelingFeatures.cpp:3:
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/ModelingInternal.hpp:15:65: error: unknown type name 'TopoDS_Face'; did you mean 'TopoDS_Shape'?
+   15 | TopoDS_Shape draft(const TopoDS_Shape &shape, const std::vector<TopoDS_Face> &faces,
+      |                                                                 ^~~~~~~~~~~
+      |                                                                 TopoDS_Shape
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/opencascade/TopoDS_Shape.hxx:40:7: note: 'TopoDS_Shape' declared here
+   40 | class TopoDS_Shape
+      |       ^
+1 error generated.
+ninja: build stopped: subcommand failed.

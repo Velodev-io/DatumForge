@@ -1,0 +1,84 @@
+{
+  "host": "macOS-26.6.2-arm64-arm-64bit-Mach-O",
+  "steps": [
+    {
+      "command": [
+        "build/macos-debug/module4_workspace",
+        "toolSelection"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 1.811,
+      "scale": 100,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-100/tools.txt"
+    },
+    {
+      "command": [
+        "build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 6.296,
+      "scale": 100,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-100/arcs.txt"
+    },
+    {
+      "command": [
+        "build/macos-debug/module4_workspace",
+        "toolSelection"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 1.205,
+      "scale": 125,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-125/tools.txt"
+    },
+    {
+      "command": [
+        "build/macos-debug/module4_workspace",
+        "toolSelection"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 1.223,
+      "scale": 150,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-150/tools.txt"
+    },
+    {
+      "command": [
+        "build/macos-debug/module4_workspace",
+        "toolSelection"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 1.525,
+      "scale": 175,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-175/tools.txt"
+    },
+    {
+      "command": [
+        "build/macos-debug/module4_workspace",
+        "toolSelection"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 1.602,
+      "scale": 200,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-200/tools.txt"
+    },
+    {
+      "command": [
+        "build/macos-debug/module3_contracts",
+        "nativeArcs"
+      ],
+      "cwd": "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+      "exit_code": 0,
+      "seconds": 9.049,
+      "scale": 200,
+      "log": "docs/testing/artifacts/module-4/tool-selection-20261026/native-200/arcs.txt"
+    }
+  ],
+  "status": "Pass",
+  "limits": "Automated Cocoa windows on one Mac; no physical-device or other-platform acceptance"
+}

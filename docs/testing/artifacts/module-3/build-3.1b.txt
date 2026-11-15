@@ -1,0 +1,32 @@
+[1/32] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[2/32] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Database.cpp.o
+[3/32] Building CXX object CMakeFiles/module2_storage.dir/tests/module2/storage.cpp.o
+[4/32] Building CXX object CMakeFiles/cad_protocol.dir/src/protocol/Mesh.cpp.o
+[5/32] Building C object CMakeFiles/cad_sqlite.dir/.deps/src/sqlite/sqlite3.c.o
+[6/32] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[7/32] Linking C static library libcad_sqlite.a
+[8/32] Linking CXX static library libcad_protocol.a
+[9/32] Building CXX object CMakeFiles/cad_geometry.dir/src/geometry/occt/ReferenceScene.cpp.o
+[10/32] Linking CXX static library libcad_persistence.a
+[11/32] Linking CXX static library libcad_geometry.a
+[12/32] Linking CXX executable module2_storage
+[13/32] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[14/32] Linking CXX executable cad-worker
+[15/32] Automatic MOC for target cad_client
+[16/32] Building CXX object CMakeFiles/cad_client.dir/cad_client_autogen/mocs_compilation.cpp.o
+[17/32] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[18/32] Linking CXX static library libcad_client.a
+[19/32] Automatic MOC for target cad_desktop_ui
+[20/32] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[21/32] Building CXX object CMakeFiles/cad-desktop.dir/apps/desktop/main.cpp.o
+[22/32] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+[23/32] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[24/32] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[25/32] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[26/32] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[27/32] Linking CXX static library libcad_desktop_ui.a
+[28/32] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[29/32] Automatic MOC for target module2_contracts
+[30/32] Building CXX object CMakeFiles/module2_contracts.dir/module2_contracts_autogen/mocs_compilation.cpp.o
+[31/32] Building CXX object CMakeFiles/module2_contracts.dir/tests/module2/contracts.cpp.o
+[32/32] Linking CXX executable module2_contracts

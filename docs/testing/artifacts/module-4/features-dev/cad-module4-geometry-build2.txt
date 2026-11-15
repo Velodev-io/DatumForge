@@ -1,0 +1,4 @@
+[1/4] Building CXX object CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o
+[2/4] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[3/4] Linking CXX static library libcad_part.a
+[4/4] Linking CXX executable module4_geometry

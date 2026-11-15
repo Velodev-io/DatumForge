@@ -1,0 +1,9 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 67: cm4.support_worker
+1/2 Test #67: cm4.support_worker ...............   Passed    1.81 sec
+    Start 68: cm4.support_transport
+2/2 Test #68: cm4.support_transport ............   Passed    1.10 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   2.91 sec

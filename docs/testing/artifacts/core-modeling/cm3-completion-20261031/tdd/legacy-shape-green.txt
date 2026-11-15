@@ -1,0 +1,7 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 23: module3.shapeEditing
+1/1 Test #23: module3.shapeEditing .............   Passed    1.88 sec
+
+100% tests passed, 0 tests failed out of 1
+
+Total Test time (real) =   1.89 sec

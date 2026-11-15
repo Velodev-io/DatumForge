@@ -1,0 +1,16 @@
+[1/12] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[2/12] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/12] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[4/12] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/12] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[6/12] Linking CXX static library libcad_sketch_model.a
+[7/12] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+FAILED: [code=1] CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/planegcs/src/planegcs" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/src/boost" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/src/eigen" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o -MF CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o.d -o CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/sketch/Solver.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/sketch/Solver.cpp:99:79: error: 'auto' deduced as 'const value_type' (aka 'const cad::sketch::Constraint') in declaration of 'a' and deduced as 'value_type' (aka 'cad::sketch::Constraint') in declaration of 'b'
+   99 |             bool same=true;for(size_t i=0;i<candidate.constraints.size();++i){auto &a=previous->constraints[i],&b=candidate.constraints[i];if(a.id!=b.id||a.value!=b.value||a.second!=b.second||a.expression!=b.expression||a.kind!=b.kind||a.a!=b.a||a.b!=b.b)same=false;}
+      |                                                                               ^       ~~~~~~~~~~~~~~~~~~~~~~~~    ~~~~~~~~~~~~~~~~~~~~~~~~
+1 error generated.
+[8/12] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/qp_eq.cpp.o
+[9/12] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+ninja: build stopped: subcommand failed.

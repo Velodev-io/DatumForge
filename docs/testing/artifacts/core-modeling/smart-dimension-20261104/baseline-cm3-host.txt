@@ -1,0 +1,17 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 86: cm3.associated_dimensions
+1/6 Test #86: cm3.associated_dimensions ........   Passed    1.06 sec
+    Start 87: cm3.dimensions
+2/6 Test #87: cm3.dimensions ...................   Passed    0.46 sec
+    Start 88: cm3.dimension_contracts
+3/6 Test #88: cm3.dimension_contracts ..........   Passed    9.78 sec
+    Start 89: cm3.dimension_identity
+4/6 Test #89: cm3.dimension_identity ...........   Passed    0.71 sec
+    Start 90: cm3.completion
+5/6 Test #90: cm3.completion ...................   Passed    2.15 sec
+    Start 91: cm3.completion_contracts
+6/6 Test #91: cm3.completion_contracts .........   Passed   14.28 sec
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =  28.44 sec

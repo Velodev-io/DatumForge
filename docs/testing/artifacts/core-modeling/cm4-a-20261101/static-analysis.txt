@@ -1,0 +1,12 @@
+Command: ['python3', 'tools/static_analysis.py', 'docs/testing/artifacts/core-modeling/cm4-a-20261101/compile-commands.json']
+Analyzed src/persistence/ProjectStore.cpp
+Analyzed src/domain/GeometryReference.cpp
+Analyzed src/evaluation/Graph.cpp
+Analyzed src/sketch/Dependencies.cpp
+Analyzed src/sketch/References.cpp
+Analyzed src/evaluation/Plan.cpp
+Analyzed tests/core_modeling/graph.cpp
+Analyzed tests/core_modeling/graph_plan.cpp
+Analyzed tests/core_modeling/graph_store.cpp
+
+Exit: 0

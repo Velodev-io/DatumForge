@@ -1,0 +1,52 @@
+[1/61] Automatic MOC for target cad_desktop_ui
+[2/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[3/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[4/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[5/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[6/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchEditingUI.cpp.o
+[7/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[8/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DimensionUI.cpp.o
+[9/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchProposalUI.cpp.o
+[10/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[11/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+[12/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DatumUI.cpp.o
+[13/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ExchangeUI.cpp.o
+[14/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyUI.cpp.o
+[15/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/InteractionUI.cpp.o
+[16/61] Linking CXX static library libcad_desktop_ui.a
+[17/61] Automatic MOC for target module3_contracts
+[18/60] Automatic MOC for target module3_input
+[19/59] Automatic MOC for target module4_workspace
+[20/58] Automatic MOC for target module4_contracts
+[21/57] Automatic MOC for target cm1_contracts
+[22/56] Automatic MOC for target cm4_workflow_contracts
+[23/55] Automatic MOC for target cm3_dimension_contracts
+[24/54] Automatic MOC for target cm3_completion_contracts
+[25/53] Automatic MOC for target cm2_contracts
+[26/52] Building CXX object CMakeFiles/module3_input.dir/tests/module3/input.cpp.o
+[27/52] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[28/52] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[29/52] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[30/52] Building CXX object CMakeFiles/cm1_contracts.dir/tests/core_modeling/contracts.cpp.o
+[31/52] Building CXX object CMakeFiles/cm4_workflow_contracts.dir/tests/core_modeling/workflow_contracts.cpp.o
+[32/52] Building CXX object CMakeFiles/cm3_dimension_contracts.dir/tests/core_modeling/dimension_contracts.cpp.o
+[33/52] Building CXX object CMakeFiles/cm3_completion_contracts.dir/tests/core_modeling/completion_contracts.cpp.o
+[34/52] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[35/52] Linking CXX executable module1_contracts
+[36/52] Linking CXX executable module2_contracts
+[37/52] Linking CXX executable module3_input
+[38/52] Linking CXX executable module3_contracts
+[39/52] Linking CXX executable module4_workspace
+[40/52] Linking CXX executable module4_contracts
+[41/52] Linking CXX executable module5_contracts
+[42/52] Linking CXX executable module6_contracts
+[43/52] Linking CXX executable module7_contracts
+[44/52] Linking CXX executable module8_contracts
+[45/52] Linking CXX executable module9_interaction
+[46/52] Building CXX object CMakeFiles/cm2_contracts.dir/tests/core_modeling/editing_contracts.cpp.o
+[47/52] Linking CXX executable cm1_contracts
+[48/52] Linking CXX executable cm4_datum_contracts
+[49/52] Linking CXX executable cm4_workflow_contracts
+[50/52] Linking CXX executable cm3_dimension_contracts
+[51/52] Linking CXX executable cm3_completion_contracts
+[52/52] Linking CXX executable cm2_contracts

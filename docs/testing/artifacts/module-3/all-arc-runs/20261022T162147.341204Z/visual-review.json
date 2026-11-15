@@ -1,0 +1,24 @@
+{
+  "status": "Pass",
+  "scope": "Manual review of saved native Cocoa test screenshots; synthetic application events only",
+  "reviewed": [
+    "native-100/three-point-live-mm.png",
+    "native-100/tangent-live-in.png",
+    "native-200/normal-live-mm.png",
+    "native-200/course-normal-transition-in.png",
+    "native-200/course-solved-mm.png",
+    "native-200/centerpoint-arc-live-mm.png"
+  ],
+  "observations": [
+    "3 Point live semicircle shows R 10 mm, 180 degrees, dashed chord and a stage prompt before completion.",
+    "Tangent preview in inches shows R 0.3937008 in and 90 degrees at the line endpoint.",
+    "Normal preview shows a perpendicular join and R 10 mm, 90 degrees.",
+    "EDP normal transition shows R 0.3937008 in, 180 degrees; the solved closed profile matches the course shape and Line is selected again.",
+    "Centerpoint preview shows R 10 mm, 90 degrees CCW and radial guides. The Properties refusal message is the intentionally tested premature Finish; the canvas prompt gives the current stage.",
+    "Flyout label reflects the selected method; radius/angle and canvas prompts are readable in the reviewed 100/200 percent subset."
+  ],
+  "limits": [
+    "Five effective scales on one Retina display, not five physical displays.",
+    "Visual subset only; no physical mouse/trackpad, assistive technology, installed-build, other-platform or resource acceptance."
+  ]
+}

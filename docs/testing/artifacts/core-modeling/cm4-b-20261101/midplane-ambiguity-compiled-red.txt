@@ -1,0 +1,4 @@
+Command: ['build/macos-debug/cm4_support_geometry']
+FAIL: Expected ReferenceAmbiguous, got 
+
+Exit: 1

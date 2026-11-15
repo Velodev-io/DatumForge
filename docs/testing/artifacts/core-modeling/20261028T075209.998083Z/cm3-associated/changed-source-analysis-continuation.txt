@@ -1,0 +1,10 @@
+Analyzed apps/desktop/SketchPanel.cpp
+Analyzed apps/desktop/DimensionUI.cpp
+Analyzed src/render/SketchView.cpp
+Analyzed src/persistence/ProjectStore.cpp
+Analyzed src/sketch/Sketch.cpp
+Analyzed src/sketch/Dimensions.cpp
+Analyzed src/sketch/Solver.cpp
+Analyzed tests/core_modeling/dimensions.cpp
+Analyzed tests/core_modeling/associated_dimensions.cpp
+Analyzed tests/core_modeling/dimension_contracts.cpp

@@ -1,0 +1,13 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 64: cm5.transport
+1/1 Test #64: cm5.transport ....................***Failed   15.42 sec
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/modeling_contracts.cpp:73: wait([&]{return client.ready();})
+
+
+0% tests passed, 1 tests failed out of 1
+
+Total Test time (real) =  15.43 sec
+
+The following tests FAILED:
+	 64 - cm5.transport (Failed)
+Errors while running CTest

@@ -1,0 +1,24 @@
+{
+  "status": "Pass",
+  "scope": "Current-source baseline freeze for CM5 on HEAD 37501e8 (macOS debug build)",
+  "head": "37501e857eafe6c2576f14a87e04554117fc3bc5",
+  "branch": "review/cm2-editing-repair-20261114",
+  "source_inputs": 281,
+  "ctest": {
+    "total": 98,
+    "passed": 97,
+    "failed": 0,
+    "disabled": 1
+  },
+  "analysis_translation_units": 22,
+  "source_hashes_match": true,
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "module_11_started": false,
+  "native_interaction": "Not run: CM5.d",
+  "physical_8gb": "Not run",
+  "windows_linux": "Not run"
+}

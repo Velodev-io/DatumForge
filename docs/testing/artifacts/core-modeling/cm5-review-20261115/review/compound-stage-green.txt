@@ -1,0 +1,9 @@
+Test project /private/tmp/datumforge-cm5-review-20261115/build/macos-debug
+    Start 63: cm5.worker
+1/2 Test #63: cm5.worker .......................   Passed    0.21 sec
+    Start 81: cm5.workflow_contracts
+2/2 Test #81: cm5.workflow_contracts ...........   Passed    7.85 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   8.07 sec

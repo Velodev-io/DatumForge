@@ -1,0 +1,4 @@
+[1/4] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/SupportReferences.cpp.o
+[2/4] Linking CXX static library libcad_support_geometry.a
+[3/4] Linking CXX executable cm4_support_evolution
+[4/4] Linking CXX executable cm4_support_store

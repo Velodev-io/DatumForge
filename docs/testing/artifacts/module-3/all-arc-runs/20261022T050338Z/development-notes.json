@@ -1,0 +1,12 @@
+{
+  "status": "Development history only; final-run results recorded separately",
+  "failures_preserved": {
+    "red-build": "Test variable collision, renamed joinLine",
+    "focused-first": "Arc flyout parent lookup caused startup SIGSEGV, fixed by querying commandTabs",
+    "all-types-first": "Premature test invocation while build running used stale test executable",
+    "branch-red": "Expected tangent branch-flip regression before continuity guard",
+    "stored-angle-red": "Expected saved start-angle silent-repair regression before guard"
+  },
+  "debugger_probe": "Timed out at 60 seconds without useful stack; no debugger conclusion claimed",
+  "original_app": "Not stopped or edited by this arc task; later prelaunch process check found no cad-desktop or cad-worker process"
+}

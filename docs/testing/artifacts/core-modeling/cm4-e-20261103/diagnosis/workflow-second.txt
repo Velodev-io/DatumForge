@@ -1,0 +1,33 @@
+********* Start testing of WorkflowContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : WorkflowContracts::initTestCase()
+PASS   : WorkflowContracts::datumModes(plane-Principal)
+PASS   : WorkflowContracts::datumModes(plane-Offset)
+PASS   : WorkflowContracts::datumModes(plane-ParallelPoint)
+PASS   : WorkflowContracts::datumModes(plane-Angle)
+PASS   : WorkflowContracts::datumModes(plane-ThreePoints)
+PASS   : WorkflowContracts::datumModes(plane-LinePoint)
+PASS   : WorkflowContracts::datumModes(plane-TwoLines)
+PASS   : WorkflowContracts::datumModes(plane-NormalCurve)
+PASS   : WorkflowContracts::datumModes(plane-TangentSurface)
+PASS   : WorkflowContracts::datumModes(plane-Midplane)
+PASS   : WorkflowContracts::datumModes(axis-Principal)
+PASS   : WorkflowContracts::datumModes(axis-FaceAxis)
+PASS   : WorkflowContracts::datumModes(axis-Line)
+PASS   : WorkflowContracts::datumModes(axis-TwoPlanes)
+PASS   : WorkflowContracts::datumModes(axis-TwoPoints)
+PASS   : WorkflowContracts::datumModes(axis-PointNormal)
+PASS   : WorkflowContracts::upstreamHistory(mm)
+PASS   : WorkflowContracts::upstreamHistory(in)
+FAIL!  : WorkflowContracts::conversionChain() 'index>=0' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/workflow_contracts.cpp(118)]
+FAIL!  : WorkflowContracts::conversionChain() Compared values are not the same
+   Actual   (model.conversions.size()): 0
+   Expected (size_t(2))               : 2
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/workflow_contracts.cpp(120)]
+FAIL!  : WorkflowContracts::explicitSplitRepair() 's.editor([&](QDialog*d){ select(d,"supportMode","Offset");choose(d,0,cut.id,"Face");number(d,"supportDistance",30); QSignalSpy inspector(s.client,&Client::supportReferenceResolution);d->findChild<QPushButton *>("supportInspect0")->click();QVERIFY(wait([&]{return !inspector.empty()&&!s.client->outstanding();})); QCborMap top;for(auto value:inspector[0][0].value<QCborMap>().value("descriptions").toArray()){auto m=value.toMap();auto p=m.value("center_si").toArray();if(m.value("geometry_type")=="Plane"&&std::abs(p[2].toDouble()-.01)<1e-10)top=m.value("reference").toMap();}QVERIFY(!top.empty()); auto *choices=d->findChild<QComboBox *>("supportReplacements");int index=choices->findData(QVariant::fromValue(top));QVERIFY(index>0);choices->setCurrentIndex(index);QVERIFY(apply(d)); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/workflow_contracts.cpp(138)]
+PASS   : WorkflowContracts::cancelAndStale()
+PASS   : WorkflowContracts::cleanupTestCase()
+Totals: 21 passed, 2 failed, 0 skipped, 0 blacklisted, 19763ms
+********* Finished testing of WorkflowContracts *********

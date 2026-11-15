@@ -1,0 +1,14 @@
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::pointerGestures() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::pointerGestures() qt.qpa.fonts: Populating font family aliases took 117 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+QWARN  : Contracts::pointerGestures() This plugin does not support createPlatformOpenGLContext!
+QWARN  : Contracts::pointerGestures() QOpenGLWidget: Failed to create context
+FAIL!  : Contracts::pointerGestures() 'ink(center + QPoint(30,0))' returned FALSE. (5 mm radius must be visible while held)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(124)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 375ms
+********* Finished testing of Contracts *********

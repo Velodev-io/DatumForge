@@ -1,0 +1,16 @@
+{
+  "status": "Pass for reviewed native subset",
+  "reviewed_images": [
+    "native-100/exchange.png",
+    "native-200/exchange.png"
+  ],
+  "observations": [
+    "Import/export/portable copy controls are readable in the left Properties panel",
+    "Options and long retained-source warnings scroll without covering the fixed progress and Cancel controls",
+    "Imported solid is visible in the viewport and Saved status applies to the reopened portable project"
+  ],
+  "limits": [
+    "One Retina display with effective scale overrides",
+    "Automated Qt widgets and file pickers; physical-device/assistive-technology/full appearance acceptance remains Blocked"
+  ]
+}

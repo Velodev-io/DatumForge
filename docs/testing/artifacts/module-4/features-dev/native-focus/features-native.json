@@ -1,0 +1,11 @@
+{
+    "dpr": 1,
+    "height": 800,
+    "physical_device": "Blocked: synthetic input only",
+    "recovered_revision": 19,
+    "renderer": "OpenGL 4.1; DPR 1; initialized 1; 4.1 Metal - 90.5; Apple M2; Apple",
+    "saved_revision": 18,
+    "status": "Pass",
+    "volume_m3": 4.0488761101961534e-05,
+    "width": 1280
+}

@@ -1,0 +1,151 @@
+{
+  "scope": "Available-Mac Module 2 document/persistence foundation; no full R1/platform acceptance",
+  "recorded_at_utc": "2026-10-19T16:29:55.583150+00:00",
+  "steps": [
+    {
+      "name": "configure",
+      "command": [
+        "cmake",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.4675416660029441
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 8.200888250008575
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 11.698518334000255
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.32961037500353996
+    },
+    {
+      "name": "static-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "build/macos-debug/compile_commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 82.47620425000787
+    },
+    {
+      "name": "ownership",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-2/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.09000491599726956
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1395313749962952
+    },
+    {
+      "name": "native-module2",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module2_contracts",
+        "nativeDocuments",
+        "-o",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-2/native-module2.txt,txt"
+      ],
+      "exit_code": 0,
+      "seconds": 2.831773041994893
+    },
+    {
+      "name": "native-module1-scale100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction",
+        "-o",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-2/native-module1-scale100.txt,txt"
+      ],
+      "exit_code": 0,
+      "seconds": 2.275207667000359
+    },
+    {
+      "name": "native-module1-scale125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction",
+        "-o",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-2/native-module1-scale125.txt,txt"
+      ],
+      "exit_code": 0,
+      "seconds": 2.6301578339916887
+    },
+    {
+      "name": "native-module1-scale150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction",
+        "-o",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-2/native-module1-scale150.txt,txt"
+      ],
+      "exit_code": 0,
+      "seconds": 2.3118382499960717
+    },
+    {
+      "name": "native-module1-scale175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction",
+        "-o",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-2/native-module1-scale175.txt,txt"
+      ],
+      "exit_code": 0,
+      "seconds": 2.441046792009729
+    },
+    {
+      "name": "native-module1-scale200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module1_contracts",
+        "nativeInteraction",
+        "-o",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-2/native-module1-scale200.txt,txt"
+      ],
+      "exit_code": 0,
+      "seconds": 2.519649207999464
+    }
+  ],
+  "status": "Pass: requested available-Mac checks",
+  "Windows": "Blocked: native host/compiler/filesystem unavailable",
+  "Linux": "Blocked: native host/filesystem unavailable",
+  "physical_power_loss": "Blocked: hardware/power-loss procedure unavailable",
+  "physical_disk_exhaustion": "Not run: actual SQLITE_FULL is tested using a database page quota",
+  "native_requested": true
+}

@@ -1,0 +1,23 @@
+[0/1] Re-running CMake...
+-- Configuring done (0.4s)
+-- Generating done (0.1s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+[1/26] Automatic MOC for target cad_client
+[2/24] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/24] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/24] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/24] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[6/24] Automatic MOC for target cad_desktop_ui
+[7/24] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[8/24] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[9/24] Linking CXX static library libcad_planegcs.a
+[10/24] Linking CXX static library libcad_sketch_solver.a
+[11/24] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+FAILED: [code=1] CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cad_desktop_ui_autogen/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtNetwork" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGLWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGL" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o -MF CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o.d -o CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop/MainWindow.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop/MainWindow.cpp:167:29: error: use of undeclared identifier 'items'
+  167 |                 auto sketch=items.first()->data(0,Qt::UserRole+3).toString();
+      |                             ^~~~~
+1 error generated.
+[12/24] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+ninja: build stopped: subcommand failed.

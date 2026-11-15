@@ -1,0 +1,200 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+      Start  1: harness.pass
+ 1/55 Test  #1: harness.pass .....................   Passed    0.86 sec
+      Start  2: harness.failure_reporting
+ 2/55 Test  #2: harness.failure_reporting ........   Passed    0.09 sec
+      Start  3: measurement.statistics
+ 3/55 Test  #3: measurement.statistics ...........   Passed    0.08 sec
+      Start  4: harness.deliberate_failure
+ 4/55 Test  #4: harness.deliberate_failure .......***Not Run (Disabled)   0.00 sec
+      Start  5: protocol.boundaries
+ 5/55 Test  #5: protocol.boundaries ..............   Passed    0.51 sec
+      Start  6: storage.crash_matrix
+ 6/55 Test  #6: storage.crash_matrix .............   Passed    1.03 sec
+      Start  7: cad.geometry_topology
+ 7/55 Test  #7: cad.geometry_topology ............   Passed    0.80 sec
+      Start  8: cad.sketch_solver
+ 8/55 Test  #8: cad.sketch_solver ................   Passed    0.51 sec
+      Start  9: cad.rigid_mates
+ 9/55 Test  #9: cad.rigid_mates ..................   Passed    0.80 sec
+      Start 10: native.process_transport
+10/55 Test #10: native.process_transport .........***Failed    0.14 sec
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/native/slice_desktop.cpp:183: server.listen(path)
+
+      Start 11: fixtures.determinism
+11/55 Test #11: fixtures.determinism .............   Passed    0.06 sec
+      Start 12: isolation.research
+12/55 Test #12: isolation.research ...............   Passed    0.15 sec
+      Start 13: module1.ownership
+13/55 Test #13: module1.ownership ................   Passed    0.10 sec
+      Start 14: module1.contracts
+14/55 Test #14: module1.contracts ................***Failed   10.71 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+PASS   : Contracts::frameCorpus()
+PASS   : Contracts::transferCorpus()
+FAIL!  : Contracts::workerCorpus() 'raw.start()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module1/contracts.cpp(223)]
+FAIL!  : Contracts::clientLifecycle() 'waitUntil([&] { return client.ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module1/contracts.cpp(296)]
+FAIL!  : Contracts::clientFailureCorpus() 'waitUntil([&] { return client.state().phase == Phase::WorkerUnavailable; })' returned FALSE. (capability)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module1/contracts.cpp(357)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 4 passed, 3 failed, 0 skipped, 0 blacklisted, 10021ms
+********* Finished testing of Contracts *********
+
+      Start 15: module2.domain
+15/55 Test #15: module2.domain ...................   Passed    0.50 sec
+      Start 16: module2.storage
+16/55 Test #16: module2.storage ..................   Passed    2.03 sec
+      Start 17: module2.worker_lifecycle
+17/55 Test #17: module2.worker_lifecycle .........***Failed   10.61 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+FAIL!  : Contracts::lifecycle() 'wait([&] { return c.ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module2/contracts.cpp(88)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 10005ms
+********* Finished testing of Contracts *********
+
+      Start 18: module2.crash_matrix
+18/55 Test #18: module2.crash_matrix .............   Passed   21.01 sec
+      Start 19: module2.dispatch
+19/55 Test #19: module2.dispatch .................   Passed    0.79 sec
+      Start 20: module3.model
+20/55 Test #20: module3.model ....................   Passed    0.50 sec
+      Start 21: module3.persistence
+21/55 Test #21: module3.persistence ..............   Passed    1.05 sec
+      Start 22: module3.input
+22/55 Test #22: module3.input ....................   Passed    1.43 sec
+      Start 23: module3.shapeEditing
+23/55 Test #23: module3.shapeEditing .............***Failed   10.81 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::shapeEditing() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::shapeEditing() qt.qpa.fonts: Populating font family aliases took 30 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::shapeEditing() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::shapeEditing() 'wait([&] { return c->ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(402)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 10207ms
+********* Finished testing of Contracts *********
+
+      Start 24: module3.gestures
+24/55 Test #24: module3.gestures .................***Failed   20.33 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QINFO  : Contracts::pointerGestures() Pointer gesture workflow in "mm"
+QWARN  : Contracts::pointerGestures() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::pointerGestures() qt.qpa.fonts: Populating font family aliases took 30 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::pointerGestures() 'wait([&] { return c->ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(564)]
+QINFO  : Contracts::pointerGestures() Pointer gesture workflow in "in"
+QWARN  : Contracts::pointerGestures() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::pointerGestures() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::pointerGestures() 'wait([&] { return c->ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(564)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 20278ms
+********* Finished testing of Contracts *********
+
+      Start 25: module3.arcs
+25/55 Test #25: module3.arcs .....................***Failed   20.24 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::arcGestures() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::arcGestures() qt.qpa.fonts: Populating font family aliases took 31 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::arcGestures() 'wait([&] { return c->ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(287)]
+QWARN  : Contracts::arcGestures() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::arcGestures() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::arcGestures() 'wait([&] { return c->ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(287)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 20195ms
+********* Finished testing of Contracts *********
+
+      Start 26: module3.all_arcs
+26/55 Test #26: module3.all_arcs .................***Failed   20.27 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::allArcTypes() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::allArcTypes() qt.qpa.fonts: Populating font family aliases took 31 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::allArcTypes() 'wait([&] { return c->ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(131)]
+QWARN  : Contracts::allArcTypes() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::allArcTypes() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::allArcTypes() 'wait([&] { return c->ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(131)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 20226ms
+********* Finished testing of Contracts *********
+
+      Start 27: module3.interaction
+27/55 Test #27: module3.interaction ..............***Failed   10.25 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::drafts() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::drafts() qt.qpa.fonts: Populating font family aliases took 31 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::drafts() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::drafts() 'wait([&] { return c->ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module3/contracts.cpp(732)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 10184ms
+********* Finished testing of Contracts *********
+
+      Start 28: module3.solver
+28/55 Test #28: module3.solver ...................   Passed    0.79 sec
+      Start 29: module3.expressions
+29/55 Test #29: module3.expressions ..............   Passed    0.50 sec
+      Start 30: module4.workspace
+30/55 Test #30: module4.workspace ................***Failed   12.78 sec
+********* Start testing of Workspace *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Workspace::initTestCase()
+QWARN  : Workspace::layout() QOpenGLWidget is not supported on this platform.
+QWARN  : Workspace::layout() qt.qpa.fonts: Populating font family aliases took 30 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Workspace::layout() This plugin does not support propagateSizeHints()
+FAIL!  : Workspace::layout() 'wait([&] { return c->ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(88)]
+PASS   : Workspace::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 12172ms
+********* Finished testing of Workspace *********
+
+      Start 31: module4.geometry
+31/55 Test #31: module4.geometry .................   Passed    0.91 sec
+      Start 32: module4.persistence
+32/55 Test #32: module4.persistence ..............   Passed    1.99 sec
+      Start 33: module4.lifecycle
+33/55 Test #33: module4.lifecycle ................***Failed   20.78 sec
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+QWARN  : Contracts::lifecycle() QOpenGLWidget is not supported on this platform.
+QWARN  : Contracts::lifecycle() qt.qpa.fonts: Populating font family aliases took 31 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Contracts::lifecycle() This plugin does not support propagateSizeHints()
+FAIL!  : Contracts::lifecycle() 'wait([&] { return c->ready(); })' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/contracts.cpp(76)]
+PASS   : Contracts::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 20172ms
+********* Finished testing of Contracts *********
+
+      Start 34: module4.variants
+34/55 Test #34: module4.variants .................   Passed    1.97 sec
+      Start 35: module5.plan
+35/55 Test #35: module5.plan .....................   Passed    0.54 sec
+      Start 36: module5.engine
+36/55 Test #36: module5.engine ...................   Passed    0.70 sec
+      Start 37: module5.persistence
+37/55 Test #37: module5.persistence ..............   Passed    1.01 sec
+      Start 38: module5.b2

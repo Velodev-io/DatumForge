@@ -1,0 +1,18 @@
+[1/83] Automatic MOC for target cad_client
+[2/81] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/81] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/81] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/81] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[6/81] Automatic MOC for target cad_desktop_ui
+[7/80] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+FAILED: [code=1] CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cad_desktop_ui_autogen/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtNetwork" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGLWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGL" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o -MF CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o.d -o CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/render/Viewport.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/render/Viewport.cpp:103:9: error: 'auto' deduced as 'int' in declaration of 'first' and deduced as 'qsizetype' (aka 'long long') in declaration of 'count'
+  103 |         auto first=instance.firstTriangle, count=instance.triangleCount<0?mesh->triangleRoles.size():instance.triangleCount;
+      |         ^          ~~~~~~~~~~~~~~~~~~~~~~        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/render/Viewport.cpp:104:9: error: 'auto' deduced as 'int' in declaration of 'firstEdge' and deduced as 'qsizetype' (aka 'long long') in declaration of 'edgeCount'
+  104 |         auto firstEdge=instance.firstEdge, edgeCount=instance.edgeCount<0?mesh->edgeIds.size():instance.edgeCount;
+      |         ^              ~~~~~~~~~~~~~~~~~~            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+2 errors generated.
+[8/80] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+ninja: build stopped: subcommand failed.

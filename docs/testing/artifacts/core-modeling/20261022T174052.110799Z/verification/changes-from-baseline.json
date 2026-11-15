@@ -1,0 +1,89 @@
+{
+  "scope": "Verification input hash differences from captured pre-CM baseline. Pre-existing dirty files with unchanged hashes are excluded. Documentation/report changes outside these input sets are not enumerated. A newly included verifier path is not proof that all its contents were authored in this turn.",
+  "changes": [
+    {
+      "path": ".clang-format",
+      "before": null,
+      "after": "8a3d0e7cbdb7e97588eab9463c5d64c7a078d65cfd3a0902fc31b244eb0f22d7",
+      "kind": "Newly included verification input (may pre-exist)"
+    },
+    {
+      "path": "CMakeLists.txt",
+      "before": "4727dffc1c5d2bf490bbdf214300f1f86552bf40191751f037d02a6138effe96",
+      "after": "ed811d51bb14b3a0d575c4a868e25432a86d6f800694bb0611611154d55cf10b",
+      "kind": "Changed"
+    },
+    {
+      "path": "apps/desktop/SketchPanel.cpp",
+      "before": "8d21c11c6550266464515dd80e0ac001fb2bf8fe45702e9d2b51db90f14e72e9",
+      "after": "26dafda2ca6e73e433d64d772d450fbeae08010ca497f000b116da74665c1dc5",
+      "kind": "Changed"
+    },
+    {
+      "path": "cmake/patches/qt-6.10.0-arm-yield.patch",
+      "before": null,
+      "after": "b47fd041cbcaf1c74491f17d53a54b0ebb2bb45466c3239afa72713ee7a9bf10",
+      "kind": "Newly included verification input (may pre-exist)"
+    },
+    {
+      "path": "docs/scripts/check_specs.py",
+      "before": null,
+      "after": "d1b692fa1e4229174138e3456f7bcc5e245ee5a427e206b2e20bc0fabe819e0d",
+      "kind": "Newly included verification input (may pre-exist)"
+    },
+    {
+      "path": "src/persistence/ProjectStore.cpp",
+      "before": "66bb827814bb32f6e4b5e3dbf3d559bc7dd44a339283b81a5cc279d1821dc003",
+      "after": "a8ad712f1a7d8608bf51b799bb79f33f981eb18bbb03c9c97a11717881432ef2",
+      "kind": "Changed"
+    },
+    {
+      "path": "src/sketch/Sketch.cpp",
+      "before": "4307f8eb60a13d563310d156ceacfeda1775a968486c8e30014ec6314ebffafd",
+      "after": "eaf074dcc4f34485836ac2f45857ead7aa761426077a03d3f0d83c3fc12b66d9",
+      "kind": "Changed"
+    },
+    {
+      "path": "src/sketch/Sketch.hpp",
+      "before": "6e3f35d8dd8b06e53e91cc99d8c6662776918c644feea7dd26ba54dcd076bbde",
+      "after": "94dc19db05872114ed421d77c68eb74b88b89229f45657d4014c0db62b40271b",
+      "kind": "Changed"
+    },
+    {
+      "path": "src/sketch/Solver.cpp",
+      "before": "68d37d46fc1d7fdf0dfca78d042ba20d01ca5d1d009fe4733188c202bcd2c679",
+      "after": "f9fbd034692ecc854207cf3b6057d40754c772f67f5d9098097cc9201e031cd4",
+      "kind": "Changed"
+    },
+    {
+      "path": "tests/core_modeling/contracts.cpp",
+      "before": null,
+      "after": "244c3174e3cb6009f2f7753c6b4168a69c660391b0065c5f05d80204575cdcc2",
+      "kind": "Newly included verification input (may pre-exist)"
+    },
+    {
+      "path": "tests/core_modeling/feasibility.cpp",
+      "before": null,
+      "after": "c9e5c218d4f48074e8356ee936b06d2bd5724ad607022aba398c9b7af96f18a8",
+      "kind": "Newly included verification input (may pre-exist)"
+    },
+    {
+      "path": "tests/core_modeling/relations.cpp",
+      "before": null,
+      "after": "2ddc0d6155ef13b380725b1f227dd0329c2a3c33344f63ecd298c6e9797134ce",
+      "kind": "Newly included verification input (may pre-exist)"
+    },
+    {
+      "path": "tools/check_core_modeling.py",
+      "before": null,
+      "after": "a50266223fd3cdf0585088606d360567fb2fdd72669ca0ba1075d14370ef6374",
+      "kind": "Newly included verification input (may pre-exist)"
+    },
+    {
+      "path": "tools/verify_core_modeling.py",
+      "before": null,
+      "after": "5a0b6818b37f874c714b00379cb41df35ff5757fe33fb882f73e776abe617e64",
+      "kind": "Newly included verification input (may pre-exist)"
+    }
+  ]
+}

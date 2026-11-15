@@ -1,0 +1,29 @@
+[1/30] Automatic MOC for target cad_client
+[2/30] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/30] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[4/30] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[5/30] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[6/30] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[7/30] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[8/30] Building CXX object CMakeFiles/cad_client.dir/cad_client_autogen/mocs_compilation.cpp.o
+[9/30] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[10/30] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[11/30] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[12/30] Linking CXX static library libcad_client.a
+[13/30] Automatic MOC for target cad_desktop_ui
+[14/30] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+[15/30] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[16/30] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[17/30] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[18/30] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[19/30] Linking CXX static library libcad_desktop_ui.a
+[20/30] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[21/30] Linking CXX static library libcad_planegcs.a
+[22/30] Linking CXX static library libcad_sketch_solver.a
+[23/30] Linking CXX static library libcad_persistence.a
+[24/30] Linking CXX executable module3_persistence
+[25/30] Linking CXX executable module3_solver
+[26/30] Linking CXX executable cad-worker
+[27/30] Automatic MOC for target module3_contracts
+[28/29] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[29/29] Linking CXX executable module3_contracts

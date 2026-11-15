@@ -1,0 +1,55 @@
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed apps/desktop/WorkspaceChrome.cpp
+Analyzed apps/desktop/SketchPanel.cpp
+Analyzed apps/desktop/DimensionUI.cpp
+Analyzed apps/desktop/SketchProposalUI.cpp
+Analyzed src/render/SketchView.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/persistence/ProjectStore.cpp
+Analyzed src/sketch/Sketch.cpp
+Analyzed src/sketch/Editing.cpp
+Analyzed src/sketch/Constructions.cpp
+Analyzed src/sketch/Dimensions.cpp
+Analyzed tests/module3/contracts.cpp
+Analyzed src/sketch/Solver.cpp
+Analyzed src/sketch/LineEditing.cpp
+Analyzed tests/module4/workspace.cpp
+Analyzed tests/core_modeling/dimension_contracts.cpp
+Analyzed tests/core_modeling/completion.cpp
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp:68:9: warning: Called C++ object pointer is null [core.CallAndMessage]
+   68 |         client->projectCommand("SetSketches", sketch::fields({{"sketches", sketch::encode({s})}}));
+      |         ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp:738:17: note: Calling implicit default constructor for 'Session'
+  738 |         Session session;
+      |                 ^~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp:26:13: note: Null pointer value stored to 'session.client'
+   26 |     Client *client = nullptr;
+      |             ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp:738:17: note: Returning from default constructor for 'Session'
+  738 |         Session session;
+      |                 ^~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp:739:9: note: Assuming the condition is false
+  739 |         QVERIFY(session.start());
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:9: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp:739:9: note: Taking false branch
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:5: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |     ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp:739:9: note: Loop condition is false.  Exiting loop
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:64:28: note: expanded from macro 'QVERIFY'
+   64 | #define QVERIFY(statement) \
+      |                            ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp:743:17: note: Calling 'Session::seed'
+  743 |         QVERIFY(session.seed(s));
+      |                 ^~~~~~~~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:43: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |                                           ^~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion_contracts.cpp:68:9: note: Called C++ object pointer is null
+   68 |         client->projectCommand("SetSketches", sketch::fields({{"sketches", sketch::encode({s})}}));
+      |         ^~~~~~
+1 warning generated.
+Fail: analyzer reported an error or warning in tests/core_modeling/completion_contracts.cpp

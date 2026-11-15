@@ -1,0 +1,128 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+      Start  1: harness.pass
+ 1/60 Test  #1: harness.pass .....................   Passed    0.00 sec
+      Start  2: harness.failure_reporting
+ 2/60 Test  #2: harness.failure_reporting ........   Passed    0.08 sec
+      Start  3: measurement.statistics
+ 3/60 Test  #3: measurement.statistics ...........   Passed    0.11 sec
+      Start  4: harness.deliberate_failure
+ 4/60 Test  #4: harness.deliberate_failure .......***Not Run (Disabled)   0.00 sec
+      Start  5: protocol.boundaries
+ 5/60 Test  #5: protocol.boundaries ..............   Passed    0.04 sec
+      Start  6: storage.crash_matrix
+ 6/60 Test  #6: storage.crash_matrix .............   Passed    0.57 sec
+      Start  7: cad.geometry_topology
+ 7/60 Test  #7: cad.geometry_topology ............   Passed    0.17 sec
+      Start  8: cad.sketch_solver
+ 8/60 Test  #8: cad.sketch_solver ................   Passed    0.45 sec
+      Start  9: cad.rigid_mates
+ 9/60 Test  #9: cad.rigid_mates ..................   Passed    0.24 sec
+      Start 10: native.process_transport
+10/60 Test #10: native.process_transport .........   Passed    0.21 sec
+      Start 11: fixtures.determinism
+11/60 Test #11: fixtures.determinism .............   Passed    0.06 sec
+      Start 12: isolation.research
+12/60 Test #12: isolation.research ...............   Passed    0.18 sec
+      Start 13: module1.ownership
+13/60 Test #13: module1.ownership ................   Passed    0.10 sec
+      Start 14: module1.contracts
+14/60 Test #14: module1.contracts ................   Passed    2.04 sec
+      Start 15: module2.domain
+15/60 Test #15: module2.domain ...................   Passed    0.01 sec
+      Start 16: module2.storage
+16/60 Test #16: module2.storage ..................   Passed    2.10 sec
+      Start 17: module2.worker_lifecycle
+17/60 Test #17: module2.worker_lifecycle .........   Passed    1.61 sec
+      Start 18: module2.crash_matrix
+18/60 Test #18: module2.crash_matrix .............   Passed   20.25 sec
+      Start 19: module2.dispatch
+19/60 Test #19: module2.dispatch .................   Passed    0.77 sec
+      Start 20: module3.model
+20/60 Test #20: module3.model ....................   Passed    0.49 sec
+      Start 21: module3.persistence
+21/60 Test #21: module3.persistence ..............   Passed    1.05 sec
+      Start 22: module3.input
+22/60 Test #22: module3.input ....................   Passed    1.50 sec
+      Start 23: module3.shapeEditing
+23/60 Test #23: module3.shapeEditing .............   Passed    1.62 sec
+      Start 24: module3.gestures
+24/60 Test #24: module3.gestures .................   Passed    1.84 sec
+      Start 25: module3.arcs
+25/60 Test #25: module3.arcs .....................   Passed    1.08 sec
+      Start 26: module3.all_arcs
+26/60 Test #26: module3.all_arcs .................   Passed    1.48 sec
+      Start 27: module3.interaction
+27/60 Test #27: module3.interaction ..............   Passed    1.92 sec
+      Start 28: module3.solver
+28/60 Test #28: module3.solver ...................   Passed    0.55 sec
+      Start 29: module3.expressions
+29/60 Test #29: module3.expressions ..............   Passed    0.01 sec
+      Start 30: module4.workspace
+30/60 Test #30: module4.workspace ................   Passed    1.59 sec
+      Start 31: module4.geometry
+31/60 Test #31: module4.geometry .................   Passed    0.89 sec
+      Start 32: module4.persistence
+32/60 Test #32: module4.persistence ..............   Passed    1.93 sec
+      Start 33: module4.lifecycle
+33/60 Test #33: module4.lifecycle ................   Passed    2.97 sec
+      Start 34: module4.variants
+34/60 Test #34: module4.variants .................   Passed    2.11 sec
+      Start 35: module5.plan
+35/60 Test #35: module5.plan .....................   Passed    0.52 sec
+      Start 36: module5.engine
+36/60 Test #36: module5.engine ...................   Passed    0.71 sec
+      Start 37: module5.persistence
+37/60 Test #37: module5.persistence ..............   Passed    1.02 sec
+      Start 38: module5.b2
+38/60 Test #38: module5.b2 .......................   Passed   97.61 sec
+      Start 39: module5.lifecycle
+39/60 Test #39: module5.lifecycle ................   Passed    2.45 sec
+      Start 40: module6.exchange
+40/60 Test #40: module6.exchange .................   Passed    0.85 sec
+      Start 41: module6.persistence
+41/60 Test #41: module6.persistence ..............   Passed    1.08 sec
+      Start 42: module6.contracts
+42/60 Test #42: module6.contracts ................   Passed    3.41 sec
+      Start 43: module7.model
+43/60 Test #43: module7.model ....................   Passed    0.69 sec
+      Start 44: module7.geometry
+44/60 Test #44: module7.geometry .................   Passed    0.70 sec
+      Start 45: module7.persistence
+45/60 Test #45: module7.persistence ..............   Passed    1.71 sec
+      Start 46: module7.b3
+46/60 Test #46: module7.b3 .......................   Passed   14.16 sec
+      Start 47: module7.contracts
+47/60 Test #47: module7.contracts ................   Passed    2.57 sec
+      Start 48: module8.drawing
+48/60 Test #48: module8.drawing ..................   Passed   58.40 sec
+      Start 49: module8.contracts
+49/60 Test #49: module8.contracts ................   Passed    2.16 sec
+      Start 50: module8.geometry
+50/60 Test #50: module8.geometry .................   Passed    0.67 sec
+      Start 51: module9.privacy
+51/60 Test #51: module9.privacy ..................   Passed    0.76 sec
+      Start 52: module9.interaction
+52/60 Test #52: module9.interaction ..............   Passed    1.56 sec
+      Start 53: module10.crash_matrix
+53/60 Test #53: module10.crash_matrix ............   Passed   22.39 sec
+      Start 54: module10.hardening
+54/60 Test #54: module10.hardening ...............   Passed    2.77 sec
+      Start 55: module10.contracts
+55/60 Test #55: module10.contracts ...............   Passed    1.20 sec
+      Start 56: cm1.relations
+56/60 Test #56: cm1.relations ....................   Passed    1.11 sec
+      Start 57: cm1.contracts
+57/60 Test #57: cm1.contracts ....................   Passed    5.95 sec
+      Start 58: cm0.coverage
+58/60 Test #58: cm0.coverage .....................   Passed    0.09 sec
+      Start 59: cm1.rectangles
+59/60 Test #59: cm1.rectangles ...................   Passed    3.35 sec
+      Start 60: cm1.rectangle_contracts
+60/60 Test #60: cm1.rectangle_contracts ..........   Passed    8.49 sec
+
+100% tests passed, 0 tests failed out of 59
+
+Total Test time (real) = 286.44 sec
+
+The following tests did not run:
+	  4 - harness.deliberate_failure (Disabled)

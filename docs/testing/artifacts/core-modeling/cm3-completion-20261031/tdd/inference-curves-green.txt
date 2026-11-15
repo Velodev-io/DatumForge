@@ -1,0 +1,11 @@
+********* Start testing of Completion *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Completion::initTestCase()
+PASS   : Completion::inferenceCurvePoint(Ellipse)
+PASS   : Completion::inferenceCurvePoint(EllipticalArc)
+FAIL!  : Completion::inferenceCurvePoint(Parabola) 'std::any_of(proposed.constraints.begin(), proposed.constraints.end(), [&](auto &c) { return c.kind == "Coincident" && c.a == point && c.b == curve; })' returned FALSE. (Parabola)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/completion.cpp(43)]
+PASS   : Completion::inferenceCurvePoint(Spline)
+PASS   : Completion::cleanupTestCase()
+Totals: 5 passed, 1 failed, 0 skipped, 0 blacklisted, 26ms
+********* Finished testing of Completion *********

@@ -1,0 +1,12 @@
+{
+  "status": "Pass",
+  "command": [
+    "ctest",
+    "--preset",
+    "macos-debug",
+    "--output-on-failure"
+  ],
+  "exit_code": 0,
+  "seconds": 267.1410865840153,
+  "scope": "Fresh existing-suite baseline on host for local IPC; production binaries held unchanged from captured initial build. Subsequent source edits were rebuilt after the baseline suite completed. New CM experiments were not part of this baseline."
+}

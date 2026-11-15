@@ -1,0 +1,66 @@
+********* Start testing of Workspace *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+INFO   : Workspace::initTestCase() entering
+PASS   : Workspace::initTestCase()
+INFO   : Workspace::toolSelection() entering
+INFO   : Workspace::toolSelection() QVERIFY(root.isValid())
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(69)]
+QWARN  : Workspace::toolSelection() QOpenGLWidget is not supported on this platform.
+QWARN  : Workspace::toolSelection() qt.qpa.fonts: Populating font family aliases took 104 ms. Replace uses of missing font family "Sans Serif" with one that exists to avoid this cost. 
+QWARN  : Workspace::toolSelection() This plugin does not support propagateSizeHints()
+INFO   : Workspace::toolSelection() QVERIFY(wait([&] { return c->ready(); }))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(84)]
+QWARN  : Workspace::toolSelection() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::toolSelection() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::toolSelection() This plugin does not support propagateSizeHints()
+INFO   : Workspace::toolSelection() QVERIFY(wait([&] { return c->state().projectOpen && !c->outstanding(); }))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(86)]
+QWARN  : Workspace::toolSelection() This plugin does not support propagateSizeHints()
+INFO   : Workspace::toolSelection() QVERIFY(expectTool("Select / drag"))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(101)]
+INFO   : Workspace::toolSelection() QVERIFY(lineButton)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(103)]
+INFO   : Workspace::toolSelection() QVERIFY(expectTool("Line"))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(105)]
+INFO   : Workspace::toolSelection() QVERIFY(expectTool("Select / drag"))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(108)]
+INFO   : Workspace::toolSelection() QCOMPARE(entities->count(), 0)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(114)]
+INFO   : Workspace::toolSelection() QVERIFY(expectTool("Select / drag"))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(118)]
+INFO   : Workspace::toolSelection() QCOMPARE(entities->count(), 0)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(120)]
+INFO   : Workspace::toolSelection() QVERIFY(expectTool(name))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(123)]
+INFO   : Workspace::toolSelection() QVERIFY(expectTool(name))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(123)]
+INFO   : Workspace::toolSelection() QVERIFY(expectTool(name))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(123)]
+INFO   : Workspace::toolSelection() QVERIFY(expectTool(name))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(123)]
+INFO   : Workspace::toolSelection() QCOMPARE(entities->count(), 3)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(127)]
+INFO   : Workspace::toolSelection() QVERIFY(expectTool("Tangent Arc"))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(136)]
+INFO   : Workspace::toolSelection() QVERIFY(!line->isChecked())
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(137)]
+INFO   : Workspace::toolSelection() QCOMPARE(w.findChild<QToolButton *>("sketchArcFlyout")->defaultAction(), arc)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(138)]
+INFO   : Workspace::toolSelection() QVERIFY(expectTool("Select / drag"))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(140)]
+INFO   : Workspace::toolSelection() QVERIFY(!view->sizingArc())
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(141)]
+INFO   : Workspace::toolSelection() QCOMPARE(entities->count(), 3)
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(143)]
+INFO   : Workspace::toolSelection() QVERIFY(expectTool("Select / drag"))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(145)]
+QWARN  : Workspace::toolSelection() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::toolSelection() This plugin does not support propagateSizeHints()
+QWARN  : Workspace::toolSelection() This plugin does not support propagateSizeHints()
+INFO   : Workspace::toolSelection() QVERIFY(wait([&] { return !c->state().projectOpen && !c->outstanding(); }))
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/workspace.cpp(148)]
+PASS   : Workspace::toolSelection()
+INFO   : Workspace::cleanupTestCase() entering
+PASS   : Workspace::cleanupTestCase()
+Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted, 437ms
+********* Finished testing of Workspace *********

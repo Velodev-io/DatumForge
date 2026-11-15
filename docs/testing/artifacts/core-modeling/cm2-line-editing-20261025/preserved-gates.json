@@ -1,0 +1,43 @@
+{
+  "6.1b": {
+    "status": "Blocked",
+    "scope": "Background jobs/progress, real IPC cancellation, source/record/entity/topology admission and sampled available-Mac footprints pass. Parser cancellation latency, arbitrary kernel pre-allocation/peak guarantees, orphan staging cleanup proof and full physical B4/platform acceptance remain Blocked.",
+    "evidence": [
+      "docs/testing/module-6.md",
+      "docs/decisions/module-6-exchange.md",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/verification.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/source-identity.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/b4-correctness.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/visual-review.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/memory-summary.json"
+    ]
+  },
+  "6.4c": {
+    "status": "Blocked",
+    "scope": "Available-Mac malformed/truncated/oversized/record-expansion/parser, missing/corrupt source, injected StorageFull, stale output refusal and canceled destination preservation pass. Full hostile-kernel expansion, physical disk-full/power-loss and platform/resource containment remain Blocked.",
+    "evidence": [
+      "docs/testing/module-6.md",
+      "docs/decisions/module-6-exchange.md",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/verification.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/source-identity.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/b4-correctness.json",
+      "docs/testing/artifacts/module-6/runs/20261021T113246.906093Z/visual-review.json"
+    ]
+  },
+  "7.4c": {
+    "status": "Blocked",
+    "scope": "Available-Mac portable reopen without original saved file, coarse unload/reload, exact cache release, authoritative-input recovery and sampled B3/native footprints pass. Full NFR-002 steady/peak/shared/GPU/FPS and resource-retention/platform acceptance remain Blocked. Full unavailable native/device acceptance remains Blocked.",
+    "evidence": [
+      "docs/testing/module-7.md",
+      "docs/decisions/module-7-assemblies.md",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/verification.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/source-identity.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/evidence-consistency.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/b3-correctness.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/visual-review.json",
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/memory-summary.json"
+    ]
+  }
+}

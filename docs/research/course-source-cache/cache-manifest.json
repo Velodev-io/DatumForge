@@ -1,0 +1,268 @@
+{
+  "preserved_utc": "2026-10-22T17:24:00.384234+00:00",
+  "origin": "Retained PDFKit extraction and renders from prior review; original PDFs deleted by user, confirmed 2026-10-22",
+  "scope": "Private research evidence only, excluded from application/catalog packaging. Does not recreate the original PDFs.",
+  "original_pdf_hashes": "../solidworks-training-sources.json",
+  "files": [
+    {
+      "path": "T1 INTRODUCTION TO SW-contact.png",
+      "bytes": 826743,
+      "sha256": "2b7e986f7c487a76d56a440a847af0df5907f6ce441c4cdc0c9eb02867bae02b"
+    },
+    {
+      "path": "T1 INTRODUCTION TO SW.json",
+      "bytes": 43535,
+      "sha256": "230ba2c2bb48210f3cc49ff47d7bea35f844fdb7e19a43bba580272ad9f3c008"
+    },
+    {
+      "path": "T1 INTRODUCTION TO SW.txt",
+      "bytes": 42270,
+      "sha256": "6c4f05cedece6ae6233defff7f59358c8d5041397def88374f068ad4afedde33"
+    },
+    {
+      "path": "T10 DRAWING-contact.png",
+      "bytes": 870636,
+      "sha256": "47d1b3cbb42d245441a1f9449bb921290e5899cd5f7e1ebb4f2b6ac968914b03"
+    },
+    {
+      "path": "T10 DRAWING.json",
+      "bytes": 43272,
+      "sha256": "c441663d0f445b4054355cac779bb3003e823ce96caa88290909791a6544969a"
+    },
+    {
+      "path": "T10 DRAWING.pdf-p26.png",
+      "bytes": 276490,
+      "sha256": "f54c75b643d6caaa8e0966b341c2bf9a41581e1a2091e77af5e1496b70047d0a"
+    },
+    {
+      "path": "T10 DRAWING.pdf-p35.png",
+      "bytes": 290800,
+      "sha256": "802cad398e4e87e6eb8cda9d0fe05c49aa92bd1d0dc053ea71ce05f0ed395d29"
+    },
+    {
+      "path": "T10 DRAWING.txt",
+      "bytes": 41876,
+      "sha256": "ce18fa56ffed0dc9203e7182a3d7a74311c50f64df1be8b77882a7c8db4855df"
+    },
+    {
+      "path": "T2 PART IN 2D-contact.png",
+      "bytes": 949884,
+      "sha256": "e50863e63a849d94fb8de43ccec1e2fda9d1869efdc9f1f2d4540ecb6c4ed36a"
+    },
+    {
+      "path": "T2 PART IN 2D.json",
+      "bytes": 50700,
+      "sha256": "6ccd9fac3fff12cdd66184c7f5e962d8e7e1ca5dfd43f15630a393d569eee51f"
+    },
+    {
+      "path": "T2 PART IN 2D.pdf-p17.png",
+      "bytes": 251538,
+      "sha256": "29cf1952f8b38b951fb5fa8324282a17978af76b0424b0703619d61060ea8d5c"
+    },
+    {
+      "path": "T2 PART IN 2D.pdf-p18.png",
+      "bytes": 182349,
+      "sha256": "e65d3622007c2b1d35c9e4e102e3bdee5d92f6898e2419bae7fe9bf74030811c"
+    },
+    {
+      "path": "T2 PART IN 2D.pdf-p35.png",
+      "bytes": 229534,
+      "sha256": "a023efc3548e33a3132f28a728f717ca6ff61451faeb79c3e94af177c2483469"
+    },
+    {
+      "path": "T2 PART IN 2D.pdf-p4.png",
+      "bytes": 31116,
+      "sha256": "d571c7750491cf9d5ea2a7fe43ed645b693ce2cf1b7770c9ea97b14dc7ad9f0f"
+    },
+    {
+      "path": "T2 PART IN 2D.txt",
+      "bytes": 49082,
+      "sha256": "07149e5811404f0252af527d32ecfd97dfb5f1ff57458666e0bd190bafd5d533"
+    },
+    {
+      "path": "T3 EDITING PART-contact.png",
+      "bytes": 868837,
+      "sha256": "c510e7db06ffbf7c70e3fd11f18401b0f14bc0f216b1063073525c7b6e4fa99a"
+    },
+    {
+      "path": "T3 EDITING PART.json",
+      "bytes": 48689,
+      "sha256": "96097ceb34017d695db37dbe3f3f05f11deaafa3abc758eefa5292ea6b90d5cf"
+    },
+    {
+      "path": "T3 EDITING PART.pdf-p24.png",
+      "bytes": 278443,
+      "sha256": "145a563fef0343e11399a8dbd931e0a324fa1308ca4e0963072a0a0a08af04d5"
+    },
+    {
+      "path": "T3 EDITING PART.pdf-p32.png",
+      "bytes": 231536,
+      "sha256": "149b04e596b2a8b8d4fb9b7788f74dac00247aa1674dbe34f5531e15e22b0c06"
+    },
+    {
+      "path": "T3 EDITING PART.txt",
+      "bytes": 47206,
+      "sha256": "771f5d59ab0ff0e99ddd232a0cc5efc2413998ec279c981c0a1741846ea712a0"
+    },
+    {
+      "path": "T4 ADD RELATIONS-contact.png",
+      "bytes": 875257,
+      "sha256": "fcd5e08d87a5446836056cc8ab1cb4db9cae7e1c5d2d74318a37cdf06b2fcf7c"
+    },
+    {
+      "path": "T4 ADD RELATIONS.json",
+      "bytes": 50646,
+      "sha256": "4044541e477325ca4f6b2055747673e7f04502bd32dd913ac99277a7daf36e5c"
+    },
+    {
+      "path": "T4 ADD RELATIONS.pdf-p12.png",
+      "bytes": 281958,
+      "sha256": "6d18639b22de63d284e27a88837b6718986e0460b9284f788423ebdfcbb67920"
+    },
+    {
+      "path": "T4 ADD RELATIONS.txt",
+      "bytes": 49159,
+      "sha256": "d9359c72705912acfcf77a3f86eadc60e00aa9b3e7f3352c351924dbc3370b5b"
+    },
+    {
+      "path": "T5 ADD PART FEATURES-contact.png",
+      "bytes": 1102701,
+      "sha256": "f25bf374fc8f3635ba9dd073fe0071fcddce08be43ae17812cf0705d592c3812"
+    },
+    {
+      "path": "T5 ADD PART FEATURES.json",
+      "bytes": 50266,
+      "sha256": "d073bdc1caa48d0b6120775a34ebfb137779988644c22f6bec6c655c023adc93"
+    },
+    {
+      "path": "T5 ADD PART FEATURES.pdf-p24.png",
+      "bytes": 347095,
+      "sha256": "4c4b1d4fcb4f977d6175f461e9826602e08214330b0382c7411f3341fb968b90"
+    },
+    {
+      "path": "T5 ADD PART FEATURES.txt",
+      "bytes": 48553,
+      "sha256": "ea4e7404760bf5675eeed0a93d0cc916dddc7cc5cc3ef7f899a6a8fb5dcb6c6d"
+    },
+    {
+      "path": "T6 REFERENCE GEOMETRY-contact.png",
+      "bytes": 1152633,
+      "sha256": "2a40f9955ccef817447f841cc3892e3291f6b3c1bfb610f5daa814a6d07b732c"
+    },
+    {
+      "path": "T6 REFERENCE GEOMETRY.json",
+      "bytes": 51757,
+      "sha256": "fbbb97869b29b8c758351f1eecd72adb71c456d97f73e44293685f5d999d401e"
+    },
+    {
+      "path": "T6 REFERENCE GEOMETRY.pdf-p33.png",
+      "bytes": 283052,
+      "sha256": "f62233fe210b8a7cccaff83084379c8f108e2f4b1c062c59168d6c1d9b3efe89"
+    },
+    {
+      "path": "T6 REFERENCE GEOMETRY.txt",
+      "bytes": 49912,
+      "sha256": "66f25f3c4b83b8001f33d4fbaeb973ca51537c765c494cb7326ac219cd213b1a"
+    },
+    {
+      "path": "T7 MODELLING TOOLS-contact.png",
+      "bytes": 1127768,
+      "sha256": "89c925644d53a955b1e942e7458e6a25a3d751103aaee402c770346ae5d20945"
+    },
+    {
+      "path": "T7 MODELLING TOOLS.json",
+      "bytes": 50443,
+      "sha256": "f86388e29dfb6ff20df150f2403e3eef435ce309e5a757a38cbe4d65f1720f66"
+    },
+    {
+      "path": "T7 MODELLING TOOLS.pdf-p21.png",
+      "bytes": 250776,
+      "sha256": "f3ed647d76514310ca8b7b2991bb3f7543506c58f8dc1b303bcac8bcc7a18bee"
+    },
+    {
+      "path": "T7 MODELLING TOOLS.txt",
+      "bytes": 48673,
+      "sha256": "4a7c25cd6c8b5091c86927d6074b69b27478c31d70878fc4a7b619bedd4a3c28"
+    },
+    {
+      "path": "T8 ADVANCE MODELLING TOOLS-contact.png",
+      "bytes": 1091399,
+      "sha256": "5e2c0bcf4a8596c42306f877800fcb225c4a4265d319561e24d1190fd69a9eb6"
+    },
+    {
+      "path": "T8 ADVANCE MODELLING TOOLS.json",
+      "bytes": 45565,
+      "sha256": "53cd7cbe61c3ae1e1f3f3620cc906865abe473192fc8506fefe3679e7fd11cbc"
+    },
+    {
+      "path": "T8 ADVANCE MODELLING TOOLS.pdf-p35.png",
+      "bytes": 325073,
+      "sha256": "81c5ebc4d9966aba7ec805e939dd2f359925f24960d4521fe0e02967885e5a96"
+    },
+    {
+      "path": "T8 ADVANCE MODELLING TOOLS.txt",
+      "bytes": 43848,
+      "sha256": "d5f6e14e51f0445f32adfaa39ef2f527181dd87e3ad46877a0a766f9a94352d6"
+    },
+    {
+      "path": "T9 ASSEMBLY PART 1 -contact.png",
+      "bytes": 386109,
+      "sha256": "90158d3336a4be88d70a48e02342b4a767e67556c7234a6f8aa9faa20ef95f86"
+    },
+    {
+      "path": "T9 ASSEMBLY PART 1 .json",
+      "bytes": 14709,
+      "sha256": "5a0650ee6eafb1fbc2329e4806a6b7b056860202e2a0b22399c237b466857208"
+    },
+    {
+      "path": "T9 ASSEMBLY PART 1 .pdf-p20.png",
+      "bytes": 131411,
+      "sha256": "1e416ef62c8241420c4a36d7a251d98702117c173dc4be909f156fbcbb355da7"
+    },
+    {
+      "path": "T9 ASSEMBLY PART 1 .txt",
+      "bytes": 14047,
+      "sha256": "d6387679f46ed767884f4f8813cecf78b1c45dae7572a7d2e2eb953bc9d3567c"
+    },
+    {
+      "path": "T9 ASSEMBLY PART 2-contact.png",
+      "bytes": 529489,
+      "sha256": "a6eea7eb700fe9275f843535e8ed7cab9effa485702d112fc20890f16fd26a29"
+    },
+    {
+      "path": "T9 ASSEMBLY PART 2.json",
+      "bytes": 17778,
+      "sha256": "6e6df665e5d2241041f18a0cc74250bf530f4171273ca2c2aaffe583b18c9c8d"
+    },
+    {
+      "path": "T9 ASSEMBLY PART 2.pdf-p7.png",
+      "bytes": 404770,
+      "sha256": "dcaae40908b109d1e22fa8e4b99724637dc1ab7237ecf5a0dd2ea2100eff1b39"
+    },
+    {
+      "path": "T9 ASSEMBLY PART 2.txt",
+      "bytes": 16835,
+      "sha256": "56dc4da1ccd350e73a8eb89c392788bacb9cc1ba76acde73fd5f5ea68cabecee"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 1256,
+      "sha256": "c9a02825e7e4d16e044ee38cd695652fb817e06c969f9ffb69abd66fbab4d90c"
+    },
+    {
+      "path": "read.swift",
+      "bytes": 2890,
+      "sha256": "a917a4a77ffc60a3235eedf50c873c47f07a1017fc071fbbb38acdd723cfd648"
+    },
+    {
+      "path": "render.swift",
+      "bytes": 992,
+      "sha256": "d285886815c0e4c6c04ad67cacc86b1525c5f4483ae830b6ea3b7c3c2de02370"
+    },
+    {
+      "path": "source-manifest.json",
+      "bytes": 2115,
+      "sha256": "805ef94cb396217b9835309f93cdabbe24ed13afb8a1d111a5d771058dd1447a"
+    }
+  ]
+}

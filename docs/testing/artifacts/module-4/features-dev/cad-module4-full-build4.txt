@@ -1,0 +1,35 @@
+[1/62] Automatic MOC for target cad_desktop_ui
+[2/61] Building CXX object CMakeFiles/slice_worker.dir/tests/native/slice_worker.cpp.o
+[3/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[4/61] Linking CXX executable cad-worker
+[5/61] Linking CXX executable module1_adversary
+[6/61] Linking CXX static library libcad_desktop_ui.a
+[7/61] Linking CXX executable slice_worker
+[8/61] Automatic MOC for target module2_contracts
+[9/61] Automatic MOC for target module1_contracts
+[10/61] Automatic MOC for target module3_input
+[11/61] Automatic MOC for target module3_contracts
+[12/61] Automatic MOC for target module4_workspace
+[13/61] Building CXX object CMakeFiles/harness_probe.dir/tests/unit/harness_probe.cpp.o
+[14/61] Building CXX object CMakeFiles/protocol_spike.dir/tests/integration/protocol_spike.cpp.o
+[15/61] Building CXX object CMakeFiles/storage_spike.dir/tests/integration/storage_spike.cpp.o
+[16/61] Building CXX object CMakeFiles/cad_spike.dir/tests/integration/cad_spike.cpp.o
+[17/61] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[18/61] Building CXX object CMakeFiles/slice_desktop.dir/tests/native/slice_desktop.cpp.o
+[19/61] Building CXX object CMakeFiles/cad-desktop.dir/apps/desktop/main.cpp.o
+[20/61] Building CXX object CMakeFiles/mate_spike.dir/tests/integration/mate_spike.cpp.o
+[21/61] Building CXX object CMakeFiles/module2_domain.dir/tests/module2/domain.cpp.o
+[22/61] Building CXX object CMakeFiles/module2_storage.dir/tests/module2/storage.cpp.o
+[23/61] Building CXX object CMakeFiles/module2_fault_worker.dir/tests/module2/fault_worker.cpp.o
+[24/61] Building CXX object CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o
+FAILED: [code=1] CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o 
+/usr/bin/c++ -DCAD_SOURCE_ROOT="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_CORE_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/cad-worker" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/src/sqlite" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -g -std=c++20 -mmacosx-version-min=13.0 -Wall -Wextra -Wpedantic -MD -MT CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o -MF CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o.d -o CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module2/dispatch.cpp'
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module2/dispatch.cpp:1:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/cad-worker/Projects.hpp:3:
+In file included from /Users/binova/Documents/Projects/Suru/Solidworks Clone/src/geometry/occt/Part.hpp:3:
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/protocol/Mesh.hpp:4:10: fatal error: 'QMatrix4x4' file not found
+    4 | #include <QMatrix4x4>
+      |          ^~~~~~~~~~~~
+1 error generated.
+[25/61] Building CXX object CMakeFiles/module3_model.dir/tests/module3/model.cpp.o
+ninja: build stopped: subcommand failed.

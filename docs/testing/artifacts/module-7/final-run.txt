@@ -1,0 +1,21 @@
+Running configure
+Running build
+Running ctest
+Running b3-memory
+Running format
+Running static-analysis
+Running ownership
+Running research-isolation
+Running native-assembly-100
+Running native-assembly-125
+Running native-assembly-150
+Running native-assembly-175
+Running native-assembly-200
+Running native-module6-regression
+Running native-module5-regression
+Running native-module4-regression
+Running native-module3-regression
+Running native-module2-regression
+Running native-module1-regression
+Running clean-reproduction
+Pass: requested available-Mac checks; broader acceptance Blocked

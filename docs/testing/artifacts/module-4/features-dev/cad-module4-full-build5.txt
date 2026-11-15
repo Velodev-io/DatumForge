@@ -1,0 +1,70 @@
+[1/61] Automatic MOC for target cad_client
+[2/59] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[3/59] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[4/59] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/59] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[6/59] Automatic MOC for target cad_desktop_ui
+[7/57] Automatic MOC for target module3_input
+[8/57] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[9/57] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[10/57] Linking CXX static library libcad_planegcs.a
+[11/57] Linking CXX static library libcad_sketch_solver.a
+[12/57] Linking CXX executable cad-worker
+[13/57] Automatic MOC for target module1_contracts
+[14/57] Automatic MOC for target module2_contracts
+[15/57] Automatic MOC for target module3_contracts
+[16/57] Automatic MOC for target module4_workspace
+[17/57] Building CXX object CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o
+[18/57] Automatic MOC for target module4_contracts
+AutoMoc warning
+---------------
+"SRC:/tests/module4/contracts.cpp"
+includes the moc file "contracts.moc", but does not contain a Q_OBJECT, Q_GADGET, Q_NAMESPACE, Q_NAMESPACE_EXPORT, Q_GADGET_EXPORT or Q_ENUM_NS macro.
+
+[19/57] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[20/57] Building CXX object CMakeFiles/module3_solver.dir/tests/module3/solver.cpp.o
+[21/57] Building CXX object CMakeFiles/module3_expressions.dir/tests/module3/expressions.cpp.o
+[22/57] Building CXX object CMakeFiles/module1_contracts.dir/module1_contracts_autogen/mocs_compilation.cpp.o
+[23/57] Building CXX object CMakeFiles/module4_persistence.dir/tests/module4/persistence.cpp.o
+[24/57] Building CXX object CMakeFiles/module2_contracts.dir/module2_contracts_autogen/mocs_compilation.cpp.o
+[25/57] Building CXX object CMakeFiles/module1_contracts.dir/tests/module1/contracts.cpp.o
+[26/57] Building CXX object CMakeFiles/module3_input.dir/module3_input_autogen/mocs_compilation.cpp.o
+[27/57] Building CXX object CMakeFiles/module2_contracts.dir/tests/module2/contracts.cpp.o
+[28/57] Building CXX object CMakeFiles/module3_contracts.dir/module3_contracts_autogen/mocs_compilation.cpp.o
+[29/57] Building CXX object CMakeFiles/module3_input.dir/tests/module3/input.cpp.o
+[30/57] Building CXX object CMakeFiles/module4_workspace.dir/module4_workspace_autogen/mocs_compilation.cpp.o
+[31/57] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[32/57] Building CXX object CMakeFiles/module4_contracts.dir/module4_contracts_autogen/mocs_compilation.cpp.o
+[33/57] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[34/57] Linking CXX executable harness_probe
+[35/57] Linking CXX executable protocol_spike
+[36/57] Linking CXX executable storage_spike
+[37/57] Linking CXX executable cad_spike
+[38/57] Linking CXX executable solver_spike
+[39/57] Linking CXX executable mate_spike
+[40/57] Linking CXX executable slice_desktop.app/Contents/MacOS/slice_desktop
+[41/57] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[42/57] Linking CXX executable module1_contracts
+[43/57] Linking CXX executable module2_domain
+[44/57] Linking CXX executable module2_storage
+[45/57] Linking CXX executable module2_contracts
+[46/57] Linking CXX executable module2_fault_worker
+[47/57] Linking CXX executable module2_dispatch
+[48/57] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+FAILED: [code=1] CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_OPENGLWIDGETS_LIB -DQT_OPENGL_LIB -DQT_TESTCASE_BUILDDIR="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug\"" -DQT_TESTCASE_SOURCEDIR="\"/Users/binova/Documents/Projects/Suru/Solidworks Clone\"" -DQT_TESTLIB_LIB -DQT_WIDGETS_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/apps/desktop" -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/module4_contracts_autogen/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtNetwork" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGLWidgets" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtOpenGL" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o -MF CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o.d -o CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/contracts.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/module4/contracts.cpp:73:490: error: call to member function 'mapTo' is ambiguous
+   73 |     if(native){QVERIFY2(graphics.empty(),"Native graphics initialization failed");auto out=qEnvironmentVariable("CAD_ARTIFACT_DIR");QDir().mkpath(out);w.resize(1280,800);QTest::qWait(100);QVERIFY(w.grab().save(out+"/features-B1.png"));auto b=doc(c).value("features").toArray()[0].toMap().value("id").toString();panel->begin({},b);QTest::qWait(50);auto*acceptButton=w.findChild<QPushButton*>("acceptFeatureButton");QVERIFY(acceptButton->isVisible());QVERIFY(w.rect().contains(acceptButton->mapTo(&w,{0,0})));QVERIFY(w.grab().save(out+"/features-editing.png"));panel->discard();QVERIFY(settle());QFile info(out+"/features-native.json");QVERIFY(info.open(QIODevice::WriteOnly));info.write(QJsonDocument(QJsonObject{{"status","Pass"},{"dpr",w.devicePixelRatioF()},{"width",w.width()},{"height",w.height()},{"renderer",w.sceneView()->graphicsDescription()},{"saved_revision",saved},{"recovered_revision",recovery},{"volume_m3",exact},{"physical_device","Blocked: synthetic input only"}}).toJson());}
+      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            ~~~~~~~~~~~~~~^~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtTest/qtestcase.h:66:43: note: expanded from macro 'QVERIFY'
+   66 |     if (!QTest::qVerify(static_cast<bool>(statement), #statement, "", __FILE__, __LINE__))\
+      |                                           ^~~~~~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qwidget.h:305:13: note: candidate function
+  305 |     QPointF mapTo(const QWidget *, const QPointF &) const;
+      |             ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtWidgets/qwidget.h:306:12: note: candidate function
+  306 |     QPoint mapTo(const QWidget *, const QPoint &) const;
+      |            ^
+1 error generated.
+[49/57] Linking CXX executable module3_model
+ninja: build stopped: subcommand failed.

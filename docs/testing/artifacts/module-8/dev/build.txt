@@ -1,0 +1,40 @@
+[1/162] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Editing.cpp.o
+[2/162] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[3/162] Linking CXX static library libcad_sketch_model.a
+[4/162] Building CXX object CMakeFiles/cad_protocol.dir/src/protocol/Mesh.cpp.o
+[5/162] Building CXX object CMakeFiles/cad_expressions.dir/src/domain/Expressions.cpp.o
+[6/162] Linking CXX static library libcad_protocol.a
+[7/162] Linking CXX static library libcad_expressions.a
+[8/162] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/Model.cpp.o
+[9/162] Linking CXX static library libcad_feature_model.a
+[10/162] Building CXX object CMakeFiles/cad_evaluation_plan.dir/src/evaluation/Plan.cpp.o
+[11/162] Building CXX object CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o
+[12/162] Linking CXX static library libcad_evaluation_plan.a
+[13/162] Linking CXX static library libcad_assembly_model.a
+[14/162] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[15/162] Automatic MOC for target cad_client
+[16/162] Building CXX object CMakeFiles/cad_assembly_solver.dir/src/assembly/Solver.cpp.o
+[17/162] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[18/162] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[19/162] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[20/162] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[21/162] Linking CXX static library libcad_part.a
+[22/162] Linking CXX static library libcad_assembly_solver.a
+[23/162] Building CXX object CMakeFiles/cad_assembly_geometry.dir/src/assembly/Geometry.cpp.o
+[24/162] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/qp_eq.cpp.o
+[25/162] Building CXX object CMakeFiles/cad_drawing_model.dir/src/drawing/Model.cpp.o
+[26/162] Building CXX object CMakeFiles/cad_drawing_paint.dir/src/drawing/Paint.cpp.o
+FAILED: [code=1] CMakeFiles/cad_drawing_paint.dir/src/drawing/Paint.cpp.o 
+/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -I"/Users/binova/Documents/Projects/Suru/Solidworks Clone/src" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/mkspecs/macx-clang" -isystem "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtGui" -g -std=c++20 -mmacosx-version-min=13.0 -MD -MT CMakeFiles/cad_drawing_paint.dir/src/drawing/Paint.cpp.o -MF CMakeFiles/cad_drawing_paint.dir/src/drawing/Paint.cpp.o.d -o CMakeFiles/cad_drawing_paint.dir/src/drawing/Paint.cpp.o -c '/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/drawing/Paint.cpp'
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/src/drawing/Paint.cpp:19:29: error: call to member function 'value' is ambiguous
+   19 |             for(auto path:v.value(key).toArray()){
+      |                           ~~^~~~~
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcbormap.h:270:16: note: candidate function
+  270 |     QCborValue value(const QString & key) const
+      |                ^
+/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/include/QtCore/qcbormap.h:272:16: note: candidate function
+  272 |     QCborValue value(const QCborValue &key) const
+      |                ^
+1 error generated.
+[27/162] Building CXX object CMakeFiles/cad_client.dir/cad_client_autogen/mocs_compilation.cpp.o
+ninja: build stopped: subcommand failed.

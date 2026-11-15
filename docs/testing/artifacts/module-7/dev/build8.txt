@@ -1,0 +1,72 @@
+[1/77] Linking CXX static library libcad_planegcs.a
+[2/77] Linking CXX static library libcad_sketch_solver.a
+[3/77] Automatic MOC for target cad_desktop_ui
+[4/76] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+[5/76] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[6/76] Building CXX object CMakeFiles/cad_assembly_solver.dir/src/assembly/Solver.cpp.o
+[7/76] Linking CXX static library libcad_assembly_solver.a
+[8/76] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[9/76] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+[10/76] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o
+[11/76] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ExchangeUI.cpp.o
+[12/76] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyUI.cpp.o
+[13/76] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[14/76] Linking CXX executable module1_adversary
+[15/76] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyPanel.cpp.o
+[16/76] Linking CXX static library libcad_desktop_ui.a
+[17/76] Building CXX object CMakeFiles/solver_spike.dir/tests/integration/solver_spike.cpp.o
+[18/76] Automatic MOC for target module1_contracts
+[19/75] Automatic MOC for target module3_input
+[20/74] Automatic MOC for target module2_contracts
+[21/73] Automatic MOC for target module3_contracts
+[22/72] Automatic MOC for target module4_workspace
+[23/71] Automatic MOC for target module4_contracts
+[24/70] Automatic MOC for target module5_contracts
+[25/69] Automatic MOC for target module6_contracts
+[26/68] Building CXX object CMakeFiles/cad-desktop.dir/apps/desktop/main.cpp.o
+[27/68] Building CXX object CMakeFiles/module2_storage.dir/tests/module2/storage.cpp.o
+[28/68] Building CXX object CMakeFiles/module2_fault_worker.dir/tests/module2/fault_worker.cpp.o
+[29/68] Building CXX object CMakeFiles/module2_dispatch.dir/tests/module2/dispatch.cpp.o
+[30/68] Building CXX object CMakeFiles/module3_persistence.dir/tests/module3/persistence.cpp.o
+[31/68] Building CXX object CMakeFiles/module4_geometry.dir/tests/module4/geometry.cpp.o
+[32/68] Building CXX object CMakeFiles/module4_persistence.dir/tests/module4/persistence.cpp.o
+[33/68] Building CXX object CMakeFiles/module4_variants.dir/tests/module4/variants.cpp.o
+[34/68] Building CXX object CMakeFiles/module5_engine.dir/tests/module5/engine.cpp.o
+[35/68] Building CXX object CMakeFiles/module5_persistence.dir/tests/module5/persistence.cpp.o
+[36/68] Building CXX object CMakeFiles/module5_b2.dir/tests/module5/b2.cpp.o
+[37/68] Building CXX object CMakeFiles/module6_persistence.dir/tests/module6/persistence.cpp.o
+[38/68] Building CXX object CMakeFiles/module7_model.dir/tests/module7/model.cpp.o
+[39/68] Building CXX object CMakeFiles/module1_contracts.dir/tests/module1/contracts.cpp.o
+[40/68] Building CXX object CMakeFiles/module2_contracts.dir/tests/module2/contracts.cpp.o
+[41/68] Building CXX object CMakeFiles/module4_workspace.dir/tests/module4/workspace.cpp.o
+[42/68] Building CXX object CMakeFiles/module3_contracts.dir/tests/module3/contracts.cpp.o
+[43/68] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[44/68] Building CXX object CMakeFiles/module5_contracts.dir/tests/module5/contracts.cpp.o
+[45/68] Linking CXX executable solver_spike
+[46/68] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[47/68] Linking CXX executable module1_contracts
+[48/68] Linking CXX executable module2_storage
+[49/68] Linking CXX executable module2_contracts
+[50/68] Linking CXX executable module2_fault_worker
+[51/68] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[52/68] Linking CXX executable module3_persistence
+[53/68] Linking CXX executable module3_input
+[54/68] Linking CXX executable module3_contracts
+[55/68] Linking CXX executable module3_solver
+[56/68] Linking CXX executable module4_workspace
+[57/68] Linking CXX executable module4_geometry
+[58/68] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[59/68] Linking CXX executable module4_contracts
+[60/68] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[61/68] Linking CXX executable module5_engine
+[62/68] Building CXX object CMakeFiles/module6_contracts.dir/tests/module6/contracts.cpp.o
+[63/68] Linking CXX executable module5_persistence
+[64/68] Linking CXX executable module5_b2
+[65/68] Linking CXX executable module5_contracts
+[66/68] Linking CXX executable module6_contracts
+[67/68] Linking CXX executable module6_persistence
+[68/68] Linking CXX executable module7_model

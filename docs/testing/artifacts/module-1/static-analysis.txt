@@ -1,0 +1,17 @@
+Analyzed tests/unit/harness_probe.cpp
+Analyzed tests/integration/protocol_spike.cpp
+Analyzed tests/integration/storage_spike.cpp
+Analyzed tests/integration/cad_spike.cpp
+Analyzed tests/integration/solver_spike.cpp
+Analyzed tests/integration/mate_spike.cpp
+Analyzed tests/native/slice_worker.cpp
+Analyzed tests/native/slice_desktop.cpp
+Analyzed src/protocol/Mesh.cpp
+Analyzed src/protocol/Client.cpp
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed src/render/Viewport.cpp
+Analyzed src/geometry/occt/ReferenceScene.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed apps/desktop/main.cpp
+Analyzed tests/module1/adversary.cpp
+Analyzed tests/module1/contracts.cpp

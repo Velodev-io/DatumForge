@@ -1,0 +1,13 @@
+{
+  "status": "Fail",
+  "reviewed": [
+    "native-100/cm1-slot-3-Point-Arc-mm.png",
+    "native-100/cm1-curve-Spline-mm.png"
+  ],
+  "findings": [
+    "Slot path-radius and sweep labels overlap at their shared center",
+    "Numeric literal expressions duplicate dimension values with excessive decimals",
+    "QLineEdit numeric text scrolls to its tail after setText, obscuring its beginning"
+  ],
+  "action": "Fix transient label placement, omit redundant literal expression annotations and show shortest round-trip numeric text from its beginning, then rerun current-source verification"
+}

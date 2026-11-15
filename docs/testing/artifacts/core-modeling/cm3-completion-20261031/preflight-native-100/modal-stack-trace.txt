@@ -1,0 +1,10 @@
+********* Start testing of CompletionContracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : CompletionContracts::initTestCase()
+QINFO  : CompletionContracts::proposalRestart(fullyDefine) Modal readiness 0 1 "sketchProposalEditor" true true
+QINFO  : CompletionContracts::proposalRestart(fullyDefine) Modal action entered "sketchProposalEditor"
+QINFO  : CompletionContracts::proposalRestart(fullyDefine) Modal action returned "sketchProposalEditor" false
+Sampling process 25362 for 1 second with 1 millisecond of run time between samples
+Sampling completed, processing symbols...
+Sample analysis of process 25362 written to file /Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/cm3-completion-20261031/preflight-native-100/ready-stack.txt
+Bounded diagnostic terminated its own stalled test

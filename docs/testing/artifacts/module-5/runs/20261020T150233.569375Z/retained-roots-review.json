@@ -1,0 +1,27 @@
+{
+  "scope": "Source review of retained roots, supplemented by B2 runtime cache assertions; not a heap/live-object or physical footprint measurement",
+  "cache": {
+    "owner": "ProjectStore::resultCache; max 128 entries / 256 MiB topology estimate",
+    "shape_roots": "Per-effect touched bodies, stage and tool; returned Part results retain shapes while in use",
+    "trim": "ResultCache::trim clears entries/order/bytes; ProjectStore::close also trims",
+    "runtime_check": "B2 asserts zero cache entries/estimated bytes after trim, then exact semantic regeneration and save/reopen/recovery equivalence"
+  },
+  "semantic_roots": {
+    "owner": "SQLite current feature collection and last-valid semantic checkpoint; durable commands/history/recovery references",
+    "undo_limits": "StoreOptions defaults 128 history entries and 8 MiB retained history; configured upper bounds checked",
+    "ledger_limit": "100000 durable command records; archival required before further edits; trimming result caches does not discard this authority"
+  },
+  "result": "Pass for inspected ownership and bounded cache accounting; NFR-009 total live-object growth proof remains Blocked",
+  "limitations": [
+    "No total OCCT live-object census",
+    "No shared/GPU/allocator physical footprint accounting",
+    "No full SRS retention/performance acceptance"
+  ],
+  "source_sha256": {
+    "src/geometry/occt/Part.hpp": "fa61ee1fc0442d0d8a7bfec2e1bd6cf78b81b7e02ac0c43886b92680b711ba91",
+    "src/geometry/occt/Part.cpp": "e067d3e47cf0b52163c5bbd1803cc0c6c841a2822e24305c81f6452300aedcda",
+    "src/persistence/ProjectStore.hpp": "6a836e99d26555c3a91f9d901c9385d69fff6eb73d9afcdee406a72eeb163f92",
+    "src/persistence/ProjectStore.cpp": "58359c9cd34e40e39e1b023e0a6f175a970fc428d5896dd04dd6be20180c5416",
+    "tests/module5/b2.cpp": "f5564f69ffefee0f6b5a5478acc646345fe5191837999c874c1e74831be2a74f"
+  }
+}

@@ -1,0 +1,16 @@
+********* Start testing of Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 26.6.2
+PASS   : Contracts::initTestCase()
+PASS   : Contracts::nativeSlotTools()
+QINFO  : Contracts::nativeCurveTools() Curve workflow "Ellipse" "mm"
+QINFO  : Contracts::nativeCurveTools() Curve workflow "EllipticalArc" "mm"
+QINFO  : Contracts::nativeCurveTools() Curve workflow "Parabola" "mm"
+QINFO  : Contracts::nativeCurveTools() Curve workflow "Spline" "mm"
+QINFO  : Contracts::nativeCurveTools() Curve workflow "Ellipse" "in"
+QINFO  : Contracts::nativeCurveTools() Curve workflow "EllipticalArc" "in"
+QINFO  : Contracts::nativeCurveTools() Curve workflow "Parabola" "in"
+QINFO  : Contracts::nativeCurveTools() Curve workflow "Spline" "in"
+PASS   : Contracts::nativeCurveTools()
+PASS   : Contracts::cleanupTestCase()
+Totals: 4 passed, 0 failed, 0 skipped, 0 blacklisted, 21355ms
+********* Finished testing of Contracts *********

@@ -1,0 +1,23 @@
+Test project /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug
+    Start 23: module3.shapeEditing
+1/9 Test #23: module3.shapeEditing .............   Passed    2.80 sec
+    Start 27: module3.interaction
+2/9 Test #27: module3.interaction ..............   Passed    2.53 sec
+    Start 30: module4.workspace
+3/9 Test #30: module4.workspace ................   Passed    1.67 sec
+    Start 65: cm3.associated_dimensions
+4/9 Test #65: cm3.associated_dimensions ........   Passed    1.18 sec
+    Start 66: cm3.dimensions
+5/9 Test #66: cm3.dimensions ...................   Passed    0.47 sec
+    Start 67: cm3.dimension_contracts
+6/9 Test #67: cm3.dimension_contracts ..........   Passed   10.24 sec
+    Start 68: cm3.dimension_identity
+7/9 Test #68: cm3.dimension_identity ...........   Passed    0.68 sec
+    Start 69: cm3.completion
+8/9 Test #69: cm3.completion ...................   Passed    2.09 sec
+    Start 70: cm3.completion_contracts
+9/9 Test #70: cm3.completion_contracts .........   Passed   11.98 sec
+
+100% tests passed, 0 tests failed out of 9
+
+Total Test time (real) =  33.64 sec
