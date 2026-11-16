@@ -1,0 +1,12 @@
+********* Start testing of WorkflowContractsCM6 *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 27.2.1
+PASS   : WorkflowContractsCM6::initTestCase()
+PASS   : WorkflowContractsCM6::bracketFixture()
+PASS   : WorkflowContractsCM6::threadAndFilletFixture()
+PASS   : WorkflowContractsCM6::chamferAndBlockedBlendFixture()
+PASS   : WorkflowContractsCM6::nativeEffectiveScales(mm)
+PASS   : WorkflowContractsCM6::nativeEffectiveScales(inch)
+PASS   : WorkflowContractsCM6::persistenceAndReconstruction()
+PASS   : WorkflowContractsCM6::cleanupTestCase()
+Totals: 8 passed, 0 failed, 0 skipped, 0 blacklisted, 42734ms
+********* Finished testing of WorkflowContractsCM6 *********

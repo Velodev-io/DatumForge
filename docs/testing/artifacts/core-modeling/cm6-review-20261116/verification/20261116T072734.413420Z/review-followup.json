@@ -1,0 +1,5 @@
+{
+  "status": "Superseded for native file round-trip acceptance",
+  "reason": "Image review found the native test used its recovery root as a save destination and did not assert save/open success. The original passing log is retained. Production code is unchanged by this follow-up; the test now uses a separate marked files root, checks file existence, closes the project, reopens it, and requires current state.",
+  "required_followup": "Rebuild and rerun native workflows and current-source verification before delivery."
+}

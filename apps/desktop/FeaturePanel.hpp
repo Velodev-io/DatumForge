@@ -8,8 +8,10 @@
 #include <QFormLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QListWidget>
 #include <QPushButton>
 #include <QSpinBox>
+#include <QTableWidget>
 #include <QWidget>
 namespace cad {
 class FeaturePanel : public QWidget {
@@ -79,6 +81,88 @@ class FeaturePanel : public QWidget {
     QComboBox *draftFaces = nullptr;
     QDoubleSpinBox *draftStandaloneAngle = nullptr;
     QCheckBox *draftStandaloneOutward = nullptr;
+
+    // CM6 Controls
+    // Hole Wizard
+    QComboBox *holeFamily = nullptr;
+    QComboBox *holePlacementFace = nullptr;
+    QListWidget *holePoints = nullptr;
+    QComboBox *holeDepthReference = nullptr, *holeEndReference = nullptr;
+    QDoubleSpinBox *holeTapDiameter = nullptr, *holeTaperAngle = nullptr;
+    QDoubleSpinBox *holeThreadPitch = nullptr, *holeThreadDepth = nullptr;
+    QLineEdit *holeThreadDesignation = nullptr;
+    QCheckBox *holeCustomSizing = nullptr;
+    QLabel *holeCatalog = nullptr;
+    QDoubleSpinBox *holeDiameter = nullptr;
+    QDoubleSpinBox *holeDepth = nullptr;
+    QDoubleSpinBox *holeCounterboreDia = nullptr;
+    QDoubleSpinBox *holeCounterboreDepth = nullptr;
+    QDoubleSpinBox *holeCountersinkDia = nullptr;
+    QDoubleSpinBox *holeCountersinkAngle = nullptr;
+    QDoubleSpinBox *holeDrillAngle = nullptr;
+    QComboBox *holeTermination = nullptr;
+
+    // Treatments: Fillet & Chamfer
+    QComboBox *filletMethod = nullptr;
+    QDoubleSpinBox *filletRadius = nullptr;
+    QCheckBox *filletPropagateTangent = nullptr;
+    QListWidget *filletEdges = nullptr;
+    QComboBox *filletVariableEdge = nullptr, *filletTransition = nullptr;
+    QTableWidget *filletRadii = nullptr, *filletControlPoints = nullptr;
+    QPushButton *addFilletPoint = nullptr, *removeFilletPoint = nullptr;
+
+    QComboBox *chamferMethod = nullptr;
+    QDoubleSpinBox *chamferDistance = nullptr;
+    QDoubleSpinBox *chamferDistance2 = nullptr;
+    QDoubleSpinBox *chamferAngle = nullptr;
+    QCheckBox *chamferFlip = nullptr;
+    QListWidget *chamferEdges = nullptr;
+    QComboBox *chamferReferenceFace = nullptr;
+    QCheckBox *chamferPropagateTangent = nullptr;
+
+    // Rib
+    QDoubleSpinBox *ribThickness = nullptr;
+    QComboBox *ribSide = nullptr;
+    QComboBox *ribDirection = nullptr;
+    QCheckBox *ribFlipMaterial = nullptr;
+
+    // Repetition: LinearPattern, CircularPattern, Mirror
+    QComboBox *patSeedKind = nullptr;
+    QComboBox *patSeed = nullptr;
+    QComboBox *linearDir1Ref = nullptr;
+    QDoubleSpinBox *linearSpacing1 = nullptr;
+    QSpinBox *linearCount1 = nullptr;
+    QCheckBox *linearReverse1 = nullptr;
+    QComboBox *linearDir2Ref = nullptr;
+    QDoubleSpinBox *linearSpacing2 = nullptr;
+    QSpinBox *linearCount2 = nullptr;
+    QCheckBox *linearReverse2 = nullptr;
+
+    QComboBox *circAxisRef = nullptr;
+    QSpinBox *circCount = nullptr;
+    QCheckBox *circEqualSpacing = nullptr;
+    QDoubleSpinBox *circAngle = nullptr;
+    QCheckBox *circReverse = nullptr;
+
+    QComboBox *mirrorPlaneRef = nullptr;
+
+    // Cosmetic Thread
+    QComboBox *threadEdgeRef = nullptr;
+    QLineEdit *threadDesignation = nullptr;
+    QComboBox *threadStandard = nullptr;
+    QComboBox *threadType = nullptr;
+    QLineEdit *threadSize = nullptr;
+    QCheckBox *threadInternal = nullptr;
+    QDoubleSpinBox *threadMajorDia = nullptr;
+    QDoubleSpinBox *threadMinorDia = nullptr;
+    QDoubleSpinBox *threadPitch = nullptr;
+    QComboBox *threadTermination = nullptr;
+    QCheckBox *threadShadedDisplay = nullptr;
+    QDoubleSpinBox *threadDepth = nullptr;
+    QCborMap availableModelingInputs;
+    void installHolePoints();
+    void installPatternSeeds();
+    void installFilletRadii();
 
     // Repair controls
     QComboBox *repairCandidate = nullptr;

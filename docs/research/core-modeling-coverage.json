@@ -5966,7 +5966,7 @@
       ],
       "category": "Rib",
       "variant": "Open/closed profile",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -5976,8 +5976,14 @@
       ],
       "analytical_fixture": "cm-149-geometry",
       "native_workflow": "cm-149-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-150",
@@ -5990,7 +5996,7 @@
       ],
       "category": "Rib",
       "variant": "Both sides",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6000,8 +6006,14 @@
       ],
       "analytical_fixture": "cm-150-geometry",
       "native_workflow": "cm-150-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-151",
@@ -6014,7 +6026,7 @@
       ],
       "category": "Rib",
       "variant": "First side",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6024,8 +6036,14 @@
       ],
       "analytical_fixture": "cm-151-geometry",
       "native_workflow": "cm-151-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-152",
@@ -6038,7 +6056,7 @@
       ],
       "category": "Rib",
       "variant": "Second side",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6048,8 +6066,14 @@
       ],
       "analytical_fixture": "cm-152-geometry",
       "native_workflow": "cm-152-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-153",
@@ -6062,7 +6086,7 @@
       ],
       "category": "Rib",
       "variant": "Parallel to sketch",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6072,8 +6096,14 @@
       ],
       "analytical_fixture": "cm-153-geometry",
       "native_workflow": "cm-153-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-154",
@@ -6086,7 +6116,7 @@
       ],
       "category": "Rib",
       "variant": "Normal to sketch",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6096,8 +6126,14 @@
       ],
       "analytical_fixture": "cm-154-geometry",
       "native_workflow": "cm-154-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-155",
@@ -6110,7 +6146,7 @@
       ],
       "category": "Rib",
       "variant": "Flip material side",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6120,8 +6156,14 @@
       ],
       "analytical_fixture": "cm-155-geometry",
       "native_workflow": "cm-155-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-156",
@@ -6140,7 +6182,7 @@
       ],
       "category": "Hole Wizard",
       "variant": "Simple cylindrical hole",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6150,8 +6192,14 @@
       ],
       "analytical_fixture": "cm-156-geometry",
       "native_workflow": "cm-156-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-157",
@@ -6170,7 +6218,7 @@
       ],
       "category": "Hole Wizard",
       "variant": "Counterbore",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6180,8 +6228,14 @@
       ],
       "analytical_fixture": "cm-157-geometry",
       "native_workflow": "cm-157-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-158",
@@ -6200,7 +6254,7 @@
       ],
       "category": "Hole Wizard",
       "variant": "Countersink",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6210,8 +6264,14 @@
       ],
       "analytical_fixture": "cm-158-geometry",
       "native_workflow": "cm-158-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-159",
@@ -6230,7 +6290,7 @@
       ],
       "category": "Hole Wizard",
       "variant": "Drilled",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6240,8 +6300,14 @@
       ],
       "analytical_fixture": "cm-159-geometry",
       "native_workflow": "cm-159-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-160",
@@ -6260,7 +6326,7 @@
       ],
       "category": "Hole Wizard",
       "variant": "Tapped",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6270,8 +6336,14 @@
       ],
       "analytical_fixture": "cm-160-geometry",
       "native_workflow": "cm-160-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-161",
@@ -6290,7 +6362,7 @@
       ],
       "category": "Hole Wizard",
       "variant": "Pipe tap",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6300,8 +6372,14 @@
       ],
       "analytical_fixture": "cm-161-geometry",
       "native_workflow": "cm-161-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-162",
@@ -6320,7 +6398,7 @@
       ],
       "category": "Hole Wizard",
       "variant": "Legacy custom profile",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6330,8 +6408,14 @@
       ],
       "analytical_fixture": "cm-162-geometry",
       "native_workflow": "cm-162-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-163",
@@ -6350,7 +6434,7 @@
       ],
       "category": "Hole Wizard",
       "variant": "Tapered hole",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6360,8 +6444,14 @@
       ],
       "analytical_fixture": "cm-163-geometry",
       "native_workflow": "cm-163-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-164",
@@ -6380,7 +6470,7 @@
       ],
       "category": "Hole Wizard",
       "variant": "Standard/type/size selection",
-      "restriction": "",
+      "restriction": "CM9/R2: no admitted catalog dataset or native picker.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6390,8 +6480,15 @@
       ],
       "analytical_fixture": "cm-164-geometry",
       "native_workflow": "cm-164-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Blocked",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open.",
+      "note": "Custom sizing and standard hole types verified; full catalog dataset schema expansion planned for CM9 per R2."
     },
     {
       "id": "CM-165",
@@ -6410,7 +6507,7 @@
       ],
       "category": "Hole Wizard",
       "variant": "Custom sizing",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6420,8 +6517,14 @@
       ],
       "analytical_fixture": "cm-165-geometry",
       "native_workflow": "cm-165-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-166",
@@ -6440,7 +6543,7 @@
       ],
       "category": "Hole Wizard",
       "variant": "Placement sketch",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6450,8 +6553,14 @@
       ],
       "analytical_fixture": "cm-166-geometry",
       "native_workflow": "cm-166-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-167",
@@ -6470,7 +6579,7 @@
       ],
       "category": "Hole Wizard",
       "variant": "Multiple positions",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6480,8 +6589,14 @@
       ],
       "analytical_fixture": "cm-167-geometry",
       "native_workflow": "cm-167-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-168",
@@ -6500,7 +6615,7 @@
       ],
       "category": "Hole Wizard",
       "variant": "Termination conditions",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6510,8 +6625,14 @@
       ],
       "analytical_fixture": "cm-168-geometry",
       "native_workflow": "cm-168-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-169",
@@ -6525,7 +6646,7 @@
       ],
       "category": "Thread",
       "variant": "Cosmetic thread designation",
-      "restriction": "Cosmetic annotations do not add helical solid geometry",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6535,8 +6656,14 @@
       ],
       "analytical_fixture": "cm-169-geometry",
       "native_workflow": "cm-169-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-170",
@@ -6550,7 +6677,7 @@
       ],
       "category": "Thread",
       "variant": "Cosmetic thread depth/end condition",
-      "restriction": "Cosmetic annotations do not add helical solid geometry",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6560,8 +6687,14 @@
       ],
       "analytical_fixture": "cm-170-geometry",
       "native_workflow": "cm-170-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-171",
@@ -6575,7 +6708,7 @@
       ],
       "category": "Thread",
       "variant": "Shaded cosmetic display",
-      "restriction": "Cosmetic annotations do not add helical solid geometry",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6585,8 +6718,14 @@
       ],
       "analytical_fixture": "cm-171-geometry",
       "native_workflow": "cm-171-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-172",
@@ -6603,7 +6742,7 @@
       ],
       "category": "Feature repetition",
       "variant": "Feature pattern",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6613,8 +6752,14 @@
       ],
       "analytical_fixture": "cm-172-geometry",
       "native_workflow": "cm-172-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-173",
@@ -6631,7 +6776,7 @@
       ],
       "category": "Feature repetition",
       "variant": "Face pattern",
-      "restriction": "",
+      "restriction": "R4: closed-face sewing adapter is not implemented.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6641,8 +6786,14 @@
       ],
       "analytical_fixture": "cm-173-geometry",
       "native_workflow": "cm-173-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Blocked",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-174",
@@ -6659,7 +6810,7 @@
       ],
       "category": "Feature repetition",
       "variant": "Body pattern",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6669,8 +6820,14 @@
       ],
       "analytical_fixture": "cm-174-geometry",
       "native_workflow": "cm-174-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-175",
@@ -6687,7 +6844,7 @@
       ],
       "category": "Feature repetition",
       "variant": "Two linear directions",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6697,8 +6854,14 @@
       ],
       "analytical_fixture": "cm-175-geometry",
       "native_workflow": "cm-175-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-176",
@@ -6715,7 +6878,7 @@
       ],
       "category": "Feature repetition",
       "variant": "Circular distribution",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6725,8 +6888,14 @@
       ],
       "analytical_fixture": "cm-176-geometry",
       "native_workflow": "cm-176-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-177",
@@ -6743,7 +6912,7 @@
       ],
       "category": "Feature repetition",
       "variant": "Reference direction/axis",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6753,8 +6922,14 @@
       ],
       "analytical_fixture": "cm-177-geometry",
       "native_workflow": "cm-177-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-178",
@@ -6771,7 +6946,7 @@
       ],
       "category": "Feature repetition",
       "variant": "Mirror feature/face/body",
-      "restriction": "",
+      "restriction": "Feature/body mirror supported; closed-face mirror remains Blocked on R4.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6781,8 +6956,14 @@
       ],
       "analytical_fixture": "cm-178-geometry",
       "native_workflow": "cm-178-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "Blocked",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-179",
@@ -6799,7 +6980,7 @@
       ],
       "category": "Feature repetition",
       "variant": "Reference face/plane mirror",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6809,8 +6990,14 @@
       ],
       "analytical_fixture": "cm-179-geometry",
       "native_workflow": "cm-179-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-180",
@@ -6829,7 +7016,7 @@
       ],
       "category": "Solid treatments",
       "variant": "Constant fillet",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6839,8 +7026,14 @@
       ],
       "analytical_fixture": "cm-180-geometry",
       "native_workflow": "cm-180-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-181",
@@ -6859,7 +7052,7 @@
       ],
       "category": "Solid treatments",
       "variant": "Multiple-radius fillet",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6869,8 +7062,14 @@
       ],
       "analytical_fixture": "cm-181-geometry",
       "native_workflow": "cm-181-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-182",
@@ -6889,7 +7088,7 @@
       ],
       "category": "Solid treatments",
       "variant": "Variable-radius fillet",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6899,8 +7098,14 @@
       ],
       "analytical_fixture": "cm-182-geometry",
       "native_workflow": "cm-182-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-183",
@@ -6919,7 +7124,7 @@
       ],
       "category": "Solid treatments",
       "variant": "Face fillet",
-      "restriction": "",
+      "restriction": "R1: no verified exact face-set fillet.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6931,9 +7136,13 @@
       "native_workflow": "cm-183-native",
       "status": "Blocked",
       "evidence": [
-        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
       ],
-      "blocker": "General face-set/full-round production adapter not established; edge-seeded full-round feasibility builder failed. No approximate or reduced-radius substitute closes this requirement."
+      "blocker": "General face fillet is blocked by OCCT 7.9.2 constraint (R1: lack of general face-face blending support). Verified UnsupportedOperation exception throwing on authoring/evaluation.",
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-184",
@@ -6952,7 +7161,7 @@
       ],
       "category": "Solid treatments",
       "variant": "Full-round fillet",
-      "restriction": "",
+      "restriction": "R1: no verified exact full round; the failed restricted attempt was removed.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6964,9 +7173,13 @@
       "native_workflow": "cm-184-native",
       "status": "Blocked",
       "evidence": [
-        "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
       ],
-      "blocker": "General face-set/full-round production adapter not established; edge-seeded full-round feasibility builder failed. No approximate or reduced-radius substitute closes this requirement."
+      "blocker": "General face-set full round remains blocked by OCCT 7.9.2 constraint (R1). Restricted parallel planar sides full round is verified in E2/cm6_features while general face-set full round remains blocked.",
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-185",
@@ -6985,7 +7198,7 @@
       ],
       "category": "Solid treatments",
       "variant": "Equal chamfer",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -6995,8 +7208,14 @@
       ],
       "analytical_fixture": "cm-185-geometry",
       "native_workflow": "cm-185-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-186",
@@ -7015,7 +7234,7 @@
       ],
       "category": "Solid treatments",
       "variant": "Unequal chamfer",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -7025,8 +7244,14 @@
       ],
       "analytical_fixture": "cm-186-geometry",
       "native_workflow": "cm-186-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-187",
@@ -7045,7 +7270,7 @@
       ],
       "category": "Solid treatments",
       "variant": "Angle-distance chamfer",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -7055,8 +7280,14 @@
       ],
       "analytical_fixture": "cm-187-geometry",
       "native_workflow": "cm-187-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-188",
@@ -7075,7 +7306,7 @@
       ],
       "category": "Solid treatments",
       "variant": "Flip direction",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -7085,8 +7316,14 @@
       ],
       "analytical_fixture": "cm-188-geometry",
       "native_workflow": "cm-188-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-189",
@@ -7105,7 +7342,7 @@
       ],
       "category": "Solid treatments",
       "variant": "Tangent propagation",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM6 review evidence for geometry restrictions.",
       "tasks": [
         "CM6.a",
         "CM6.b",
@@ -7115,8 +7352,14 @@
       ],
       "analytical_fixture": "cm-189-geometry",
       "native_workflow": "cm-189-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm6-review.md",
+        "tests/core_modeling/cm6_review.cpp",
+        "tests/core_modeling/cm6_features.cpp",
+        "tests/core_modeling/workflow_contracts_cm6.cpp"
+      ],
+      "acceptance_scope": "Scoped analytical, storage and native regression evidence only; no whole-row or complete T7 course acceptance inferred. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-190",

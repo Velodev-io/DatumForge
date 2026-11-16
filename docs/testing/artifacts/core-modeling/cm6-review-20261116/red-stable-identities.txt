@@ -1,0 +1,1 @@
+FAIL: /Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/cm6_review.cpp:87: first.part.bodies[1].id == second.part.bodies[1].id

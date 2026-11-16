@@ -1,0 +1,9 @@
+********* Start testing of WorkflowContractsCM6 *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 27.2.1
+PASS   : WorkflowContractsCM6::initTestCase()
+QWARN  : WorkflowContractsCM6::nativeEffectiveScales(mm) "WorkerUnavailable: Worker request timed out. Outcome is uncertain; restart and inspect before retrying." "Inputs changed · preview required"
+FAIL!  : WorkflowContractsCM6::nativeEffectiveScales(mm) 'accept()' returned FALSE. ()
+   Loc: [/Users/binova/Documents/Projects/Suru/Solidworks Clone/tests/core_modeling/workflow_contracts_cm6.cpp(608)]
+PASS   : WorkflowContractsCM6::cleanupTestCase()
+Totals: 2 passed, 1 failed, 0 skipped, 0 blacklisted, 143907ms
+********* Finished testing of WorkflowContractsCM6 *********

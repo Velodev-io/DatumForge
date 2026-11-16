@@ -786,6 +786,47 @@ DisplayMesh Part::mesh(double deflection) const {
     exactBounds.Get(x, y, z, a, b, c);
     m.minimum = {float(x), float(y), float(z)};
     m.maximum = {float(a), float(b), float(c)};
+    // Cosmetic rings are display segments only; exact topology and mass stay unchanged.
+    int overlayBudget = 8192;
+    for (auto value : cosmeticThreads) {
+        auto thread = value.toMap();
+        auto vector = [&](QString key) {
+            auto a = thread.value(key).toArray();
+            return gp_Vec(a[0].toDouble(), a[1].toDouble(), a[2].toDouble());
+        };
+        auto origin = vector("origin") * 1000, u = vector("u"), v = vector("v"),
+             direction = vector("direction");
+        double radius = thread.value("radius").toDouble() * 1000,
+               depth = thread.value("depth").toDouble() * 1000,
+               pitch = thread.value("pitch").toDouble() * 1000;
+        // Lift cosmetic lines toward free space beyond the display tessellation error.
+        radius +=
+            (thread.value("internal").toBool() ? -1 : 1) * std::min(radius * .1, deflection * 1.1);
+        int availableRings = std::max(2, overlayBudget / (32 * int(cosmeticThreads.size())));
+        int rings = int(std::min(8., std::floor(depth / pitch) + 1));
+        rings = std::min(availableRings, std::max(2, rings));
+        for (int ring = 0; ring < rings; ++ring) {
+            double station = ring == rings - 1
+                                 ? depth
+                                 : std::floor((depth / pitch) * ring / (rings - 1)) * pitch;
+            for (int segment = 0; segment < 32; ++segment) {
+                m.edgeIds.append("cosmetic/" + thread.value("id").toString() + "/" +
+                                 QString::number(ring * 32 + segment));
+                for (int endpoint : {segment, segment + 1}) {
+                    double angle = endpoint * 2 * std::numbers::pi / 32;
+                    auto p = origin + direction * station +
+                             (u * std::cos(angle) + v * std::sin(angle)) * radius;
+                    QVector3D point(float(p.X()), float(p.Y()), float(p.Z()));
+                    m.edges.append(point);
+                    for (int axis = 0; axis < 3; ++axis) {
+                        m.minimum[axis] = qMin(m.minimum[axis], point[axis]);
+                        m.maximum[axis] = qMax(m.maximum[axis], point[axis]);
+                    }
+                }
+            }
+        }
+        overlayBudget -= rings * 32;
+    }
     m.instances.append(Instance{"part", {}});
     m.validate();
     return m;

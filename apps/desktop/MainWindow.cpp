@@ -61,11 +61,12 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
         historyPanel->begin(active, item ? item->data(0, Qt::UserRole + 5).toString() : QString());
     });
     connect(historyPanel, &HistoryPanel::editingChanged, this, &MainWindow::refresh);
-    for (auto pair : {std::pair{"extrude", "Extrude"}, std::pair{"revolve", "Revolve"},
-                      std::pair{"draft", "Draft"}, std::pair{"fillet", "Fillet"},
-                      std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"},
-                      std::pair{"pattern", "LinearPattern"}, std::pair{"mirror", "Mirror"},
-                      std::pair{"circularPattern", "CircularPattern"}})
+    for (auto pair :
+         {std::pair{"extrude", "Extrude"}, std::pair{"revolve", "Revolve"},
+          std::pair{"draft", "Draft"}, std::pair{"fillet", "Fillet"},
+          std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"}, std::pair{"rib", "Rib"},
+          std::pair{"pattern", "LinearPattern"}, std::pair{"mirror", "Mirror"},
+          std::pair{"circularPattern", "CircularPattern"}, std::pair{"thread", "CosmeticThread"}})
         connect(commands.get(pair.first), &QAction::triggered, this,
                 [this, pair] { featurePanel->begin(pair.second); });
     connect(featurePanel, &FeaturePanel::editingChanged, this, &MainWindow::refresh);

@@ -2021,49 +2021,79 @@
     ]
   },
   "CM6.a": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM6 review repairs for supported production behavior; whole CM6 remains In progress. Face/full-round blends, closed-face repetition and catalog data remain Blocked; complete T7 replay remains open.",
+    "implementation_status": "Supported subset repaired; see the finding-to-regression mapping and explicit restrictions in CM6 review evidence.",
+    "development_verification_status": "Pass: 103 enabled CTests, 18 Clang analyses, pinned format, ownership/research/coverage/specification checks; all 297 frozen source/configuration hashes matched. Earlier blanket completion claims withdrawn.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm6-review.md",
+      "docs/testing/artifacts/core-modeling/cm6-review-20261116/verification/20261116T084114.620661Z/verification.json",
+      "docs/testing/artifacts/core-modeling/cm6-review-20261116/verification/20261116T084114.620661Z/source-identity.json",
+      "tests/core_modeling/cm6_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm6.cpp"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen and overlay workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T7 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM6.b": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "In progress",
+    "scope": "CM6 review repairs for supported production behavior; whole CM6 remains In progress. Face/full-round blends, closed-face repetition and catalog data remain Blocked; complete T7 replay remains open.",
+    "implementation_status": "Supported subset repaired; see the finding-to-regression mapping and explicit restrictions in CM6 review evidence.",
+    "development_verification_status": "Pass: 103 enabled CTests, 18 Clang analyses, pinned format, ownership/research/coverage/specification checks; all 297 frozen source/configuration hashes matched. Earlier blanket completion claims withdrawn.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm6-review.md",
+      "docs/testing/artifacts/core-modeling/cm6-review-20261116/verification/20261116T084114.620661Z/verification.json",
+      "docs/testing/artifacts/core-modeling/cm6-review-20261116/verification/20261116T084114.620661Z/source-identity.json",
+      "tests/core_modeling/cm6_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm6.cpp"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen and overlay workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T7 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM6.c": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM6 review repairs for supported production behavior; whole CM6 remains In progress. Face/full-round blends, closed-face repetition and catalog data remain Blocked; complete T7 replay remains open.",
+    "implementation_status": "Supported subset repaired; see the finding-to-regression mapping and explicit restrictions in CM6 review evidence.",
+    "development_verification_status": "Pass: 103 enabled CTests, 18 Clang analyses, pinned format, ownership/research/coverage/specification checks; all 297 frozen source/configuration hashes matched. Earlier blanket completion claims withdrawn.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm6-review.md",
+      "docs/testing/artifacts/core-modeling/cm6-review-20261116/verification/20261116T084114.620661Z/verification.json",
+      "docs/testing/artifacts/core-modeling/cm6-review-20261116/verification/20261116T084114.620661Z/source-identity.json",
+      "tests/core_modeling/cm6_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm6.cpp"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen and overlay workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T7 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM6.d": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "In progress",
+    "scope": "CM6 review repairs for supported production behavior; whole CM6 remains In progress. Face/full-round blends, closed-face repetition and catalog data remain Blocked; complete T7 replay remains open.",
+    "implementation_status": "Supported subset repaired; see the finding-to-regression mapping and explicit restrictions in CM6 review evidence.",
+    "development_verification_status": "Pass: 103 enabled CTests, 18 Clang analyses, pinned format, ownership/research/coverage/specification checks; all 297 frozen source/configuration hashes matched. Earlier blanket completion claims withdrawn.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm6-review.md",
+      "docs/testing/artifacts/core-modeling/cm6-review-20261116/verification/20261116T084114.620661Z/verification.json",
+      "docs/testing/artifacts/core-modeling/cm6-review-20261116/verification/20261116T084114.620661Z/source-identity.json",
+      "tests/core_modeling/cm6_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm6.cpp"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen and overlay workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T7 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM6.e": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "In progress",
+    "scope": "CM6 review repairs for supported production behavior; whole CM6 remains In progress. Face/full-round blends, closed-face repetition and catalog data remain Blocked; complete T7 replay remains open.",
+    "implementation_status": "Supported subset repaired; see the finding-to-regression mapping and explicit restrictions in CM6 review evidence.",
+    "development_verification_status": "Pass: 103 enabled CTests, 18 Clang analyses, pinned format, ownership/research/coverage/specification checks; all 297 frozen source/configuration hashes matched. Earlier blanket completion claims withdrawn.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm6-review.md",
+      "docs/testing/artifacts/core-modeling/cm6-review-20261116/verification/20261116T084114.620661Z/verification.json",
+      "docs/testing/artifacts/core-modeling/cm6-review-20261116/verification/20261116T084114.620661Z/source-identity.json",
+      "tests/core_modeling/cm6_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm6.cpp"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen and overlay workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T7 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM7.a": {
     "status": "Not run",

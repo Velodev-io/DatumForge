@@ -1,0 +1,66 @@
+[1/62] Automatic MOC for target cad_desktop_ui
+[2/61] Linking CXX executable module2_storage
+[3/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+[4/61] Linking CXX executable module2_fault_worker
+[5/61] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[6/61] Linking CXX executable module3_persistence
+[7/61] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[8/61] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[9/61] Linking CXX executable module5_persistence
+[10/61] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[11/61] Linking CXX executable module5_b2
+[12/61] Linking CXX executable module6_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_exchange.a'
+[13/61] Linking CXX executable module7_persistence
+[14/61] Linking CXX static library libcad_desktop_ui.a
+[15/61] Linking CXX executable module7_b3
+[16/61] Linking CXX executable module1_contracts
+[17/61] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[18/61] Linking CXX executable module2_contracts
+[19/61] Linking CXX executable module3_input
+[20/61] Linking CXX executable module3_contracts
+[21/61] Linking CXX executable module4_workspace
+[22/61] Linking CXX executable module4_contracts
+[23/61] Linking CXX executable module5_contracts
+[24/61] Linking CXX executable module6_contracts
+[25/61] Linking CXX executable module7_contracts
+[26/61] Linking CXX executable module8_drawing
+[27/61] Linking CXX executable module8_contracts
+[28/61] Linking CXX executable module9_interaction
+[29/61] Linking CXX executable module10_fault_worker
+[30/61] Linking CXX executable module10_hardening
+[31/61] Linking CXX executable cm1_relations
+[32/61] Linking CXX executable cm1_contracts
+[33/61] Linking CXX executable cm5_profiles
+[34/61] Linking CXX executable cm5_features
+[35/61] Linking CXX executable cm5_contracts
+[36/61] Linking CXX executable cm5_store
+[37/61] Linking CXX executable cm5_repair
+[38/61] Linking CXX executable cm6_store
+[39/61] Linking CXX executable cm4_store
+[40/61] Linking CXX executable cm4_support_geometry
+[41/61] Linking CXX executable cm4_support_convert
+[42/61] Linking CXX executable cm4_support_engine
+[43/61] Linking CXX executable cm4_support_store
+[44/61] Linking CXX executable cm4_support_evolution
+[45/61] Linking CXX executable cm4_datum_contracts
+[46/61] Linking CXX executable cm4_support_contracts
+[47/61] Linking CXX executable cm4_workflow_contracts
+[48/61] Linking CXX executable cm5_workflow_contracts
+[49/61] Linking CXX executable cm1_rectangles
+[50/61] Linking CXX executable cm6_workflow_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_support_geometry.a'
+[51/61] Linking CXX executable cm1_curves
+[52/61] Linking CXX executable cm1_slots
+[53/61] Linking CXX executable cm1_intent
+[54/61] Linking CXX executable cm1_pierce
+[55/61] Linking CXX executable cm3_dimensions
+[56/61] Linking CXX executable cm2_editing
+[57/61] Linking CXX executable cm3_dimension_contracts
+[58/61] Linking CXX executable cm3_associated_dimensions
+[59/61] Linking CXX executable cm3_completion
+[60/61] Linking CXX executable cm3_completion_contracts
+[61/61] Linking CXX executable cm2_contracts

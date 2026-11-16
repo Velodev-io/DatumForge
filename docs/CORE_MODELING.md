@@ -117,11 +117,11 @@ The authorized drawing slice is limited to the plan; Module 11 remains excluded.
 
 ### CM6 — Holes, ribs, repetition and treatments
 
-- [ ] **CM6.a:** Define Hole Wizard families/positions, cosmetic threads, rib controls, pattern selections and treatment variants.
-- [ ] **CM6.b:** Implement custom and catalog-driven holes, ribs, two-direction patterns, feature/face/body repetition, advanced fillets and chamfers with propagation.
-- [ ] **CM6.c:** Retain standard/version/resolved values and thread metadata; do not model cosmetic threads as helical solids.
-- [ ] **CM6.d:** Add native position sketches, selection filters and treatment previews.
-- [ ] **CM6.e:** Use nontrivial per-variant fixtures; simple cuts/edge fillets do not close Hole Wizard/face/full-round coverage. Catalog coverage depends on CM9.
+- [x] **CM6.a:** Versioned hole, thread, rib, repetition and treatment contracts are implemented. Dataset version metadata and sorted radius laws have scoped contract coverage; unversioned legacy catalog values remain readable without inventing a version. See [review repairs](testing/core-modeling-cm6-review.md).
+- [ ] **CM6.b:** Supported exact adapters are implemented and reviewed: shared extent/publication validation, stable instance identities, bounded ribs and explicit failure for unresolved operands. Face/full-round blends (R1), closed-face repetition (R4), catalog data (CM9/R2) and documented geometry combinations remain open; no full-round success is claimed.
+- [x] **CM6.c:** CM6 manifest/persistence, deterministic replay, metadata retention, save/reopen, undo/redo and explicit reference repair have scoped storage coverage. Cosmetic threads remain display metadata, never helical solids. See [review repairs](testing/core-modeling-cm6-review.md).
+- [ ] **CM6.d:** Native controls support the verified subset, including position selection, radius tables, typed operands and exact previews. Unsupported choices are disabled with diagnostics. Full per-variant native/course coverage remains open.
+- [ ] **CM6.e:** Independent analytical and worker-backed native regressions are recorded in [review evidence](testing/core-modeling-cm6-review.md). Complete T7 model replay and full platform/device/resource acceptance remain open. Headless tests and parser-only cases do not establish those gates.
 
 ### CM7 — Spatial sketches and derived curves
 

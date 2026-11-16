@@ -1,5 +1,13 @@
 # Core-modeling execution evidence
 
+[CM6 review repairs](core-modeling-cm6-review.md) supersede the 15 November
+completion claim. Stable repetition, exact body/surface terminations, bounded rib
+construction, safe reference failures, complete editor round trips and cosmetic
+thread display are checked separately from full course coverage. Face/full-round
+blends, closed-face repetition and catalog data remain Blocked; CM6 stays In
+progress. Available-Mac verification and all remaining acceptance gates are
+recorded in the linked evidence.
+
 [CM5 native review fixes and completion](core-modeling-cm5-review.md) track the
 15 November review repairs, CM5.d native authoring/manipulators, and CM5.e course
 workflow verification merged into `main` (commit `1d42a10`). All 98 enabled CTests,

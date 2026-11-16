@@ -3,7 +3,7 @@
 Living checklist maintained across sessions.
 Format: `[ ]` not started, `[/]` in progress, `[x]` done, `[~]` deferred/blocked.
 
-Last Updated: 2026-11-14
+Last Updated: 2026-11-15
 
 ---
 
@@ -50,7 +50,12 @@ Last Updated: 2026-11-14
   - [x] CM5.c: Durable persistence, Boolean provenance & explicit repair *(Verified on available-Mac development scope, branch `review/cm5-c-delivery-20261114`; native controls and full acceptance remain open)*.
   - [x] CM5.d: Native on-screen depth/thickness/draft manipulators & authoring *(Complete: FeaturePanel Extrude/Revolve/Draft controls, linear depth & angular draft handles in Viewport, exact display preview protocol, 5-scale verification at 100–200% DPR, mm/in, arbitrary sketch planes; review repairs merged into main)*.
   - [x] CM5.e: Complete course workflow verification *(Complete: T5 Tutorial 1 asymmetric draft, T5 thin extrusion midplane, T6 selected/reused contours, T6 open-profile cut, T8 standalone draft, upstream mutation & rebuild, save/reopen, 98/98 enabled CTests passing; merged into main)*.
-- [ ] **CM6: Hole Wizard, Ribs, Patterns & Treatments** *(Scheduled; not started)*.
+- [/] **CM6: Hole Wizard, Ribs, Patterns & Treatments** — [review repairs and scoped evidence](docs/testing/core-modeling-cm6-review.md); full course acceptance remains open.
+  - [x] CM6.a: Versioned semantic contracts and bounded typed references.
+  - [ ] CM6.b: Supported exact adapters repaired; face blends, closed-face repetition and catalog data remain Blocked.
+  - [x] CM6.c: Durable metadata, deterministic replay, save/reopen, undo/redo and explicit repair.
+  - [ ] CM6.d: Supported native authoring and edit workflows verified separately from full native coverage.
+  - [ ] CM6.e: Analytical/native regressions replace the unsupported whole-course completion claim.
 - [ ] **CM7: 3D Curves & Spatial Sketches** *(Scheduled; not started)*.
 - [ ] **CM8: Sweeps, Lofts & Shells** *(Scheduled; not started)*.
 - [ ] **CM9: Offline Catalogs, Materials & Evaluation Tools** *(Scheduled; not started)*.

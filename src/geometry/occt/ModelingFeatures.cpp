@@ -1,6 +1,10 @@
 #include "ModelingFeatures.hpp"
+#include "Holes.hpp"
 #include "ModelingInternal.hpp"
 #include "ModelingProfiles.hpp"
+#include "Repetition.hpp"
+#include "Ribs.hpp"
+#include "Treatments.hpp"
 #include "features/ModelingIntent.hpp"
 #include "features/ModelingRecords.hpp"
 #include "sketch/Dependencies.hpp"
@@ -34,14 +38,16 @@ QString bodyId(QString owner, int ordinal) {
                               .toString(QUuid::WithoutBraces);
 }
 void publish(kernel::Part &part, modeling::Context &context, const QCborMap &m,
-             const TopoDS_Shape &tool) {
+             const TopoDS_Shape &tool, const QStringList &identities = {}) {
     auto id = m.value("id").toString();
     kernel::validateShape(tool);
     std::vector<kernel::Body> changed;
     if (m.value("operation").toString() == "NewBody") {
         int ordinal = 0;
         for (TopExp_Explorer solid(tool, TopAbs_SOLID); solid.More(); solid.Next()) {
-            auto name = bodyId(id, ordinal++);
+            auto name = identities.empty() ? bodyId(id, ordinal) : identities.value(ordinal);
+            ++ordinal;
+            domain::id(name);
             check(std::none_of(part.bodies.begin(), part.bodies.end(),
                                [&](auto &b) { return b.id == name; }),
                   "InvalidInput", "Generated body identity collision");
@@ -248,10 +254,11 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
                 return result;
             }
             QCborArray provenance;
-            check(m.value("kind").toString() == "Extrude" ||
-                      m.value("kind").toString() == "Revolve" ||
-                      m.value("kind").toString() == "Draft",
-                  "UnsupportedOperation", "Extrude/revolve adapter required");
+            auto kind = m.value("kind").toString();
+            check(QStringList{"Extrude", "Revolve", "Draft", "Hole", "CosmeticThread", "Rib",
+                              "LinearPattern", "CircularPattern", "Mirror", "Fillet", "Chamfer"}
+                      .contains(kind),
+                  "UnsupportedOperation", "Modeling adapter required");
             TopoDS_Shape target;
             if (m.value("operation").toString() != "NewBody") {
                 auto selected = modeling::body(context, m.value("target").toMap());
@@ -262,7 +269,8 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
                       "Writable body selection is not the current target stage");
                 target = current->shape;
             }
-            if (m.value("kind").toString() == "Draft") {
+            auto historyStart = result.part.history.size();
+            if (kind == "Draft") {
                 std::vector<TopoDS_Face> faces;
                 for (auto value : m.value("faces").toArray())
                     faces.push_back(TopoDS::Face(context.references.topology(
@@ -271,7 +279,6 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
                     domain::GeometryReference::parse(m.value("neutral").toMap()));
                 auto axis = context.references.axis(
                     domain::GeometryReference::parse(m.value("pull").toMap()));
-                auto historyStart = result.part.history.size();
                 auto shape = modeling::draft(
                     target, faces, gp_Dir(vector(axis.direction)),
                     gp_Pln(kernelPoint(frame.origin),
@@ -287,6 +294,54 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
                 current->shape = shape;
                 result.part.stages[id] = shape;
                 context.bodyStages[id] = {*current};
+            } else if (kind == "Fillet") {
+                auto shape = modeling::fillet(target, m, context, result.part, id);
+                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                    provenance.append(result.part.history[n]);
+                auto selected = m.value("target").toMap().value("body").toString();
+                auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
+                                            [&](auto &b) { return b.id == selected; });
+                current->shape = shape;
+                result.part.stages[id] = shape;
+                context.bodyStages[id] = {*current};
+            } else if (kind == "Chamfer") {
+                auto shape = modeling::chamfer(target, m, context, result.part, id);
+                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                    provenance.append(result.part.history[n]);
+                auto selected = m.value("target").toMap().value("body").toString();
+                auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
+                                            [&](auto &b) { return b.id == selected; });
+                current->shape = shape;
+                result.part.stages[id] = shape;
+                context.bodyStages[id] = {*current};
+            } else if (kind == "Hole") {
+                auto tool = modeling::hole(target, m, context, result.part, id, control);
+                publish(result.part, context, m, tool);
+                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                    provenance.append(result.part.history[n]);
+            } else if (kind == "CosmeticThread") {
+                result.part.cosmeticThreads.append(modeling::cosmeticThread(m, context));
+                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                    provenance.append(result.part.history[n]);
+                result.part.stages[id] = target;
+                auto selected = m.value("target").toMap().value("body").toString();
+                auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
+                                            [&](auto &b) { return b.id == selected; });
+                context.bodyStages[id] = {*current};
+            } else if (kind == "Rib") {
+                auto tool = modeling::rib(target, m, context, result.part, id, control);
+                publish(result.part, context, m, tool);
+                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                    provenance.append(result.part.history[n]);
+            } else if (kind == "LinearPattern" || kind == "CircularPattern" || kind == "Mirror") {
+                QStringList identities;
+                auto tool =
+                    kind == "Mirror"
+                        ? modeling::mirror(m, context, result.part, id, identities)
+                        : modeling::pattern(m, context, result.part, id, identities, control);
+                publish(result.part, context, m, tool, identities);
+                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                    provenance.append(result.part.history[n]);
             } else {
                 auto selection = m.value("profile").toMap();
                 check(sketches.contains(selection.value("sketch").toString()), "ReferenceMissing",
@@ -297,7 +352,6 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
                     m.value("kind").toString() == "Revolve"
                         ? revolve(profile, m, context, result.part)
                         : modeling::extrude(profile, m, context, target, result.part, control);
-                auto historyStart = result.part.history.size();
                 publish(result.part, context, m, tool);
                 for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
                     provenance.append(result.part.history[n]);
@@ -305,14 +359,15 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
             QCborArray outputs;
             for (auto &b : context.bodyStages.value(id))
                 outputs.append(b.id);
-            result.modelingProvenance.append(
-                sketch::fields({{"feature", id},
-                                {"kind", m.value("kind")},
-                                {"operation", m.value("kind") == "Draft" ? QCborValue("Draft")
-                                                                         : m.value("operation")},
-                                {"target", m.value("target")},
-                                {"outputs", outputs},
-                                {"history", provenance}}));
+            bool directOp = kind == "Draft" || kind == "Fillet" || kind == "Chamfer" ||
+                            kind == "CosmeticThread";
+            result.modelingProvenance.append(sketch::fields(
+                {{"feature", id},
+                 {"kind", m.value("kind")},
+                 {"operation", directOp ? QCborValue(m.value("kind")) : m.value("operation")},
+                 {"target", m.value("target")},
+                 {"outputs", outputs},
+                 {"history", provenance}}));
             context.references.stages = result.part.stages;
             context.references.history = result.part.history;
             result.part.diagnostics.append(sketch::fields(

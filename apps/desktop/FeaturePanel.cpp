@@ -5,6 +5,7 @@
 #include <QDialogButtonBox>
 #include <QGroupBox>
 #include <QHBoxLayout>
+#include <QHeaderView>
 #include <QListWidget>
 #include <QScrollArea>
 #include <QSignalBlocker>
@@ -149,6 +150,210 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
     draftStandaloneAngle = spin("draftStandaloneAngle", "Draft angle (degrees)", 5, 0, 89.99999999);
     draftStandaloneOutward = check("draftStandaloneOutward", "Draft outward");
 
+    auto ispin = [&](QString id, QString label, int value, int low, int high) {
+        auto *w = new QSpinBox;
+        w->setObjectName(id);
+        w->setRange(low, high);
+        w->setValue(value);
+        form->addRow(label, w);
+        connect(w, &QSpinBox::valueChanged, this, [this] { invalidate(); });
+        return w;
+    };
+
+    // CM6 Controls
+    // Hole Wizard
+    holeFamily = combo("holeFamily", "Hole type");
+    holeFamily->addItems({"Simple", "Counterbore", "Countersink", "Drilled", "Tapped", "PipeTap",
+                          "LegacySimple", "LegacySimpleDrilled", "LegacyCounterboreDrill",
+                          "LegacyCountersinkDrill", "LegacyTapered"});
+    holePlacementFace = combo("holePlacementFace", "Placement face");
+    holePoints = new QListWidget;
+    holePoints->setObjectName("holePoints");
+    holePoints->setMaximumHeight(130);
+    form->addRow("Hole positions", holePoints);
+    connect(holePoints, &QListWidget::itemChanged, this, [this] { invalidate(); });
+    connect(profile, &QComboBox::currentIndexChanged, this, [this] {
+        if (!installing && editing && draft.kind == "Hole")
+            installHolePoints();
+    });
+    holeDepthReference = combo("holeDepthReference", "Depth measured to");
+    holeDepthReference->addItems({"Shoulder", "Tip"});
+    holeEndReference = combo("holeEndReference", "Termination reference");
+    holeTapDiameter = spin("holeTapDiameter", "Tap drill diameter", 8.5, 1e-4, 1e4);
+    holeTaperAngle = spin("holeTaperAngle", "Taper included angle (degrees)", 1.7899, .0001, 89);
+    holeThreadDesignation = new QLineEdit("M10x1.5");
+    holeThreadDesignation->setObjectName("holeThreadDesignation");
+    form->addRow("Thread designation", holeThreadDesignation);
+    connect(holeThreadDesignation, &QLineEdit::textChanged, this, [this] { invalidate(); });
+    holeThreadPitch = spin("holeThreadPitch", "Thread pitch", 1.5, 1e-4, 1e4);
+    holeThreadDepth = spin("holeThreadDepth", "Thread depth", 20, 1e-4, 1e4);
+    holeCustomSizing = check("holeCustomSizing", "Override with custom sizing");
+    holeCustomSizing->setChecked(true);
+    holeCatalog = new QLabel;
+    holeCatalog->setWordWrap(true);
+    form->addRow("Accepted catalog sizing", holeCatalog);
+    holeDiameter = spin("holeDiameter", "Hole diameter (mm)", 10.0, 1e-4, 1e4);
+    holeDepth = spin("holeDepth", "Hole depth (mm)", 25.0, 1e-4, 1e4);
+    holeCounterboreDia = spin("holeCounterboreDia", "Counterbore diameter (mm)", 14.0, 1e-4, 1e4);
+    holeCounterboreDepth = spin("holeCounterboreDepth", "Counterbore depth (mm)", 4.2, 1e-4, 1e4);
+    holeCountersinkDia = spin("holeCountersinkDia", "Countersink diameter (mm)", 14.0, 1e-4, 1e4);
+    holeCountersinkAngle =
+        spin("holeCountersinkAngle", "Countersink angle (deg)", 90.0, 1.0, 179.0);
+    holeDrillAngle = spin("holeDrillAngle", "Drill tip angle (deg)", 118.0, 1.0, 179.0);
+    holeTermination = combo("holeTermination", "Termination mode");
+    holeTermination->addItems(
+        {"ThroughAll", "Blind", "UpToNext", "UpToVertex", "UpToSurface", "OffsetFromSurface"});
+
+    // Fillet
+    filletMethod = combo("filletMethod", "Fillet type");
+    filletMethod->addItems({"Constant", "MultipleRadius", "Variable", "Face", "FullRound"});
+    filletRadius = spin("filletRadius", "Fillet radius (mm)", 5.0, 1e-4, 1e4);
+    filletPropagateTangent = check("filletPropagateTangent", "Tangent propagation");
+    filletPropagateTangent->setChecked(true);
+    filletEdges = new QListWidget;
+    filletEdges->setObjectName("filletEdges");
+    filletEdges->setMaximumHeight(130);
+    form->addRow("Edges to fillet", filletEdges);
+    filletVariableEdge = combo("filletVariableEdge", "Variable radius edge");
+    auto table = [&](QString id, QString label, QStringList headings) {
+        auto *w = new QTableWidget(0, headings.size());
+        w->setObjectName(id);
+        w->setHorizontalHeaderLabels(headings);
+        w->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        w->setMaximumHeight(170);
+        form->addRow(label, w);
+        connect(w, &QTableWidget::cellChanged, this, [this] { invalidate(); });
+        return w;
+    };
+    filletRadii = table("filletRadii", "Radius per edge", {"Edge", "Radius"});
+    filletControlPoints =
+        table("filletControlPoints", "Radius along edge", {"Parameter (0–1)", "Radius"});
+    filletTransition = combo("filletTransition", "Radius transition");
+    filletTransition->addItems({"Linear", "Smooth"});
+    filletTransition->setItemData(0, "Linear transition supports two endpoints", Qt::ToolTipRole);
+    addFilletPoint = new QPushButton("Add radius point");
+    removeFilletPoint = new QPushButton("Remove selected radius point");
+    form->addRow(addFilletPoint);
+    form->addRow(removeFilletPoint);
+    connect(filletEdges, &QListWidget::itemChanged, this, [this] {
+        if (!installing) {
+            installFilletRadii();
+            invalidate();
+        }
+    });
+    connect(addFilletPoint, &QPushButton::clicked, this, [this] {
+        int row = filletControlPoints->rowCount() - 1;
+        if (row < 1 || row >= 31)
+            return;
+        bool a, b;
+        double before = filletControlPoints->item(row - 1, 0)->text().toDouble(&a);
+        double after = filletControlPoints->item(row, 0)->text().toDouble(&b);
+        if (!a || !b || before >= after)
+            return;
+        auto radius = filletControlPoints->item(row - 1, 1)->text();
+        filletControlPoints->insertRow(row);
+        filletControlPoints->setItem(
+            row, 0, new QTableWidgetItem(QString::number((before + after) / 2, 'g', 12)));
+        filletControlPoints->setItem(row, 1, new QTableWidgetItem(radius));
+        filletTransition->setCurrentText("Smooth");
+    });
+    connect(removeFilletPoint, &QPushButton::clicked, this, [this] {
+        int row = filletControlPoints->currentRow();
+        if (row > 0 && row < filletControlPoints->rowCount() - 1) {
+            filletControlPoints->removeRow(row);
+            fieldsForKind();
+            invalidate();
+        }
+    });
+    for (auto method : {"Face", "FullRound"}) {
+        auto *item = qobject_cast<QStandardItemModel *>(filletMethod->model())
+                         ->item(filletMethod->findText(method));
+        item->setEnabled(false);
+        item->setToolTip("Blocked: no verified face-set blend adapter (R1)");
+    }
+    filletPropagateTangent->setEnabled(false);
+    filletPropagateTangent->setToolTip("This OCCT adapter requires tangent propagation");
+
+    // Chamfer
+    chamferMethod = combo("chamferMethod", "Chamfer type");
+    chamferMethod->addItems({"AngleDistance", "DistanceDistance", "EqualDistance"});
+    chamferDistance = spin("chamferDistance", "Distance 1 (mm)", 1.5, 1e-4, 1e4);
+    chamferDistance2 = spin("chamferDistance2", "Distance 2 (mm)", 1.5, 1e-4, 1e4);
+    chamferAngle = spin("chamferAngle", "Chamfer angle (deg)", 45.0, 1.0, 89.0);
+    chamferFlip = check("chamferFlip", "Flip direction / face");
+    chamferEdges = new QListWidget;
+    chamferEdges->setObjectName("chamferEdges");
+    chamferEdges->setMaximumHeight(130);
+    form->addRow("Edges to chamfer", chamferEdges);
+    connect(chamferEdges, &QListWidget::itemChanged, this, [this] { invalidate(); });
+    chamferReferenceFace = combo("chamferReferenceFace", "Chamfer reference face");
+    chamferPropagateTangent = check("chamferPropagateTangent", "Tangent propagation");
+    chamferPropagateTangent->setChecked(true);
+    chamferPropagateTangent->setEnabled(false);
+    chamferPropagateTangent->setToolTip("This OCCT adapter requires tangent propagation");
+
+    // Rib
+    ribThickness = spin("ribThickness", "Rib thickness (mm)", 13.0, 1e-4, 1e4);
+    ribSide = combo("ribSide", "Thickness side");
+    ribSide->addItems({"Both", "First", "Second"});
+    ribDirection = combo("ribDirection", "Extrusion direction");
+    ribDirection->addItems({"Parallel", "Normal"});
+    ribFlipMaterial = check("ribFlipMaterial", "Flip material side");
+
+    // Repetition
+    patSeedKind = combo("patSeedKind", "Pattern seed kind");
+    patSeedKind->addItems({"Feature", "Body", "Face"});
+    auto *faceSeedItem = qobject_cast<QStandardItemModel *>(patSeedKind->model())->item(2);
+    faceSeedItem->setEnabled(false);
+    faceSeedItem->setToolTip("Blocked: closed-face sewing adapter has not been verified (R4)");
+    connect(patSeedKind, &QComboBox::currentIndexChanged, this, [this] {
+        if (!installing)
+            installPatternSeeds();
+    });
+    patSeed = combo("patSeed", "Seed object");
+    linearDir1Ref = combo("linearDir1Ref", "Direction 1 reference");
+    linearSpacing1 = spin("linearSpacing1", "Direction 1 spacing (mm)", 43.0, 1e-4, 1e4);
+    linearCount1 = ispin("linearCount1", "Direction 1 count", 2, 1, 32);
+    linearReverse1 = check("linearReverse1", "Reverse direction 1");
+    linearDir2Ref = combo("linearDir2Ref", "Direction 2 reference");
+    linearSpacing2 = spin("linearSpacing2", "Direction 2 spacing (mm)", 40.0, 1e-4, 1e4);
+    linearCount2 = ispin("linearCount2", "Direction 2 count", 1, 1, 32);
+    linearReverse2 = check("linearReverse2", "Reverse direction 2");
+
+    circAxisRef = combo("circAxisRef", "Rotation axis");
+    circCount = ispin("circCount", "Instance count", 4, 1, 360);
+    circEqualSpacing = check("circEqualSpacing", "Equal spacing");
+    circEqualSpacing->setChecked(true);
+    circAngle = spin("circAngle", "Total angle (deg)", 360.0, 0.1, 360.0);
+    circReverse = check("circReverse", "Reverse rotation");
+
+    mirrorPlaneRef = combo("mirrorPlaneRef", "Mirror plane");
+
+    // Cosmetic Thread
+    threadEdgeRef = combo("threadEdgeRef", "Cylindrical edge");
+    threadDesignation = new QLineEdit;
+    threadDesignation->setObjectName("threadDesignation");
+    threadDesignation->setText("M10x1.5");
+    form->addRow("Thread designation", threadDesignation);
+    connect(threadDesignation, &QLineEdit::textChanged, this, [this] { invalidate(); });
+    threadStandard = combo("threadStandard", "Thread standard");
+    threadStandard->addItems({"ANSI Metric", "ISO", "ANSI Inch"});
+    threadType = combo("threadType", "Thread type");
+    threadType->addItems({"Machine Thread", "Pipe Thread"});
+    threadSize = new QLineEdit;
+    threadSize->setObjectName("threadSize");
+    threadSize->setText("M10x1.5");
+    form->addRow("Thread size", threadSize);
+    connect(threadSize, &QLineEdit::textChanged, this, [this] { invalidate(); });
+    threadInternal = check("threadInternal", "Internal thread");
+    threadInternal->setChecked(true);
+    threadMajorDia = spin("threadMajorDia", "Major diameter (mm)", 10.0, 1e-4, 1e4);
+    threadMinorDia = spin("threadMinorDia", "Minor diameter (mm)", 8.5, 1e-4, 1e4);
+    threadPitch = spin("threadPitch", "Thread pitch (mm)", 1.5, 1e-4, 1e4);
+    threadTermination = combo("threadTermination", "Thread termination");
+    threadTermination->addItems({"UpToNext", "Blind", "ThroughAll"});
+    threadDepth = spin("threadDepth", "Thread depth", 25, 1e-4, 1e4);
+
     selectDraftFaces = new QPushButton("Select faces to draft…");
     selectDraftFaces->setObjectName("featureSelectDraftFaces");
     form->addRow(selectDraftFaces);
@@ -191,9 +396,12 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
     // Repair controls
     repairPath = combo("featureRepairPath", "Reference to repair");
     repairPath->addItems({"direction1/reference", "start/reference", "direction2/reference", "axis",
-                          "neutral", "pull", "target/source"});
-    for (int i = 0; i < 32; ++i)
+                          "neutral", "pull", "target/source", "placement/face", "edges/0", "edge",
+                          "radii/0/edge", "plane", "reference", "reference_face"});
+    for (int i = 0; i < 32; ++i) {
         repairPath->addItem(QString("faces/%1").arg(i));
+        repairPath->addItem(QString("seed/faces/%1").arg(i));
+    }
     repairCandidate = combo("featureRepairCandidate", "Repair candidate");
     applyRepairButton = new QPushButton("Apply repair");
     applyRepairButton->setObjectName("featureApplyRepair");
@@ -227,9 +435,14 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
             diagnostic->setText(e.what());
         }
     });
-    for (auto *c : {profileMode, startMode, extent, extent2, thinMode, operation, revolveExtent})
+    for (auto *c : {profileMode, startMode, extent, extent2, thinMode, operation, revolveExtent,
+                    holeFamily, holeTermination, filletMethod, chamferMethod, ribSide, ribDirection,
+                    patSeedKind, threadStandard, threadType, threadTermination, filletTransition})
         connect(c, &QComboBox::currentIndexChanged, this, [this] { fieldsForKind(); });
-    for (auto *k : {draftEnable, direction2Enable, draft2Enable, flipSide, thinReverse})
+    for (auto *k :
+         {draftEnable, direction2Enable, draft2Enable, flipSide, thinReverse,
+          filletPropagateTangent, chamferFlip, ribFlipMaterial, linearReverse1, linearReverse2,
+          circEqualSpacing, circReverse, threadInternal, holeCustomSizing})
         connect(k, &QCheckBox::toggled, this, [this] { fieldsForKind(); });
     connect(name, &QLineEdit::textChanged, this, [this] { invalidate(); });
     evaluation = new QWidget;
@@ -297,6 +510,16 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
     auto *assign = new QPushButton("Assign material density");
     assign->setObjectName("assignDensityButton");
     evaluationLayout->addWidget(assign);
+    threadShadedDisplay = new QCheckBox("Show cosmetic thread overlay");
+    threadShadedDisplay->setObjectName("threadShadedDisplay");
+    threadShadedDisplay->setChecked(true);
+    evaluationLayout->addWidget(threadShadedDisplay);
+    connect(threadShadedDisplay, &QCheckBox::toggled, this, [this](bool value) {
+        if (!installing && !editing && client->ready() && !client->outstanding())
+            client->projectCommand("SetParameter", fields({{"name", "DisplayCosmeticThreads"},
+                                                           {"dimension", "scalar"},
+                                                           {"value_si", value ? 1.0 : 0.0}}));
+    });
     connect(assign, &QPushButton::clicked, this, [this] {
         if (!editing && density->value() > 0)
             client->projectCommand("SetParameter", fields({{"name", "MaterialDensityKgM3"},
@@ -509,6 +732,15 @@ void FeaturePanel::invalidate() {
     updateManipulator();
 }
 void FeaturePanel::install(QCborMap active, bool idle) {
+    bool showThreads = true;
+    for (auto value : active.value("parameters").toArray())
+        if (value.toMap().value("name") == "DisplayCosmeticThreads")
+            showThreads = value.toMap().value("value_si").toDouble() != 0;
+    {
+        QSignalBlocker block(threadShadedDisplay);
+        threadShadedDisplay->setChecked(showThreads);
+    }
+    threadShadedDisplay->setEnabled(idle && !editing && !active.empty());
     if (editing) {
         inputs->setEnabled(idle);
         cancelButton->setEnabled(!commitPending);
@@ -535,7 +767,10 @@ void FeaturePanel::fieldsForKind() {
     form->setRowVisible(offsetReverse2, isModeling && direction2Enable->isChecked() &&
                                             extent2->currentText() == "OffsetFromSurface");
     form->setRowVisible(selectDraftFaces, isModeling && draft.kind == "Draft");
-    form->setRowVisible(selectRegions, isModeling && profileMode->currentText() != "AllClosed");
+    form->setRowVisible(selectRegions, isModeling &&
+                                           (draft.kind == "Extrude" || draft.kind == "Revolve" ||
+                                            draft.kind == "Rib") &&
+                                           profileMode->currentText() != "AllClosed");
     form->setRowVisible(repairPath, isModeling);
     form->setRowVisible(handleParameter, isModeling);
     auto kind = draft.kind;
@@ -543,13 +778,133 @@ void FeaturePanel::fieldsForKind() {
     bool isRevolve = (kind == "Revolve");
     bool isDraft = (kind == "Draft");
     bool isSketch = isExtrude || isRevolve;
-    bool isTreatment = (kind == "Fillet" || kind == "Chamfer");
+    bool isFillet = (kind == "Fillet");
+    bool isChamfer = (kind == "Chamfer");
     bool isHole = (kind == "Hole");
-    bool isPattern = (kind == "LinearPattern" || kind == "CircularPattern" || kind == "Mirror");
+    bool isRib = (kind == "Rib");
+    bool isLinearPattern = (kind == "LinearPattern");
+    bool isCircularPattern = (kind == "CircularPattern");
+    bool isMirror = (kind == "Mirror");
+    bool isCosmeticThread = (kind == "CosmeticThread");
+    bool isTreatment = isFillet || isChamfer;
+    bool isPattern = isLinearPattern || isCircularPattern || isMirror;
 
     auto show = [&](QWidget *w, bool yes) {
         if (w)
             form->setRowVisible(w, yes);
+    };
+
+    auto hideAll = [&]() {
+        QWidget *widgets[] = {profile,
+                              profileMode,
+                              flipSide,
+                              operation,
+                              target,
+                              startMode,
+                              startOffset,
+                              startReference,
+                              extent,
+                              depth,
+                              angle,
+                              reverseDirection,
+                              surfaceOffset2,
+                              offsetReverse2,
+                              surfaceOffset,
+                              offsetReverse,
+                              dir1Reference,
+                              draftEnable,
+                              draftAngle,
+                              draftOutward,
+                              direction2Enable,
+                              extent2,
+                              depth2,
+                              dir2Reference,
+                              draft2Enable,
+                              draft2Angle,
+                              draft2Outward,
+                              thinMode,
+                              thickness1,
+                              thickness2,
+                              thinReverse,
+                              revolveAxis,
+                              revolveExtent,
+                              angle2,
+                              draftNeutral,
+                              draftPull,
+                              draftFaces,
+                              draftStandaloneAngle,
+                              draftStandaloneOutward,
+                              holePlacementFace,
+                              holeFamily,
+                              holeDiameter,
+                              holeDepth,
+                              holeCounterboreDia,
+                              holeCounterboreDepth,
+                              holeCountersinkDia,
+                              holeCountersinkAngle,
+                              holeDrillAngle,
+                              holeTermination,
+                              filletMethod,
+                              filletRadius,
+                              filletPropagateTangent,
+                              filletEdges,
+                              chamferMethod,
+                              chamferDistance,
+                              chamferDistance2,
+                              chamferAngle,
+                              chamferFlip,
+                              chamferEdges,
+                              ribThickness,
+                              ribSide,
+                              ribDirection,
+                              ribFlipMaterial,
+                              patSeedKind,
+                              patSeed,
+                              linearDir1Ref,
+                              linearSpacing1,
+                              linearCount1,
+                              linearReverse1,
+                              linearDir2Ref,
+                              linearSpacing2,
+                              linearCount2,
+                              linearReverse2,
+                              circAxisRef,
+                              circCount,
+                              circEqualSpacing,
+                              circAngle,
+                              circReverse,
+                              mirrorPlaneRef,
+                              threadEdgeRef,
+                              threadDesignation,
+                              threadStandard,
+                              threadType,
+                              threadSize,
+                              threadInternal,
+                              threadMajorDia,
+                              threadMinorDia,
+                              threadPitch,
+                              threadTermination,
+                              threadDepth,
+                              holePoints,
+                              holeDepthReference,
+                              holeEndReference,
+                              holeTapDiameter,
+                              holeTaperAngle,
+                              holeThreadDesignation,
+                              holeThreadPitch,
+                              holeThreadDepth,
+                              holeCustomSizing,
+                              holeCatalog,
+                              filletVariableEdge,
+                              filletTransition,
+                              filletRadii,
+                              filletControlPoints,
+                              addFilletPoint,
+                              removeFilletPoint,
+                              chamferReferenceFace,
+                              chamferPropagateTangent};
+        for (QWidget *w : widgets)
+            show(w, false);
     };
 
     if (isModeling) {
@@ -565,72 +920,31 @@ void FeaturePanel::fieldsForKind() {
             show(axis[i], false);
         }
 
-        if (isDraft) {
-            // Standalone draft
-            show(profile, false);
-            show(profileMode, false);
-            show(flipSide, false);
-            show(operation, false);
-            show(target, true); // target body
-            show(startMode, false);
-            show(startOffset, false);
-            show(startReference, false);
-            show(extent, false);
-            show(depth, false);
-            show(angle, false);
-            show(reverseDirection, false);
-            show(surfaceOffset, false);
-            show(offsetReverse, false);
-            show(dir1Reference, false);
-            show(draftEnable, false);
-            show(draftAngle, false);
-            show(draftOutward, false);
-            show(direction2Enable, false);
-            show(extent2, false);
-            show(depth2, false);
-            show(dir2Reference, false);
-            show(draft2Enable, false);
-            show(draft2Angle, false);
-            show(draft2Outward, false);
-            show(thinMode, false);
-            show(thickness1, false);
-            show(thickness2, false);
-            show(thinReverse, false);
-            show(revolveAxis, false);
-            show(revolveExtent, false);
-            show(angle2, false);
+        hideAll();
 
+        if (isDraft) {
+            show(target, true);
             show(draftNeutral, true);
             show(draftPull, true);
             show(draftFaces, true);
             show(draftStandaloneAngle, true);
             show(draftStandaloneOutward, true);
-        } else {
-            // Extrude or Revolve
-            show(draftNeutral, false);
-            show(draftPull, false);
-            show(draftFaces, false);
-            show(draftStandaloneAngle, false);
-            show(draftStandaloneOutward, false);
-
+        } else if (isExtrude || isRevolve) {
             show(profile, true);
             show(profileMode, true);
             show(operation, true);
             show(target, operation->currentText() != "NewBody");
 
-            // Open chains cut flip side
             bool isOpenCut =
                 (profileMode->currentText() == "OpenChains" && thinMode->currentText() == "Solid" &&
                  isExtrude && operation->currentText() == "Cut");
             show(flipSide, isOpenCut);
 
-            // Start condition (only for Extrude; Revolve start is sketch plane)
             show(startMode, isExtrude);
             auto sMode = startMode->currentText();
             show(startOffset, isExtrude && sMode == "Offset");
             show(startReference, isExtrude && (sMode == "Surface" || sMode == "Vertex"));
 
-            // Extent / Direction 1
             show(extent, isExtrude);
             show(depth, isExtrude && (extent->currentText() == "Blind" ||
                                       extent->currentText() == "Midplane"));
@@ -644,26 +958,17 @@ void FeaturePanel::fieldsForKind() {
             show(surfaceOffset, isExtrude && ext1 == "OffsetFromSurface");
             show(offsetReverse, isExtrude && ext1 == "OffsetFromSurface");
 
-            // Direction 1 Draft (only for Extrude)
             show(draftEnable, isExtrude);
             show(draftAngle, isExtrude && draftEnable->isChecked());
             show(draftOutward, isExtrude && draftEnable->isChecked());
 
-            // Direction 2 (inactive if Midplane)
             bool midplane1 = (isExtrude && ext1 == "Midplane") ||
                              (isRevolve && revolveExtent->currentText() == "Midplane");
             show(direction2Enable, !midplane1);
             bool dir2On = !midplane1 && direction2Enable->isChecked();
             if (isRevolve) {
-                show(extent2, false);
-                show(depth2, false);
-                show(dir2Reference, false);
-                show(draft2Enable, false);
-                show(draft2Angle, false);
-                show(draft2Outward, false);
                 show(angle2, dir2On);
             } else {
-                show(angle2, false);
                 show(extent2, dir2On);
                 auto ext2 = extent2->currentText();
                 show(depth2, dir2On && ext2 == "Blind");
@@ -675,18 +980,147 @@ void FeaturePanel::fieldsForKind() {
                 show(draft2Outward, dir2On && draft2Enable->isChecked());
             }
 
-            // Thin mode
             show(thinMode, true);
             auto tm = thinMode->currentText();
             show(thickness1, tm != "Solid");
             show(thickness2, tm == "TwoDirection");
             show(thinReverse, tm == "OneDirection");
 
-            // Revolve specific
             show(revolveAxis, isRevolve);
             show(revolveExtent, isRevolve);
+        } else if (isHole) {
+            show(target, true);
+            show(profile, true);
+            show(holePlacementFace, true);
+            show(holeFamily, true);
+            show(holePoints, true);
+            bool catalog = modelingDraft.value("sizing").toMap().value("mode") == "Catalog";
+            show(holeCustomSizing, catalog);
+            show(holeCatalog, catalog);
+            bool editable = !catalog || holeCustomSizing->isChecked();
+            for (auto *w : {holeDiameter, holeDepth, holeCounterboreDia, holeCounterboreDepth,
+                            holeCountersinkDia, holeCountersinkAngle, holeDrillAngle,
+                            holeTapDiameter, holeTaperAngle, holeThreadPitch, holeThreadDepth})
+                w->setEnabled(editable);
+            holeFamily->setEnabled(editable);
+            holeThreadDesignation->setEnabled(editable);
+            show(holeDiameter, true);
+            show(holeDepth, holeTermination->currentText() == "Blind");
+            auto hFam = holeFamily->currentText();
+            show(holeCounterboreDia, hFam == "Counterbore" || hFam == "LegacyCounterboreDrill");
+            show(holeCounterboreDepth, hFam == "Counterbore" || hFam == "LegacyCounterboreDrill");
+            show(holeCountersinkDia, hFam == "Countersink" || hFam == "LegacyCountersinkDrill");
+            show(holeCountersinkAngle, hFam == "Countersink" || hFam == "LegacyCountersinkDrill");
+            bool drilled = hFam == "Drilled" || hFam == "LegacySimpleDrilled" ||
+                           hFam == "LegacyCounterboreDrill" || hFam == "LegacyCountersinkDrill";
+            bool tapered = hFam == "PipeTap" || hFam == "LegacyTapered";
+            bool tapped = hFam == "Tapped" || hFam == "PipeTap";
+            show(holeDrillAngle, drilled);
+            show(holeDepthReference, drilled && holeTermination->currentText() == "Blind");
+            show(holeTapDiameter, tapped);
+            show(holeTaperAngle, tapered);
+            show(holeThreadDesignation, tapped);
+            show(holeThreadPitch, tapped);
+            show(holeThreadDepth, tapped);
+            auto terminationMode = holeTermination->currentText();
+            show(holeEndReference, terminationMode == "UpToVertex" ||
+                                       terminationMode == "UpToSurface" ||
+                                       terminationMode == "OffsetFromSurface");
+            show(surfaceOffset, terminationMode == "OffsetFromSurface");
+            show(offsetReverse, terminationMode == "OffsetFromSurface");
+            auto *terminationItems = qobject_cast<QStandardItemModel *>(holeTermination->model());
+            for (int i = 0; i < holeTermination->count(); ++i) {
+                auto mode = holeTermination->itemText(i);
+                bool supported =
+                    tapered ? mode == "Blind" : !drilled || mode == "Blind" || mode == "ThroughAll";
+                terminationItems->item(i)->setEnabled(supported);
+                terminationItems->item(i)->setToolTip(
+                    supported ? QString()
+                              : "This hole section does not yet support this termination");
+            }
+            show(holeTermination, true);
+        } else if (isFillet) {
+            show(target, true);
+            show(filletMethod, true);
+            auto fMeth = filletMethod->currentText();
+            show(filletRadius, fMeth == "Constant");
+            show(filletPropagateTangent, true);
+            filletPropagateTangent->setEnabled(!filletPropagateTangent->isChecked());
+            show(filletEdges, fMeth == "Constant" || fMeth == "MultipleRadius");
+            show(filletRadii, fMeth == "MultipleRadius");
+            show(filletVariableEdge, fMeth == "Variable");
+            show(filletControlPoints, fMeth == "Variable");
+            show(filletTransition, fMeth == "Variable");
+            qobject_cast<QStandardItemModel *>(filletTransition->model())
+                ->item(0)
+                ->setEnabled(filletControlPoints->rowCount() == 2);
+            show(addFilletPoint, fMeth == "Variable");
+            show(removeFilletPoint, fMeth == "Variable");
+        } else if (isChamfer) {
+            show(target, true);
+            show(chamferMethod, true);
+            show(chamferDistance, true);
+            auto cMeth = chamferMethod->currentText();
+            show(chamferDistance2, cMeth == "DistanceDistance");
+            show(chamferAngle, cMeth == "AngleDistance");
+            show(chamferFlip, cMeth != "EqualDistance");
+            show(chamferEdges, true);
+            show(chamferReferenceFace, cMeth != "EqualDistance");
+            show(chamferPropagateTangent, true);
+            chamferPropagateTangent->setEnabled(!chamferPropagateTangent->isChecked());
+        } else if (isRib) {
+            show(target, true);
+            show(profile, true);
+            show(profileMode, true);
+            show(ribThickness, true);
+            show(ribSide, true);
+            show(ribDirection, true);
+            show(ribFlipMaterial, true);
+        } else if (isLinearPattern) {
+            show(operation, true);
+            show(target, operation->currentText() != "NewBody");
+            show(patSeedKind, true);
+            show(patSeed, true);
+            show(linearDir1Ref, true);
+            show(linearSpacing1, true);
+            show(linearCount1, true);
+            show(linearReverse1, true);
+            show(linearDir2Ref, true);
+            show(linearSpacing2, true);
+            show(linearCount2, true);
+            show(linearReverse2, true);
+        } else if (isCircularPattern) {
+            show(operation, true);
+            show(target, operation->currentText() != "NewBody");
+            show(patSeedKind, true);
+            show(patSeed, true);
+            show(circAxisRef, true);
+            show(circCount, true);
+            show(circEqualSpacing, true);
+            show(circAngle, true);
+            show(circReverse, true);
+        } else if (isMirror) {
+            show(operation, true);
+            show(target, operation->currentText() != "NewBody");
+            show(patSeedKind, true);
+            show(patSeed, true);
+            show(mirrorPlaneRef, true);
+        } else if (isCosmeticThread) {
+            show(target, true);
+            show(threadEdgeRef, true);
+            show(threadDesignation, true);
+            show(threadStandard, true);
+            show(threadType, true);
+            show(threadSize, true);
+            show(threadInternal, true);
+            show(threadMajorDia, true);
+            show(threadMinorDia, true);
+            show(threadPitch, true);
+            show(threadTermination, true);
+            show(threadDepth, threadTermination->currentText() == "Blind");
         }
     } else {
+        hideAll();
         // Legacy feature UI
         show(profile, isSketch);
         show(operation, isSketch || (!isTreatment && !isHole));
@@ -705,38 +1139,6 @@ void FeaturePanel::fieldsForKind() {
             show(origin[i], vectors);
             show(axis[i], vectors || kind == "LinearPattern");
         }
-        // Hide all CM5 widgets
-        show(profileMode, false);
-        show(flipSide, false);
-        show(startMode, false);
-        show(startOffset, false);
-        show(startReference, false);
-        show(reverseDirection, false);
-        show(surfaceOffset, false);
-        show(offsetReverse, false);
-        show(dir1Reference, false);
-        show(draftEnable, false);
-        show(draftAngle, false);
-        show(draftOutward, false);
-        show(direction2Enable, false);
-        show(extent2, false);
-        show(depth2, false);
-        show(dir2Reference, false);
-        show(draft2Enable, false);
-        show(draft2Angle, false);
-        show(draft2Outward, false);
-        show(thinMode, false);
-        show(thickness1, false);
-        show(thickness2, false);
-        show(thinReverse, false);
-        show(revolveAxis, false);
-        show(revolveExtent, false);
-        show(angle2, false);
-        show(draftNeutral, false);
-        show(draftPull, false);
-        show(draftFaces, false);
-        show(draftStandaloneAngle, false);
-        show(draftStandaloneOutward, false);
     }
 
     if (auto *label = qobject_cast<QLabel *>(form->labelForField(size)))
@@ -768,6 +1170,7 @@ void FeaturePanel::fieldsForKind() {
             !items->item(box->currentIndex())->isEnabled())
             box->setCurrentIndex(first);
     };
+    filterReferences(holeEndReference, holeTermination->currentText());
     filterReferences(startReference, startMode->currentText());
     filterReferences(dir1Reference, extent->currentText());
     filterReferences(dir2Reference, extent2->currentText());
@@ -775,8 +1178,33 @@ void FeaturePanel::fieldsForKind() {
     for (auto *offset : {surfaceOffset, surfaceOffset2})
         offset->setRange(0, 1000 / unit());
     auto units = document.value("units").toString();
-    for (auto *w : {size, depth, depth2, spacing, thickness1, thickness2, startOffset,
-                    surfaceOffset, surfaceOffset2})
+    for (auto *w : {size,
+                    depth,
+                    depth2,
+                    spacing,
+                    thickness1,
+                    thickness2,
+                    startOffset,
+                    surfaceOffset,
+                    surfaceOffset2,
+                    holeDiameter,
+                    holeDepth,
+                    holeCounterboreDia,
+                    holeCounterboreDepth,
+                    holeCountersinkDia,
+                    filletRadius,
+                    chamferDistance,
+                    chamferDistance2,
+                    ribThickness,
+                    linearSpacing1,
+                    linearSpacing2,
+                    threadMajorDia,
+                    threadMinorDia,
+                    threadPitch,
+                    threadDepth,
+                    holeTapDiameter,
+                    holeThreadPitch,
+                    holeThreadDepth})
         if (w)
             w->setSuffix(" " + units);
     for (auto *w : origin)
@@ -787,10 +1215,13 @@ void FeaturePanel::fieldsForKind() {
 void FeaturePanel::begin(QString kind, QString editId) {
     if (editing || document.empty() || client->outstanding())
         return;
-    bool advanced = kind == "Extrude" || kind == "Revolve" || kind == "Draft";
+    bool advanced = kind == "Extrude" || kind == "Revolve" || kind == "Draft" || kind == "Hole" ||
+                    kind == "Fillet" || kind == "Chamfer" || kind == "Rib" ||
+                    kind == "LinearPattern" || kind == "CircularPattern" || kind == "Mirror" ||
+                    kind == "CosmeticThread";
     if (editId.isEmpty() && !advanced &&
         !document.value("modeling").toMap().value("intents").toArray().empty()) {
-        diagnostic->setText("This legacy operation cannot follow CM5 solid intents.");
+        diagnostic->setText("This legacy operation cannot follow solid intents.");
         return;
     }
     installing = true;
@@ -830,7 +1261,7 @@ void FeaturePanel::begin(QString kind, QString editId) {
             }
         }
     } else {
-        if (kind == "Draft") {
+        if (kind == "Draft" || kind == "Rib" || kind == "CosmeticThread") {
             isModeling = true;
         } else if (hasModeling) {
             isModeling = true;
@@ -1032,6 +1463,55 @@ void FeaturePanel::begin(QString kind, QString editId) {
             origin[2]->setValue(m[2].toDouble() / unit());
     }
 
+    if (isModeling) {
+        availableModelingInputs = {};
+        patSeed->clear();
+        patSeed->setProperty("seedKind", QString());
+        for (auto *box :
+             {holePlacementFace, holeEndReference, filletVariableEdge, chamferReferenceFace,
+              threadEdgeRef, mirrorPlaneRef, circAxisRef, linearDir1Ref, linearDir2Ref})
+            box->clear();
+        filletEdges->clear();
+        chamferEdges->clear();
+        holePoints->clear();
+        filletRadii->setRowCount(0);
+        filletControlPoints->setRowCount(2);
+        for (int row = 0; row < 2; ++row) {
+            filletControlPoints->setItem(row, 0, new QTableWidgetItem(QString::number(row)));
+            filletControlPoints->setItem(
+                row, 1, new QTableWidgetItem(QString::number(.005 / unit(), 'g', 12)));
+        }
+        holeFamily->setCurrentText("Simple");
+        holeTermination->setCurrentText("ThroughAll");
+        holeDepthReference->setCurrentText("Shoulder");
+        holeCustomSizing->setChecked(true);
+        filletMethod->setCurrentText("Constant");
+        filletTransition->setCurrentText("Linear");
+        filletPropagateTangent->setChecked(true);
+        chamferPropagateTangent->setChecked(true);
+        patSeedKind->setCurrentText("Feature");
+        linearCount2->setValue(1);
+        for (auto item : {std::pair{holeDiameter, .010},
+                          {holeDepth, .025},
+                          {holeTapDiameter, .0085},
+                          {holeCounterboreDia, .014},
+                          {holeCounterboreDepth, .0042},
+                          {holeCountersinkDia, .014},
+                          {holeThreadPitch, .0015},
+                          {holeThreadDepth, .020},
+                          {filletRadius, .005},
+                          {ribThickness, .013},
+                          {linearSpacing1, .043},
+                          {linearSpacing2, .040},
+                          {threadMajorDia, .010},
+                          {threadMinorDia, .0085},
+                          {threadPitch, .0015},
+                          {threadDepth, .025}})
+            item.first->setValue(item.second / unit());
+        if (kind == "Rib")
+            profileMode->setCurrentText("OpenChains");
+    }
+
     auto matchRef = [](QComboBox *box, const QCborMap &targetRef) {
         if (targetRef.isEmpty() || !box)
             return;
@@ -1161,6 +1641,189 @@ void FeaturePanel::begin(QString kind, QString editId) {
                     matchRef(draftFaces, faces[0].toMap());
             }
         }
+
+        if (kind == "Hole") {
+            auto placement = p.value("placement").toMap();
+            auto index = profile->findData(placement.value("sketch").toString());
+            if (index >= 0)
+                profile->setCurrentIndex(index);
+            matchRef(holePlacementFace, placement.value("face").toMap());
+            auto termination = p.value("termination").toMap();
+            holeDepthReference->setCurrentText(termination.value("depth_reference").toString());
+            matchRef(holeEndReference, termination.value("reference").toMap());
+            surfaceOffset->setValue(termination.value("offset").toDouble() / unit());
+            offsetReverse->setChecked(termination.value("offset_reverse").toBool());
+            if (p.contains(QStringLiteral("family")))
+                holeFamily->setCurrentText(p.value("family").toString());
+            if (p.contains(QStringLiteral("sizing"))) {
+                auto sz = p.value("sizing").toMap();
+                bool catalog = sz.value("mode") == "Catalog";
+                holeCustomSizing->setChecked(!catalog);
+                holeCatalog->setText(
+                    catalog ? sz.value("dataset").toString() + " / " +
+                                  sz.value("version").toString("Unversioned legacy") + " / " +
+                                  sz.value("standard").toString() + " / " +
+                                  sz.value("type").toString() + " / " + sz.value("size").toString()
+                            : QString());
+                if (sz.contains(QStringLiteral("tap_drill_diameter")))
+                    holeTapDiameter->setValue(sz.value("tap_drill_diameter").toDouble() / unit());
+                if (sz.contains(QStringLiteral("taper_angle")))
+                    holeTaperAngle->setValue(sz.value("taper_angle").toDouble() * 180 /
+                                             std::numbers::pi);
+                if (sz.contains(QStringLiteral("thread"))) {
+                    auto th = sz.value("thread").toMap();
+                    holeThreadDesignation->setText(th.value("designation").toString());
+                    holeThreadPitch->setValue(th.value("pitch").toDouble() / unit());
+                    holeThreadDepth->setValue(th.value("depth").toDouble() / unit());
+                }
+                if (sz.contains(QStringLiteral("diameter")))
+                    holeDiameter->setValue(sz.value("diameter").toDouble() / unit());
+                if (sz.contains(QStringLiteral("depth")))
+                    holeDepth->setValue(sz.value("depth").toDouble() / unit());
+                if (sz.contains(QStringLiteral("counterbore_diameter")))
+                    holeCounterboreDia->setValue(sz.value("counterbore_diameter").toDouble() /
+                                                 unit());
+                if (sz.contains(QStringLiteral("counterbore_depth")))
+                    holeCounterboreDepth->setValue(sz.value("counterbore_depth").toDouble() /
+                                                   unit());
+                if (sz.contains(QStringLiteral("countersink_diameter")))
+                    holeCountersinkDia->setValue(sz.value("countersink_diameter").toDouble() /
+                                                 unit());
+                if (sz.contains(QStringLiteral("countersink_angle")))
+                    holeCountersinkAngle->setValue(sz.value("countersink_angle").toDouble() *
+                                                   180.0 / std::numbers::pi);
+                if (sz.contains(QStringLiteral("drill_angle")))
+                    holeDrillAngle->setValue(sz.value("drill_angle").toDouble() * 180.0 /
+                                             std::numbers::pi);
+            }
+            if (p.contains(QStringLiteral("termination")))
+                holeTermination->setCurrentText(
+                    p.value("termination").toMap().value("mode").toString());
+        }
+
+        if (kind == "Fillet") {
+            matchRef(filletVariableEdge, p.value("edge").toMap());
+            if (p.value("control_points").isArray()) {
+                auto points = p.value("control_points").toArray();
+                filletControlPoints->setRowCount(points.size());
+                for (int row = 0; row < points.size(); ++row) {
+                    auto point = points[row].toMap();
+                    filletControlPoints->setItem(
+                        row, 0,
+                        new QTableWidgetItem(
+                            QString::number(point.value("parameter").toDouble(), 'g', 12)));
+                    filletControlPoints->setItem(
+                        row, 1,
+                        new QTableWidgetItem(
+                            QString::number(point.value("radius").toDouble() / unit(), 'g', 12)));
+                }
+                filletTransition->setCurrentText(p.value("transition").toString());
+            }
+            if (p.contains(QStringLiteral("method")))
+                filletMethod->setCurrentText(p.value("method").toString());
+            if (p.contains(QStringLiteral("radius")))
+                filletRadius->setValue(p.value("radius").toDouble() / unit());
+            if (p.contains(QStringLiteral("propagate_tangent")))
+                filletPropagateTangent->setChecked(p.value("propagate_tangent").toBool());
+        }
+
+        if (kind == "Chamfer") {
+            matchRef(chamferReferenceFace, p.value("reference_face").toMap());
+            chamferPropagateTangent->setChecked(p.value("propagate_tangent").toBool());
+            if (p.contains(QStringLiteral("method")))
+                chamferMethod->setCurrentText(p.value("method").toString());
+            if (p.contains(QStringLiteral("distance")))
+                chamferDistance->setValue(p.value("distance").toDouble() / unit());
+            if (p.contains(QStringLiteral("distance1")))
+                chamferDistance->setValue(p.value("distance1").toDouble() / unit());
+            if (p.contains(QStringLiteral("distance2")))
+                chamferDistance2->setValue(p.value("distance2").toDouble() / unit());
+            if (p.contains(QStringLiteral("angle")))
+                chamferAngle->setValue(p.value("angle").toDouble() * 180.0 / std::numbers::pi);
+            if (p.contains(QStringLiteral("flip")))
+                chamferFlip->setChecked(p.value("flip").toBool());
+        }
+
+        if (kind == "Rib") {
+            if (p.contains(QStringLiteral("thickness")))
+                ribThickness->setValue(p.value("thickness").toDouble() / unit());
+            if (p.contains(QStringLiteral("side")))
+                ribSide->setCurrentText(p.value("side").toString());
+            if (p.contains(QStringLiteral("direction")))
+                ribDirection->setCurrentText(p.value("direction").toString());
+            if (p.contains(QStringLiteral("flip_material")))
+                ribFlipMaterial->setChecked(p.value("flip_material").toBool());
+        }
+
+        if (kind == "LinearPattern") {
+            matchRef(linearDir1Ref, p.value("direction1").toMap().value("reference").toMap());
+            matchRef(linearDir2Ref, p.value("direction2").toMap().value("reference").toMap());
+            if (p.contains(QStringLiteral("seed_kind")))
+                patSeedKind->setCurrentText(p.value("seed_kind").toString());
+            if (p.contains(QStringLiteral("direction1"))) {
+                auto d1 = p.value("direction1").toMap();
+                if (d1.contains(QStringLiteral("spacing")))
+                    linearSpacing1->setValue(d1.value("spacing").toDouble() / unit());
+                if (d1.contains(QStringLiteral("count")))
+                    linearCount1->setValue(d1.value("count").toInteger());
+                if (d1.contains(QStringLiteral("reverse")))
+                    linearReverse1->setChecked(d1.value("reverse").toBool());
+            }
+            if (p.contains(QStringLiteral("direction2")) && !p.value("direction2").isNull()) {
+                auto d2 = p.value("direction2").toMap();
+                if (d2.contains(QStringLiteral("spacing")))
+                    linearSpacing2->setValue(d2.value("spacing").toDouble() / unit());
+                if (d2.contains(QStringLiteral("count")))
+                    linearCount2->setValue(d2.value("count").toInteger());
+                if (d2.contains(QStringLiteral("reverse")))
+                    linearReverse2->setChecked(d2.value("reverse").toBool());
+            }
+        }
+
+        if (kind == "CircularPattern") {
+            matchRef(circAxisRef, p.value("axis").toMap());
+            if (p.contains(QStringLiteral("seed_kind")))
+                patSeedKind->setCurrentText(p.value("seed_kind").toString());
+            if (p.contains(QStringLiteral("count")))
+                circCount->setValue(p.value("count").toInteger());
+            if (p.contains(QStringLiteral("equal_spacing")))
+                circEqualSpacing->setChecked(p.value("equal_spacing").toBool());
+            if (p.contains(QStringLiteral("angle")))
+                circAngle->setValue(p.value("angle").toDouble() * 180.0 / std::numbers::pi);
+            if (p.contains(QStringLiteral("reverse")))
+                circReverse->setChecked(p.value("reverse").toBool());
+        }
+
+        if (kind == "Mirror") {
+            matchRef(mirrorPlaneRef, p.value("plane").toMap());
+            if (p.contains(QStringLiteral("seed_kind")))
+                patSeedKind->setCurrentText(p.value("seed_kind").toString());
+        }
+
+        if (kind == "CosmeticThread") {
+            matchRef(threadEdgeRef, p.value("reference").toMap());
+            threadDepth->setValue(p.value("termination").toMap().value("depth").toDouble(.025) /
+                                  unit());
+            if (p.contains(QStringLiteral("designation")))
+                threadDesignation->setText(p.value("designation").toString());
+            if (p.contains(QStringLiteral("standard")))
+                threadStandard->setCurrentText(p.value("standard").toString());
+            if (p.contains(QStringLiteral("type")))
+                threadType->setCurrentText(p.value("type").toString());
+            if (p.contains(QStringLiteral("size")))
+                threadSize->setText(p.value("size").toString());
+            if (p.contains(QStringLiteral("thread_type")))
+                threadInternal->setChecked(p.value("thread_type").toString() == "Internal");
+            if (p.contains(QStringLiteral("major_diameter")))
+                threadMajorDia->setValue(p.value("major_diameter").toDouble() / unit());
+            if (p.contains(QStringLiteral("minor_diameter")))
+                threadMinorDia->setValue(p.value("minor_diameter").toDouble() / unit());
+            if (p.contains(QStringLiteral("pitch")))
+                threadPitch->setValue(p.value("pitch").toDouble() / unit());
+            if (p.contains(QStringLiteral("termination")))
+                threadTermination->setCurrentText(
+                    p.value("termination").toMap().value("mode").toString());
+        }
     } else if (!isModeling && !editId.isEmpty()) {
         auto p = draft.parameters;
         auto pick = [&](QComboBox *w, QString key) {
@@ -1201,6 +1864,8 @@ void FeaturePanel::begin(QString kind, QString editId) {
         }
     }
 
+    if (isModeling && kind == "Hole")
+        installHolePoints();
     editing = true;
     evaluation->hide();
     inputs->setEnabled(true);
@@ -1222,7 +1887,18 @@ void FeaturePanel::begin(QString kind, QString editId) {
     invalidate();
     updateManipulator();
     if (isModeling) {
-        repairPath->setCurrentText(kind == "Draft" ? "faces/0" : "direction1/reference");
+        if (kind == "Draft")
+            repairPath->setCurrentText("faces/0");
+        else if (kind == "Hole")
+            repairPath->setCurrentText("placement/face");
+        else if (kind == "Fillet" || kind == "Chamfer")
+            repairPath->setCurrentText("edges/0");
+        else if (kind == "Mirror")
+            repairPath->setCurrentText("plane");
+        else if (kind == "CosmeticThread")
+            repairPath->setCurrentText("reference");
+        else
+            repairPath->setCurrentText("direction1/reference");
         QCborArray prefix;
         for (auto value : document.value("modeling").toMap().value("intents").toArray()) {
             if (value.toMap().value("id") == draft.id)
@@ -1321,10 +1997,122 @@ QCborArray FeaturePanel::definitions() const {
     return all;
 }
 
+void FeaturePanel::installHolePoints() {
+    QSignalBlocker block(holePoints);
+    holePoints->clear();
+    auto selected = modelingDraft.value("placement").toMap();
+    bool original = selected.value("sketch").toString() == profile->currentData().toString();
+    for (auto value : document.value("sketches").toArray()) {
+        auto sketch = value.toMap();
+        if (sketch.value("id").toString() != profile->currentData().toString())
+            continue;
+        for (auto entry : sketch.value("entities").toArray()) {
+            auto entity = entry.toMap();
+            if (entity.value("kind") != "Point")
+                continue;
+            auto *item =
+                new QListWidgetItem("Point " + entity.value("id").toString().right(8), holePoints);
+            item->setData(Qt::UserRole, entity.value("id").toString());
+            item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+            item->setCheckState(
+                !original || selected.value("points").toArray().contains(entity.value("id"))
+                    ? Qt::Checked
+                    : Qt::Unchecked);
+        }
+    }
+    if (original)
+        for (auto point : selected.value("points").toArray()) {
+            bool found = false;
+            for (int i = 0; i < holePoints->count(); ++i)
+                found =
+                    found || holePoints->item(i)->data(Qt::UserRole).toString() == point.toString();
+            if (!found) {
+                auto *item = new QListWidgetItem("Missing point " + point.toString().right(8) +
+                                                     " (choose a replacement)",
+                                                 holePoints);
+                item->setData(Qt::UserRole, point.toString());
+                item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+                item->setCheckState(Qt::Checked);
+            }
+        }
+}
+void FeaturePanel::installFilletRadii() {
+    QMap<QString, QString> values;
+    for (auto value : modelingDraft.value("radii").toArray()) {
+        auto radius = value.toMap();
+        auto key = QString::fromLatin1(QCborValue(radius.value("edge")).toCbor().toHex());
+        values[key] = QString::number(radius.value("radius").toDouble() / unit(), 'g', 12);
+    }
+    for (int row = 0; row < filletRadii->rowCount(); ++row)
+        values[filletRadii->item(row, 0)->data(Qt::UserRole).toString()] =
+            filletRadii->item(row, 1)->text();
+    QSignalBlocker block(filletRadii);
+    filletRadii->setRowCount(0);
+    for (int i = 0; i < filletEdges->count(); ++i) {
+        auto *edge = filletEdges->item(i);
+        if (edge->checkState() != Qt::Checked)
+            continue;
+        auto ref = edge->data(Qt::UserRole).value<QCborMap>();
+        auto key = QString::fromLatin1(QCborValue(ref).toCbor().toHex());
+        int row = filletRadii->rowCount();
+        filletRadii->insertRow(row);
+        auto *label = new QTableWidgetItem(edge->text());
+        label->setFlags(label->flags() & ~Qt::ItemIsEditable);
+        label->setData(Qt::UserRole, key);
+        label->setData(Qt::UserRole + 1, QVariant::fromValue(ref));
+        filletRadii->setItem(row, 0, label);
+        filletRadii->setItem(row, 1,
+                             new QTableWidgetItem(values.value(
+                                 key, QString::number(filletRadius->value(), 'g', 12))));
+    }
+}
+void FeaturePanel::installPatternSeeds() {
+    auto kind = patSeedKind->currentText();
+    auto previous =
+        patSeed->property("seedKind").toString() == kind ? patSeed->currentData() : QVariant{};
+    if (!previous.isValid() && modelingDraft.value("seed_kind") == kind) {
+        auto seed = modelingDraft.value("seed");
+        previous = seed.isString() ? QVariant(seed.toString()) : QVariant::fromValue(seed.toMap());
+    }
+    QSignalBlocker block(patSeed);
+    patSeed->clear();
+    if (kind == "Feature") {
+        for (auto value : document.value("modeling").toMap().value("intents").toArray()) {
+            auto intent = value.toMap();
+            if (intent.value("id").toString() == draft.id)
+                break;
+            auto type = intent.value("kind").toString();
+            if (type == "Fillet" || type == "Chamfer" || type == "Draft" ||
+                type == "CosmeticThread")
+                continue;
+            patSeed->addItem(type + " " + intent.value("id").toString().right(8),
+                             intent.value("id").toString());
+        }
+    } else if (kind == "Body") {
+        for (auto value : availableModelingInputs.value("bodies").toArray()) {
+            auto body = value.toMap();
+            patSeed->addItem("Body " + body.value("body").toString().right(8),
+                             QVariant::fromValue(body));
+        }
+    }
+    for (int i = 0; i < patSeed->count(); ++i)
+        if (patSeed->itemData(i) == previous) {
+            patSeed->setCurrentIndex(i);
+            previous = {};
+            break;
+        }
+    if (previous.isValid()) {
+        patSeed->addItem("Original seed (requires validation)", previous);
+        patSeed->setCurrentIndex(patSeed->count() - 1);
+    }
+    patSeed->setProperty("seedKind", kind);
+}
+
 void FeaturePanel::installModelingInputs(QCborMap input) {
     if (!editing || !isModeling)
         return;
     installing = true;
+    availableModelingInputs = input;
     auto priorTarget = target->currentData();
     target->clear();
     target->addItem("None", QString());
@@ -1385,6 +2173,132 @@ void FeaturePanel::installModelingInputs(QCborMap input) {
                 }
         }
     }
+
+    for (auto *box : {holePlacementFace, filletVariableEdge, chamferReferenceFace, holeEndReference,
+                      threadEdgeRef, mirrorPlaneRef, circAxisRef, linearDir1Ref, linearDir2Ref}) {
+        if (!box)
+            continue;
+        auto previous = box->currentData().value<QCborMap>();
+        box->clear();
+        if (box == chamferReferenceFace)
+            box->addItem("Automatic adjacent face", QVariant::fromValue(QCborMap{}));
+        for (auto value : input.value("references").toArray()) {
+            auto ref = value.toMap();
+            auto role = ref.value("role").toString();
+            bool match = false;
+            if (box == holePlacementFace && role == "Face")
+                match = true;
+            else if ((box == filletVariableEdge && role == "Edge") ||
+                     (box == threadEdgeRef && (role == "Edge" || role == "Face")))
+                match = true;
+            else if ((box == mirrorPlaneRef || box == chamferReferenceFace) && role == "Face")
+                match = true;
+            else if (box == holeEndReference && (role == "Face" || role == "Vertex"))
+                match = true;
+            else if (box == circAxisRef && (role == "Edge" || role == "Axis"))
+                match = true;
+            else if ((box == linearDir1Ref || box == linearDir2Ref) &&
+                     (role == "Edge" || role == "Axis" || role == "Curve"))
+                match = true;
+
+            if (match)
+                box->addItem(role + " " + ref.value("topology").toString().right(8),
+                             QVariant::fromValue(ref));
+        }
+
+        if (box == mirrorPlaneRef || box == circAxisRef || box == linearDir1Ref ||
+            box == linearDir2Ref || box == holeEndReference) {
+            auto *supports = box == circAxisRef || box == linearDir1Ref || box == linearDir2Ref
+                                 ? revolveAxis
+                                 : draftNeutral;
+            for (int i = 0; i < supports->count(); ++i) {
+                auto ref = supports->itemData(i).value<QCborMap>();
+                if (ref.value("role") == "Axis" || ref.value("role") == "Plane")
+                    box->addItem(supports->itemText(i), QVariant::fromValue(ref));
+            }
+            for (auto s : document.value("sketches").toArray()) {
+                auto sm = s.toMap();
+                auto sName = sm.value("name").toString();
+                auto sId = sm.value("id").toString();
+                if (box == mirrorPlaneRef || box == holeEndReference) {
+                    auto planeRef = makeRef(sId, "Plane");
+                    box->addItem(sName + " / Plane", QVariant::fromValue(planeRef.map()));
+                }
+                for (auto entVal : sm.value("entities").toArray()) {
+                    auto ent = entVal.toMap();
+                    if (box == holeEndReference && ent.value("kind") == "Point")
+                        box->addItem(sName + " / Point " + ent.value("id").toString().right(6),
+                                     QVariant::fromValue(
+                                         makeRef(sId, "Point", ent.value("id").toString()).map()));
+                    if (ent.value("kind") == "Line") {
+                        auto lineRef = makeRef(sId, "Curve", ent.value("id").toString());
+                        if (box == circAxisRef || box == linearDir1Ref || box == linearDir2Ref)
+                            box->addItem(sName + " / Line " + ent.value("id").toString().right(6),
+                                         QVariant::fromValue(lineRef.map()));
+                    }
+                }
+            }
+        }
+
+        if (!previous.empty()) {
+            int selected = -1;
+            for (int i = 0; i < box->count(); ++i)
+                if (box->itemData(i).value<QCborMap>() == previous)
+                    selected = i;
+            if (selected < 0) {
+                box->addItem("Original reference (requires validation)",
+                             QVariant::fromValue(previous));
+                selected = box->count() - 1;
+            }
+            box->setCurrentIndex(selected);
+        } else if (!client->state().selection.entity.isEmpty()) {
+            auto sel = client->state().selection.entity;
+            for (int i = 0; i < box->count(); ++i) {
+                auto ref = box->itemData(i).value<QCborMap>();
+                if (ref.value("topology").toString() == sel ||
+                    sel.contains(ref.value("topology").toString())) {
+                    box->setCurrentIndex(i);
+                    break;
+                }
+            }
+        }
+    }
+
+    for (auto *list : {filletEdges, chamferEdges}) {
+        QSignalBlocker block(list);
+        QCborArray selected;
+        bool populated = list->count() > 0;
+        for (int i = 0; i < list->count(); ++i)
+            if (list->item(i)->checkState() == Qt::Checked)
+                selected.append(list->item(i)->data(Qt::UserRole).value<QCborMap>());
+        if (!populated) {
+            selected = modelingDraft.value("edges").toArray();
+            if (list == filletEdges && modelingDraft.value("method") == "MultipleRadius")
+                for (auto radius : modelingDraft.value("radii").toArray())
+                    selected.append(radius.toMap().value("edge"));
+        }
+        list->clear();
+        auto add = [&](QCborMap ref) {
+            auto *item =
+                new QListWidgetItem("Edge " + ref.value("topology").toString().right(8), list);
+            item->setData(Qt::UserRole, QVariant::fromValue(ref));
+            item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+            bool checked = selected.contains(ref);
+            if (!populated && modelingDraft.empty())
+                checked =
+                    client->state().selection.entity.contains(ref.value("topology").toString());
+            item->setCheckState(checked ? Qt::Checked : Qt::Unchecked);
+        };
+        for (auto ref : selected)
+            add(ref.toMap());
+        for (auto value : input.value("references").toArray()) {
+            auto ref = value.toMap();
+            if (ref.value("role") == "Edge" && !selected.contains(ref))
+                add(ref);
+        }
+    }
+    installFilletRadii();
+    installPatternSeeds();
     inputSketches = input.value("sketches").toArray();
     inputGeometry = input.value("geometry").toArray();
     installing = false;
@@ -1530,8 +2444,7 @@ QCborMap FeaturePanel::definitionModeling() const {
     m.insert(QStringLiteral("id"), draft.id);
     m.insert(QStringLiteral("kind"), kind);
 
-    if (kind == "Draft") {
-        // target body
+    auto makeTarget = [&]() -> QCborMap {
         auto targetData = target->currentData();
         QCborMap targetMap;
         if (targetData.canConvert<QCborMap>()) {
@@ -1540,7 +2453,7 @@ QCborMap FeaturePanel::definitionModeling() const {
             targetMap.insert(QStringLiteral("source"),
                              makeRef(targetData.toString(), "Object").map());
             targetMap.insert(QStringLiteral("body"), targetData.toString());
-        } else if (!modelingDraft.isEmpty() && modelingDraft.contains(QStringLiteral("target"))) {
+        } else if (!modelingDraft.isEmpty() && !modelingDraft.value("target").isNull()) {
             targetMap = modelingDraft.value("target").toMap();
         } else {
             for (auto idVal : result.value("bodies").toArray()) {
@@ -1550,7 +2463,11 @@ QCborMap FeaturePanel::definitionModeling() const {
                 break;
             }
         }
-        m.insert(QStringLiteral("target"), targetMap);
+        return targetMap;
+    };
+
+    if (kind == "Draft") {
+        m.insert(QStringLiteral("target"), makeTarget());
 
         // neutral
         QCborMap neutralMap;
@@ -1592,31 +2509,344 @@ QCborMap FeaturePanel::definitionModeling() const {
         return m;
     }
 
+    if (kind == "Hole") {
+        m.insert(QStringLiteral("operation"), QStringLiteral("Cut"));
+        m.insert(QStringLiteral("target"), makeTarget());
+        m.insert(QStringLiteral("family"), holeFamily->currentText());
+
+        QCborMap placement;
+        auto profSketchId = profile->currentData().toString();
+        placement.insert(QStringLiteral("sketch"), profSketchId);
+        QCborArray pts;
+        for (int i = 0; i < holePoints->count(); ++i)
+            if (holePoints->item(i)->checkState() == Qt::Checked)
+                pts.append(holePoints->item(i)->data(Qt::UserRole).toString());
+        QCborArray ordered;
+        auto originalPlacement = modelingDraft.value("placement").toMap();
+        if (originalPlacement.value("sketch").toString() == profSketchId)
+            for (auto point : originalPlacement.value("points").toArray())
+                if (pts.contains(point))
+                    ordered.append(point);
+        for (auto point : pts)
+            if (!ordered.contains(point))
+                ordered.append(point);
+        placement.insert(QStringLiteral("points"), ordered);
+        QCborMap faceRef;
+        if (holePlacementFace->currentData().canConvert<QCborMap>())
+            faceRef = holePlacementFace->currentData().value<QCborMap>();
+        else if (!modelingDraft.isEmpty() &&
+                 modelingDraft.value("placement").toMap().contains(QStringLiteral("face")))
+            faceRef = modelingDraft.value("placement").toMap().value("face").toMap();
+        placement.insert(QStringLiteral("face"), faceRef);
+        m.insert(QStringLiteral("placement"), placement);
+
+        QCborMap sizing;
+        sizing.insert(QStringLiteral("mode"), QStringLiteral("Custom"));
+        double dia = holeDiameter->value() * u;
+        double dep = holeDepth->value() * u;
+        sizing.insert(QStringLiteral("diameter"), dia);
+        sizing.insert(QStringLiteral("depth"), dep);
+        auto fam = holeFamily->currentText();
+        if (fam == "Counterbore" || fam == "LegacyCounterboreDrill") {
+            double cbDia = holeCounterboreDia->value() * u;
+            double cbDep = holeCounterboreDepth->value() * u;
+            sizing.insert(QStringLiteral("counterbore_diameter"), cbDia);
+            sizing.insert(QStringLiteral("counterbore_depth"), cbDep);
+        }
+        if (fam == "Countersink" || fam == "LegacyCountersinkDrill") {
+            double csDia = holeCountersinkDia->value() * u;
+            sizing.insert(QStringLiteral("countersink_diameter"), csDia);
+            sizing.insert(QStringLiteral("countersink_angle"),
+                          holeCountersinkAngle->value() * std::numbers::pi / 180.0);
+        }
+        if (fam == "Drilled" || fam == "LegacySimpleDrilled" || fam == "LegacyCounterboreDrill" ||
+            fam == "LegacyCountersinkDrill") {
+            sizing.insert(QStringLiteral("drill_angle"),
+                          holeDrillAngle->value() * std::numbers::pi / 180.0);
+        }
+        if (fam == "LegacyTapered" || fam == "PipeTap")
+            sizing.insert(QStringLiteral("taper_angle"),
+                          holeTaperAngle->value() * std::numbers::pi / 180);
+        if (fam == "Tapped" || fam == "PipeTap") {
+            sizing.insert(QStringLiteral("tap_drill_diameter"), holeTapDiameter->value() * u);
+            bool cosmetic = modelingDraft.value("sizing")
+                                .toMap()
+                                .value("thread")
+                                .toMap()
+                                .value("cosmetic")
+                                .toBool(true);
+            sizing.insert(QStringLiteral("thread"),
+                          fields({{"cosmetic", cosmetic},
+                                  {"designation", holeThreadDesignation->text()},
+                                  {"pitch", holeThreadPitch->value() * u},
+                                  {"depth", holeThreadDepth->value() * u}}));
+        }
+        if (!holeCustomSizing->isChecked() &&
+            modelingDraft.value("sizing").toMap().value("mode") == "Catalog")
+            sizing = modelingDraft.value("sizing").toMap();
+        m.insert(QStringLiteral("sizing"), sizing);
+
+        QCborMap term;
+        term.insert(QStringLiteral("mode"), holeTermination->currentText());
+        term.insert(QStringLiteral("depth_reference"), holeDepthReference->currentText());
+        auto mode = holeTermination->currentText();
+        if (mode == "UpToSurface" || mode == "UpToVertex" || mode == "OffsetFromSurface")
+            term.insert(QStringLiteral("reference"),
+                        holeEndReference->currentData().value<QCborMap>());
+        if (mode == "OffsetFromSurface") {
+            term.insert(QStringLiteral("offset"), surfaceOffset->value() * u);
+            term.insert(QStringLiteral("offset_reverse"), offsetReverse->isChecked());
+        }
+        m.insert(QStringLiteral("termination"), term);
+        return m;
+    }
+
+    auto checkedEdges = [](QListWidget *list) {
+        QCborArray refs;
+        for (int i = 0; i < list->count(); ++i)
+            if (list->item(i)->checkState() == Qt::Checked)
+                refs.append(list->item(i)->data(Qt::UserRole).value<QCborMap>());
+        return refs;
+    };
+    auto number = [](QTableWidget *table, int row, int column) {
+        auto *item = table->item(row, column);
+        bool ok = false;
+        double value = item ? item->text().toDouble(&ok) : 0;
+        domain::check(ok && std::isfinite(value), "InvalidInput",
+                      "Enter finite numeric radius table values");
+        return value;
+    };
+    if (kind == "Fillet") {
+        m.insert(QStringLiteral("target"), makeTarget());
+        auto method = filletMethod->currentText();
+        m.insert(QStringLiteral("method"), method);
+        m.insert(QStringLiteral("propagate_tangent"), filletPropagateTangent->isChecked());
+        if (method == "Constant") {
+            m.insert(QStringLiteral("radius"), filletRadius->value() * u);
+            m.insert(QStringLiteral("edges"), checkedEdges(filletEdges));
+        } else if (method == "MultipleRadius") {
+            QCborArray radii;
+            for (int row = 0; row < filletRadii->rowCount(); ++row)
+                radii.append(fields(
+                    {{"edge", filletRadii->item(row, 0)->data(Qt::UserRole + 1).value<QCborMap>()},
+                     {"radius", number(filletRadii, row, 1) * u}}));
+            m.insert(QStringLiteral("radii"), radii);
+        } else if (method == "Variable") {
+            m.insert(QStringLiteral("edge"), filletVariableEdge->currentData().value<QCborMap>());
+            QCborArray points;
+            for (int row = 0; row < filletControlPoints->rowCount(); ++row)
+                points.append(fields({{"parameter", number(filletControlPoints, row, 0)},
+                                      {"radius", number(filletControlPoints, row, 1) * u}}));
+            m.insert(QStringLiteral("control_points"), points);
+            m.insert(QStringLiteral("transition"), filletTransition->currentText());
+        } else {
+            domain::check(false, "UnsupportedOperation", "Face-set fillets remain blocked (R1)");
+        }
+        return m;
+    }
+
+    if (kind == "Chamfer") {
+        m.insert(QStringLiteral("target"), makeTarget());
+        auto method = chamferMethod->currentText();
+        m.insert(QStringLiteral("method"), method);
+        m.insert(QStringLiteral("propagate_tangent"), true);
+        m.insert(QStringLiteral("edges"), checkedEdges(chamferEdges));
+        m.insert(QStringLiteral("propagate_tangent"), chamferPropagateTangent->isChecked());
+        auto referenceFace = chamferReferenceFace->currentData().value<QCborMap>();
+        if (method != "EqualDistance" && !referenceFace.empty())
+            m.insert(QStringLiteral("reference_face"), referenceFace);
+        if (method == "EqualDistance") {
+            m.insert(QStringLiteral("distance"), chamferDistance->value() * u);
+        } else if (method == "DistanceDistance") {
+            m.insert(QStringLiteral("distance1"), chamferDistance->value() * u);
+            m.insert(QStringLiteral("distance2"), chamferDistance2->value() * u);
+            m.insert(QStringLiteral("flip"), chamferFlip->isChecked());
+        } else if (method == "AngleDistance") {
+            m.insert(QStringLiteral("distance"), chamferDistance->value() * u);
+            m.insert(QStringLiteral("angle"), chamferAngle->value() * std::numbers::pi / 180.0);
+            m.insert(QStringLiteral("flip"), chamferFlip->isChecked());
+        }
+        return m;
+    }
+
+    if (kind == "Rib") {
+        m.insert(QStringLiteral("operation"), QStringLiteral("Add"));
+        m.insert(QStringLiteral("target"), makeTarget());
+
+        QCborMap prof;
+        auto profSketchId = profile->currentData().toString();
+        prof.insert(QStringLiteral("sketch"), profSketchId);
+        prof.insert(QStringLiteral("mode"), profileMode->currentText());
+        QCborArray uses;
+        for (auto skVal : document.value("sketches").toArray()) {
+            auto sk = skVal.toMap();
+            if (sk.value("id").toString() == profSketchId) {
+                for (auto entVal : sk.value("entities").toArray()) {
+                    auto ent = entVal.toMap();
+                    if (!ent.value("construction").toBool()) {
+                        QString ek = ent.value("kind").toString();
+                        if (ek == "Line" || ek == "Arc" || ek == "Circle" || ek == "Spline") {
+                            QCborMap uMap;
+                            uMap.insert(QStringLiteral("entity"), ent.value("id").toString());
+                            uMap.insert(QStringLiteral("from"), 0.0);
+                            uMap.insert(QStringLiteral("to"), 1.0);
+                            uMap.insert(QStringLiteral("reverse"), false);
+                            uses.append(uMap);
+                        }
+                    }
+                }
+                break;
+            }
+        }
+        prof.insert(QStringLiteral("regions"),
+                    profileMode->currentText() == "AllClosed" ? QCborArray{}
+                    : currentRegions.empty()                  ? QCborArray{QCborArray{uses}}
+                                                              : currentRegions);
+        m.insert(QStringLiteral("profile"), prof);
+
+        m.insert(QStringLiteral("thickness"), ribThickness->value() * u);
+        m.insert(QStringLiteral("side"), ribSide->currentText());
+        m.insert(QStringLiteral("direction"), ribDirection->currentText());
+        m.insert(QStringLiteral("flip_material"), ribFlipMaterial->isChecked());
+        return m;
+    }
+
+    if (kind == "LinearPattern") {
+        auto op = operation->currentText();
+        m.insert(QStringLiteral("operation"), op);
+        m.insert(QStringLiteral("target"), op == "NewBody" ? QCborValue(nullptr) : makeTarget());
+        auto skind = patSeedKind->currentText();
+        m.insert(QStringLiteral("seed_kind"), skind);
+        if (skind == "Feature") {
+            m.insert(QStringLiteral("seed"), patSeed->currentData().toString());
+        } else if (skind == "Body") {
+            m.insert(QStringLiteral("seed"), patSeed->currentData().value<QCborMap>());
+        } else {
+            m.insert(QStringLiteral("seed"), QCborArray{patSeed->currentData().value<QCborMap>()});
+        }
+
+        QCborMap d1;
+        QCborMap ref1;
+        if (linearDir1Ref->currentData().canConvert<QCborMap>())
+            ref1 = linearDir1Ref->currentData().value<QCborMap>();
+        else if (!modelingDraft.isEmpty() &&
+                 modelingDraft.value("direction1").toMap().contains(QStringLiteral("reference")))
+            ref1 = modelingDraft.value("direction1").toMap().value("reference").toMap();
+        d1.insert(QStringLiteral("reference"), ref1);
+        d1.insert(QStringLiteral("spacing"), linearSpacing1->value() * u);
+        d1.insert(QStringLiteral("count"), linearCount1->value());
+        d1.insert(QStringLiteral("reverse"), linearReverse1->isChecked());
+        m.insert(QStringLiteral("direction1"), d1);
+
+        if (linearCount2->value() > 1) {
+            QCborMap d2;
+            QCborMap ref2;
+            if (linearDir2Ref->currentData().canConvert<QCborMap>())
+                ref2 = linearDir2Ref->currentData().value<QCborMap>();
+            else if (!modelingDraft.isEmpty() && modelingDraft.value("direction2")
+                                                     .toMap()
+                                                     .contains(QStringLiteral("reference")))
+                ref2 = modelingDraft.value("direction2").toMap().value("reference").toMap();
+            d2.insert(QStringLiteral("reference"), ref2);
+            d2.insert(QStringLiteral("spacing"), linearSpacing2->value() * u);
+            d2.insert(QStringLiteral("count"), linearCount2->value());
+            d2.insert(QStringLiteral("reverse"), linearReverse2->isChecked());
+            m.insert(QStringLiteral("direction2"), d2);
+        } else {
+            m.insert(QStringLiteral("direction2"), QCborValue(nullptr));
+        }
+        return m;
+    }
+
+    if (kind == "CircularPattern") {
+        auto op = operation->currentText();
+        m.insert(QStringLiteral("operation"), op);
+        m.insert(QStringLiteral("target"), op == "NewBody" ? QCborValue(nullptr) : makeTarget());
+        auto skind = patSeedKind->currentText();
+        m.insert(QStringLiteral("seed_kind"), skind);
+        if (skind == "Feature") {
+            m.insert(QStringLiteral("seed"), patSeed->currentData().toString());
+        } else if (skind == "Body") {
+            m.insert(QStringLiteral("seed"), patSeed->currentData().value<QCborMap>());
+        } else {
+            m.insert(QStringLiteral("seed"), QCborArray{patSeed->currentData().value<QCborMap>()});
+        }
+
+        QCborMap axisRef;
+        if (circAxisRef->currentData().canConvert<QCborMap>())
+            axisRef = circAxisRef->currentData().value<QCborMap>();
+        else if (!modelingDraft.isEmpty() && modelingDraft.contains(QStringLiteral("axis")))
+            axisRef = modelingDraft.value("axis").toMap();
+        m.insert(QStringLiteral("axis"), axisRef);
+
+        m.insert(QStringLiteral("count"), circCount->value());
+        m.insert(QStringLiteral("equal_spacing"), circEqualSpacing->isChecked());
+        m.insert(QStringLiteral("angle"), circAngle->value() * std::numbers::pi / 180.0);
+        m.insert(QStringLiteral("reverse"), circReverse->isChecked());
+        return m;
+    }
+
+    if (kind == "Mirror") {
+        auto op = operation->currentText();
+        m.insert(QStringLiteral("operation"), op);
+        m.insert(QStringLiteral("target"), op == "NewBody" ? QCborValue(nullptr) : makeTarget());
+        auto skind = patSeedKind->currentText();
+        m.insert(QStringLiteral("seed_kind"), skind);
+        if (skind == "Feature") {
+            m.insert(QStringLiteral("seed"), patSeed->currentData().toString());
+        } else if (skind == "Body") {
+            m.insert(QStringLiteral("seed"), patSeed->currentData().value<QCborMap>());
+        } else {
+            m.insert(QStringLiteral("seed"), QCborArray{patSeed->currentData().value<QCborMap>()});
+        }
+
+        QCborMap planeRef;
+        if (mirrorPlaneRef->currentData().canConvert<QCborMap>())
+            planeRef = mirrorPlaneRef->currentData().value<QCborMap>();
+        else if (!modelingDraft.isEmpty() && modelingDraft.contains(QStringLiteral("plane")))
+            planeRef = modelingDraft.value("plane").toMap();
+        m.insert(QStringLiteral("plane"), planeRef);
+        return m;
+    }
+
+    if (kind == "CosmeticThread") {
+        m.insert(QStringLiteral("target"), makeTarget());
+        QCborMap edgeRef;
+        if (threadEdgeRef->currentData().canConvert<QCborMap>())
+            edgeRef = threadEdgeRef->currentData().value<QCborMap>();
+        else if (!modelingDraft.isEmpty() && modelingDraft.contains(QStringLiteral("reference")))
+            edgeRef = modelingDraft.value("reference").toMap();
+        m.insert(QStringLiteral("reference"), edgeRef);
+        m.insert(QStringLiteral("designation"), threadDesignation->text().isEmpty()
+                                                    ? QStringLiteral("M10x1.5")
+                                                    : threadDesignation->text());
+        m.insert(QStringLiteral("standard"), threadStandard->currentText());
+        m.insert(QStringLiteral("type"), threadType->currentText());
+        m.insert(QStringLiteral("size"),
+                 threadSize->text().isEmpty() ? QStringLiteral("M10x1.5") : threadSize->text());
+        m.insert(QStringLiteral("thread_type"), threadInternal->isChecked()
+                                                    ? QStringLiteral("Internal")
+                                                    : QStringLiteral("External"));
+        double maj = threadMajorDia->value() * u;
+        double min = threadMinorDia->value() * u;
+        m.insert(QStringLiteral("major_diameter"), maj);
+        m.insert(QStringLiteral("minor_diameter"), min);
+        m.insert(QStringLiteral("pitch"), threadPitch->value() * u);
+        QCborMap term;
+        term.insert(QStringLiteral("mode"), threadTermination->currentText());
+        if (threadTermination->currentText() == "Blind")
+            term.insert(QStringLiteral("depth"), threadDepth->value() * u);
+        m.insert(QStringLiteral("termination"), term);
+        return m;
+    }
+
     // Extrude or Revolve
     auto op = operation->currentText();
     m.insert(QStringLiteral("operation"), op);
     if (op == "NewBody") {
         m.insert(QStringLiteral("target"), QCborValue(nullptr));
     } else {
-        auto targetData = target->currentData();
-        QCborMap targetMap;
-        if (targetData.canConvert<QCborMap>()) {
-            targetMap = targetData.value<QCborMap>();
-        } else if (!targetData.toString().isEmpty()) {
-            targetMap.insert(QStringLiteral("source"),
-                             makeRef(targetData.toString(), "Object").map());
-            targetMap.insert(QStringLiteral("body"), targetData.toString());
-        } else if (!modelingDraft.isEmpty() && !modelingDraft.value("target").isNull()) {
-            targetMap = modelingDraft.value("target").toMap();
-        } else {
-            for (auto idVal : result.value("bodies").toArray()) {
-                auto bid = idVal.toString();
-                targetMap.insert(QStringLiteral("source"), makeRef(bid, "Object").map());
-                targetMap.insert(QStringLiteral("body"), bid);
-                break;
-            }
-        }
-        m.insert(QStringLiteral("target"), targetMap);
+        m.insert(QStringLiteral("target"), makeTarget());
     }
 
     // profile
@@ -1888,6 +3118,7 @@ void FeaturePanel::discard() {
     if (!editing || commitPending)
         return;
     editing = false;
+    isModeling = false;
     previewAfterInputs = false;
     validPreview = false;
     inputs->hide();
@@ -1930,7 +3161,8 @@ void FeaturePanel::updateManipulator() {
                     handleParameter->addItem("Direction 2 draft");
             }
         }
-        if (draft.kind != "Draft" && thinMode->currentText() != "Solid") {
+        if ((draft.kind == "Extrude" || draft.kind == "Revolve") &&
+            thinMode->currentText() != "Solid") {
             handleParameter->addItem("Thickness 1");
             if (thinMode->currentText() == "TwoDirection")
                 handleParameter->addItem("Thickness 2");
