@@ -69,9 +69,12 @@ TopoDS_Shape getSeed(const QCborMap &intent, const kernel::Part &part, const Con
         throw domain::Error("ReferenceMissing", "Seed feature shape missing: " + seedId);
     } else if (seedKind == "Body") {
         return body(context, intent.value("seed").toMap()).shape;
-    } else {
+    } else if (seedKind == "Face") {
+        check(intent.value("seed").isArray(), "InvalidInput", "Face seeds must be an array");
+        auto array = intent.value("seed").toArray();
+        check(!array.isEmpty(), "InvalidInput", "At least one face seed required");
         BRepBuilderAPI_Sewing sewing(1e-7);
-        for (auto value : intent.value("seed").toArray())
+        for (auto value : array)
             sewing.Add(
                 context.references.topology(domain::GeometryReference::parse(value.toMap())));
         sewing.Perform();
@@ -85,6 +88,8 @@ TopoDS_Shape getSeed(const QCborMap &intent, const kernel::Part &part, const Con
               "InvalidGeometry", "Face seed is not a valid closed tool body");
         kernel::validateShape(solid);
         return solid;
+    } else {
+        throw domain::Error("InvalidInput", "Unsupported seed kind: " + seedKind);
     }
 }
 } // namespace

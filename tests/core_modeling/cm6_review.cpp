@@ -219,6 +219,29 @@ void closedFaceSeeds() {
     GProp_GProps mass;
     BRepGProp::VolumeProperties(mirrored.part.bodies[1].shape, mass);
     near(mass.CentreOfMass().Z(), 35, 1e-8);
+    auto circular = fields({{"version", 1},
+                            {"id", newId()},
+                            {"kind", "CircularPattern"},
+                            {"operation", "NewBody"},
+                            {"target", nullptr},
+                            {"seed_kind", "Face"},
+                            {"seed", faces},
+                            {"axis", support_fixture::ref(p.sketch.id, "Curve", p.lines[1]).map()},
+                            {"count", 3},
+                            {"equal_spacing", true},
+                            {"angle", 2 * std::numbers::pi},
+                            {"reverse", false}});
+    auto circ = evaluateModeling(p.definition, {p.ext, circular});
+    CHECK(circ.part.bodies.size() == 3);
+    near(volume(circ.part.bodies[2].shape), .1 * .1 * .05, 1e-12);
+    auto unknownSeed = pattern;
+    unknownSeed.insert(QStringLiteral("seed_kind"), "Unknown");
+    support_fixture::error("InvalidInput",
+                           [&] { evaluateModeling(p.definition, {p.ext, unknownSeed}); });
+    auto emptySeed = pattern;
+    emptySeed.insert(QStringLiteral("seed"), QCborArray{});
+    support_fixture::error("ResourceLimit",
+                           [&] { evaluateModeling(p.definition, {p.ext, emptySeed}); });
     faces.removeLast();
     pattern.insert(QStringLiteral("seed"), faces);
     support_fixture::error("InvalidGeometry",
