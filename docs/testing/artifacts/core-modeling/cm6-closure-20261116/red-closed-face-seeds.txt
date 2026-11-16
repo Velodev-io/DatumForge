@@ -1,0 +1,1 @@
+FAIL: Face pattern requires a closed tool body (R4)

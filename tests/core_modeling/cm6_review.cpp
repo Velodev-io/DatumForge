@@ -189,6 +189,41 @@ void holeExtents() {
     h.insert(QStringLiteral("placement"), placement);
     support_fixture::error("ReferenceMissing", [&] { evaluateModeling(p.definition, {p.ext, h}); });
 }
+void closedFaceSeeds() {
+    Plate p;
+    auto baseResult = evaluateModeling(p.definition, {p.ext});
+    QCborArray faces;
+    for (TopExp_Explorer ex(baseResult.part.bodies[0].shape, TopAbs_FACE); ex.More(); ex.Next()) {
+        auto ref = support_fixture::ref(p.id, "Face");
+        ref.topology = supportToken(ex.Current());
+        faces.append(ref.map());
+    }
+    auto pattern = p.pattern();
+    pattern.insert(QStringLiteral("seed_kind"), "Face");
+    pattern.insert(QStringLiteral("seed"), faces);
+    auto result = evaluateModeling(p.definition, {p.ext, pattern});
+    CHECK(result.part.bodies.size() == 2);
+    near(volume(result.part.bodies[1].shape), .1 * .1 * .05, 1e-12);
+    CHECK(result.part.bodies[1].id ==
+          evaluateModeling(p.definition, {p.ext, pattern}).part.bodies[1].id);
+    auto mirror = fields({{"version", 1},
+                          {"id", newId()},
+                          {"kind", "Mirror"},
+                          {"operation", "NewBody"},
+                          {"target", nullptr},
+                          {"seed_kind", "Face"},
+                          {"seed", faces},
+                          {"plane", support_fixture::ref(p.stop.id, "Plane").map()}});
+    auto mirrored = evaluateModeling(p.definition, {p.ext, mirror});
+    near(volume(mirrored.part.bodies[1].shape), .1 * .1 * .05, 1e-12);
+    GProp_GProps mass;
+    BRepGProp::VolumeProperties(mirrored.part.bodies[1].shape, mass);
+    near(mass.CentreOfMass().Z(), 35, 1e-8);
+    faces.removeLast();
+    pattern.insert(QStringLiteral("seed"), faces);
+    support_fixture::error("InvalidGeometry",
+                           [&] { evaluateModeling(p.definition, {p.ext, pattern}); });
+}
 void ribsAndTreatments() {
     Plate p;
     sketch::Sketch line;
@@ -284,6 +319,7 @@ int main(int argc, char **argv) {
     return run([] {
         repetition();
         holeExtents();
+        closedFaceSeeds();
         ribsAndTreatments();
         durablePattern();
     });

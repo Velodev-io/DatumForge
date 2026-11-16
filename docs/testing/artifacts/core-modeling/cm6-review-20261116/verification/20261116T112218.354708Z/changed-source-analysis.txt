@@ -1,0 +1,5 @@
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed apps/desktop/FeaturePanel.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/geometry/occt/Repetition.cpp
+Analyzed tests/core_modeling/cm6_review.cpp
