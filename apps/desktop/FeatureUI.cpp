@@ -21,6 +21,11 @@ void MainWindow::refreshFeatures() {
     bool sketchEdit = sketchPanel && sketchPanel->active(),
          edit = featurePanel->active() || (historyPanel && historyPanel->active());
     featurePanel->install(active, idle);
+    bool threadsVisible = true;
+    for (auto value : active.value("parameters").toArray())
+        if (value.toMap().value("name") == "DisplayCosmeticThreads")
+            threadsVisible = value.toMap().value("value_si").toDouble() != 0;
+    viewport->setCosmeticThreadsVisible(threadsVisible);
     auto available = [&](QString id, bool yes, QString reason) {
         auto *a = commands.get(id);
         a->setEnabled(yes);

@@ -111,3 +111,49 @@ loosely structured parameters in the legacy `Feature` class.
   - `EqualDistance`: `distance`: double (> 0)
   - `DistanceDistance`: `distance1`: double, `distance2`: double, `flip`: bool, optional `reference_face`
   - `AngleDistance`: `distance`: double, `angle`: double (0 < angle < π/2), `flip`: bool, optional `reference_face`
+
+## 16 November review corrections and supported scope
+
+The current [review evidence](../testing/core-modeling-cm6-review.md) replaces the
+original blanket completion claim. Custom/resolved hole sections remain SI.
+Catalog sizing accepts an optional bounded `version` string. Legacy catalog
+intents without it retain their original resolved values; no source version is
+invented and no catalog update can rewrite them. The UI preserves catalog sizing
+unless the user explicitly enables the custom override.
+
+Patterns publish copies through shared exact validation with deterministic UUIDv5
+identities derived from feature UUID, `(i,j)` and seed-solid ordinal. Body seeds
+resolve their producing stage; feature seeds use the feature tool. There must be
+at least one copy. New-body output is capped before construction at ten total
+bodies. Feature tools are transformed; reference-terminated seeds are not silently
+re-evaluated at each instance. Circular angle means total distributed angle when
+`equal_spacing=true`, otherwise angular spacing, matching the stored intent.
+
+Hole placement currently requires a planar face with interior centers. Simple,
+counterbore, countersink and tapped cylinders use shared CM5 end conditions.
+Drill-point holes support Blind/ThroughAll; tapered/PipeTap sections support Blind.
+Other combinations fail explicitly. Tip depths shorter than the drill tip and
+countersinks deeper than the blind hole are rejected. Legacy counterbore/drilled
+and countersink/drilled families include their stored drill point for Blind.
+
+Parallel ribs currently accept one straight open chain and construct a thickness
+section terminated at the first target surface. Normal ribs use exact thin bands
+(open or closed) terminated at the body. Unsupported profiles or nonintersecting
+material directions fail without changing accepted state.
+
+Tangent propagation off is explicitly unsupported; its native controls are
+disabled. Linear variable-radius transition supports two endpoint values; Smooth
+uses ordered interpolation points. Every law includes parameters 0 and 1. The
+Linear choice has an endpoint-only tooltip in the native editor. Face/full-round
+blends and closed-face repetition remain Blocked and unavailable as ordinary
+commands; parser acceptance does not imply geometry support.
+
+Cosmetic threads resolve a complete cylinder or an unambiguous circular boundary
+edge, with Blind depth bounded by that section and ThroughAll/UpToNext using its
+actual extent. Worker-generated cosmetic ring segments are lifted toward free space by display
+deflection to avoid tessellation self-occlusion; their display bounds include that
+offset. Internal/external type must match the selected surface. They change neither exact
+volume nor topology and cannot be picked as modeling edges. Display density is
+bounded (sampled rings); `DisplayCosmeticThreads` is a separate persisted scalar
+document display parameter. No catalog-backed thread designation validation or
+helical solid is claimed.

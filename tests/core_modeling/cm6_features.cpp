@@ -41,13 +41,14 @@ domain::GeometryReference findFace(const TopoDS_Shape &shape, QString object, do
     return r;
 }
 
-domain::GeometryReference findEdge(const TopoDS_Shape &shape, QString object) {
-    domain::GeometryReference r = support_fixture::ref(object, "Edge");
-    for (TopExp_Explorer ex(shape, TopAbs_EDGE); ex.More(); ex.Next()) {
-        r.topology = supportToken(ex.Current());
-        return r;
-    }
-    return r;
+domain::GeometryReference threadFace(const TopoDS_Shape &shape, QString object) {
+    auto r = support_fixture::ref(object, "Face");
+    for (TopExp_Explorer ex(shape, TopAbs_FACE); ex.More(); ex.Next())
+        if (BRepAdaptor_Surface(TopoDS::Face(ex.Current())).GetType() == GeomAbs_Cylinder) {
+            r.topology = supportToken(ex.Current());
+            return r;
+        }
+    throw std::runtime_error("Thread cylinder missing");
 }
 
 QCborMap blind(double value = 0.02) {
@@ -77,11 +78,15 @@ void testTreatments() {
 
     // Pick a top edge (length L = 0.100 m)
     auto topEdge = res.part.bodies[0].shape;
+    double edgeLength = 0;
     domain::GeometryReference edgeRef;
     edgeRef.object = baseId;
     edgeRef.role = "Edge";
     for (TopExp_Explorer ex(topEdge, TopAbs_EDGE); ex.More(); ex.Next()) {
         edgeRef.topology = supportToken(ex.Current());
+        GProp_GProps length;
+        BRepGProp::LinearProperties(ex.Current(), length);
+        edgeLength = length.Mass() / 1000;
         break;
     }
     CHECK(!edgeRef.topology.isEmpty());
@@ -101,8 +106,8 @@ void testTreatments() {
     CHECK(resFillet.part.bodies.size() == 1);
     double volFillet = volume(resFillet.part.bodies[0].shape);
     // Analytical oracle for 90 degree convex edge fillet: (1 - pi/4) * r^2 * L
-    double expectedLoss = (1.0 - std::numbers::pi / 4.0) * rFillet * rFillet * 0.100;
-    near(initialVol - volFillet, expectedLoss, 1e-6);
+    double expectedLoss = (1.0 - std::numbers::pi / 4.0) * rFillet * rFillet * edgeLength;
+    near(initialVol - volFillet, expectedLoss, 1e-10);
 
     // 2. AngleDistance Chamfer 1.5 mm at 45 deg (Tutorial 3)
     double chamfD = 0.0015;
@@ -122,8 +127,8 @@ void testTreatments() {
     CHECK(resChamf.part.bodies.size() == 1);
     double volChamf = volume(resChamf.part.bodies[0].shape);
     // Analytical oracle: d * (d * tan(theta)) / 2 * L
-    double expectedChamfLoss = (chamfD * chamfD * std::tan(chamfAng) / 2.0) * 0.100;
-    near(initialVol - volChamf, expectedChamfLoss, 1e-6);
+    double expectedChamfLoss = (chamfD * chamfD * std::tan(chamfAng) / 2.0) * edgeLength;
+    near(initialVol - volChamf, expectedChamfLoss, 1e-10);
 
     // 2b. AngleDistance Chamfer with flip: true and 30 deg
     double chamfD30 = 0.002;
@@ -141,8 +146,8 @@ void testTreatments() {
     auto resChamfFlip = evaluateModeling(d, {baseExt, chamfFlipIntent});
     CHECK(resChamfFlip.part.bodies.size() == 1);
     double volChamfFlip = volume(resChamfFlip.part.bodies[0].shape);
-    double expectedChamfFlipLoss = (chamfD30 * chamfD30 * std::tan(chamfAng30) / 2.0) * 0.100;
-    near(initialVol - volChamfFlip, expectedChamfFlipLoss, 1e-6);
+    double expectedChamfFlipLoss = (chamfD30 * chamfD30 * std::tan(chamfAng30) / 2.0) * edgeLength;
+    near(initialVol - volChamfFlip, expectedChamfFlipLoss, 1e-10);
 
     // 3. Equal Chamfer 2 mm
     double eqD = 0.002;
@@ -157,8 +162,8 @@ void testTreatments() {
 
     auto resEq = evaluateModeling(d, {baseExt, eqChamfIntent});
     double volEq = volume(resEq.part.bodies[0].shape);
-    double expectedEqLoss = (eqD * eqD / 2.0) * 0.100;
-    near(initialVol - volEq, expectedEqLoss, 1e-6);
+    double expectedEqLoss = (eqD * eqD / 2.0) * edgeLength;
+    near(initialVol - volEq, expectedEqLoss, 1e-10);
 
     // 4. Face Fillet Blocked per R1
     auto faceFilletIntent =
@@ -214,7 +219,7 @@ void testHoles() {
     double h1Vol = volume(h1Res.part.bodies[0].shape);
     // Oracle for cylinder through 50 mm slab: pi * r^2 * h
     double expectedHoleLoss = std::numbers::pi * (dia / 2.0) * (dia / 2.0) * 0.050;
-    near(baseVol - h1Vol, expectedHoleLoss, 1e-6);
+    near(baseVol - h1Vol, expectedHoleLoss, 1e-10);
 
     // 2. Counterbore Hole (Tutorial 1: 8.5 / 14 / 4.2 mm Through All)
     double cbDia = 0.014, cbDepth = 0.0042, mainDia = 0.0085;
@@ -239,7 +244,7 @@ void testHoles() {
     double expectedCbLoss =
         std::numbers::pi * (cbDia / 2.0) * (cbDia / 2.0) * cbDepth +
         std::numbers::pi * (mainDia / 2.0) * (mainDia / 2.0) * (0.050 - cbDepth);
-    near(baseVol - cbVol, expectedCbLoss, 1e-6);
+    near(baseVol - cbVol, expectedCbLoss, 1e-10);
 
     // 3. Multiple positions (pt1 and pt2)
     auto multiHole = simpleHole;
@@ -249,7 +254,7 @@ void testHoles() {
 
     auto mRes = evaluateModeling(d, {baseExt, multiHole});
     double mVol = volume(mRes.part.bodies[0].shape);
-    near(baseVol - mVol, expectedHoleLoss * 2.0, 1e-6);
+    near(baseVol - mVol, expectedHoleLoss * 2.0, 1e-10);
 
     // 4. Drilled Hole Blind with 118 deg tip
     double drillDia = 0.010, drillDepth = 0.030, drillAngle = 118.0 * std::numbers::pi / 180.0;
@@ -274,7 +279,7 @@ void testHoles() {
     double expectedDrillLoss =
         std::numbers::pi * (drillDia / 2.0) * (drillDia / 2.0) * drillDepth +
         (1.0 / 3.0) * std::numbers::pi * (drillDia / 2.0) * (drillDia / 2.0) * tipH;
-    near(baseVol - drVol, expectedDrillLoss, 1e-6);
+    near(baseVol - drVol, expectedDrillLoss, 1e-10);
 
     puts("hole engine passed");
 }
@@ -317,7 +322,7 @@ void testCosmeticThread() {
                 {"id", newId()},
                 {"kind", "CosmeticThread"},
                 {"target", body(holeId, baseId)},
-                {"reference", findEdge(resBefore.part.bodies[0].shape, holeId).map()},
+                {"reference", threadFace(resBefore.part.bodies[0].shape, holeId).map()},
                 {"designation", "M42x3.0"},
                 {"standard", "ANSI Metric"},
                 {"type", "Machine Thread"},
@@ -334,7 +339,38 @@ void testCosmeticThread() {
     // Invariant: Cosmetic thread must NOT alter solid volume or topology!
     near(volBefore, volAfter, 1e-12);
     CHECK(resAfter.part.bodies.size() == 1);
+    CHECK(resAfter.part.cosmeticThreads.size() == 1);
+    near(resAfter.part.cosmeticThreads[0].toMap().value("depth").toDouble(), .050, 1e-10);
+    auto display = resAfter.part.mesh();
+    CHECK(std::any_of(display.edgeIds.begin(), display.edgeIds.end(),
+                      [](auto id) { return id.startsWith("cosmetic/"); }));
 
+    auto invalid = threadIntent;
+    invalid.insert(QStringLiteral("reference"),
+                   findFace(resBefore.part.bodies[0].shape, holeId, 49, 51).map());
+    support_fixture::error("InvalidInput", [&] { evaluateModeling(d, {baseExt, hole, invalid}); });
+    sketch::Sketch round;
+    round.circle(round.point({0, 0}), .01);
+    auto roundExtrude = makeExtrude(round.id, .05);
+    auto roundId = roundExtrude.value("id").toString();
+    auto roundModel = base({round});
+    auto roundResult = evaluateModeling(roundModel, {roundExtrude});
+    auto external = threadIntent;
+    external.insert(QStringLiteral("id"), newId());
+    external.insert(QStringLiteral("target"), body(roundId));
+    external.insert(QStringLiteral("reference"),
+                    threadFace(roundResult.part.bodies[0].shape, roundId).map());
+    external.insert(QStringLiteral("thread_type"), "External");
+    external.insert(QStringLiteral("designation"), "M20x1.5");
+    external.insert(QStringLiteral("size"), "M20x1.5");
+    external.insert(QStringLiteral("major_diameter"), .020);
+    external.insert(QStringLiteral("minor_diameter"), .018);
+    external.insert(QStringLiteral("pitch"), .0015);
+    auto externalResult = evaluateModeling(roundModel, {roundExtrude, external});
+    near(volume(externalResult.part.bodies[0].shape), volume(roundResult.part.bodies[0].shape),
+         1e-12);
+    auto externalMesh = externalResult.part.mesh();
+    CHECK(externalMesh.minimum.x() < -10 && externalMesh.maximum.x() > 10);
     puts("cosmetic thread engine passed");
 }
 
@@ -404,7 +440,7 @@ void testRepetition() {
     double singleHoleVol = std::numbers::pi * (holeDia / 2.0) * (holeDia / 2.0) * 0.020;
     double totalPatLoss = baseVol - volume(patRes.part.bodies[0].shape);
     // Oracle: 8 holes * volume per hole
-    near(totalPatLoss, (n1 * n2) * singleHoleVol, 1e-6);
+    near(totalPatLoss, (n1 * n2) * singleHoleVol, 1e-10);
 
     // 2. Mirror of cut hole about midplane (Tutorial 1 / Tutorial 3)
     auto mirrorIntent = fields({{"version", 1},
@@ -420,7 +456,7 @@ void testRepetition() {
     CHECK(mirRes.part.bodies.size() == 1);
     double mirLoss = baseVol - volume(mirRes.part.bodies[0].shape);
     // Oracle: seed + mirror = 2 holes
-    near(mirLoss, 2.0 * singleHoleVol, 1e-6);
+    near(mirLoss, 2.0 * singleHoleVol, 1e-10);
 
     puts("repetition engine passed");
 }
@@ -433,6 +469,7 @@ void testRib() {
     // Wall sketch on base top
     sketch::Sketch sWall;
     sWall.rectangle({0, 0}, {0.100, 0.020});
+    sWall.frame.origin = {0, 0, .020};
 
     // Rib sketch on symmetry plane: line connecting top of wall to front of base
     sketch::Sketch sRib;
@@ -486,8 +523,7 @@ void testRib() {
     CHECK(res.part.bodies.size() == 1);
     double bracketVol = volume(res.part.bodies[0].shape);
     double initialVol = 0.100 * 0.100 * 0.020 + 0.100 * 0.020 * 0.060;
-    // Rib adds positive material between the walls
-    CHECK(bracketVol > initialVol);
+    near(bracketVol - initialVol, .5 * .060 * .060 * tRib, 1e-10);
 
     puts("rib engine passed");
 }

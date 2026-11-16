@@ -38,14 +38,16 @@ QString bodyId(QString owner, int ordinal) {
                               .toString(QUuid::WithoutBraces);
 }
 void publish(kernel::Part &part, modeling::Context &context, const QCborMap &m,
-             const TopoDS_Shape &tool) {
+             const TopoDS_Shape &tool, const QStringList &identities = {}) {
     auto id = m.value("id").toString();
     kernel::validateShape(tool);
     std::vector<kernel::Body> changed;
     if (m.value("operation").toString() == "NewBody") {
         int ordinal = 0;
         for (TopExp_Explorer solid(tool, TopAbs_SOLID); solid.More(); solid.Next()) {
-            auto name = bodyId(id, ordinal++);
+            auto name = identities.empty() ? bodyId(id, ordinal) : identities.value(ordinal);
+            ++ordinal;
+            domain::id(name);
             check(std::none_of(part.bodies.begin(), part.bodies.end(),
                                [&](auto &b) { return b.id == name; }),
                   "InvalidInput", "Generated body identity collision");
@@ -313,17 +315,12 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
                 result.part.stages[id] = shape;
                 context.bodyStages[id] = {*current};
             } else if (kind == "Hole") {
-                auto shape = modeling::hole(target, m, context, result.part, id);
+                auto tool = modeling::hole(target, m, context, result.part, id, control);
+                publish(result.part, context, m, tool);
                 for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
                     provenance.append(result.part.history[n]);
-                auto selected = m.value("target").toMap().value("body").toString();
-                auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
-                                            [&](auto &b) { return b.id == selected; });
-                current->shape = shape;
-                result.part.stages[id] = shape;
-                context.bodyStages[id] = {*current};
             } else if (kind == "CosmeticThread") {
-                modeling::cosmeticThread(m, context);
+                result.part.cosmeticThreads.append(modeling::cosmeticThread(m, context));
                 for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
                     provenance.append(result.part.history[n]);
                 result.part.stages[id] = target;
@@ -332,47 +329,19 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
                                             [&](auto &b) { return b.id == selected; });
                 context.bodyStages[id] = {*current};
             } else if (kind == "Rib") {
-                auto shape = modeling::rib(target, m, context, result.part, id);
+                auto tool = modeling::rib(target, m, context, result.part, id, control);
+                publish(result.part, context, m, tool);
                 for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
                     provenance.append(result.part.history[n]);
-                auto selected = m.value("target").toMap().value("body").toString();
-                auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
-                                            [&](auto &b) { return b.id == selected; });
-                current->shape = shape;
-                result.part.stages[id] = shape;
-                context.bodyStages[id] = {*current};
-            } else if (kind == "LinearPattern" || kind == "CircularPattern") {
-                auto shape = modeling::pattern(target, m, context, result.part, id);
+            } else if (kind == "LinearPattern" || kind == "CircularPattern" || kind == "Mirror") {
+                QStringList identities;
+                auto tool =
+                    kind == "Mirror"
+                        ? modeling::mirror(m, context, result.part, id, identities)
+                        : modeling::pattern(m, context, result.part, id, identities, control);
+                publish(result.part, context, m, tool, identities);
                 for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
                     provenance.append(result.part.history[n]);
-                if (m.value("operation").toString() != "NewBody") {
-                    auto selected = m.value("target").toMap().value("body").toString();
-                    auto current =
-                        std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
-                                     [&](auto &b) { return b.id == selected; });
-                    current->shape = shape;
-                    result.part.stages[id] = shape;
-                    context.bodyStages[id] = {*current};
-                } else {
-                    result.part.stages[id] = shape;
-                    context.bodyStages[id] = result.part.bodies;
-                }
-            } else if (kind == "Mirror") {
-                auto shape = modeling::mirror(target, m, context, result.part, id);
-                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
-                    provenance.append(result.part.history[n]);
-                if (m.value("operation").toString() != "NewBody") {
-                    auto selected = m.value("target").toMap().value("body").toString();
-                    auto current =
-                        std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
-                                     [&](auto &b) { return b.id == selected; });
-                    current->shape = shape;
-                    result.part.stages[id] = shape;
-                    context.bodyStages[id] = {*current};
-                } else {
-                    result.part.stages[id] = shape;
-                    context.bodyStages[id] = result.part.bodies;
-                }
             } else {
                 auto selection = m.value("profile").toMap();
                 check(sketches.contains(selection.value("sketch").toString()), "ReferenceMissing",

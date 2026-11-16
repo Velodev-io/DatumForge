@@ -4,6 +4,7 @@
 #include <BRepAlgoAPI_Cut.hxx>
 #include <BRepAlgoAPI_Fuse.hxx>
 #include <BRepBuilderAPI_Transform.hxx>
+#include <BRep_Builder.hxx>
 #include <TopExp_Explorer.hxx>
 #include <TopoDS.hxx>
 #include <numbers>
@@ -16,25 +17,21 @@ namespace {
 gp_Vec resolveDirection(const Context &context, const QCborMap &dirMap) {
     auto ref = domain::GeometryReference::parse(dirMap.value("reference").toMap());
     gp_Vec dir(1, 0, 0);
-    try {
-        if (ref.role == "Axis") {
-            auto a = context.references.axis(ref);
-            dir = vector(a.direction);
-        } else if (ref.role == "Edge" || ref.role == "Line" || ref.role == "Curve") {
-            auto c = context.references.curve(ref);
-            gp_Pnt p1;
-            gp_Vec v1;
-            c.curve->D1(c.first, p1, v1);
-            dir = v1.Normalized();
-        } else if (ref.role == "Plane" || ref.role == "Face") {
-            auto frame = context.references.plane(ref);
-            dir = vector(frame.u).Crossed(vector(frame.v)).Normalized();
-        } else {
-            auto a = context.references.axis(ref);
-            dir = vector(a.direction);
-        }
-    } catch (...) {
-        // Fallback default
+    if (ref.role == "Axis") {
+        auto a = context.references.axis(ref);
+        dir = vector(a.direction);
+    } else if (ref.role == "Edge" || ref.role == "Line" || ref.role == "Curve") {
+        auto c = context.references.curve(ref);
+        gp_Pnt p1;
+        gp_Vec v1;
+        c.curve->D1(c.first, p1, v1);
+        dir = v1.Normalized();
+    } else if (ref.role == "Plane" || ref.role == "Face") {
+        auto frame = context.references.plane(ref);
+        dir = vector(frame.u).Crossed(vector(frame.v)).Normalized();
+    } else {
+        auto a = context.references.axis(ref);
+        dir = vector(a.direction);
     }
     if (dirMap.value("reverse").toBool())
         dir.Reverse();
@@ -43,12 +40,7 @@ gp_Vec resolveDirection(const Context &context, const QCborMap &dirMap) {
 
 gp_Ax1 resolveAxis(const Context &context, const QCborMap &intent) {
     auto ref = domain::GeometryReference::parse(intent.value("axis").toMap());
-    SupportAxis a;
-    try {
-        a = context.references.axis(ref);
-    } catch (...) {
-        a.direction = {0, 0, 1};
-    }
+    auto a = context.references.axis(ref);
     gp_Dir d(vector(a.direction));
     if (intent.value("reverse").toBool())
         d.Reverse();
@@ -57,33 +49,21 @@ gp_Ax1 resolveAxis(const Context &context, const QCborMap &intent) {
 
 gp_Ax2 resolveMirrorPlane(const Context &context, const QCborMap &intent) {
     auto ref = domain::GeometryReference::parse(intent.value("plane").toMap());
-    sketch::Frame frame;
-    try {
-        frame = context.references.plane(ref);
-    } catch (...) {
-        frame = sketch::Frame();
-    }
+    auto frame = context.references.plane(ref);
     gp_Dir normal(vector(frame.u).Crossed(vector(frame.v)));
     return gp_Ax2(kernelPoint(frame.origin), normal);
 }
 
-TopoDS_Shape getSeed(const QCborMap &intent, const kernel::Part &part, QString operation) {
+TopoDS_Shape getSeed(const QCborMap &intent, const kernel::Part &part, const Context &context) {
     auto seedKind = intent.value("seed_kind").toString();
     if (seedKind == "Feature") {
         auto seedId = intent.value("seed").toString();
-        if (operation == "Cut" && part.tools.contains(seedId))
-            return part.tools.value(seedId);
-        if (part.stages.contains(seedId))
-            return part.stages.value(seedId);
         if (part.tools.contains(seedId))
             return part.tools.value(seedId);
+
         throw domain::Error("ReferenceMissing", "Seed feature shape missing: " + seedId);
     } else if (seedKind == "Body") {
-        auto bodyId = intent.value("seed").toMap().value("body").toString();
-        for (const auto &b : part.bodies)
-            if (b.id == bodyId)
-                return b.shape;
-        throw domain::Error("ReferenceMissing", "Seed body missing: " + bodyId);
+        return body(context, intent.value("seed").toMap()).shape;
     } else {
         // Face seeds require closed tool volume (R4)
         throw domain::Error("UnsupportedOperation",
@@ -92,13 +72,13 @@ TopoDS_Shape getSeed(const QCborMap &intent, const kernel::Part &part, QString o
 }
 } // namespace
 
-TopoDS_Shape pattern(const TopoDS_Shape &target, const QCborMap &intent, const Context &context,
-                     kernel::Part &part, QString owner) {
+TopoDS_Shape pattern(const QCborMap &intent, const Context &context, kernel::Part &part,
+                     QString owner, QStringList &identities, const exchange::Control &control) {
     auto kind = intent.value("kind").toString();
-    auto op = intent.value("operation").toString();
-    auto seed = getSeed(intent, part, op);
+    auto seed = getSeed(intent, part, context);
 
     std::vector<gp_Trsf> transforms;
+    QStringList indices;
 
     if (kind == "LinearPattern") {
         auto d1Map = intent.value("direction1").toMap();
@@ -123,6 +103,7 @@ TopoDS_Shape pattern(const TopoDS_Shape &target, const QCborMap &intent, const C
                 gp_Trsf t;
                 t.SetTranslation(dir1 * (s1 * i) + dir2 * (s2 * j));
                 transforms.push_back(t);
+                indices.append(QString("%1/%2").arg(i).arg(j));
             }
         }
     } else {
@@ -137,57 +118,48 @@ TopoDS_Shape pattern(const TopoDS_Shape &target, const QCborMap &intent, const C
             gp_Trsf t;
             t.SetRotation(axis, step * i);
             transforms.push_back(t);
+            indices.append(QString("%1/0").arg(i));
         }
     }
 
-    std::vector<TopoDS_Shape> copies;
-    TopoDS_Shape current = target;
-
+    int solids = 0;
+    for (TopExp_Explorer ex(seed, TopAbs_SOLID); ex.More(); ex.Next())
+        ++solids;
+    bool newBody = intent.value("operation").toString() == "NewBody";
+    if (newBody)
+        check(part.bodies.size() + transforms.size() * solids <= 10, "ResourceLimit",
+              "Part admits ten bodies; reduce the pattern count");
+    check(!transforms.empty(), "InvalidInput", "Pattern needs at least one copied instance");
+    TopoDS_Shape combined;
+    TopoDS_Compound copies;
+    BRep_Builder builder;
+    builder.MakeCompound(copies);
+    size_t instance = 0;
     for (const auto &t : transforms) {
+        control.checkpoint("Transforming pattern instance", 50);
         BRepBuilderAPI_Transform moved(seed, t, true);
-        auto copy = moved.Shape();
+        check(moved.IsDone(), "InvalidGeometry", "Pattern transform failed");
         kernel::recordShapeHistory(part, owner, moved, seed);
-        copies.push_back(copy);
-
-        if (op == "Cut") {
-            BRepAlgoAPI_Cut cut(current, copy);
-            cut.Build();
-            check(cut.IsDone() && BRepAlgoAPI_Check(cut.Shape()).IsValid(), "InvalidGeometry",
-                  "Pattern cut failed for instance");
-            kernel::recordShapeHistory(part, owner, cut, current);
-            kernel::recordShapeHistory(part, owner, cut, copy);
-            current = cut.Shape();
-        } else if (op == "Add") {
-            BRepAlgoAPI_Fuse fuse(current, copy);
-            fuse.Build();
-            check(fuse.IsDone() && BRepAlgoAPI_Check(fuse.Shape()).IsValid(), "InvalidGeometry",
-                  "Pattern fuse failed for instance");
-            kernel::recordShapeHistory(part, owner, fuse, current);
-            kernel::recordShapeHistory(part, owner, fuse, copy);
-            current = fuse.Shape();
-        } else {
-            // NewBody
-            part.bodies.push_back({QUuid::createUuid().toString(QUuid::WithoutBraces), copy});
-        }
+        if (newBody) {
+            int solid = 0;
+            for (TopExp_Explorer ex(moved.Shape(), TopAbs_SOLID); ex.More(); ex.Next()) {
+                builder.Add(copies, ex.Current());
+                identities.append(
+                    QUuid::createUuidV5(QUuid(owner), ("instance/" + indices[int(instance)] +
+                                                       "/solid/" + QString::number(solid++))
+                                                          .toUtf8())
+                        .toString(QUuid::WithoutBraces));
+            }
+        } else
+            combined = join(combined, moved.Shape(), part, owner);
+        ++instance;
     }
-
-    if (!copies.empty()) {
-        TopoDS_Shape combined = copies[0];
-        for (size_t i = 1; i < copies.size(); ++i) {
-            BRepAlgoAPI_Fuse f(combined, copies[i]);
-            f.Build();
-            combined = f.Shape();
-        }
-        part.tools[owner] = combined;
-    }
-
-    return current;
+    return newBody ? TopoDS_Shape(copies) : combined;
 }
 
-TopoDS_Shape mirror(const TopoDS_Shape &target, const QCborMap &intent, const Context &context,
-                    kernel::Part &part, QString owner) {
-    auto op = intent.value("operation").toString();
-    auto seed = getSeed(intent, part, op);
+TopoDS_Shape mirror(const QCborMap &intent, const Context &context, kernel::Part &part,
+                    QString owner, QStringList &identities) {
+    auto seed = getSeed(intent, part, context);
     auto mirrorPlane = resolveMirrorPlane(context, intent);
 
     gp_Trsf t;
@@ -196,28 +168,17 @@ TopoDS_Shape mirror(const TopoDS_Shape &target, const QCborMap &intent, const Co
     BRepBuilderAPI_Transform moved(seed, t, true);
     auto copy = moved.Shape();
     kernel::recordShapeHistory(part, owner, moved, seed);
-    part.tools[owner] = copy;
-
-    if (op == "Cut") {
-        BRepAlgoAPI_Cut cut(target, copy);
-        cut.Build();
-        check(cut.IsDone() && BRepAlgoAPI_Check(cut.Shape()).IsValid(), "InvalidGeometry",
-              "Mirror cut failed");
-        kernel::recordShapeHistory(part, owner, cut, target);
-        kernel::recordShapeHistory(part, owner, cut, copy);
-        return cut.Shape();
-    } else if (op == "Add") {
-        BRepAlgoAPI_Fuse fuse(target, copy);
-        fuse.Build();
-        check(fuse.IsDone() && BRepAlgoAPI_Check(fuse.Shape()).IsValid(), "InvalidGeometry",
-              "Mirror fuse failed");
-        kernel::recordShapeHistory(part, owner, fuse, target);
-        kernel::recordShapeHistory(part, owner, fuse, copy);
-        return fuse.Shape();
-    } else {
-        part.bodies.push_back({QUuid::createUuid().toString(QUuid::WithoutBraces), copy});
-        return target.IsNull() ? copy : target;
+    if (intent.value("operation").toString() == "NewBody") {
+        int solid = 0;
+        for (TopExp_Explorer ex(copy, TopAbs_SOLID); ex.More(); ex.Next())
+            identities.append(
+                QUuid::createUuidV5(QUuid(owner),
+                                    ("instance/1/0/solid/" + QString::number(solid++)).toUtf8())
+                    .toString(QUuid::WithoutBraces));
+        check(part.bodies.size() + identities.size() <= 10, "ResourceLimit",
+              "Part admits ten bodies");
     }
+    return copy;
 }
 
 } // namespace cad::geometry::modeling

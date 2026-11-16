@@ -36,16 +36,13 @@ TopoDS_Edge resolveEdge(const TopoDS_Shape &target, const domain::GeometryRefere
 
 TopoDS_Face resolveFace(const TopoDS_Shape &target, const domain::GeometryReference &ref,
                         const Context &context) {
-    if (!ref.topology.isEmpty()) {
-        for (TopExp_Explorer ex(target, TopAbs_FACE); ex.More(); ex.Next()) {
-            if (supportToken(ex.Current()) == ref.topology)
-                return TopoDS::Face(ex.Current());
-        }
-    }
     auto shape = context.references.topology(ref);
     check(!shape.IsNull() && shape.ShapeType() == TopAbs_FACE, "ReferenceMissing",
-          "Selected face is missing or invalid");
-    return TopoDS::Face(shape);
+          "Selected face is missing");
+    for (TopExp_Explorer face(target, TopAbs_FACE); face.More(); face.Next())
+        if (face.Current().IsSame(shape) || supportToken(face.Current()) == ref.topology)
+            return TopoDS::Face(face.Current());
+    throw domain::Error("ReferenceMissing", "Reference face is not in the target body");
 }
 
 TopoDS_Face faceForEdge(const TopoDS_Shape &target, const TopoDS_Edge &edge) {
@@ -65,92 +62,33 @@ TopoDS_Face otherFaceForEdge(const TopoDS_Shape &target, const TopoDS_Edge &edge
     TopExp::MapShapesAndAncestors(target, TopAbs_EDGE, TopAbs_FACE, edgeFaceMap);
     if (edgeFaceMap.Contains(edge)) {
         const auto &faces = edgeFaceMap.FindFromKey(edge);
-        for (auto it = faces.cbegin(); it != faces.cend(); ++it) {
+        bool adjacent = false;
+        for (auto it = faces.cbegin(); it != faces.cend(); ++it)
+            adjacent = adjacent || it->IsSame(face);
+        check(adjacent, "InvalidInput", "Chamfer reference face does not adjoin the edge");
+        for (auto it = faces.cbegin(); it != faces.cend(); ++it)
             if (!it->IsSame(face))
                 return TopoDS::Face(*it);
-        }
     }
-    return face;
+    throw domain::Error("InvalidInput", "Chamfer reference face does not adjoin the edge");
 }
 
-// E2 experiment ladder: restricted exact full round between parallel planar side faces
-std::optional<TopoDS_Shape> fullRoundRestricted(const TopoDS_Shape &target,
-                                                const std::vector<TopoDS_Face> &side1,
-                                                const std::vector<TopoDS_Face> &center,
-                                                const std::vector<TopoDS_Face> &side2,
-                                                kernel::Part &part, QString owner) {
-    if (side1.size() != 1 || center.size() != 1 || side2.size() != 1)
-        return std::nullopt;
-    BRepAdaptor_Surface s1(side1[0]), sc(center[0]), s2(side2[0]);
-    if (s1.GetType() != GeomAbs_Plane || s2.GetType() != GeomAbs_Plane ||
-        sc.GetType() != GeomAbs_Plane)
-        return std::nullopt;
-    gp_Pln pln1 = s1.Plane(), pln2 = s2.Plane();
-    gp_Dir d1 = pln1.Axis().Direction(), d2 = pln2.Axis().Direction();
-    if (std::abs(d1.Dot(d2)) < 1.0 - 1e-6)
-        return std::nullopt; // side faces must be parallel planes
-
-    double dist = pln1.Distance(pln2.Location());
-    if (dist < 1e-6)
-        return std::nullopt;
-    double radius = dist / 2.0;
-
-    // Find the center face boundary edges sharing side1 and side2
-    TopTools_IndexedDataMapOfShapeListOfShape efMap;
-    TopExp::MapShapesAndAncestors(target, TopAbs_EDGE, TopAbs_FACE, efMap);
-    std::vector<TopoDS_Edge> targetEdges;
-    for (TopExp_Explorer ex(center[0], TopAbs_EDGE); ex.More(); ex.Next()) {
-        const auto &edge = TopoDS::Edge(ex.Current());
-        if (efMap.Contains(edge)) {
-            const auto &faces = efMap.FindFromKey(edge);
-            for (auto it = faces.cbegin(); it != faces.cend(); ++it) {
-                if (it->IsSame(side1[0]) || it->IsSame(side2[0]))
-                    targetEdges.push_back(edge);
-            }
-        }
-    }
-    if (targetEdges.empty())
-        return std::nullopt;
-
-    BRepFilletAPI_MakeFillet fillet(target);
-    for (const auto &e : targetEdges)
-        fillet.Add(radius, e);
-    fillet.Build();
-    if (fillet.IsDone() && BRepAlgoAPI_Check(fillet.Shape()).IsValid()) {
-        kernel::recordShapeHistory(part, owner, fillet, target);
-        return fillet.Shape();
-    }
-    return std::nullopt;
-}
 } // namespace
 
 TopoDS_Shape fillet(const TopoDS_Shape &target, const QCborMap &intent, const Context &context,
                     kernel::Part &part, QString owner) {
     auto method = intent.value("method").toString();
-    bool propagate = intent.value("propagate_tangent").toBool(true);
+    check(intent.value("propagate_tangent").toBool(), "UnsupportedOperation",
+          "Disabling tangent propagation is not supported by this OCCT adapter");
 
     if (method == "Face") {
         // CM-183: OCCT 7.9.2 lacks a general face-face blend API.
         throw domain::Error("UnsupportedOperation",
                             "Face fillet blend is blocked in OCCT 7.9.2 (R1)");
     }
-    if (method == "FullRound") {
-        std::vector<TopoDS_Face> s1, sc, s2;
-        for (auto f : intent.value("side_faces1").toArray())
-            s1.push_back(resolveFace(target, domain::GeometryReference::parse(f.toMap()), context));
-        for (auto f : intent.value("center_faces").toArray())
-            sc.push_back(resolveFace(target, domain::GeometryReference::parse(f.toMap()), context));
-        for (auto f : intent.value("side_faces2").toArray())
-            s2.push_back(resolveFace(target, domain::GeometryReference::parse(f.toMap()), context));
-
-        auto exact = fullRoundRestricted(target, s1, sc, s2, part, owner);
-        if (exact.has_value())
-            return exact.value();
-        // CM-184: general full round stays honestly Blocked per plan R1
-        throw domain::Error(
-            "UnsupportedOperation",
-            "Full round blend is blocked for non-parallel faces in OCCT 7.9.2 (R1)");
-    }
+    if (method == "FullRound")
+        throw domain::Error("UnsupportedOperation",
+                            "Full round requires a verified face-set blend adapter (R1)");
 
     BRepFilletAPI_MakeFillet builder(target);
 
@@ -178,7 +116,13 @@ TopoDS_Shape fillet(const TopoDS_Shape &target, const QCborMap &intent, const Co
             arr.SetValue(i + 1, gp_Pnt2d(pt.value("parameter").toDouble(),
                                          pt.value("radius").toDouble() * mm));
         }
-        builder.Add(arr, edge);
+        if (intent.value("transition") == "Linear") {
+            check(pts.size() == 2, "UnsupportedOperation",
+                  "Linear radius transition currently requires two endpoints");
+            builder.Add(arr.Value(1).Y(), arr.Value(2).Y(), edge);
+        } else {
+            builder.Add(arr, edge);
+        }
     } else {
         throw domain::Error("UnsupportedOperation", "Unsupported fillet method: " + method);
     }
@@ -193,6 +137,8 @@ TopoDS_Shape fillet(const TopoDS_Shape &target, const QCborMap &intent, const Co
 TopoDS_Shape chamfer(const TopoDS_Shape &target, const QCborMap &intent, const Context &context,
                      kernel::Part &part, QString owner) {
     auto method = intent.value("method").toString();
+    check(intent.value("propagate_tangent").toBool(), "UnsupportedOperation",
+          "Disabling tangent propagation is not supported by this OCCT adapter");
     BRepFilletAPI_MakeChamfer builder(target);
 
     for (auto val : intent.value("edges").toArray()) {
@@ -214,6 +160,7 @@ TopoDS_Shape chamfer(const TopoDS_Shape &target, const QCborMap &intent, const C
             } else {
                 face = faceForEdge(target, edge);
             }
+            otherFaceForEdge(target, edge, face);
             builder.Add(flip ? d2 : d1, flip ? d1 : d2, edge, face);
         } else if (method == "AngleDistance") {
             double d = intent.value("distance").toDouble() * mm;
@@ -229,6 +176,7 @@ TopoDS_Shape chamfer(const TopoDS_Shape &target, const QCborMap &intent, const C
             } else {
                 face = faceForEdge(target, edge);
             }
+            otherFaceForEdge(target, edge, face);
             if (flip) {
                 auto other = otherFaceForEdge(target, edge, face);
                 builder.AddDA(d, angle, edge, other);

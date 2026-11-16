@@ -112,8 +112,7 @@ void Viewport::paintGL() {
                 instance.triangleCount < 0 ? mesh->triangleRoles.size() : instance.triangleCount;
             auto firstEdge = instance.firstEdge;
             auto edgeCount = instance.edgeCount < 0 ? mesh->edgeIds.size() : instance.edgeCount;
-            auto localTriangles = triangles.mid(first * 3, count * 3),
-                 localEdges = mesh->edges.mid(firstEdge * 2, edgeCount * 2);
+            auto localTriangles = triangles.mid(first * 3, count * 3);
             if (mode != "Wireframe") {
                 glEnable(GL_POLYGON_OFFSET_FILL);
                 glPolygonOffset(1, 1);
@@ -121,8 +120,17 @@ void Viewport::paintGL() {
                      mode == "Hidden edges" ? QVector4D(.09, .12, .16, 1) : base, instance);
                 glDisable(GL_POLYGON_OFFSET_FILL);
             }
+            QVector<QVector3D> ordinaryEdges, threadEdges;
+            for (int e = firstEdge; e < firstEdge + edgeCount; ++e) {
+                auto &lines =
+                    mesh->edgeIds[e].startsWith("cosmetic/") ? threadEdges : ordinaryEdges;
+                lines.append(mesh->edges[e * 2]);
+                lines.append(mesh->edges[e * 2 + 1]);
+            }
             if (mode != "Shaded")
-                draw(localEdges, GL_LINES, QVector4D(.85, .9, .95, 1), instance);
+                draw(ordinaryEdges, GL_LINES, QVector4D(.85, .9, .95, 1), instance);
+            if (cosmeticThreadsVisible)
+                draw(threadEdges, GL_LINES, QVector4D(.95, .75, .3, 1), instance);
             if (selection.occurrence != instance.id)
                 continue;
             QVector<QVector3D> highlight;
@@ -140,7 +148,7 @@ void Viewport::paintGL() {
                     draw(highlight, GL_LINES, QVector4D(1, .65, .15, 1), instance);
                 }
             } else
-                draw(localEdges, GL_LINES, QVector4D(1, .65, .15, 1), instance);
+                draw(ordinaryEdges, GL_LINES, QVector4D(1, .65, .15, 1), instance);
         }
     }
     for (auto &d : datums)
@@ -417,6 +425,8 @@ Selection Viewport::pick(QPointF pos) const {
              e < (instance.edgeCount < 0 ? mesh->edgeIds.size()
                                          : instance.firstEdge + instance.edgeCount);
              ++e) {
+            if (mesh->edgeIds[e].startsWith("cosmetic/"))
+                continue;
             auto a = instance.map(mesh->edges[e * 2]), b = instance.map(mesh->edges[e * 2 + 1]);
             auto pa = project(a), pb = project(b), ab = pb - pa;
             double length = QPointF::dotProduct(ab, ab);

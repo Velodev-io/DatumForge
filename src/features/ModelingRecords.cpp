@@ -4,8 +4,8 @@ using domain::check;
 namespace {
 QStringList referencePath(QString path) {
     check(QStringList{"start/reference", "direction1/reference", "direction2/reference", "axis",
-                      "plane", "target/source", "neutral", "pull", "reference", "placement/face",
-                      "termination/reference", "reference_face", "edge"}
+                      "plane", "seed/source", "target/source", "neutral", "pull", "reference",
+                      "placement/face", "termination/reference", "reference_face", "edge"}
                   .contains(path) ||
               QRegularExpression("^(faces|edges|faces1|faces2|side_faces1|center_faces|side_faces2|"
                                  "seed/faces)/([0-9]|[12][0-9]|3[01])$")
@@ -17,6 +17,13 @@ QStringList referencePath(QString path) {
 }
 QCborValue at(const QCborMap &intent, const QStringList &parts) {
     auto value = intent.value(parts[0]);
+    if (parts.size() == 3 && parts[0] == "seed" && parts[1] == "faces") {
+        check(value.isArray() && parts[2].toInt() < value.toArray().size(), "InvalidInput",
+              "Face seed slot missing");
+        value = value.toArray()[parts[2].toInt()];
+        check(value.isMap(), "InvalidInput", "Typed face seed required");
+        return value;
+    }
     if (parts.size() == 2) {
         if (value.isArray()) {
             check(parts[1].toInt() < value.toArray().size(), "InvalidInput",

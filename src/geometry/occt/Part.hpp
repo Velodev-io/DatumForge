@@ -12,7 +12,7 @@ using SourceResolver = std::function<TopoDS_Shape(const features::Feature &)>;
 class ResultCache;
 struct Part {
     std::vector<Body> bodies;
-    QCborArray diagnostics, history;
+    QCborArray diagnostics, history, cosmeticThreads;
     bool stale = false;
     QCborArray errors;
     QMap<QString, TopoDS_Shape> stages, tools;

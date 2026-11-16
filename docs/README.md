@@ -142,3 +142,9 @@ and full course/platform/device/resource acceptance remain open/Blocked. Deferre
 gates and Module 11 are unchanged.
 
 CM5 native review defects have [scoped repairs and available-Mac verification](testing/core-modeling-cm5-review.md): a full 98-test regression run, affected ownership/test-harness follow-up, ten Clang analyses and five observed Cocoa/OpenGL scales. Reference/body-stage selection, contour boundaries, parameter round trips, native handles and explicit pending repair are covered. Complete source-course and platform/device/resource acceptance remain open; this does not close CM5.d/e or start Module 11.
+
+CM6 review repairs are recorded in [current CM6 evidence](testing/core-modeling-cm6-review.md).
+The original completion claim is withdrawn: supported production/available-Mac
+verification is separate from full T7 replay, and face blends, closed-face
+repetition and catalog data remain Blocked. CM6 is In progress; no later module
+is started by these repairs.

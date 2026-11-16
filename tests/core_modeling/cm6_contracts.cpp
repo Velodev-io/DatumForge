@@ -86,6 +86,14 @@ void holeContracts() {
                             {"fit", "Normal"}})},
          {"termination", fields({{"mode", "ThroughAll"}, {"depth_reference", "Shoulder"}})}});
     roundtrip(cboreHole);
+    auto versioned = cboreHole;
+    auto versionedSizing = cboreHole.value("sizing").toMap();
+    versionedSizing.insert(QStringLiteral("version"), "2026.1");
+    versioned.insert(QStringLiteral("sizing"), versionedSizing);
+    roundtrip(versioned);
+    versionedSizing.insert(QStringLiteral("version"), "");
+    versioned.insert(QStringLiteral("sizing"), versionedSizing);
+    error("InvalidInput", [&] { features::ModelingIntent::parse(versioned); });
 
     // Countersink hole
     QCborMap csinkHole = fields(

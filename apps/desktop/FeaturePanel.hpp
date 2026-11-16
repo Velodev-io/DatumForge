@@ -8,8 +8,10 @@
 #include <QFormLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QListWidget>
 #include <QPushButton>
 #include <QSpinBox>
+#include <QTableWidget>
 #include <QWidget>
 namespace cad {
 class FeaturePanel : public QWidget {
@@ -84,7 +86,13 @@ class FeaturePanel : public QWidget {
     // Hole Wizard
     QComboBox *holeFamily = nullptr;
     QComboBox *holePlacementFace = nullptr;
-    QComboBox *holePlacementSketch = nullptr;
+    QListWidget *holePoints = nullptr;
+    QComboBox *holeDepthReference = nullptr, *holeEndReference = nullptr;
+    QDoubleSpinBox *holeTapDiameter = nullptr, *holeTaperAngle = nullptr;
+    QDoubleSpinBox *holeThreadPitch = nullptr, *holeThreadDepth = nullptr;
+    QLineEdit *holeThreadDesignation = nullptr;
+    QCheckBox *holeCustomSizing = nullptr;
+    QLabel *holeCatalog = nullptr;
     QDoubleSpinBox *holeDiameter = nullptr;
     QDoubleSpinBox *holeDepth = nullptr;
     QDoubleSpinBox *holeCounterboreDia = nullptr;
@@ -98,14 +106,19 @@ class FeaturePanel : public QWidget {
     QComboBox *filletMethod = nullptr;
     QDoubleSpinBox *filletRadius = nullptr;
     QCheckBox *filletPropagateTangent = nullptr;
-    QComboBox *filletEdges = nullptr;
+    QListWidget *filletEdges = nullptr;
+    QComboBox *filletVariableEdge = nullptr, *filletTransition = nullptr;
+    QTableWidget *filletRadii = nullptr, *filletControlPoints = nullptr;
+    QPushButton *addFilletPoint = nullptr, *removeFilletPoint = nullptr;
 
     QComboBox *chamferMethod = nullptr;
     QDoubleSpinBox *chamferDistance = nullptr;
     QDoubleSpinBox *chamferDistance2 = nullptr;
     QDoubleSpinBox *chamferAngle = nullptr;
     QCheckBox *chamferFlip = nullptr;
-    QComboBox *chamferEdges = nullptr;
+    QListWidget *chamferEdges = nullptr;
+    QComboBox *chamferReferenceFace = nullptr;
+    QCheckBox *chamferPropagateTangent = nullptr;
 
     // Rib
     QDoubleSpinBox *ribThickness = nullptr;
@@ -145,6 +158,11 @@ class FeaturePanel : public QWidget {
     QDoubleSpinBox *threadPitch = nullptr;
     QComboBox *threadTermination = nullptr;
     QCheckBox *threadShadedDisplay = nullptr;
+    QDoubleSpinBox *threadDepth = nullptr;
+    QCborMap availableModelingInputs;
+    void installHolePoints();
+    void installPatternSeeds();
+    void installFilletRadii();
 
     // Repair controls
     QComboBox *repairCandidate = nullptr;

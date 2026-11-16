@@ -30,7 +30,7 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     QQuaternion orientation;
     bool customOrientation = false;
     QPoint previous, press;
-    bool componentDrag = false;
+    bool componentDrag = false, cosmeticThreadsVisible = true;
     QString draggedOccurrence;
     bool manipulatorActive = false;
     QString manipulatorKind;
@@ -71,6 +71,10 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
         setStale(stale);
     }
     void setMode(QString value);
+    void setCosmeticThreadsVisible(bool value) {
+        cosmeticThreadsVisible = value;
+        update();
+    }
     void setFilter(QString value) {
         filter = value;
     }

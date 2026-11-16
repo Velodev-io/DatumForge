@@ -15,6 +15,7 @@
 #include <QDialogButtonBox>
 #include <QFile>
 #include <QSettings>
+#include <QSignalSpy>
 #include <QTemporaryDir>
 #include <QTest>
 #include <TopExp_Explorer.hxx>
@@ -27,6 +28,59 @@ using namespace modeling_fixture;
 using sketch::fields;
 
 namespace {
+bool waitFor(std::function<bool()> ready) {
+    QElapsedTimer timer;
+    timer.start();
+    while (!ready() && timer.elapsed() < 15000)
+        QTest::qWait(5);
+    return ready();
+}
+struct NativeSession {
+    QTemporaryDir root{QDir::tempPath() + "/cad-module6-review-native-XXXXXX"};
+    QTemporaryDir files{QDir::tempPath() + "/cad-module6-review-native-files-XXXXXX"};
+    std::unique_ptr<MainWindow> window;
+    Client *client = nullptr;
+    bool start(QString units) {
+        for (auto *dir : {&root, &files}) {
+            if (!dir->isValid())
+                return false;
+            QFile marker(dir->filePath(".cad-test-root"));
+            if (!marker.open(QIODevice::WriteOnly))
+                return false;
+            marker.write("disposable\n");
+            marker.close();
+        }
+        QSettings settings(root.filePath("settings.ini"), QSettings::IniFormat);
+        settings.setValue("startup/offerRecovery", false);
+        settings.sync();
+        window = std::make_unique<MainWindow>(root.filePath("settings.ini"), nullptr, root.path());
+        window->resize(1400, 900);
+        window->show();
+        if (qEnvironmentVariableIsSet("CAD_NATIVE_TEST")) {
+            window->raise();
+            window->activateWindow();
+            if (!QTest::qWaitForWindowExposed(window.get()) ||
+                !waitFor([&] { return window->isActiveWindow(); }))
+                return false;
+        }
+        client = window->workerClient();
+        if (!waitFor([&] { return client->ready(); }))
+            return false;
+        client->newProject("Part", "CM6 native review", units);
+        return idle();
+    }
+    bool idle() {
+        QTest::qWait(20);
+        return waitFor([&] { return !client->outstanding(); });
+    }
+    QCborMap document() const {
+        for (auto value : client->state().documentRecords)
+            if (value.toMap().value("id") == client->state().activeDocument)
+                return value.toMap();
+        return {};
+    }
+};
+
 inline void checkNear(double actual, double expected, double tolerance) {
     QVERIFY2(std::abs(actual - expected) <= tolerance,
              qPrintable(QString("Expected %1, got %2 (diff %3 > %4)")
@@ -62,6 +116,16 @@ domain::GeometryReference findFace(const TopoDS_Shape &shape, QString object, do
     return r;
 }
 
+domain::GeometryReference threadFace(const TopoDS_Shape &shape, QString object) {
+    auto r = support_fixture::ref(object, "Face");
+    for (TopExp_Explorer ex(shape, TopAbs_FACE); ex.More(); ex.Next())
+        if (BRepAdaptor_Surface(TopoDS::Face(ex.Current())).GetType() == GeomAbs_Cylinder) {
+            r.topology = supportToken(ex.Current());
+            return r;
+        }
+    throw std::runtime_error("Thread cylinder missing");
+}
+
 domain::GeometryReference findEdge(const TopoDS_Shape &shape, QString object) {
     domain::GeometryReference r = support_fixture::ref(object, "Edge");
     for (TopExp_Explorer ex(shape, TopAbs_EDGE); ex.More(); ex.Next()) {
@@ -89,7 +153,7 @@ class WorkflowContractsCM6 : public QObject {
 
     // Tutorial 1: L-Bracket with 13 mm rib, Ø10 mm through hole, M8 counterbore, 2D pattern, cut
     // mirror
-    void tutorial1_bracketWorkflow() {
+    void bracketFixture() {
         // Base model: 100 mm x 100 mm x 20 mm block
         sketch::Sketch sBase;
         auto rectLines = sBase.rectangle({0, 0}, {0.100, 0.100});
@@ -99,6 +163,7 @@ class WorkflowContractsCM6 : public QObject {
         // 1. Rib: 13 mm thickness on open wire
         sketch::Sketch sWall;
         sWall.rectangle({0, 0}, {0.100, 0.020});
+        sWall.frame.origin = {0, 0, .020};
         auto wallExt = fields(
             {{"version", 1},
              {"id", newId()},
@@ -178,11 +243,11 @@ class WorkflowContractsCM6 : public QObject {
              {"placement",
               fields({{"sketch", sCb.id}, {"face", topFace.map()}, {"points", QCborArray{cbPt}}})},
              {"sizing", fields({{"mode", "Custom"},
-                                {"diameter", 0.009},
+                                {"diameter", 0.0085},
                                 {"depth", 0.030},
                                 {"counterbore_diameter", 0.014},
                                 {"counterbore_depth", 0.0042}})},
-             {"termination", fields({{"mode", "Blind"}, {"depth_reference", "Shoulder"}})}});
+             {"termination", fields({{"mode", "ThroughAll"}, {"depth_reference", "Shoulder"}})}});
         auto holeCbId = holeCbIntent.value("id").toString();
 
         // 4. 2D Linear Pattern: 43 mm spacing x 2 count
@@ -225,11 +290,15 @@ class WorkflowContractsCM6 : public QObject {
         // The final volume must be strictly less than ribVol (holes cut material) and greater than
         // 0
         QVERIFY(finalVol < ribVol);
-        QVERIFY(finalVol > 0.0004);
+        double expectedRib = .100 * .100 * .020 + .100 * .020 * .060 + .5 * .060 * .060 * .013;
+        double simpleHoles = 2 * std::numbers::pi * .005 * .005 * .020;
+        double counterbore = std::numbers::pi * (.007 * .007 * .0042 + .00425 * .00425 * .0158);
+        double mirroredExtra = std::numbers::pi * (.007 * .007 - .005 * .005) * .0042;
+        checkNear(finalVol, expectedRib - simpleHoles - counterbore - mirroredExtra, 1e-10);
     }
 
     // Tutorial 2: Revolve, Cut, M42x3.0 cosmetic thread, R5 fillet with tangent propagation
-    void tutorial2_revolveThreadFillet() {
+    void threadAndFilletFixture() {
         sketch::Sketch s;
         s.rectangle({0, 0}, {0.100, 0.100});
         sketch::Sketch plSk;
@@ -264,7 +333,7 @@ class WorkflowContractsCM6 : public QObject {
                     {"id", newId()},
                     {"kind", "CosmeticThread"},
                     {"target", body(holeId, baseId)},
-                    {"reference", findEdge(resBefore.part.bodies[0].shape, holeId).map()},
+                    {"reference", threadFace(resBefore.part.bodies[0].shape, holeId).map()},
                     {"designation", "M42x3.0"},
                     {"standard", "ANSI Metric"},
                     {"type", "Machine Thread"},
@@ -306,7 +375,7 @@ class WorkflowContractsCM6 : public QObject {
 
     // Tutorial 3: Contour Extrude, 1.5 mm at 45° Chamfer, Hole Mirror, Full Round Restricted &
     // Blocked Record
-    void tutorial3_contourChamferMirrorFullround() {
+    void chamferAndBlockedBlendFixture() {
         // Base block: 80 mm x 50 mm x 20 mm
         sketch::Sketch s;
         s.rectangle({0, 0}, {0.080, 0.050});
@@ -374,7 +443,8 @@ class WorkflowContractsCM6 : public QObject {
                                        {"side_faces1", QCborArray{sideFace1.map()}},
                                        {"center_faces", QCborArray{centerFace.map()}},
                                        {"side_faces2", QCborArray{sideFace2.map()}}});
-        features::ModelingIntent::parse(fullRoundIntent);
+        support_fixture::error("UnsupportedOperation",
+                               [&] { evaluateModeling(d, {baseExt, fullRoundIntent}); });
 
         // 4. Verify R1: Face fillet throws UnsupportedOperation per OCCT 7.9.2 constraint
         auto faceFilletIntent = fields({{"version", 1},
@@ -397,50 +467,292 @@ class WorkflowContractsCM6 : public QObject {
         QVERIFY(threw);
     }
 
-    // 5-scale DPI and units verification: 100%, 125%, 150%, 175%, 200% in mm and in
     void nativeEffectiveScales_data() {
-        QTest::addColumn<double>("dpr");
         QTest::addColumn<QString>("units");
-        double actual = qEnvironmentVariableIsSet("CAD_NATIVE_TEST")
-                            ? qEnvironmentVariable("CAD_EXPECTED_DPR").toDouble()
-                            : 1.0;
-        QTest::newRow("mm") << actual << QString("mm");
-        QTest::newRow("inch") << actual << QString("in");
+        QTest::newRow("mm") << QString("mm");
+        QTest::newRow("inch") << QString("in");
     }
-
+    int threadPixels(Viewport *view) {
+        auto image = view->grabFramebuffer().convertToFormat(QImage::Format_RGB32);
+        int count = 0;
+        for (int y = 0; y < image.height(); ++y)
+            for (int x = 0; x < image.width(); ++x) {
+                auto c = image.pixelColor(x, y);
+                if (c.red() > 180 && c.green() > 110 && c.green() < 230 && c.blue() < 140 &&
+                    c.red() > c.green() && c.green() > c.blue())
+                    ++count;
+            }
+        return count;
+    }
     void nativeEffectiveScales() {
-        QFETCH(double, dpr);
         QFETCH(QString, units);
-        Q_UNUSED(dpr);
+        NativeSession session;
+        QVERIFY(session.start(units));
+        auto &window = *session.window;
+        auto *client = session.client;
+        if (qEnvironmentVariableIsSet("CAD_NATIVE_TEST")) {
+            QCOMPARE(QGuiApplication::platformName(), QString("cocoa"));
+            QVERIFY(std::abs(window.devicePixelRatioF() -
+                             qEnvironmentVariable("CAD_EXPECTED_DPR").toDouble()) < .01);
+        }
+        auto *panel = window.findChild<FeaturePanel *>();
+        auto combo = [&](const char *id) { return window.findChild<QComboBox *>(id); };
+        auto spin = [&](const char *id) { return window.findChild<QDoubleSpinBox *>(id); };
+        auto check = [&](const char *id) { return window.findChild<QCheckBox *>(id); };
+        auto selectReference = [&](const char *id, QCborMap ref) {
+            auto *box = combo(id);
+            for (int i = 0; i < box->count(); ++i)
+                if (box->itemData(i).value<QCborMap>() == ref) {
+                    box->setCurrentIndex(i);
+                    return true;
+                }
+            return false;
+        };
+        auto accept = [&] {
+            panel->preview();
+            if (!waitFor([&] { return !client->outstanding(); }) ||
+                client->state().phase != Phase::PreviewReady) {
+                qWarning() << client->state().message
+                           << window.findChild<QLabel *>("featureDiagnostic")->text();
+                return false;
+            }
+            panel->finish();
+            return session.idle() && !panel->active() && client->state().phase != Phase::Failed;
+        };
+        double unit = units == "in" ? .0254 : .001;
+        sketch::Sketch plate, positions;
+        plate.name = "Plate";
+        positions.name = "Hole positions";
+        auto lines = plate.rectangle({0, 0}, {.1, .1});
+        positions.frame.origin = {0, 0, .05};
+        auto firstPoint = positions.point({.03, .03});
+        auto secondPoint = positions.point({.07, .07});
+        auto model = base({plate, positions});
+        auto ext = makeExtrude(plate.id, .05);
+        auto extId = ext.value("id").toString();
+        client->projectCommand("SetModelSupports",
+                               fields({{"model", model.map()}, {"intents", QCborArray{ext}}}));
+        QVERIFY(session.idle());
+        QCOMPARE(client->state().phase, Phase::Ready);
+        auto evaluated = evaluateModeling(model, {ext});
+        auto face = findFace(evaluated.part.bodies[0].shape, extId, 49, 51);
+        panel->begin("Hole");
+        QVERIFY(session.idle());
+        combo("featureProfile")->setCurrentIndex(combo("featureProfile")->findData(positions.id));
+        QVERIFY(selectReference("holePlacementFace", face.map()));
+        auto *points = window.findChild<QListWidget *>("holePoints");
+        QCOMPARE(points->count(), 2);
+        for (int i = 0; i < points->count(); ++i)
+            points->item(i)->setCheckState(
+                points->item(i)->data(Qt::UserRole).toString() == firstPoint ? Qt::Checked
+                                                                             : Qt::Unchecked);
+        combo("holeFamily")->setCurrentText("Counterbore");
+        spin("holeDiameter")->setValue(.0085 / unit);
+        spin("holeCounterboreDia")->setValue(.014 / unit);
+        spin("holeCounterboreDepth")->setValue(.0042 / unit);
+        QVERIFY(accept());
+        auto intent =
+            session.document().value("modeling").toMap().value("intents").toArray().last().toMap();
+        QCOMPARE(intent.value("placement").toMap().value("points").toArray(),
+                 QCborArray{firstPoint});
+        auto id = intent.value("id").toString();
+        panel->begin("Hole", id);
+        QVERIFY(session.idle());
+        QCOMPARE(combo("featureProfile")->currentData().toString(), positions.id);
+        QVERIFY(accept());
+        QCOMPARE(
+            session.document().value("modeling").toMap().value("intents").toArray().last().toMap(),
+            intent);
 
-        Client client;
-        FeaturePanel panel(&client);
+        // Invalid dimensions must fail without changing either the displayed value or accepted
+        // revision.
+        panel->begin("Hole", id);
+        QVERIFY(session.idle());
+        spin("holeCounterboreDia")->setValue(.004 / unit);
+        auto revision = client->state().revision;
+        panel->preview();
+        QVERIFY(session.idle());
+        QVERIFY(!window.findChild<QPushButton *>("acceptFeatureButton")->isEnabled());
+        QCOMPARE(client->state().revision, revision);
+        checkNear(spin("holeCounterboreDia")->value() * unit, .004, unit * .51e-8);
+        panel->discard();
+        QVERIFY(session.idle());
 
-        sketch::Sketch sketch;
-        sketch.rectangle({0, 0}, {.03, .02});
-        auto doc = sketch::fields({{"id", QUuid::createUuid().toString(QUuid::WithoutBraces)},
-                                   {"units", units},
-                                   {"sketches", sketch::encode({sketch})},
-                                   {"features", QCborArray{}},
-                                   {"model_supports", modeling_fixture::base({sketch}).map()},
-                                   {"modeling", sketch::fields({{"intents", QCborArray{}}})}});
-        panel.install(doc, true);
+        // Resolved fixture catalog metadata survives a native no-op edit.
+        auto catalog = intent;
+        auto reversedPlacement = catalog.value("placement").toMap();
+        reversedPlacement.insert(QStringLiteral("points"), QCborArray{secondPoint, firstPoint});
+        catalog.insert(QStringLiteral("placement"), reversedPlacement);
+        auto sizing = catalog.value("sizing").toMap();
+        sizing.insert(QStringLiteral("mode"), "Catalog");
+        for (auto pair : {std::pair{"dataset", "test-fixture"},
+                          {"version", "2026.1"},
+                          {"standard", "Fixture"},
+                          {"type", "Counterbore"},
+                          {"size", "Test"},
+                          {"fit", "Normal"}})
+            sizing.insert(QString(pair.first), QString(pair.second));
+        catalog.insert(QStringLiteral("sizing"), sizing);
+        client->projectCommand("SetModelSupports", fields({{"model", model.map()},
+                                                           {"intents", QCborArray{ext, catalog}}}));
+        QVERIFY(session.idle());
+        panel->begin("Hole", id);
+        QVERIFY(session.idle());
+        QVERIFY(!check("holeCustomSizing")->isChecked());
+        QVERIFY(accept());
+        QCOMPARE(
+            session.document().value("modeling").toMap().value("intents").toArray().last().toMap(),
+            catalog);
 
-        // Verify feature UI controls and unit suffixes for all CM6 types
-        for (auto kind : {"Hole", "Fillet", "Chamfer", "Rib", "LinearPattern", "CircularPattern",
-                          "Mirror", "CosmeticThread"}) {
-            panel.begin(kind);
-            QVERIFY(panel.isModelingActive());
-            panel.discard();
-            QVERIFY(!panel.isModelingActive());
+        panel->begin("Fillet");
+        QVERIFY(session.idle());
+        auto *edges = window.findChild<QListWidget *>("filletEdges");
+        QSet<QString> verticals;
+        for (TopExp_Explorer ex(evaluated.part.bodies[0].shape, TopAbs_EDGE); ex.More();
+             ex.Next()) {
+            GProp_GProps length;
+            BRepGProp::LinearProperties(ex.Current(), length);
+            if (std::abs(length.Mass() - 50) < 1e-6)
+                verticals.insert(supportToken(ex.Current()));
+        }
+        int selected = 0;
+        for (int i = 0; i < edges->count() && selected < 2; ++i)
+            if (verticals.contains(edges->item(i)
+                                       ->data(Qt::UserRole)
+                                       .value<QCborMap>()
+                                       .value("topology")
+                                       .toString())) {
+                edges->item(i)->setCheckState(Qt::Checked);
+                ++selected;
+            }
+        QCOMPARE(selected, 2);
+        spin("filletRadius")->setValue(.002 / unit);
+        QVERIFY(accept());
+        auto fillet =
+            session.document().value("modeling").toMap().value("intents").toArray().last().toMap();
+        auto reversedEdges = fillet.value("edges").toArray();
+        fillet.insert(QStringLiteral("edges"), QCborArray{reversedEdges[1], reversedEdges[0]});
+        client->projectCommand(
+            "SetModelSupports",
+            fields({{"model", model.map()}, {"intents", QCborArray{ext, catalog, fillet}}}));
+        QVERIFY(session.idle());
+        auto filletId = fillet.value("id").toString();
+        panel->begin("Fillet", filletId);
+        QVERIFY(session.idle());
+        QVERIFY(accept());
+        QCOMPARE(
+            session.document().value("modeling").toMap().value("intents").toArray().last().toMap(),
+            fillet);
+        panel->begin("Fillet", filletId);
+        QVERIFY(session.idle());
+        combo("filletMethod")->setCurrentText("MultipleRadius");
+        auto *radii = window.findChild<QTableWidget *>("filletRadii");
+        QCOMPARE(radii->rowCount(), 2);
+        radii->item(0, 1)->setText(QString::number(.002 / unit, 'g', 12));
+        radii->item(1, 1)->setText(QString::number(.003 / unit, 'g', 12));
+        QVERIFY(accept());
+        auto multiple =
+            session.document().value("modeling").toMap().value("intents").toArray().last().toMap();
+        QCOMPARE(multiple.value("radii").toArray().size(), 2);
+        checkNear(multiple.value("radii").toArray()[1].toMap().value("radius").toDouble(), .003,
+                  1e-11);
+        panel->begin("Fillet", filletId);
+        QVERIFY(session.idle());
+        combo("filletMethod")->setCurrentText("Variable");
+        QVERIFY(selectReference("filletVariableEdge", fillet.value("edges").toArray()[0].toMap()));
+        auto *law = window.findChild<QTableWidget *>("filletControlPoints");
+        law->item(0, 1)->setText(QString::number(.002 / unit, 'g', 12));
+        law->item(1, 1)->setText(QString::number(.003 / unit, 'g', 12));
+        QVERIFY(accept());
+        panel->begin("Fillet", filletId);
+        QVERIFY(session.idle());
+        law->item(1, 1)->setText(QString::number(.004 / unit, 'g', 12));
+        QVERIFY(accept());
+        auto variable =
+            session.document().value("modeling").toMap().value("intents").toArray().last().toMap();
+        checkNear(variable.value("control_points").toArray()[1].toMap().value("radius").toDouble(),
+                  .004, 1e-11);
+
+        // A real cosmetic thread reaches the mesh, changes no solid, and has a separate document
+        // display setting.
+        auto acceptedIntents =
+            session.document().value("modeling").toMap().value("intents").toArray();
+        auto solid = evaluateModeling(model, acceptedIntents);
+        auto cylinder = threadFace(solid.part.bodies[0].shape, filletId);
+        panel->begin("CosmeticThread");
+        QVERIFY(session.idle());
+        QVERIFY(selectReference("threadEdgeRef", cylinder.map()));
+        combo("threadTermination")->setCurrentText("Blind");
+        spin("threadDepth")->setValue(.010 / unit);
+        QVERIFY(accept());
+        auto threadedIntents =
+            session.document().value("modeling").toMap().value("intents").toArray();
+        auto threaded = evaluateModeling(model, threadedIntents);
+        checkNear(shapeVolume(threaded.part.bodies[0].shape),
+                  shapeVolume(solid.part.bodies[0].shape), 1e-12);
+        QVERIFY(std::any_of(client->mesh()->edgeIds.begin(), client->mesh()->edgeIds.end(),
+                            [](auto edge) { return edge.startsWith("cosmetic/"); }));
+        if (qEnvironmentVariableIsSet("CAD_NATIVE_TEST")) {
+            QVERIFY(waitFor([&] { return window.sceneView()->isValid(); }));
+            auto faceView = positions.frame;
+            faceView.origin = {.05, .05, .05};
+            QVERIFY(window.sceneView()->normalTo(faceView));
+            QTest::qWait(50);
+            QVERIFY2(threadPixels(window.sceneView()) > 4,
+                     "Cosmetic overlay must be visible in the rendered frame");
+            auto directory = qEnvironmentVariable("CAD_ARTIFACT_DIR");
+            if (!directory.isEmpty())
+                QVERIFY(window.grab().save(directory + "/cm6-thread-" + units + ".png"));
+        }
+        check("threadShadedDisplay")->setChecked(false);
+        QVERIFY(session.idle());
+        if (qEnvironmentVariableIsSet("CAD_NATIVE_TEST")) {
+            QTest::qWait(50);
+            QCOMPARE(threadPixels(window.sceneView()), 0);
         }
 
-        // Test 5 DPI scale factors (100%, 125%, 150%, 175%, 200%) on font metrics & panel layout
-        for (double scale : {1.0, 1.25, 1.50, 1.75, 2.0}) {
-            QFont f = panel.font();
-            f.setPointSizeF(12.0 * scale);
-            panel.setFont(f);
-            QVERIFY(panel.sizeHint().isValid());
+        panel->begin("LinearPattern");
+        QVERIFY(session.idle());
+        combo("featureOperation")->setCurrentText("NewBody");
+        combo("patSeed")->setCurrentIndex(combo("patSeed")->findData(extId));
+        QVERIFY(selectReference("linearDir1Ref",
+                                support_fixture::ref(plate.id, "Curve", lines[0]).map()));
+        spin("linearSpacing1")->setValue(.15 / unit);
+        QVERIFY(accept());
+        auto pattern =
+            session.document().value("modeling").toMap().value("intents").toArray().last().toMap();
+        panel->begin("LinearPattern", pattern.value("id").toString());
+        QVERIFY(session.idle());
+        QCOMPARE(combo("patSeed")->currentData().toString(), extId);
+        QVERIFY(accept());
+        QCOMPARE(
+            session.document().value("modeling").toMap().value("intents").toArray().last().toMap(),
+            pattern);
+        auto path = session.files.filePath("native.cadproj");
+        client->saveProject(path, true);
+        QVERIFY(session.idle());
+        QVERIFY2(QFile::exists(path), qPrintable(client->state().message));
+        QVERIFY2(client->state().current(), qPrintable(client->state().message));
+        client->closeProject();
+        QVERIFY(session.idle());
+        QVERIFY(!client->state().projectOpen);
+        client->openProject(path, "Saved");
+        QVERIFY(session.idle());
+        QVERIFY2(client->state().projectOpen && client->state().current(),
+                 qPrintable(client->state().message));
+        QCOMPARE(QFileInfo(client->state().savedPath).canonicalFilePath(),
+                 QFileInfo(path).canonicalFilePath());
+        QCOMPARE(
+            session.document().value("modeling").toMap().value("intents").toArray().last().toMap(),
+            pattern);
+        QCOMPARE(session.document().value("modeling").toMap().value("intents").toArray()[1].toMap(),
+                 catalog);
+        QVERIFY(!check("threadShadedDisplay")->isChecked());
+        if (qEnvironmentVariableIsSet("CAD_NATIVE_TEST")) {
+            QVERIFY(waitFor([&] { return window.sceneView()->isValid(); }));
+            auto directory = qEnvironmentVariable("CAD_ARTIFACT_DIR");
+            if (!directory.isEmpty())
+                QVERIFY(window.grab().save(directory + "/cm6-" + units + ".png"));
         }
     }
 
@@ -498,7 +810,7 @@ class WorkflowContractsCM6 : public QObject {
             checkNear(shapeVolume(res.part.bodies[0].shape), 0.050 * 0.050 * 0.025, 1e-8);
 
             // Add Hole intent
-            auto topFace = findFace(res.part.bodies[0].shape, baseId, 0.024, 0.026);
+            auto topFace = findFace(res.part.bodies[0].shape, baseId, 24.0, 26.0);
             sketch::Sketch sHole;
             sHole.name = "HolePoint";
             sHole.frame.origin = {0, 0, 0.025};
@@ -552,8 +864,24 @@ class WorkflowContractsCM6 : public QObject {
             auto mutatedModel = base({mutatedRect, sHole});
             mutatedModel.document = document;
 
-            store.execute(command("SetModelSupports",
-                                  fields({{"model", mutatedModel.map()}, {"intents", intents}})));
+            auto beforeRevision = store.revision();
+            support_fixture::error("ReferenceMissing", [&] {
+                store.execute(command("SetModelSupports", fields({{"model", mutatedModel.map()},
+                                                                  {"intents", intents}})));
+            });
+            QCOMPARE(store.revision(), beforeRevision);
+            auto inspection = store.modelingReferenceCandidates(
+                document, mutatedModel.map(), intents, holeIntent.value("id").toString(),
+                "placement/face");
+            auto mutatedBase = evaluateModeling(mutatedModel, {baseExt});
+            auto replacement = findFace(mutatedBase.part.bodies[0].shape, baseId, 24, 26);
+            store.execute(command("ResolveModelingReference",
+                                  fields({{"model", mutatedModel.map()},
+                                          {"intents", intents},
+                                          {"owner", holeIntent.value("id")},
+                                          {"path", "placement/face"},
+                                          {"replacement", replacement.map()},
+                                          {"fingerprint", inspection.value("fingerprint")}})));
 
             auto mutatedPart = store.evaluatePart(document);
             QCOMPARE(mutatedPart.bodies.size(), 1);

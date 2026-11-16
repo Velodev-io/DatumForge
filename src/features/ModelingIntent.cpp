@@ -273,7 +273,11 @@ ModelingIntent ModelingIntent::parse(const QCborMap &m) {
         }
         if (smode == "Catalog") {
             szKeys.unite({"dataset", "standard", "type", "size", "fit"});
-            wire::text(sizing, "dataset");
+            domain::label(wire::text(sizing, "dataset"));
+            if (sizing.contains(QStringLiteral("version"))) {
+                szKeys.insert("version");
+                domain::label(wire::text(sizing, "version"));
+            }
             wire::text(sizing, "standard");
             wire::text(sizing, "type");
             wire::text(sizing, "size");
@@ -476,12 +480,19 @@ ModelingIntent ModelingIntent::parse(const QCborMap &m) {
             auto pts = m.value("control_points").toArray();
             domain::check(pts.size() >= 2 && pts.size() <= 32, "ResourceLimit",
                           "Select 2–32 variable fillet control points");
+            double previousParameter = -1;
             for (auto pt : pts) {
                 auto ptMap = pt.toMap();
                 wire::keys(ptMap, {"parameter", "radius"});
-                number(ptMap, "parameter", 0, 1);
+                auto parameter = number(ptMap, "parameter", 0, 1);
+                domain::check(parameter > previousParameter, "InvalidInput",
+                              "Radius parameters must strictly increase");
+                previousParameter = parameter;
                 number(ptMap, "radius", 1e-8, 1000);
             }
+            domain::check(pts[0].toMap().value("parameter").toDouble() == 0 &&
+                              pts.last().toMap().value("parameter").toDouble() == 1,
+                          "InvalidInput", "Radius law must include both edge endpoints");
             auto tr = wire::text(m, "transition");
             domain::check(tr == "Smooth" || tr == "Linear", "InvalidInput",
                           "Transition must be Smooth or Linear");

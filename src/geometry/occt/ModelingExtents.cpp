@@ -182,8 +182,20 @@ void completeCaps(const TopoDS_Shape &result, const TopoDS_Shape &envelope,
     TopoDS_Compound boundary;
     BRep_Builder builder;
     builder.MakeCompound(boundary);
-    for (TopExp_Explorer face(until, TopAbs_FACE); face.More(); face.Next())
-        builder.Add(boundary, face.Current());
+    for (TopExp_Explorer face(until, TopAbs_FACE); face.More(); face.Next()) {
+        BRepAlgoAPI_Common overlap;
+        TopTools_ListOfShape arguments, tools;
+        arguments.Append(face.Current());
+        tools.Append(from);
+        overlap.SetArguments(arguments);
+        overlap.SetTools(tools);
+        overlap.SetNonDestructive(true);
+        overlap.Build();
+        check(overlap.IsDone() && !overlap.HasErrors(), "InvalidGeometry",
+              "Support cap overlap query failed");
+        if (surfaceArea(overlap.Shape()) <= 1e-10)
+            builder.Add(boundary, face.Current());
+    }
     auto start = common(result, from, part, id), end = common(result, boundary, part, id);
     check(surfaceArea(start) > 1e-10 && surfaceArea(end) > 1e-10, "ReferenceMissing",
           "Both exact support caps are required");

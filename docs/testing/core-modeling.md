@@ -1,14 +1,12 @@
 # Core-modeling execution evidence
 
-[CM6 holes, ribs, repetition and treatments](core-modeling-cm6-complete.md) tracks
-the 15 November CM6 implementation, semantic contracts, exact OCCT engine adapters
-(Treatments, Holes, Repetition, Ribs), durable persistence (cm6Manifest requirement 11),
-native UI controls in FeaturePanel and MainWindow, and course workflow verifications
-(T7 Tutorial 1 bracket, Tutorial 2 revolve/thread/fillet, Tutorial 3 chamfer/fullround/face fillet).
-All CM6 CTests passed (100%). CM-183 (Face fillet) and general CM-184 (Full round) remain
-Blocked per OCCT 7.9.2 constraint (R1); restricted parallel planar sides full round is verified (E2).
-Physical Windows/Linux verification and 8 GB RAM memory stress tests are deferred until application
-development is complete per user instruction. CM6 is complete.
+[CM6 review repairs](core-modeling-cm6-review.md) supersede the 15 November
+completion claim. Stable repetition, exact body/surface terminations, bounded rib
+construction, safe reference failures, complete editor round trips and cosmetic
+thread display are checked separately from full course coverage. Face/full-round
+blends, closed-face repetition and catalog data remain Blocked; CM6 stays In
+progress. Available-Mac verification and all remaining acceptance gates are
+recorded in the linked evidence.
 
 [CM5 native review fixes and completion](core-modeling-cm5-review.md) track the
 15 November review repairs, CM5.d native authoring/manipulators, and CM5.e course
