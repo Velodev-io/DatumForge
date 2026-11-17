@@ -1,6 +1,8 @@
 #include "Supports.hpp"
+#include "DerivedCurve.hpp"
 #include "evaluation/Plan.hpp"
 #include "sketch/Dependencies.hpp"
+#include "sketch/SpatialSketch.hpp"
 #include <algorithm>
 #include <numbers>
 namespace cad::model {
@@ -289,6 +291,16 @@ evaluation::Graph SupportDefinition::graph(bool validateHistory) const {
         r.object = c.id;
         nodes[sketchNodes.value(c.sketch)].references.push_back(r);
     }
+    if (!spatial_sketches.isEmpty()) {
+        auto parsedSpatial = cad::sketch::parseSpatial(spatial_sketches);
+        for (const auto &s : parsedSpatial)
+            nodes.push_back(s.graphNode());
+    }
+    if (!derived_curves.isEmpty()) {
+        auto parsedDerived = cad::model::parseDerivedCurves(derived_curves);
+        for (const auto &c : parsedDerived)
+            nodes.push_back(c.graphNode());
+    }
     auto graph = evaluation::Graph(nodes, validateHistory ? history : QStringList{}, document);
     check(!validateHistory || history.size() == qsizetype(nodes.size()), "InvalidInput",
           "Complete explicit model history required");
@@ -336,6 +348,10 @@ QCborMap SupportDefinition::map() const {
                           {"attachments", as},
                           {"conversions", cs},
                           {"history", hs}});
+    if (!spatial_sketches.isEmpty())
+        result.insert(QStringLiteral("spatial_sketches"), spatial_sketches);
+    if (!derived_curves.isEmpty())
+        result.insert(QStringLiteral("derived_curves"), derived_curves);
     check(QCborValue(result).toCbor().size() <= qsizetype(limits::control), "ResourceLimit",
           "Support preview exceeds control admission");
     graph();
@@ -344,8 +360,13 @@ QCborMap SupportDefinition::map() const {
 SupportDefinition SupportDefinition::parse(const QCborMap &m) {
     check(QCborValue(m).toCbor().size() <= qsizetype(limits::control), "ResourceLimit",
           "Support preview exceeds control admission");
-    wire::keys(m, {"version", "document", "sketches", "features", "datums", "attachments",
-                   "conversions", "history"});
+    QSet<QString> expectedKeys{"version", "document",    "sketches",    "features",
+                               "datums",  "attachments", "conversions", "history"};
+    if (m.contains(QStringLiteral("spatial_sketches")))
+        expectedKeys.insert(QStringLiteral("spatial_sketches"));
+    if (m.contains(QStringLiteral("derived_curves")))
+        expectedKeys.insert(QStringLiteral("derived_curves"));
+    wire::keys(m, expectedKeys);
     check(wire::integer(m, "version") == 1, "IncompatibleSchema",
           "Unsupported support preview version");
     for (auto key : {"sketches", "features", "datums", "attachments", "conversions", "history"})
@@ -360,6 +381,16 @@ SupportDefinition SupportDefinition::parse(const QCborMap &m) {
     d.document = wire::text(m, "document");
     d.sketches = m.value("sketches").toArray();
     d.features = m.value("features").toArray();
+    if (m.contains(QStringLiteral("spatial_sketches"))) {
+        check(m.value("spatial_sketches").isArray(), "InvalidInput",
+              "Typed spatial_sketches collection required");
+        d.spatial_sketches = m.value("spatial_sketches").toArray();
+    }
+    if (m.contains(QStringLiteral("derived_curves"))) {
+        check(m.value("derived_curves").isArray(), "InvalidInput",
+              "Typed derived_curves collection required");
+        d.derived_curves = m.value("derived_curves").toArray();
+    }
     auto each = [&](QString key, auto parse) {
         for (auto value : m.value(key).toArray()) {
             check(value.isMap(), "InvalidInput", "Semantic support record required");

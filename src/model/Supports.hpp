@@ -39,6 +39,7 @@ struct SupportDefinition {
     std::vector<Datum> datums;
     std::vector<Attachment> attachments;
     std::vector<Conversion> conversions;
+    QCborArray spatial_sketches, derived_curves;
     QStringList history;
     evaluation::Graph graph(bool validateHistory = true) const;
     void sequence();

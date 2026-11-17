@@ -3,7 +3,7 @@
 Living checklist maintained across sessions.
 Format: `[ ]` not started, `[/]` in progress, `[x]` done, `[~]` deferred/blocked.
 
-Last Updated: 2026-11-16
+Last Updated: 2026-11-17
 
 ---
 
@@ -56,7 +56,13 @@ Last Updated: 2026-11-16
   - [x] CM6.c: Durable metadata, deterministic replay, save/reopen, undo/redo and explicit repair.
   - [x] CM6.d: Supported native authoring and edit workflows verified at 5 scales (100–200% DPR).
   - [x] CM6.e: Analytical/native regressions and course model workflows verified.
-- [ ] **CM7: 3D Curves & Spatial Sketches** *(Scheduled; not started)*.
+- [/] **CM7: 3D Curves & Spatial Sketches** — In progress (`review/cm7-a-20261117`).
+  - [x] CM7 Preparation: freeze source-derived scope, baseline, course fixtures (T4 p14–15, T8 p18–27, 48–49).
+  - [x] CM7.a: Spatial entities, plane-relative relations (ParallelYZ, ParallelZX, AlongZ), active drafting plane, derived curve contracts (SketchOnSketch, SketchOnFaces, CompositeCurve, HelixSpiral), CurveFrame with stable up-vector policy, and Graph validation gate.
+  - [ ] CM7.b: Separate Eigen spatial solver and worker-owned exact derived curves.
+  - [ ] CM7.c: Durable definitions, atomic edits, replay and explicit reference repair.
+  - [ ] CM7.d: Native spatial sketching, dimensions, plane switching and branch selection.
+  - [ ] CM7.e: Projected/chair paths, failure cases, regression/native evidence and review.
 - [ ] **CM8: Sweeps, Lofts & Shells** *(Scheduled; not started)*.
 - [ ] **CM9: Offline Catalogs, Materials & Evaluation Tools** *(Scheduled; not started)*.
 

@@ -7,21 +7,22 @@ Graph::Graph(const std::vector<GraphNode> &nodes, QStringList history, QString d
     if (document != "Self")
         domain::id(document);
     QMap<QString, const GraphNode *> byId;
-    size_t sketches = 0, features = 0;
+    size_t sketches = 0, features = 0, spatial_sketches = 0;
     for (auto &node : nodes) {
         sketches += node.kind == "Sketch";
+        spatial_sketches += node.kind == "SpatialSketch";
         features += node.kind == "Feature";
-        domain::check(sketches <= 32 && features <= 100 && node.references.size() <= 512 &&
-                          node.members.size() <= 256,
+        domain::check(sketches <= 32 && spatial_sketches <= 32 && features <= 100 &&
+                          node.references.size() <= 512 && node.members.size() <= 256,
                       "ResourceLimit", "Model dependency node exceeds existing admission bounds");
         domain::id(node.id);
         domain::check(!byId.contains(node.id), "InvalidInput", "Duplicate model node identity");
-        domain::check(
-            QStringList{"Sketch", "DatumPlane", "DatumAxis", "DerivedCurve", "Feature"}.contains(
-                node.kind),
-            "InvalidInput", "Unsupported model node kind");
-        domain::check(node.kind == "Sketch" || node.members.empty(), "InvalidInput",
-                      "Only sketch nodes own member entities");
+        domain::check(QStringList{"Sketch", "SpatialSketch", "DatumPlane", "DatumAxis",
+                                  "DerivedCurve", "Feature"}
+                          .contains(node.kind),
+                      "InvalidInput", "Unsupported model node kind");
+        domain::check(node.kind == "Sketch" || node.kind == "SpatialSketch" || node.members.empty(),
+                      "InvalidInput", "Only sketch nodes own member entities");
         for (auto it = node.members.cbegin(); it != node.members.cend(); ++it) {
             domain::id(it.key());
             domain::check(it.value() == "Point" || it.value() == "Curve", "InvalidInput",
@@ -41,6 +42,10 @@ Graph::Graph(const std::vector<GraphNode> &nodes, QStringList history, QString d
             bool compatible = ref.role == "Object";
             if (source.kind == "Sketch") {
                 compatible = compatible || ref.role == "Plane";
+                if (ref.role == "Point" || ref.role == "Curve")
+                    compatible = source.members.contains(ref.entity) &&
+                                 source.members.value(ref.entity) == ref.role;
+            } else if (source.kind == "SpatialSketch") {
                 if (ref.role == "Point" || ref.role == "Curve")
                     compatible = source.members.contains(ref.entity) &&
                                  source.members.value(ref.entity) == ref.role;

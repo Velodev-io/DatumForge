@@ -1,3 +1,24 @@
+# Active plan: CM7 — Spatial sketches and derived curves
+
+Prepared 17 November 2026. See the [CM7 execution plan](docs/decisions/core-modeling-cm7-plan.md)
+for contracts, integration points, all 14 coverage entries and verification gates.
+This is planning only; CM7 implementation has not started in this task.
+
+- [x] Preparation: freeze source-derived scope, course fixtures and current baseline.
+- [x] CM7.a: spatial entities, typed branches, constraints and frame contracts.
+- [ ] CM7.b: separate Eigen spatial solver and worker-owned exact derived curves.
+- [ ] CM7.c: durable definitions, atomic edits, replay and explicit reference repair.
+- [ ] CM7.d: native spatial sketching, dimensions, plane switching and branch selection.
+- [ ] CM7.e: projected/chair paths, failure cases, regression/native evidence and review.
+
+Execute in order with each task verified before dependent work. First execution
+scope is preparation plus CM7.a only. Preserve deferred gates; stop before CM8
+and Module 11. No implementation, commit or push is claimed by this plan.
+
+The prior CM5 plan and its historical execution notes are preserved below.
+
+---
+
 # Plan: complete CM5.a–e
 
 Prepared 14 November 2026. This is a planning deliverable; its checkboxes are
