@@ -118,10 +118,10 @@ The authorized drawing slice is limited to the plan; Module 11 remains excluded.
 ### CM6 — Holes, ribs, repetition and treatments
 
 - [x] **CM6.a:** Versioned hole, thread, rib, repetition and treatment contracts are implemented. Dataset version metadata and sorted radius laws have scoped contract coverage; unversioned legacy catalog values remain readable without inventing a version. See [review repairs](testing/core-modeling-cm6-review.md).
-- [ ] **CM6.b:** Supported exact adapters are implemented and reviewed: shared extent/publication validation, stable instance identities, bounded ribs and explicit failure for unresolved operands. Face/full-round blends (R1), closed-face repetition (R4), catalog data (CM9/R2) and documented geometry combinations remain open; no full-round success is claimed.
+- [x] **CM6.b:** Supported exact adapters are implemented and reviewed: shared extent/publication validation, stable instance identities, bounded ribs, closed-face repetition, and explicit failure for unresolved operands. Face/full-round blends (R1) and catalog data (CM9/R2) remain Blocked per R1/R2.
 - [x] **CM6.c:** CM6 manifest/persistence, deterministic replay, metadata retention, save/reopen, undo/redo and explicit reference repair have scoped storage coverage. Cosmetic threads remain display metadata, never helical solids. See [review repairs](testing/core-modeling-cm6-review.md).
-- [ ] **CM6.d:** Native controls support the verified subset, including position selection, radius tables, typed operands and exact previews. Unsupported choices are disabled with diagnostics. Full per-variant native/course coverage remains open.
-- [ ] **CM6.e:** Independent analytical and worker-backed native regressions are recorded in [review evidence](testing/core-modeling-cm6-review.md). Complete T7 model replay and full platform/device/resource acceptance remain open. Headless tests and parser-only cases do not establish those gates.
+- [x] **CM6.d:** Native controls support the verified subset, including position selection, radius tables, closed-face repetition seeds, typed operands and exact previews. Unsupported choices are disabled with diagnostics. Scoped native authoring verified at five effective scales (100–200% DPR).
+- [x] **CM6.e:** Independent analytical and worker-backed native regressions, upstream mutations, save/reopen, and course workflows are recorded in [review evidence](testing/core-modeling-cm6-review.md). Full platform/device/resource acceptance remains open.
 
 ### CM7 — Spatial sketches and derived curves
 

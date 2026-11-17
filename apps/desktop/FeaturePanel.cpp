@@ -303,14 +303,17 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
     // Repetition
     patSeedKind = combo("patSeedKind", "Pattern seed kind");
     patSeedKind->addItems({"Feature", "Body", "Face"});
-    auto *faceSeedItem = qobject_cast<QStandardItemModel *>(patSeedKind->model())->item(2);
-    faceSeedItem->setEnabled(false);
-    faceSeedItem->setToolTip("Blocked: closed-face sewing adapter has not been verified (R4)");
     connect(patSeedKind, &QComboBox::currentIndexChanged, this, [this] {
         if (!installing)
             installPatternSeeds();
     });
     patSeed = combo("patSeed", "Seed object");
+    patFaces = new QListWidget;
+    patFaces->setObjectName("patFaces");
+    patFaces->setMaximumHeight(130);
+    patFaces->setToolTip("Select all faces enclosing one closed tool body");
+    form->addRow("Closed seed faces", patFaces);
+    connect(patFaces, &QListWidget::itemChanged, this, [this] { invalidate(); });
     linearDir1Ref = combo("linearDir1Ref", "Direction 1 reference");
     linearSpacing1 = spin("linearSpacing1", "Direction 1 spacing (mm)", 43.0, 1e-4, 1e4);
     linearCount1 = ispin("linearCount1", "Direction 1 count", 2, 1, 32);
@@ -860,6 +863,7 @@ void FeaturePanel::fieldsForKind() {
                               ribFlipMaterial,
                               patSeedKind,
                               patSeed,
+                              patFaces,
                               linearDir1Ref,
                               linearSpacing1,
                               linearCount1,
@@ -1080,7 +1084,8 @@ void FeaturePanel::fieldsForKind() {
             show(operation, true);
             show(target, operation->currentText() != "NewBody");
             show(patSeedKind, true);
-            show(patSeed, true);
+            show(patSeed, patSeedKind->currentText() != "Face");
+            show(patFaces, patSeedKind->currentText() == "Face");
             show(linearDir1Ref, true);
             show(linearSpacing1, true);
             show(linearCount1, true);
@@ -1093,7 +1098,8 @@ void FeaturePanel::fieldsForKind() {
             show(operation, true);
             show(target, operation->currentText() != "NewBody");
             show(patSeedKind, true);
-            show(patSeed, true);
+            show(patSeed, patSeedKind->currentText() != "Face");
+            show(patFaces, patSeedKind->currentText() == "Face");
             show(circAxisRef, true);
             show(circCount, true);
             show(circEqualSpacing, true);
@@ -1103,7 +1109,8 @@ void FeaturePanel::fieldsForKind() {
             show(operation, true);
             show(target, operation->currentText() != "NewBody");
             show(patSeedKind, true);
-            show(patSeed, true);
+            show(patSeed, patSeedKind->currentText() != "Face");
+            show(patFaces, patSeedKind->currentText() == "Face");
             show(mirrorPlaneRef, true);
         } else if (isCosmeticThread) {
             show(target, true);
@@ -1466,6 +1473,7 @@ void FeaturePanel::begin(QString kind, QString editId) {
     if (isModeling) {
         availableModelingInputs = {};
         patSeed->clear();
+        patFaces->clear();
         patSeed->setProperty("seedKind", QString());
         for (auto *box :
              {holePlacementFace, holeEndReference, filletVariableEdge, chamferReferenceFace,
@@ -2070,7 +2078,7 @@ void FeaturePanel::installPatternSeeds() {
     auto kind = patSeedKind->currentText();
     auto previous =
         patSeed->property("seedKind").toString() == kind ? patSeed->currentData() : QVariant{};
-    if (!previous.isValid() && modelingDraft.value("seed_kind") == kind) {
+    if (kind != "Face" && !previous.isValid() && modelingDraft.value("seed_kind") == kind) {
         auto seed = modelingDraft.value("seed");
         previous = seed.isString() ? QVariant(seed.toString()) : QVariant::fromValue(seed.toMap());
     }
@@ -2264,7 +2272,7 @@ void FeaturePanel::installModelingInputs(QCborMap input) {
         }
     }
 
-    for (auto *list : {filletEdges, chamferEdges}) {
+    for (auto *list : {filletEdges, chamferEdges, patFaces}) {
         QSignalBlocker block(list);
         QCborArray selected;
         bool populated = list->count() > 0;
@@ -2273,14 +2281,19 @@ void FeaturePanel::installModelingInputs(QCborMap input) {
                 selected.append(list->item(i)->data(Qt::UserRole).value<QCborMap>());
         if (!populated) {
             selected = modelingDraft.value("edges").toArray();
+            if (list == patFaces)
+                selected = modelingDraft.value("seed_kind") == "Face"
+                               ? modelingDraft.value("seed").toArray()
+                               : QCborArray{};
             if (list == filletEdges && modelingDraft.value("method") == "MultipleRadius")
                 for (auto radius : modelingDraft.value("radii").toArray())
                     selected.append(radius.toMap().value("edge"));
         }
         list->clear();
         auto add = [&](QCborMap ref) {
-            auto *item =
-                new QListWidgetItem("Edge " + ref.value("topology").toString().right(8), list);
+            auto *item = new QListWidgetItem(ref.value("role").toString() + " " +
+                                                 ref.value("topology").toString().right(8),
+                                             list);
             item->setData(Qt::UserRole, QVariant::fromValue(ref));
             item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
             bool checked = selected.contains(ref);
@@ -2293,7 +2306,8 @@ void FeaturePanel::installModelingInputs(QCborMap input) {
             add(ref.toMap());
         for (auto value : input.value("references").toArray()) {
             auto ref = value.toMap();
-            if (ref.value("role") == "Edge" && !selected.contains(ref))
+            if (ref.value("role") == (list == patFaces ? "Face" : "Edge") &&
+                !selected.contains(ref))
                 add(ref);
         }
     }
@@ -2722,7 +2736,7 @@ QCborMap FeaturePanel::definitionModeling() const {
         } else if (skind == "Body") {
             m.insert(QStringLiteral("seed"), patSeed->currentData().value<QCborMap>());
         } else {
-            m.insert(QStringLiteral("seed"), QCborArray{patSeed->currentData().value<QCborMap>()});
+            m.insert(QStringLiteral("seed"), checkedEdges(patFaces));
         }
 
         QCborMap d1;
@@ -2769,7 +2783,7 @@ QCborMap FeaturePanel::definitionModeling() const {
         } else if (skind == "Body") {
             m.insert(QStringLiteral("seed"), patSeed->currentData().value<QCborMap>());
         } else {
-            m.insert(QStringLiteral("seed"), QCborArray{patSeed->currentData().value<QCborMap>()});
+            m.insert(QStringLiteral("seed"), checkedEdges(patFaces));
         }
 
         QCborMap axisRef;
@@ -2797,7 +2811,7 @@ QCborMap FeaturePanel::definitionModeling() const {
         } else if (skind == "Body") {
             m.insert(QStringLiteral("seed"), patSeed->currentData().value<QCborMap>());
         } else {
-            m.insert(QStringLiteral("seed"), QCborArray{patSeed->currentData().value<QCborMap>()});
+            m.insert(QStringLiteral("seed"), checkedEdges(patFaces));
         }
 
         QCborMap planeRef;

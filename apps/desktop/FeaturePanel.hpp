@@ -129,6 +129,7 @@ class FeaturePanel : public QWidget {
     // Repetition: LinearPattern, CircularPattern, Mirror
     QComboBox *patSeedKind = nullptr;
     QComboBox *patSeed = nullptr;
+    QListWidget *patFaces = nullptr;
     QComboBox *linearDir1Ref = nullptr;
     QDoubleSpinBox *linearSpacing1 = nullptr;
     QSpinBox *linearCount1 = nullptr;

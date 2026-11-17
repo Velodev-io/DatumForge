@@ -34,9 +34,8 @@ verification and final review. No CM7–CM9 or Module 11 work is started.
   copies; no body/output identity is fabricated for a no-op.
 - Linear variable-radius laws currently support two endpoints; Smooth supports
   ordered control points. Propagation off is explicitly unsupported.
-- Exact face/full-round blends (R1), closed-face repetition (R4) and admitted
-  catalog datasets/pickers (CM9/R2) remain Blocked. No restricted full-round success
-  or actual catalog standard validation is claimed.
+- Closed-face repetition (R4) is resolved: face seeds are sewn into a valid closed solid tool body (`BRepBuilderAPI_Sewing` + `BRepBuilderAPI_MakeSolid`) with strict non-closed rejection, exposed via `patFaces` list widget in `FeaturePanel`, and verified in `cm6.review` (`closedFaceSeeds`).
+- Exact face/full-round blends (R1) and admitted catalog datasets/pickers (CM9/R2) remain Blocked. No restricted full-round success or actual catalog standard validation is claimed.
 - Cosmetic threads are sampled display rings on a resolved complete cylinder,
   with bounded density; exact solids/topology remain unchanged. Hole-owned thread
   metadata is retained; standalone cosmetic-thread authoring supplies the overlay.

@@ -3,8 +3,13 @@
 #include <BRepAlgoAPI_Check.hxx>
 #include <BRepAlgoAPI_Cut.hxx>
 #include <BRepAlgoAPI_Fuse.hxx>
+#include <BRepBuilderAPI_MakeSolid.hxx>
+#include <BRepBuilderAPI_Sewing.hxx>
 #include <BRepBuilderAPI_Transform.hxx>
+#include <BRepCheck_Analyzer.hxx>
+#include <BRepLib.hxx>
 #include <BRep_Builder.hxx>
+#include <BRep_Tool.hxx>
 #include <TopExp_Explorer.hxx>
 #include <TopoDS.hxx>
 #include <numbers>
@@ -64,10 +69,27 @@ TopoDS_Shape getSeed(const QCborMap &intent, const kernel::Part &part, const Con
         throw domain::Error("ReferenceMissing", "Seed feature shape missing: " + seedId);
     } else if (seedKind == "Body") {
         return body(context, intent.value("seed").toMap()).shape;
+    } else if (seedKind == "Face") {
+        check(intent.value("seed").isArray(), "InvalidInput", "Face seeds must be an array");
+        auto array = intent.value("seed").toArray();
+        check(!array.isEmpty(), "InvalidInput", "At least one face seed required");
+        BRepBuilderAPI_Sewing sewing(1e-7);
+        for (auto value : array)
+            sewing.Add(
+                context.references.topology(domain::GeometryReference::parse(value.toMap())));
+        sewing.Perform();
+        auto shell = sewing.SewedShape();
+        check(!shell.IsNull() && shell.ShapeType() == TopAbs_SHELL && BRep_Tool::IsClosed(shell),
+              "InvalidGeometry", "Face seeds must enclose one closed tool body");
+        BRepBuilderAPI_MakeSolid makeSolid(TopoDS::Shell(shell));
+        check(makeSolid.IsDone(), "InvalidGeometry", "Face seed solid construction failed");
+        auto solid = makeSolid.Solid();
+        check(BRepLib::OrientClosedSolid(solid) && BRepCheck_Analyzer(solid).IsValid(),
+              "InvalidGeometry", "Face seed is not a valid closed tool body");
+        kernel::validateShape(solid);
+        return solid;
     } else {
-        // Face seeds require closed tool volume (R4)
-        throw domain::Error("UnsupportedOperation",
-                            "Face pattern requires a closed tool body (R4)");
+        throw domain::Error("InvalidInput", "Unsupported seed kind: " + seedKind);
     }
 }
 } // namespace
