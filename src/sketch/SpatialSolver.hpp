@@ -5,6 +5,7 @@
 namespace cad::sketch {
 
 using PlaneResolver = std::function<sketch::Frame(const domain::GeometryReference &)>;
+using CancelChecker = std::function<bool()>;
 
 struct SpatialSolveResult {
     SpatialSketch sketch;
@@ -19,9 +20,10 @@ struct SpatialSolveResult {
 };
 
 SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *previous = nullptr,
-                                const PlaneResolver &resolve = {});
+                                const PlaneResolver &resolve = {},
+                                const CancelChecker &canceled = {});
 
 QCborMap evaluateSpatial(const SpatialSketch &candidate, const SpatialSketch *previous = nullptr,
-                         const PlaneResolver &resolve = {});
+                         const PlaneResolver &resolve = {}, const CancelChecker &canceled = {});
 
 } // namespace cad::sketch

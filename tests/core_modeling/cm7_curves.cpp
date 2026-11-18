@@ -212,6 +212,63 @@ void testSketchOnFacesProjection() {
     double radSq = pt.X() * pt.X() + pt.Y() * pt.Y();
     near(radSq, 400.0, 1.0);
     near(pt.Z(), 50.0, 1e-3);
+
+    // Case 2: NormalToFace mode onto the cylinder face
+    model::DerivedCurve dcNormal;
+    dcNormal.kind = QStringLiteral("SketchOnFaces");
+    model::SketchOnFacesDefinition sofNormal;
+    sofNormal.sketch = sketchRef(s.id, line);
+    sofNormal.faces = {cylFaceRef};
+    sofNormal.mode = QStringLiteral("NormalToFace");
+    sofNormal.branch.index = 0;
+    sofNormal.branch.token = QStringLiteral("branch/0");
+    dcNormal.sketchOnFaces = sofNormal;
+
+    auto resNormal = geometry::evaluateSketchOnFaces(dcNormal, scene);
+    CHECK(!resNormal.empty());
+    gp_Pnt ptNormal = resNormal[0].curve->Value(resNormal[0].first);
+    double radSqNormal = ptNormal.X() * ptNormal.X() + ptNormal.Y() * ptNormal.Y();
+    near(radSqNormal, 400.0, 1.0);
+
+    // Case 3: NormalToFace mode onto a planar face (box top face at z = 100)
+    BRepPrimAPI_MakeBox makeBox(100.0, 100.0, 100.0);
+    TopoDS_Shape boxShape = makeBox.Shape();
+    QString boxId = newId();
+    scene.stages.insert(boxId, boxShape);
+    domain::GeometryReference boxTopRef;
+    boxTopRef.object = boxId;
+    boxTopRef.role = QStringLiteral("Face");
+    for (TopExp_Explorer exp(boxShape, TopAbs_FACE); exp.More(); exp.Next()) {
+        BRepAdaptor_Surface surf(TopoDS::Face(exp.Current()));
+        if (surf.GetType() == GeomAbs_Plane &&
+            std::abs(surf.Plane().Location().Z() - 100.0) < 1e-4) {
+            boxTopRef.topology = geometry::supportToken(exp.Current());
+            break;
+        }
+    }
+    CHECK(!boxTopRef.topology.isEmpty());
+
+    sketch::Sketch sBox;
+    sBox.frame = {{0, 0, 0.150}, {1, 0, 0}, {0, 1, 0}}; // at z = 150 mm
+    auto pb1 = sBox.point({0.020, 0.020});
+    auto pb2 = sBox.point({0.080, 0.020});
+    auto lBox = sBox.line(pb1, pb2);
+    scene.sketches.insert(sBox.id, sBox);
+
+    model::DerivedCurve dcBox;
+    dcBox.kind = QStringLiteral("SketchOnFaces");
+    model::SketchOnFacesDefinition sofBox;
+    sofBox.sketch = sketchRef(sBox.id, lBox);
+    sofBox.faces = {boxTopRef};
+    sofBox.mode = QStringLiteral("NormalToFace");
+    sofBox.branch.index = 0;
+    sofBox.branch.token = QStringLiteral("branch/0");
+    dcBox.sketchOnFaces = sofBox;
+
+    auto resBox = geometry::evaluateSketchOnFaces(dcBox, scene);
+    CHECK(!resBox.empty());
+    gp_Pnt ptBox = resBox[0].curve->Value(resBox[0].first);
+    near(ptBox.Z(), 100.0, 1e-3);
 }
 
 void testCompositeCurveGapsAndDiscontinuities() {

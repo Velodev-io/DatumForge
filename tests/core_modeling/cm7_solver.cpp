@@ -425,6 +425,175 @@ void testChairFramePathSolverGeometry() {
     near(solvedP5[2], 0.040, 1e-6);
 }
 
+void testReferenceDimensionDoesNotConstrain() {
+    sketch::SpatialSketch s;
+    auto p1 = s.point({0.0, 0.0, 0.0});
+    auto p2 = s.point({0.10, 0.0, 0.0});
+    s.line(p1, p2);
+
+    // Fixed p1
+    sketch::SpatialConstraint fix1;
+    fix1.kind = QStringLiteral("Fixed");
+    fix1.a = p1;
+    s.constraints.push_back(fix1);
+
+    // Driving distance p1-p2 = 0.05
+    sketch::SpatialConstraint dDriving;
+    dDriving.kind = QStringLiteral("Distance");
+    dDriving.a = p1;
+    dDriving.b = p2;
+    dDriving.value = 0.05;
+    dDriving.driving = true;
+    s.constraints.push_back(dDriving);
+
+    // Reference (non-driving) distance p1-p2 with value 0.10 (geometry is actually 0.05)
+    sketch::SpatialConstraint dRef;
+    dRef.kind = QStringLiteral("Distance");
+    dRef.a = p1;
+    dRef.b = p2;
+    dRef.value = 0.10;
+    dRef.driving = false; // NON-DRIVING!
+    s.constraints.push_back(dRef);
+
+    auto res = sketch::solveSpatial(s);
+    CHECK(res.valid);
+    CHECK(res.status == "Underconstrained" || res.status == "Solved");
+    near(sketch::norm(res.sketch.entity(p2).point), 0.05, 1e-6);
+    CHECK(res.conflicting.isEmpty());
+    bool foundRef = false;
+    for (const auto &c : res.sketch.constraints) {
+        if (c.id == dRef.id) {
+            foundRef = true;
+            near(c.value, 0.05, 1e-6);
+        }
+    }
+    CHECK(foundRef);
+}
+
+void testTangentConstraint3D() {
+    sketch::SpatialSketch s;
+    auto pC = s.point({0.0, 0.0, 0.0});
+    auto pA = s.point({0.05, 0.0, 0.0});
+    auto pB = s.point({0.0, 0.05, 0.0});
+    auto arcId = s.arc(pC, pA, pB, {0, 0, 1}, 0.05);
+
+    // Line 1: touches at pA, goes along Y: tangent in the circle plane!
+    auto pY = s.point({0.05, 0.05, 0.0});
+    auto lY = s.line(pA, pY);
+
+    // Fixed arc center and endpoints
+    sketch::SpatialConstraint fixC, fixA, fixB;
+    fixC.kind = "Fixed";
+    fixC.a = pC;
+    s.constraints.push_back(fixC);
+    fixA.kind = "Fixed";
+    fixA.a = pA;
+    s.constraints.push_back(fixA);
+    fixB.kind = "Fixed";
+    fixB.a = pB;
+    s.constraints.push_back(fixB);
+
+    sketch::SpatialConstraint tanY;
+    tanY.kind = "Tangent";
+    tanY.a = lY;
+    tanY.b = arcId;
+    s.constraints.push_back(tanY);
+
+    auto resY = sketch::solveSpatial(s);
+    CHECK(resY.valid);
+
+    // Line 2: touches at pA, goes along Z: perpendicular to the circle plane!
+    // This MUST NOT be tangent to the circle!
+    s.constraints.pop_back(); // remove tanY
+    auto pZ = s.point({0.05, 0.0, 0.05});
+    auto lZ = s.line(pA, pZ);
+
+    sketch::SpatialConstraint fixZ;
+    fixZ.kind = "Fixed";
+    fixZ.a = pZ;
+    s.constraints.push_back(fixZ);
+
+    sketch::SpatialConstraint tanZ;
+    tanZ.kind = "Tangent";
+    tanZ.a = lZ;
+    tanZ.b = arcId;
+    s.constraints.push_back(tanZ);
+
+    auto resZ = sketch::solveSpatial(s);
+    // Prior attempt: dir = (0, 0, 1), rad = (1, 0, 0). dir . rad == 0!
+    // So prior attempt treats line along Z as TANGENT to the circle in the XY plane!
+    // Expected: resZ must NOT be valid (it's perpendicular to the circle plane, not tangent)!
+    CHECK(!resZ.valid);
+}
+
+void testConstraintOperandOrdering() {
+    sketch::SpatialSketch s;
+    auto p1 = s.point({0.0, 0.0, 0.0});
+    auto p2 = s.point({0.10, 0.0, 0.0});
+    auto l = s.line(p1, p2);
+    auto p = s.point({0.05, 0.05, 0.0});
+
+    // Fix line endpoints
+    sketch::SpatialConstraint fix1, fix2;
+    fix1.kind = "Fixed";
+    fix1.a = p1;
+    s.constraints.push_back(fix1);
+    fix2.kind = "Fixed";
+    fix2.a = p2;
+    s.constraints.push_back(fix2);
+
+    // Coincident with a = line, b = point (reversed operand order)
+    sketch::SpatialConstraint cCoin;
+    cCoin.kind = "Coincident";
+    cCoin.a = l;
+    cCoin.b = p;
+    s.constraints.push_back(cCoin);
+
+    auto res = sketch::solveSpatial(s);
+    CHECK(res.valid);
+    auto solvedP = res.sketch.entity(p).point;
+    // Y must be 0 if coincident to the line along X
+    near(solvedP[1], 0.0, 1e-5);
+}
+
+void testDistanceLinePlane() {
+    sketch::SpatialSketch s;
+    auto p1 = s.point({0.0, 0.0, 0.05});
+    auto p2 = s.point({0.10, 0.0, -0.05});
+    auto l = s.line(p1, p2);
+
+    auto planeId = newId();
+    sketch::SpatialConstraint c;
+    c.kind = "Distance";
+    c.a = l;
+    c.plane = planeRef(planeId);
+    c.value = 0.05;
+    s.constraints.push_back(c);
+
+    // Standard XY plane (z = 0)
+    sketch::Frame planeXY{{0, 0, 0}, {1, 0, 0}, {0, 1, 0}};
+    auto res = sketch::solveSpatial(s, nullptr, [&](const auto &) { return planeXY; });
+    CHECK(res.valid);
+    auto sp1 = res.sketch.entity(p1).point;
+    auto sp2 = res.sketch.entity(p2).point;
+    // Both endpoints must be on the same side and line parallel to plane!
+    near(std::abs(sp1[2]), 0.05, 1e-5);
+    near(std::abs(sp2[2]), 0.05, 1e-5);
+    near(sp1[2] - sp2[2], 0.0, 1e-5); // parallel to plane
+}
+
+void testSpatialSolveCancellation() {
+    sketch::SpatialSketch s;
+    auto p1 = s.point({0.0, 0.0, 0.0});
+    auto p2 = s.point({0.1, 0.0, 0.0});
+    s.line(p1, p2);
+
+    // Cancel callback returns true
+    auto res = sketch::solveSpatial(s, nullptr, {}, [] { return true; });
+    CHECK(!res.valid);
+    CHECK(res.status == "Canceled");
+}
+
 } // namespace
 
 int main(int argc, char **argv) {
@@ -438,5 +607,10 @@ int main(int argc, char **argv) {
         testAdmittedEntitiesAndDimensions();
         testRedundantConstraintReporting();
         testChairFramePathSolverGeometry();
+        testReferenceDimensionDoesNotConstrain();
+        testTangentConstraint3D();
+        testConstraintOperandOrdering();
+        testDistanceLinePlane();
+        testSpatialSolveCancellation();
     });
 }

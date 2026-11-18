@@ -56,10 +56,95 @@ struct ConstraintBlock {
     int rowCount = 0;
 };
 
+double measureSpatialDimension(const SpatialSketch &s, const SpatialConstraint &c,
+                               const PlaneResolver &resolve) {
+    auto getPt = [&](const QString &id) -> Eigen::Vector3d {
+        const auto &e = s.entity(id);
+        return {e.point[0], e.point[1], e.point[2]};
+    };
+    if (c.kind == "Distance") {
+        if (c.plane.has_value()) {
+            sketch::Frame fr = defaultResolvePlane(*c.plane, resolve);
+            Eigen::Vector3d O = toEigen(fr.origin);
+            Eigen::Vector3d N = toEigen(fr.u).cross(toEigen(fr.v)).normalized();
+            if (s.entity(c.a).kind == "Point") {
+                return std::abs((getPt(c.a) - O).dot(N));
+            } else {
+                const auto &l = s.entity(c.a);
+                return std::abs((getPt(l.a) - O).dot(N));
+            }
+        }
+        const auto &ea = s.entity(c.a);
+        const auto &eb = s.entity(c.b);
+        if (ea.kind == "Point" && eb.kind == "Point") {
+            return (getPt(c.a) - getPt(c.b)).norm();
+        }
+        if (ea.kind == "Point" && eb.kind == "Line") {
+            Eigen::Vector3d p = getPt(c.a);
+            Eigen::Vector3d p1 = getPt(eb.a);
+            Eigen::Vector3d p2 = getPt(eb.b);
+            Eigen::Vector3d dir = p2 - p1;
+            double dn = dir.norm();
+            if (dn < 1e-12)
+                return (p - p1).norm();
+            dir /= dn;
+            Eigen::Vector3d w = p - p1;
+            return (w - w.dot(dir) * dir).norm();
+        }
+        if (ea.kind == "Line" && eb.kind == "Point") {
+            Eigen::Vector3d p = getPt(c.b);
+            Eigen::Vector3d p1 = getPt(ea.a);
+            Eigen::Vector3d p2 = getPt(ea.b);
+            Eigen::Vector3d dir = p2 - p1;
+            double dn = dir.norm();
+            if (dn < 1e-12)
+                return (p - p1).norm();
+            dir /= dn;
+            Eigen::Vector3d w = p - p1;
+            return (w - w.dot(dir) * dir).norm();
+        }
+        if (ea.kind == "Line" && eb.kind == "Line") {
+            Eigen::Vector3d p1 = getPt(ea.a);
+            Eigen::Vector3d q1 = getPt(eb.a);
+            Eigen::Vector3d q2 = getPt(eb.b);
+            Eigen::Vector3d dir = q2 - q1;
+            double dn = dir.norm();
+            if (dn < 1e-12)
+                return (p1 - q1).norm();
+            dir /= dn;
+            Eigen::Vector3d w = p1 - q1;
+            return (w - w.dot(dir) * dir).norm();
+        }
+    } else if (c.kind == "Angle") {
+        if (c.plane.has_value()) {
+            sketch::Frame fr = defaultResolvePlane(*c.plane, resolve);
+            Eigen::Vector3d N = toEigen(fr.u).cross(toEigen(fr.v)).normalized();
+            const auto &l = s.entity(c.a);
+            Eigen::Vector3d dir = getPt(l.b) - getPt(l.a);
+            double dn = dir.norm();
+            if (dn < 1e-12)
+                return 0.0;
+            double dotVal = std::clamp((dir / dn).dot(N), -1.0, 1.0);
+            return std::abs(std::asin(dotVal));
+        } else {
+            const auto &l1 = s.entity(c.a);
+            const auto &l2 = s.entity(c.b);
+            Eigen::Vector3d d1 = getPt(l1.b) - getPt(l1.a);
+            Eigen::Vector3d d2 = getPt(l2.b) - getPt(l2.a);
+            double n1 = d1.norm(), n2 = d2.norm();
+            if (n1 < 1e-12 || n2 < 1e-12)
+                return 0.0;
+            double cosTheta = std::clamp((d1 / n1).dot(d2 / n2), -1.0, 1.0);
+            return std::acos(cosTheta);
+        }
+    }
+    return c.value;
+}
+
 } // namespace
 
 SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *previous,
-                                const PlaneResolver &resolve) {
+                                const PlaneResolver &resolve, const CancelChecker &canceled) {
     SpatialSolveResult result;
     result.sketch = candidate;
     try {
@@ -68,6 +153,15 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
         result.status = "FailedSolve";
         result.message = QString::fromUtf8(e.what());
         result.valid = false;
+        if (previous)
+            result.sketch = *previous;
+        return result;
+    }
+
+    if (canceled && canceled()) {
+        result.valid = false;
+        result.status = "Canceled";
+        result.message = "Spatial solve canceled";
         if (previous)
             result.sketch = *previous;
         return result;
@@ -162,6 +256,18 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
         // Explicit Constraints
         for (const auto &c : candidate.constraints) {
             int startIdx = int(resList.size());
+            if (c.kind == "Distance" || c.kind == "Angle") {
+                if (!c.driving) {
+                    if (recordBlocks) {
+                        ConstraintBlock block;
+                        block.constraintId = c.id;
+                        block.startRow = startIdx;
+                        block.rowCount = 0;
+                        blocks.push_back(block);
+                    }
+                    continue;
+                }
+            }
             if (c.kind == "Fixed") {
                 Eigen::Vector3d pt = getPoint(vars, c.a);
                 Eigen::Vector3d target = initialFixed.value(c.id, pt);
@@ -171,18 +277,30 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
                     Eigen::Vector3d pA = getPoint(vars, c.a);
                     Eigen::Vector3d pB = getPoint(vars, c.b);
                     addVec3((pA - pB) / lengthScale);
-                } else if (pointIndex.contains(c.a)) {
-                    const auto &lineEnt = candidate.entity(c.b);
-                    Eigen::Vector3d pA = getPoint(vars, c.a);
-                    Eigen::Vector3d p1 = getPoint(vars, lineEnt.a);
-                    Eigen::Vector3d p2 = getPoint(vars, lineEnt.b);
-                    Eigen::Vector3d dir = p2 - p1;
-                    double dirNorm = dir.norm();
-                    if (dirNorm > 1e-12) {
-                        Eigen::Vector3d dUnit = dir / dirNorm;
-                        Eigen::Vector3d w = pA - p1;
-                        Eigen::Vector3d perp = w - (w.dot(dUnit)) * dUnit;
-                        addVec3(perp / lengthScale);
+                } else {
+                    QString ptId = pointIndex.contains(c.a) ? c.a : c.b;
+                    QString otherId = pointIndex.contains(c.a) ? c.b : c.a;
+                    if (pointIndex.contains(ptId)) {
+                        const auto &otherEnt = candidate.entity(otherId);
+                        Eigen::Vector3d pA = getPoint(vars, ptId);
+                        if (otherEnt.kind == "Line") {
+                            Eigen::Vector3d p1 = getPoint(vars, otherEnt.a);
+                            Eigen::Vector3d p2 = getPoint(vars, otherEnt.b);
+                            Eigen::Vector3d dir = p2 - p1;
+                            double dirNorm = dir.norm();
+                            if (dirNorm > 1e-12) {
+                                Eigen::Vector3d dUnit = dir / dirNorm;
+                                Eigen::Vector3d w = pA - p1;
+                                Eigen::Vector3d perp = w - (w.dot(dUnit)) * dUnit;
+                                addVec3(perp / lengthScale);
+                            }
+                        } else if (otherEnt.kind == "Arc") {
+                            Eigen::Vector3d C = getPoint(vars, otherEnt.center);
+                            Eigen::Vector3d N = toEigen(otherEnt.normal).normalized();
+                            double R = otherEnt.radius;
+                            addRes(((pA - C).norm() - R) / lengthScale);
+                            addRes(((pA - C).dot(N)) / lengthScale);
+                        }
                     }
                 }
             } else if (c.kind == "Distance") {
@@ -201,16 +319,19 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
                         const auto &lineEnt = candidate.entity(c.a);
                         Eigen::Vector3d p1 = getPoint(vars, lineEnt.a);
                         Eigen::Vector3d p2 = getPoint(vars, lineEnt.b);
+                        Eigen::Vector3d dir = p2 - p1;
+                        addRes((dir.dot(N)) / lengthScale);
                         addRes((std::abs((p1 - O).dot(N)) - c.value) / lengthScale);
-                        addRes((std::abs((p2 - O).dot(N)) - c.value) / lengthScale);
                     }
                 } else if (pointIndex.contains(c.a) && pointIndex.contains(c.b)) {
                     Eigen::Vector3d pA = getPoint(vars, c.a);
                     Eigen::Vector3d pB = getPoint(vars, c.b);
                     addRes(((pA - pB).norm() - c.value) / lengthScale);
-                } else if (pointIndex.contains(c.a)) {
-                    const auto &lineEnt = candidate.entity(c.b);
-                    Eigen::Vector3d pA = getPoint(vars, c.a);
+                } else if (pointIndex.contains(c.a) || pointIndex.contains(c.b)) {
+                    QString ptId = pointIndex.contains(c.a) ? c.a : c.b;
+                    QString lineId = pointIndex.contains(c.a) ? c.b : c.a;
+                    const auto &lineEnt = candidate.entity(lineId);
+                    Eigen::Vector3d pA = getPoint(vars, ptId);
                     Eigen::Vector3d p1 = getPoint(vars, lineEnt.a);
                     Eigen::Vector3d p2 = getPoint(vars, lineEnt.b);
                     Eigen::Vector3d dir = p2 - p1;
@@ -219,6 +340,24 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
                         Eigen::Vector3d dUnit = dir / dirNorm;
                         Eigen::Vector3d w = pA - p1;
                         double perpDist = (w - (w.dot(dUnit)) * dUnit).norm();
+                        addRes((perpDist - c.value) / lengthScale);
+                    }
+                } else {
+                    const auto &l1 = candidate.entity(c.a);
+                    const auto &l2 = candidate.entity(c.b);
+                    Eigen::Vector3d p1 = getPoint(vars, l1.a);
+                    Eigen::Vector3d p2 = getPoint(vars, l1.b);
+                    Eigen::Vector3d q1 = getPoint(vars, l2.a);
+                    Eigen::Vector3d q2 = getPoint(vars, l2.b);
+                    Eigen::Vector3d d1 = p2 - p1;
+                    Eigen::Vector3d d2 = q2 - q1;
+                    double n1 = d1.norm(), n2 = d2.norm();
+                    if (n1 > 1e-12 && n2 > 1e-12) {
+                        addVec3((d1 / n1).cross(d2 / n2));
+                        Eigen::Vector3d mid = (p1 + p2) * 0.5;
+                        Eigen::Vector3d dUnit2 = d2 / n2;
+                        Eigen::Vector3d w = mid - q1;
+                        double perpDist = (w - (w.dot(dUnit2)) * dUnit2).norm();
                         addRes((perpDist - c.value) / lengthScale);
                     }
                 }
@@ -371,7 +510,6 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
                     }
                 }
             } else if (c.kind == "Tangent") {
-                // Line a and Arc b
                 const auto &entA = candidate.entity(c.a);
                 const auto &entB = candidate.entity(c.b);
                 const auto &lineEnt = entA.kind == "Line" ? entA : entB;
@@ -384,13 +522,18 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
                 Eigen::Vector3d A = getPoint(vars, arcEnt.a);
                 Eigen::Vector3d B = getPoint(vars, arcEnt.b);
 
-                // Check which endpoint is shared
-                Eigen::Vector3d touch = ((p1 - A).norm() < (p1 - B).norm()) ? A : B;
+                double d1A = (p1 - A).norm(), d1B = (p1 - B).norm();
+                double d2A = (p2 - A).norm(), d2B = (p2 - B).norm();
+                double minD = std::min({d1A, d1B, d2A, d2B});
+                Eigen::Vector3d touch = (minD == d1A || minD == d2A) ? A : B;
                 Eigen::Vector3d rad = touch - C;
                 double rNorm = rad.norm(), dNorm = dir.norm();
+                Eigen::Vector3d arcN = toEigen(arcEnt.normal).normalized();
                 if (rNorm > 1e-12 && dNorm > 1e-12) {
                     addRes((dir / dNorm).dot(rad / rNorm));
+                    addRes((dir / dNorm).dot(arcN));
                 } else {
+                    addRes(0.0);
                     addRes(0.0);
                 }
             }
@@ -440,6 +583,15 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
 
     int maxIterations = 80;
     for (int iter = 0; iter < maxIterations && !converged; ++iter) {
+        if (canceled && canceled()) {
+            result.valid = false;
+            result.status = "Canceled";
+            result.message = "Spatial solve canceled";
+            if (previous)
+                result.sketch = *previous;
+            return result;
+        }
+
         double currentNorm = R.norm();
         double maxRes = R.cwiseAbs().maxCoeff();
         if (maxRes < 1e-7) {
@@ -507,6 +659,11 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
             auto &ent = candidate.entity(pid);
             ent.point = {currentX[i * 3 + 0], currentX[i * 3 + 1], currentX[i * 3 + 2]};
         }
+        for (auto &c : candidate.constraints) {
+            if (!c.driving) {
+                c.value = measureSpatialDimension(candidate, c, resolve);
+            }
+        }
         result.sketch = candidate;
 
         // Check for redundant constraints
@@ -567,8 +724,8 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
 }
 
 QCborMap evaluateSpatial(const SpatialSketch &candidate, const SpatialSketch *previous,
-                         const PlaneResolver &resolve) {
-    auto res = solveSpatial(candidate, previous, resolve);
+                         const PlaneResolver &resolve, const CancelChecker &canceled) {
+    auto res = solveSpatial(candidate, previous, resolve, canceled);
     QCborMap map;
     map.insert(QStringLiteral("sketch"), res.sketch.map());
     map.insert(QStringLiteral("diagnostics"), res.diagnostic());

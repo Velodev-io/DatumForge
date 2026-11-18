@@ -3,6 +3,8 @@
 #include <BRepAlgoAPI_Section.hxx>
 #include <BRepBuilderAPI_MakeEdge.hxx>
 #include <BRepBuilderAPI_MakeWire.hxx>
+#include <BRepBuilderAPI_Transform.hxx>
+#include <BRepOffsetAPI_NormalProjection.hxx>
 #include <BRepPrimAPI_MakePrism.hxx>
 #include <BRepProj_Projection.hxx>
 #include <BRep_Builder.hxx>
@@ -384,50 +386,31 @@ std::vector<SupportCurve> evaluateSketchOnFaces(const model::DerivedCurve &c,
         check(!def.direction.has_value(), "InvalidInput",
               "NormalToFace mode forbids explicit direction reference");
         for (const auto &fRef : def.faces) {
-            TopoDS_Face face = TopoDS::Face(scene.topology(fRef));
+            TopoDS_Shape targetShape = scene.topology(fRef);
+            BRepOffsetAPI_NormalProjection proj(targetShape);
             for (const auto &sc : curves) {
-                if (sc.curve.IsNull())
-                    continue;
-                BRepBuilderAPI_MakeEdge makeEdge(sc.curve, sc.first, sc.last);
-                if (!makeEdge.IsDone())
-                    continue;
-                BRepBuilderAPI_MakeWire makeWire(makeEdge.Edge());
-                if (!makeWire.IsDone())
-                    continue;
+                if (!sc.curve.IsNull()) {
+                    BRepBuilderAPI_MakeEdge makeEdge(sc.curve, sc.first, sc.last);
+                    if (makeEdge.IsDone())
+                        proj.Add(makeEdge.Edge());
+                }
+            }
+            proj.SetLimit(Standard_True);
+            proj.Compute3d(Standard_True);
+            proj.Build();
 
-                // Estimate normal from center of face
-                gp_Pnt p0 = sc.curve->Value((sc.first + sc.last) * 0.5);
-                gp_Vec normal = scene.normalAt(fRef, p0);
-                if (normal.Magnitude() < 1e-6)
-                    normal = gp_Vec(0, 0, 1);
-                normal.Normalize();
-
-                double extent = 2000.0;
-                BRepPrimAPI_MakePrism prismPos(makeEdge.Edge(), normal * extent);
-                BRepPrimAPI_MakePrism prismNeg(makeEdge.Edge(), -normal * extent);
-
-                TopoDS_Compound compPrism;
-                b.MakeCompound(compPrism);
-                if (prismPos.IsDone())
-                    b.Add(compPrism, prismPos.Shape());
-                if (prismNeg.IsDone())
-                    b.Add(compPrism, prismNeg.Shape());
-
-                BRepAlgoAPI_Section sec(compPrism, face);
-                sec.Build();
-                if (sec.IsDone()) {
-                    for (TopExp_Explorer exp(sec.Shape(), TopAbs_EDGE); exp.More(); exp.Next()) {
-                        TopoDS_Edge edge = TopoDS::Edge(exp.Current());
-                        Standard_Real f, l;
-                        Handle(Geom_Curve) curve = BRep_Tool::Curve(edge, f, l);
-                        if (!curve.IsNull() && std::abs(l - f) > 1e-6) {
-                            BranchCandidate cand;
-                            cand.curve = new Geom_TrimmedCurve(curve, f, l);
-                            cand.first = f;
-                            cand.last = l;
-                            cand.startPt = curve->Value(f);
-                            candidates.push_back(cand);
-                        }
+            if (proj.IsDone()) {
+                for (TopExp_Explorer exp(proj.Projection(), TopAbs_EDGE); exp.More(); exp.Next()) {
+                    TopoDS_Edge edge = TopoDS::Edge(exp.Current());
+                    Standard_Real f, l;
+                    Handle(Geom_Curve) curve = BRep_Tool::Curve(edge, f, l);
+                    if (!curve.IsNull() && std::abs(l - f) > 1e-6) {
+                        BranchCandidate cand;
+                        cand.curve = new Geom_TrimmedCurve(curve, f, l);
+                        cand.first = f;
+                        cand.last = l;
+                        cand.startPt = curve->Value(f);
+                        candidates.push_back(cand);
                     }
                 }
             }

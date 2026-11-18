@@ -558,7 +558,10 @@ class Projects {
                 check(p.value("sketch").isMap(), "InvalidInput", "Spatial sketch map required");
                 auto spatialCandidate = sketch::SpatialSketch::parse(p.value("sketch").toMap());
                 control.checkpoint("Solving spatial sketch", 25);
-                auto solved = sketch::solveSpatial(spatialCandidate);
+                auto solved = sketch::solveSpatial(spatialCandidate, nullptr, {}, [&] {
+                    return control.canceled && control.canceled();
+                });
+                check(solved.status != "Canceled", "Canceled", "Spatial sketch preview canceled");
                 control.checkpoint("Evaluating spatial curves", 50);
                 auto curves = geometry::evaluateSpatialSketch(solved.sketch);
                 QCborArray displayCurves;
