@@ -1,6 +1,9 @@
 #include "Supports.hpp"
 #include "Convert.hpp"
+#include "SpatialCurve.hpp"
+#include "model/DerivedCurve.hpp"
 #include "sketch/Solver.hpp"
+#include "sketch/SpatialSolver.hpp"
 #include <Standard_Failure.hxx>
 namespace cad::geometry {
 using domain::check;
@@ -64,6 +67,22 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
     for (auto &c : d.conversions) {
         byConversion.insert(c.id, &c);
         admit(c.id);
+    }
+    auto parsedSpatial = sketch::parseSpatial(d.spatial_sketches);
+    QMap<QString, size_t> spatialIndex;
+    for (size_t i = 0; i < parsedSpatial.size(); ++i) {
+        spatialIndex.insert(parsedSpatial[i].id, i);
+        admit(parsedSpatial[i].id);
+        for (const auto &e : parsedSpatial[i].entities)
+            admit(e.id);
+        for (const auto &c : parsedSpatial[i].constraints)
+            admit(c.id);
+    }
+    auto parsedDerived = model::parseDerivedCurves(d.derived_curves);
+    QMap<QString, size_t> derivedIndex;
+    for (size_t i = 0; i < parsedDerived.size(); ++i) {
+        derivedIndex.insert(parsedDerived[i].id, i);
+        admit(parsedDerived[i].id);
     }
     for (auto &a : d.attachments)
         attachments.insert(a.sketch, &a);
@@ -176,6 +195,20 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
                     scene.sketches.insert(s.id, s);
                     base[sketchIndex.value(s.id)] = s;
                 }
+            } else if (spatialIndex.contains(id)) {
+                auto candidate = parsedSpatial[spatialIndex.value(id)];
+                auto solved = sketch::solveSpatial(
+                    candidate, nullptr,
+                    [&](const domain::GeometryReference &pref) { return scene.plane(pref); });
+                check(solved.valid, "SolveFailure",
+                      "Spatial sketch failed to solve: " + solved.message);
+                auto exactCurves = evaluateSpatialSketch(solved.sketch);
+                scene.spatialSketches.insert(id, solved.sketch);
+                scene.derived.insert(id, exactCurves);
+            } else if (derivedIndex.contains(id)) {
+                const auto &candidate = parsedDerived[derivedIndex.value(id)];
+                auto exactCurves = evaluateDerivedCurve(candidate, scene);
+                scene.derived.insert(id, exactCurves);
             } else {
                 check(byFeature.contains(id), "ReferenceMissing",
                       "Model history node is unavailable");

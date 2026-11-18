@@ -92,32 +92,32 @@ being extended so an older edit path cannot silently discard spatial data.
 
 ### CM7.b — Worker-only spatial solver and exact curves
 
-- [ ] Implement a separate Eigen spatial solver, preserving PlaneGCS for planar
+- [x] Implement a separate Eigen spatial solver, preserving PlaneGCS for planar
   sketches. Define variable scaling, convergence, rank/remaining freedom and
   redundant/conflicting constraint reporting. Bound iterations, variables and
   cancellation work. Reuse existing diagnostic conventions where applicable.
-- [ ] Verify independent geometric residuals and rank, including rigid-body
+- [x] Verify independent geometric residuals and rank, including rigid-body
   freedom, rotated planes, unit changes, nearly singular systems, inconsistent
   dimensions and failed dragging. Preserve the last accepted/valid state; a
   numerical optimizer returning success alone does not establish a valid sketch.
-- [ ] Implement exact worker curves for admitted spatial entities and both
+- [x] Implement exact worker curves for admitted spatial entities and both
   projection modes. Sketch-on-sketch must produce a spatial curve satisfying
   both source projections; it is not planar Convert Entities. Sketch-on-face
   must respect trimmed planar/curved faces and producing-stage dependencies.
-- [ ] Enumerate projection branches with deterministic semantic identities and
+- [x] Enumerate projection branches with deterministic semantic identities and
   source provenance. Return candidates for ambiguity; accept only the selected
   branch. Missing/split/merged branches require explicit repair, never nearest
   display segment or result-list index selection.
-- [ ] Implement ordered/reversible composite paths with continuity diagnostics,
+- [x] Implement ordered/reversible composite paths with continuity diagnostics,
   and exact editable helix/spiral definitions for the frozen parameter modes.
   Reject disconnected or ambiguous chains where a single path is required;
   preserve intentional corners. Validate pitch/radius/turns/orientation and
   degeneracies using each mode's contract, not blanket assumptions.
-- [ ] Extend worker read-only previews and typed curve/support inspection.
+- [x] Extend worker read-only previews and typed curve/support inspection.
   Tessellation is display output, not authoritative curve geometry. Coalesce
   previews to one running and one replaceable pending request; reject stale
   results and retain existing memory/message limits.
-- [ ] **Gate:** independent analytical geometry/solver checks and real-worker
+- [x] **Gate:** independent analytical geometry/solver checks and real-worker
   preview/cancellation tests pass. Isolated experiments stay under tests; no
   production fallback to sampled curves or frozen geometry to mask failures.
 

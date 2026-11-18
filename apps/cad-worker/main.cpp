@@ -157,7 +157,10 @@ class Worker : public QObject {
             failure(e, "ResourceLimit", "One computation owns the worker; wait or cancel it");
             return;
         }
-        if (e.command == "PreviewReference")
+        if (e.command == "PreviewReference" || e.command == "PreviewSketches" ||
+            e.command == "PreviewSketchEdit" || e.command == "PreviewSpatialSketch" ||
+            e.command == "PreviewModelSupports" || e.command == "PreviewFeatures" ||
+            e.command == "PreviewHistory")
             for (int i = queue.size() - 1; i >= 0; --i)
                 if (queue[i].command == e.command && queue[i].context == e.context) {
                     auto old = queue.takeAt(i);

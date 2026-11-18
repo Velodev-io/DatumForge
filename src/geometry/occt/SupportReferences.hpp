@@ -2,6 +2,7 @@
 #include "Part.hpp"
 #include "SketchCurve.hpp"
 #include "domain/GeometryReference.hpp"
+#include "sketch/SpatialSketch.hpp"
 #include <gp_Pnt.hxx>
 #include <gp_Vec.hxx>
 namespace cad::geometry {
@@ -27,6 +28,7 @@ class SupportReferences {
   public:
     QString document = "Self";
     QMap<QString, sketch::Sketch> sketches;
+    QMap<QString, sketch::SpatialSketch> spatialSketches;
     QMap<QString, sketch::Frame> planes;
     QMap<QString, SupportAxis> axes;
     QMap<QString, std::vector<SupportCurve>> derived;

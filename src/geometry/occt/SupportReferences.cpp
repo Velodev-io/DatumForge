@@ -1,4 +1,5 @@
 #include "SupportReferences.hpp"
+#include "SpatialCurve.hpp"
 #include <BRepAdaptor_Curve.hxx>
 #include <BRepAdaptor_Surface.hxx>
 #include <BRepClass_FaceClassifier.hxx>
@@ -154,9 +155,21 @@ SupportCurve SupportReferences::curve(const domain::GeometryReference &r) const 
         return edgeCurve(TopoDS::Edge(topology(r)), r.object + "/" + r.topology);
     if (derived.contains(r.object)) {
         auto values = derived.value(r.object);
+        if (!r.entity.isEmpty()) {
+            for (const auto &v : values) {
+                if (v.key == r.entity || v.key == r.object + "/" + r.entity)
+                    return v;
+            }
+        }
         domain::check(values.size() == 1 && !values[0].point, "ReferenceAmbiguous",
                       "Select one derived curve");
         return values[0];
+    }
+    if (spatialSketches.contains(r.object)) {
+        const auto &s = spatialSketches.value(r.object);
+        const auto &e = s.entity(r.entity);
+        domain::check(e.kind != "Point", "ReferenceMissing", "Curve member role changed");
+        return spatialEntityCurve(s, e);
     }
     domain::check(sketches.contains(r.object) && r.role == "Curve", "ReferenceMissing",
                   "Curve source is missing");
@@ -185,6 +198,20 @@ gp_Pnt SupportReferences::point(const domain::GeometryReference &r) const {
     if (r.role == "Vertex")
         return BRep_Tool::Pnt(TopoDS::Vertex(topology(r)));
     if (r.role == "Point") {
+        if (spatialSketches.contains(r.object)) {
+            const auto &s = spatialSketches.value(r.object);
+            const auto &e = s.entity(r.entity);
+            domain::check(e.kind == "Point", "ReferenceMissing", "Source point role changed");
+            return kernelPoint(e.point);
+        }
+        if (derived.contains(r.object)) {
+            auto values = derived.value(r.object);
+            for (const auto &v : values) {
+                if (v.point.has_value() &&
+                    (v.key == r.entity || v.key == r.object + "/" + r.entity))
+                    return *v.point;
+            }
+        }
         domain::check(sketches.contains(r.object), "ReferenceMissing", "Point source is missing");
         const auto &s = sketches.constFind(r.object).value();
         const auto &e = s.entity(r.entity);

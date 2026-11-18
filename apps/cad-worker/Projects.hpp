@@ -1,9 +1,11 @@
 #pragma once
 #include "evaluation/Plan.hpp"
 #include "geometry/occt/Part.hpp"
+#include "geometry/occt/SpatialCurve.hpp"
 #include "persistence/ProjectStore.hpp"
 #include "sketch/LineEditing.hpp"
 #include "sketch/Solver.hpp"
+#include "sketch/SpatialSolver.hpp"
 #include <QFile>
 #include <QFileInfo>
 #include <QStandardPaths>
@@ -67,6 +69,7 @@ class Projects {
                            "CollectObjects",
                            "SetSketches",
                            "PreviewSketches",
+                           "PreviewSpatialSketch",
                            "PreviewSketchEdit",
                            "PreviewModelSupports",
                            "SetModelSupports",
@@ -545,6 +548,31 @@ class Projects {
                 QCborMap reply;
                 reply.insert(QStringLiteral("sketch_preview"), candidate.value("sketches"));
                 reply.insert(QStringLiteral("sketch_diagnostics"), candidate.value("diagnostics"));
+                return reply;
+            }
+            if (e.command == "PreviewSpatialSketch") {
+                control.checkpoint("Preparing spatial sketch preview", 0);
+                wire::keys(p, {"sketch"});
+                check(e.revision == store->revision(), "StaleRevision",
+                      "Project changed before spatial sketch preview");
+                check(p.value("sketch").isMap(), "InvalidInput", "Spatial sketch map required");
+                auto spatialCandidate = sketch::SpatialSketch::parse(p.value("sketch").toMap());
+                control.checkpoint("Solving spatial sketch", 25);
+                auto solved = sketch::solveSpatial(spatialCandidate);
+                control.checkpoint("Evaluating spatial curves", 50);
+                auto curves = geometry::evaluateSpatialSketch(solved.sketch);
+                QCborArray displayCurves;
+                for (const auto &sc : curves) {
+                    QCborMap item;
+                    item.insert(QStringLiteral("id"), sc.key);
+                    item.insert(QStringLiteral("points"), geometry::tessellateSupportCurve(sc));
+                    displayCurves.append(item);
+                }
+                control.checkpoint("Spatial sketch preview ready", 100);
+                QCborMap reply;
+                reply.insert(QStringLiteral("spatial_sketch"), solved.sketch.map());
+                reply.insert(QStringLiteral("diagnostics"), solved.diagnostic());
+                reply.insert(QStringLiteral("display_curves"), displayCurves);
                 return reply;
             }
             QCborMap result;
