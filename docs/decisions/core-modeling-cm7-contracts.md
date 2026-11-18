@@ -28,18 +28,18 @@ Every spatial entity carries an immutable UUID `id`, boolean `construction`, and
 - **Point**: 3D Cartesian coordinates `(x, y, z)` in SI meters (`[-1000, 1000]`). Must not define endpoints or poles.
 - **Line**: references start point `a` and end point `b`. Requires `a != b` and both endpoints existing as `Point` entities.
 - **Arc**: circular arc in 3D space defined by center point `center`, endpoints `a` and `b`, positive radius in `(0, 1000]`, and plane unit normal vector `normal` (`||normal|| = 1`). Points `center`, `a`, `b` must all differ.
-- **Spline**: 3D B-spline / NURBS defined by 2 to 64 control poles (`poles`), integer degree `degree` in `[1, 7]` with `degree < poles.size()`, optional positive weights, and optional non-decreasing knot vector.
+- **Spline**: 3D B-spline / NURBS defined by 2 to 64 control poles (`poles`), integer degree `degree` in `[1, 7]` with `degree < poles.size()`, optional positive weights, and optional non-decreasing finite knot vector matching `poles.size() + degree + 1` with positive span.
 
 ### 3. Spatial Constraints and Relations (`cad::sketch::SpatialConstraint`)
-Constraints carry an immutable UUID `id`, typed `kind`, entity operands `a`, `b`, optional `third`, optional `plane` reference, `value`, `driving` flag, and `reversed` flag:
+Constraints carry an immutable UUID `id`, typed `kind`, entity operands `a`, `b`, optional `plane` reference, `value`, `driving` flag, and `reversed` flag (`third` is unused and must be empty):
 - **ParallelYZ**: forces a line to be parallel to the local YZ plane of a selected plane (local X component is zero). Requires Line entity `a` and `plane` reference (`Plane` or `Face`).
 - **ParallelZX**: forces a line to be parallel to the local ZX plane of a selected plane (local Y component is zero). Requires Line entity `a` and `plane` reference (`Plane` or `Face`).
 - **AlongZ**: forces a line to be normal to a selected plane (local X and Y components are zero). Requires Line entity `a` and `plane` reference (`Plane` or `Face`).
 - **AlongX / AlongY**: forces a line to be parallel to local X or local Y axis of the reference plane or global coordinate system.
 - **OnPlane**: constrains a point or curve to lie directly on a selected datum plane or planar face (signed point-to-plane distance equals zero). Requires entity `a` and `plane` reference (`Plane` or `Face`).
-- **Distance**: driving or reference spatial dimension between two points, a point and a plane, or line length. Value in `(0, 1000]` meters.
-- **Angle**: driving or reference spatial angular dimension between two lines or a line and a plane. Value in `(0, pi)` radians.
-- **Coincident, Perpendicular, Parallel, Tangent, EqualLength, Fixed**: 3D geometric relations between spatial entities.
+- **Distance**: driving or reference spatial dimension between two points, a point and a line, two lines, or an entity and a plane (entity `b` and `plane` are mutually exclusive). Value in `(0, 1000]` meters.
+- **Angle**: driving or reference spatial angular dimension between two lines or a line and a plane (entity `b` and `plane` are mutually exclusive). Value in `(0, pi)` radians.
+- **Coincident, Perpendicular, Parallel, Tangent, EqualLength, Fixed**: 3D geometric relations between spatial entities (`EqualLength`, `Parallel`, `Perpendicular` require Line entities; `Tangent` requires curve entities; `Fixed` requires a Point entity; relations do not accept plane references or values).
 
 ### 4. Active Drafting Plane Mode
 - The `SpatialSketch` schema includes an `active_plane` field representing the transient editor drafting orientation (`"XY"`, `"YZ"`, or `"ZX"`).
@@ -69,7 +69,7 @@ Carries an immutable UUID `id`, descriptive `name`, schema version 1, and `kind`
   - Deterministically right-handed: `cross(T, N) = B` with determinant +1.
 - **Singularity Handling**: If `||dP/du|| < 1e-12`, the frame is undefined. An explicit `InvalidInput` error is thrown; zero derivatives are never assigned arbitrary frames.
 - **Reversal Semantics**: When `reversed == true`, tangent is negated `T' = -T`, binormal is negated `B' = -B`, and normal `N' = N` is preserved. Right-handed orthonormal frame properties are strictly preserved.
-- **Corner Semantics**: At C0 tangent discontinuities (corners between composite segments or polylines), evaluating without specifying limit side or branch throws `InvalidInput` ("Ambiguous tangent at curve corner"). Corners are preserved and never silently smoothed.
+- **Corner Semantics**: At C0 tangent discontinuities (corners between composite segments or polylines), evaluating without specifying limit side or branch throws `InvalidInput` ("Ambiguous tangent at curve corner") via `CurveFrame::evaluateCorner`. Corners are preserved and never silently smoothed. Explicit limit sides (`"Left"` / `"Right"`) evaluate the canonical frame using the respective one-sided limit derivative.
 - **Closed Seam Semantics**: Closed periodic curves evaluate identically and continuously at parameters `u = 0.0` and `u = 1.0`.
 
 ### 7. Graph Integration and Security Gate

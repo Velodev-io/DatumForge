@@ -15,6 +15,9 @@ template <class F> void error(QString expected, F &&action) {
     } catch (const domain::Error &e) {
         code = e.code;
         message = QString::fromUtf8(e.what());
+    } catch (const std::runtime_error &e) {
+        code = QStringLiteral("InvalidInput");
+        message = QString::fromUtf8(e.what());
     }
     if (code != expected)
         throw std::runtime_error("Expected " + expected.toStdString() + ", got " +
@@ -157,6 +160,40 @@ void testSpatialEntities() {
     badSpline.poles = {p1, p2};
     badSpline.degree = 2; // degree must be < poles.size()
     error("InvalidInput", [&] { badSpline.validate(); });
+
+    // Spline knot count must equal poles.size() + degree + 1 (2 + 1 + 1 = 4)
+    badSpline.poles = {p1, p2};
+    badSpline.degree = 1;
+    badSpline.knots = {0.0, 1.0}; // Only 2 knots instead of 4
+    error("InvalidInput", [&] { badSpline.validate(); });
+
+    // Spline knot non-finite
+    badSpline.knots = {0.0, 0.0, std::numeric_limits<double>::quiet_NaN(), 1.0};
+    error("InvalidInput", [&] { badSpline.validate(); });
+
+    // Spline knot zero span
+    badSpline.knots = {0.0, 0.0, 0.0, 0.0};
+    error("InvalidInput", [&] { badSpline.validate(); });
+
+    // SpatialEntity parse rejects extraneous keys
+    QCborMap badPtMap;
+    badPtMap.insert(QStringLiteral("version"), 1);
+    badPtMap.insert(QStringLiteral("id"), newId());
+    badPtMap.insert(QStringLiteral("kind"), QStringLiteral("Point"));
+    badPtMap.insert(QStringLiteral("construction"), false);
+    badPtMap.insert(QStringLiteral("point"), QCborArray{0.0, 0.0, 0.0});
+    badPtMap.insert(QStringLiteral("radius"), 0.05); // Extraneous key for Point!
+    error("InvalidInput", [&] { sketch::SpatialEntity::parse(badPtMap); });
+
+    QCborMap badLineMap;
+    badLineMap.insert(QStringLiteral("version"), 1);
+    badLineMap.insert(QStringLiteral("id"), newId());
+    badLineMap.insert(QStringLiteral("kind"), QStringLiteral("Line"));
+    badLineMap.insert(QStringLiteral("construction"), false);
+    badLineMap.insert(QStringLiteral("a"), p1);
+    badLineMap.insert(QStringLiteral("b"), p2);
+    badLineMap.insert(QStringLiteral("center"), pCenter); // Extraneous key for Line!
+    error("InvalidInput", [&] { sketch::SpatialEntity::parse(badLineMap); });
 }
 
 void testSpatialConstraintsAndRelations() {
@@ -267,6 +304,109 @@ void testSpatialConstraintsAndRelations() {
 
     badC.value = std::numbers::pi + 0.1; // Exceeds pi
     error("InvalidInput", [&] { badC.validate(); });
+
+    // third operand rejection
+    badC = cDist;
+    badC.third = newId();
+    error("InvalidInput", [&] { badC.validate(); });
+
+    // Distance cannot specify both b entity and plane reference
+    badC = cDist;
+    badC.b = p2;
+    badC.plane = plRef;
+    error("InvalidInput", [&] { badC.validate(); });
+
+    // Angle cannot specify both b entity and plane reference
+    badC = cAngle;
+    badC.b = l2;
+    badC.plane = plRef;
+    error("InvalidInput", [&] { badC.validate(); });
+
+    // Geometric relations reject plane reference
+    badC = cPerp;
+    badC.plane = plRef;
+    error("InvalidInput", [&] { badC.validate(); });
+
+    // Geometric relations reject non-zero value
+    badC = cPerp;
+    badC.plane = std::nullopt;
+    badC.value = 1.0;
+    error("InvalidInput", [&] { badC.validate(); });
+
+    // Constraint entity kind mismatch in SpatialSketch::validate
+    // EqualLength requires Lines, not Points
+    sketch::SpatialConstraint badEqualLength;
+    badEqualLength.kind = QStringLiteral("EqualLength");
+    badEqualLength.a = p1;
+    badEqualLength.b = p2;
+    error("InvalidInput", [&] {
+        sketch::SpatialSketch testS = s;
+        testS.constraints = {badEqualLength};
+        testS.validate();
+    });
+
+    // Parallel requires Lines, not Points
+    sketch::SpatialConstraint badParallel;
+    badParallel.kind = QStringLiteral("Parallel");
+    badParallel.a = p1;
+    badParallel.b = p2;
+    error("InvalidInput", [&] {
+        sketch::SpatialSketch testS = s;
+        testS.constraints = {badParallel};
+        testS.validate();
+    });
+
+    // Perpendicular requires Lines, not Points
+    sketch::SpatialConstraint badPerp;
+    badPerp.kind = QStringLiteral("Perpendicular");
+    badPerp.a = p1;
+    badPerp.b = p2;
+    error("InvalidInput", [&] {
+        sketch::SpatialSketch testS = s;
+        testS.constraints = {badPerp};
+        testS.validate();
+    });
+
+    // Tangent requires curves, not two Points
+    sketch::SpatialConstraint badTangent;
+    badTangent.kind = QStringLiteral("Tangent");
+    badTangent.a = p1;
+    badTangent.b = p2;
+    error("InvalidInput", [&] {
+        sketch::SpatialSketch testS = s;
+        testS.constraints = {badTangent};
+        testS.validate();
+    });
+
+    // Angle requires Lines, not Points
+    sketch::SpatialConstraint badAngle;
+    badAngle.kind = QStringLiteral("Angle");
+    badAngle.a = p1;
+    badAngle.b = p2;
+    badAngle.value = 1.0;
+    error("InvalidInput", [&] {
+        sketch::SpatialSketch testS = s;
+        testS.constraints = {badAngle};
+        testS.validate();
+    });
+
+    // SpatialConstraint parse rejects extraneous keys
+    QCborMap badCMap;
+    badCMap.insert(QStringLiteral("version"), 1);
+    badCMap.insert(QStringLiteral("id"), newId());
+    badCMap.insert(QStringLiteral("kind"), QStringLiteral("ParallelYZ"));
+    badCMap.insert(QStringLiteral("a"), l1);
+    badCMap.insert(QStringLiteral("plane"), plRef.map());
+    badCMap.insert(QStringLiteral("value"), 50.0); // Extraneous key for ParallelYZ!
+    error("InvalidInput", [&] { sketch::SpatialConstraint::parse(badCMap); });
+
+    QCborMap badFixedMap;
+    badFixedMap.insert(QStringLiteral("version"), 1);
+    badFixedMap.insert(QStringLiteral("id"), newId());
+    badFixedMap.insert(QStringLiteral("kind"), QStringLiteral("Fixed"));
+    badFixedMap.insert(QStringLiteral("a"), p1);
+    badFixedMap.insert(QStringLiteral("b"), p2); // Extraneous key for Fixed!
+    error("InvalidInput", [&] { sketch::SpatialConstraint::parse(badFixedMap); });
 }
 
 void testActivePlaneSwitching() {
@@ -415,6 +555,11 @@ void testDerivedCurves() {
     CHECK(sofDecoded.sketchOnFaces->mode == "NormalToFace");
     CHECK(sofDecoded.sketchOnFaces->faces.size() == 1);
 
+    // Duplicate target face rejected
+    model::DerivedCurve dupFacesSOF = curveSOF;
+    dupFacesSOF.sketchOnFaces->faces = {faceRef(bodyId), faceRef(bodyId)};
+    error("InvalidInput", [&] { dupFacesSOF.validate(); });
+
     // AlongVector mode requires direction
     sof.mode = QStringLiteral("AlongVector");
     curveSOF.sketchOnFaces = sof;
@@ -483,6 +628,23 @@ void testDerivedCurves() {
     curveHelix.helixSpiral = helix;
     curveHelix.validate();
     CHECK(curveHelix.map().value("definition").toMap().value("mode").toString() == "Spiral");
+
+    // HelixSpiral parse rejects extraneous mode keys
+    QCborMap badSpiralMap;
+    badSpiralMap.insert(QStringLiteral("version"), 1);
+    badSpiralMap.insert(QStringLiteral("mode"), QStringLiteral("Spiral"));
+    badSpiralMap.insert(QStringLiteral("axis"), axisRef(bodyId).map());
+    badSpiralMap.insert(QStringLiteral("radius"), 0.025);
+    badSpiralMap.insert(QStringLiteral("start_angle"), 0.0);
+    badSpiralMap.insert(QStringLiteral("clockwise"), true);
+    badSpiralMap.insert(QStringLiteral("pitch"), 0.010);
+    badSpiralMap.insert(QStringLiteral("revolutions"), 5.0);
+    badSpiralMap.insert(QStringLiteral("height"), 0.05); // Forbidden for Spiral!
+    error("InvalidInput", [&] { model::HelixSpiralDefinition::parse(badSpiralMap); });
+
+    QCborMap badPitchRevMap = badSpiralMap;
+    badPitchRevMap.insert(QStringLiteral("mode"), QStringLiteral("PitchAndRevolution"));
+    error("InvalidInput", [&] { model::HelixSpiralDefinition::parse(badPitchRevMap); });
 }
 
 void testCurveFrameEvaluation() {
@@ -528,9 +690,69 @@ void testCurveFrameEvaluation() {
     near(sketch::dot(frameRev.tangent, frameRev.normal), 0.0);
     near(sketch::norm(sketch::cross(frameRev.tangent, frameRev.normal)), 1.0);
 
-    // 4. Zero derivative throws InvalidInput
+    // 4. Inclined 3D vector evaluation and reversal
+    sketch::Vec3 tgt3D{3.0, 4.0, 12.0}; // norm = 13.0
+    auto frame3D = model::CurveFrame::evaluate(pt, tgt3D);
+    near(frame3D.tangent[0], 3.0 / 13.0);
+    near(frame3D.tangent[1], 4.0 / 13.0);
+    near(frame3D.tangent[2], 12.0 / 13.0);
+    near(sketch::dot(frame3D.tangent, frame3D.normal), 0.0);
+    near(sketch::dot(frame3D.normal, frame3D.binormal), 0.0);
+    near(sketch::dot(frame3D.binormal, frame3D.tangent), 0.0);
+    near(sketch::norm(frame3D.tangent), 1.0);
+    near(sketch::norm(frame3D.normal), 1.0);
+    near(sketch::norm(frame3D.binormal), 1.0);
+    auto crossBN = sketch::cross(frame3D.tangent, frame3D.normal);
+    near(crossBN[0], frame3D.binormal[0]);
+    near(crossBN[1], frame3D.binormal[1]);
+    near(crossBN[2], frame3D.binormal[2]);
+
+    auto frame3DRev = model::CurveFrame::evaluate(pt, tgt3D, true);
+    near(frame3DRev.tangent[0], -frame3D.tangent[0]);
+    near(frame3DRev.tangent[1], -frame3D.tangent[1]);
+    near(frame3DRev.tangent[2], -frame3D.tangent[2]);
+    near(frame3DRev.normal[0], frame3D.normal[0]);
+    near(frame3DRev.normal[1], frame3D.normal[1]);
+    near(frame3DRev.normal[2], frame3D.normal[2]);
+    near(frame3DRev.binormal[0], -frame3D.binormal[0]);
+    near(frame3DRev.binormal[1], -frame3D.binormal[1]);
+    near(frame3DRev.binormal[2], -frame3D.binormal[2]);
+
+    // 5. Zero derivative throws InvalidInput
     sketch::Vec3 tgtZero{0.0, 0.0, 0.0};
     error("InvalidInput", [&] { model::CurveFrame::evaluate(pt, tgtZero); });
+
+    // Non-finite coordinates throw InvalidInput
+    sketch::Vec3 ptNaN{std::numeric_limits<double>::quiet_NaN(), 0.0, 0.0};
+    error("InvalidInput", [&] { model::CurveFrame::evaluate(ptNaN, tgtX); });
+
+    sketch::Vec3 tgtInf{1.0, 0.0, std::numeric_limits<double>::infinity()};
+    error("InvalidInput", [&] { model::CurveFrame::evaluate(pt, tgtInf); });
+
+    // Zero preferred up vector throws InvalidInput
+    error("InvalidInput",
+          [&] { model::CurveFrame::evaluate(pt, tgtX, false, sketch::Vec3{0, 0, 0}); });
+
+    // 6. Corner evaluation semantics
+    sketch::Vec3 tgtMinus{1.0, 0.0, 0.0};
+    sketch::Vec3 tgtPlus{0.0, 1.0, 0.0};
+
+    // Corner evaluation without limit side throws "Ambiguous tangent at curve corner"
+    error("InvalidInput", [&] { model::CurveFrame::evaluateCorner(pt, tgtMinus, tgtPlus, ""); });
+
+    // Invalid limit side throws InvalidInput
+    error("InvalidInput",
+          [&] { model::CurveFrame::evaluateCorner(pt, tgtMinus, tgtPlus, "Center"); });
+
+    // Limit side "Left" evaluates using tgtMinus
+    auto cornerLeft = model::CurveFrame::evaluateCorner(pt, tgtMinus, tgtPlus, "Left");
+    near(cornerLeft.tangent[0], 1.0);
+    near(cornerLeft.tangent[1], 0.0);
+
+    // Limit side "Right" evaluates using tgtPlus
+    auto cornerRight = model::CurveFrame::evaluateCorner(pt, tgtMinus, tgtPlus, "Right");
+    near(cornerRight.tangent[0], 0.0);
+    near(cornerRight.tangent[1], 1.0);
 }
 
 void testGraphIntegrationAndGate() {

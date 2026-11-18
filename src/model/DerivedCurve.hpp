@@ -65,7 +65,7 @@ struct HelixSpiralDefinition {
     std::optional<domain::GeometryReference> center;
     double radius = 0.01;
     double pitch = 0.005;
-    double height = 0.05;
+    double height = 0.0;
     double revolutions = 5.0;
     double taperAngle = 0.0;
     double startAngle = 0.0;
@@ -84,6 +84,10 @@ struct CurveFrame {
 
     static CurveFrame evaluate(sketch::Vec3 point, sketch::Vec3 tangent, bool reversed = false,
                                std::optional<sketch::Vec3> preferredUp = std::nullopt);
+    static CurveFrame evaluateCorner(sketch::Vec3 point, sketch::Vec3 tangentMinus,
+                                     sketch::Vec3 tangentPlus, const QString &limitSide = QString(),
+                                     bool reversed = false,
+                                     std::optional<sketch::Vec3> preferredUp = std::nullopt);
 };
 
 struct DerivedCurve {

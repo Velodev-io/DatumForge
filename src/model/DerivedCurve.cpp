@@ -97,9 +97,13 @@ void SketchOnFacesDefinition::validate() const {
           "Source sketch reference role must be Object or Curve");
     check(faces.size() >= 1 && faces.size() <= 32, "ResourceLimit",
           "Sketch-on-faces requires 1 to 32 target faces");
+    QSet<QString> seenFaces;
     for (const auto &f : faces) {
         f.validate();
         check(f.role == "Face", "InvalidInput", "Target face reference must have role Face");
+        QString key = f.object + ":" + f.topology;
+        check(!seenFaces.contains(key), "InvalidInput", "Duplicate target face reference");
+        seenFaces.insert(key);
     }
     check(mode == "AlongVector" || mode == "NormalToFace", "InvalidInput",
           "Projection mode must be AlongVector or NormalToFace");
@@ -290,15 +294,36 @@ QCborMap HelixSpiralDefinition::map() const {
 }
 
 HelixSpiralDefinition HelixSpiralDefinition::parse(const QCborMap &m) {
-    QSet<QString> keys{"version", "mode", "axis", "radius", "start_angle", "clockwise"};
-    for (auto k : {"center", "pitch", "height", "revolutions", "taper_angle"})
-        if (m.contains(QString::fromLatin1(k)))
-            keys.insert(QString::fromLatin1(k));
-    wire::keys(m, keys);
+    check(m.contains(QStringLiteral("version")), "IncompatibleSchema", "Version required");
     check(wire::integer(m, "version") == 1, "IncompatibleSchema",
           "Unsupported helix/spiral schema version");
+    check(m.contains(QStringLiteral("mode")), "InvalidInput", "Mode required");
+    QString mode = wire::text(m, "mode");
+    QSet<QString> expectedKeys{"version", "mode", "axis", "radius", "start_angle", "clockwise"};
+    if (m.contains(QStringLiteral("center")))
+        expectedKeys.insert(QStringLiteral("center"));
+    if (mode == "PitchAndRevolution") {
+        expectedKeys.insert(QStringLiteral("pitch"));
+        expectedKeys.insert(QStringLiteral("revolutions"));
+        if (m.contains(QStringLiteral("taper_angle")))
+            expectedKeys.insert(QStringLiteral("taper_angle"));
+    } else if (mode == "HeightAndRevolution") {
+        expectedKeys.insert(QStringLiteral("height"));
+        expectedKeys.insert(QStringLiteral("revolutions"));
+        if (m.contains(QStringLiteral("taper_angle")))
+            expectedKeys.insert(QStringLiteral("taper_angle"));
+    } else if (mode == "HeightAndPitch") {
+        expectedKeys.insert(QStringLiteral("height"));
+        expectedKeys.insert(QStringLiteral("pitch"));
+        if (m.contains(QStringLiteral("taper_angle")))
+            expectedKeys.insert(QStringLiteral("taper_angle"));
+    } else if (mode == "Spiral") {
+        expectedKeys.insert(QStringLiteral("pitch"));
+        expectedKeys.insert(QStringLiteral("revolutions"));
+    }
+    wire::keys(m, expectedKeys);
     HelixSpiralDefinition d;
-    d.mode = wire::text(m, "mode");
+    d.mode = mode;
     d.axis = domain::GeometryReference::parse(m.value("axis").toMap());
     if (m.contains(QStringLiteral("center")))
         d.center = domain::GeometryReference::parse(m.value("center").toMap());
@@ -321,6 +346,11 @@ HelixSpiralDefinition HelixSpiralDefinition::parse(const QCborMap &m) {
 
 CurveFrame CurveFrame::evaluate(sketch::Vec3 pt, sketch::Vec3 tgt, bool reversed,
                                 std::optional<sketch::Vec3> preferredUp) {
+    check(std::isfinite(pt[0]) && std::isfinite(pt[1]) && std::isfinite(pt[2]), "InvalidInput",
+          "Curve evaluation point coordinates must be finite");
+    check(std::isfinite(tgt[0]) && std::isfinite(tgt[1]) && std::isfinite(tgt[2]), "InvalidInput",
+          "Curve evaluation tangent coordinates must be finite");
+
     double tNorm = sketch::norm(tgt);
     check(tNorm >= 1e-12, "InvalidInput", "Zero derivative at curve evaluation parameter");
 
@@ -335,6 +365,11 @@ CurveFrame CurveFrame::evaluate(sketch::Vec3 pt, sketch::Vec3 tgt, bool reversed
     }
 
     if (preferredUp.has_value()) {
+        check(std::isfinite((*preferredUp)[0]) && std::isfinite((*preferredUp)[1]) &&
+                  std::isfinite((*preferredUp)[2]),
+              "InvalidInput", "Preferred up-vector coordinates must be finite");
+        check(sketch::norm(*preferredUp) > 1e-14, "InvalidInput",
+              "Preferred up-vector cannot be zero");
         sketch::Vec3 pUp = *preferredUp;
         double proj = sketch::dot(T, pUp);
         sketch::Vec3 inPlane{pUp[0] - proj * T[0], pUp[1] - proj * T[1], pUp[2] - proj * T[2]};
@@ -349,6 +384,15 @@ CurveFrame CurveFrame::evaluate(sketch::Vec3 pt, sketch::Vec3 tgt, bool reversed
     sketch::Vec3 B = sketch::cross(T, N);
 
     return {pt, T, N, B};
+}
+
+CurveFrame CurveFrame::evaluateCorner(sketch::Vec3 pt, sketch::Vec3 tgtMinus, sketch::Vec3 tgtPlus,
+                                      const QString &limitSide, bool reversed,
+                                      std::optional<sketch::Vec3> preferredUp) {
+    check(limitSide == "Left" || limitSide == "Right", "InvalidInput",
+          "Ambiguous tangent at curve corner");
+    sketch::Vec3 tgt = (limitSide == "Left") ? tgtMinus : tgtPlus;
+    return evaluate(pt, tgt, reversed, preferredUp);
 }
 
 void DerivedCurve::validate() const {

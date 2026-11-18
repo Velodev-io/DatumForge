@@ -68,6 +68,8 @@ void SpatialEntity::validate() const {
               "Arc endpoints and center must all differ");
         check(std::isfinite(radius) && radius > 0 && radius <= 1000, "InvalidInput",
               "Arc radius must be positive and bounded");
+        check(std::isfinite(normal[0]) && std::isfinite(normal[1]) && std::isfinite(normal[2]),
+              "InvalidInput", "Arc normal coordinates must be finite");
         check(std::abs(norm(normal) - 1.0) < 1e-4, "InvalidInput",
               "Arc normal must be a unit vector");
         check(poles.isEmpty(), "InvalidInput", "Arc entity must not define poles");
@@ -84,12 +86,19 @@ void SpatialEntity::validate() const {
             check(weights.size() == size_t(poles.size()), "InvalidInput",
                   "Spline weights count must match poles count");
             for (double w : weights)
-                check(std::isfinite(w) && w > 0, "InvalidInput", "Spline weights must be positive");
+                check(std::isfinite(w) && w > 0 && w <= 1e6, "InvalidInput",
+                      "Spline weights must be positive and bounded");
         }
         if (!knots.empty()) {
+            check(knots.size() == size_t(poles.size() + degree + 1), "InvalidInput",
+                  "Spline knot vector size must equal poles count + degree + 1");
+            for (double k : knots)
+                check(std::isfinite(k), "InvalidInput", "Spline knots must be finite");
             for (size_t i = 1; i < knots.size(); ++i)
                 check(knots[i] >= knots[i - 1], "InvalidInput",
                       "Spline knots must be non-decreasing");
+            check(knots.back() > knots.front(), "InvalidInput",
+                  "Spline knot vector must have positive span");
         }
     }
 }
@@ -135,21 +144,37 @@ QCborMap SpatialEntity::map() const {
 }
 
 SpatialEntity SpatialEntity::parse(const QCborMap &m) {
-    QSet<QString> keys{"version", "id", "kind", "construction"};
-    for (auto k :
-         {"point", "a", "b", "center", "radius", "normal", "poles", "degree", "weights", "knots"})
-        if (m.contains(QString::fromLatin1(k)))
-            keys.insert(QString::fromLatin1(k));
-    wire::keys(m, keys);
+    check(m.contains(QStringLiteral("version")), "IncompatibleSchema", "Version required");
     check(wire::integer(m, "version") == 1, "IncompatibleSchema",
           "Unsupported spatial entity schema version");
+    check(m.contains(QStringLiteral("kind")), "InvalidInput", "Kind required");
+    QString kind = wire::text(m, "kind");
+    QSet<QString> expectedKeys{"version", "id", "kind", "construction"};
+    if (kind == "Point") {
+        expectedKeys.insert(QStringLiteral("point"));
+    } else if (kind == "Line") {
+        expectedKeys.insert(QStringLiteral("a"));
+        expectedKeys.insert(QStringLiteral("b"));
+    } else if (kind == "Arc") {
+        expectedKeys.insert(QStringLiteral("center"));
+        expectedKeys.insert(QStringLiteral("a"));
+        expectedKeys.insert(QStringLiteral("b"));
+        expectedKeys.insert(QStringLiteral("radius"));
+        expectedKeys.insert(QStringLiteral("normal"));
+    } else if (kind == "Spline") {
+        expectedKeys.insert(QStringLiteral("poles"));
+        expectedKeys.insert(QStringLiteral("degree"));
+        if (m.contains(QStringLiteral("weights")))
+            expectedKeys.insert(QStringLiteral("weights"));
+        if (m.contains(QStringLiteral("knots")))
+            expectedKeys.insert(QStringLiteral("knots"));
+    }
+    wire::keys(m, expectedKeys);
     SpatialEntity e;
     e.id = wire::text(m, "id");
-    e.kind = wire::text(m, "kind");
+    e.kind = kind;
     e.construction = boolean(m, "construction");
     if (e.kind == "Point") {
-        check(m.contains(QStringLiteral("point")), "InvalidInput",
-              "Point entity requires point coordinates");
         e.point = parseVec3(m.value("point").toArray());
     } else if (e.kind == "Line") {
         e.a = wire::text(m, "a");
@@ -159,10 +184,8 @@ SpatialEntity SpatialEntity::parse(const QCborMap &m) {
         e.a = wire::text(m, "a");
         e.b = wire::text(m, "b");
         e.radius = number(m, "radius", 1e-6, 1000);
-        check(m.contains(QStringLiteral("normal")), "InvalidInput", "Arc entity requires normal");
         e.normal = parseVec3(m.value("normal").toArray());
     } else if (e.kind == "Spline") {
-        check(m.contains(QStringLiteral("poles")), "InvalidInput", "Spline requires poles");
         auto pArr = m.value("poles").toArray();
         for (const auto &p : pArr)
             e.poles.append(p.toString());
@@ -190,6 +213,7 @@ void SpatialConstraint::validate() const {
               .contains(kind),
           "InvalidInput", "Invalid spatial constraint kind: " + kind);
     domain::id(a);
+    check(third.isEmpty(), "InvalidInput", "Spatial constraints do not use a third operand");
     if (plane.has_value()) {
         plane->validate();
         check(plane->role == "Plane" || plane->role == "Face", "InvalidInput",
@@ -200,31 +224,53 @@ void SpatialConstraint::validate() const {
               "Plane-relative direction constraint operates on a single line");
         check(plane.has_value(), "InvalidInput",
               "Plane-relative direction constraint requires a plane reference");
+        check(value == 0 && driving, "InvalidInput",
+              "Plane-relative direction constraint does not accept a value");
+        check(!reversed, "InvalidInput", "Plane-relative direction constraint cannot be reversed");
     } else if (kind == "OnPlane") {
         check(b.isEmpty(), "InvalidInput", "OnPlane constraint operates on a single entity");
         check(plane.has_value(), "InvalidInput", "OnPlane constraint requires a plane reference");
+        check(value == 0 && driving, "InvalidInput", "OnPlane constraint does not accept a value");
+        check(!reversed, "InvalidInput", "OnPlane constraint cannot be reversed");
     } else if (kind == "Distance") {
         check(!b.isEmpty() || plane.has_value(), "InvalidInput",
               "Distance requires second entity or plane reference");
-        if (!b.isEmpty())
+        check(!(!b.isEmpty() && plane.has_value()), "InvalidInput",
+              "Distance cannot specify both a second entity and a plane reference");
+        if (!b.isEmpty()) {
             domain::id(b);
+            check(a != b, "InvalidInput", "Distance entities must differ");
+        }
         check(std::isfinite(value) && value > 0 && value <= 1000, "InvalidInput",
               "Distance value must be positive and bounded");
     } else if (kind == "Angle") {
         check(!b.isEmpty() || plane.has_value(), "InvalidInput",
               "Angle requires second entity or plane reference");
-        if (!b.isEmpty())
+        check(!(!b.isEmpty() && plane.has_value()), "InvalidInput",
+              "Angle cannot specify both a second entity and a plane reference");
+        if (!b.isEmpty()) {
             domain::id(b);
+            check(a != b, "InvalidInput", "Angle entities must differ");
+        }
         check(std::isfinite(value) && value > 0 && value < std::numbers::pi, "InvalidInput",
               "Angle value must be in (0, pi)");
     } else if (kind == "Fixed") {
         check(b.isEmpty() && !plane.has_value(), "InvalidInput",
               "Fixed constraint operates on a single point");
+        check(value == 0 && driving, "InvalidInput", "Fixed constraint does not accept a value");
+        check(!reversed, "InvalidInput", "Fixed constraint cannot be reversed");
     } else if (kind == "AlongX" || kind == "AlongY") {
         check(b.isEmpty(), "InvalidInput", "Along axis constraint operates on a single line");
+        check(value == 0 && driving, "InvalidInput",
+              "Along axis constraint does not accept a value");
+        check(!reversed, "InvalidInput", "Along axis constraint cannot be reversed");
     } else {
         domain::id(b);
         check(a != b, "InvalidInput", "Constraint entities must differ");
+        check(!plane.has_value(), "InvalidInput",
+              "Geometric relation does not accept a plane reference");
+        check(value == 0 && driving, "InvalidInput", "Geometric relation does not accept a value");
+        check(!reversed, "InvalidInput", "Geometric relation cannot be reversed");
     }
 }
 
@@ -237,8 +283,6 @@ QCborMap SpatialConstraint::map() const {
     m.insert(QStringLiteral("a"), a);
     if (!b.isEmpty())
         m.insert(QStringLiteral("b"), b);
-    if (!third.isEmpty())
-        m.insert(QStringLiteral("third"), third);
     if (plane.has_value())
         m.insert(QStringLiteral("plane"), plane->map());
     if (kind == "Distance" || kind == "Angle") {
@@ -251,21 +295,40 @@ QCborMap SpatialConstraint::map() const {
 }
 
 SpatialConstraint SpatialConstraint::parse(const QCborMap &m) {
-    QSet<QString> keys{"version", "id", "kind", "a"};
-    for (auto k : {"b", "third", "plane", "value", "driving", "reversed"})
-        if (m.contains(QString::fromLatin1(k)))
-            keys.insert(QString::fromLatin1(k));
-    wire::keys(m, keys);
+    check(m.contains(QStringLiteral("version")), "IncompatibleSchema", "Version required");
     check(wire::integer(m, "version") == 1, "IncompatibleSchema",
           "Unsupported spatial constraint schema version");
+    check(m.contains(QStringLiteral("kind")), "InvalidInput", "Kind required");
+    QString kind = wire::text(m, "kind");
+    QSet<QString> expectedKeys{"version", "id", "kind", "a"};
+    if (kind == "Distance" || kind == "Angle") {
+        expectedKeys.insert(QStringLiteral("value"));
+        expectedKeys.insert(QStringLiteral("driving"));
+        if (m.contains(QStringLiteral("b")))
+            expectedKeys.insert(QStringLiteral("b"));
+        if (m.contains(QStringLiteral("plane")))
+            expectedKeys.insert(QStringLiteral("plane"));
+        if (m.contains(QStringLiteral("reversed")))
+            expectedKeys.insert(QStringLiteral("reversed"));
+    } else if (kind == "ParallelYZ" || kind == "ParallelZX" || kind == "AlongZ" ||
+               kind == "OnPlane") {
+        expectedKeys.insert(QStringLiteral("plane"));
+    } else if (kind == "AlongX" || kind == "AlongY") {
+        if (m.contains(QStringLiteral("plane")))
+            expectedKeys.insert(QStringLiteral("plane"));
+    } else if (kind == "Fixed") {
+        // no additional keys
+    } else {
+        // Coincident, Perpendicular, Parallel, Tangent, EqualLength
+        expectedKeys.insert(QStringLiteral("b"));
+    }
+    wire::keys(m, expectedKeys);
     SpatialConstraint c;
     c.id = wire::text(m, "id");
-    c.kind = wire::text(m, "kind");
+    c.kind = kind;
     c.a = wire::text(m, "a");
     if (m.contains(QStringLiteral("b")))
         c.b = wire::text(m, "b");
-    if (m.contains(QStringLiteral("third")))
-        c.third = wire::text(m, "third");
     if (m.contains(QStringLiteral("plane")))
         c.plane = domain::GeometryReference::parse(m.value("plane").toMap());
     if (m.contains(QStringLiteral("value"))) {
@@ -333,6 +396,19 @@ void SpatialSketch::validate() const {
         } else if (c.kind == "Fixed") {
             check(entityKinds.value(c.a) == "Point", "InvalidInput",
                   "Fixed constraint requires Point entity");
+        } else if (c.kind == "EqualLength" || c.kind == "Parallel" || c.kind == "Perpendicular") {
+            check(entityKinds.value(c.a) == "Line" && entityKinds.value(c.b) == "Line",
+                  "InvalidInput", c.kind + " constraint requires Line entities");
+        } else if (c.kind == "Tangent") {
+            check(entityKinds.value(c.a) != "Point" && entityKinds.value(c.b) != "Point",
+                  "InvalidInput", "Tangent constraint requires curve entities");
+        } else if (c.kind == "Angle") {
+            check(entityKinds.value(c.a) == "Line", "InvalidInput",
+                  "Angle constraint requires Line entity for operand a");
+            if (!c.b.isEmpty()) {
+                check(entityKinds.value(c.b) == "Line", "InvalidInput",
+                      "Angle constraint between entities requires Line entities");
+            }
         }
     }
 }
