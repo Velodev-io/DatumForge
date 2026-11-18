@@ -265,18 +265,35 @@ SupportAxis SupportReferences::axis(const domain::GeometryReference &r) const {
 QCborMap SupportReferences::inspect(const domain::GeometryReference &r, bool replacements) const {
     scope(r);
     if (r.role != "Face" && r.role != "Edge" && r.role != "Vertex") {
+        if (r.role == "Axis") {
+            bool direct = axes.contains(r.object);
+            QCborArray candidates;
+            for (auto it = axes.cbegin(); it != axes.cend(); ++it) {
+                domain::GeometryReference ref;
+                ref.object = it.key();
+                ref.role = QStringLiteral("Axis");
+                candidates.append(ref.map());
+            }
+            return sketch::fields({{"state", direct ? "Direct" : "Missing"},
+                                   {"candidates", direct ? QCborArray{r.object} : QCborArray{}},
+                                   {"reference", r.map()},
+                                   {"replacements", candidates},
+                                   {"descriptions", QCborArray{}}});
+        }
         if (r.role == "Plane") {
             bool direct = planes.contains(r.object) || sketches.contains(r.object);
             QCborArray candidates;
             for (auto it = planes.cbegin(); it != planes.cend(); ++it) {
-                candidates.append(domain::GeometryReference::parse(
-                                      sketch::fields({{"object", it.key()}, {"role", "Plane"}}))
-                                      .map());
+                domain::GeometryReference ref;
+                ref.object = it.key();
+                ref.role = QStringLiteral("Plane");
+                candidates.append(ref.map());
             }
             for (auto it = sketches.cbegin(); it != sketches.cend(); ++it) {
-                candidates.append(domain::GeometryReference::parse(
-                                      sketch::fields({{"object", it.key()}, {"role", "Plane"}}))
-                                      .map());
+                domain::GeometryReference ref;
+                ref.object = it.key();
+                ref.role = QStringLiteral("Plane");
+                candidates.append(ref.map());
             }
             return sketch::fields({{"state", direct ? "Direct" : "Missing"},
                                    {"candidates", direct ? QCborArray{r.object} : QCborArray{}},
@@ -311,21 +328,38 @@ QCborMap SupportReferences::inspect(const domain::GeometryReference &r, bool rep
             QCborArray candidates;
             for (auto it = derived.cbegin(); it != derived.cend(); ++it) {
                 for (const auto &sc : it.value()) {
-                    auto m = sketch::fields(
-                        {{"object", it.key()}, {"role", "Curve"}, {"entity", sc.key}});
+                    domain::GeometryReference ref;
+                    ref.object = it.key();
+                    ref.role = QStringLiteral("Curve");
+                    ref.entity = sc.key;
                     if (!r.endpoint.isEmpty())
-                        m.insert(QStringLiteral("endpoint"), r.endpoint);
-                    candidates.append(domain::GeometryReference::parse(m).map());
+                        ref.endpoint = r.endpoint;
+                    candidates.append(ref.map());
                 }
             }
             for (auto it = spatialSketches.cbegin(); it != spatialSketches.cend(); ++it) {
                 for (const auto &e : it.value().entities) {
                     if (e.kind != "Point") {
-                        auto m = sketch::fields(
-                            {{"object", it.key()}, {"role", "Curve"}, {"entity", e.id}});
+                        domain::GeometryReference ref;
+                        ref.object = it.key();
+                        ref.role = QStringLiteral("Curve");
+                        ref.entity = e.id;
                         if (!r.endpoint.isEmpty())
-                            m.insert(QStringLiteral("endpoint"), r.endpoint);
-                        candidates.append(domain::GeometryReference::parse(m).map());
+                            ref.endpoint = r.endpoint;
+                        candidates.append(ref.map());
+                    }
+                }
+            }
+            for (auto it = sketches.cbegin(); it != sketches.cend(); ++it) {
+                for (const auto &e : it.value().entities) {
+                    if (e.kind != "Point") {
+                        domain::GeometryReference ref;
+                        ref.object = it.key();
+                        ref.role = QStringLiteral("Curve");
+                        ref.entity = e.id;
+                        if (!r.endpoint.isEmpty())
+                            ref.endpoint = r.endpoint;
+                        candidates.append(ref.map());
                     }
                 }
             }
@@ -356,11 +390,22 @@ QCborMap SupportReferences::inspect(const domain::GeometryReference &r, bool rep
             for (auto it = spatialSketches.cbegin(); it != spatialSketches.cend(); ++it) {
                 for (const auto &e : it.value().entities) {
                     if (e.kind == "Point") {
-                        candidates.append(
-                            domain::GeometryReference::parse(
-                                sketch::fields(
-                                    {{"object", it.key()}, {"role", "Point"}, {"entity", e.id}}))
-                                .map());
+                        domain::GeometryReference ref;
+                        ref.object = it.key();
+                        ref.role = QStringLiteral("Point");
+                        ref.entity = e.id;
+                        candidates.append(ref.map());
+                    }
+                }
+            }
+            for (auto it = sketches.cbegin(); it != sketches.cend(); ++it) {
+                for (const auto &e : it.value().entities) {
+                    if (e.kind == "Point") {
+                        domain::GeometryReference ref;
+                        ref.object = it.key();
+                        ref.role = QStringLiteral("Point");
+                        ref.entity = e.id;
+                        candidates.append(ref.map());
                     }
                 }
             }

@@ -219,6 +219,10 @@ class Projects {
                     allowed.insert(QStringLiteral("slot"));
                 if (p.contains(QStringLiteral("path")))
                     allowed.insert(QStringLiteral("path"));
+                if (p.contains(QStringLiteral("spatial_sketches")))
+                    allowed.insert(QStringLiteral("spatial_sketches"));
+                if (p.contains(QStringLiteral("derived_curves")))
+                    allowed.insert(QStringLiteral("derived_curves"));
                 wire::keys(p, allowed);
                 check(e.revision == store->revision(), "StaleRevision",
                       "Project changed before support inspection");
@@ -226,20 +230,37 @@ class Projects {
                 check(slot >= -1 && slot < 32, "InvalidInput", "Bounded support slot required");
                 QString path =
                     p.contains(QStringLiteral("path")) ? wire::text(p, "path") : QString{};
+                auto modelMap = p.value("model").toMap();
+                if (p.contains(QStringLiteral("spatial_sketches")))
+                    modelMap.insert(QStringLiteral("spatial_sketches"),
+                                    p.value("spatial_sketches"));
+                if (p.contains(QStringLiteral("derived_curves")))
+                    modelMap.insert(QStringLiteral("derived_curves"), p.value("derived_curves"));
                 return sketch::fields({{"support_reference_resolution",
                                         store->supportReferenceCandidates(
-                                            e.context.document, p.value("model").toMap(),
-                                            wire::text(p, "owner"), slot, path, control)}});
+                                            e.context.document, modelMap, wire::text(p, "owner"),
+                                            slot, path, control)}});
             }
             if (e.command == "ModelingInputs") {
-                wire::keys(p, {"model", "intents"});
+                QSet<QString> allowed{"model", "intents"};
+                if (p.contains(QStringLiteral("spatial_sketches")))
+                    allowed.insert(QStringLiteral("spatial_sketches"));
+                if (p.contains(QStringLiteral("derived_curves")))
+                    allowed.insert(QStringLiteral("derived_curves"));
+                wire::keys(p, allowed);
                 check(e.revision == store->revision(), "StaleRevision",
                       "Model changed before input inspection");
                 check(p.value("model").isMap() && p.value("intents").isArray(), "InvalidInput",
                       "Typed model and intents required");
+                auto modelMap = p.value("model").toMap();
+                if (p.contains(QStringLiteral("spatial_sketches")))
+                    modelMap.insert(QStringLiteral("spatial_sketches"),
+                                    p.value("spatial_sketches"));
+                if (p.contains(QStringLiteral("derived_curves")))
+                    modelMap.insert(QStringLiteral("derived_curves"), p.value("derived_curves"));
                 return sketch::fields(
                     {{"modeling_inputs",
-                      store->modelingInputs(e.context.document, p.value("model").toMap(),
+                      store->modelingInputs(e.context.document, modelMap,
                                             p.value("intents").toArray(), control)}});
             }
             if (e.command == "ModelingReferenceCandidates") {

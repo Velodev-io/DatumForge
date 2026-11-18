@@ -82,13 +82,11 @@ int main(int argc, char **argv) {
                                                         {"name", "CM7 Store Test"},
                                                         {"units", "mm"}})));
 
-        puts("Step 1");
         // 1. Save legacy project before any CM7 spatial data and verify bytes
         auto legacyPath = files.filePath("legacy.cadproj");
         store.save(command("SaveProject"), legacyPath);
         auto originalBytes = bytes(legacyPath);
 
-        puts("Step 2");
         // 2. Build base planar sketch and solid base
         sketch::Sketch baseSketch;
         baseSketch.rectangle({0, 0}, {0.100, 0.100});
@@ -96,7 +94,6 @@ int main(int argc, char **argv) {
         auto baseExt = extrude(baseSketch.id);
         baseExt.insert(QStringLiteral("direction1"), blind(0.020));
 
-        puts("Step 3");
         // 3. Build spatial sketch (3D chair-frame path segment with spatial constraint)
         sketch::SpatialSketch spatial;
         auto p0 = spatial.point({0.0, 0.0, 0.020});
@@ -109,7 +106,6 @@ int main(int argc, char **argv) {
         cAlongX.a = l1;
         spatial.constraints.push_back(cAlongX);
 
-        puts("Step 4");
         // 4. Build derived curves:
         // 4a. DatumAxis (Z axis) and HelixSpiral
         QString axisId = newId();
@@ -162,7 +158,6 @@ int main(int argc, char **argv) {
         normalPlane.mode = QStringLiteral("NormalCurve");
         normalPlane.references = {curveRef(sos.id, QStringLiteral("Start"))};
 
-        puts("Step 5 - mapping");
         // Construct initial complete SupportDefinition
         model::SupportDefinition modelDef;
         modelDef.document = document;
@@ -174,12 +169,10 @@ int main(int argc, char **argv) {
                             spatial.id, helix.id,      sos.id,  normalPlane.id};
 
         auto mappedDef = modelDef.map();
-        puts("Step 5 - committing");
         // 5. Commit CM7 model via SetModelSupports
         auto commit = command("SetModelSupports",
                               fields({{"model", mappedDef}, {"intents", QCborArray{baseExt}}}));
         store.execute(commit);
-        puts("Step 5 - committed");
         auto revision = store.revision();
         CHECK(revision > 0);
 
@@ -400,6 +393,99 @@ int main(int argc, char **argv) {
         CHECK(afterDeletion.value("derived_curves").toArray().isEmpty());
         // spatial_sketches is preserved!
         CHECK(afterDeletion.value("spatial_sketches").toArray().size() == 1);
+
+        // 18. Omission preservation during supportReferenceCandidates and ResolveSupportReference
+        // Add a second axis and helix to test repairing reference to newAxis
+        auto newAxisId = newId();
+        model::Datum newAxis = axisDatum;
+        newAxis.id = newAxisId;
+        auto axisReplacement = axisRef(newAxisId).map();
+
+        auto modelWithHelix = deletionModel;
+        modelWithHelix.datums = {axisDatum, newAxis};
+        modelWithHelix.derived_curves = model::encodeDerivedCurves({helix});
+        modelWithHelix.history = {axisId,       newAxisId,  baseSketch.id, skXY.id,
+                                  mutatedYZ.id, spatial.id, helix.id};
+        store.execute(command("SetModelSupports", fields({{"model", modelWithHelix.map()}})));
+        revision = store.revision();
+
+        // Now test inspecting and repairing helix axis while OMITTING spatial_sketches from input
+        // map
+        auto omittedModelMap = modelWithHelix.map();
+        omittedModelMap.remove(QStringLiteral("spatial_sketches"));
+        QCborArray hist2;
+        for (auto h : omittedModelMap.value("history").toArray())
+            if (h.toString() != spatial.id)
+                hist2.append(h);
+        omittedModelMap.insert(QStringLiteral("history"), hist2);
+
+        // supportReferenceCandidates merges omitted collections so candidate fingerprint includes
+        // preserved spatial_sketches
+        auto omittedInspection = store.supportReferenceCandidates(
+            document, omittedModelMap, helix.id, 0, QStringLiteral("axis"));
+        CHECK(!omittedInspection.value("replacements").toArray().isEmpty());
+        auto omittedFingerprint = omittedInspection.value("fingerprint").toByteArray();
+
+        // ResolveSupportReference with omittedModelMap and matched fingerprint
+        auto repairOmittedPayload = fields({{"model", omittedModelMap},
+                                            {"owner", helix.id},
+                                            {"path", QStringLiteral("axis")},
+                                            {"replacement", axisReplacement},
+                                            {"fingerprint", omittedFingerprint}});
+        store.execute(command("ResolveSupportReference", repairOmittedPayload));
+        CHECK(store.revision() > revision);
+        revision = store.revision();
+
+        // Confirm spatial_sketches is still preserved in storage
+        auto stateAfterRepair = store.featureState(document).value("supports").toMap();
+        CHECK(stateAfterRepair.value("spatial_sketches").toArray().size() == 1);
+        CHECK(stateAfterRepair.value("derived_curves").toArray().size() == 1);
+
+        // 19. SupportReferences::inspect for Curve and Point includes 2D sketches and spatial
+        // sketches
+        geometry::SupportReferences testScene;
+        testScene.document = document;
+        testScene.axes.insert(axisId, geometry::SupportAxis{{0, 0, 0}, {0, 0, 1}});
+        testScene.axes.insert(newAxisId, geometry::SupportAxis{{0, 0, 0}, {0, 0, 1}});
+        testScene.sketches.insert(baseSketch.id, baseSketch);
+        testScene.spatialSketches.insert(spatial.id, spatial);
+        testScene.derived.insert(helix.id, geometry::evaluateHelixSpiral(helix, testScene));
+
+        // Curve role inspect on missing curve returns candidates from sketches, spatialSketches,
+        // and derived
+        domain::GeometryReference missingCurveRef;
+        missingCurveRef.object = newId();
+        missingCurveRef.role = QStringLiteral("Curve");
+        auto curveInsp = testScene.inspect(missingCurveRef);
+        CHECK(curveInsp.value("state") == "Missing");
+        auto curveReplacements = curveInsp.value("replacements").toArray();
+        CHECK(curveReplacements.size() >= 4); // 4 base sketch edges + spatial lines + helix
+
+        // Point role inspect on missing point returns candidates from sketches and spatialSketches
+        domain::GeometryReference missingPtRef;
+        missingPtRef.object = newId();
+        missingPtRef.entity = newId();
+        missingPtRef.role = QStringLiteral("Point");
+        auto ptInsp = testScene.inspect(missingPtRef);
+        CHECK(ptInsp.value("state") == "Missing");
+        auto ptReplacements = ptInsp.value("replacements").toArray();
+        CHECK(ptReplacements.size() >= 4); // 4 rectangle corners + 3 spatial points
+
+        // 20. modelingInputs publishes spatial sketch points/curves and derived curves
+        auto modelingInputsReply =
+            store.modelingInputs(document, stateAfterRepair, QCborArray{baseExt});
+        CHECK(modelingInputsReply.value("version").toInteger() == 1);
+        auto modGeometry = modelingInputsReply.value("geometry").toArray();
+        bool foundSpatialOperand = false, foundDerivedOperand = false;
+        for (auto g : modGeometry) {
+            auto refObj = g.toMap().value("reference").toMap().value("object").toString();
+            if (refObj == spatial.id)
+                foundSpatialOperand = true;
+            if (refObj == helix.id)
+                foundDerivedOperand = true;
+        }
+        CHECK(foundSpatialOperand);
+        CHECK(foundDerivedOperand);
 
         puts("cm7_store passed");
     });

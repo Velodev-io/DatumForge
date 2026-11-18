@@ -450,6 +450,64 @@ geometry::SupportResult rebuildSupports(Database &db, const QCborMap &collection
         },
         control);
 }
+QCborMap mergeSupportCollections(QCborMap modelMap, const QCborMap &priorSupports,
+                                 const QCborMap &payload = {}) {
+    QSet<QString> preservedIds;
+    if (payload.contains(QStringLiteral("spatial_sketches"))) {
+        check(payload.value("spatial_sketches").isArray(), "InvalidInput",
+              "Typed spatial_sketches collection required");
+        modelMap.insert(QStringLiteral("spatial_sketches"), payload.value("spatial_sketches"));
+    } else if (!modelMap.contains(QStringLiteral("spatial_sketches")) &&
+               priorSupports.contains(QStringLiteral("spatial_sketches"))) {
+        modelMap.insert(QStringLiteral("spatial_sketches"),
+                        priorSupports.value(QStringLiteral("spatial_sketches")));
+        for (auto v : priorSupports.value(QStringLiteral("spatial_sketches")).toArray())
+            preservedIds.insert(v.toMap().value("id").toString());
+    }
+    if (payload.contains(QStringLiteral("derived_curves"))) {
+        check(payload.value("derived_curves").isArray(), "InvalidInput",
+              "Typed derived_curves collection required");
+        modelMap.insert(QStringLiteral("derived_curves"), payload.value("derived_curves"));
+    } else if (!modelMap.contains(QStringLiteral("derived_curves")) &&
+               priorSupports.contains(QStringLiteral("derived_curves"))) {
+        modelMap.insert(QStringLiteral("derived_curves"),
+                        priorSupports.value(QStringLiteral("derived_curves")));
+        for (auto v : priorSupports.value(QStringLiteral("derived_curves")).toArray())
+            preservedIds.insert(v.toMap().value("id").toString());
+    }
+    if (!preservedIds.isEmpty() && priorSupports.contains(QStringLiteral("history"))) {
+        auto priorHistory = priorSupports.value("history").toArray();
+        auto currentHistory = modelMap.value("history").toArray();
+        QSet<QString> currentHistorySet;
+        QStringList merged;
+        for (auto v : currentHistory) {
+            auto hid = v.toString();
+            currentHistorySet.insert(hid);
+            merged.append(hid);
+        }
+        for (qsizetype i = 0; i < priorHistory.size(); ++i) {
+            auto hid = priorHistory[i].toString();
+            if (preservedIds.contains(hid) && !currentHistorySet.contains(hid)) {
+                int insertIdx = 0;
+                for (qsizetype p = i - 1; p >= 0; --p) {
+                    auto prevId = priorHistory[p].toString();
+                    int found = merged.indexOf(prevId);
+                    if (found != -1) {
+                        insertIdx = found + 1;
+                        break;
+                    }
+                }
+                merged.insert(insertIdx, hid);
+                currentHistorySet.insert(hid);
+            }
+        }
+        QCborArray mergedArr;
+        for (const auto &id : merged)
+            mergedArr.append(id);
+        modelMap.insert(QStringLiteral("history"), mergedArr);
+    }
+    return modelMap;
+}
 } // namespace
 ProjectStore::ProjectStore(QString recoveryDirectory, StoreOptions settings)
     : root(recoveryRoot(recoveryDirectory)), options(std::move(settings)) {
@@ -1016,7 +1074,9 @@ QCborMap ProjectStore::referenceCandidates(QString document, QString ownerId, QS
 QCborMap ProjectStore::supportReferenceCandidates(QString document, const QCborMap &definition,
                                                   QString owner, int slot, QString path,
                                                   const exchange::Control &control) const {
-    auto model = model::SupportDefinition::parse(definition);
+    auto defMap =
+        mergeSupportCollections(definition, featureState(document).value("supports").toMap());
+    auto model = model::SupportDefinition::parse(defMap);
     check(model.document == "Self" || model.document == document, "StaleSession",
           "Support document changed");
     model.document = document;
@@ -1053,65 +1113,12 @@ QCborMap ProjectStore::previewSupports(QString document, const QCborMap &definit
     check(db &&
               db->scalar("SELECT type FROM documents WHERE id=?", {document}).toString() == "Part",
           "UnsupportedOperation", "Model support preview requires a Part document");
-    auto defMap = definition;
-    auto priorSupports = featureState(document).value("supports").toMap();
-    if (!defMap.contains(QStringLiteral("spatial_sketches")) &&
-        priorSupports.contains(QStringLiteral("spatial_sketches")))
-        defMap.insert(QStringLiteral("spatial_sketches"),
-                      priorSupports.value(QStringLiteral("spatial_sketches")));
-    if (!defMap.contains(QStringLiteral("derived_curves")) &&
-        priorSupports.contains(QStringLiteral("derived_curves")))
-        defMap.insert(QStringLiteral("derived_curves"),
-                      priorSupports.value(QStringLiteral("derived_curves")));
-    if (priorSupports.contains(QStringLiteral("history"))) {
-        auto priorHistory = priorSupports.value("history").toArray();
-        auto currentHistory = defMap.value("history").toArray();
-        QSet<QString> currentHistorySet;
-        for (auto v : currentHistory)
-            currentHistorySet.insert(v.toString());
-        QCborArray mergedHistory;
-        QSet<QString> added;
-        for (auto v : priorHistory) {
-            auto hid = v.toString();
-            if (currentHistorySet.contains(hid)) {
-                mergedHistory.append(hid);
-                added.insert(hid);
-            } else {
-                bool isPreserved = false;
-                for (auto s : defMap.value("spatial_sketches").toArray()) {
-                    if (s.toMap().value("id").toString() == hid) {
-                        isPreserved = true;
-                        break;
-                    }
-                }
-                if (!isPreserved) {
-                    for (auto c : defMap.value("derived_curves").toArray()) {
-                        if (c.toMap().value("id").toString() == hid) {
-                            isPreserved = true;
-                            break;
-                        }
-                    }
-                }
-                if (isPreserved) {
-                    mergedHistory.append(hid);
-                    added.insert(hid);
-                }
-            }
-        }
-        for (auto v : currentHistory) {
-            auto hid = v.toString();
-            if (!added.contains(hid)) {
-                mergedHistory.append(hid);
-                added.insert(hid);
-            }
-        }
-        defMap.insert(QStringLiteral("history"), mergedHistory);
-    }
+    auto defMap =
+        mergeSupportCollections(definition, featureState(document).value("supports").toMap());
     auto model = model::SupportDefinition::parse(defMap);
     check(model.document == "Self" || model.document == document, "StaleSession",
           "Model support document changed");
     model.document = document;
-    model.sequence();
     auto result = geometry::evaluateModeling(
         model,
         intents ? *intents
@@ -1133,7 +1140,9 @@ QCborMap ProjectStore::modelingInputs(QString document, const QCborMap &definiti
                                       const exchange::Control &control) const {
     check(db && db->scalar("SELECT type FROM documents WHERE id=?", {document}) == "Part",
           "UnsupportedOperation", "Modeling inspection requires a Part");
-    auto model = model::SupportDefinition::parse(definition);
+    auto defMap =
+        mergeSupportCollections(definition, featureState(document).value("supports").toMap());
+    auto model = model::SupportDefinition::parse(defMap);
     check(model.document == "Self" || model.document == document, "StaleSession",
           "Model document changed");
     model.document = document;
@@ -1180,6 +1189,8 @@ QCborMap ProjectStore::modelingInputs(QString document, const QCborMap &definiti
     scene.stages = evaluated.part.stages;
     for (const auto &sketch : evaluated.sketches)
         scene.sketches.insert(sketch.id, sketch);
+    scene.spatialSketches = evaluated.spatialSketches;
+    scene.derived = evaluated.derived;
     QCborArray geometry;
     auto operands = references;
     for (const auto &sketch : evaluated.sketches) {
@@ -1192,6 +1203,28 @@ QCborMap ProjectStore::modelingInputs(QString document, const QCborMap &definiti
                 continue;
             ref.role = entity.kind == "Point" ? "Point" : "Curve";
             ref.entity = entity.id;
+            operands.append(ref.map());
+        }
+    }
+    for (auto it = evaluated.spatialSketches.cbegin(); it != evaluated.spatialSketches.cend();
+         ++it) {
+        for (const auto &entity : it.value().entities) {
+            if (entity.construction)
+                continue;
+            domain::GeometryReference ref;
+            ref.object = it.key();
+            ref.role = entity.kind == "Point" ? "Point" : "Curve";
+            ref.entity = entity.id;
+            operands.append(ref.map());
+        }
+    }
+    for (auto it = evaluated.derived.cbegin(); it != evaluated.derived.cend(); ++it) {
+        for (const auto &sc : it.value()) {
+            domain::GeometryReference ref;
+            ref.object = it.key();
+            ref.role = "Curve";
+            if (!sc.key.isEmpty() && sc.key != it.key())
+                ref.entity = sc.key;
             operands.append(ref.map());
         }
     }
@@ -1220,6 +1253,22 @@ QCborMap ProjectStore::modelingInputs(QString document, const QCborMap &definiti
             } else if (ref.role == "Vertex" || ref.role == "Point") {
                 origin = geometry::siPoint(scene.point(ref));
                 direction = {0, 0, 1};
+            } else if (ref.role == "Curve") {
+                try {
+                    auto axis = scene.axis(ref);
+                    origin = axis.origin;
+                    direction = axis.direction;
+                } catch (const domain::Error &) {
+                    auto c = scene.curve(ref);
+                    origin = geometry::siPoint(c.curve->Value(c.first));
+                    gp_Pnt p;
+                    gp_Vec tan;
+                    c.curve->D1(c.first, p, tan);
+                    if (tan.SquareMagnitude() > 1e-12)
+                        direction = geometry::coordinates(tan.Normalized());
+                    else
+                        direction = {0, 0, 1};
+                }
             } else {
                 auto axis = scene.axis(ref);
                 origin = axis.origin;
@@ -1446,81 +1495,22 @@ QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse,
         check(db->scalar("SELECT type FROM documents WHERE id=?", {doc}).toString() == "Part",
               "UnsupportedOperation", "Model supports require a Part");
         check(p.value("model").isMap(), "InvalidInput", "Support model map required");
-        auto modelMap = p.value("model").toMap();
-        auto priorSupports = featureState(doc).value("supports").toMap();
-        if (p.contains(QStringLiteral("spatial_sketches"))) {
-            check(p.value("spatial_sketches").isArray(), "InvalidInput",
-                  "Typed spatial_sketches collection required");
-            modelMap.insert(QStringLiteral("spatial_sketches"), p.value("spatial_sketches"));
-        } else if (!modelMap.contains(QStringLiteral("spatial_sketches")) &&
-                   priorSupports.contains(QStringLiteral("spatial_sketches"))) {
-            modelMap.insert(QStringLiteral("spatial_sketches"),
-                            priorSupports.value(QStringLiteral("spatial_sketches")));
-        }
-        if (p.contains(QStringLiteral("derived_curves"))) {
-            check(p.value("derived_curves").isArray(), "InvalidInput",
-                  "Typed derived_curves collection required");
-            modelMap.insert(QStringLiteral("derived_curves"), p.value("derived_curves"));
-        } else if (!modelMap.contains(QStringLiteral("derived_curves")) &&
-                   priorSupports.contains(QStringLiteral("derived_curves"))) {
-            modelMap.insert(QStringLiteral("derived_curves"),
-                            priorSupports.value(QStringLiteral("derived_curves")));
-        }
-        if (priorSupports.contains(QStringLiteral("history"))) {
-            auto priorHistory = priorSupports.value("history").toArray();
-            auto currentHistory = modelMap.value("history").toArray();
-            QSet<QString> currentHistorySet;
-            for (auto v : currentHistory)
-                currentHistorySet.insert(v.toString());
-            QCborArray mergedHistory;
-            QSet<QString> added;
-            for (auto v : priorHistory) {
-                auto hid = v.toString();
-                if (currentHistorySet.contains(hid)) {
-                    mergedHistory.append(hid);
-                    added.insert(hid);
-                } else {
-                    bool isPreserved = false;
-                    for (auto s : modelMap.value("spatial_sketches").toArray()) {
-                        if (s.toMap().value("id").toString() == hid) {
-                            isPreserved = true;
-                            break;
-                        }
-                    }
-                    if (!isPreserved) {
-                        for (auto c : modelMap.value("derived_curves").toArray()) {
-                            if (c.toMap().value("id").toString() == hid) {
-                                isPreserved = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (isPreserved) {
-                        mergedHistory.append(hid);
-                        added.insert(hid);
-                    }
-                }
-            }
-            for (auto v : currentHistory) {
-                auto hid = v.toString();
-                if (!added.contains(hid)) {
-                    mergedHistory.append(hid);
-                    added.insert(hid);
-                }
-            }
-            modelMap.insert(QStringLiteral("history"), mergedHistory);
-        }
+        auto modelMap = mergeSupportCollections(p.value("model").toMap(),
+                                                featureState(doc).value("supports").toMap(), p);
         auto model = model::SupportDefinition::parse(modelMap);
         check(model.document == "Self" || model.document == doc, "StaleSession",
               "Support document changed");
         model.document = doc;
-        model.sequence();
         if (e.command == "ResolveSupportReference") {
             QSet<QString> allowed{"model", "owner", "replacement", "fingerprint"};
             if (p.contains(QStringLiteral("slot")))
                 allowed.insert(QStringLiteral("slot"));
             if (p.contains(QStringLiteral("path")))
                 allowed.insert(QStringLiteral("path"));
+            if (p.contains(QStringLiteral("spatial_sketches")))
+                allowed.insert(QStringLiteral("spatial_sketches"));
+            if (p.contains(QStringLiteral("derived_curves")))
+                allowed.insert(QStringLiteral("derived_curves"));
             wire::keys(p, allowed);
             auto id = domain::id(wire::text(p, "owner"));
             int slot = p.contains(QStringLiteral("slot")) ? int(wire::integer(p, "slot")) : 0;
@@ -1569,32 +1559,42 @@ QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse,
                         replaced = true;
                     } else if (c.sketchOnSketch) {
                         auto ref = domain::GeometryReference::parse(replacementMap);
-                        if (slot == 0)
+                        if (path == "sketch1" || (path.isEmpty() && slot == 0))
                             c.sketchOnSketch->sketch1 = ref;
-                        else if (slot == 1)
+                        else if (path == "sketch2" || (path.isEmpty() && slot == 1))
                             c.sketchOnSketch->sketch2 = ref;
                         replaced = true;
                     } else if (c.sketchOnFaces) {
                         auto ref = domain::GeometryReference::parse(replacementMap);
-                        if (slot == 0)
+                        if (path == "sketch" || (path.isEmpty() && slot == 0))
                             c.sketchOnFaces->sketch = ref;
-                        else if (slot >= 1 && slot <= int(c.sketchOnFaces->faces.size()))
-                            c.sketchOnFaces->faces[size_t(slot - 1)] = ref;
-                        else if (c.sketchOnFaces->direction.has_value() &&
-                                 slot == int(c.sketchOnFaces->faces.size()) + 1)
+                        else if (path == "direction" ||
+                                 (path.isEmpty() && c.sketchOnFaces->direction.has_value() &&
+                                  slot == int(c.sketchOnFaces->faces.size()) + 1))
                             c.sketchOnFaces->direction = ref;
+                        else if (path.startsWith("faces/")) {
+                            auto fidx = size_t(path.section('/', 1, 1).toULongLong());
+                            check(fidx < c.sketchOnFaces->faces.size(), "InvalidInput",
+                                  "Missing face slot");
+                            c.sketchOnFaces->faces[fidx] = ref;
+                        } else if (path.isEmpty() && slot >= 1 &&
+                                   slot <= int(c.sketchOnFaces->faces.size()))
+                            c.sketchOnFaces->faces[size_t(slot - 1)] = ref;
                         replaced = true;
                     } else if (c.compositeCurve) {
-                        check(size_t(slot) < c.compositeCurve->members.size(), "InvalidInput",
+                        size_t memIdx = path.startsWith("members/")
+                                            ? size_t(path.section('/', 1, 1).toULongLong())
+                                            : size_t(slot);
+                        check(memIdx < c.compositeCurve->members.size(), "InvalidInput",
                               "Missing operand slot");
-                        c.compositeCurve->members[size_t(slot)].source =
+                        c.compositeCurve->members[memIdx].source =
                             domain::GeometryReference::parse(replacementMap);
                         replaced = true;
                     } else if (c.helixSpiral) {
                         auto ref = domain::GeometryReference::parse(replacementMap);
-                        if (slot == 0)
+                        if (path == "axis" || (path.isEmpty() && slot == 0))
                             c.helixSpiral->axis = ref;
-                        else if (slot == 1)
+                        else if (path == "center" || (path.isEmpty() && slot == 1))
                             c.helixSpiral->center = ref;
                         replaced = true;
                     }

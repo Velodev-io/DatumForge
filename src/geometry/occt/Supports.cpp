@@ -115,42 +115,63 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
                         result.inspection = inspectBranchCandidates(candidate, scene);
                         return result;
                     }
-                    if (inspectSlot >= 0) {
-                        if (candidate.sketchOnSketch.has_value()) {
-                            check(inspectSlot < 2, "InvalidInput",
-                                  "Choose a valid sketch-on-sketch slot");
-                            auto ref = inspectSlot == 0 ? candidate.sketchOnSketch->sketch1
-                                                        : candidate.sketchOnSketch->sketch2;
-                            result.inspection = scene.inspect(ref);
+                    if (candidate.sketchOnSketch.has_value()) {
+                        int s = inspectPath == "sketch1"   ? 0
+                                : inspectPath == "sketch2" ? 1
+                                                           : inspectSlot;
+                        check(s >= 0 && s < 2, "InvalidInput",
+                              "Choose a valid sketch-on-sketch slot");
+                        auto ref = s == 0 ? candidate.sketchOnSketch->sketch1
+                                          : candidate.sketchOnSketch->sketch2;
+                        result.inspection = scene.inspect(ref);
+                        return result;
+                    }
+                    if (candidate.sketchOnFaces.has_value()) {
+                        const auto &def = *candidate.sketchOnFaces;
+                        if (inspectPath == "direction" && def.direction.has_value()) {
+                            result.inspection = scene.inspect(*def.direction);
                             return result;
                         }
-                        if (candidate.sketchOnFaces.has_value()) {
-                            const auto &def = *candidate.sketchOnFaces;
-                            check(inspectSlot <= int(def.faces.size()) + (def.direction ? 1 : 0),
-                                  "InvalidInput", "Choose a valid slot");
-                            auto ref = inspectSlot == 0 ? def.sketch
-                                       : inspectSlot <= int(def.faces.size())
-                                           ? def.faces[size_t(inspectSlot - 1)]
-                                           : *def.direction;
-                            result.inspection = scene.inspect(ref);
+                        if (inspectPath == "sketch") {
+                            result.inspection = scene.inspect(def.sketch);
                             return result;
                         }
-                        if (candidate.compositeCurve.has_value()) {
-                            const auto &def = *candidate.compositeCurve;
-                            check(size_t(inspectSlot) < def.members.size(), "InvalidInput",
-                                  "Choose a valid member slot");
-                            result.inspection =
-                                scene.inspect(def.members[size_t(inspectSlot)].source);
+                        if (inspectPath.startsWith("faces/")) {
+                            auto fidx = size_t(inspectPath.section('/', 1, 1).toULongLong());
+                            check(fidx < def.faces.size(), "InvalidInput",
+                                  "Choose a valid face slot");
+                            result.inspection = scene.inspect(def.faces[fidx]);
                             return result;
                         }
-                        if (candidate.helixSpiral.has_value()) {
-                            const auto &def = *candidate.helixSpiral;
-                            check(inspectSlot == 0 || (inspectSlot == 1 && def.center.has_value()),
-                                  "InvalidInput", "Choose a valid slot");
-                            auto ref = inspectSlot == 0 ? def.axis : *def.center;
-                            result.inspection = scene.inspect(ref);
-                            return result;
-                        }
+                        check(inspectSlot <= int(def.faces.size()) + (def.direction ? 1 : 0),
+                              "InvalidInput", "Choose a valid slot");
+                        auto ref = inspectSlot == 0 ? def.sketch
+                                   : inspectSlot <= int(def.faces.size())
+                                       ? def.faces[size_t(inspectSlot - 1)]
+                                       : *def.direction;
+                        result.inspection = scene.inspect(ref);
+                        return result;
+                    }
+                    if (candidate.compositeCurve.has_value()) {
+                        const auto &def = *candidate.compositeCurve;
+                        size_t memIdx = inspectPath.startsWith("members/")
+                                            ? size_t(inspectPath.section('/', 1, 1).toULongLong())
+                                            : size_t(inspectSlot);
+                        check(memIdx < def.members.size(), "InvalidInput",
+                              "Choose a valid member slot");
+                        result.inspection = scene.inspect(def.members[memIdx].source);
+                        return result;
+                    }
+                    if (candidate.helixSpiral.has_value()) {
+                        const auto &def = *candidate.helixSpiral;
+                        int s = inspectPath == "axis"     ? 0
+                                : inspectPath == "center" ? 1
+                                                          : inspectSlot;
+                        check(s == 0 || (s == 1 && def.center.has_value()), "InvalidInput",
+                              "Choose a valid slot");
+                        auto ref = s == 0 ? def.axis : *def.center;
+                        result.inspection = scene.inspect(ref);
+                        return result;
                     }
                 }
                 if (spatialIndex.contains(inspectOwner) && id == inspectOwner) {
