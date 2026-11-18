@@ -7,7 +7,7 @@ This is planning only; CM7 implementation has not started in this task.
 - [x] Preparation: freeze source-derived scope, course fixtures and current baseline.
 - [x] CM7.a: spatial entities, typed branches, constraints and frame contracts.
 - [x] CM7.b: separate Eigen spatial solver and worker-owned exact derived curves.
-- [ ] CM7.c: durable definitions, atomic edits, replay and explicit reference repair.
+- [x] CM7.c: durable definitions, atomic edits, replay and explicit reference repair.
 - [ ] CM7.d: native spatial sketching, dimensions, plane switching and branch selection.
 - [ ] CM7.e: projected/chair paths, failure cases, regression/native evidence and review.
 

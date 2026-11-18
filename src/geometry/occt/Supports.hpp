@@ -5,8 +5,10 @@ namespace cad::geometry {
 using SupportBuild = std::function<kernel::Part(const QCborArray &, const QCborArray &)>;
 struct SupportResult {
     std::vector<sketch::Sketch> sketches;
+    QMap<QString, sketch::SpatialSketch> spatialSketches;
     QMap<QString, sketch::Frame> planes;
     QMap<QString, SupportAxis> axes;
+    QMap<QString, std::vector<SupportCurve>> derived;
     QCborArray conversions;
     QStringList order;
     kernel::Part part;
@@ -21,5 +23,5 @@ sketch::Frame attachmentFrame(const model::Attachment &attachment,
 SupportResult evaluateSupports(const model::SupportDefinition &definition,
                                const SupportBuild &build = {},
                                const exchange::Control &control = {}, QString inspectOwner = {},
-                               int inspectSlot = -1);
+                               int inspectSlot = -1, QString inspectPath = {});
 } // namespace cad::geometry

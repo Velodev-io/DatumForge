@@ -264,9 +264,115 @@ SupportAxis SupportReferences::axis(const domain::GeometryReference &r) const {
 }
 QCborMap SupportReferences::inspect(const domain::GeometryReference &r, bool replacements) const {
     scope(r);
-    domain::check(r.role == "Face" || r.role == "Edge" || r.role == "Vertex",
-                  "UnsupportedOperation",
-                  "Exact topology inspection requires a face, edge or vertex operand");
+    if (r.role != "Face" && r.role != "Edge" && r.role != "Vertex") {
+        if (r.role == "Plane") {
+            bool direct = planes.contains(r.object) || sketches.contains(r.object);
+            QCborArray candidates;
+            for (auto it = planes.cbegin(); it != planes.cend(); ++it) {
+                candidates.append(domain::GeometryReference::parse(
+                                      sketch::fields({{"object", it.key()}, {"role", "Plane"}}))
+                                      .map());
+            }
+            for (auto it = sketches.cbegin(); it != sketches.cend(); ++it) {
+                candidates.append(domain::GeometryReference::parse(
+                                      sketch::fields({{"object", it.key()}, {"role", "Plane"}}))
+                                      .map());
+            }
+            return sketch::fields({{"state", direct ? "Direct" : "Missing"},
+                                   {"candidates", direct ? QCborArray{r.object} : QCborArray{}},
+                                   {"reference", r.map()},
+                                   {"replacements", candidates},
+                                   {"descriptions", QCborArray{}}});
+        }
+        if (r.role == "Curve") {
+            bool direct = derived.contains(r.object) || spatialSketches.contains(r.object) ||
+                          sketches.contains(r.object);
+            if (direct && !r.entity.isEmpty()) {
+                if (spatialSketches.contains(r.object)) {
+                    bool found = false;
+                    for (const auto &e : spatialSketches.value(r.object).entities) {
+                        if (e.id == r.entity && e.kind != "Point") {
+                            found = true;
+                            break;
+                        }
+                    }
+                    direct = found;
+                } else if (sketches.contains(r.object)) {
+                    bool found = false;
+                    for (const auto &e : sketches.value(r.object).entities) {
+                        if (e.id == r.entity && e.kind != "Point") {
+                            found = true;
+                            break;
+                        }
+                    }
+                    direct = found;
+                }
+            }
+            QCborArray candidates;
+            for (auto it = derived.cbegin(); it != derived.cend(); ++it) {
+                for (const auto &sc : it.value()) {
+                    auto m = sketch::fields(
+                        {{"object", it.key()}, {"role", "Curve"}, {"entity", sc.key}});
+                    if (!r.endpoint.isEmpty())
+                        m.insert(QStringLiteral("endpoint"), r.endpoint);
+                    candidates.append(domain::GeometryReference::parse(m).map());
+                }
+            }
+            for (auto it = spatialSketches.cbegin(); it != spatialSketches.cend(); ++it) {
+                for (const auto &e : it.value().entities) {
+                    if (e.kind != "Point") {
+                        auto m = sketch::fields(
+                            {{"object", it.key()}, {"role", "Curve"}, {"entity", e.id}});
+                        if (!r.endpoint.isEmpty())
+                            m.insert(QStringLiteral("endpoint"), r.endpoint);
+                        candidates.append(domain::GeometryReference::parse(m).map());
+                    }
+                }
+            }
+            return sketch::fields({{"state", direct ? "Direct" : "Missing"},
+                                   {"candidates", direct ? QCborArray{r.object} : QCborArray{}},
+                                   {"reference", r.map()},
+                                   {"replacements", candidates},
+                                   {"descriptions", QCborArray{}}});
+        }
+        if (r.role == "Point") {
+            bool direct = false;
+            if (spatialSketches.contains(r.object)) {
+                for (const auto &e : spatialSketches.value(r.object).entities) {
+                    if (e.id == r.entity && e.kind == "Point") {
+                        direct = true;
+                        break;
+                    }
+                }
+            } else if (sketches.contains(r.object)) {
+                for (const auto &e : sketches.value(r.object).entities) {
+                    if (e.id == r.entity && e.kind == "Point") {
+                        direct = true;
+                        break;
+                    }
+                }
+            }
+            QCborArray candidates;
+            for (auto it = spatialSketches.cbegin(); it != spatialSketches.cend(); ++it) {
+                for (const auto &e : it.value().entities) {
+                    if (e.kind == "Point") {
+                        candidates.append(
+                            domain::GeometryReference::parse(
+                                sketch::fields(
+                                    {{"object", it.key()}, {"role", "Point"}, {"entity", e.id}}))
+                                .map());
+                    }
+                }
+            }
+            return sketch::fields({{"state", direct ? "Direct" : "Missing"},
+                                   {"candidates", direct ? QCborArray{r.object} : QCborArray{}},
+                                   {"reference", r.map()},
+                                   {"replacements", candidates},
+                                   {"descriptions", QCborArray{}}});
+        }
+        throw domain::Error("UnsupportedOperation",
+                            "Exact reference inspection does not support role: " + r.role);
+    }
     domain::check(stages.contains(r.object), "ReferenceMissing",
                   "Producing feature stage is unavailable");
     auto kind = r.role == "Face" ? TopAbs_FACE : r.role == "Edge" ? TopAbs_EDGE : TopAbs_VERTEX;

@@ -7,6 +7,7 @@
 #include "Treatments.hpp"
 #include "features/ModelingIntent.hpp"
 #include "features/ModelingRecords.hpp"
+#include "model/DerivedCurve.hpp"
 #include "sketch/Dependencies.hpp"
 #include <BRepAlgoAPI_Check.hxx>
 #include <BRepAlgoAPI_Cut.hxx>
@@ -112,12 +113,27 @@ std::vector<evaluation::GraphNode> baseNodes(const model::SupportDefinition &d,
             kinds[id] = datum.kind;
     for (auto &c : d.conversions)
         kinds[c.id] = "DerivedCurve";
+    std::vector<sketch::SpatialSketch> spatialSketches;
+    if (!d.spatial_sketches.isEmpty()) {
+        spatialSketches = sketch::parseSpatial(d.spatial_sketches);
+        for (const auto &s : spatialSketches)
+            kinds[s.id] = "SpatialSketch";
+    }
+    std::vector<model::DerivedCurve> derivedCurves;
+    if (!d.derived_curves.isEmpty()) {
+        derivedCurves = model::parseDerivedCurves(d.derived_curves);
+        for (const auto &c : derivedCurves)
+            kinds[c.id] = "DerivedCurve";
+    }
     std::vector<evaluation::GraphNode> nodes;
     for (auto id : d.history) {
         evaluation::GraphNode node{id, kinds.value(id), {}, {}};
         for (auto &s : sketches)
             if (s.id == id)
                 node.members = s.members;
+        for (auto &s : spatialSketches)
+            if (s.id == id)
+                node.members = s.members();
         for (auto parent : graph.dependencies(id)) {
             domain::GeometryReference r;
             r.object = parent;
@@ -209,8 +225,10 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
     modeling::Context context;
     context.references.document = d.document;
     context.references.sketches = sketches;
+    context.references.spatialSketches = result.spatialSketches;
     context.references.planes = result.planes;
     context.references.axes = result.axes;
+    context.references.derived = result.derived;
     for (auto value : result.conversions) {
         auto conversion = value.toMap();
         auto sketchId = conversion.value("sketch").toString();

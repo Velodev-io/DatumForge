@@ -214,15 +214,22 @@ class Projects {
                     {{"support_geometry", store->supportGeometry(e.context.document, control)}});
             }
             if (e.command == "SupportReferenceCandidates") {
-                wire::keys(p, {"model", "owner", "slot"});
+                QSet<QString> allowed{"model", "owner"};
+                if (p.contains(QStringLiteral("slot")))
+                    allowed.insert(QStringLiteral("slot"));
+                if (p.contains(QStringLiteral("path")))
+                    allowed.insert(QStringLiteral("path"));
+                wire::keys(p, allowed);
                 check(e.revision == store->revision(), "StaleRevision",
                       "Project changed before support inspection");
-                auto slot = wire::integer(p, "slot");
-                check(slot >= 0 && slot < 32, "InvalidInput", "Bounded support slot required");
+                int slot = p.contains(QStringLiteral("slot")) ? int(wire::integer(p, "slot")) : 0;
+                check(slot >= -1 && slot < 32, "InvalidInput", "Bounded support slot required");
+                QString path =
+                    p.contains(QStringLiteral("path")) ? wire::text(p, "path") : QString{};
                 return sketch::fields({{"support_reference_resolution",
                                         store->supportReferenceCandidates(
                                             e.context.document, p.value("model").toMap(),
-                                            wire::text(p, "owner"), int(slot), control)}});
+                                            wire::text(p, "owner"), slot, path, control)}});
             }
             if (e.command == "ModelingInputs") {
                 wire::keys(p, {"model", "intents"});
@@ -251,6 +258,10 @@ class Projects {
                 QSet<QString> allowed{"model"};
                 if (p.contains(QStringLiteral("intents")))
                     allowed.insert(QStringLiteral("intents"));
+                if (p.contains(QStringLiteral("spatial_sketches")))
+                    allowed.insert(QStringLiteral("spatial_sketches"));
+                if (p.contains(QStringLiteral("derived_curves")))
+                    allowed.insert(QStringLiteral("derived_curves"));
                 if (p.contains(QStringLiteral("display")))
                     allowed.insert(QStringLiteral("display"));
                 if (p.contains(QStringLiteral("deflection_mm")))
@@ -258,6 +269,12 @@ class Projects {
                 wire::keys(p, allowed);
                 check(!p.contains(QStringLiteral("intents")) || p.value("intents").isArray(),
                       "InvalidInput", "Modeling intents must be a bounded array");
+                check(!p.contains(QStringLiteral("spatial_sketches")) ||
+                          p.value("spatial_sketches").isArray(),
+                      "InvalidInput", "Spatial sketches must be a bounded array");
+                check(!p.contains(QStringLiteral("derived_curves")) ||
+                          p.value("derived_curves").isArray(),
+                      "InvalidInput", "Derived curves must be a bounded array");
                 check(!p.contains(QStringLiteral("display")) || p.value("display").isBool(),
                       "InvalidInput", "Display flag must be boolean");
                 check(!p.contains(QStringLiteral("deflection_mm")) ||
@@ -274,8 +291,14 @@ class Projects {
                 double deflection = p.contains(QStringLiteral("deflection_mm"))
                                         ? features::number(p, "deflection_mm", .01, 5)
                                         : .2;
+                auto modelMap = p.value("model").toMap();
+                if (p.contains(QStringLiteral("spatial_sketches")))
+                    modelMap.insert(QStringLiteral("spatial_sketches"),
+                                    p.value("spatial_sketches"));
+                if (p.contains(QStringLiteral("derived_curves")))
+                    modelMap.insert(QStringLiteral("derived_curves"), p.value("derived_curves"));
                 auto preview = store->previewSupports(
-                    e.context.document, p.value("model").toMap(), control,
+                    e.context.document, modelMap, control,
                     p.contains(QStringLiteral("intents"))
                         ? std::optional<QCborArray>(p.value("intents").toArray())
                         : std::nullopt,

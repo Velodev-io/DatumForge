@@ -22,7 +22,7 @@ sketch::Frame attachmentFrame(const model::Attachment &a, const SupportReference
 }
 SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportBuild &build,
                                const exchange::Control &control, QString inspectOwner,
-                               int inspectSlot) {
+                               int inspectSlot, QString inspectPath) {
     d.map(); // Validate the complete graph/history and transport admission first.
     control.checkpoint("Preparing model supports", 0);
     auto base = sketch::parse(d.sketches);
@@ -106,6 +106,74 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
                  (byConversion.contains(id) && byConversion.value(id)->sketch == inspectOwner));
             if (inspectAttachment || id == inspectOwner ||
                 (byDatum.contains(id) && byDatum.value(id)->id == inspectOwner)) {
+                if (derivedIndex.contains(inspectOwner) && id == inspectOwner) {
+                    const auto &candidate = parsedDerived[derivedIndex.value(id)];
+                    if (inspectPath == "branch" || (inspectPath.isEmpty() &&
+                                                    (candidate.sketchOnSketch.has_value() ||
+                                                     candidate.sketchOnFaces.has_value()) &&
+                                                    inspectSlot == -1)) {
+                        result.inspection = inspectBranchCandidates(candidate, scene);
+                        return result;
+                    }
+                    if (inspectSlot >= 0) {
+                        if (candidate.sketchOnSketch.has_value()) {
+                            check(inspectSlot < 2, "InvalidInput",
+                                  "Choose a valid sketch-on-sketch slot");
+                            auto ref = inspectSlot == 0 ? candidate.sketchOnSketch->sketch1
+                                                        : candidate.sketchOnSketch->sketch2;
+                            result.inspection = scene.inspect(ref);
+                            return result;
+                        }
+                        if (candidate.sketchOnFaces.has_value()) {
+                            const auto &def = *candidate.sketchOnFaces;
+                            check(inspectSlot <= int(def.faces.size()) + (def.direction ? 1 : 0),
+                                  "InvalidInput", "Choose a valid slot");
+                            auto ref = inspectSlot == 0 ? def.sketch
+                                       : inspectSlot <= int(def.faces.size())
+                                           ? def.faces[size_t(inspectSlot - 1)]
+                                           : *def.direction;
+                            result.inspection = scene.inspect(ref);
+                            return result;
+                        }
+                        if (candidate.compositeCurve.has_value()) {
+                            const auto &def = *candidate.compositeCurve;
+                            check(size_t(inspectSlot) < def.members.size(), "InvalidInput",
+                                  "Choose a valid member slot");
+                            result.inspection =
+                                scene.inspect(def.members[size_t(inspectSlot)].source);
+                            return result;
+                        }
+                        if (candidate.helixSpiral.has_value()) {
+                            const auto &def = *candidate.helixSpiral;
+                            check(inspectSlot == 0 || (inspectSlot == 1 && def.center.has_value()),
+                                  "InvalidInput", "Choose a valid slot");
+                            auto ref = inspectSlot == 0 ? def.axis : *def.center;
+                            result.inspection = scene.inspect(ref);
+                            return result;
+                        }
+                    }
+                }
+                if (spatialIndex.contains(inspectOwner) && id == inspectOwner) {
+                    const auto &candidate = parsedSpatial[spatialIndex.value(id)];
+                    if (inspectPath.startsWith("constraints/")) {
+                        auto cid = inspectPath.section('/', 1, 1);
+                        for (const auto &cn : candidate.constraints) {
+                            if (cn.id == cid && cn.plane.has_value()) {
+                                result.inspection = scene.inspect(*cn.plane);
+                                return result;
+                            }
+                        }
+                        throw domain::Error("ReferenceMissing",
+                                            "Constraint plane reference not found: " + cid);
+                    }
+                    if (inspectSlot >= 0 && size_t(inspectSlot) < candidate.constraints.size()) {
+                        check(candidate.constraints[size_t(inspectSlot)].plane.has_value(),
+                              "InvalidInput", "Constraint does not have a plane reference");
+                        result.inspection =
+                            scene.inspect(*candidate.constraints[size_t(inspectSlot)].plane);
+                        return result;
+                    }
+                }
                 const std::vector<domain::GeometryReference> *operands = nullptr;
                 std::vector<domain::GeometryReference> attached;
                 if (inspectAttachment) {
@@ -223,8 +291,10 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
         check(inspectOwner.isEmpty(), "ReferenceMissing", "Support operand owner is missing");
         result.evolution = scene.evolution;
         result.sketches = base;
+        result.spatialSketches = scene.spatialSketches;
         result.planes = scene.planes;
         result.axes = scene.axes;
+        result.derived = scene.derived;
         control.checkpoint("Model supports ready", 100);
         result.map(); // Refuse oversized output before publication.
         return result;

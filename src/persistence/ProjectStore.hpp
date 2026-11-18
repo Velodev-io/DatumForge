@@ -71,7 +71,8 @@ class ProjectStore {
                               bool allowFailure = false) const;
     QCborMap referenceCandidates(QString document, QString feature, QString token) const;
     QCborMap supportReferenceCandidates(QString document, const QCborMap &definition, QString owner,
-                                        int slot, const exchange::Control &control = {}) const;
+                                        int slot = 0, QString path = {},
+                                        const exchange::Control &control = {}) const;
     QCborMap previewSupports(QString document, const QCborMap &definition,
                              const exchange::Control &control = {},
                              std::optional<QCborArray> intents = std::nullopt,

@@ -155,13 +155,6 @@ std::vector<SupportCurve> evaluateSpatialSketch(const sketch::SpatialSketch &s) 
 
 namespace {
 
-struct BranchCandidate {
-    QString token;
-    Handle(Geom_Curve) curve;
-    double first = 0, last = 1;
-    gp_Pnt startPt;
-};
-
 std::vector<SupportCurve> collectSourceCurves(const domain::GeometryReference &ref,
                                               const SupportReferences &scene) {
     std::vector<SupportCurve> result;
@@ -226,8 +219,8 @@ TopoDS_Shape makeExtrusion(const std::vector<SupportCurve> &curves, const gp_Vec
 
 } // namespace
 
-std::vector<SupportCurve> evaluateSketchOnSketch(const model::DerivedCurve &c,
-                                                 const SupportReferences &scene) {
+std::vector<BranchCandidate> enumerateSketchOnSketchBranches(const model::DerivedCurve &c,
+                                                             const SupportReferences &scene) {
     check(c.sketchOnSketch.has_value(), "InvalidInput", "SketchOnSketch definition missing");
     const auto &def = *c.sketchOnSketch;
 
@@ -280,6 +273,7 @@ std::vector<SupportCurve> evaluateSketchOnSketch(const model::DerivedCurve &c,
                 cand.first = f;
                 cand.last = l;
                 cand.startPt = pStart;
+                cand.endPt = pEnd;
                 candidates.push_back(cand);
             }
         }
@@ -300,6 +294,14 @@ std::vector<SupportCurve> evaluateSketchOnSketch(const model::DerivedCurve &c,
     for (size_t i = 0; i < candidates.size(); ++i) {
         candidates[i].token = QString("branch/%1").arg(i);
     }
+    return candidates;
+}
+
+std::vector<SupportCurve> evaluateSketchOnSketch(const model::DerivedCurve &c,
+                                                 const SupportReferences &scene) {
+    check(c.sketchOnSketch.has_value(), "InvalidInput", "SketchOnSketch definition missing");
+    const auto &def = *c.sketchOnSketch;
+    auto candidates = enumerateSketchOnSketchBranches(c, scene);
 
     int branchCount = int(candidates.size());
     const auto &sel = def.branch;
@@ -337,8 +339,8 @@ std::vector<SupportCurve> evaluateSketchOnSketch(const model::DerivedCurve &c,
     return {sc};
 }
 
-std::vector<SupportCurve> evaluateSketchOnFaces(const model::DerivedCurve &c,
-                                                const SupportReferences &scene) {
+std::vector<BranchCandidate> enumerateSketchOnFacesBranches(const model::DerivedCurve &c,
+                                                            const SupportReferences &scene) {
     check(c.sketchOnFaces.has_value(), "InvalidInput", "SketchOnFaces definition missing");
     const auto &def = *c.sketchOnFaces;
 
@@ -377,6 +379,7 @@ std::vector<SupportCurve> evaluateSketchOnFaces(const model::DerivedCurve &c,
                     cand.first = f;
                     cand.last = l;
                     cand.startPt = curve->Value(f);
+                    cand.endPt = curve->Value(l);
                     candidates.push_back(cand);
                 }
             }
@@ -410,6 +413,7 @@ std::vector<SupportCurve> evaluateSketchOnFaces(const model::DerivedCurve &c,
                         cand.first = f;
                         cand.last = l;
                         cand.startPt = curve->Value(f);
+                        cand.endPt = curve->Value(l);
                         candidates.push_back(cand);
                     }
                 }
@@ -431,6 +435,14 @@ std::vector<SupportCurve> evaluateSketchOnFaces(const model::DerivedCurve &c,
     for (size_t i = 0; i < candidates.size(); ++i) {
         candidates[i].token = QString("branch/%1").arg(i);
     }
+    return candidates;
+}
+
+std::vector<SupportCurve> evaluateSketchOnFaces(const model::DerivedCurve &c,
+                                                const SupportReferences &scene) {
+    check(c.sketchOnFaces.has_value(), "InvalidInput", "SketchOnFaces definition missing");
+    const auto &def = *c.sketchOnFaces;
+    auto candidates = enumerateSketchOnFacesBranches(c, scene);
 
     int branchCount = int(candidates.size());
     const auto &sel = def.branch;
@@ -633,6 +645,62 @@ std::vector<SupportCurve> evaluateDerivedCurve(const model::DerivedCurve &c,
     if (c.kind == "HelixSpiral")
         return evaluateHelixSpiral(c, scene);
     throw domain::Error("InvalidInput", "Unsupported derived curve kind: " + c.kind);
+}
+
+QCborMap inspectBranchCandidates(const model::DerivedCurve &c, const SupportReferences &scene) {
+    std::vector<BranchCandidate> candidates;
+    model::BranchSelection currentBranch;
+    if (c.sketchOnSketch.has_value()) {
+        candidates = enumerateSketchOnSketchBranches(c, scene);
+        currentBranch = c.sketchOnSketch->branch;
+    } else if (c.sketchOnFaces.has_value()) {
+        candidates = enumerateSketchOnFacesBranches(c, scene);
+        currentBranch = c.sketchOnFaces->branch;
+    } else {
+        throw domain::Error("UnsupportedOperation",
+                            "Branch inspection requires a SketchOnSketch or SketchOnFaces curve");
+    }
+
+    QCborArray replacements;
+    QCborArray descriptions;
+    QCborArray candidateTokens;
+    int matchingIndex = -1;
+    for (size_t i = 0; i < candidates.size(); ++i) {
+        const auto &cand = candidates[i];
+        candidateTokens.append(cand.token);
+        if (cand.token == currentBranch.token)
+            matchingIndex = int(i);
+        model::BranchSelection sel;
+        sel.index = int(i);
+        sel.token = cand.token;
+        sel.reversed = false;
+        sel.startParam = 0.0;
+        sel.endParam = 1.0;
+        replacements.append(sel.map());
+        descriptions.append(sketch::fields(
+            {{"index", int(i)},
+             {"token", cand.token},
+             {"start_pt", QCborArray{cand.startPt.X() / 1000.0, cand.startPt.Y() / 1000.0,
+                                     cand.startPt.Z() / 1000.0}},
+             {"end_pt", QCborArray{cand.endPt.X() / 1000.0, cand.endPt.Y() / 1000.0,
+                                   cand.endPt.Z() / 1000.0}}}));
+    }
+
+    QString state;
+    if (candidates.empty())
+        state = "Missing";
+    else if (matchingIndex < 0)
+        state = candidates.size() > 1 ? "Ambiguous" : "Missing";
+    else if (candidates.size() > 1 && currentBranch.index != matchingIndex)
+        state = "Ambiguous";
+    else
+        state = "Direct";
+
+    return sketch::fields({{"state", state},
+                           {"candidates", candidateTokens},
+                           {"reference", currentBranch.map()},
+                           {"replacements", replacements},
+                           {"descriptions", descriptions}});
 }
 
 QCborArray tessellateSupportCurve(const SupportCurve &c, int samples) {

@@ -1,4 +1,5 @@
 #include "Datums.hpp"
+#include "model/DerivedCurve.hpp"
 #include <Standard_Failure.hxx>
 #include <gp_Ax1.hxx>
 #include <gp_Trsf.hxx>
@@ -76,7 +77,10 @@ sketch::Frame planeValue(const model::Datum &d, const SupportReferences &r) {
         c.curve->D1(r.parameter(refs[0]), p, tangent);
         if (c.last < c.first)
             tangent.Reverse();
-        return supportFrame(p, unit(tangent));
+        domain::check(tangent.SquareMagnitude() > 1e-24, "InvalidInput",
+                      "Ambiguous tangent or singular derivative at curve endpoint");
+        auto cf = model::CurveFrame::evaluate(siPoint(p), coordinates(tangent), d.reversed);
+        return sketch::Frame{cf.point, cf.normal, cf.binormal};
     }
     if (d.mode == "TangentSurface")
         return r.tangent(refs[0], d.parameters.value("u_fraction").toDouble(),

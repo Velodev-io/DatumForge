@@ -6,6 +6,7 @@
 #include "geometry/occt/Part.hpp"
 #include "geometry/occt/SupportReferences.hpp"
 #include "geometry/occt/Supports.hpp"
+#include "model/DerivedCurve.hpp"
 #include "sketch/Solver.hpp"
 #include <BRep_Builder.hxx>
 #include <QDateTime>
@@ -38,8 +39,10 @@ const QString interactionManifest = associatedDimensionManifest + ";sketch-inter
 const QString supportManifest = interactionManifest + ";model-supports=1";
 const QString modelingManifest = supportManifest + ";modeling-intents=1";
 const QString cm6Manifest = modelingManifest + ";cm6-features=1";
+const QString cm7Manifest = cm6Manifest + ";cm7-spatial=1";
 int manifestRequirement(QString value) {
-    return value == cm6Manifest                   ? 11
+    return value == cm7Manifest                   ? 12
+           : value == cm6Manifest                 ? 11
            : value == modelingManifest            ? 10
            : value == supportManifest             ? 9
            : value == interactionManifest         ? 8
@@ -78,6 +81,17 @@ int sketchRequirement(const QCborValue &value) {
                     }
                 }
             }
+        }
+        if ((map.contains(QStringLiteral("spatial_sketches")) &&
+             !map.value("spatial_sketches").toArray().isEmpty()) ||
+            (map.contains(QStringLiteral("derived_curves")) &&
+             !map.value("derived_curves").toArray().isEmpty())) {
+            result = 12;
+        }
+        if (map.contains(QStringLiteral("active_plane")) ||
+            QStringList{"SketchOnSketch", "SketchOnFaces", "CompositeCurve", "HelixSpiral"}
+                .contains(map.value("kind").toString())) {
+            result = 12;
         }
         if (map.contains(QStringLiteral("entities")) &&
             map.contains(QStringLiteral("constraints")) && map.value("version").toInteger() >= 2)
@@ -258,7 +272,7 @@ void compatible(Database &db) {
                       assemblyManifest, drawingManifest, coreManifest, constructionManifest,
                       primitiveManifest, editManifest, dimensionManifest,
                       associatedDimensionManifest, interactionManifest, supportManifest,
-                      modelingManifest, cm6Manifest}
+                      modelingManifest, cm6Manifest, cm7Manifest}
               .contains(db.scalar("SELECT manifest FROM project_meta").toString()),
           "IncompatibleSchema",
           "Unsupported semantic/object encoding; original file was not changed");
@@ -588,7 +602,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                   QStringList{assemblyManifest, drawingManifest, coreManifest, constructionManifest,
                               primitiveManifest, editManifest, dimensionManifest,
                               associatedDimensionManifest, interactionManifest, supportManifest,
-                              modelingManifest, cm6Manifest}
+                              modelingManifest, cm6Manifest, cm7Manifest}
                       .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
               "InvalidProject", "Invalid assembly collection owner/manifest");
         auto m = assembly::Model::parse(decode(row[2]));
@@ -611,7 +625,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                   QStringList{drawingManifest, coreManifest, constructionManifest,
                               primitiveManifest, editManifest, dimensionManifest,
                               associatedDimensionManifest, interactionManifest, supportManifest,
-                              modelingManifest, cm6Manifest}
+                              modelingManifest, cm6Manifest, cm7Manifest}
                       .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
               "InvalidProject", "Invalid drawing collection owner/manifest");
         auto model = drawing::Model::parse(decode(row[3]));
@@ -671,7 +685,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                               drawingManifest, coreManifest, constructionManifest,
                               primitiveManifest, editManifest, dimensionManifest,
                               associatedDimensionManifest, interactionManifest, supportManifest,
-                              modelingManifest, cm6Manifest}
+                              modelingManifest, cm6Manifest, cm7Manifest}
                       .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
               "InvalidProject", "Invalid feature collection context or manifest");
         auto collection = decode(row[0]);
@@ -702,6 +716,30 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
             auto model = model::SupportDefinition::parse(collection.value("supports").toMap());
             check(model.document == row[1].toString(), "InvalidProject",
                   "Support document mismatch");
+            if (!model.spatial_sketches.isEmpty() || !model.derived_curves.isEmpty()) {
+                check(semanticRequirement >= 12, "IncompatibleSchema",
+                      "CM7 spatial sketch and derived curve reader manifest required");
+            }
+            for (const auto &s : sketch::parseSpatial(model.spatial_sketches)) {
+                check(!sketchIds.contains(s.id), "InvalidProject",
+                      "Spatial sketch identity collision");
+                sketchIds.insert(s.id);
+                for (const auto &e : s.entities) {
+                    check(!sketchIds.contains(e.id), "InvalidProject",
+                          "Spatial entity identity collision");
+                    sketchIds.insert(e.id);
+                }
+                for (const auto &c : s.constraints) {
+                    check(!sketchIds.contains(c.id), "InvalidProject",
+                          "Spatial constraint identity collision");
+                    sketchIds.insert(c.id);
+                }
+            }
+            for (const auto &c : model::parseDerivedCurves(model.derived_curves)) {
+                check(!sketchIds.contains(c.id), "InvalidProject",
+                      "Derived curve identity collision");
+                sketchIds.insert(c.id);
+            }
             for (auto &datum : model.datums) {
                 auto ids = datum.outputs();
                 if (!ids.contains(datum.id))
@@ -745,7 +783,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                     QStringList{exchangeManifest, assemblyManifest, drawingManifest, coreManifest,
                                 constructionManifest, primitiveManifest, editManifest,
                                 dimensionManifest, associatedDimensionManifest, interactionManifest,
-                                supportManifest, modelingManifest, cm6Manifest}
+                                supportManifest, modelingManifest, cm6Manifest, cm7Manifest}
                         .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
                 "IncompatibleSchema", "History manifest required");
             check(collection.value("stale").isBool(), "InvalidProject",
@@ -976,7 +1014,7 @@ QCborMap ProjectStore::referenceCandidates(QString document, QString ownerId, QS
     return result;
 }
 QCborMap ProjectStore::supportReferenceCandidates(QString document, const QCborMap &definition,
-                                                  QString owner, int slot,
+                                                  QString owner, int slot, QString path,
                                                   const exchange::Control &control) const {
     auto model = model::SupportDefinition::parse(definition);
     check(model.document == "Self" || model.document == document, "StaleSession",
@@ -986,13 +1024,13 @@ QCborMap ProjectStore::supportReferenceCandidates(QString document, const QCborM
               db->scalar("SELECT type FROM documents WHERE id=?", {document}).toString() == "Part",
           "UnsupportedOperation", "Support inspection requires a Part");
     domain::id(owner);
-    check(slot >= 0 && slot < 32, "InvalidInput", "Bounded support operand slot required");
+    check(slot >= -1 && slot < 32, "InvalidInput", "Bounded support operand slot required");
     auto result = geometry::evaluateSupports(
                       model,
                       [&](const QCborArray &sketches, const QCborArray &features) {
                           return buildPart(*db, sketches, features, &resultCache);
                       },
-                      control, owner, slot)
+                      control, owner, slot, path)
                       .inspection;
     result.insert(
         QStringLiteral("fingerprint"),
@@ -1001,6 +1039,8 @@ QCborMap ProjectStore::supportReferenceCandidates(QString document, const QCborM
             .toHex());
     result.insert(QStringLiteral("owner"), owner);
     result.insert(QStringLiteral("slot"), slot);
+    if (!path.isEmpty())
+        result.insert(QStringLiteral("path"), path);
     result.insert(QStringLiteral("revision"), revision());
     check(QCborValue(result).toCbor().size() <= qsizetype(limits::control), "ResourceLimit",
           "Support inspection exceeds control admission");
@@ -1013,10 +1053,65 @@ QCborMap ProjectStore::previewSupports(QString document, const QCborMap &definit
     check(db &&
               db->scalar("SELECT type FROM documents WHERE id=?", {document}).toString() == "Part",
           "UnsupportedOperation", "Model support preview requires a Part document");
-    auto model = model::SupportDefinition::parse(definition);
+    auto defMap = definition;
+    auto priorSupports = featureState(document).value("supports").toMap();
+    if (!defMap.contains(QStringLiteral("spatial_sketches")) &&
+        priorSupports.contains(QStringLiteral("spatial_sketches")))
+        defMap.insert(QStringLiteral("spatial_sketches"),
+                      priorSupports.value(QStringLiteral("spatial_sketches")));
+    if (!defMap.contains(QStringLiteral("derived_curves")) &&
+        priorSupports.contains(QStringLiteral("derived_curves")))
+        defMap.insert(QStringLiteral("derived_curves"),
+                      priorSupports.value(QStringLiteral("derived_curves")));
+    if (priorSupports.contains(QStringLiteral("history"))) {
+        auto priorHistory = priorSupports.value("history").toArray();
+        auto currentHistory = defMap.value("history").toArray();
+        QSet<QString> currentHistorySet;
+        for (auto v : currentHistory)
+            currentHistorySet.insert(v.toString());
+        QCborArray mergedHistory;
+        QSet<QString> added;
+        for (auto v : priorHistory) {
+            auto hid = v.toString();
+            if (currentHistorySet.contains(hid)) {
+                mergedHistory.append(hid);
+                added.insert(hid);
+            } else {
+                bool isPreserved = false;
+                for (auto s : defMap.value("spatial_sketches").toArray()) {
+                    if (s.toMap().value("id").toString() == hid) {
+                        isPreserved = true;
+                        break;
+                    }
+                }
+                if (!isPreserved) {
+                    for (auto c : defMap.value("derived_curves").toArray()) {
+                        if (c.toMap().value("id").toString() == hid) {
+                            isPreserved = true;
+                            break;
+                        }
+                    }
+                }
+                if (isPreserved) {
+                    mergedHistory.append(hid);
+                    added.insert(hid);
+                }
+            }
+        }
+        for (auto v : currentHistory) {
+            auto hid = v.toString();
+            if (!added.contains(hid)) {
+                mergedHistory.append(hid);
+                added.insert(hid);
+            }
+        }
+        defMap.insert(QStringLiteral("history"), mergedHistory);
+    }
+    auto model = model::SupportDefinition::parse(defMap);
     check(model.document == "Self" || model.document == document, "StaleSession",
           "Model support document changed");
     model.document = document;
+    model.sequence();
     auto result = geometry::evaluateModeling(
         model,
         intents ? *intents
@@ -1350,45 +1445,195 @@ QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse,
     if (e.command == "SetModelSupports" || e.command == "ResolveSupportReference") {
         check(db->scalar("SELECT type FROM documents WHERE id=?", {doc}).toString() == "Part",
               "UnsupportedOperation", "Model supports require a Part");
-        auto model = model::SupportDefinition::parse(p.value("model").toMap());
+        check(p.value("model").isMap(), "InvalidInput", "Support model map required");
+        auto modelMap = p.value("model").toMap();
+        auto priorSupports = featureState(doc).value("supports").toMap();
+        if (p.contains(QStringLiteral("spatial_sketches"))) {
+            check(p.value("spatial_sketches").isArray(), "InvalidInput",
+                  "Typed spatial_sketches collection required");
+            modelMap.insert(QStringLiteral("spatial_sketches"), p.value("spatial_sketches"));
+        } else if (!modelMap.contains(QStringLiteral("spatial_sketches")) &&
+                   priorSupports.contains(QStringLiteral("spatial_sketches"))) {
+            modelMap.insert(QStringLiteral("spatial_sketches"),
+                            priorSupports.value(QStringLiteral("spatial_sketches")));
+        }
+        if (p.contains(QStringLiteral("derived_curves"))) {
+            check(p.value("derived_curves").isArray(), "InvalidInput",
+                  "Typed derived_curves collection required");
+            modelMap.insert(QStringLiteral("derived_curves"), p.value("derived_curves"));
+        } else if (!modelMap.contains(QStringLiteral("derived_curves")) &&
+                   priorSupports.contains(QStringLiteral("derived_curves"))) {
+            modelMap.insert(QStringLiteral("derived_curves"),
+                            priorSupports.value(QStringLiteral("derived_curves")));
+        }
+        if (priorSupports.contains(QStringLiteral("history"))) {
+            auto priorHistory = priorSupports.value("history").toArray();
+            auto currentHistory = modelMap.value("history").toArray();
+            QSet<QString> currentHistorySet;
+            for (auto v : currentHistory)
+                currentHistorySet.insert(v.toString());
+            QCborArray mergedHistory;
+            QSet<QString> added;
+            for (auto v : priorHistory) {
+                auto hid = v.toString();
+                if (currentHistorySet.contains(hid)) {
+                    mergedHistory.append(hid);
+                    added.insert(hid);
+                } else {
+                    bool isPreserved = false;
+                    for (auto s : modelMap.value("spatial_sketches").toArray()) {
+                        if (s.toMap().value("id").toString() == hid) {
+                            isPreserved = true;
+                            break;
+                        }
+                    }
+                    if (!isPreserved) {
+                        for (auto c : modelMap.value("derived_curves").toArray()) {
+                            if (c.toMap().value("id").toString() == hid) {
+                                isPreserved = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (isPreserved) {
+                        mergedHistory.append(hid);
+                        added.insert(hid);
+                    }
+                }
+            }
+            for (auto v : currentHistory) {
+                auto hid = v.toString();
+                if (!added.contains(hid)) {
+                    mergedHistory.append(hid);
+                    added.insert(hid);
+                }
+            }
+            modelMap.insert(QStringLiteral("history"), mergedHistory);
+        }
+        auto model = model::SupportDefinition::parse(modelMap);
         check(model.document == "Self" || model.document == doc, "StaleSession",
               "Support document changed");
         model.document = doc;
+        model.sequence();
         if (e.command == "ResolveSupportReference") {
-            wire::keys(p, {"model", "owner", "slot", "replacement", "fingerprint"});
+            QSet<QString> allowed{"model", "owner", "replacement", "fingerprint"};
+            if (p.contains(QStringLiteral("slot")))
+                allowed.insert(QStringLiteral("slot"));
+            if (p.contains(QStringLiteral("path")))
+                allowed.insert(QStringLiteral("path"));
+            wire::keys(p, allowed);
             auto id = domain::id(wire::text(p, "owner"));
-            auto slot = wire::integer(p, "slot");
-            check(slot >= 0 && slot < 32, "InvalidInput", "Bounded support operand slot required");
-            auto inspection = supportReferenceCandidates(doc, model.map(), id, int(slot), control);
+            int slot = p.contains(QStringLiteral("slot")) ? int(wire::integer(p, "slot")) : 0;
+            check(slot >= -1 && slot < 32, "InvalidInput", "Bounded support operand slot required");
+            QString path = p.contains(QStringLiteral("path")) ? wire::text(p, "path") : QString{};
+            auto inspection = supportReferenceCandidates(doc, model.map(), id, slot, path, control);
             check(inspection.value("fingerprint") == p.value("fingerprint"), "StaleRevision",
                   "Support model changed before repair");
             check(inspection.value("replacements").toArray().contains(p.value("replacement")),
                   "InvalidInput", "Choose one of the current exact typed candidates");
-            auto replacement = domain::GeometryReference::parse(p.value("replacement").toMap());
+            auto replacementMap = p.value("replacement").toMap();
             bool replaced = false;
             for (auto &datum : model.datums)
                 if (datum.id == id || datum.outputs().contains(id)) {
                     check(size_t(slot) < datum.references.size(), "InvalidInput",
                           "Missing operand slot");
-                    datum.references[size_t(slot)] = replacement;
+                    datum.references[size_t(slot)] =
+                        domain::GeometryReference::parse(replacementMap);
                     replaced = true;
                 }
             for (auto &conversion : model.conversions)
                 if (conversion.id == id) {
                     check(size_t(slot) < conversion.sources.size(), "InvalidInput",
                           "Missing operand slot");
-                    conversion.sources[size_t(slot)] = replacement;
+                    conversion.sources[size_t(slot)] =
+                        domain::GeometryReference::parse(replacementMap);
                     replaced = true;
                 }
             for (auto &attachment : model.attachments)
                 if (attachment.sketch == id && slot == 0) {
-                    attachment.reference = replacement;
+                    attachment.reference = domain::GeometryReference::parse(replacementMap);
                     replaced = true;
                 }
+            auto parsedDerived = model::parseDerivedCurves(model.derived_curves);
+            for (auto &c : parsedDerived) {
+                if (c.id == id) {
+                    if (path == "branch" ||
+                        (path.isEmpty() && (c.sketchOnSketch || c.sketchOnFaces) &&
+                         (slot == -1 ||
+                          (slot == 0 && replacementMap.contains(QStringLiteral("token")))))) {
+                        auto branchSel = model::BranchSelection::parse(replacementMap);
+                        if (c.sketchOnSketch)
+                            c.sketchOnSketch->branch = branchSel;
+                        if (c.sketchOnFaces)
+                            c.sketchOnFaces->branch = branchSel;
+                        replaced = true;
+                    } else if (c.sketchOnSketch) {
+                        auto ref = domain::GeometryReference::parse(replacementMap);
+                        if (slot == 0)
+                            c.sketchOnSketch->sketch1 = ref;
+                        else if (slot == 1)
+                            c.sketchOnSketch->sketch2 = ref;
+                        replaced = true;
+                    } else if (c.sketchOnFaces) {
+                        auto ref = domain::GeometryReference::parse(replacementMap);
+                        if (slot == 0)
+                            c.sketchOnFaces->sketch = ref;
+                        else if (slot >= 1 && slot <= int(c.sketchOnFaces->faces.size()))
+                            c.sketchOnFaces->faces[size_t(slot - 1)] = ref;
+                        else if (c.sketchOnFaces->direction.has_value() &&
+                                 slot == int(c.sketchOnFaces->faces.size()) + 1)
+                            c.sketchOnFaces->direction = ref;
+                        replaced = true;
+                    } else if (c.compositeCurve) {
+                        check(size_t(slot) < c.compositeCurve->members.size(), "InvalidInput",
+                              "Missing operand slot");
+                        c.compositeCurve->members[size_t(slot)].source =
+                            domain::GeometryReference::parse(replacementMap);
+                        replaced = true;
+                    } else if (c.helixSpiral) {
+                        auto ref = domain::GeometryReference::parse(replacementMap);
+                        if (slot == 0)
+                            c.helixSpiral->axis = ref;
+                        else if (slot == 1)
+                            c.helixSpiral->center = ref;
+                        replaced = true;
+                    }
+                }
+            }
+            if (replaced && !parsedDerived.empty())
+                model.derived_curves = model::encodeDerivedCurves(parsedDerived);
+            auto parsedSpatial = sketch::parseSpatial(model.spatial_sketches);
+            for (auto &s : parsedSpatial) {
+                if (s.id == id) {
+                    auto ref = domain::GeometryReference::parse(replacementMap);
+                    if (path.startsWith("constraints/")) {
+                        auto cid = path.section('/', 1, 1);
+                        for (auto &cn : s.constraints) {
+                            if (cn.id == cid) {
+                                cn.plane = ref;
+                                replaced = true;
+                                break;
+                            }
+                        }
+                    } else if (size_t(slot) < s.constraints.size()) {
+                        s.constraints[size_t(slot)].plane = ref;
+                        replaced = true;
+                    }
+                }
+            }
+            if (replaced && !parsedSpatial.empty())
+                model.spatial_sketches = sketch::encodeSpatial(parsedSpatial);
             check(replaced, "ReferenceMissing", "Support owner is missing");
-        } else
-            wire::keys(p, p.contains(QStringLiteral("intents")) ? QSet<QString>{"model", "intents"}
-                                                                : QSet<QString>{"model"});
+        } else {
+            QSet<QString> allowed{"model"};
+            if (p.contains(QStringLiteral("intents")))
+                allowed.insert(QStringLiteral("intents"));
+            if (p.contains(QStringLiteral("spatial_sketches")))
+                allowed.insert(QStringLiteral("spatial_sketches"));
+            if (p.contains(QStringLiteral("derived_curves")))
+                allowed.insert(QStringLiteral("derived_curves"));
+            wire::keys(p, allowed);
+        }
         check(!p.contains(QStringLiteral("intents")) || p.value("intents").isArray(),
               "InvalidInput", "Typed modeling intents required");
         auto priorModeling = featureState(doc).value("modeling").toMap();
@@ -1719,11 +1964,11 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
                         "definition=excluded.definition",
                         {entity, encode(collection)});
             db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN "
-                    "(?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     {historyManifest, exchangeManifest, assemblyManifest, drawingManifest,
                      coreManifest, constructionManifest, primitiveManifest, editManifest,
                      dimensionManifest, associatedDimensionManifest, interactionManifest,
-                     supportManifest, modelingManifest, cm6Manifest});
+                     supportManifest, modelingManifest, cm6Manifest, cm7Manifest});
         } else if (type == "set_features") {
             auto a = d.value("features").toArray();
             buildPart(*db, profileSketches(wire::text(d, "document"), a), a, &resultCache);
@@ -1750,12 +1995,12 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
                     "definition=excluded.definition",
                     {entity, bytes});
             db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN "
-                    "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     {sketchManifest, featureManifest, historyManifest, exchangeManifest,
                      assemblyManifest, drawingManifest, coreManifest, constructionManifest,
                      primitiveManifest, editManifest, dimensionManifest,
                      associatedDimensionManifest, interactionManifest, supportManifest,
-                     modelingManifest, cm6Manifest});
+                     modelingManifest, cm6Manifest, cm7Manifest});
         } else if (type == "set_parameter")
             db->run("INSERT INTO parameters VALUES(?,?,?,?) ON CONFLICT(owner,name) DO UPDATE SET "
                     "dimension=excluded.dimension,value_si=excluded.value_si",
@@ -1803,7 +2048,8 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
     // history may still contain extended sketches even when the active state does not.
     auto required = std::max(retainedRequirement, sketchRequirement(d));
     if (required >= 2)
-        db->run("UPDATE project_meta SET manifest=?", {required >= 11   ? cm6Manifest
+        db->run("UPDATE project_meta SET manifest=?", {required >= 12   ? cm7Manifest
+                                                       : required >= 11 ? cm6Manifest
                                                        : required >= 10 ? modelingManifest
                                                        : required >= 9  ? supportManifest
                                                        : required >= 8  ? interactionManifest
@@ -2444,7 +2690,8 @@ void ProjectStore::migrationCopy(QString source, QString destination, const Boun
     check(prior != drawingManifest && prior != coreManifest && prior != constructionManifest &&
               prior != primitiveManifest && prior != editManifest && prior != dimensionManifest &&
               prior != associatedDimensionManifest && prior != interactionManifest &&
-              prior != supportManifest && prior != modelingManifest && prior != cm6Manifest,
+              prior != supportManifest && prior != modelingManifest && prior != cm6Manifest &&
+              prior != cm7Manifest,
           "IncompatibleSchema", "Project already uses the current semantic manifest");
     spaceFor(QFileInfo(destination).absolutePath(), QFileInfo(source).size() * 2);
     QTemporaryFile staged(QFileInfo(destination).absolutePath() + "/.cad-migration-XXXXXX");
@@ -2573,14 +2820,14 @@ QCborMap ProjectStore::importGeometry(const wire::Envelope &request, QString pat
     auto after = deltaFor(edit, before);
     auto next = revision() + 1;
     apply(after, next);
-    db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN (?,?,?,?,?,?,?,?,?,?,?)",
+    db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN (?,?,?,?,?,?,?,?,?,?,?,?)",
             {db->scalar("SELECT count(*) FROM drawing_views").toInt() > 0
                  ? drawingManifest
                  : (db->scalar("SELECT count(*) FROM occurrences").toInt() > 0 ? assemblyManifest
                                                                                : exchangeManifest),
              coreManifest, constructionManifest, primitiveManifest, editManifest, dimensionManifest,
              associatedDimensionManifest, interactionManifest, supportManifest, modelingManifest,
-             cm6Manifest});
+             cm6Manifest, cm7Manifest});
     auto cursor = db->scalar("SELECT history_cursor FROM project_meta").toLongLong();
     db->run("DELETE FROM history WHERE position>?", {cursor});
     db->run("UPDATE project_meta SET revision=?,history_cursor=?", {next, cursor + 1});
