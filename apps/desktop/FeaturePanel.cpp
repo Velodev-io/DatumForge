@@ -357,6 +357,94 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
     threadTermination->addItems({"UpToNext", "Blind", "ThroughAll"});
     threadDepth = spin("threadDepth", "Thread depth", 25, 1e-4, 1e4);
 
+    // CM7 Derived Curve Controls
+    projectedMode = combo("projectedMode", "Projected curve mode");
+    projectedMode->addItems({"SketchOnSketch", "SketchOnFaces"});
+    connect(projectedMode, &QComboBox::currentIndexChanged, this, [this] {
+        fieldsForKind();
+        invalidate();
+    });
+
+    projectedSketch1 = combo("projectedSketch1", "First sketch");
+    connect(projectedSketch1, &QComboBox::currentIndexChanged, this, [this] { invalidate(); });
+    projectedSketch2 = combo("projectedSketch2", "Second sketch");
+    connect(projectedSketch2, &QComboBox::currentIndexChanged, this, [this] { invalidate(); });
+
+    projectedFaceSketch = combo("projectedFaceSketch", "Source sketch");
+    connect(projectedFaceSketch, &QComboBox::currentIndexChanged, this, [this] { invalidate(); });
+
+    projectedFaces = new QListWidget;
+    projectedFaces->setObjectName("projectedFaces");
+    projectedFaces->setMaximumHeight(100);
+    form->addRow("Faces to project onto", projectedFaces);
+    connect(projectedFaces, &QListWidget::itemChanged, this, [this] { invalidate(); });
+
+    projectedVectorMode = combo("projectedVectorMode", "Projection direction mode");
+    projectedVectorMode->addItems({"AlongVector", "NormalToFace"});
+    connect(projectedVectorMode, &QComboBox::currentIndexChanged, this, [this] {
+        fieldsForKind();
+        invalidate();
+    });
+
+    projectedDirection = combo("projectedDirection", "Projection vector direction");
+    connect(projectedDirection, &QComboBox::currentIndexChanged, this, [this] { invalidate(); });
+
+    projectedBranch = ispin("projectedBranch", "Branch index", 0, 0, 16);
+    connect(projectedBranch, &QSpinBox::valueChanged, this, [this] { invalidate(); });
+
+    projectedBranchLabel = new QLabel;
+    projectedBranchLabel->setObjectName("projectedBranchLabel");
+    form->addRow("Branch selection", projectedBranchLabel);
+
+    projectedReversed = check("projectedReversed", "Reverse curve direction");
+    projectedStartParam = spin("projectedStartParam", "Start parameter (0..1)", 0.0, 0.0, 1.0);
+    projectedEndParam = spin("projectedEndParam", "End parameter (0..1)", 1.0, 0.0, 1.0);
+
+    compositeMembers = new QListWidget;
+    compositeMembers->setObjectName("compositeMembers");
+    compositeMembers->setMaximumHeight(120);
+    form->addRow("Composite members", compositeMembers);
+    connect(compositeMembers, &QListWidget::itemChanged, this, [this] { invalidate(); });
+
+    compositeAddMember = new QPushButton("Add member");
+    compositeAddMember->setObjectName("compositeAddMember");
+    form->addRow(compositeAddMember);
+
+    compositeRemoveMember = new QPushButton("Remove member");
+    compositeRemoveMember->setObjectName("compositeRemoveMember");
+    form->addRow(compositeRemoveMember);
+
+    compositeReverseMember = new QPushButton("Toggle reverse");
+    compositeReverseMember->setObjectName("compositeReverseMember");
+    form->addRow(compositeReverseMember);
+
+    compositeClosed = check("compositeClosed", "Closed path");
+    compositeDiagnostic = new QLabel;
+    compositeDiagnostic->setObjectName("compositeDiagnostic");
+    form->addRow("Path diagnostic", compositeDiagnostic);
+
+    helixMode = combo("helixMode", "Helix / spiral mode");
+    helixMode->addItems({"PitchAndRevolution", "HeightAndRevolution", "HeightAndPitch", "Spiral"});
+    connect(helixMode, &QComboBox::currentIndexChanged, this, [this] {
+        fieldsForKind();
+        invalidate();
+    });
+
+    helixAxis = combo("helixAxis", "Helix axis");
+    connect(helixAxis, &QComboBox::currentIndexChanged, this, [this] { invalidate(); });
+
+    helixCenter = combo("helixCenter", "Helix center (optional)");
+    connect(helixCenter, &QComboBox::currentIndexChanged, this, [this] { invalidate(); });
+
+    helixRadius = spin("helixRadius", "Starting radius (mm)", 15.0, 1e-4, 1e4);
+    helixPitch = spin("helixPitch", "Pitch (mm)", 5.0, 1e-4, 1e4);
+    helixHeight = spin("helixHeight", "Height (mm)", 20.0, 0.0, 1e4);
+    helixRevolutions = spin("helixRevolutions", "Revolutions", 4.0, 1e-4, 1000.0);
+    helixStartAngle = spin("helixStartAngle", "Start angle (deg)", 0.0, 0.0, 360.0);
+    helixTaperAngle = spin("helixTaperAngle", "Taper angle (deg)", 0.0, -89.0, 89.0);
+    helixClockwise = check("helixClockwise", "Clockwise");
+    helixClockwise->setChecked(true);
+
     selectDraftFaces = new QPushButton("Select faces to draft…");
     selectDraftFaces->setObjectName("featureSelectDraftFaces");
     form->addRow(selectDraftFaces);
@@ -707,7 +795,7 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
         if (editing) {
             bool idle = !client->outstanding();
             accept->setEnabled(idle && validPreview &&
-                               client->state().phase == Phase::PreviewReady);
+                               (isDerivedCurve || client->state().phase == Phase::PreviewReady));
             previewButton->setEnabled(idle);
             if (client->state().phase == Phase::Failed) {
                 supportPreviewPending = false;
@@ -906,10 +994,88 @@ void FeaturePanel::fieldsForKind() {
                               addFilletPoint,
                               removeFilletPoint,
                               chamferReferenceFace,
-                              chamferPropagateTangent};
+                              chamferPropagateTangent,
+                              projectedMode,
+                              projectedSketch1,
+                              projectedSketch2,
+                              projectedFaceSketch,
+                              projectedFaces,
+                              projectedVectorMode,
+                              projectedDirection,
+                              projectedBranch,
+                              projectedBranchLabel,
+                              projectedReversed,
+                              projectedStartParam,
+                              projectedEndParam,
+                              compositeMembers,
+                              compositeAddMember,
+                              compositeRemoveMember,
+                              compositeReverseMember,
+                              compositeClosed,
+                              compositeDiagnostic,
+                              helixMode,
+                              helixAxis,
+                              helixCenter,
+                              helixRadius,
+                              helixPitch,
+                              helixHeight,
+                              helixRevolutions,
+                              helixStartAngle,
+                              helixTaperAngle,
+                              helixClockwise};
         for (QWidget *w : widgets)
             show(w, false);
     };
+
+    if (isDerivedCurve) {
+        hideAll();
+        show(source, false);
+        show(distribution, false);
+        show(size, false);
+        show(spacing, false);
+        show(count, false);
+        show(through, false);
+        for (int i = 0; i < 3; ++i) {
+            show(origin[i], false);
+            show(axis[i], false);
+        }
+        if (draft.kind == "ProjectedCurve") {
+            show(projectedMode, true);
+            show(projectedBranch, true);
+            show(projectedBranchLabel, true);
+            show(projectedReversed, true);
+            show(projectedStartParam, true);
+            show(projectedEndParam, true);
+            if (projectedMode->currentText() == "SketchOnSketch") {
+                show(projectedSketch1, true);
+                show(projectedSketch2, true);
+            } else {
+                show(projectedFaceSketch, true);
+                show(projectedFaces, true);
+                show(projectedVectorMode, true);
+                show(projectedDirection, projectedVectorMode->currentText() == "AlongVector");
+            }
+        } else if (draft.kind == "CompositeCurve") {
+            show(compositeMembers, true);
+            show(compositeAddMember, true);
+            show(compositeRemoveMember, true);
+            show(compositeReverseMember, true);
+            show(compositeClosed, true);
+            show(compositeDiagnostic, true);
+        } else if (draft.kind == "HelixSpiral") {
+            show(helixMode, true);
+            show(helixAxis, true);
+            show(helixCenter, true);
+            show(helixRadius, true);
+            show(helixPitch, true);
+            show(helixHeight, true);
+            show(helixRevolutions, true);
+            show(helixStartAngle, true);
+            show(helixTaperAngle, true);
+            show(helixClockwise, true);
+        }
+        return;
+    }
 
     if (isModeling) {
         // Hide legacy controls
@@ -1245,7 +1411,9 @@ void FeaturePanel::begin(QString kind, QString editId) {
                        !document.value("modeling").toMap().value("intents").toArray().empty();
 
     isModeling = false;
+    isDerivedCurve = false;
     modelingDraft = {};
+    curveDraft = {};
     draft = features::Feature{};
 
     if (!editId.isEmpty()) {
@@ -1258,7 +1426,20 @@ void FeaturePanel::begin(QString kind, QString editId) {
                 }
             }
         }
-        if (!isModeling) {
+        if (!isModeling && document.contains(QStringLiteral("model_supports"))) {
+            auto sup = model::SupportDefinition::parse(document.value("model_supports").toMap());
+            for (const auto &c : model::parseDerivedCurves(sup.derived_curves)) {
+                if (c.id == editId) {
+                    isDerivedCurve = true;
+                    curveDraft = c;
+                    kind = c.kind == "HelixSpiral"      ? "HelixSpiral"
+                           : c.kind == "CompositeCurve" ? "CompositeCurve"
+                                                        : "ProjectedCurve";
+                    break;
+                }
+            }
+        }
+        if (!isModeling && !isDerivedCurve) {
             auto definitions = document.value("features").toArray();
             for (auto f : definitions) {
                 if (f.toMap().value("id").toString() == editId) {
@@ -1268,7 +1449,10 @@ void FeaturePanel::begin(QString kind, QString editId) {
             }
         }
     } else {
-        if (kind == "Draft" || kind == "Rib" || kind == "CosmeticThread") {
+        if (kind == "ProjectedCurve" || kind == "CompositeCurve" || kind == "HelixSpiral") {
+            isDerivedCurve = true;
+            isModeling = false;
+        } else if (kind == "Draft" || kind == "Rib" || kind == "CosmeticThread") {
             isModeling = true;
         } else if (hasModeling) {
             isModeling = true;
@@ -1277,6 +1461,98 @@ void FeaturePanel::begin(QString kind, QString editId) {
         } else {
             isModeling = false;
         }
+    }
+
+    if (isDerivedCurve) {
+        draft.id = editId.isEmpty() ? QUuid::createUuid().toString(QUuid::WithoutBraces) : editId;
+        draft.kind = kind;
+        draft.name = kind;
+        name->setText(draft.name);
+        title->setText(kind);
+
+        projectedSketch1->clear();
+        projectedSketch2->clear();
+        projectedFaceSketch->clear();
+        for (auto s : document.value("sketches").toArray()) {
+            auto sm = s.toMap();
+            auto sName = sm.value("name").toString();
+            auto sId = sm.value("id").toString();
+            projectedSketch1->addItem(sName, sId);
+            projectedSketch2->addItem(sName, sId);
+            projectedFaceSketch->addItem(sName, sId);
+        }
+        if (projectedSketch2->count() > 1)
+            projectedSketch2->setCurrentIndex(1);
+
+        helixAxis->clear();
+        projectedDirection->clear();
+        for (auto axName : {"X", "Y", "Z"}) {
+            helixAxis->addItem(QString("Axis ") + axName, QString("axis/") + axName);
+            projectedDirection->addItem(QString("Axis ") + axName, QString("axis/") + axName);
+        }
+        if (document.contains(QStringLiteral("model_supports"))) {
+            auto sup = model::SupportDefinition::parse(document.value("model_supports").toMap());
+            for (const auto &d : sup.datums) {
+                if (d.kind == "DatumAxis") {
+                    helixAxis->addItem(d.id, d.id);
+                    projectedDirection->addItem(d.id, d.id);
+                }
+            }
+        }
+        helixAxis->setCurrentIndex(2);
+
+        helixCenter->clear();
+        helixCenter->addItem("None (origin)", QString());
+
+        if (!editId.isEmpty()) {
+            if (curveDraft.helixSpiral) {
+                const auto &h = *curveDraft.helixSpiral;
+                helixMode->setCurrentText(h.mode);
+                helixRadius->setValue(h.radius / unit());
+                helixPitch->setValue(h.pitch / unit());
+                helixHeight->setValue(h.height / unit());
+                helixRevolutions->setValue(h.revolutions);
+                helixStartAngle->setValue(h.startAngle * 180.0 / std::numbers::pi);
+                helixTaperAngle->setValue(h.taperAngle * 180.0 / std::numbers::pi);
+                helixClockwise->setChecked(h.clockwise);
+                int axIdx = helixAxis->findData(h.axis.object);
+                if (axIdx >= 0)
+                    helixAxis->setCurrentIndex(axIdx);
+            } else if (curveDraft.sketchOnSketch) {
+                const auto &sos = *curveDraft.sketchOnSketch;
+                projectedMode->setCurrentText("SketchOnSketch");
+                int s1Idx = projectedSketch1->findData(sos.sketch1.object);
+                if (s1Idx >= 0)
+                    projectedSketch1->setCurrentIndex(s1Idx);
+                int s2Idx = projectedSketch2->findData(sos.sketch2.object);
+                if (s2Idx >= 0)
+                    projectedSketch2->setCurrentIndex(s2Idx);
+                projectedBranch->setValue(sos.branch.index);
+                projectedReversed->setChecked(sos.branch.reversed);
+                projectedStartParam->setValue(sos.branch.startParam);
+                projectedEndParam->setValue(sos.branch.endParam);
+            } else if (curveDraft.sketchOnFaces) {
+                const auto &sof = *curveDraft.sketchOnFaces;
+                projectedMode->setCurrentText("SketchOnFaces");
+                int sIdx = projectedFaceSketch->findData(sof.sketch.object);
+                if (sIdx >= 0)
+                    projectedFaceSketch->setCurrentIndex(sIdx);
+                projectedVectorMode->setCurrentText(sof.mode);
+                projectedBranch->setValue(sof.branch.index);
+                projectedReversed->setChecked(sof.branch.reversed);
+                projectedStartParam->setValue(sof.branch.startParam);
+                projectedEndParam->setValue(sof.branch.endParam);
+            } else if (curveDraft.compositeCurve) {
+                compositeClosed->setChecked(curveDraft.compositeCurve->closed);
+            }
+        }
+        editing = true;
+        validPreview = false;
+        installing = false;
+        fieldsForKind();
+        invalidate();
+        emit editingChanged();
+        return;
     }
 
     if (isModeling) {
@@ -3062,7 +3338,192 @@ QCborArray FeaturePanel::definitionsModeling() const {
 
 void FeaturePanel::preview() {
     try {
+        if (isDerivedCurve) {
+            curveDraft.id =
+                draft.id.isEmpty() ? QUuid::createUuid().toString(QUuid::WithoutBraces) : draft.id;
+            curveDraft.name =
+                name->text().trimmed().isEmpty() ? draft.kind : name->text().trimmed();
+            if (draft.kind == "HelixSpiral") {
+                curveDraft.kind = "HelixSpiral";
+                model::HelixSpiralDefinition hd;
+                hd.mode = helixMode->currentText();
+                domain::GeometryReference axRef;
+                QString axisObj = helixAxis->currentData().toString();
+                if (!wire::uuid(axisObj)) {
+                    QString axName = axisObj.startsWith("axis/") ? axisObj.mid(5) : "Z";
+                    auto sup =
+                        model::SupportDefinition::parse(document.value("model_supports").toMap());
+                    QString foundId;
+                    for (const auto &d : sup.datums) {
+                        if (d.kind == "DatumAxis" && d.mode == "Principal" &&
+                            d.parameters.value("axis").toString() == axName) {
+                            foundId = d.id;
+                            break;
+                        }
+                    }
+                    if (foundId.isEmpty()) {
+                        model::Datum axDatum;
+                        axDatum.kind = "DatumAxis";
+                        axDatum.mode = "Principal";
+                        axDatum.parameters = sketch::fields({{"axis", axName}});
+                        sup.datums.push_back(axDatum);
+                        sup.sequence();
+                        foundId = axDatum.id;
+                        document.insert(QStringLiteral("model_supports"), sup.map());
+                    }
+                    axisObj = foundId;
+                }
+                axRef.object = axisObj;
+                axRef.role = "Axis";
+                hd.axis = axRef;
+                if (helixCenter->currentIndex() > 0 &&
+                    !helixCenter->currentData().toString().isEmpty()) {
+                    domain::GeometryReference cRef;
+                    cRef.object = helixCenter->currentData().toString();
+                    cRef.role = "Point";
+                    hd.center = cRef;
+                }
+                hd.radius = helixRadius->value() * unit();
+                hd.pitch = helixPitch->value() * unit();
+                hd.height = helixHeight->value() * unit();
+                hd.revolutions = helixRevolutions->value();
+                hd.startAngle = helixStartAngle->value() * std::numbers::pi / 180.0;
+                hd.taperAngle = helixTaperAngle->value() * std::numbers::pi / 180.0;
+                hd.clockwise = helixClockwise->isChecked();
+                curveDraft.helixSpiral = hd;
+                curveDraft.validate();
+                diagnostic->setText("Preview ready · Helix/spiral valid");
+                validPreview = true;
+                accept->setEnabled(true);
+                return;
+            } else if (draft.kind == "CompositeCurve") {
+                curveDraft.kind = "CompositeCurve";
+                model::CompositeCurveDefinition cd;
+                cd.closed = compositeClosed->isChecked();
+                for (int i = 0; i < compositeMembers->count(); ++i) {
+                    auto item = compositeMembers->item(i);
+                    if (item->checkState() == Qt::Checked) {
+                        model::CompositeCurveMember m;
+                        m.source = domain::GeometryReference::parse(
+                            item->data(Qt::UserRole).value<QCborMap>());
+                        cd.members.push_back(m);
+                    }
+                }
+                curveDraft.compositeCurve = cd;
+                curveDraft.validate();
+                diagnostic->setText("Preview ready · Composite curve valid");
+                validPreview = true;
+                accept->setEnabled(true);
+                return;
+            } else if (draft.kind == "ProjectedCurve") {
+                auto pmode = projectedMode->currentText();
+                curveDraft.kind = pmode;
+                if (pmode == "SketchOnSketch") {
+                    model::SketchOnSketchDefinition sos;
+                    domain::GeometryReference r1, r2;
+                    r1.object = projectedSketch1->currentData().toString();
+                    r1.role = "Object";
+                    r2.object = projectedSketch2->currentData().toString();
+                    r2.role = "Object";
+                    sos.sketch1 = r1;
+                    sos.sketch2 = r2;
+                    sos.branch.index = projectedBranch->value();
+                    sos.branch.token = QString("branch/%1").arg(projectedBranch->value());
+                    sos.branch.reversed = projectedReversed->isChecked();
+                    sos.branch.startParam = projectedStartParam->value();
+                    sos.branch.endParam = projectedEndParam->value();
+                    curveDraft.sketchOnSketch = sos;
+                    curveDraft.validate();
+                    projectedBranchLabel->setText(
+                        QString("Branch index %1").arg(projectedBranch->value()));
+                    diagnostic->setText("Preview ready · Projected curve valid");
+                    validPreview = true;
+                    accept->setEnabled(true);
+                    return;
+                } else if (pmode == "SketchOnFaces") {
+                    model::SketchOnFacesDefinition sof;
+                    domain::GeometryReference r;
+                    r.object = projectedFaceSketch->currentData().toString();
+                    r.role = "Object";
+                    sof.sketch = r;
+                    sof.mode = projectedVectorMode->currentText();
+                    if (sof.mode == "AlongVector") {
+                        domain::GeometryReference dirRef;
+                        QString dirObj = projectedDirection->currentData().toString();
+                        if (!wire::uuid(dirObj)) {
+                            QString axName = dirObj.startsWith("axis/") ? dirObj.mid(5) : "Z";
+                            auto sup = model::SupportDefinition::parse(
+                                document.value("model_supports").toMap());
+                            QString foundId;
+                            for (const auto &d : sup.datums) {
+                                if (d.kind == "DatumAxis" && d.mode == "Principal" &&
+                                    d.parameters.value("axis").toString() == axName) {
+                                    foundId = d.id;
+                                    break;
+                                }
+                            }
+                            if (foundId.isEmpty()) {
+                                model::Datum axDatum;
+                                axDatum.kind = "DatumAxis";
+                                axDatum.mode = "Principal";
+                                axDatum.parameters = sketch::fields({{"axis", axName}});
+                                sup.datums.push_back(axDatum);
+                                sup.sequence();
+                                foundId = axDatum.id;
+                                document.insert(QStringLiteral("model_supports"), sup.map());
+                            }
+                            dirObj = foundId;
+                        }
+                        dirRef.object = dirObj;
+                        dirRef.role = "Axis";
+                        sof.direction = dirRef;
+                    }
+                    for (int i = 0; i < projectedFaces->count(); ++i) {
+                        auto item = projectedFaces->item(i);
+                        if (item->checkState() == Qt::Checked)
+                            sof.faces.push_back(domain::GeometryReference::parse(
+                                item->data(Qt::UserRole).value<QCborMap>()));
+                    }
+                    sof.branch.index = projectedBranch->value();
+                    sof.branch.token = QString("branch/%1").arg(projectedBranch->value());
+                    sof.branch.reversed = projectedReversed->isChecked();
+                    sof.branch.startParam = projectedStartParam->value();
+                    sof.branch.endParam = projectedEndParam->value();
+                    curveDraft.sketchOnFaces = sof;
+                    curveDraft.validate();
+                    projectedBranchLabel->setText(
+                        QString("Branch index %1").arg(projectedBranch->value()));
+                    diagnostic->setText("Preview ready · Projected curve valid");
+                    validPreview = true;
+                    accept->setEnabled(true);
+                    return;
+                }
+            }
+        }
         if (isModeling) {
+            auto profId = profile->currentData().toString();
+            if (document.contains(QStringLiteral("model_supports"))) {
+                auto sup =
+                    model::SupportDefinition::parse(document.value("model_supports").toMap());
+                for (const auto &c : model::parseDerivedCurves(sup.derived_curves)) {
+                    if (c.id == profId) {
+                        diagnostic->setText("Selected entity is a reference curve, not a solid "
+                                            "body or planar profile");
+                        validPreview = false;
+                        accept->setEnabled(false);
+                        return;
+                    }
+                }
+                for (const auto &s : sketch::parseSpatial(sup.spatial_sketches)) {
+                    if (s.id == profId) {
+                        diagnostic->setText("Selected entity is a reference curve, not a solid "
+                                            "body or planar profile");
+                        validPreview = false;
+                        accept->setEnabled(false);
+                        return;
+                    }
+                }
+            }
             candidateIntents = definitionsModeling();
             validPreview = false;
             supportPreviewPending = true;
@@ -3095,6 +3556,29 @@ void FeaturePanel::finish() {
     if (!editing || !validPreview || client->outstanding())
         return;
     try {
+        if (isDerivedCurve) {
+            auto sup = model::SupportDefinition::parse(document.value("model_supports").toMap());
+            auto curves = model::parseDerivedCurves(sup.derived_curves);
+            bool replaced = false;
+            for (auto &existing : curves) {
+                if (existing.id == curveDraft.id) {
+                    existing = curveDraft;
+                    replaced = true;
+                    break;
+                }
+            }
+            if (!replaced)
+                curves.push_back(curveDraft);
+            auto modelDef =
+                model::editSupportedDerivedCurves(document, model::encodeDerivedCurves(curves));
+            commitPending = true;
+            validPreview = false;
+            client->projectCommand("SetModelSupports", fields({{"model", modelDef.map()}}));
+            editing = false;
+            isDerivedCurve = false;
+            emit editingChanged();
+            return;
+        }
         if (isModeling) {
             auto current = definitionsModeling();
             if (current != candidateIntents) {
@@ -3131,6 +3615,17 @@ void FeaturePanel::finish() {
 void FeaturePanel::discard() {
     if (!editing || commitPending)
         return;
+    if (isDerivedCurve) {
+        editing = false;
+        isDerivedCurve = false;
+        inputs->hide();
+        accept->hide();
+        previewButton->hide();
+        cancelButton->hide();
+        emit clearManipulatorRequested();
+        emit editingChanged();
+        return;
+    }
     editing = false;
     isModeling = false;
     previewAfterInputs = false;

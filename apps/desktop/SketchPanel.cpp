@@ -122,6 +122,14 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     plane->setObjectName("sketchPlane");
     plane->addItems({"XY", "XZ", "YZ"});
     form->addRow("New support plane", plane);
+    spatialActivePlane = new QComboBox;
+    spatialActivePlane->setObjectName("spatialActivePlane");
+    spatialActivePlane->addItems({"XY", "YZ", "ZX"});
+    spatialActivePlane->setVisible(false);
+    form->addRow("Active 3D plane", spatialActivePlane);
+    connect(spatialActivePlane, &QComboBox::currentTextChanged, this,
+            [this](const QString &p) { setActiveSpatialPlane(p); });
+    connect(view, &SketchView::planeSwitched, this, &SketchPanel::switchActivePlane);
     auto button = [&](QString text, QString id) {
         auto *b = new QPushButton(text);
         b->setObjectName(id);
@@ -146,6 +154,15 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     reviewInference = button("Review proposed relations", "reviewInference");
     reviewInference->setEnabled(false);
     connect(reviewInference, &QPushButton::clicked, this, &SketchPanel::inferSelection);
+    applySpatialProposalBtn = button("Confirm proposed constraint", "applySpatialProposal");
+    applySpatialProposalBtn->setVisible(false);
+    connect(applySpatialProposalBtn, &QPushButton::clicked, this,
+            [this] { applySpatialProposal(); });
+    spatialProposalsList = new QListWidget;
+    spatialProposalsList->setObjectName("spatialProposalsList");
+    spatialProposalsList->setMaximumHeight(90);
+    spatialProposalsList->setVisible(false);
+    form->addRow("Proposed relations", spatialProposalsList);
     connect(automaticRelations, &QCheckBox::toggled, this, [this](bool enabled) {
         if (!enabled)
             clearInference();
@@ -238,6 +255,8 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     };
     selectedX = selectedInput("X", "selectedX");
     selectedY = selectedInput("Y", "selectedY");
+    selectedZ = selectedInput("Z", "selectedZ");
+    selectedZ->setVisible(false);
     selectedRadius = selectedInput("Radius", "selectedRadius");
     selectedWidth = selectedInput("Width", "selectedWidth");
     selectedHeight = selectedInput("Height", "selectedHeight");
@@ -676,7 +695,24 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
     connect(view, &SketchView::dimensionPicked, this,
             [this](QString id, double x, double y) { pickDimension(id, {x, y}); });
     connect(view, &SketchView::dragged, this, [this](QString id, double x, double y) {
-        if (!editing || !gestureBefore || gestureFinishing)
+        if (!editing)
+            return;
+        if (is3D) {
+            try {
+                const auto &pt = currentSpatial().entity(id).point;
+                sketch::Vec3 target;
+                if (activeSpatialPlane == "YZ")
+                    target = {pt[0], x, y};
+                else if (activeSpatialPlane == "ZX")
+                    target = {y, pt[1], x};
+                else
+                    target = {x, y, pt[2]};
+                dragSpatialEntity(id, target);
+            } catch (...) {
+            }
+            return;
+        }
+        if (!gestureBefore || gestureFinishing)
             return;
         if (x == gestureOrigin.x && y == gestureOrigin.y)
             return;
@@ -715,7 +751,10 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
                 relationSelectionOrder.append(id);
         updateRelations();
         selectedId = selected.empty() ? QString() : selected.first()->data(Qt::UserRole).toString();
-        view->showSketch(current(), selectedId, editing);
+        if (is3D)
+            view->setSpatialDrawing(currentSpatial());
+        else
+            view->showSketch(current(), selectedId, editing);
         updateSelection();
         emit selectionChanged();
     });
@@ -737,6 +776,29 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
         });
     });
     connect(accept, &QPushButton::clicked, this, [this] {
+        if (is3D) {
+            guard([&] {
+                currentSpatial().validate();
+                auto payload =
+                    fields({{"model", model::editSupportedSpatialSketches(
+                                          supportDocument, sketch::encodeSpatial(draftSpatial))
+                                          .map()}});
+                committing = true;
+                client->projectCommand("SetModelSupports", payload);
+                editing = false;
+                is3D = false;
+                view->set3D(false);
+                spatialActivePlane->setVisible(false);
+                if (selectedZ)
+                    selectedZ->setVisible(false);
+                applySpatialProposalBtn->setVisible(false);
+                spatialProposalsList->setVisible(false);
+                plane->setVisible(true);
+                sketches->setVisible(true);
+                emit editingChanged();
+            });
+            return;
+        }
         if (!lineEditBefore.empty()) {
             context->setText("Apply or cancel the line edit preview before finishing");
             return;
@@ -1003,6 +1065,20 @@ sketch::Sketch &SketchPanel::current() {
     domain::check(!s.empty(), "InvalidInput", "Create or select a sketch");
     return s[std::clamp(sketches->currentIndex(), 0, int(s.size() - 1))];
 }
+sketch::SpatialSketch &SketchPanel::currentSpatial() {
+    auto &s = editing ? draftSpatial : acceptedSpatial;
+    domain::check(!s.empty(), "InvalidInput", "Create or select a 3D sketch");
+    return s.back();
+}
+const sketch::SpatialSketch &SketchPanel::currentSpatial() const {
+    const auto &s = editing ? draftSpatial : acceptedSpatial;
+    domain::check(!s.empty(), "InvalidInput", "Create or select a 3D sketch");
+    return s.back();
+}
+void SketchPanel::rememberSpatial(const sketch::SpatialSketch &before) {
+    draftSpatialUndo.push_back(before);
+    draftSpatialRedo.clear();
+}
 void SketchPanel::install(QCborMap d, bool idle) {
     supportDocument = d;
     setProperty("units", d.value("units").toString());
@@ -1027,13 +1103,24 @@ void SketchPanel::install(QCborMap d, bool idle) {
         dragFeedback.clear();
         draftUndo.clear();
         draftRedo.clear();
+        draftSpatialUndo.clear();
+        draftSpatialRedo.clear();
+        spatialProposals.clear();
         clearInference();
         clearLineEdit();
         view->cancelPointerInput();
         committing = false;
         accepted = sketch::parse(d.value("sketches").toArray());
         draft = accepted;
+        if (d.contains(QStringLiteral("model_supports"))) {
+            auto sup = model::SupportDefinition::parse(d.value("model_supports").toMap());
+            acceptedSpatial = sketch::parseSpatial(sup.spatial_sketches);
+        } else {
+            acceptedSpatial.clear();
+        }
+        draftSpatial = acceptedSpatial;
         editing = false;
+        is3D = false;
         pendingArcJoin.reset();
         resumeLineTool.clear();
         lineContinuationAnchor = false;
@@ -1045,6 +1132,13 @@ void SketchPanel::install(QCborMap d, bool idle) {
     setProperty("units", d.value("units").toString());
     view->setProperty("units", d.value("units").toString());
     if (!editing) {
+        if (d.contains(QStringLiteral("model_supports"))) {
+            auto sup = model::SupportDefinition::parse(d.value("model_supports").toMap());
+            acceptedSpatial = sketch::parseSpatial(sup.spatial_sketches);
+        } else {
+            acceptedSpatial.clear();
+        }
+        draftSpatial = acceptedSpatial;
         QStringList labels;
         for (auto item : d.value("sketch_diagnostics").toArray()) {
             auto m = item.toMap();
@@ -1080,6 +1174,7 @@ void SketchPanel::begin() {
         s.frame = {{0, 0, 0}, {0, 1, 0}, {0, 0, 1}};
     draft.push_back(s);
     editing = true;
+    is3D = false;
     draftUndo.clear();
     draftRedo.clear();
     clicks.clear();
@@ -1089,9 +1184,287 @@ void SketchPanel::begin() {
     rebuild();
     emit editingChanged();
 }
+void SketchPanel::begin3D(QString editId) {
+    if (editing)
+        return;
+    view->cancelPointerInput();
+    draftSpatial = acceptedSpatial;
+    selectedId.clear();
+    spatialProposals.clear();
+    is3D = true;
+    editing = true;
+    if (!editId.isEmpty()) {
+        auto it = std::find_if(draftSpatial.begin(), draftSpatial.end(),
+                               [&](const auto &s) { return s.id == editId; });
+        if (it != draftSpatial.end()) {
+            auto found = *it;
+            draftSpatial.erase(it);
+            draftSpatial.push_back(found);
+        }
+    } else {
+        sketch::SpatialSketch s;
+        s.name = "3D Sketch " + QString::number(draftSpatial.size() + 1);
+        s.activePlane = "XY";
+        draftSpatial.push_back(s);
+    }
+    activeSpatialPlane =
+        currentSpatial().activePlane.isEmpty() ? QString("XY") : currentSpatial().activePlane;
+    spatialActivePlane->blockSignals(true);
+    spatialActivePlane->setCurrentText(activeSpatialPlane);
+    spatialActivePlane->blockSignals(false);
+    view->set3D(true);
+    view->setActivePlane(activeSpatialPlane);
+    spatialActivePlane->setVisible(true);
+    if (selectedZ)
+        selectedZ->setVisible(true);
+    applySpatialProposalBtn->setVisible(true);
+    spatialProposalsList->setVisible(true);
+    plane->setVisible(false);
+    sketches->setVisible(false);
+    tool->setCurrentText("Line");
+    clicks.clear();
+    refreshSpatial();
+    emit editingChanged();
+}
+void SketchPanel::switchActivePlane() {
+    if (!is3D)
+        return;
+    if (activeSpatialPlane == "XY")
+        setActiveSpatialPlane("YZ");
+    else if (activeSpatialPlane == "YZ")
+        setActiveSpatialPlane("ZX");
+    else
+        setActiveSpatialPlane("XY");
+}
+void SketchPanel::setActiveSpatialPlane(const QString &p) {
+    if (!is3D)
+        return;
+    activeSpatialPlane = p;
+    currentSpatial().activePlane = p;
+    spatialActivePlane->blockSignals(true);
+    spatialActivePlane->setCurrentText(p);
+    spatialActivePlane->blockSignals(false);
+    view->setActivePlane(p);
+    refreshSpatial();
+}
+void SketchPanel::refreshSpatial() {
+    if (!is3D || draftSpatial.empty())
+        return;
+    view->setSpatialDrawing(currentSpatial());
+    bool hasConflict = false;
+    QString conflictMsg;
+    QSet<QString> alongX, alongY, alongZ;
+    for (const auto &c : currentSpatial().constraints) {
+        if (c.kind == "AlongX") {
+            if (alongY.contains(c.a) || alongZ.contains(c.a)) {
+                hasConflict = true;
+                conflictMsg = "Conflicting axis constraints on " + c.a;
+            }
+            alongX.insert(c.a);
+        } else if (c.kind == "AlongY") {
+            if (alongX.contains(c.a) || alongZ.contains(c.a)) {
+                hasConflict = true;
+                conflictMsg = "Conflicting axis constraints on " + c.a;
+            }
+            alongY.insert(c.a);
+        } else if (c.kind == "AlongZ") {
+            if (alongX.contains(c.a) || alongY.contains(c.a)) {
+                hasConflict = true;
+                conflictMsg = "Conflicting axis constraints on " + c.a;
+            }
+            alongZ.insert(c.a);
+        }
+    }
+    if (hasConflict) {
+        context->setText("Conflict in 3D sketch: " + conflictMsg);
+    } else {
+        context->setText("3D Sketch · " + QString::number(currentSpatial().entities.size()) +
+                         " entities · " + QString::number(currentSpatial().constraints.size()) +
+                         " constraints");
+    }
+    QSignalBlocker blockE(entities);
+    entities->clear();
+    for (const auto &e : currentSpatial().entities) {
+        auto *item = new QListWidgetItem(e.kind + " (" + e.id + ")");
+        item->setData(Qt::UserRole, e.id);
+        entities->addItem(item);
+        if (e.id == selectedId)
+            item->setSelected(true);
+    }
+    QSignalBlocker blockC(constraints);
+    constraints->clear();
+    double u = domain::toSI(1, "length", property("units").toString());
+    for (const auto &c : currentSpatial().constraints) {
+        QString desc = c.kind + ": " + c.a;
+        if (!c.b.isEmpty())
+            desc += ", " + c.b;
+        if (c.kind == "Distance")
+            desc += " = " + preciseNumber(c.value / u) + " " + property("units").toString();
+        auto *item = new QListWidgetItem(desc);
+        constraints->addItem(item);
+    }
+    proposeSpatialRelations();
+    accept->setEnabled(editing && !hasConflict);
+}
+void SketchPanel::proposeSpatialRelations() {
+    spatialProposals.clear();
+    spatialProposalsList->clear();
+    if (!is3D || draftSpatial.empty()) {
+        applySpatialProposalBtn->setEnabled(false);
+        return;
+    }
+    const auto &sp = currentSpatial();
+    auto hasConstraint = [&](const QString &kind, const QString &a) {
+        for (const auto &c : sp.constraints) {
+            if (c.kind == kind && c.a == a)
+                return true;
+        }
+        return false;
+    };
+    for (const auto &e : sp.entities) {
+        if (e.kind == "Line") {
+            try {
+                auto p1 = sp.entity(e.a).point;
+                auto p2 = sp.entity(e.b).point;
+                sketch::Vec3 d = {p2[0] - p1[0], p2[1] - p1[1], p2[2] - p1[2]};
+                double len = std::sqrt(d[0] * d[0] + d[1] * d[1] + d[2] * d[2]);
+                if (len > 1e-6) {
+                    d[0] /= len;
+                    d[1] /= len;
+                    d[2] /= len;
+                    if (std::abs(d[1]) < 0.08 && std::abs(d[2]) < 0.08 &&
+                        !hasConstraint("AlongX", e.id)) {
+                        sketch::SpatialConstraint prop;
+                        prop.kind = "AlongX";
+                        prop.a = e.id;
+                        spatialProposals.push_back(prop);
+                    }
+                    if (std::abs(d[0]) < 0.08 && std::abs(d[2]) < 0.08 &&
+                        !hasConstraint("AlongY", e.id)) {
+                        sketch::SpatialConstraint prop;
+                        prop.kind = "AlongY";
+                        prop.a = e.id;
+                        spatialProposals.push_back(prop);
+                    }
+                    if (std::abs(d[0]) < 0.08 && std::abs(d[1]) < 0.08 &&
+                        !hasConstraint("AlongZ", e.id)) {
+                        sketch::SpatialConstraint prop;
+                        prop.kind = "AlongZ";
+                        prop.a = e.id;
+                        spatialProposals.push_back(prop);
+                    }
+                    if (std::abs(d[0]) < 0.08 && !hasConstraint("ParallelYZ", e.id) &&
+                        !hasConstraint("AlongY", e.id) && !hasConstraint("AlongZ", e.id)) {
+                        sketch::SpatialConstraint prop;
+                        prop.kind = "ParallelYZ";
+                        prop.a = e.id;
+                        spatialProposals.push_back(prop);
+                    }
+                    if (std::abs(d[1]) < 0.08 && !hasConstraint("ParallelZX", e.id) &&
+                        !hasConstraint("AlongX", e.id) && !hasConstraint("AlongZ", e.id)) {
+                        sketch::SpatialConstraint prop;
+                        prop.kind = "ParallelZX";
+                        prop.a = e.id;
+                        spatialProposals.push_back(prop);
+                    }
+                }
+            } catch (...) {
+            }
+        }
+    }
+    for (int i = 0; i < int(spatialProposals.size()); ++i) {
+        auto *item =
+            new QListWidgetItem(spatialProposals[i].kind + " (" + spatialProposals[i].a + ")");
+        item->setData(Qt::UserRole, i);
+        spatialProposalsList->addItem(item);
+    }
+    applySpatialProposalBtn->setEnabled(!spatialProposals.empty());
+    if (!spatialProposals.empty() && spatialProposalsList->currentRow() < 0)
+        spatialProposalsList->setCurrentRow(0);
+}
+void SketchPanel::applySpatialProposal(int index) {
+    if (!is3D || spatialProposals.empty())
+        return;
+    if (index < 0)
+        index = spatialProposalsList->currentRow();
+    if (index < 0)
+        index = 0;
+    if (index >= 0 && index < int(spatialProposals.size())) {
+        rememberSpatial(currentSpatial());
+        currentSpatial().constraints.push_back(spatialProposals[index]);
+        refreshSpatial();
+    }
+}
+void SketchPanel::addSpatialRelation(QString kind) {
+    if (!is3D)
+        return;
+    rememberSpatial(currentSpatial());
+    sketch::SpatialConstraint c;
+    c.kind = kind;
+    if (relationSelectionOrder.size() == 1) {
+        c.a = relationSelectionOrder[0];
+    } else if (relationSelectionOrder.size() >= 2) {
+        c.a = relationSelectionOrder[0];
+        c.b = relationSelectionOrder[1];
+        if (relationSelectionOrder.size() >= 3)
+            c.third = relationSelectionOrder[2];
+    }
+    currentSpatial().constraints.push_back(c);
+    refreshSpatial();
+}
+void SketchPanel::addSpatialDimension(double val, bool driving) {
+    if (!is3D)
+        return;
+    rememberSpatial(currentSpatial());
+    sketch::SpatialConstraint c;
+    c.kind = "Distance";
+    double u = domain::toSI(1, "length", property("units").toString());
+    c.value = val * u;
+    c.driving = driving;
+    if (relationSelectionOrder.size() == 1) {
+        c.a = relationSelectionOrder[0];
+    } else if (relationSelectionOrder.size() >= 2) {
+        c.a = relationSelectionOrder[0];
+        c.b = relationSelectionOrder[1];
+    }
+    currentSpatial().constraints.push_back(c);
+    refreshSpatial();
+}
+void SketchPanel::dragSpatialEntity(QString id, sketch::Vec3 target) {
+    if (!is3D || !editing)
+        return;
+    try {
+        auto &ent = currentSpatial().entity(id);
+        if (ent.kind == "Point") {
+            ent.point = target;
+            view->setSpatialDrawing(currentSpatial());
+        }
+    } catch (...) {
+    }
+}
 void SketchPanel::discard() {
     if (!editing || committing)
         return;
+    if (is3D) {
+        editing = false;
+        is3D = false;
+        draftSpatial = acceptedSpatial;
+        draftSpatialUndo.clear();
+        draftSpatialRedo.clear();
+        selectedId.clear();
+        spatialProposals.clear();
+        view->set3D(false);
+        view->setSpatialDrawing(sketch::SpatialSketch{});
+        spatialActivePlane->setVisible(false);
+        if (selectedZ)
+            selectedZ->setVisible(false);
+        applySpatialProposalBtn->setVisible(false);
+        spatialProposalsList->setVisible(false);
+        plane->setVisible(true);
+        sketches->setVisible(true);
+        emit editingChanged();
+        return;
+    }
     clearDimensionInput();
     clearInference();
     clearLineEdit();
@@ -1257,6 +1630,53 @@ void SketchPanel::rebuild() {
     rootForm->setRowVisible(propertyPane->findChild<QCheckBox *>("sketchGrid"), false);
 }
 void SketchPanel::addAt(sketch::Vec2 p, bool snapInput) {
+    if (is3D) {
+        sketch::Vec3 lastAnchor{0, 0, 0};
+        if (!currentSpatial().entities.empty()) {
+            for (auto it = currentSpatial().entities.rbegin();
+                 it != currentSpatial().entities.rend(); ++it) {
+                if (it->kind == "Point") {
+                    lastAnchor = it->point;
+                    break;
+                }
+            }
+        }
+        sketch::Vec3 p3;
+        if (activeSpatialPlane == "YZ")
+            p3 = {lastAnchor[0], p.x, p.y};
+        else if (activeSpatialPlane == "ZX")
+            p3 = {p.y, lastAnchor[1], p.x};
+        else
+            p3 = {p.x, p.y, lastAnchor[2]};
+
+        rememberSpatial(currentSpatial());
+        bool c = construction->isChecked();
+        if (tool->currentText() == "Point") {
+            currentSpatial().point(p3, c);
+            clicks.clear();
+        } else {
+            if (clicks.empty()) {
+                QString ptId = currentSpatial().point(p3, c);
+                clicks.push_back(p);
+                selectedId = ptId;
+            } else {
+                QString prevPtId;
+                for (auto it = currentSpatial().entities.rbegin();
+                     it != currentSpatial().entities.rend(); ++it) {
+                    if (it->kind == "Point") {
+                        prevPtId = it->id;
+                        break;
+                    }
+                }
+                QString ptId = currentSpatial().point(p3, c);
+                QString lineId = currentSpatial().line(prevPtId, ptId, c);
+                selectedId = lineId;
+                clicks = {p};
+            }
+        }
+        refreshSpatial();
+        return;
+    }
     auto before = current();
     auto candidate = current();
     auto nextClicks = clicks;
@@ -1437,7 +1857,19 @@ void SketchPanel::remember(sketch::Sketch before) {
     emit editingChanged();
 }
 void SketchPanel::undoDraftEdit() {
-    if (!editing || draftUndo.empty() || client->outstanding() || committing)
+    if (!editing || client->outstanding() || committing)
+        return;
+    if (is3D) {
+        if (draftSpatialUndo.empty())
+            return;
+        draftSpatialRedo.push_back(currentSpatial());
+        currentSpatial() = draftSpatialUndo.back();
+        draftSpatialUndo.pop_back();
+        refreshSpatial();
+        emit editingChanged();
+        return;
+    }
+    if (draftUndo.empty())
         return;
     clearInference();
     clearLineEdit();
@@ -1456,7 +1888,19 @@ void SketchPanel::undoDraftEdit() {
     emit editingChanged();
 }
 void SketchPanel::redoDraftEdit() {
-    if (!editing || draftRedo.empty() || client->outstanding() || committing)
+    if (!editing || client->outstanding() || committing)
+        return;
+    if (is3D) {
+        if (draftSpatialRedo.empty())
+            return;
+        draftSpatialUndo.push_back(currentSpatial());
+        currentSpatial() = draftSpatialRedo.back();
+        draftSpatialRedo.pop_back();
+        refreshSpatial();
+        emit editingChanged();
+        return;
+    }
+    if (draftRedo.empty())
         return;
     clearInference();
     clearLineEdit();
@@ -1480,6 +1924,13 @@ void SketchPanel::selectEntity(QString id) {
     QSignalBlocker block(entities);
     for (int i = 0; i < entities->count(); ++i)
         entities->item(i)->setSelected(entities->item(i)->data(Qt::UserRole).toString() == id);
+    if (is3D) {
+        view->setSpatialDrawing(currentSpatial());
+        updateRelations();
+        updateSelection();
+        emit selectionChanged();
+        return;
+    }
     if (!(editing ? draft : accepted).empty())
         view->showSketch(current(), selectedId, editing);
     updateRelations();
@@ -1487,6 +1938,46 @@ void SketchPanel::selectEntity(QString id) {
     emit selectionChanged();
 }
 void SketchPanel::updateSelection() {
+    if (is3D) {
+        bool selected = !draftSpatial.empty() && !selectedId.isEmpty();
+        if (selectionGroup->isHidden() == selected)
+            selectionGroup->setVisible(selected);
+        if (!selected)
+            return;
+        try {
+            const auto &e = currentSpatial().entity(selectedId);
+            selectionTitle->setText(e.kind + " (" + e.id + ")");
+            double u = domain::toSI(1, "length", property("units").toString());
+            if (e.kind == "Point") {
+                selectedX->setVisible(true);
+                selectedX->setText(preciseNumber(e.point[0] / u));
+                selectedY->setVisible(true);
+                selectedY->setText(preciseNumber(e.point[1] / u));
+                if (selectedZ) {
+                    selectedZ->setVisible(true);
+                    selectedZ->setText(preciseNumber(e.point[2] / u));
+                }
+            } else {
+                selectedX->setVisible(false);
+                selectedY->setVisible(false);
+                if (selectedZ)
+                    selectedZ->setVisible(false);
+            }
+            selectedRadius->setVisible(false);
+            selectedWidth->setVisible(false);
+            selectedHeight->setVisible(false);
+            selectedStart->setVisible(false);
+            selectedSweep->setVisible(false);
+            selectedRotation->setVisible(false);
+            selectedSideAngle->setVisible(false);
+            applySelection->setEnabled(editing && e.kind == "Point");
+            removeEntity->setEnabled(editing);
+        } catch (...) {
+            selectedId.clear();
+            selectionGroup->setVisible(false);
+        }
+        return;
+    }
     bool selected = !(editing ? draft : accepted).empty() && !selectedId.isEmpty();
     if (selected) {
         bool exists = false;
@@ -1691,6 +2182,27 @@ void SketchPanel::updateSelection() {
     selectedCurveDegree->setEnabled(editing && idle);
 }
 void SketchPanel::applySelected() {
+    if (is3D) {
+        if (!editing || selectedId.isEmpty())
+            return;
+        try {
+            auto &e = currentSpatial().entity(selectedId);
+            if (e.kind == "Point") {
+                double u = domain::toSI(1, "length", property("units").toString());
+                bool okX = false, okY = false, okZ = false;
+                double nx = selectedX->text().toDouble(&okX) * u;
+                double ny = selectedY->text().toDouble(&okY) * u;
+                double nz = selectedZ ? selectedZ->text().toDouble(&okZ) * u : 0.0;
+                if (okX && okY && (!selectedZ || okZ)) {
+                    rememberSpatial(currentSpatial());
+                    e.point = {nx, ny, nz};
+                    refreshSpatial();
+                }
+            }
+        } catch (...) {
+        }
+        return;
+    }
     domain::check(editing && !selectedId.isEmpty(), "InvalidInput",
                   "Edit a sketch and select geometry");
     auto before = current(), candidate = before;
@@ -1961,6 +2473,26 @@ void SketchPanel::applySelected() {
 void SketchPanel::deleteSelected() {
     if (!editing || selectedId.isEmpty())
         return;
+    if (is3D) {
+        rememberSpatial(currentSpatial());
+        auto &ents = currentSpatial().entities;
+        ents.erase(std::remove_if(ents.begin(), ents.end(),
+                                  [&](const auto &e) {
+                                      return e.id == selectedId || e.a == selectedId ||
+                                             e.b == selectedId;
+                                  }),
+                   ents.end());
+        auto &cons = currentSpatial().constraints;
+        cons.erase(std::remove_if(cons.begin(), cons.end(),
+                                  [&](const auto &c) {
+                                      return c.a == selectedId || c.b == selectedId ||
+                                             c.third == selectedId;
+                                  }),
+                   cons.end());
+        selectedId.clear();
+        refreshSpatial();
+        return;
+    }
     view->cancelPointerInput();
     auto before = current();
     current() = sketch::eraseEntity(before, selectedId);
@@ -2019,6 +2551,36 @@ sketch::CurveReference SketchPanel::pierceReference() const {
     return ref;
 }
 void SketchPanel::updateRelations() {
+    if (is3D) {
+        relation->clear();
+        if (relationSelectionOrder.size() == 1) {
+            try {
+                auto k = currentSpatial().entity(relationSelectionOrder[0]).kind;
+                if (k == "Line")
+                    relation->addItems(
+                        {"AlongX", "AlongY", "AlongZ", "ParallelYZ", "ParallelZX", "Fixed"});
+                else if (k == "Point")
+                    relation->addItems({"Fixed"});
+            } catch (...) {
+            }
+        } else if (relationSelectionOrder.size() == 2) {
+            try {
+                auto k1 = currentSpatial().entity(relationSelectionOrder[0]).kind;
+                auto k2 = currentSpatial().entity(relationSelectionOrder[1]).kind;
+                if (k1 == "Line" && k2 == "Line")
+                    relation->addItems({"Parallel", "Perpendicular", "EqualLength", "Angle"});
+                else if (k1 == "Point" && k2 == "Point")
+                    relation->addItems({"Coincident", "Distance"});
+                else
+                    relation->addItems({"Coincident", "Distance"});
+            } catch (...) {
+            }
+        } else if (relationSelectionOrder.size() > 2) {
+            relation->addItems({"EqualLength"});
+        }
+        addConstraint->setEnabled(!relationSelectionOrder.isEmpty() && relation->count() > 0);
+        return;
+    }
     if (!editing || draft.empty())
         return;
     auto kind = relation->currentData().toString();
@@ -2082,6 +2644,11 @@ void SketchPanel::updateRelations() {
                               model->item(relation->currentIndex())->isEnabled());
 }
 void SketchPanel::addRelation() {
+    if (is3D) {
+        if (relation->count() > 0)
+            addSpatialRelation(relation->currentText());
+        return;
+    }
     domain::check(editing, "InvalidInput", "Begin a sketch edit first");
     auto selected = entities->selectedItems();
     domain::check(!selected.empty() && selected.size() <= 256, "InvalidInput",

@@ -1,5 +1,7 @@
 #include "SupportEditor.hpp"
 #include "domain/Documents.hpp"
+#include "model/DerivedCurve.hpp"
+#include "sketch/SpatialSketch.hpp"
 #include <QDialogButtonBox>
 #include <QHBoxLayout>
 #include <QScrollArea>
@@ -598,6 +600,15 @@ void SupportEditor::referenceChoices(int slot, std::optional<domain::GeometryRef
         for (auto it = c.members.cbegin(); it != c.members.cend(); ++it)
             add("Converted " + it.value() + " " + it.key().right(8),
                 ref(c.sketch, it.value(), it.key()));
+    for (auto &s : sketch::parseSpatial(draft.spatial_sketches)) {
+        for (auto &e : s.entities)
+            if (e.kind == "Point")
+                add(s.name + " / Point " + e.id.right(8), ref(s.id, "Point", e.id));
+            else
+                add(s.name + " / " + e.kind + " " + e.id.right(8), ref(s.id, "Curve", e.id));
+    }
+    for (auto &c : model::parseDerivedCurves(draft.derived_curves))
+        add(c.name + " / Curve", ref(c.id, "Curve"));
     for (auto value : draft.features) {
         auto f = value.toMap();
         for (auto role : {"Face", "Edge", "Vertex"}) {

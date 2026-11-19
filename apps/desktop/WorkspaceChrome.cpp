@@ -84,6 +84,20 @@ void MainWindow::buildCommandTabs() {
           std::pair{"circularPattern", "Circular pattern"}, std::pair{"mirror", "Mirror"},
           std::pair{"thread", "Cosmetic thread"}})
         add(pair.first, pair.second, "Exact modeling intent");
+    auto *sketch3d = add("sketch.3d", "3D Sketch");
+    connect(sketch3d, &QAction::triggered, this, [this] {
+        sketchPanel->begin3D();
+        refresh();
+    });
+    for (auto pair : {std::pair{"curve.projected", "Projected Curve"},
+                      std::pair{"curve.composite", "Composite Curve"},
+                      std::pair{"curve.helix", "Helix / Spiral"}}) {
+        auto *action = add(pair.first, pair.second, "Derived reference curve");
+        QString kind = QString(pair.first) == "curve.projected"   ? "ProjectedCurve"
+                       : QString(pair.first) == "curve.composite" ? "CompositeCurve"
+                                                                  : "HelixSpiral";
+        connect(action, &QAction::triggered, this, [this, kind] { featurePanel->begin(kind); });
+    }
     auto *toolbar = addToolBar("CommandManager");
     toolbar->setObjectName("commandManager");
     toolbar->setMovable(false);
@@ -108,10 +122,29 @@ void MainWindow::buildCommandTabs() {
         }
         commandTabs->addTab(bar, name);
     };
-    page("Features",
-         {"sketch", "sketch.edit", "", "extrude", "revolve", "draft", "rib", "", "fillet",
-          "chamfer", "hole", "thread", "", "pattern", "circularPattern", "mirror"});
+    page("Features", {"sketch",
+                      "sketch.3d",
+                      "sketch.edit",
+                      "",
+                      "extrude",
+                      "revolve",
+                      "draft",
+                      "rib",
+                      "",
+                      "fillet",
+                      "chamfer",
+                      "hole",
+                      "thread",
+                      "",
+                      "curve.projected",
+                      "curve.composite",
+                      "curve.helix",
+                      "",
+                      "pattern",
+                      "circularPattern",
+                      "mirror"});
     page("Sketch", {"sketch",
+                    "sketch.3d",
                     "sketch.edit",
                     "",
                     "sketch.tool.Select / drag",

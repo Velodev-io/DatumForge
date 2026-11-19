@@ -348,10 +348,9 @@ void MainWindow::refreshProjectUI() {
                     axis->setData(0, Qt::UserRole + 2, documentId + "/axis/" + name);
                     axis->setData(0, Qt::UserRole + 6, "principal/" + QString(name));
                 }
-                if (d.contains(QStringLiteral("model_supports")))
-                    for (auto &datum :
-                         model::SupportDefinition::parse(d.value("model_supports").toMap())
-                             .datums) {
+                if (d.contains(QStringLiteral("model_supports"))) {
+                    auto sup = model::SupportDefinition::parse(d.value("model_supports").toMap());
+                    for (auto &datum : sup.datums) {
                         auto outputs = datum.outputs();
                         for (int i = 0; i < outputs.size(); ++i) {
                             auto id = outputs[i];
@@ -368,6 +367,32 @@ void MainWindow::refreshProjectUI() {
                             node->setSelected(selectedKey == id);
                         }
                     }
+                    for (const auto &s : sketch::parseSpatial(sup.spatial_sketches)) {
+                        bool editing =
+                            sketchPanel && sketchPanel->active() && sketchPanel->sketchId() == s.id;
+                        auto *node = new QTreeWidgetItem(
+                            row, {s.name + (editing ? " (editing)" : "") + " (3D Sketch)"});
+                        node->setIcon(0, commands.get("sketch.3d")
+                                             ? commands.get("sketch.3d")->icon()
+                                             : commands.get("sketch")->icon());
+                        node->setData(0, Qt::UserRole + 1, documentId);
+                        node->setData(0, Qt::UserRole + 2, s.id);
+                        node->setData(0, Qt::UserRole + 3, s.id);
+                        node->setData(0, Qt::UserRole + 6, "spatial_sketch/" + s.id);
+                        node->setSelected(selectedKey == s.id);
+                    }
+                    for (const auto &c : model::parseDerivedCurves(sup.derived_curves)) {
+                        auto *node = new QTreeWidgetItem(row, {c.name + " (" + c.kind + ")"});
+                        node->setIcon(0, commands.get("curve.projected")
+                                             ? commands.get("curve.projected")->icon()
+                                             : commands.get("sketch")->icon());
+                        node->setData(0, Qt::UserRole + 1, documentId);
+                        node->setData(0, Qt::UserRole + 2, c.id);
+                        node->setData(0, Qt::UserRole + 5, c.id);
+                        node->setData(0, Qt::UserRole + 6, "derived_curve/" + c.id);
+                        node->setSelected(selectedKey == c.id);
+                    }
+                }
                 bool hasDraft = false;
                 for (auto value : d.value("sketches").toArray()) {
                     auto sketch = value.toMap();

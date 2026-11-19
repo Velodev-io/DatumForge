@@ -253,6 +253,62 @@ void SketchView::paintEvent(QPaintEvent *) {
     auto o = screen({0, 0});
     p.drawLine(QPointF(0, o.y()), QPointF(width(), o.y()));
     p.drawLine(QPointF(o.x(), 0), QPointF(o.x(), height()));
+
+    if (is3D) {
+        auto proj3D = [&](const sketch::Vec3 &v) -> sketch::Vec2 {
+            if (activePlane == "YZ")
+                return {v[1], v[2]};
+            if (activePlane == "ZX")
+                return {v[2], v[0]};
+            return {v[0], v[1]};
+        };
+        for (const auto &e : spatialDrawing.entities) {
+            bool selected = e.id == selectedId || dimensionOperands.contains(e.id);
+            p.setPen(QPen(selected ? QColor(255, 197, 74) : ink, selected ? 3 : 2,
+                          e.construction ? Qt::DashLine : Qt::SolidLine));
+            if (e.kind == "Point") {
+                p.drawEllipse(screen(proj3D(e.point)), 3, 3);
+            } else if (e.kind == "Line") {
+                p.drawLine(screen(proj3D(spatialDrawing.entity(e.a).point)),
+                           screen(proj3D(spatialDrawing.entity(e.b).point)));
+            } else if (e.kind == "Arc") {
+                p.drawLine(screen(proj3D(spatialDrawing.entity(e.a).point)),
+                           screen(proj3D(spatialDrawing.entity(e.b).point)));
+            } else if (e.kind == "Spline") {
+                QPolygonF poly;
+                for (const auto &pole : e.poles)
+                    poly << screen(proj3D(spatialDrawing.entity(pole).point));
+                p.drawPolyline(poly);
+            }
+        }
+        // Draw 3D triad and active plane indicator
+        p.save();
+        int triadX = 50, triadY = height() - 50, len = 28;
+        p.setPen(QPen(activePlane == "XY" || activePlane == "ZX" ? QColor(230, 60, 60)
+                                                                 : QColor(140, 60, 60),
+                      2));
+        p.drawLine(triadX, triadY, triadX + len, triadY);
+        p.drawText(triadX + len + 3, triadY + 4, "X");
+
+        p.setPen(QPen(activePlane == "XY" || activePlane == "YZ" ? QColor(60, 200, 60)
+                                                                 : QColor(60, 130, 60),
+                      2));
+        p.drawLine(triadX, triadY, triadX, triadY - len);
+        p.drawText(triadX - 4, triadY - len - 3, "Y");
+
+        p.setPen(QPen(activePlane == "YZ" || activePlane == "ZX" ? QColor(60, 100, 240)
+                                                                 : QColor(60, 80, 150),
+                      2));
+        p.drawLine(triadX, triadY, triadX - int(len * 0.7), triadY + int(len * 0.7));
+        p.drawText(triadX - int(len * 0.7) - 10, triadY + int(len * 0.7) + 4, "Z");
+
+        p.setPen(QPen(dark ? Qt::white : Qt::black));
+        p.drawText(triadX - 25, triadY - len - 12,
+                   QString("Plane: %1 (Tab to switch)").arg(activePlane));
+        p.restore();
+        return;
+    }
+
     for (auto &e : drawing.entities) {
         bool selected = e.id == selectedId || dimensionOperands.contains(e.id);
         p.setPen(QPen(selected ? QColor(255, 197, 74) : ink, selected ? 3 : 2,
@@ -699,6 +755,43 @@ void SketchView::moveArc(sketch::Vec2 at) {
     }
 }
 QString SketchView::pick(QPointF p) const {
+    if (is3D) {
+        auto proj3D = [&](const sketch::Vec3 &v) -> sketch::Vec2 {
+            if (activePlane == "YZ")
+                return {v[1], v[2]};
+            if (activePlane == "ZX")
+                return {v[2], v[0]};
+            return {v[0], v[1]};
+        };
+        QString best;
+        double d = 12;
+        for (const auto &e : spatialDrawing.entities) {
+            if (e.kind == "Point") {
+                double distance = QLineF(p, screen(proj3D(e.point))).length();
+                if (distance < d) {
+                    d = distance;
+                    best = e.id;
+                }
+            }
+        }
+        if (!best.isEmpty())
+            return best;
+        for (const auto &e : spatialDrawing.entities) {
+            if (e.kind == "Line") {
+                auto a = screen(proj3D(spatialDrawing.entity(e.a).point));
+                auto b = screen(proj3D(spatialDrawing.entity(e.b).point));
+                auto ab = b - a;
+                double n = QPointF::dotProduct(ab, ab);
+                double t = n > 0 ? std::clamp(QPointF::dotProduct(p - a, ab) / n, 0., 1.) : 0.;
+                double distance = QLineF(p, a + t * ab).length();
+                if (distance < d) {
+                    d = distance;
+                    best = e.id;
+                }
+            }
+        }
+        return best;
+    }
     QString best;
     double d = 9;
     // Endpoints have priority over adjacent curves within the pick radius.
@@ -969,6 +1062,11 @@ void SketchView::contextMenuEvent(QContextMenuEvent *e) {
         fit();
 }
 void SketchView::keyPressEvent(QKeyEvent *e) {
+    if (is3D && e->key() == Qt::Key_Tab) {
+        emit planeSwitched();
+        e->accept();
+        return;
+    }
     if (e->key() == Qt::Key_Escape)
         emit canceled();
     else if (editable && (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter) &&

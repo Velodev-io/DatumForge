@@ -77,6 +77,8 @@ class CommandRegistry {
             for (int x = 5; x <= 20; x += 5)
                 for (int y = 5; y <= 20; y += 5)
                     p.drawPoint(x, y);
+        } else if (id.startsWith("curve")) {
+            p.drawArc(QRectF(4, 4, 16, 16), 30 * 16, 280 * 16);
         } else if (id.startsWith("sketch")) {
             p.drawRect(3, 15, 17, 6);
             p.drawPolygon(QPolygonF{{7, 15}, {15, 3}, {19, 6}, {11, 18}, {6, 20}});

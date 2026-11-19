@@ -1,6 +1,7 @@
 #pragma once
 #include "features/Model.hpp"
 #include "features/ModelingIntent.hpp"
+#include "model/DerivedCurve.hpp"
 #include "protocol/Client.hpp"
 #include <QCheckBox>
 #include <QComboBox>
@@ -169,6 +170,45 @@ class FeaturePanel : public QWidget {
     QComboBox *repairCandidate = nullptr;
     QPushButton *repairButton = nullptr;
     QPushButton *applyRepairButton = nullptr;
+
+    // CM7 Derived Curve Controls
+    bool isDerivedCurve = false;
+    model::DerivedCurve curveDraft;
+    QString currentCurveKind;
+
+    // Projected Curve
+    QComboBox *projectedMode = nullptr;
+    QComboBox *projectedSketch1 = nullptr;
+    QComboBox *projectedSketch2 = nullptr;
+    QComboBox *projectedFaceSketch = nullptr;
+    QListWidget *projectedFaces = nullptr;
+    QComboBox *projectedVectorMode = nullptr;
+    QComboBox *projectedDirection = nullptr;
+    QSpinBox *projectedBranch = nullptr;
+    QLabel *projectedBranchLabel = nullptr;
+    QCheckBox *projectedReversed = nullptr;
+    QDoubleSpinBox *projectedStartParam = nullptr;
+    QDoubleSpinBox *projectedEndParam = nullptr;
+
+    // Composite Curve
+    QListWidget *compositeMembers = nullptr;
+    QPushButton *compositeAddMember = nullptr;
+    QPushButton *compositeRemoveMember = nullptr;
+    QPushButton *compositeReverseMember = nullptr;
+    QCheckBox *compositeClosed = nullptr;
+    QLabel *compositeDiagnostic = nullptr;
+
+    // Helix / Spiral
+    QComboBox *helixMode = nullptr;
+    QComboBox *helixAxis = nullptr;
+    QComboBox *helixCenter = nullptr;
+    QDoubleSpinBox *helixRadius = nullptr;
+    QDoubleSpinBox *helixPitch = nullptr;
+    QDoubleSpinBox *helixHeight = nullptr;
+    QDoubleSpinBox *helixRevolutions = nullptr;
+    QDoubleSpinBox *helixStartAngle = nullptr;
+    QDoubleSpinBox *helixTaperAngle = nullptr;
+    QCheckBox *helixClockwise = nullptr;
 
     void fieldsForKind();
     QCborArray definitions() const;

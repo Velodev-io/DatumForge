@@ -52,4 +52,19 @@ SupportDefinition editSupportedSketches(const QCborMap &document, QCborArray ske
     model.map();
     return model;
 }
+SupportDefinition editSupportedSpatialSketches(const QCborMap &document,
+                                               QCborArray spatialSketches) {
+    auto model = editableSupports(document);
+    model.spatial_sketches = spatialSketches;
+    model.sequence();
+    model.map();
+    return model;
+}
+SupportDefinition editSupportedDerivedCurves(const QCborMap &document, QCborArray derivedCurves) {
+    auto model = editableSupports(document);
+    model.derived_curves = derivedCurves;
+    model.sequence();
+    model.map();
+    return model;
+}
 } // namespace cad::model

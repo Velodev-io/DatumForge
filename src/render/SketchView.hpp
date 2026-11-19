@@ -1,12 +1,16 @@
 #pragma once
 #include "sketch/ArcGeometry.hpp"
 #include "sketch/Sketch.hpp"
+#include "sketch/SpatialSketch.hpp"
 #include <QWidget>
 #include <optional>
 namespace cad {
 class SketchView : public QWidget {
     Q_OBJECT
     sketch::Sketch drawing;
+    bool is3D = false;
+    QString activePlane = "XY";
+    sketch::SpatialSketch spatialDrawing;
     QMap<QString, std::vector<sketch::Vec2>> curveDisplay;
     QString selectedId, dragging;
     QStringList dimensionOperands;
@@ -92,7 +96,26 @@ class SketchView : public QWidget {
     }
     void fit();
     sketch::Vec2 snapPoint(sketch::Vec2 point) const;
+    void set3D(bool enabled) {
+        is3D = enabled;
+        update();
+    }
+    bool is3DMode() const {
+        return is3D;
+    }
+    void setActivePlane(const QString &p) {
+        activePlane = p;
+        update();
+    }
+    QString currentActivePlane() const {
+        return activePlane;
+    }
+    void setSpatialDrawing(const sketch::SpatialSketch &s) {
+        spatialDrawing = s;
+        update();
+    }
   signals:
+    void planeSwitched();
     void clicked(double x, double y);
     void completePrimitive();
     void selected(QString id);

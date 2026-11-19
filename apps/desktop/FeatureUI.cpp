@@ -45,6 +45,18 @@ void MainWindow::refreshFeatures() {
                   profile ? "Accept a Part sketch first"
                           : "Requires an accepted Part solid and no active command");
     }
+    if (commands.get("sketch.3d"))
+        available("sketch.3d", part && idle && !sketchEdit && !edit,
+                  "Requires an idle Part and no active command");
+    if (commands.get("curve.projected"))
+        available("curve.projected", part && idle && !sketchEdit && !edit && sketches,
+                  "Requires planar sketches and no active command");
+    if (commands.get("curve.composite"))
+        available("curve.composite", part && idle && !sketchEdit && !edit,
+                  "Requires reference curves or sketches and no active command");
+    if (commands.get("curve.helix"))
+        available("curve.helix", part && idle && !sketchEdit && !edit,
+                  "Requires an idle Part and no active command");
     findChild<QAction *>("cancelFeatureAction")
         ->setEnabled(edit || (assemblyPanel && assemblyPanel->active()));
     if (commands.get("history"))

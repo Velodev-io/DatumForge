@@ -2,6 +2,7 @@
 #include "protocol/Client.hpp"
 #include "render/SketchView.hpp"
 #include "sketch/Editing.hpp"
+#include "sketch/SpatialSketch.hpp"
 #include <QCheckBox>
 #include <QComboBox>
 #include <QFormLayout>
@@ -42,10 +43,23 @@ class SketchPanel : public QWidget {
     QListWidget *entities, *constraints;
     QLabel *context, *selectionTitle;
     QGroupBox *selectionGroup;
-    QLineEdit *selectedX, *selectedY, *selectedRadius, *selectedWidth, *selectedHeight,
-        *selectedStart, *selectedSweep;
+    QLineEdit *selectedX, *selectedY, *selectedZ = nullptr, *selectedRadius, *selectedWidth,
+                                      *selectedHeight, *selectedStart, *selectedSweep;
     QLineEdit *selectedRotation, *selectedSideAngle;
     QPushButton *applySelection, *removeEntity;
+    bool is3D = false;
+    QString activeSpatialPlane = "XY";
+    std::vector<sketch::SpatialSketch> acceptedSpatial, draftSpatial;
+    std::vector<sketch::SpatialSketch> draftSpatialUndo, draftSpatialRedo;
+    std::vector<sketch::SpatialConstraint> spatialProposals;
+    QComboBox *spatialActivePlane = nullptr;
+    QPushButton *applySpatialProposalBtn = nullptr;
+    QListWidget *spatialProposalsList = nullptr;
+    sketch::SpatialSketch &currentSpatial();
+    const sketch::SpatialSketch &currentSpatial() const;
+    void rememberSpatial(const sketch::SpatialSketch &before);
+    void refreshSpatial();
+    void proposeSpatialRelations();
     QGroupBox *lineEditGroup;
     QComboBox *lineEditMode, *lineEditSource;
     QListWidget *lineEditBoundaries, *lineEditDisclosure;
@@ -119,17 +133,30 @@ class SketchPanel : public QWidget {
         return editing;
     }
     void begin();
+    void begin3D(QString editId = {});
+    bool is3DSketch() const {
+        return is3D;
+    }
+    void switchActivePlane();
+    void setActiveSpatialPlane(const QString &plane);
+    void applySpatialProposal(int index = -1);
+    void addSpatialRelation(QString kind);
+    void addSpatialDimension(double val, bool driving = true);
+    void dragSpatialEntity(QString id, sketch::Vec3 target);
     void discard();
     void editSelected(QString entity = {});
     bool selectionEditable() const;
     void setTool(QString name);
     void undoDraftEdit();
     void redoDraftEdit();
+    double unit() const {
+        return domain::toSI(1, "length", property("units").toString());
+    }
     bool canUndoDraft() const {
-        return !draftUndo.empty();
+        return is3D ? !draftSpatialUndo.empty() : !draftUndo.empty();
     }
     bool canRedoDraft() const {
-        return !draftRedo.empty();
+        return is3D ? !draftSpatialRedo.empty() : !draftRedo.empty();
     }
     SketchView *canvas() const {
         return view;

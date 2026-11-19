@@ -89,6 +89,19 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
     connect(viewport, &Viewport::draftManipulatorReleased, featurePanel,
             &FeaturePanel::setDraftAngleFinishedFromManipulator);
     connect(tree, &QTreeWidget::itemDoubleClicked, this, [this](QTreeWidgetItem *item, int) {
+        auto role6 = item->data(0, Qt::UserRole + 6).toString();
+        if (role6.startsWith("spatial_sketch/")) {
+            auto id = role6.mid(QString("spatial_sketch/").length());
+            if (!sketchPanel->active())
+                sketchPanel->begin3D(id);
+            return;
+        }
+        if (role6.startsWith("derived_curve/")) {
+            auto id = role6.mid(QString("derived_curve/").length());
+            if (!featurePanel->active())
+                featurePanel->begin({}, id);
+            return;
+        }
         auto id = item->data(0, Qt::UserRole + 5).toString();
         if (!id.isEmpty() && !sketchPanel->active()) {
             for (auto d : state().documentRecords)
