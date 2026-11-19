@@ -1,0 +1,61 @@
+[1/50] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/SpatialSolver.cpp.o
+[2/50] Linking CXX static library libcad_sketch_solver.a
+[3/50] Linking CXX executable module2_storage
+[4/50] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[5/50] Linking CXX executable module2_fault_worker
+[6/50] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[7/50] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[8/50] Linking CXX executable module3_solver
+[9/50] Linking CXX executable module3_persistence
+[10/50] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[11/50] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[12/50] Linking CXX executable module5_persistence
+[13/50] Linking CXX executable module5_b2
+[14/50] Linking CXX executable module6_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_exchange.a'
+[15/50] Linking CXX executable module7_persistence
+[16/50] Linking CXX executable module7_b3
+[17/50] Linking CXX executable module8_drawing
+[18/50] Linking CXX executable module10_fault_worker
+[19/50] Linking CXX executable module10_hardening
+[20/50] Linking CXX executable cm7_solver
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a'
+[21/50] Linking CXX executable cm1_relations
+[22/50] Linking CXX executable cm7_curves
+ld: warning: ignoring duplicate libraries: 'libcad_part.a', 'libcad_support_geometry.a'
+[23/50] Linking CXX executable cm7_store
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a', 'libcad_part.a', 'libcad_support_geometry.a'
+[24/50] Linking CXX executable cm5_profiles
+[25/50] Linking CXX executable cm7_review
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a', 'libcad_part.a', 'libcad_support_geometry.a'
+[26/50] Linking CXX executable cm5_features
+[27/50] Linking CXX executable cm6_features
+[28/50] Linking CXX executable cm5_contracts
+[29/50] Linking CXX executable cm5_store
+[30/50] Linking CXX executable cm5_repair
+[31/50] Linking CXX executable cm6_review
+[32/50] Linking CXX executable cm6_store
+[33/50] Linking CXX executable cm4_store
+[34/50] Linking CXX executable cm4_support_geometry
+[35/50] Linking CXX executable cm4_support_convert
+[36/50] Linking CXX executable cm4_support_engine
+[37/50] Linking CXX executable cm4_support_store
+[38/50] Linking CXX executable cm4_support_evolution
+[39/50] Linking CXX executable cm4_support_contracts
+[40/50] Linking CXX executable cm6_workflow_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_support_geometry.a'
+[41/50] Linking CXX executable cm7_workflow_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_support_geometry.a'
+[42/50] Linking CXX executable cm1_rectangles
+[43/50] Linking CXX executable cm1_slots
+[44/50] Linking CXX executable cm1_curves
+[45/50] Linking CXX executable cm1_pierce
+[46/50] Linking CXX executable cm1_intent
+[47/50] Linking CXX executable cm2_editing
+[48/50] Linking CXX executable cm3_dimensions
+[49/50] Linking CXX executable cm3_associated_dimensions
+[50/50] Linking CXX executable cm3_completion

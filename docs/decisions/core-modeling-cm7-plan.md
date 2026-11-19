@@ -123,68 +123,68 @@ being extended so an older edit path cannot silently discard spatial data.
 
 ### CM7.c — Durable definitions, replay and reference repair
 
-- [ ] Extend existing SQLite semantic storage and compatibility manifests for
+- [x] Extend existing SQLite semantic storage and compatibility manifests for
   spatial sketches and derived curves. Persist IDs, original definitions,
   branch selection and endpoint/frame provenance; recompute exact outputs on
   replay. Persisted derived evidence must be checked, not trusted as frozen shape.
-- [ ] Extend the actual `PreviewModelSupports`/`SetModelSupports` path for atomic
+- [x] Extend the actual `PreviewModelSupports`/`SetModelSupports` path for atomic
   multi-collection edits, or introduce versioned ModelEdit only where necessary.
   Audit this seam first: shared architecture's proposed ModelEdit names are not
   proof that those commands already exist. Do not create parallel writer paths.
-- [ ] Preserve omitted collections on unrelated edits; an explicit empty
+- [x] Preserve omitted collections on unrelated edits; an explicit empty
   collection has separately validated deletion semantics. Maintain revision
   checks, deduplication and sticky reader requirements across retained history.
   Verify old projects remain readable, upgrades use copies and older readers
   refuse new semantics without damaging files.
-- [ ] Implement explicit branch/endpoint repair against the complete pending
+- [x] Implement explicit branch/endpoint repair against the complete pending
   model and matching revision/fingerprint. Rebuild affected descendants in one
   atomic operation. Cancel, invalid repair, worker failure or stale candidates
   must leave accepted state unchanged.
-- [ ] **Gate:** save/reopen, deterministic replay, portable copy, undo/redo,
+- [x] **Gate:** save/reopen, deterministic replay, portable copy, undo/redo,
   duplicate commands, restart and interrupted-commit tests pass in marked
   disposable roots. Include upstream mutations and unrelated-edit retention.
 
 ### CM7.d — Native spatial authoring and derived-curve tools
 
-- [ ] Add entry/exit and editing of a 3D sketch using existing native command,
+- [x] Add entry/exit and editing of a 3D sketch using existing native command,
   draft and property-panel patterns. Display the active XY/YZ/ZX plane and triad;
   Tab switches planes before or after anchoring a segment without moving that
   anchor or implicitly adding On Plane constraints.
-- [ ] Add spatial axis/plane inference with visible proposals and explicit
+- [x] Add spatial axis/plane inference with visible proposals and explicit
   confirmation; persist only confirmed constraints. Provide unit-aware spatial
   dimensions, relation selection, constrained dragging and useful conflict
   diagnostics. Existing planar gestures and focus handling must still work.
-- [ ] Add projected/composite/helix/spiral authoring, source selection, branch
+- [x] Add projected/composite/helix/spiral authoring, source selection, branch
   highlighting and explicit branch choice. Support edit/reopen round trips for
   every exposed value. Ambiguous results cannot be accepted until resolved.
-- [ ] Allow stable curve/endpoint selection for datum planes and sketch support;
+- [x] Allow stable curve/endpoint selection for datum planes and sketch support;
   use worker tangent/frame results. Publish reference curves distinctly from
   solids, including tree/selection behavior and clear nonsolid evaluation refusal.
-- [ ] **Gate:** worker-backed native create/edit/accept/cancel/repair/undo/reopen
+- [x] **Gate:** worker-backed native create/edit/accept/cancel/repair/undo/reopen
   workflows pass in mm/in and observed effective scales 100, 125, 150, 175 and
   200 percent. Verify keyboard and pointer paths, focus and accessible labels;
   synthetic events do not certify physical devices or assistive technology.
 
 ### CM7.e — Workflow evidence and completion review
 
-- [ ] Reproduce the T8 projected path, including an endpoint-normal plane and
+- [x] Reproduce the T8 projected path, including an endpoint-normal plane and
   supported sketch attachment. Mutate both source sketches and the target face;
   verify rebuild, branch ambiguity, repair and persistence.
-- [ ] Reproduce the chair-frame **path** and its relations/dimensions using the
+- [x] Reproduce the chair-frame **path** and its relations/dimensions using the
   verified diagram and the offset-plane endpoint constraint. Verify plane
   switching, edits and reopen. The finished swept/mirrored tube remains CM8.
-- [ ] Exercise composite gaps/corners/reversal, closed seams, helix/spiral edits,
+- [x] Exercise composite gaps/corners/reversal, closed seams, helix/spiral edits,
   degenerate tangents, solver conflicts, stale previews and upstream deletion.
   Verify downstream support frames, not only displayed path appearance.
-- [ ] Run focused CM7 tests followed by the enabled regression suite, changed-
+- [x] Run focused CM7 tests followed by the enabled regression suite, changed-
   source analyses, formatting, architecture/isolation/specification checks and
   native cases. Measure bounded preview/cache behavior and repeated edit/undo
   cycles without treating a larger machine as physical 8 GB acceptance.
-- [ ] Record current source identity, commands, actual enabled/disabled test
+- [x] Record current source identity, commands, actual enabled/disabled test
   counts, failures, expected/actual geometry, native scales/units and fixture
   paths in a CM7 evidence record. Update SDD, traceability/coverage and the
   milestone summary together; keep historical failures and unrelated evidence.
-- [ ] Close each row only with its own linked evidence. Report separately:
+- [x] Close each row only with its own linked evidence. Report separately:
   production implementation, available-Mac verification, course-path coverage
   and full acceptance. Unrun platform/device/installed-build/resource gates
   remain Blocked/Not run; passing one row cannot close the milestone.

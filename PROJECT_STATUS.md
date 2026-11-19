@@ -56,13 +56,13 @@ Last Updated: 2026-11-17
   - [x] CM6.c: Durable metadata, deterministic replay, save/reopen, undo/redo and explicit repair.
   - [x] CM6.d: Supported native authoring and edit workflows verified at 5 scales (100–200% DPR).
   - [x] CM6.e: Analytical/native regressions and course model workflows verified.
-- [/] **CM7: 3D Curves & Spatial Sketches** — In progress (`review/cm7-c-20261118`).
+- [x] **CM7: 3D Curves & Spatial Sketches** — Completed and verified on review branch (`review/cm7-e-20261119`).
   - [x] CM7 Preparation: freeze source-derived scope, baseline, course fixtures (T4 p14–15, T8 p18–27, 48–49).
   - [x] CM7.a: Spatial entities, plane-relative relations (ParallelYZ, ParallelZX, AlongZ), active drafting plane, derived curve contracts (SketchOnSketch, SketchOnFaces, CompositeCurve, HelixSpiral), CurveFrame with stable up-vector policy, and Graph validation gate.
   - [x] CM7.b: Separate Eigen spatial solver with variable scaling, Levenberg-Marquardt optimizer, SVD rank/freedom, redundant/conflicting diagnostics, worker-owned exact derived curves (SketchOnSketch, SketchOnFaces along vector/normal to face, CompositeCurve, HelixSpiral 4 modes), worker preview with request coalescing & cancellation checkpoints.
   - [x] CM7.c: Durable definitions, atomic edits, replay and explicit reference repair.
-  - [ ] CM7.d: Native spatial sketching, dimensions, plane switching and branch selection.
-  - [ ] CM7.e: Projected/chair paths, failure cases, regression/native evidence and review.
+  - [x] CM7.d: Native spatial sketching, dimensions, plane switching and branch selection verified at 5 scales (100–200% DPR).
+  - [x] CM7.e: Projected/chair paths, failure cases, regression/native evidence and completion review.
 - [ ] **CM8: Sweeps, Lofts & Shells** *(Scheduled; not started)*.
 - [ ] **CM9: Offline Catalogs, Materials & Evaluation Tools** *(Scheduled; not started)*.
 

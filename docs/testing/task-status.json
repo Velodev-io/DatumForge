@@ -2106,49 +2106,94 @@
     "full_acceptance_status": "Open/deferred: full T7 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM7.a": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM7 spatial sketch entities, plane-relative relations (ParallelYZ, ParallelZX, AlongZ), active drafting plane, derived curve contracts (SketchOnSketch, SketchOnFaces, CompositeCurve, HelixSpiral), CurveFrame with stable up-vector policy, and Graph validation gate.",
+    "implementation_status": "Pass: contracts for spatial entities, plane-relative constraints, derived curve structures, Frenet frames, and dependency graph validation verified in cm7_contracts.cpp.",
+    "development_verification_status": "Pass: 109 enabled CTests, Clang analyses, pinned format, ownership/research/coverage/specification checks.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm7-review.md",
+      "docs/testing/artifacts/core-modeling/cm7-review-20261119/verification/20261119T045656.790738Z/verification.json",
+      "tests/core_modeling/cm7_contracts.cpp",
+      "tests/core_modeling/cm7_solver.cpp",
+      "tests/core_modeling/cm7_curves.cpp",
+      "tests/core_modeling/cm7_store.cpp",
+      "tests/core_modeling/cm7_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm7.cpp"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T8 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM7.b": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM7 separate Eigen spatial solver with variable scaling, Levenberg-Marquardt optimizer, SVD rank/freedom, redundant/conflicting diagnostics, worker-owned exact derived curves (SketchOnSketch, SketchOnFaces along vector/normal to face, CompositeCurve, HelixSpiral 4 modes), worker preview with request coalescing & cancellation checkpoints.",
+    "implementation_status": "Pass: exact worker derived curves, LM spatial optimizer, and preview coalescing verified in cm7_solver.cpp and cm7_curves.cpp.",
+    "development_verification_status": "Pass: 109 enabled CTests, Clang analyses, pinned format, ownership/research/coverage/specification checks.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm7-review.md",
+      "docs/testing/artifacts/core-modeling/cm7-review-20261119/verification/20261119T045656.790738Z/verification.json",
+      "tests/core_modeling/cm7_contracts.cpp",
+      "tests/core_modeling/cm7_solver.cpp",
+      "tests/core_modeling/cm7_curves.cpp",
+      "tests/core_modeling/cm7_store.cpp",
+      "tests/core_modeling/cm7_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm7.cpp"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T8 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM7.c": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM7 durable definitions, SQLite schema upgrade (rank 12, cm7-spatial=1), atomic edits, replay and explicit reference repair with fingerprint and candidate inspection.",
+    "implementation_status": "Pass: durable persistence, branch ambiguity inspection and atomic repair verified in cm7_store.cpp.",
+    "development_verification_status": "Pass: 109 enabled CTests, Clang analyses, pinned format, ownership/research/coverage/specification checks.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm7-review.md",
+      "docs/testing/artifacts/core-modeling/cm7-review-20261119/verification/20261119T045656.790738Z/verification.json",
+      "tests/core_modeling/cm7_contracts.cpp",
+      "tests/core_modeling/cm7_solver.cpp",
+      "tests/core_modeling/cm7_curves.cpp",
+      "tests/core_modeling/cm7_store.cpp",
+      "tests/core_modeling/cm7_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm7.cpp"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T8 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM7.d": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM7 native spatial sketching, dimensions, plane switching without coordinate displacement, derived curve feature panels, and nonsolid evaluation refusal verified at five effective scales (100\u2013200% DPR).",
+    "implementation_status": "Pass: SketchPanel 3D authoring, Tab plane switching, FeaturePanel derived curve tools, nonsolid profile refusal, and mm/in workflows verified at five effective scales in workflow_contracts_cm7.cpp.",
+    "development_verification_status": "Pass: 109 enabled CTests, Clang analyses, pinned format, ownership/research/coverage/specification checks.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm7-review.md",
+      "docs/testing/artifacts/core-modeling/cm7-review-20261119/verification/20261119T045656.790738Z/verification.json",
+      "tests/core_modeling/cm7_contracts.cpp",
+      "tests/core_modeling/cm7_solver.cpp",
+      "tests/core_modeling/cm7_curves.cpp",
+      "tests/core_modeling/cm7_store.cpp",
+      "tests/core_modeling/cm7_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm7.cpp"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T8 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM7.e": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM7 workflow evidence and completion review: T8 projected path fixture, chair-frame 3D path fixture with offset plane constraint, composite gaps/corners/reversals, helix/spiral 4-mode edits, upstream mutations and save/reopen verified.",
+    "implementation_status": "Pass: analytical/native regressions, course model fixtures, upstream mutation, branch repair, and save/reopen verified in cm7_review.cpp and workflow_contracts_cm7.cpp.",
+    "development_verification_status": "Pass: 109 enabled CTests, Clang analyses, pinned format, ownership/research/coverage/specification checks.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm7-review.md",
+      "docs/testing/artifacts/core-modeling/cm7-review-20261119/verification/20261119T045656.790738Z/verification.json",
+      "tests/core_modeling/cm7_contracts.cpp",
+      "tests/core_modeling/cm7_solver.cpp",
+      "tests/core_modeling/cm7_curves.cpp",
+      "tests/core_modeling/cm7_store.cpp",
+      "tests/core_modeling/cm7_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm7.cpp"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T8 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM8.a": {
     "status": "Not run",

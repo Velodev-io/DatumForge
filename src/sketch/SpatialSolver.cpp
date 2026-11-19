@@ -388,8 +388,11 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
                     }
                 }
             } else if (c.kind == "ParallelYZ") {
-                sketch::Frame fr = defaultResolvePlane(*c.plane, resolve);
-                Eigen::Vector3d U = toEigen(fr.u).normalized();
+                Eigen::Vector3d U = {1, 0, 0};
+                if (c.plane.has_value()) {
+                    sketch::Frame fr = defaultResolvePlane(*c.plane, resolve);
+                    U = toEigen(fr.u).normalized();
+                }
                 const auto &lineEnt = candidate.entity(c.a);
                 Eigen::Vector3d p1 = getPoint(vars, lineEnt.a);
                 Eigen::Vector3d p2 = getPoint(vars, lineEnt.b);
@@ -397,8 +400,11 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
                 double dNorm = dir.norm();
                 addRes(dNorm > 1e-12 ? (dir.dot(U)) / dNorm : 0.0);
             } else if (c.kind == "ParallelZX") {
-                sketch::Frame fr = defaultResolvePlane(*c.plane, resolve);
-                Eigen::Vector3d V = toEigen(fr.v).normalized();
+                Eigen::Vector3d V = {0, 1, 0};
+                if (c.plane.has_value()) {
+                    sketch::Frame fr = defaultResolvePlane(*c.plane, resolve);
+                    V = toEigen(fr.v).normalized();
+                }
                 const auto &lineEnt = candidate.entity(c.a);
                 Eigen::Vector3d p1 = getPoint(vars, lineEnt.a);
                 Eigen::Vector3d p2 = getPoint(vars, lineEnt.b);
@@ -406,9 +412,13 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
                 double dNorm = dir.norm();
                 addRes(dNorm > 1e-12 ? (dir.dot(V)) / dNorm : 0.0);
             } else if (c.kind == "AlongZ") {
-                sketch::Frame fr = defaultResolvePlane(*c.plane, resolve);
-                Eigen::Vector3d U = toEigen(fr.u).normalized();
-                Eigen::Vector3d V = toEigen(fr.v).normalized();
+                Eigen::Vector3d U = {1, 0, 0};
+                Eigen::Vector3d V = {0, 1, 0};
+                if (c.plane.has_value()) {
+                    sketch::Frame fr = defaultResolvePlane(*c.plane, resolve);
+                    U = toEigen(fr.u).normalized();
+                    V = toEigen(fr.v).normalized();
+                }
                 const auto &lineEnt = candidate.entity(c.a);
                 Eigen::Vector3d p1 = getPoint(vars, lineEnt.a);
                 Eigen::Vector3d p2 = getPoint(vars, lineEnt.b);
@@ -595,7 +605,6 @@ SpatialSolveResult solveSpatial(SpatialSketch candidate, const SpatialSketch *pr
         double currentNorm = R.norm();
         double maxRes = R.cwiseAbs().maxCoeff();
         if (maxRes < 1e-7) {
-            converged = true;
             break;
         }
 

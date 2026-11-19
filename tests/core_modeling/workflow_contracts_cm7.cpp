@@ -251,9 +251,6 @@ class WorkflowContractsCM7 : public QObject {
         QVERIFY(acceptFeatureBtn != nullptr);
         featurePanel->preview();
         QVERIFY(session.idle());
-        auto *diagLabel = window.findChild<QLabel *>("featureDiagnostic");
-        if (diagLabel)
-            qWarning() << "DIAGNOSTIC IS:" << diagLabel->text();
         QVERIFY(acceptFeatureBtn->isEnabled());
         featurePanel->finish();
         QVERIFY(session.idle());
@@ -304,10 +301,6 @@ class WorkflowContractsCM7 : public QObject {
         auto savePath = session.files.filePath("cm7_native_review.cadproj");
         client->saveProject(savePath, true);
         QVERIFY(session.idle());
-        if (!QFile::exists(savePath)) {
-            qWarning() << "Save failed! message:" << client->state().message
-                       << "phase:" << int(client->state().phase) << "savePath:" << savePath;
-        }
         QVERIFY2(QFile::exists(savePath), qPrintable(client->state().message));
 
         client->closeProject();
@@ -325,6 +318,12 @@ class WorkflowContractsCM7 : public QObject {
         QCOMPARE(reopenedCurves.size(), 1);
         QCOMPARE(reopenedCurves[0].kind, QString("HelixSpiral"));
         checkNear(reopenedCurves[0].helixSpiral->radius, 0.015, 1e-6);
+
+        if (qEnvironmentVariableIsSet("CAD_NATIVE_TEST")) {
+            auto directory = qEnvironmentVariable("CAD_ARTIFACT_DIR");
+            if (!directory.isEmpty())
+                QVERIFY(window.grab().save(directory + "/cm7-" + units + ".png"));
+        }
     }
 };
 

@@ -1,0 +1,5 @@
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/sketch/SpatialSolver.cpp
+Analyzed tests/core_modeling/cm7_review.cpp
+Analyzed tests/core_modeling/workflow_contracts_cm7.cpp
