@@ -32,7 +32,8 @@ struct Reader {
             : category == "Thread" ? r.role == "Edge" || r.role == "Face" || r.role == "Curve"
             : category == "Direction" ? r.role == "Axis" || r.role == "Edge" || r.role == "Curve" ||
                                             r.role == "Plane" || r.role == "Face"
-                                      : r.role == category;
+            : category == "Curve" ? r.role == "Curve" || r.role == "Edge"
+                                  : r.role == category;
         domain::check(valid, "InvalidInput", "Wrong modeling reference role: " + key);
         node.references.push_back(r);
         if (category == "Body" || r.role == "Face" || r.role == "Edge" || r.role == "Vertex")
@@ -45,7 +46,13 @@ struct Reader {
         return reference(m, "source", "Body");
     }
     QString profile(const QCborMap &m) {
-        wire::keys(m, {"sketch", "mode", "regions"});
+        QSet<QString> allowed{"sketch", "mode", "regions"};
+        if (m.contains(QStringLiteral("type")))
+            allowed.insert(QStringLiteral("type"));
+        wire::keys(m, allowed);
+        if (m.contains(QStringLiteral("type")))
+            domain::check(wire::text(m, "type") == "Sketch", "InvalidInput",
+                          "Profile type must be Sketch");
         domain::GeometryReference r;
         r.object = domain::id(wire::text(m, "sketch"));
         kind(r.object, "Sketch");
@@ -579,6 +586,233 @@ ModelingIntent ModelingIntent::parse(const QCborMap &m) {
             boolean(m, "flip");
         } else
             throw domain::Error("UnsupportedOperation", "Unsupported chamfer method: " + method);
+    } else if (kind == "Shell") {
+        wire::keys(m, {"version", "id", "kind", "target", "thickness", "inward", "remove_faces",
+                       "overrides"});
+        auto target = reader.body(object(m, "target"));
+        number(m, "thickness", 1e-8, 1000);
+        boolean(m, "inward");
+        domain::check(m.value("remove_faces").isArray(), "InvalidInput",
+                      "Shell remove_faces array required");
+        auto removeFaces = m.value("remove_faces").toArray();
+        domain::check(removeFaces.size() <= 64, "ResourceLimit",
+                      "At most 64 shell remove faces admitted");
+        QSet<QString> seenFaces;
+        for (auto faceVal : removeFaces) {
+            auto r = reader.reference(sketch::fields({{"f", faceVal}}), "f", "Face");
+            domain::check(r.object == target.object, "InvalidInput",
+                          "Shell removed faces must belong to the target stage");
+            domain::check(!seenFaces.contains(r.topology), "InvalidInput",
+                          "Duplicate shell remove face");
+            seenFaces.insert(r.topology);
+        }
+        domain::check(m.value("overrides").isArray(), "InvalidInput",
+                      "Shell overrides array required");
+        auto overrides = m.value("overrides").toArray();
+        domain::check(overrides.size() <= 64, "ResourceLimit",
+                      "At most 64 shell thickness overrides admitted");
+        QSet<QString> seenOverrides;
+        for (auto ovVal : overrides) {
+            domain::check(ovVal.isMap(), "InvalidInput", "Shell override map required");
+            auto ovMap = ovVal.toMap();
+            wire::keys(ovMap, {"face", "thickness"});
+            auto r = reader.reference(ovMap, "face", "Face");
+            domain::check(r.object == target.object, "InvalidInput",
+                          "Shell override face must belong to the target stage");
+            domain::check(!seenFaces.contains(r.topology), "InvalidInput",
+                          "Face cannot be both removed and overridden in thickness");
+            domain::check(!seenOverrides.contains(r.topology), "InvalidInput",
+                          "Duplicate shell override face");
+            seenOverrides.insert(r.topology);
+            number(ovMap, "thickness", 1e-8, 1000);
+        }
+    } else if (kind == "Sweep") {
+        auto operation = wire::text(m, "operation");
+        domain::check(QStringList{"NewBody", "Add", "Cut"}.contains(operation),
+                      "UnsupportedOperation", "Unsupported Boolean intent");
+        if (operation == "NewBody")
+            domain::check(m.value("target").isNull(), "InvalidInput", "NewBody has no target");
+        else
+            reader.body(object(m, "target"));
+        auto profileObj = object(m, "profile");
+        auto profileType = wire::text(profileObj, "type");
+        QString profileMode;
+        if (profileType == "Sketch") {
+            profileMode = reader.profile(profileObj);
+        } else if (profileType == "Circular") {
+            wire::keys(profileObj, {"type", "diameter"});
+            number(profileObj, "diameter", 1e-8, 1000);
+        } else {
+            throw domain::Error("InvalidInput", "Unsupported sweep profile type: " + profileType);
+        }
+        auto pathObj = object(m, "path");
+        wire::keys(pathObj, {"reference", "reverse"});
+        auto pathRef = reader.reference(pathObj, "reference", "Curve");
+        boolean(pathObj, "reverse");
+        domain::check(m.value("guides").isArray(), "InvalidInput", "Sweep guides array required");
+        auto guidesArr = m.value("guides").toArray();
+        domain::check(guidesArr.size() <= 16, "ResourceLimit", "At most 16 sweep guides admitted");
+        for (auto gVal : guidesArr) {
+            auto gRef = reader.reference(sketch::fields({{"g", gVal}}), "g", "Curve");
+            domain::check(gRef.object != pathRef.object || gRef.entity != pathRef.entity ||
+                              gRef.topology != pathRef.topology,
+                          "InvalidInput", "Guide curve cannot duplicate sweep path");
+        }
+        auto corner = wire::text(m, "corner_transition");
+        domain::check(corner == "Round" || corner == "Sharp", "InvalidInput",
+                      "Sweep corner transition must be Round or Sharp");
+        auto startTangency = wire::text(m, "start_tangency");
+        domain::check(startTangency == "None" || startTangency == "PathTangent", "InvalidInput",
+                      "Sweep start tangency must be None or PathTangent");
+        auto endTangency = wire::text(m, "end_tangency");
+        domain::check(endTangency == "None" || endTangency == "PathTangent", "InvalidInput",
+                      "Sweep end tangency must be None or PathTangent");
+        int previewSecs = wire::integer(m, "preview_sections");
+        domain::check(previewSecs >= 0 && previewSecs <= 32, "InvalidInput",
+                      "Sweep preview sections must be 0–32");
+        auto thinObj = object(m, "thin");
+        reader.thin(thinObj);
+        auto thinMode = wire::text(thinObj, "mode");
+        QSet<QString> keys{"version",
+                           "id",
+                           "kind",
+                           "operation",
+                           "target",
+                           "profile",
+                           "path",
+                           "guides",
+                           "corner_transition",
+                           "start_tangency",
+                           "end_tangency",
+                           "thin",
+                           "preview_sections"};
+        if (profileType == "Sketch" && profileMode == "OpenChains" && thinMode == "Solid") {
+            domain::check(operation == "Cut", "UnsupportedOperation",
+                          "Open profile sweep requires thickness or a cut");
+            keys.insert("flip_side");
+            boolean(m, "flip_side");
+        }
+        wire::keys(m, keys);
+    } else if (kind == "Loft") {
+        auto output = wire::text(m, "output");
+        domain::check(output == "Solid" || output == "Surface", "InvalidInput",
+                      "Loft output must be Solid or Surface");
+        auto operation = wire::text(m, "operation");
+        if (output == "Surface") {
+            domain::check(operation == "NewBody", "InvalidInput",
+                          "Surface loft requires NewBody operation");
+            domain::check(m.value("target").isNull(), "InvalidInput",
+                          "Surface loft has no target body");
+        } else {
+            domain::check(QStringList{"NewBody", "Add", "Cut"}.contains(operation),
+                          "UnsupportedOperation", "Unsupported Boolean intent");
+            if (operation == "NewBody")
+                domain::check(m.value("target").isNull(), "InvalidInput", "NewBody has no target");
+            else
+                reader.body(object(m, "target"));
+        }
+
+        domain::check(m.value("sections").isArray(), "InvalidInput",
+                      "Loft sections array required");
+        auto sectionsArr = m.value("sections").toArray();
+        domain::check(sectionsArr.size() >= 2 && sectionsArr.size() <= 32, "ResourceLimit",
+                      "Loft requires 2–32 sections");
+        QString firstProfileMode;
+        for (qsizetype s = 0; s < sectionsArr.size(); ++s) {
+            domain::check(sectionsArr[s].isMap(), "InvalidInput", "Loft section map required");
+            auto sMode = reader.profile(sectionsArr[s].toMap());
+            if (s == 0)
+                firstProfileMode = sMode;
+            if (output == "Solid") {
+                domain::check(sMode != "OpenChains", "InvalidInput",
+                              "Solid loft requires closed sections");
+            } else {
+                bool open = (sMode == "OpenChains");
+                bool firstOpen = (firstProfileMode == "OpenChains");
+                domain::check(open == firstOpen, "InvalidInput",
+                              "Loft sections must have consistent open/closed topology");
+            }
+        }
+
+        if (!m.value("centerline").isNull()) {
+            auto clObj = object(m, "centerline");
+            wire::keys(clObj, {"reference", "reverse"});
+            reader.reference(clObj, "reference", "Curve");
+            boolean(clObj, "reverse");
+        }
+
+        domain::check(m.value("guides").isArray(), "InvalidInput", "Loft guides array required");
+        auto guidesArr = m.value("guides").toArray();
+        domain::check(guidesArr.size() <= 16, "ResourceLimit", "At most 16 loft guides admitted");
+        for (auto gVal : guidesArr) {
+            reader.reference(sketch::fields({{"g", gVal}}), "g", "Curve");
+        }
+
+        domain::check(m.value("connectors").isArray(), "InvalidInput",
+                      "Loft connectors array required");
+        auto connArr = m.value("connectors").toArray();
+        domain::check(connArr.size() <= 64, "ResourceLimit", "At most 64 loft connectors admitted");
+        QSet<QString> seenConnIds;
+        std::vector<std::vector<double>> connParams;
+        for (auto cVal : connArr) {
+            domain::check(cVal.isMap(), "InvalidInput", "Loft connector map required");
+            auto cMap = cVal.toMap();
+            wire::keys(cMap, {"id", "points"});
+            auto cId = domain::id(wire::text(cMap, "id"));
+            domain::check(!seenConnIds.contains(cId), "InvalidInput",
+                          "Duplicate connector identity");
+            seenConnIds.insert(cId);
+
+            domain::check(cMap.value("points").isArray(), "InvalidInput",
+                          "Connector points array required");
+            auto ptsArr = cMap.value("points").toArray();
+            domain::check(ptsArr.size() == sectionsArr.size(), "InvalidInput",
+                          "Connector must have a point for every section");
+            std::vector<double> params;
+            for (qsizetype p = 0; p < ptsArr.size(); ++p) {
+                domain::check(ptsArr[p].isMap(), "InvalidInput", "Connector point map required");
+                auto ptMap = ptsArr[p].toMap();
+                wire::keys(ptMap, {"section", "parameter"});
+                domain::check(wire::integer(ptMap, "section") == p, "InvalidInput",
+                              "Connector points must correspond to section index in order");
+                params.push_back(number(ptMap, "parameter", 0, 1));
+            }
+            connParams.push_back(std::move(params));
+        }
+        for (size_t i = 0; i < connParams.size(); ++i) {
+            for (size_t j = i + 1; j < connParams.size(); ++j) {
+                double diff0 = connParams[i][0] - connParams[j][0];
+                if (std::abs(diff0) < 1e-9)
+                    throw domain::Error("InvalidInput", "Loft connectors must not coincide");
+                for (size_t s = 1; s < static_cast<size_t>(sectionsArr.size()); ++s) {
+                    double diffS = connParams[i][s] - connParams[j][s];
+                    if (std::abs(diffS) < 1e-9 || (diff0 > 0 && diffS < 0) ||
+                        (diff0 < 0 && diffS > 0)) {
+                        throw domain::Error("InvalidInput", "Loft connectors must not cross");
+                    }
+                }
+            }
+        }
+
+        auto startCond = wire::text(m, "start_condition");
+        domain::check(startCond == "None" || startCond == "NormalToSection" ||
+                          startCond == "TangentToFace",
+                      "InvalidInput", "Unsupported loft start condition");
+        auto endCond = wire::text(m, "end_condition");
+        domain::check(endCond == "None" || endCond == "NormalToSection" ||
+                          endCond == "TangentToFace",
+                      "InvalidInput", "Unsupported loft end condition");
+
+        auto thinObj = object(m, "thin");
+        reader.thin(thinObj);
+        if (output == "Surface") {
+            domain::check(wire::text(thinObj, "mode") == "Solid", "InvalidInput",
+                          "Surface loft does not support thin wall thickness");
+        }
+
+        wire::keys(m, {"version", "id", "kind", "output", "operation", "target", "sections",
+                       "centerline", "guides", "connectors", "start_condition", "end_condition",
+                       "thin"});
     } else {
         domain::check(kind == "Extrude" || kind == "Revolve", "UnsupportedOperation",
                       "Unsupported modeling intent kind");

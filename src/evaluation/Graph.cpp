@@ -41,14 +41,16 @@ Graph::Graph(const std::vector<GraphNode> &nodes, QStringList history, QString d
             const auto &source = *byId.value(ref.object);
             bool compatible = ref.role == "Object";
             if (source.kind == "Sketch") {
-                compatible = compatible || ref.role == "Plane";
+                compatible = compatible || ref.role == "Plane" ||
+                             (ref.role == "Curve" && ref.entity.isEmpty());
                 if (ref.role == "Point" || ref.role == "Curve")
-                    compatible = source.members.contains(ref.entity) &&
-                                 source.members.value(ref.entity) == ref.role;
+                    compatible = compatible || (source.members.contains(ref.entity) &&
+                                                source.members.value(ref.entity) == ref.role);
             } else if (source.kind == "SpatialSketch") {
+                compatible = compatible || (ref.role == "Curve" && ref.entity.isEmpty());
                 if (ref.role == "Point" || ref.role == "Curve")
-                    compatible = source.members.contains(ref.entity) &&
-                                 source.members.value(ref.entity) == ref.role;
+                    compatible = compatible || (source.members.contains(ref.entity) &&
+                                                source.members.value(ref.entity) == ref.role);
             } else if (source.kind == "DatumPlane")
                 compatible = compatible || ref.role == "Plane";
             else if (source.kind == "DatumAxis")

@@ -63,7 +63,12 @@ Last Updated: 2026-11-17
   - [x] CM7.c: Durable definitions, atomic edits, replay and explicit reference repair.
   - [x] CM7.d: Native spatial sketching, dimensions, plane switching and branch selection verified at 5 scales (100–200% DPR).
   - [x] CM7.e: Projected/chair paths, failure cases, regression/native evidence and completion review.
-- [ ] **CM8: Sweeps, Lofts & Shells** *(Scheduled; not started)*.
+- [/] **CM8: Sweeps, Lofts & Shells** — In progress (branch `review/cm8-a-20261121`).
+  - [x] Preparation & CM8.a: Versioned shell/sweep/loft contracts, result types, connector correspondence and graph validation.
+  - [ ] CM8.b: Exact worker adapters for shell, pipe-shell sweep and lofts.
+  - [ ] CM8.c: Durable definitions, topology history, atomic rebuild and explicit repair.
+  - [ ] CM8.d: Native face/path/section/guide selection, connector handles and bounded previews.
+  - [ ] CM8.e: Complete course workflows, 27-row evidence, regressions and native verification.
 - [ ] **CM9: Offline Catalogs, Materials & Evaluation Tools** *(Scheduled; not started)*.
 
 ---

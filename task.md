@@ -1,4 +1,30 @@
-# Active plan: CM7 — Spatial sketches and derived curves
+# Active plan: CM8 — Shell, sweep and loft
+
+Prepared 21 November 2026. See the [CM8 completion plan](docs/decisions/core-modeling-cm8-plan.md)
+for integration points, all 27 requirements, exact-geometry risks and verification
+gates. This is planning only; no CM8 implementation or runtime checks were run.
+
+- [x] Preparation: freeze course fixtures/options, current baseline and advanced-mode feasibility.
+- [x] CM8.a: versioned shell/sweep/loft contracts, result types and stable correspondence.
+- [ ] CM8.b: exact worker adapters for every tracked basic and advanced mode.
+- [ ] CM8.c: durable definitions, topology history, atomic rebuild and explicit repair.
+- [ ] CM8.d: native face/path/section/guide selection, connector handles and bounded previews.
+- [ ] CM8.e: complete course workflows, 27-row evidence, regressions and native verification.
+
+First execution task: preparation and CM8.a. Execute lettered tasks in order;
+verify each before dependent work. Any required unsupported variant keeps CM8
+incomplete. Preserve deferred gates and stop before CM9/Module 11. Use separate
+review branches and the standing commit/push workflow for successfully verified
+implementation tasks; no merge or force-push.
+
+The CM7 checklist below is preserved as historical planning text. Its unchecked
+items and original stop boundary are not current status: use the
+[CM7 review evidence](docs/testing/core-modeling-cm7-review.md) and CORE_MODELING
+for recorded completion. Prior CM5 plans and execution notes also remain intact.
+
+---
+
+# Historical plan: CM7 — Spatial sketches and derived curves
 
 Prepared 17 November 2026. See the [CM7 execution plan](docs/decisions/core-modeling-cm7-plan.md)
 for contracts, integration points, all 14 coverage entries and verification gates.
