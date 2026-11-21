@@ -5,13 +5,17 @@ namespace {
 QStringList referencePath(QString path) {
     check(QStringList{"start/reference", "direction1/reference", "direction2/reference", "axis",
                       "plane", "seed/source", "target/source", "neutral", "pull", "reference",
-                      "placement/face", "termination/reference", "reference_face", "edge"}
+                      "placement/face", "termination/reference", "reference_face", "edge",
+                      "path/reference", "centerline/reference"}
                   .contains(path) ||
               QRegularExpression("^(faces|edges|faces1|faces2|side_faces1|center_faces|side_faces2|"
-                                 "seed/faces)/([0-9]|[12][0-9]|3[01])$")
+                                 "seed/faces|remove_faces|guides)/([0-9]|[12][0-9]|3[01])$")
                   .match(path)
                   .hasMatch() ||
-              QRegularExpression("^radii/([0-9]|[12][0-9]|3[01])/edge$").match(path).hasMatch(),
+              QRegularExpression(
+                  "^(radii/([0-9]|[12][0-9]|3[01])/edge|overrides/([0-9]|[12][0-9]|3[01])/face)$")
+                  .match(path)
+                  .hasMatch(),
           "InvalidInput", "Choose an explicit modeling reference path");
     return path.split('/');
 }
@@ -22,6 +26,13 @@ QCborValue at(const QCborMap &intent, const QStringList &parts) {
               "Face seed slot missing");
         value = value.toArray()[parts[2].toInt()];
         check(value.isMap(), "InvalidInput", "Typed face seed required");
+        return value;
+    }
+    if (parts.size() == 3 && parts[0] == "overrides" && parts[2] == "face") {
+        check(value.isArray() && parts[1].toInt() < value.toArray().size(), "InvalidInput",
+              "Override slot missing");
+        value = value.toArray()[parts[1].toInt()].toMap().value("face");
+        check(value.isMap(), "InvalidInput", "Typed override face required");
         return value;
     }
     if (parts.size() == 2) {
@@ -93,6 +104,12 @@ QCborArray replaceIntentReference(const QCborArray &intents, QString owner, QStr
                 auto arr = m.value("seed").toArray();
                 arr[parts[2].toInt()] = replacement.map();
                 m.insert(QStringLiteral("seed"), arr);
+            } else if (parts[0] == "overrides" && parts[2] == "face") {
+                auto arr = m.value("overrides").toArray();
+                auto item = arr[parts[1].toInt()].toMap();
+                item.insert(QStringLiteral("face"), replacement.map());
+                arr[parts[1].toInt()] = item;
+                m.insert(QStringLiteral("overrides"), arr);
             }
         }
         result[i] = ModelingIntent::parse(m).map();
