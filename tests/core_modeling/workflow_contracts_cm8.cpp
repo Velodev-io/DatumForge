@@ -145,9 +145,8 @@ class WorkflowContractsCM8 : public QObject {
 
         auto modelWithBase = model::editSupportedSketches(
             session.document(), sketch::encode(std::vector<sketch::Sketch>{sBase}));
-        client->projectCommand("SetModelSupports",
-                               fields({{"model", modelWithBase.map()},
-                                       {"intents", QCborArray{baseExt}}}));
+        client->projectCommand("SetModelSupports", fields({{"model", modelWithBase.map()},
+                                                           {"intents", QCborArray{baseExt}}}));
         QVERIFY(session.idle());
 
         auto docAfterBase = session.document();
@@ -164,11 +163,12 @@ class WorkflowContractsCM8 : public QObject {
         auto *shellIn = window.findChild<QCheckBox *>("shellInward");
         auto *shellFaces = window.findChild<QListWidget *>("shellRemoveFaces");
         auto *shellOver = window.findChild<QTableWidget *>("shellOverrides");
-        auto *addOverrideBtn = window.findChild<QPushButton *>(); // addShellOverride
+        auto *addOverrideBtn = window.findChild<QPushButton *>("addShellOverride");
         QVERIFY(shellThick != nullptr);
         QVERIFY(shellIn != nullptr);
         QVERIFY(shellFaces != nullptr);
         QVERIFY(shellOver != nullptr);
+        QVERIFY(addOverrideBtn != nullptr);
 
         shellThick->setValue(0.005 / unit);
         shellIn->setChecked(true);
@@ -225,11 +225,10 @@ class WorkflowContractsCM8 : public QObject {
         auto docBeforeSweep = session.document();
         auto sketchesSweep = sketch::parse(docBeforeSweep.value("sketches").toArray());
         sketchesSweep.push_back(sPath);
-        auto modelWithSweepPath = model::editSupportedSketches(
-            docBeforeSweep, sketch::encode(sketchesSweep));
-        client->projectCommand("SetModelSupports",
-                               fields({{"model", modelWithSweepPath.map()},
-                                       {"intents", shellIntents}}));
+        auto modelWithSweepPath =
+            model::editSupportedSketches(docBeforeSweep, sketch::encode(sketchesSweep));
+        client->projectCommand("SetModelSupports", fields({{"model", modelWithSweepPath.map()},
+                                                           {"intents", shellIntents}}));
         QVERIFY(session.idle());
 
         featurePanel->begin("Sweep");
@@ -296,11 +295,10 @@ class WorkflowContractsCM8 : public QObject {
         auto sketchesLoft = sketch::parse(docBeforeLoft.value("sketches").toArray());
         sketchesLoft.push_back(sLoft1);
         sketchesLoft.push_back(sLoft2);
-        auto modelWithLoft = model::editSupportedSketches(
-            docBeforeLoft, sketch::encode(sketchesLoft));
+        auto modelWithLoft =
+            model::editSupportedSketches(docBeforeLoft, sketch::encode(sketchesLoft));
         client->projectCommand("SetModelSupports",
-                               fields({{"model", modelWithLoft.map()},
-                                       {"intents", sweepIntents}}));
+                               fields({{"model", modelWithLoft.map()}, {"intents", sweepIntents}}));
         QVERIFY(session.idle());
 
         featurePanel->begin("Loft");

@@ -82,8 +82,8 @@ void MainWindow::buildCommandTabs() {
           std::pair{"fillet", "Fillet"}, std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"},
           std::pair{"rib", "Rib"}, std::pair{"pattern", "Linear pattern"},
           std::pair{"circularPattern", "Circular pattern"}, std::pair{"mirror", "Mirror"},
-          std::pair{"thread", "Cosmetic thread"},
-          std::pair{"shell", "Shell"}, std::pair{"sweep", "Sweep"}, std::pair{"loft", "Loft"}})
+          std::pair{"thread", "Cosmetic thread"}, std::pair{"shell", "Shell"},
+          std::pair{"sweep", "Sweep"}, std::pair{"loft", "Loft"}})
         add(pair.first, pair.second, "Exact modeling intent");
     auto *sketch3d = add("sketch.3d", "3D Sketch");
     connect(sketch3d, &QAction::triggered, this, [this] {

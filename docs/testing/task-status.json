@@ -2196,49 +2196,94 @@
     "full_acceptance_status": "Open/deferred: full T8 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM8.a": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM8 contracts for Shell (uniform, removed faces, multi-thickness), Sweep (sketch/circular profile, open/closed/3D path, guides, corner transition, tangency, thin), Loft (ordered sections, centerline, guides, connectors, solid/surface output, thin), and Graph validation.",
+    "implementation_status": "Pass: CM8.a implementation verified in CM8 test suite.",
+    "development_verification_status": "Pass: enabled CTests, Clang analyses, pinned format, ownership/research/coverage/specification checks.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm8-review.md",
+      "tests/core_modeling/cm8_contracts.cpp",
+      "tests/core_modeling/cm8_features.cpp",
+      "tests/core_modeling/cm8_store.cpp",
+      "tests/core_modeling/cm8_repair.cpp",
+      "tests/core_modeling/cm8_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm8.cpp",
+      "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T8 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM8.b": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "OCCT exact kernel modeling features for Shell (uniform, removed faces, closed cavity, multi-thickness), Sweep (sketch/circular, 3D path, guides, tangency, corners, thin), Loft (ordered sections, ellipse, centerline, connectors, solid/surface output, thin), and nonsolid surface body measurement refusal.",
+    "implementation_status": "Pass: CM8.b implementation verified in CM8 test suite.",
+    "development_verification_status": "Pass: enabled CTests, Clang analyses, pinned format, ownership/research/coverage/specification checks.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm8-review.md",
+      "tests/core_modeling/cm8_contracts.cpp",
+      "tests/core_modeling/cm8_features.cpp",
+      "tests/core_modeling/cm8_store.cpp",
+      "tests/core_modeling/cm8_repair.cpp",
+      "tests/core_modeling/cm8_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm8.cpp",
+      "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T8 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM8.c": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "Durable SQLite persistence for Shell, Sweep, Loft, connector parameters, manifests requirement level 13, replay, copy upgrades, undo/redo, and reference candidate repair.",
+    "implementation_status": "Pass: CM8.c implementation verified in CM8 test suite.",
+    "development_verification_status": "Pass: enabled CTests, Clang analyses, pinned format, ownership/research/coverage/specification checks.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm8-review.md",
+      "tests/core_modeling/cm8_contracts.cpp",
+      "tests/core_modeling/cm8_features.cpp",
+      "tests/core_modeling/cm8_store.cpp",
+      "tests/core_modeling/cm8_repair.cpp",
+      "tests/core_modeling/cm8_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm8.cpp",
+      "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T8 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM8.d": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "Native desktop UI panels for Shell, Sweep, and Loft, section/guide/connector selection, connector handle manipulation, parameter inputs, action triggers, and 5-scale native verification.",
+    "implementation_status": "Pass: CM8.d implementation verified in CM8 test suite.",
+    "development_verification_status": "Pass: enabled CTests, Clang analyses, pinned format, ownership/research/coverage/specification checks.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm8-review.md",
+      "tests/core_modeling/cm8_contracts.cpp",
+      "tests/core_modeling/cm8_features.cpp",
+      "tests/core_modeling/cm8_store.cpp",
+      "tests/core_modeling/cm8_repair.cpp",
+      "tests/core_modeling/cm8_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm8.cpp",
+      "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T8 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM8.e": {
-    "status": "Not run",
-    "scope": "Authorized; no whole-task completion claimed. See milestone contracts and per-variant coverage.",
+    "status": "Pass",
+    "scope": "CM8 workflow evidence and completion review: T8 Shell Tutorial reconstruction, ordinary pipe sweep, chair frame sweep with midplane mirror, impeller blade loft with circular pattern, multisection loft (solid and surface), negative/edge cases, and save/reopen verified.",
+    "implementation_status": "Pass: CM8.e implementation verified in CM8 test suite.",
+    "development_verification_status": "Pass: enabled CTests, Clang analyses, pinned format, ownership/research/coverage/specification checks.",
     "evidence": [
-      "docs/CORE_MODELING.md",
-      "docs/testing/core-modeling.md",
-      "docs/research/core-modeling-coverage.json"
-    ]
+      "docs/testing/core-modeling-cm8-review.md",
+      "tests/core_modeling/cm8_contracts.cpp",
+      "tests/core_modeling/cm8_features.cpp",
+      "tests/core_modeling/cm8_store.cpp",
+      "tests/core_modeling/cm8_repair.cpp",
+      "tests/core_modeling/cm8_review.cpp",
+      "tests/core_modeling/workflow_contracts_cm8.cpp",
+      "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+    ],
+    "native_verification_status": "Pass: available Mac Cocoa/OpenGL, mm/in author/edit/accept/save/reopen workflows at observed 100/125/150/175/200% effective scales; synthetic Qt input only.",
+    "full_acceptance_status": "Open/deferred: full T8 corpus, physical devices/assistive technology, Windows/Linux, installed release and physical 8 GB acceptance."
   },
   "CM9.a": {
     "status": "In progress",

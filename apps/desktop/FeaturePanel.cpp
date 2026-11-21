@@ -455,7 +455,8 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
     form->addRow("Faces to remove", shellRemoveFaces);
     connect(shellRemoveFaces, &QListWidget::itemChanged, this, [this] { invalidate(); });
 
-    shellOverrides = table("shellOverrides", "Multi-thickness face overrides", {"Face", "Thickness (mm)"});
+    shellOverrides =
+        table("shellOverrides", "Multi-thickness face overrides", {"Face", "Thickness (mm)"});
     addShellOverride = new QPushButton("Add face override");
     addShellOverride->setObjectName("addShellOverride");
     removeShellOverride = new QPushButton("Remove selected face override");
@@ -566,7 +567,8 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
     loftGuides->setMaximumHeight(120);
     form->addRow("Loft guide curves", loftGuides);
     connect(loftGuides, &QListWidget::itemChanged, this, [this] { invalidate(); });
-    loftConnectors = table("loftConnectors", "Connector correspondence", {"Connector ID", "Points (parameters)"});
+    loftConnectors = table("loftConnectors", "Connector correspondence",
+                           {"Connector ID", "Points (parameters)"});
     addLoftConnector = new QPushButton("Add connector handle");
     addLoftConnector->setObjectName("addLoftConnector");
     removeLoftConnector = new QPushButton("Remove selected connector");
@@ -1499,7 +1501,8 @@ void FeaturePanel::fieldsForKind() {
             show(sweepPreviewSections, true);
         } else if (isLoft) {
             show(operation, loftOutput->currentText() == "Solid");
-            show(target, loftOutput->currentText() == "Solid" && operation->currentText() != "NewBody");
+            show(target,
+                 loftOutput->currentText() == "Solid" && operation->currentText() != "NewBody");
             show(loftOutput, true);
             show(profile, true);
             show(loftSections, true);
@@ -1516,9 +1519,12 @@ void FeaturePanel::fieldsForKind() {
             show(loftStartCondition, true);
             show(loftEndCondition, true);
             show(thinMode, loftOutput->currentText() == "Solid");
-            show(thickness1, loftOutput->currentText() == "Solid" && thinMode->currentText() != "Solid");
-            show(thickness2, loftOutput->currentText() == "Solid" && thinMode->currentText() == "TwoDirection");
-            show(thinReverse, loftOutput->currentText() == "Solid" && thinMode->currentText() == "OneDirection");
+            show(thickness1,
+                 loftOutput->currentText() == "Solid" && thinMode->currentText() != "Solid");
+            show(thickness2,
+                 loftOutput->currentText() == "Solid" && thinMode->currentText() == "TwoDirection");
+            show(thinReverse,
+                 loftOutput->currentText() == "Solid" && thinMode->currentText() == "OneDirection");
         }
     } else {
         hideAll();
@@ -1619,7 +1625,8 @@ void FeaturePanel::begin(QString kind, QString editId) {
     bool advanced = kind == "Extrude" || kind == "Revolve" || kind == "Draft" || kind == "Hole" ||
                     kind == "Fillet" || kind == "Chamfer" || kind == "Rib" ||
                     kind == "LinearPattern" || kind == "CircularPattern" || kind == "Mirror" ||
-                    kind == "CosmeticThread" || kind == "Shell" || kind == "Sweep" || kind == "Loft";
+                    kind == "CosmeticThread" || kind == "Shell" || kind == "Sweep" ||
+                    kind == "Loft";
     if (editId.isEmpty() && !advanced &&
         !document.value("modeling").toMap().value("intents").toArray().empty()) {
         diagnostic->setText("This legacy operation cannot follow solid intents.");
@@ -2062,8 +2069,10 @@ void FeaturePanel::begin(QString kind, QString editId) {
             auto sup = model::SupportDefinition::parse(document.value("model_supports").toMap());
             for (const auto &c : model::parseDerivedCurves(sup.derived_curves)) {
                 auto cRef = makeRef(c.id, "Curve");
-                sweepPath->addItem(c.name.isEmpty() ? c.id : c.name, QVariant::fromValue(cRef.map()));
-                loftCenterline->addItem(c.name.isEmpty() ? c.id : c.name, QVariant::fromValue(cRef.map()));
+                sweepPath->addItem(c.name.isEmpty() ? c.id : c.name,
+                                   QVariant::fromValue(cRef.map()));
+                loftCenterline->addItem(c.name.isEmpty() ? c.id : c.name,
+                                        QVariant::fromValue(cRef.map()));
             }
         }
     }

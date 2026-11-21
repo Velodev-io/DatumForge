@@ -7870,7 +7870,7 @@
       ],
       "category": "Shell",
       "variant": "Removed faces",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -7880,8 +7880,18 @@
       ],
       "analytical_fixture": "cm-201-geometry",
       "native_workflow": "cm-201-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-202",
@@ -7894,7 +7904,7 @@
       ],
       "category": "Shell",
       "variant": "Closed cavity",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -7904,8 +7914,18 @@
       ],
       "analytical_fixture": "cm-202-geometry",
       "native_workflow": "cm-202-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-203",
@@ -7918,7 +7938,7 @@
       ],
       "category": "Shell",
       "variant": "Inward",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -7928,8 +7948,18 @@
       ],
       "analytical_fixture": "cm-203-geometry",
       "native_workflow": "cm-203-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-204",
@@ -7942,7 +7972,7 @@
       ],
       "category": "Shell",
       "variant": "Outward",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -7952,8 +7982,18 @@
       ],
       "analytical_fixture": "cm-204-geometry",
       "native_workflow": "cm-204-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-205",
@@ -7966,7 +8006,7 @@
       ],
       "category": "Shell",
       "variant": "Multiple thicknesses",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -7976,12 +8016,22 @@
       ],
       "analytical_fixture": "cm-205-geometry",
       "native_workflow": "cm-205-native",
-      "status": "Not run",
-      "evidence": [],
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
       "feasibility": {
         "scope": "Narrow isolated seed only; see per-probe limits. No production/native/persistence completion implied.",
         "evidence": "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
-      }
+      },
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-206",
@@ -8001,7 +8051,7 @@
       ],
       "category": "Sweep",
       "variant": "Sketch profile",
-      "restriction": "T8 p15: profile plane lies at a path endpoint; profile itself need not intersect the path. Closed profile may follow an open or closed sketch/curve/edge path. Check exact continuity and explicit corner handling.",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8011,8 +8061,18 @@
       ],
       "analytical_fixture": "cm-206-geometry",
       "native_workflow": "cm-206-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-207",
@@ -8032,7 +8092,7 @@
       ],
       "category": "Sweep",
       "variant": "Circular profile",
-      "restriction": "T8 p15: profile plane lies at a path endpoint; profile itself need not intersect the path. Closed profile may follow an open or closed sketch/curve/edge path. Check exact continuity and explicit corner handling.",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8042,8 +8102,18 @@
       ],
       "analytical_fixture": "cm-207-geometry",
       "native_workflow": "cm-207-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-208",
@@ -8063,7 +8133,7 @@
       ],
       "category": "Sweep",
       "variant": "Open path",
-      "restriction": "T8 p15: profile plane lies at a path endpoint; profile itself need not intersect the path. Closed profile may follow an open or closed sketch/curve/edge path. Check exact continuity and explicit corner handling.",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8073,8 +8143,18 @@
       ],
       "analytical_fixture": "cm-208-geometry",
       "native_workflow": "cm-208-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-209",
@@ -8094,7 +8174,7 @@
       ],
       "category": "Sweep",
       "variant": "Closed path",
-      "restriction": "T8 p15: profile plane lies at a path endpoint; profile itself need not intersect the path. Closed profile may follow an open or closed sketch/curve/edge path. Check exact continuity and explicit corner handling.",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8104,8 +8184,18 @@
       ],
       "analytical_fixture": "cm-209-geometry",
       "native_workflow": "cm-209-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-210",
@@ -8125,7 +8215,7 @@
       ],
       "category": "Sweep",
       "variant": "3D path",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8135,8 +8225,18 @@
       ],
       "analytical_fixture": "cm-210-geometry",
       "native_workflow": "cm-210-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-211",
@@ -8156,7 +8256,7 @@
       ],
       "category": "Sweep",
       "variant": "One-sided thin",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8166,8 +8266,18 @@
       ],
       "analytical_fixture": "cm-211-geometry",
       "native_workflow": "cm-211-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-212",
@@ -8187,7 +8297,7 @@
       ],
       "category": "Sweep",
       "variant": "Midplane thin",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8197,8 +8307,18 @@
       ],
       "analytical_fixture": "cm-212-geometry",
       "native_workflow": "cm-212-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-213",
@@ -8218,7 +8338,7 @@
       ],
       "category": "Sweep",
       "variant": "Two-sided thin",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8228,8 +8348,18 @@
       ],
       "analytical_fixture": "cm-213-geometry",
       "native_workflow": "cm-213-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-214",
@@ -8249,7 +8379,7 @@
       ],
       "category": "Sweep",
       "variant": "Reverse thickness",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8259,8 +8389,18 @@
       ],
       "analytical_fixture": "cm-214-geometry",
       "native_workflow": "cm-214-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-215",
@@ -8273,7 +8413,7 @@
       ],
       "category": "Sweep",
       "variant": "Guide curves",
-      "restriction": "Course quiz p48/p52 names Coincident between sketch and guide. Explicitly validate guide/profile intersection and branch behavior; the text alone does not establish arbitrary guide conditions.",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8283,12 +8423,22 @@
       ],
       "analytical_fixture": "cm-215-geometry",
       "native_workflow": "cm-215-native",
-      "status": "Not run",
-      "evidence": [],
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
       "feasibility": {
         "scope": "Narrow isolated seed only; see per-probe limits. No production/native/persistence completion implied.",
         "evidence": "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
-      }
+      },
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-216",
@@ -8308,7 +8458,7 @@
       ],
       "category": "Sweep",
       "variant": "Start/end tangency",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8318,8 +8468,18 @@
       ],
       "analytical_fixture": "cm-216-geometry",
       "native_workflow": "cm-216-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-217",
@@ -8339,7 +8499,7 @@
       ],
       "category": "Sweep",
       "variant": "Corner transition",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8349,8 +8509,18 @@
       ],
       "analytical_fixture": "cm-217-geometry",
       "native_workflow": "cm-217-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-218",
@@ -8370,7 +8540,7 @@
       ],
       "category": "Sweep",
       "variant": "Preview sections",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8380,8 +8550,18 @@
       ],
       "analytical_fixture": "cm-218-geometry",
       "native_workflow": "cm-218-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-219",
@@ -8403,7 +8583,7 @@
       ],
       "category": "Loft",
       "variant": "Ordered sections",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8413,8 +8593,18 @@
       ],
       "analytical_fixture": "cm-219-geometry",
       "native_workflow": "cm-219-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-220",
@@ -8436,7 +8626,7 @@
       ],
       "category": "Loft",
       "variant": "Ellipse sections",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8446,8 +8636,18 @@
       ],
       "analytical_fixture": "cm-220-geometry",
       "native_workflow": "cm-220-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-221",
@@ -8469,7 +8669,7 @@
       ],
       "category": "Loft",
       "variant": "Open sections/surface result",
-      "restriction": "At least two ordered sections; solid lofts require closed sections (p35/p46). Open-section surface behavior is supported by quiz p48/p52 and needs explicit result type.",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8479,8 +8679,18 @@
       ],
       "analytical_fixture": "cm-221-geometry",
       "native_workflow": "cm-221-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-222",
@@ -8502,7 +8712,7 @@
       ],
       "category": "Loft",
       "variant": "Closed sections/solid result",
-      "restriction": "At least two ordered sections; solid lofts require closed sections (p35/p46). Open-section surface behavior is supported by quiz p48/p52 and needs explicit result type.",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8512,8 +8722,18 @@
       ],
       "analytical_fixture": "cm-222-geometry",
       "native_workflow": "cm-222-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-223",
@@ -8525,7 +8745,7 @@
       ],
       "category": "Loft",
       "variant": "Thin loft",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8535,8 +8755,17 @@
       ],
       "analytical_fixture": "cm-223-geometry",
       "native_workflow": "cm-223-native",
-      "status": "Not run",
-      "evidence": [],
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
       "required_option_cases": [
         "One-sided thickness",
         "Symmetric thickness",
@@ -8544,7 +8773,8 @@
         "Thickness reversal",
         "Open/closed section compatibility and exact validity"
       ],
-      "source_role": "Course references thin-loft parameters; full thickness semantics are required by the approved roadmap, not described exhaustively in these pages."
+      "source_role": "Course references thin-loft parameters; full thickness semantics are required by the approved roadmap, not described exhaustively in these pages.",
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-224",
@@ -8566,7 +8796,7 @@
       ],
       "category": "Loft",
       "variant": "Centerline path",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8576,12 +8806,22 @@
       ],
       "analytical_fixture": "cm-224-geometry",
       "native_workflow": "cm-224-native",
-      "status": "Not run",
-      "evidence": [],
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
       "feasibility": {
         "scope": "Narrow isolated seed only; see per-probe limits. No production/native/persistence completion implied.",
         "evidence": "docs/testing/artifacts/core-modeling/20261022T174052.110799Z/verification/feasibility.json"
-      }
+      },
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-225",
@@ -8594,7 +8834,7 @@
       ],
       "category": "Loft",
       "variant": "Correspondence connectors",
-      "restriction": "Circular/elliptical/closed-spline start/end sections initially show one connector; additional connectors may be added on straight or curved profiles. Persist connector handles and correspondence; do not infer by display index.",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8604,8 +8844,18 @@
       ],
       "analytical_fixture": "cm-225-geometry",
       "native_workflow": "cm-225-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-226",
@@ -8618,7 +8868,7 @@
       ],
       "category": "Loft",
       "variant": "Connector handles",
-      "restriction": "Circular/elliptical/closed-spline start/end sections initially show one connector; additional connectors may be added on straight or curved profiles. Persist connector handles and correspondence; do not infer by display index.",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8628,8 +8878,18 @@
       ],
       "analytical_fixture": "cm-226-geometry",
       "native_workflow": "cm-226-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-227",
@@ -8642,7 +8902,7 @@
       ],
       "category": "Loft",
       "variant": "Loft synchronization",
-      "restriction": "Circular/elliptical/closed-spline start/end sections initially show one connector; additional connectors may be added on straight or curved profiles. Persist connector handles and correspondence; do not infer by display index.",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM8 review evidence for geometry restrictions.",
       "tasks": [
         "CM8.a",
         "CM8.b",
@@ -8652,8 +8912,18 @@
       ],
       "analytical_fixture": "cm-227-geometry",
       "native_workflow": "cm-227-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm8-review.md",
+        "tests/core_modeling/cm8_contracts.cpp",
+        "tests/core_modeling/cm8_features.cpp",
+        "tests/core_modeling/cm8_store.cpp",
+        "tests/core_modeling/cm8_repair.cpp",
+        "tests/core_modeling/cm8_review.cpp",
+        "tests/core_modeling/workflow_contracts_cm8.cpp",
+        "docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, shell, sweep, loft and native desktop regression evidence only; complete T8 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-228",

@@ -1,0 +1,144 @@
+{
+  "status": "Pass: development-build scope; blocked acceptance remains separate",
+  "scope": "CM8 Shell, sweep and loft: stable exact evaluation, persistence, native authoring and review regressions",
+  "host": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+  "steps": [
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "--preset",
+        "macos-debug"
+      ],
+      "exit_code": 0,
+      "seconds": 0.07748500001616776
+    },
+    {
+      "name": "ctest",
+      "command": [
+        "ctest",
+        "--preset",
+        "macos-debug",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 469.6317121250031
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 1.9121673749759793
+    },
+    {
+      "name": "changed-source-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "-u",
+        "tools/static_analysis.py",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/analysis-commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 65.88292245799676
+    },
+    {
+      "name": "architecture",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-debug",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.14287137499195524
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.20367966699996032
+    },
+    {
+      "name": "coverage",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_core_modeling.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1467730829899665
+    },
+    {
+      "name": "specifications",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "docs/scripts/check_specs.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.08770295800059102
+    },
+    {
+      "name": "workflows-native-100",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm8_workflow_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 14.940722625004128
+    },
+    {
+      "name": "workflows-native-125",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm8_workflow_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 14.298086166003486
+    },
+    {
+      "name": "workflows-native-150",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm8_workflow_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 15.127478292008163
+    },
+    {
+      "name": "workflows-native-175",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm8_workflow_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 15.735063917003572
+    },
+    {
+      "name": "workflows-native-200",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-debug/cm8_workflow_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 15.564242833002936
+    }
+  ],
+  "module_11_started": false,
+  "preserved_deferred_gates": [
+    "6.1b",
+    "6.4c",
+    "7.4c"
+  ],
+  "blocked_acceptance": [
+    "Physical input devices and assistive technologies",
+    "Installed/signed builds",
+    "Windows/Linux",
+    "Full resource and whole-course acceptance corpus"
+  ],
+  "physical_ram_bytes": 8589934592,
+  "native_verification": "Pass: available Mac Cocoa/OpenGL, five observed effective scales, mm/in native author/edit/accept/reopen workflows; synthetic Qt input only",
+  "cm8_review": "Scoped review verification; full source-course/platform/device/resource acceptance remains Blocked",
+  "source_unchanged": true
+}

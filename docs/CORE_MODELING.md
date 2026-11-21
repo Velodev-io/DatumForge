@@ -133,11 +133,11 @@ The authorized drawing slice is limited to the plan; Module 11 remains excluded.
 
 ### CM8 — Shell, sweep and loft
 
-- [ ] **CM8.a:** Define solid/surface outputs, thickness/guide/section/connector and corner-transition contracts.
-- [ ] **CM8.b:** Implement OCCT shell/offset, pipe-shell sweep/centerline adapters and ordinary through-section lofts, including every described advanced mode.
-- [ ] **CM8.c:** Persist correspondence and topology history; invalid computations preserve accepted state.
-- [ ] **CM8.d:** Add native section/guide/connector selection and preview controls; no silent path smoothing.
-- [ ] **CM8.e:** Verify shell, pipe, chair frame, impeller and multisection loft workflows, including edits and invalid geometry.
+- [x] **CM8.a:** Define solid/surface outputs, thickness/guide/section/connector and corner-transition contracts. Production kernel-free versioned intent contracts and available-Mac development verification passed: [CM8 review evidence](testing/core-modeling-cm8-review.md).
+- [x] **CM8.b:** Implement OCCT shell/offset, pipe-shell sweep/centerline adapters and ordinary through-section lofts, including every described advanced mode. Production exact engine and read-only worker preview verified: [CM8 review evidence](testing/core-modeling-cm8-review.md).
+- [x] **CM8.c:** Persist correspondence and topology history; invalid computations preserve accepted state. Production durable SQLite persistence, atomic multi-collection support and reference repair verified: [CM8 review evidence](testing/core-modeling-cm8-review.md).
+- [x] **CM8.d:** Add native section/guide/connector selection and preview controls; no silent path smoothing. Production native Shell, Sweep, and Loft panels, connector handles, and 5-scale native verification (100–200% DPR) passed: [CM8 review evidence](testing/core-modeling-cm8-review.md).
+- [x] **CM8.e:** Verify shell, pipe, chair frame, impeller and multisection loft workflows, including edits and invalid geometry. All course workflows, enabled CTests, and native rendering verified: [CM8 review evidence](testing/core-modeling-cm8-review.md). Full course/platform/resource acceptance remains Blocked.
 
 ### CM9 — Catalogs, material/evaluation and model display
 

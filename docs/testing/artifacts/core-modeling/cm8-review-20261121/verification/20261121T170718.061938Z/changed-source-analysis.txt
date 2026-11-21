@@ -1,0 +1,8 @@
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed apps/desktop/WorkspaceChrome.cpp
+Analyzed apps/desktop/FeaturePanel.cpp
+Analyzed apps/desktop/FeatureUI.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/persistence/ProjectStore.cpp
+Analyzed tests/core_modeling/cm8_review.cpp
+Analyzed tests/core_modeling/workflow_contracts_cm8.cpp

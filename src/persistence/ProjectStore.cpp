@@ -1974,7 +1974,7 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
                         "definition=excluded.definition",
                         {entity, encode(collection)});
             db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN "
-                    "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     {historyManifest, exchangeManifest, assemblyManifest, drawingManifest,
                      coreManifest, constructionManifest, primitiveManifest, editManifest,
                      dimensionManifest, associatedDimensionManifest, interactionManifest,

@@ -3,7 +3,7 @@
 Living checklist maintained across sessions.
 Format: `[ ]` not started, `[/]` in progress, `[x]` done, `[~]` deferred/blocked.
 
-Last Updated: 2026-11-17
+Last Updated: 2026-11-21
 
 ---
 
@@ -63,12 +63,12 @@ Last Updated: 2026-11-17
   - [x] CM7.c: Durable definitions, atomic edits, replay and explicit reference repair.
   - [x] CM7.d: Native spatial sketching, dimensions, plane switching and branch selection verified at 5 scales (100–200% DPR).
   - [x] CM7.e: Projected/chair paths, failure cases, regression/native evidence and completion review.
-- [/] **CM8: Sweeps, Lofts & Shells** — In progress (branch `review/cm8-a-20261121`).
+- [x] **CM8: Sweeps, Lofts & Shells** — Completed and verified on review branch (`review/cm8-e-20261121`).
   - [x] Preparation & CM8.a: Versioned shell/sweep/loft contracts, result types, connector correspondence and graph validation.
-  - [ ] CM8.b: Exact worker adapters for shell, pipe-shell sweep and lofts.
-  - [ ] CM8.c: Durable definitions, topology history, atomic rebuild and explicit repair.
-  - [ ] CM8.d: Native face/path/section/guide selection, connector handles and bounded previews.
-  - [ ] CM8.e: Complete course workflows, 27-row evidence, regressions and native verification.
+  - [x] CM8.b: Exact worker adapters for shell, pipe-shell sweep and lofts; distinct nonsolid surface outputs and volume refusal.
+  - [x] CM8.c: Durable definitions, topology history, manifest requirement 13, atomic rebuild and explicit repair.
+  - [x] CM8.d: Native face/path/section/guide selection, connector handles, FeaturePanel integration, and 5-scale native verification (100–200% DPR).
+  - [x] CM8.e: Complete course workflows (T8 shell, ordinary pipe, chair frame + mirror, impeller + circular pattern, multisection loft), 27-row evidence, regressions and native verification.
 - [ ] **CM9: Offline Catalogs, Materials & Evaluation Tools** *(Scheduled; not started)*.
 
 ---
