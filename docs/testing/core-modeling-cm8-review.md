@@ -73,7 +73,8 @@ workflows in mm/in at observed 100/125/150/175/200% effective DPR scaling. Tests
 disposable roots; no user project or release recovery path is used.
 
 Artifacts generated under:
-`docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T170718.061938Z/`
+`docs/testing/artifacts/core-modeling/cm8-review-20261121/verification/20261121T175117.232364Z/`
+(historical initial attempt at `20261121T170718.061938Z/`)
 - Build, 115/115 enabled CTests, Pinned clang-format: all PASS.
 - Changed-source Clang static analysis (8 files): PASS with 0 warnings.
 - Architecture, Research-isolation, Coverage (257/257 CM requirements), Specifications: all PASS.

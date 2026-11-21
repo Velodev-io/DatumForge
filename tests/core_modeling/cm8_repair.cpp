@@ -190,6 +190,45 @@ int main(int argc, char **argv) {
         auto queriedPath = features::intentReference(repairedIntents[2].toMap(), "path/reference");
         CHECK(queriedPath.object == pathSk2.id);
 
+        // 5. Test replaceIntentReference for higher array indices (> 31, up to 63)
+        QCborArray multiRemoveFaces, multiOverrides;
+        for (int i = 0; i < 40; ++i) {
+            auto fakeFace = support_fixture::ref(baseId, "Face");
+            fakeFace.topology = QString("face/%1").arg(i, 64, 16, QChar('0'));
+            multiRemoveFaces.append(fakeFace.map());
+            auto fakeOvFace = support_fixture::ref(baseId, "Face");
+            fakeOvFace.topology = QString("face/%1").arg(100 + i, 64, 16, QChar('0'));
+            multiOverrides.append(fields({{"face", fakeOvFace.map()}, {"thickness", 0.005}}));
+        }
+        auto multiShell = fields({{"version", 1},
+                                  {"id", newId()},
+                                  {"kind", "Shell"},
+                                  {"target", body(baseId)},
+                                  {"thickness", 0.005},
+                                  {"inward", true},
+                                  {"remove_faces", multiRemoveFaces},
+                                  {"overrides", multiOverrides}});
+        auto multiShellId = multiShell.value("id").toString();
+        QCborArray multiIntents{baseExt, multiShell};
+
+        auto rep35 = features::replaceIntentReference(multiIntents, multiShellId, "remove_faces/35",
+                                                      sideFaceRef);
+        auto rep35Shell = rep35[1].toMap();
+        CHECK(rep35Shell.value("remove_faces").toArray()[35].toMap().value("topology") ==
+              sideFaceRef.topology);
+
+        auto rep35Ov =
+            features::replaceIntentReference(rep35, multiShellId, "overrides/35/face", botFaceRef);
+        auto rep35OvShell = rep35Ov[1].toMap();
+        CHECK(rep35OvShell.value("overrides")
+                  .toArray()[35]
+                  .toMap()
+                  .value("face")
+                  .toMap()
+                  .value("topology") == botFaceRef.topology);
+        auto queried35 = features::intentReference(rep35OvShell, "overrides/35/face");
+        CHECK(queried35.topology == botFaceRef.topology);
+
         puts("PASS: cm8 repair");
     });
 }

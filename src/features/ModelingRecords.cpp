@@ -3,20 +3,22 @@ namespace cad::features {
 using domain::check;
 namespace {
 QStringList referencePath(QString path) {
-    check(QStringList{"start/reference", "direction1/reference", "direction2/reference", "axis",
-                      "plane", "seed/source", "target/source", "neutral", "pull", "reference",
-                      "placement/face", "termination/reference", "reference_face", "edge",
-                      "path/reference", "centerline/reference"}
-                  .contains(path) ||
-              QRegularExpression("^(faces|edges|faces1|faces2|side_faces1|center_faces|side_faces2|"
-                                 "seed/faces|remove_faces|guides)/([0-9]|[12][0-9]|3[01])$")
-                  .match(path)
-                  .hasMatch() ||
-              QRegularExpression(
-                  "^(radii/([0-9]|[12][0-9]|3[01])/edge|overrides/([0-9]|[12][0-9]|3[01])/face)$")
-                  .match(path)
-                  .hasMatch(),
-          "InvalidInput", "Choose an explicit modeling reference path");
+    check(
+        QStringList{"start/reference", "direction1/reference", "direction2/reference", "axis",
+                    "plane", "seed/source", "target/source", "neutral", "pull", "reference",
+                    "placement/face", "termination/reference", "reference_face", "edge",
+                    "path/reference", "centerline/reference"}
+                .contains(path) ||
+            QRegularExpression("^(faces|edges|faces1|faces2|side_faces1|center_faces|side_faces2|"
+                               "seed/faces|guides)/([0-9]|[12][0-9]|3[01])$")
+                .match(path)
+                .hasMatch() ||
+            QRegularExpression("^remove_faces/([0-9]|[1-5][0-9]|6[0-3])$").match(path).hasMatch() ||
+            QRegularExpression("^(radii/([0-9]|[12][0-9]|3[01])/edge|"
+                               "overrides/([0-9]|[1-5][0-9]|6[0-3])/face)$")
+                .match(path)
+                .hasMatch(),
+        "InvalidInput", "Choose an explicit modeling reference path");
     return path.split('/');
 }
 QCborValue at(const QCborMap &intent, const QStringList &parts) {

@@ -1,0 +1,6 @@
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed apps/desktop/FeaturePanel.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/features/ModelingRecords.cpp
+Analyzed tests/core_modeling/cm8_repair.cpp
+Analyzed tests/core_modeling/workflow_contracts_cm8.cpp

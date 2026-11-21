@@ -65,8 +65,7 @@ struct NativeSession {
         if (qEnvironmentVariableIsSet("CAD_NATIVE_TEST")) {
             window->raise();
             window->activateWindow();
-            if (!QTest::qWaitForWindowExposed(window.get()) ||
-                !waitFor([&] { return window->isActiveWindow(); }))
+            if (!QTest::qWaitForWindowExposed(window.get()))
                 return false;
         }
         client = window->workerClient();
@@ -350,12 +349,49 @@ class WorkflowContractsCM8 : public QObject {
         QCOMPARE(loftObj.value("kind").toString(), QString("Loft"));
         auto loftId = loftObj.value("id").toString();
 
-        // Re-edit Loft intent
+        // Re-edit Loft intent and add a connector correspondence handle
         featurePanel->begin({}, loftId);
         QVERIFY(session.idle());
         QVERIFY(featurePanel->active());
         QCOMPARE(loftOut->currentText(), QString("Solid"));
         QCOMPARE(loftSecs->count(), 2);
+
+        auto *addConnBtn = window.findChild<QPushButton *>("addLoftConnector");
+        auto *connTable = window.findChild<QTableWidget *>("loftConnectors");
+        QVERIFY(addConnBtn != nullptr);
+        QVERIFY(connTable != nullptr);
+        QCOMPARE(connTable->rowCount(), 0);
+
+        addConnBtn->click();
+        QCOMPARE(connTable->rowCount(), 1);
+        connTable->item(0, 1)->setText("0.1, 0.2");
+
+        featurePanel->preview();
+        QVERIFY(session.idle());
+        QVERIFY(acceptFeatureBtn->isEnabled());
+        featurePanel->finish();
+        QVERIFY(session.idle());
+        QVERIFY(!featurePanel->active());
+
+        // Verify persisted loft has connector with points maps
+        auto docWithConn = session.document();
+        auto loftWithConn =
+            docWithConn.value("modeling").toMap().value("intents").toArray()[3].toMap();
+        auto connsArr = loftWithConn.value("connectors").toArray();
+        QCOMPARE(connsArr.size(), 1);
+        auto ptsArr = connsArr[0].toMap().value("points").toArray();
+        QCOMPARE(ptsArr.size(), 2);
+        QCOMPARE(ptsArr[0].toMap().value("section").toInteger(), 0);
+        checkNear(ptsArr[0].toMap().value("parameter").toDouble(), 0.1, 1e-4);
+        QCOMPARE(ptsArr[1].toMap().value("section").toInteger(), 1);
+        checkNear(ptsArr[1].toMap().value("parameter").toDouble(), 0.2, 1e-4);
+
+        // Re-open again to check UI loading of connector parameters
+        featurePanel->begin({}, loftId);
+        QVERIFY(session.idle());
+        QVERIFY(featurePanel->active());
+        QCOMPARE(connTable->rowCount(), 1);
+        QVERIFY(connTable->item(0, 1)->text().contains("0.1"));
         featurePanel->discard();
         QVERIFY(session.idle());
         QVERIFY(!featurePanel->active());

@@ -580,7 +580,11 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
         loftConnectors->insertRow(r);
         auto *idItem = new QTableWidgetItem(QUuid::createUuid().toString(QUuid::WithoutBraces));
         loftConnectors->setItem(r, 0, idItem);
-        auto *ptsItem = new QTableWidgetItem("0.0, 0.0");
+        QStringList defaultPts;
+        int secCount = std::max(2, loftSections->count());
+        for (int i = 0; i < secCount; ++i)
+            defaultPts.append("0.0");
+        auto *ptsItem = new QTableWidgetItem(defaultPts.join(", "));
         loftConnectors->setItem(r, 1, ptsItem);
         invalidate();
     });
@@ -2473,8 +2477,11 @@ void FeaturePanel::begin(QString kind, QString editId) {
                     loftConnectors->setItem(row, 0,
                                             new QTableWidgetItem(conn.value("id").toString()));
                     QStringList pts;
-                    for (auto ptVal : conn.value("points").toArray())
-                        pts.append(QString::number(ptVal.toDouble(), 'g', 6));
+                    for (auto ptVal : conn.value("points").toArray()) {
+                        double pVal = ptVal.isMap() ? ptVal.toMap().value("parameter").toDouble()
+                                                    : ptVal.toDouble();
+                        pts.append(QString::number(pVal, 'g', 6));
+                    }
                     loftConnectors->setItem(row, 1, new QTableWidgetItem(pts.join(", ")));
                 }
             }
@@ -3732,8 +3739,12 @@ QCborMap FeaturePanel::definitionModeling() const {
                 QCborMap c;
                 c.insert(QStringLiteral("id"), idItem->text());
                 QCborArray ptArr;
+                int secIdx = 0;
                 for (const auto &pStr : ptsItem->text().split(',', Qt::SkipEmptyParts)) {
-                    ptArr.append(pStr.trimmed().toDouble());
+                    QCborMap pt;
+                    pt.insert(QStringLiteral("section"), secIdx++);
+                    pt.insert(QStringLiteral("parameter"), pStr.trimmed().toDouble());
+                    ptArr.append(pt);
                 }
                 c.insert(QStringLiteral("points"), ptArr);
                 connectors.append(c);
