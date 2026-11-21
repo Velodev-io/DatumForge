@@ -1,9 +1,12 @@
 #include "ModelingFeatures.hpp"
 #include "Holes.hpp"
+#include "Loft.hpp"
 #include "ModelingInternal.hpp"
 #include "ModelingProfiles.hpp"
 #include "Repetition.hpp"
 #include "Ribs.hpp"
+#include "Shell.hpp"
+#include "Sweep.hpp"
 #include "Treatments.hpp"
 #include "features/ModelingIntent.hpp"
 #include "features/ModelingRecords.hpp"
@@ -55,6 +58,33 @@ void publish(kernel::Part &part, modeling::Context &context, const QCborMap &m,
             kernel::Body b{name, solid.Current()};
             part.bodies.push_back(b);
             changed.push_back(b);
+        }
+        if (ordinal == 0) {
+            for (TopExp_Explorer shell(tool, TopAbs_SHELL); shell.More(); shell.Next()) {
+                auto name = identities.empty() ? bodyId(id, ordinal) : identities.value(ordinal);
+                ++ordinal;
+                domain::id(name);
+                check(std::none_of(part.bodies.begin(), part.bodies.end(),
+                                   [&](auto &b) { return b.id == name; }),
+                      "InvalidInput", "Generated body identity collision");
+                kernel::Body b{name, shell.Current()};
+                part.bodies.push_back(b);
+                changed.push_back(b);
+            }
+            if (ordinal == 0) {
+                for (TopExp_Explorer face(tool, TopAbs_FACE); face.More(); face.Next()) {
+                    auto name =
+                        identities.empty() ? bodyId(id, ordinal) : identities.value(ordinal);
+                    ++ordinal;
+                    domain::id(name);
+                    check(std::none_of(part.bodies.begin(), part.bodies.end(),
+                                       [&](auto &b) { return b.id == name; }),
+                          "InvalidInput", "Generated body identity collision");
+                    kernel::Body b{name, face.Current()};
+                    part.bodies.push_back(b);
+                    changed.push_back(b);
+                }
+            }
         }
         part.stages[id] = tool;
     } else {
@@ -274,7 +304,8 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
             QCborArray provenance;
             auto kind = m.value("kind").toString();
             check(QStringList{"Extrude", "Revolve", "Draft", "Hole", "CosmeticThread", "Rib",
-                              "LinearPattern", "CircularPattern", "Mirror", "Fillet", "Chamfer"}
+                              "LinearPattern", "CircularPattern", "Mirror", "Fillet", "Chamfer",
+                              "Shell", "Sweep", "Loft"}
                       .contains(kind),
                   "UnsupportedOperation", "Modeling adapter required");
             TopoDS_Shape target;
@@ -332,6 +363,28 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
                 current->shape = shape;
                 result.part.stages[id] = shape;
                 context.bodyStages[id] = {*current};
+            } else if (kind == "Shell") {
+                auto shape = modeling::shell(target, m, context, result.part, id);
+                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                    provenance.append(result.part.history[n]);
+                auto selected = m.value("target").toMap().value("body").toString();
+                auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
+                                            [&](auto &b) { return b.id == selected; });
+                check(current != result.part.bodies.end(), "ReferenceMissing",
+                      "Shell target disappeared");
+                current->shape = shape;
+                result.part.stages[id] = shape;
+                context.bodyStages[id] = {*current};
+            } else if (kind == "Sweep") {
+                auto tool = modeling::sweep(target, m, context, result.part, id);
+                publish(result.part, context, m, tool);
+                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                    provenance.append(result.part.history[n]);
+            } else if (kind == "Loft") {
+                auto tool = modeling::loft(target, m, context, result.part, id);
+                publish(result.part, context, m, tool);
+                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                    provenance.append(result.part.history[n]);
             } else if (kind == "Hole") {
                 auto tool = modeling::hole(target, m, context, result.part, id, control);
                 publish(result.part, context, m, tool);
@@ -378,7 +431,7 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
             for (auto &b : context.bodyStages.value(id))
                 outputs.append(b.id);
             bool directOp = kind == "Draft" || kind == "Fillet" || kind == "Chamfer" ||
-                            kind == "CosmeticThread";
+                            kind == "CosmeticThread" || kind == "Shell";
             result.modelingProvenance.append(sketch::fields(
                 {{"feature", id},
                  {"kind", m.value("kind")},

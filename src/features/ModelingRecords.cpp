@@ -122,7 +122,8 @@ void validateModelingRecords(const QCborMap &m) {
         seen.insert(id);
         wire::keys(p, {"feature", "kind", "operation", "target", "outputs", "history"});
         bool directOp = f.value("kind") == "Draft" || f.value("kind") == "Fillet" ||
-                        f.value("kind") == "Chamfer" || f.value("kind") == "CosmeticThread";
+                        f.value("kind") == "Chamfer" || f.value("kind") == "CosmeticThread" ||
+                        f.value("kind") == "Shell";
         check(p.value("feature") == f.value("id") && p.value("kind") == f.value("kind") &&
                   p.value("operation") ==
                       (directOp ? QCborValue(f.value("kind")) : f.value("operation")) &&

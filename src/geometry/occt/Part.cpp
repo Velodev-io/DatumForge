@@ -92,12 +92,17 @@ TopoDS_Shape compound(const std::vector<TopoDS_Shape> &shapes) {
 void valid(const TopoDS_Shape &s, int faceLimit = 20000) {
     check(!s.IsNull() && BRepCheck_Analyzer(s, true).IsValid(), "InvalidGeometry",
           "Kernel produced an invalid shape");
-    check(count(s, TopAbs_SOLID) > 0 && count(s, TopAbs_SOLID) <= 10, "ResourceLimit",
-          "Result must contain 1–10 closed solids");
-    check(count(s, TopAbs_FACE) <= faceLimit && std::isfinite(volume(s)) && volume(s) > 1e-15,
-          "InvalidGeometry", "Empty, inverted or oversized solid result");
-    for (TopExp_Explorer i(s, TopAbs_SHELL); i.More(); i.Next())
-        check(BRep_Tool::IsClosed(i.Current()), "InvalidGeometry", "Solid shell is open");
+    int solidCount = count(s, TopAbs_SOLID);
+    if (solidCount > 0) {
+        check(solidCount <= 10, "ResourceLimit", "Result must contain 1–10 closed solids");
+        check(count(s, TopAbs_FACE) <= faceLimit && std::isfinite(volume(s)) && volume(s) > 1e-15,
+              "InvalidGeometry", "Empty, inverted or oversized solid result");
+        for (TopExp_Explorer i(s, TopAbs_SHELL); i.More(); i.Next())
+            check(BRep_Tool::IsClosed(i.Current()), "InvalidGeometry", "Solid shell is open");
+    } else {
+        check(count(s, TopAbs_FACE) > 0 && count(s, TopAbs_FACE) <= faceLimit, "InvalidGeometry",
+              "Empty or oversized surface result");
+    }
     for (TopExp_Explorer i(s, TopAbs_VERTEX); i.More(); i.Next())
         check(BRep_Tool::Tolerance(TopoDS::Vertex(i.Current())) <= 1e-4, "InvalidGeometry",
               "Tolerance exceeds declared 0.0001 mm ceiling");
@@ -701,6 +706,14 @@ QCborMap Part::measure(qint64 revision, QString body, QString selected, double d
             r.insert(QStringLiteral("radius_m"), surf.Cylinder().Radius() / mm);
         return r;
     }
+    int solidCount = count(s, TopAbs_SOLID);
+    if (solidCount == 0) {
+        if (body.isEmpty())
+            return fields({{"revision", revision},
+                           {"valid", false},
+                           {"reason", "Non-solid surface bodies have no volume"}});
+        throw domain::Error("UnsupportedOperation", "Non-solid surface body has no volume");
+    }
     Bnd_Box box;
     BRepBndLib::AddOptimal(s, box, false, false);
     double x, y, z, a, b, c;
@@ -713,7 +726,7 @@ QCborMap Part::measure(qint64 revision, QString body, QString selected, double d
                      {"area_m2", area.Mass() * siArea},
                      {"minimum_m", QCborArray{x / mm, y / mm, z / mm}},
                      {"maximum_m", QCborArray{a / mm, b / mm, c / mm}},
-                     {"solids", count(s, TopAbs_SOLID)},
+                     {"solids", solidCount},
                      {"valid", true}});
     if (density > 0) {
         r.insert(QStringLiteral("density_kg_m3"), density);
