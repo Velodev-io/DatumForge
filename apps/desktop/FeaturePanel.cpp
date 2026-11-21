@@ -445,6 +445,155 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
     helixClockwise = check("helixClockwise", "Clockwise");
     helixClockwise->setChecked(true);
 
+    // CM8 Shell
+    shellThickness = spin("shellThickness", "Shell thickness (mm)", 5.0, 1e-4, 1e4);
+    shellInward = check("shellInward", "Shell inward");
+    shellInward->setChecked(true);
+    shellRemoveFaces = new QListWidget;
+    shellRemoveFaces->setObjectName("shellRemoveFaces");
+    shellRemoveFaces->setMaximumHeight(130);
+    form->addRow("Faces to remove", shellRemoveFaces);
+    connect(shellRemoveFaces, &QListWidget::itemChanged, this, [this] { invalidate(); });
+
+    shellOverrides = table("shellOverrides", "Multi-thickness face overrides", {"Face", "Thickness (mm)"});
+    addShellOverride = new QPushButton("Add face override");
+    addShellOverride->setObjectName("addShellOverride");
+    removeShellOverride = new QPushButton("Remove selected face override");
+    removeShellOverride->setObjectName("removeShellOverride");
+    form->addRow(addShellOverride);
+    form->addRow(removeShellOverride);
+    connect(addShellOverride, &QPushButton::clicked, this, [this] {
+        int r = shellOverrides->rowCount();
+        shellOverrides->insertRow(r);
+        auto *faceItem = new QTableWidgetItem("face/0");
+        shellOverrides->setItem(r, 0, faceItem);
+        auto *thickItem = new QTableWidgetItem("10.0");
+        shellOverrides->setItem(r, 1, thickItem);
+        invalidate();
+    });
+    connect(removeShellOverride, &QPushButton::clicked, this, [this] {
+        int r = shellOverrides->currentRow();
+        if (r >= 0) {
+            shellOverrides->removeRow(r);
+            invalidate();
+        }
+    });
+
+    // CM8 Sweep
+    sweepProfileType = combo("sweepProfileType", "Sweep profile type");
+    sweepProfileType->addItems({"Circular", "Sketch"});
+    connect(sweepProfileType, &QComboBox::currentIndexChanged, this, [this] {
+        fieldsForKind();
+        invalidate();
+    });
+    sweepDiameter = spin("sweepDiameter", "Circular diameter (mm)", 20.0, 1e-4, 1e4);
+    sweepPath = combo("sweepPath", "Sweep path");
+    sweepPathReverse = check("sweepPathReverse", "Reverse sweep path");
+    sweepGuides = new QListWidget;
+    sweepGuides->setObjectName("sweepGuides");
+    sweepGuides->setMaximumHeight(120);
+    form->addRow("Guide curves", sweepGuides);
+    connect(sweepGuides, &QListWidget::itemChanged, this, [this] { invalidate(); });
+    sweepCornerTransition = combo("sweepCornerTransition", "Corner transition");
+    sweepCornerTransition->addItems({"Round", "Sharp"});
+    sweepStartTangency = combo("sweepStartTangency", "Start tangency");
+    sweepStartTangency->addItems({"None", "PathTangent"});
+    sweepEndTangency = combo("sweepEndTangency", "End tangency");
+    sweepEndTangency->addItems({"None", "PathTangent"});
+    sweepPreviewSections = ispin("sweepPreviewSections", "Preview sections (0–32)", 0, 0, 32);
+
+    // CM8 Loft
+    loftOutput = combo("loftOutput", "Loft output");
+    loftOutput->addItems({"Solid", "Surface"});
+    connect(loftOutput, &QComboBox::currentIndexChanged, this, [this] {
+        fieldsForKind();
+        invalidate();
+    });
+    loftSections = new QListWidget;
+    loftSections->setObjectName("loftSections");
+    loftSections->setMaximumHeight(130);
+    form->addRow("Loft sections (ordered)", loftSections);
+    connect(loftSections, &QListWidget::itemChanged, this, [this] { invalidate(); });
+    addLoftSection = new QPushButton("Add section to loft");
+    addLoftSection->setObjectName("addLoftSection");
+    removeLoftSection = new QPushButton("Remove selected section");
+    removeLoftSection->setObjectName("removeLoftSection");
+    moveUpLoftSection = new QPushButton("Move section up");
+    moveUpLoftSection->setObjectName("moveUpLoftSection");
+    moveDownLoftSection = new QPushButton("Move section down");
+    moveDownLoftSection->setObjectName("moveDownLoftSection");
+    form->addRow(addLoftSection);
+    form->addRow(removeLoftSection);
+    form->addRow(moveUpLoftSection);
+    form->addRow(moveDownLoftSection);
+    connect(addLoftSection, &QPushButton::clicked, this, [this] {
+        if (profile->count() > 0) {
+            auto *item = new QListWidgetItem(profile->currentText(), loftSections);
+            item->setData(Qt::UserRole, profile->currentData());
+            item->setCheckState(Qt::Checked);
+            invalidate();
+        }
+    });
+    connect(removeLoftSection, &QPushButton::clicked, this, [this] {
+        int r = loftSections->currentRow();
+        if (r >= 0) {
+            delete loftSections->takeItem(r);
+            invalidate();
+        }
+    });
+    connect(moveUpLoftSection, &QPushButton::clicked, this, [this] {
+        int r = loftSections->currentRow();
+        if (r > 0) {
+            auto *item = loftSections->takeItem(r);
+            loftSections->insertItem(r - 1, item);
+            loftSections->setCurrentRow(r - 1);
+            invalidate();
+        }
+    });
+    connect(moveDownLoftSection, &QPushButton::clicked, this, [this] {
+        int r = loftSections->currentRow();
+        if (r >= 0 && r < loftSections->count() - 1) {
+            auto *item = loftSections->takeItem(r);
+            loftSections->insertItem(r + 1, item);
+            loftSections->setCurrentRow(r + 1);
+            invalidate();
+        }
+    });
+    loftCenterline = combo("loftCenterline", "Centerline curve");
+    loftCenterlineReverse = check("loftCenterlineReverse", "Reverse centerline");
+    loftGuides = new QListWidget;
+    loftGuides->setObjectName("loftGuides");
+    loftGuides->setMaximumHeight(120);
+    form->addRow("Loft guide curves", loftGuides);
+    connect(loftGuides, &QListWidget::itemChanged, this, [this] { invalidate(); });
+    loftConnectors = table("loftConnectors", "Connector correspondence", {"Connector ID", "Points (parameters)"});
+    addLoftConnector = new QPushButton("Add connector handle");
+    addLoftConnector->setObjectName("addLoftConnector");
+    removeLoftConnector = new QPushButton("Remove selected connector");
+    removeLoftConnector->setObjectName("removeLoftConnector");
+    form->addRow(addLoftConnector);
+    form->addRow(removeLoftConnector);
+    connect(addLoftConnector, &QPushButton::clicked, this, [this] {
+        int r = loftConnectors->rowCount();
+        loftConnectors->insertRow(r);
+        auto *idItem = new QTableWidgetItem(QUuid::createUuid().toString(QUuid::WithoutBraces));
+        loftConnectors->setItem(r, 0, idItem);
+        auto *ptsItem = new QTableWidgetItem("0.0, 0.0");
+        loftConnectors->setItem(r, 1, ptsItem);
+        invalidate();
+    });
+    connect(removeLoftConnector, &QPushButton::clicked, this, [this] {
+        int r = loftConnectors->currentRow();
+        if (r >= 0) {
+            loftConnectors->removeRow(r);
+            invalidate();
+        }
+    });
+    loftStartCondition = combo("loftStartCondition", "Start condition");
+    loftStartCondition->addItems({"None", "NormalToSection"});
+    loftEndCondition = combo("loftEndCondition", "End condition");
+    loftEndCondition->addItems({"None", "NormalToSection"});
+
     selectDraftFaces = new QPushButton("Select faces to draft…");
     selectDraftFaces->setObjectName("featureSelectDraftFaces");
     form->addRow(selectDraftFaces);
@@ -877,6 +1026,9 @@ void FeaturePanel::fieldsForKind() {
     bool isCircularPattern = (kind == "CircularPattern");
     bool isMirror = (kind == "Mirror");
     bool isCosmeticThread = (kind == "CosmeticThread");
+    bool isShell = (kind == "Shell");
+    bool isSweep = (kind == "Sweep");
+    bool isLoft = (kind == "Loft");
     bool isTreatment = isFillet || isChamfer;
     bool isPattern = isLinearPattern || isCircularPattern || isMirror;
 
@@ -1022,7 +1174,36 @@ void FeaturePanel::fieldsForKind() {
                               helixRevolutions,
                               helixStartAngle,
                               helixTaperAngle,
-                              helixClockwise};
+                              helixClockwise,
+                              shellThickness,
+                              shellInward,
+                              shellRemoveFaces,
+                              shellOverrides,
+                              addShellOverride,
+                              removeShellOverride,
+                              sweepProfileType,
+                              sweepDiameter,
+                              sweepPath,
+                              sweepPathReverse,
+                              sweepGuides,
+                              sweepCornerTransition,
+                              sweepStartTangency,
+                              sweepEndTangency,
+                              sweepPreviewSections,
+                              loftOutput,
+                              loftSections,
+                              addLoftSection,
+                              removeLoftSection,
+                              moveUpLoftSection,
+                              moveDownLoftSection,
+                              loftCenterline,
+                              loftCenterlineReverse,
+                              loftGuides,
+                              loftConnectors,
+                              addLoftConnector,
+                              removeLoftConnector,
+                              loftStartCondition,
+                              loftEndCondition};
         for (QWidget *w : widgets)
             show(w, false);
     };
@@ -1291,6 +1472,53 @@ void FeaturePanel::fieldsForKind() {
             show(threadPitch, true);
             show(threadTermination, true);
             show(threadDepth, threadTermination->currentText() == "Blind");
+        } else if (isShell) {
+            show(target, true);
+            show(shellThickness, true);
+            show(shellInward, true);
+            show(shellRemoveFaces, true);
+            show(shellOverrides, true);
+            show(addShellOverride, true);
+            show(removeShellOverride, true);
+        } else if (isSweep) {
+            show(operation, true);
+            show(target, operation->currentText() != "NewBody");
+            show(sweepProfileType, true);
+            show(profile, sweepProfileType->currentText() == "Sketch");
+            show(sweepDiameter, sweepProfileType->currentText() == "Circular");
+            show(sweepPath, true);
+            show(sweepPathReverse, true);
+            show(sweepGuides, true);
+            show(sweepCornerTransition, true);
+            show(sweepStartTangency, true);
+            show(sweepEndTangency, true);
+            show(thinMode, true);
+            show(thickness1, thinMode->currentText() != "Solid");
+            show(thickness2, thinMode->currentText() == "TwoDirection");
+            show(thinReverse, thinMode->currentText() == "OneDirection");
+            show(sweepPreviewSections, true);
+        } else if (isLoft) {
+            show(operation, loftOutput->currentText() == "Solid");
+            show(target, loftOutput->currentText() == "Solid" && operation->currentText() != "NewBody");
+            show(loftOutput, true);
+            show(profile, true);
+            show(loftSections, true);
+            show(addLoftSection, true);
+            show(removeLoftSection, true);
+            show(moveUpLoftSection, true);
+            show(moveDownLoftSection, true);
+            show(loftCenterline, true);
+            show(loftCenterlineReverse, true);
+            show(loftGuides, true);
+            show(loftConnectors, true);
+            show(addLoftConnector, true);
+            show(removeLoftConnector, true);
+            show(loftStartCondition, true);
+            show(loftEndCondition, true);
+            show(thinMode, loftOutput->currentText() == "Solid");
+            show(thickness1, loftOutput->currentText() == "Solid" && thinMode->currentText() != "Solid");
+            show(thickness2, loftOutput->currentText() == "Solid" && thinMode->currentText() == "TwoDirection");
+            show(thinReverse, loftOutput->currentText() == "Solid" && thinMode->currentText() == "OneDirection");
         }
     } else {
         hideAll();
@@ -1391,7 +1619,7 @@ void FeaturePanel::begin(QString kind, QString editId) {
     bool advanced = kind == "Extrude" || kind == "Revolve" || kind == "Draft" || kind == "Hole" ||
                     kind == "Fillet" || kind == "Chamfer" || kind == "Rib" ||
                     kind == "LinearPattern" || kind == "CircularPattern" || kind == "Mirror" ||
-                    kind == "CosmeticThread";
+                    kind == "CosmeticThread" || kind == "Shell" || kind == "Sweep" || kind == "Loft";
     if (editId.isEmpty() && !advanced &&
         !document.value("modeling").toMap().value("intents").toArray().empty()) {
         diagnostic->setText("This legacy operation cannot follow solid intents.");
@@ -1452,7 +1680,8 @@ void FeaturePanel::begin(QString kind, QString editId) {
         if (kind == "ProjectedCurve" || kind == "CompositeCurve" || kind == "HelixSpiral") {
             isDerivedCurve = true;
             isModeling = false;
-        } else if (kind == "Draft" || kind == "Rib" || kind == "CosmeticThread") {
+        } else if (kind == "Draft" || kind == "Rib" || kind == "CosmeticThread" ||
+                   kind == "Shell" || kind == "Sweep" || kind == "Loft") {
             isModeling = true;
         } else if (hasModeling) {
             isModeling = true;
@@ -1794,6 +2023,49 @@ void FeaturePanel::begin(QString kind, QString editId) {
             item.first->setValue(item.second / unit());
         if (kind == "Rib")
             profileMode->setCurrentText("OpenChains");
+
+        // CM8 resets
+        shellRemoveFaces->clear();
+        shellOverrides->setRowCount(0);
+        shellThickness->setValue(2.0 / unit());
+        shellInward->setChecked(true);
+
+        sweepPath->clear();
+        sweepGuides->clear();
+        sweepProfileType->setCurrentText("Sketch");
+        sweepDiameter->setValue(10.0 / unit());
+        sweepPathReverse->setChecked(false);
+        sweepCornerTransition->setCurrentText("Round");
+        sweepStartTangency->setCurrentText("None");
+        sweepEndTangency->setCurrentText("None");
+        sweepPreviewSections->setValue(0);
+
+        loftOutput->setCurrentText("Solid");
+        loftSections->clear();
+        loftCenterline->clear();
+        loftCenterline->addItem("None", QVariant{});
+        loftCenterlineReverse->setChecked(false);
+        loftGuides->clear();
+        loftConnectors->setRowCount(0);
+        loftStartCondition->setCurrentText("None");
+        loftEndCondition->setCurrentText("None");
+
+        for (auto s : document.value("sketches").toArray()) {
+            auto sm = s.toMap();
+            auto sName = sm.value("name").toString();
+            auto sId = sm.value("id").toString();
+            auto cRef = makeRef(sId, "Curve");
+            sweepPath->addItem(sName, QVariant::fromValue(cRef.map()));
+            loftCenterline->addItem(sName, QVariant::fromValue(cRef.map()));
+        }
+        if (document.contains(QStringLiteral("model_supports"))) {
+            auto sup = model::SupportDefinition::parse(document.value("model_supports").toMap());
+            for (const auto &c : model::parseDerivedCurves(sup.derived_curves)) {
+                auto cRef = makeRef(c.id, "Curve");
+                sweepPath->addItem(c.name.isEmpty() ? c.id : c.name, QVariant::fromValue(cRef.map()));
+                loftCenterline->addItem(c.name.isEmpty() ? c.id : c.name, QVariant::fromValue(cRef.map()));
+            }
+        }
     }
 
     auto matchRef = [](QComboBox *box, const QCborMap &targetRef) {
@@ -2107,6 +2379,100 @@ void FeaturePanel::begin(QString kind, QString editId) {
             if (p.contains(QStringLiteral("termination")))
                 threadTermination->setCurrentText(
                     p.value("termination").toMap().value("mode").toString());
+        }
+
+        if (kind == "Shell") {
+            if (p.contains(QStringLiteral("thickness")))
+                shellThickness->setValue(p.value("thickness").toDouble() / unit());
+            if (p.contains(QStringLiteral("inward")))
+                shellInward->setChecked(p.value("inward").toBool());
+            if (p.contains(QStringLiteral("overrides"))) {
+                auto ovs = p.value("overrides").toArray();
+                shellOverrides->setRowCount(ovs.size());
+                for (int row = 0; row < ovs.size(); ++row) {
+                    auto ov = ovs[row].toMap();
+                    auto fRef = ov.value("face").toMap();
+                    auto *fItem = new QTableWidgetItem(fRef.value("topology").toString().right(8));
+                    fItem->setData(Qt::UserRole, QVariant::fromValue(fRef));
+                    shellOverrides->setItem(row, 0, fItem);
+                    auto *tItem = new QTableWidgetItem(
+                        QString::number(ov.value("thickness").toDouble() / unit(), 'g', 6));
+                    shellOverrides->setItem(row, 1, tItem);
+                }
+            }
+        }
+
+        if (kind == "Sweep") {
+            if (p.contains(QStringLiteral("profile"))) {
+                auto prof = p.value("profile").toMap();
+                auto pType = prof.value("type").toString();
+                sweepProfileType->setCurrentText(pType);
+                if (pType == "Circular") {
+                    sweepDiameter->setValue(prof.value("diameter").toDouble() / unit());
+                } else {
+                    auto sId = prof.value("sketch").toString();
+                    int idx = profile->findData(sId);
+                    if (idx >= 0)
+                        profile->setCurrentIndex(idx);
+                }
+            }
+            if (p.contains(QStringLiteral("path"))) {
+                auto pathMap = p.value("path").toMap();
+                matchRef(sweepPath, pathMap.value("reference").toMap());
+                sweepPathReverse->setChecked(pathMap.value("reverse").toBool());
+            }
+            if (p.contains(QStringLiteral("corner_transition")))
+                sweepCornerTransition->setCurrentText(p.value("corner_transition").toString());
+            if (p.contains(QStringLiteral("start_tangency")))
+                sweepStartTangency->setCurrentText(p.value("start_tangency").toString());
+            if (p.contains(QStringLiteral("end_tangency")))
+                sweepEndTangency->setCurrentText(p.value("end_tangency").toString());
+            if (p.contains(QStringLiteral("preview_sections")))
+                sweepPreviewSections->setValue(p.value("preview_sections").toInteger());
+        }
+
+        if (kind == "Loft") {
+            if (p.contains(QStringLiteral("output")))
+                loftOutput->setCurrentText(p.value("output").toString());
+            if (p.contains(QStringLiteral("sections"))) {
+                loftSections->clear();
+                for (auto secVal : p.value("sections").toArray()) {
+                    auto sec = secVal.toMap();
+                    auto sId = sec.value("sketch").toString();
+                    QString sName = sId;
+                    for (int i = 0; i < profile->count(); ++i) {
+                        if (profile->itemData(i).toString() == sId) {
+                            sName = profile->itemText(i);
+                            break;
+                        }
+                    }
+                    auto *item = new QListWidgetItem(sName, loftSections);
+                    item->setData(Qt::UserRole, sId);
+                    item->setCheckState(Qt::Checked);
+                }
+            }
+            if (p.contains(QStringLiteral("centerline")) && !p.value("centerline").isNull()) {
+                auto clMap = p.value("centerline").toMap();
+                matchRef(loftCenterline, clMap.value("reference").toMap());
+                loftCenterlineReverse->setChecked(clMap.value("reverse").toBool());
+            }
+            if (p.contains(QStringLiteral("connectors"))) {
+                auto conns = p.value("connectors").toArray();
+                loftConnectors->setRowCount(conns.size());
+                for (int row = 0; row < conns.size(); ++row) {
+                    auto conn = conns[row].toMap();
+                    loftConnectors->setItem(row, 0,
+                                            new QTableWidgetItem(conn.value("id").toString()));
+                    QStringList pts;
+                    for (auto ptVal : conn.value("points").toArray())
+                        pts.append(QString::number(ptVal.toDouble(), 'g', 6));
+                    loftConnectors->setItem(row, 1, new QTableWidgetItem(pts.join(", ")));
+                }
+            }
+            if (p.contains(QStringLiteral("start_condition")))
+                loftStartCondition->setCurrentText(p.value("start_condition").toString());
+            if (p.contains(QStringLiteral("end_condition")))
+                loftEndCondition->setCurrentText(p.value("end_condition").toString());
         }
     } else if (!isModeling && !editId.isEmpty()) {
         auto p = draft.parameters;
@@ -2583,6 +2949,64 @@ void FeaturePanel::installModelingInputs(QCborMap input) {
         for (auto value : input.value("references").toArray()) {
             auto ref = value.toMap();
             if (ref.value("role") == (list == patFaces ? "Face" : "Edge") &&
+                !selected.contains(ref))
+                add(ref);
+        }
+    }
+    {
+        QSignalBlocker block(shellRemoveFaces);
+        QCborArray selected;
+        bool populated = shellRemoveFaces->count() > 0;
+        for (int i = 0; i < shellRemoveFaces->count(); ++i)
+            if (shellRemoveFaces->item(i)->checkState() == Qt::Checked)
+                selected.append(shellRemoveFaces->item(i)->data(Qt::UserRole).value<QCborMap>());
+        if (!populated && !modelingDraft.empty()) {
+            selected = modelingDraft.value("remove_faces").toArray();
+        }
+        shellRemoveFaces->clear();
+        auto add = [&](QCborMap ref) {
+            auto *item = new QListWidgetItem("Face " + ref.value("topology").toString().right(8),
+                                             shellRemoveFaces);
+            item->setData(Qt::UserRole, QVariant::fromValue(ref));
+            item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+            bool checked = selected.contains(ref);
+            if (!populated && modelingDraft.empty())
+                checked =
+                    client->state().selection.entity.contains(ref.value("topology").toString());
+            item->setCheckState(checked ? Qt::Checked : Qt::Unchecked);
+        };
+        for (auto ref : selected)
+            add(ref.toMap());
+        for (auto value : input.value("references").toArray()) {
+            auto ref = value.toMap();
+            if (ref.value("role") == "Face" && !selected.contains(ref))
+                add(ref);
+        }
+    }
+    for (auto *list : {sweepGuides, loftGuides}) {
+        QSignalBlocker block(list);
+        QCborArray selected;
+        bool populated = list->count() > 0;
+        for (int i = 0; i < list->count(); ++i)
+            if (list->item(i)->checkState() == Qt::Checked)
+                selected.append(list->item(i)->data(Qt::UserRole).value<QCborMap>());
+        if (!populated && !modelingDraft.empty()) {
+            selected = modelingDraft.value("guides").toArray();
+        }
+        list->clear();
+        auto add = [&](QCborMap ref) {
+            auto *item = new QListWidgetItem(ref.value("role").toString() + " " +
+                                                 ref.value("topology").toString().right(8),
+                                             list);
+            item->setData(Qt::UserRole, QVariant::fromValue(ref));
+            item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+            item->setCheckState(selected.contains(ref) ? Qt::Checked : Qt::Unchecked);
+        };
+        for (auto ref : selected)
+            add(ref.toMap());
+        for (auto value : input.value("references").toArray()) {
+            auto ref = value.toMap();
+            if ((ref.value("role") == "Edge" || ref.value("role") == "Curve") &&
                 !selected.contains(ref))
                 add(ref);
         }
@@ -3127,6 +3551,210 @@ QCborMap FeaturePanel::definitionModeling() const {
         if (threadTermination->currentText() == "Blind")
             term.insert(QStringLiteral("depth"), threadDepth->value() * u);
         m.insert(QStringLiteral("termination"), term);
+        return m;
+    }
+
+    if (kind == "Shell") {
+        m.insert(QStringLiteral("target"), makeTarget());
+        m.insert(QStringLiteral("thickness"), shellThickness->value() * u);
+        m.insert(QStringLiteral("inward"), shellInward->isChecked());
+
+        QCborArray removeFaces;
+        for (int i = 0; i < shellRemoveFaces->count(); ++i) {
+            if (shellRemoveFaces->item(i)->checkState() == Qt::Checked) {
+                removeFaces.append(shellRemoveFaces->item(i)->data(Qt::UserRole).value<QCborMap>());
+            }
+        }
+        if (removeFaces.isEmpty() && !modelingDraft.isEmpty() &&
+            modelingDraft.contains(QStringLiteral("remove_faces"))) {
+            removeFaces = modelingDraft.value("remove_faces").toArray();
+        }
+        m.insert(QStringLiteral("remove_faces"), removeFaces);
+
+        QCborArray overrides;
+        for (int row = 0; row < shellOverrides->rowCount(); ++row) {
+            auto *faceItem = shellOverrides->item(row, 0);
+            auto *thickItem = shellOverrides->item(row, 1);
+            if (faceItem && thickItem) {
+                QCborMap ov;
+                ov.insert(QStringLiteral("face"), faceItem->data(Qt::UserRole).value<QCborMap>());
+                ov.insert(QStringLiteral("thickness"), thickItem->text().toDouble() * u);
+                overrides.append(ov);
+            }
+        }
+        if (overrides.isEmpty() && !modelingDraft.isEmpty() &&
+            modelingDraft.contains(QStringLiteral("overrides"))) {
+            overrides = modelingDraft.value("overrides").toArray();
+        }
+        m.insert(QStringLiteral("overrides"), overrides);
+        return m;
+    }
+
+    if (kind == "Sweep") {
+        auto op = operation->currentText();
+        m.insert(QStringLiteral("operation"), op);
+        m.insert(QStringLiteral("target"), op == "NewBody" ? QCborValue(nullptr) : makeTarget());
+
+        QCborMap prof;
+        if (sweepProfileType->currentText() == "Circular") {
+            prof.insert(QStringLiteral("type"), QStringLiteral("Circular"));
+            prof.insert(QStringLiteral("diameter"), sweepDiameter->value() * u);
+        } else {
+            prof.insert(QStringLiteral("type"), QStringLiteral("Sketch"));
+            auto profSketchId = profile->currentData().toString();
+            prof.insert(QStringLiteral("sketch"), profSketchId);
+            prof.insert(QStringLiteral("mode"), QStringLiteral("AllClosed"));
+            prof.insert(QStringLiteral("regions"), QCborArray{});
+        }
+        m.insert(QStringLiteral("profile"), prof);
+
+        QCborMap pathMap;
+        QCborMap pathRef;
+        if (sweepPath->currentData().canConvert<QCborMap>()) {
+            pathRef = sweepPath->currentData().value<QCborMap>();
+        } else if (!sweepPath->currentData().toString().isEmpty()) {
+            pathRef = makeRef(sweepPath->currentData().toString(), "Curve").map();
+        } else if (!modelingDraft.isEmpty() && modelingDraft.contains(QStringLiteral("path"))) {
+            pathRef = modelingDraft.value("path").toMap().value("reference").toMap();
+        }
+        pathMap.insert(QStringLiteral("reference"), pathRef);
+        pathMap.insert(QStringLiteral("reverse"), sweepPathReverse->isChecked());
+        m.insert(QStringLiteral("path"), pathMap);
+
+        QCborArray guides;
+        for (int i = 0; i < sweepGuides->count(); ++i) {
+            if (sweepGuides->item(i)->checkState() == Qt::Checked) {
+                guides.append(sweepGuides->item(i)->data(Qt::UserRole).value<QCborMap>());
+            }
+        }
+        if (guides.isEmpty() && !modelingDraft.isEmpty() &&
+            modelingDraft.contains(QStringLiteral("guides"))) {
+            guides = modelingDraft.value("guides").toArray();
+        }
+        m.insert(QStringLiteral("guides"), guides);
+
+        m.insert(QStringLiteral("corner_transition"), sweepCornerTransition->currentText());
+        m.insert(QStringLiteral("start_tangency"), sweepStartTangency->currentText());
+        m.insert(QStringLiteral("end_tangency"), sweepEndTangency->currentText());
+
+        QCborMap th;
+        th.insert(QStringLiteral("mode"), thinMode->currentText());
+        if (thinMode->currentText() == "OneDirection" || thinMode->currentText() == "Midplane") {
+            th.insert(QStringLiteral("thickness"), thickness1->value() * u);
+            th.insert(QStringLiteral("reverse"), thinReverse->isChecked());
+        } else if (thinMode->currentText() == "TwoDirection") {
+            th.insert(QStringLiteral("thickness1"), thickness1->value() * u);
+            th.insert(QStringLiteral("thickness2"), thickness2->value() * u);
+        }
+        m.insert(QStringLiteral("thin"), th);
+
+        m.insert(QStringLiteral("preview_sections"), sweepPreviewSections->value());
+        return m;
+    }
+
+    if (kind == "Loft") {
+        auto out = loftOutput->currentText();
+        m.insert(QStringLiteral("output"), out);
+        auto op = out == "Surface" ? QStringLiteral("NewBody") : operation->currentText();
+        m.insert(QStringLiteral("operation"), op);
+        m.insert(QStringLiteral("target"),
+                 (out == "Surface" || op == "NewBody") ? QCborValue(nullptr) : makeTarget());
+
+        QCborArray sections;
+        for (int i = 0; i < loftSections->count(); ++i) {
+            auto sId = loftSections->item(i)->data(Qt::UserRole).toString();
+            if (!sId.isEmpty()) {
+                QCborMap sec;
+                sec.insert(QStringLiteral("sketch"), sId);
+                sec.insert(QStringLiteral("mode"), QStringLiteral("AllClosed"));
+                sec.insert(QStringLiteral("regions"), QCborArray{});
+                sections.append(sec);
+            }
+        }
+        if (sections.isEmpty() && !modelingDraft.isEmpty() &&
+            modelingDraft.contains(QStringLiteral("sections"))) {
+            sections = modelingDraft.value("sections").toArray();
+        }
+        m.insert(QStringLiteral("sections"), sections);
+
+        if (loftCenterline->currentIndex() > 0 && !loftCenterline->currentData().isNull()) {
+            QCborMap clMap;
+            QCborMap clRef;
+            if (loftCenterline->currentData().canConvert<QCborMap>()) {
+                clRef = loftCenterline->currentData().value<QCborMap>();
+            } else if (!loftCenterline->currentData().toString().isEmpty()) {
+                clRef = makeRef(loftCenterline->currentData().toString(), "Curve").map();
+            } else if (!modelingDraft.isEmpty() &&
+                       modelingDraft.contains(QStringLiteral("centerline")) &&
+                       !modelingDraft.value("centerline").isNull()) {
+                clRef = modelingDraft.value("centerline").toMap().value("reference").toMap();
+            }
+            if (!clRef.isEmpty()) {
+                clMap.insert(QStringLiteral("reference"), clRef);
+                clMap.insert(QStringLiteral("reverse"), loftCenterlineReverse->isChecked());
+                m.insert(QStringLiteral("centerline"), clMap);
+            } else {
+                m.insert(QStringLiteral("centerline"), QCborValue(nullptr));
+            }
+        } else if (!modelingDraft.isEmpty() &&
+                   modelingDraft.contains(QStringLiteral("centerline"))) {
+            m.insert(QStringLiteral("centerline"), modelingDraft.value("centerline"));
+        } else {
+            m.insert(QStringLiteral("centerline"), QCborValue(nullptr));
+        }
+
+        QCborArray guides;
+        for (int i = 0; i < loftGuides->count(); ++i) {
+            if (loftGuides->item(i)->checkState() == Qt::Checked) {
+                guides.append(loftGuides->item(i)->data(Qt::UserRole).value<QCborMap>());
+            }
+        }
+        if (guides.isEmpty() && !modelingDraft.isEmpty() &&
+            modelingDraft.contains(QStringLiteral("guides"))) {
+            guides = modelingDraft.value("guides").toArray();
+        }
+        m.insert(QStringLiteral("guides"), guides);
+
+        QCborArray connectors;
+        for (int row = 0; row < loftConnectors->rowCount(); ++row) {
+            auto *idItem = loftConnectors->item(row, 0);
+            auto *ptsItem = loftConnectors->item(row, 1);
+            if (idItem && ptsItem) {
+                QCborMap c;
+                c.insert(QStringLiteral("id"), idItem->text());
+                QCborArray ptArr;
+                for (const auto &pStr : ptsItem->text().split(',', Qt::SkipEmptyParts)) {
+                    ptArr.append(pStr.trimmed().toDouble());
+                }
+                c.insert(QStringLiteral("points"), ptArr);
+                connectors.append(c);
+            }
+        }
+        if (connectors.isEmpty() && !modelingDraft.isEmpty() &&
+            modelingDraft.contains(QStringLiteral("connectors"))) {
+            connectors = modelingDraft.value("connectors").toArray();
+        }
+        m.insert(QStringLiteral("connectors"), connectors);
+
+        m.insert(QStringLiteral("start_condition"), loftStartCondition->currentText());
+        m.insert(QStringLiteral("end_condition"), loftEndCondition->currentText());
+
+        QCborMap th;
+        if (out == "Surface") {
+            th.insert(QStringLiteral("mode"), QStringLiteral("Solid"));
+        } else {
+            th.insert(QStringLiteral("mode"), thinMode->currentText());
+            if (thinMode->currentText() == "OneDirection" ||
+                thinMode->currentText() == "Midplane") {
+                th.insert(QStringLiteral("thickness"), thickness1->value() * u);
+                th.insert(QStringLiteral("reverse"), thinReverse->isChecked());
+            } else if (thinMode->currentText() == "TwoDirection") {
+                th.insert(QStringLiteral("thickness1"), thickness1->value() * u);
+                th.insert(QStringLiteral("thickness2"), thickness2->value() * u);
+            }
+        }
+        m.insert(QStringLiteral("thin"), th);
+
         return m;
     }
 

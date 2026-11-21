@@ -210,6 +210,42 @@ class FeaturePanel : public QWidget {
     QDoubleSpinBox *helixTaperAngle = nullptr;
     QCheckBox *helixClockwise = nullptr;
 
+    // CM8 Controls
+    // Shell
+    QDoubleSpinBox *shellThickness = nullptr;
+    QCheckBox *shellInward = nullptr;
+    QListWidget *shellRemoveFaces = nullptr;
+    QTableWidget *shellOverrides = nullptr;
+    QPushButton *addShellOverride = nullptr;
+    QPushButton *removeShellOverride = nullptr;
+
+    // Sweep
+    QComboBox *sweepProfileType = nullptr;
+    QDoubleSpinBox *sweepDiameter = nullptr;
+    QComboBox *sweepPath = nullptr;
+    QCheckBox *sweepPathReverse = nullptr;
+    QListWidget *sweepGuides = nullptr;
+    QComboBox *sweepCornerTransition = nullptr;
+    QComboBox *sweepStartTangency = nullptr;
+    QComboBox *sweepEndTangency = nullptr;
+    QSpinBox *sweepPreviewSections = nullptr;
+
+    // Loft
+    QComboBox *loftOutput = nullptr;
+    QListWidget *loftSections = nullptr;
+    QPushButton *addLoftSection = nullptr;
+    QPushButton *removeLoftSection = nullptr;
+    QPushButton *moveUpLoftSection = nullptr;
+    QPushButton *moveDownLoftSection = nullptr;
+    QComboBox *loftCenterline = nullptr;
+    QCheckBox *loftCenterlineReverse = nullptr;
+    QListWidget *loftGuides = nullptr;
+    QTableWidget *loftConnectors = nullptr;
+    QPushButton *addLoftConnector = nullptr;
+    QPushButton *removeLoftConnector = nullptr;
+    QComboBox *loftStartCondition = nullptr;
+    QComboBox *loftEndCondition = nullptr;
+
     void fieldsForKind();
     QCborArray definitions() const;
     QCborMap definitionModeling() const;

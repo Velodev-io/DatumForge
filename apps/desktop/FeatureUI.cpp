@@ -39,8 +39,9 @@ void MainWindow::refreshFeatures() {
                   (active.contains(QStringLiteral("model_supports")) &&
                    !active.value("model_supports").toMap().value("features").toArray().empty());
     for (auto id : {"extrude", "revolve", "draft", "fillet", "chamfer", "hole", "rib", "pattern",
-                    "circularPattern", "mirror", "thread"}) {
-        bool profile = QString(id) == "extrude" || QString(id) == "revolve" || QString(id) == "rib";
+                    "circularPattern", "mirror", "thread", "shell", "sweep", "loft"}) {
+        bool profile = QString(id) == "extrude" || QString(id) == "revolve" || QString(id) == "rib" ||
+                       QString(id) == "sweep" || QString(id) == "loft";
         available(id, part && idle && !sketchEdit && !edit && (profile ? sketches : solids),
                   profile ? "Accept a Part sketch first"
                           : "Requires an accepted Part solid and no active command");

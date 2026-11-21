@@ -66,7 +66,8 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
           std::pair{"draft", "Draft"}, std::pair{"fillet", "Fillet"},
           std::pair{"chamfer", "Chamfer"}, std::pair{"hole", "Hole"}, std::pair{"rib", "Rib"},
           std::pair{"pattern", "LinearPattern"}, std::pair{"mirror", "Mirror"},
-          std::pair{"circularPattern", "CircularPattern"}, std::pair{"thread", "CosmeticThread"}})
+          std::pair{"circularPattern", "CircularPattern"}, std::pair{"thread", "CosmeticThread"},
+          std::pair{"shell", "Shell"}, std::pair{"sweep", "Sweep"}, std::pair{"loft", "Loft"}})
         connect(commands.get(pair.first), &QAction::triggered, this,
                 [this, pair] { featurePanel->begin(pair.second); });
     connect(featurePanel, &FeaturePanel::editingChanged, this, &MainWindow::refresh);
