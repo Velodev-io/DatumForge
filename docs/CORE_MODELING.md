@@ -125,11 +125,11 @@ The authorized drawing slice is limited to the plan; Module 11 remains excluded.
 
 ### CM7 — Spatial sketches and derived curves
 
-- [ ] **CM7.a:** Define spatial curve entities, branch references and plane/axis/dimension constraints.
-- [ ] **CM7.b:** Implement a separate Eigen 3D constraint adapter, projected/composite curves and helix/spiral definitions; retain planar PlaneGCS.
-- [ ] **CM7.c:** Persist spatial IDs, endpoints and tangent frames for downstream supports.
-- [ ] **CM7.d:** Add active-plane switching, spatial inference and explicit projection-branch selection.
-- [ ] **CM7.e:** Verify projected paths/chair frame, conflicts, ambiguous projections and discontinuities.
+- [x] **CM7.a:** Define spatial curve entities, branch references and plane/axis/dimension constraints. Production kernel-free versioned intent contracts and available-Mac development verification passed: [CM7 review evidence](testing/core-modeling-cm7-review.md).
+- [x] **CM7.b:** Implement a separate Eigen 3D constraint adapter, projected/composite curves and helix/spiral definitions; retain planar PlaneGCS. Production exact engine and read-only worker preview verified: [CM7 review evidence](testing/core-modeling-cm7-review.md).
+- [x] **CM7.c:** Persist spatial IDs, endpoints and tangent frames for downstream supports. Production durable SQLite persistence, atomic multi-collection support and reference repair verified: [CM7 review evidence](testing/core-modeling-cm7-review.md).
+- [x] **CM7.d:** Add active-plane switching, spatial inference and explicit projection-branch selection. Production native 3D sketch mode, Tab plane cycling, and 5-scale native verification (100–200% DPR) passed: [CM7 review evidence](testing/core-modeling-cm7-review.md).
+- [x] **CM7.e:** Verify projected paths/chair frame, conflicts, ambiguous projections and discontinuities. All course workflows, 107/107 enabled CTests, and native rendering verified: [CM7 review evidence](testing/core-modeling-cm7-review.md). Full course/platform/resource acceptance remains Blocked.
 
 ### CM8 — Shell, sweep and loft
 
