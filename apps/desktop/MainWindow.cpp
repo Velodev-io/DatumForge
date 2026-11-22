@@ -44,6 +44,7 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
     buildAssemblyUI();
     buildDrawingUI();
     buildDatumUI();
+    buildEvaluationUI();
     auto *historyAction = commands.add(this, "history", "History / repair");
     addAction(historyAction);
     findChild<QToolBar *>("commandsFeatures")->addAction(historyAction);
@@ -353,10 +354,14 @@ void MainWindow::buildFrame() {
     connect(filter, &QComboBox::currentTextChanged, viewport, &Viewport::setFilter);
     viewMode = new QComboBox;
     viewMode->setObjectName("viewMode");
-    viewMode->addItems({"Shaded with edges", "Shaded", "Wireframe", "Hidden edges"});
+    viewMode->addItems({"Shaded with edges", "Shaded", "Hidden Lines Visible", "Wireframe", "Hidden edges"});
     controls->addWidget(new QLabel(" Display: "));
     controls->addWidget(viewMode);
     connect(viewMode, &QComboBox::currentTextChanged, viewport, &Viewport::setMode);
+    auto *shadowsToggle = new QCheckBox("Shadows");
+    shadowsToggle->setObjectName("viewShadows");
+    controls->addWidget(shadowsToggle);
+    connect(shadowsToggle, &QCheckBox::toggled, viewport, &Viewport::setShadows);
     notice = new QLabel("Load a reference box to inspect native geometry.");
     notice->setObjectName("notification");
     statusBar()->addWidget(notice, 1);

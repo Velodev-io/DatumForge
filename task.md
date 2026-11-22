@@ -6,7 +6,7 @@ maps all 30 coverage requirements to implementation and verification gates.
 - [x] **CM9.a** — Freeze source pages, catalog coverage and redistribution evidence. Capture the baseline and define the semantic contracts.
 - [x] **CM9.b** — Build offline/custom catalog resolution, exact evaluation and model display.
 - [x] **CM9.c** — Persist resolved snapshots, appearance overrides and named sections with compatible replay.
-- [/] **CM9.d** — Wire the native Hole, Materials, Evaluate and View workflows.
+- [x] **CM9.d** — Wire the native Hole, Materials, Evaluate and View workflows.
 - [ ] **CM9.e** — Verify all coverage rows and record the remaining acceptance gates.
 
 Start with CM9.a. A blocked catalog source leaves its coverage open and allows

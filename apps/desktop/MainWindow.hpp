@@ -45,6 +45,8 @@ class MainWindow : public QMainWindow {
     void refreshFeatures();
     void buildDatumUI();
     void refreshDatumUI();
+    void buildEvaluationUI();
+    void refreshEvaluationUI();
     void selectDatum(QString id);
     void setDatumVisible(QString id, bool visible);
     QString datumKey() const;

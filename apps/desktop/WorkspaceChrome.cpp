@@ -99,6 +99,12 @@ void MainWindow::buildCommandTabs() {
                                                                   : "HelixSpiral";
         connect(action, &QAction::triggered, this, [this, kind] { featurePanel->begin(kind); });
     }
+    for (auto pair : {std::pair{"massProperties", "Mass Properties"},
+                      std::pair{"sectionProperties", "Section Properties"},
+                      std::pair{"material.manage", "Material..."},
+                      std::pair{"sectionView", "Section View"}}) {
+        add(pair.first, pair.second, "Physical evaluation and sectioning");
+    }
     auto *toolbar = addToolBar("CommandManager");
     toolbar->setObjectName("commandManager");
     toolbar->setMovable(false);
@@ -211,7 +217,17 @@ void MainWindow::buildCommandTabs() {
     arcButton->setMenu(arcMenu);
     arcButton->setPopupMode(QToolButton::MenuButtonPopup);
     page("Evaluate",
-         {"measure", "fit", "", "view.Isometric", "view.Front", "view.Top", "view.Right"});
+         {"measure",
+          "massProperties",
+          "sectionProperties",
+          "material.manage",
+          "sectionView",
+          "fit",
+          "",
+          "view.Isometric",
+          "view.Front",
+          "view.Top",
+          "view.Right"});
     toolbar->addWidget(commandTabs);
     auto *quick = findChild<QToolBar *>("workspaceToolbar");
     quick->insertAction(commands.get("fit"), commands.get("undo"));
@@ -332,5 +348,6 @@ void MainWindow::refreshCommandTabs() {
     refreshAssemblyUI();
     refreshDrawingUI();
     refreshDatumUI();
+    refreshEvaluationUI();
 }
 } // namespace cad

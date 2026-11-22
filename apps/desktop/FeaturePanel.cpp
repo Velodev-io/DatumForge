@@ -1,5 +1,6 @@
 #include "FeaturePanel.hpp"
 #include "SupportEditor.hpp"
+#include "features/Catalogs.hpp"
 #include "features/ModelingRecords.hpp"
 #include "model/SupportEditing.hpp"
 #include <QDialogButtonBox>
@@ -187,11 +188,144 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
     connect(holeThreadDesignation, &QLineEdit::textChanged, this, [this] { invalidate(); });
     holeThreadPitch = spin("holeThreadPitch", "Thread pitch", 1.5, 1e-4, 1e4);
     holeThreadDepth = spin("holeThreadDepth", "Thread depth", 20, 1e-4, 1e4);
+
+    // CM9 Catalog Controls
+    holeCatalogSearch = new QLineEdit;
+    holeCatalogSearch->setObjectName("holeCatalogSearch");
+    holeCatalogSearch->setPlaceholderText("Search hole catalog...");
+    form->addRow("Catalog search", holeCatalogSearch);
+    connect(holeCatalogSearch, &QLineEdit::textChanged, this, [this](const QString &text) {
+        if (!installing)
+            holeCatalogModified = true;
+        if (text.trimmed().isEmpty())
+            return;
+        auto term = text.trimmed();
+        int idx = holeSize->findText(term, Qt::MatchContains);
+        if (idx >= 0) {
+            holeSize->setCurrentIndex(idx);
+            return;
+        }
+        for (int i = 0; i < holeStandard->count(); ++i) {
+            if (holeStandard->itemText(i).contains(term, Qt::CaseInsensitive)) {
+                holeStandard->setCurrentIndex(i);
+                return;
+            }
+        }
+    });
+
+    holeDataset = combo("holeDataset", "Standard catalog");
+    holeStandard = combo("holeStandard", "Standard specification");
+    holeType = combo("holeType", "Fastener type");
+    holeSize = combo("holeSize", "Fastener size");
+    holeFit = combo("holeFit", "Fit class");
+
+    holeProvenance = new QLabel;
+    holeProvenance->setObjectName("holeProvenance");
+    holeProvenance->setWordWrap(true);
+    form->addRow("Fastener provenance", holeProvenance);
+
     holeCustomSizing = check("holeCustomSizing", "Override with custom sizing");
-    holeCustomSizing->setChecked(true);
+    holeCustomSizing->setChecked(false);
     holeCatalog = new QLabel;
     holeCatalog->setWordWrap(true);
     form->addRow("Accepted catalog sizing", holeCatalog);
+
+    installHoleCatalog();
+
+    connect(holeDataset, &QComboBox::currentTextChanged, this, [this](const QString &ds) {
+        if (!installing)
+            holeCatalogModified = true;
+        QSignalBlocker b2(holeStandard), b3(holeType), b4(holeSize), b5(holeFit);
+        holeStandard->clear();
+        for (const auto &std : features::availableHoleStandards(ds))
+            holeStandard->addItem(std);
+        auto currentStd = holeStandard->currentText();
+        holeType->clear();
+        for (const auto &t : features::availableHoleTypes(ds, currentStd))
+            holeType->addItem(t);
+        auto currentT = holeType->currentText();
+        holeSize->clear();
+        for (const auto &sz : features::availableHoleSizes(ds, currentStd, currentT))
+            holeSize->addItem(sz);
+        auto currentSz = holeSize->currentText();
+        holeFit->clear();
+        for (const auto &f : features::availableHoleFits(ds, currentStd, currentT, currentSz))
+            holeFit->addItem(f);
+        updateHoleCatalogSizing();
+        invalidate();
+    });
+
+    connect(holeStandard, &QComboBox::currentTextChanged, this, [this](const QString &std) {
+        if (!installing)
+            holeCatalogModified = true;
+        QSignalBlocker b3(holeType), b4(holeSize), b5(holeFit);
+        auto ds = holeDataset->currentText();
+        holeType->clear();
+        for (const auto &t : features::availableHoleTypes(ds, std))
+            holeType->addItem(t);
+        auto currentT = holeType->currentText();
+        holeSize->clear();
+        for (const auto &sz : features::availableHoleSizes(ds, std, currentT))
+            holeSize->addItem(sz);
+        auto currentSz = holeSize->currentText();
+        holeFit->clear();
+        for (const auto &f : features::availableHoleFits(ds, std, currentT, currentSz))
+            holeFit->addItem(f);
+        updateHoleCatalogSizing();
+        invalidate();
+    });
+
+    connect(holeType, &QComboBox::currentTextChanged, this, [this](const QString &t) {
+        if (!installing)
+            holeCatalogModified = true;
+        QSignalBlocker b4(holeSize), b5(holeFit);
+        auto ds = holeDataset->currentText();
+        auto std = holeStandard->currentText();
+        holeSize->clear();
+        for (const auto &sz : features::availableHoleSizes(ds, std, t))
+            holeSize->addItem(sz);
+        auto currentSz = holeSize->currentText();
+        holeFit->clear();
+        for (const auto &f : features::availableHoleFits(ds, std, t, currentSz))
+            holeFit->addItem(f);
+        updateHoleCatalogSizing();
+        invalidate();
+    });
+
+    connect(holeSize, &QComboBox::currentTextChanged, this, [this](const QString &sz) {
+        if (!installing)
+            holeCatalogModified = true;
+        QSignalBlocker b5(holeFit);
+        auto ds = holeDataset->currentText();
+        auto std = holeStandard->currentText();
+        auto t = holeType->currentText();
+        holeFit->clear();
+        for (const auto &f : features::availableHoleFits(ds, std, t, sz))
+            holeFit->addItem(f);
+        updateHoleCatalogSizing();
+        invalidate();
+    });
+
+    connect(holeFit, &QComboBox::currentIndexChanged, this, [this] {
+        if (!installing)
+            holeCatalogModified = true;
+        updateHoleCatalogSizing();
+        invalidate();
+    });
+    connect(holeFit, &QComboBox::currentTextChanged, this, [this] {
+        if (!installing)
+            holeCatalogModified = true;
+        updateHoleCatalogSizing();
+        invalidate();
+    });
+
+    connect(holeCustomSizing, &QCheckBox::toggled, this, [this](bool custom) {
+        if (!installing && !custom)
+            holeCatalogModified = true;
+        if (!custom)
+            updateHoleCatalogSizing();
+        invalidate();
+    });
     holeDiameter = spin("holeDiameter", "Hole diameter (mm)", 10.0, 1e-4, 1e4);
     holeDepth = spin("holeDepth", "Hole depth (mm)", 25.0, 1e-4, 1e4);
     holeCounterboreDia = spin("holeCounterboreDia", "Counterbore diameter (mm)", 14.0, 1e-4, 1e4);
@@ -1145,6 +1279,13 @@ void FeaturePanel::fieldsForKind() {
                               holeThreadDepth,
                               holeCustomSizing,
                               holeCatalog,
+                              holeCatalogSearch,
+                              holeDataset,
+                              holeStandard,
+                              holeType,
+                              holeSize,
+                              holeFit,
+                              holeProvenance,
                               filletVariableEdge,
                               filletTransition,
                               filletRadii,
@@ -1351,10 +1492,16 @@ void FeaturePanel::fieldsForKind() {
             show(holePlacementFace, true);
             show(holeFamily, true);
             show(holePoints, true);
-            bool catalog = modelingDraft.value("sizing").toMap().value("mode") == "Catalog";
-            show(holeCustomSizing, catalog);
-            show(holeCatalog, catalog);
-            bool editable = !catalog || holeCustomSizing->isChecked();
+            show(holeCatalogSearch, true);
+            show(holeDataset, true);
+            show(holeStandard, true);
+            show(holeType, true);
+            show(holeSize, true);
+            show(holeFit, true);
+            show(holeProvenance, true);
+            show(holeCustomSizing, true);
+            show(holeCatalog, true);
+            bool editable = holeCustomSizing->isChecked();
             for (auto *w : {holeDiameter, holeDepth, holeCounterboreDia, holeCounterboreDepth,
                             holeCountersinkDia, holeCountersinkAngle, holeDrillAngle,
                             holeTapDiameter, holeTaperAngle, holeThreadPitch, holeThreadDepth})
@@ -1654,6 +1801,7 @@ void FeaturePanel::begin(QString kind, QString editId) {
     modelingDraft = {};
     curveDraft = {};
     draft = features::Feature{};
+    holeCatalogModified = editId.isEmpty();
 
     if (!editId.isEmpty()) {
         if (document.contains(QStringLiteral("modeling"))) {
@@ -2228,12 +2376,24 @@ void FeaturePanel::begin(QString kind, QString editId) {
                 auto sz = p.value("sizing").toMap();
                 bool catalog = sz.value("mode") == "Catalog";
                 holeCustomSizing->setChecked(!catalog);
-                holeCatalog->setText(
-                    catalog ? sz.value("dataset").toString() + " / " +
-                                  sz.value("version").toString("Unversioned legacy") + " / " +
-                                  sz.value("standard").toString() + " / " +
-                                  sz.value("type").toString() + " / " + sz.value("size").toString()
-                            : QString());
+                if (catalog) {
+                    QSignalBlocker b1(holeDataset), b2(holeStandard), b3(holeType), b4(holeSize),
+                        b5(holeFit);
+                    if (sz.contains(QStringLiteral("dataset")))
+                        holeDataset->setCurrentText(sz.value("dataset").toString());
+                    if (sz.contains(QStringLiteral("standard")))
+                        holeStandard->setCurrentText(sz.value("standard").toString());
+                    if (sz.contains(QStringLiteral("type")))
+                        holeType->setCurrentText(sz.value("type").toString());
+                    if (sz.contains(QStringLiteral("size")))
+                        holeSize->setCurrentText(sz.value("size").toString());
+                    if (sz.contains(QStringLiteral("fit")))
+                        holeFit->setCurrentText(sz.value("fit").toString());
+                    updateHoleCatalogSizing();
+                } else {
+                    holeCatalog->setText(QString());
+                    holeProvenance->setText(QStringLiteral("Custom user sizing overrides"));
+                }
                 if (sz.contains(QStringLiteral("tap_drill_diameter")))
                     holeTapDiameter->setValue(sz.value("tap_drill_diameter").toDouble() / unit());
                 if (sz.contains(QStringLiteral("taper_angle")))
@@ -2701,6 +2861,77 @@ void FeaturePanel::installHolePoints() {
                 item->setCheckState(Qt::Checked);
             }
         }
+}
+
+void FeaturePanel::installHoleCatalog() {
+    QSignalBlocker b1(holeDataset), b2(holeStandard), b3(holeType), b4(holeSize), b5(holeFit);
+    holeDataset->clear();
+    for (const auto &ds : features::availableHoleDatasets())
+        holeDataset->addItem(ds);
+    auto currentDs = holeDataset->currentText();
+    holeStandard->clear();
+    for (const auto &std : features::availableHoleStandards(currentDs))
+        holeStandard->addItem(std);
+    auto currentStd = holeStandard->currentText();
+    holeType->clear();
+    for (const auto &t : features::availableHoleTypes(currentDs, currentStd))
+        holeType->addItem(t);
+    auto currentT = holeType->currentText();
+    holeSize->clear();
+    for (const auto &sz : features::availableHoleSizes(currentDs, currentStd, currentT))
+        holeSize->addItem(sz);
+    auto currentSz = holeSize->currentText();
+    holeFit->clear();
+    for (const auto &f : features::availableHoleFits(currentDs, currentStd, currentT, currentSz))
+        holeFit->addItem(f);
+    updateHoleCatalogSizing();
+}
+
+void FeaturePanel::updateHoleCatalogSizing() {
+    if (draft.kind != "Hole")
+        return;
+    features::HoleCatalogQuery q;
+    q.dataset = holeDataset->currentText();
+    q.standard = holeStandard->currentText();
+    q.type = holeType->currentText();
+    q.size = holeSize->currentText();
+    q.fit = holeFit->currentText();
+    if (q.dataset.isEmpty() || q.standard.isEmpty() || q.type.isEmpty() || q.size.isEmpty())
+        return;
+    try {
+        auto resolved = features::resolveHoleCatalog(q);
+        holeProvenance->setText(resolved.standard + " (" + resolved.dataset + ") · " + resolved.type +
+                                " · " + resolved.size + " (" + resolved.fit + ")");
+        holeCatalog->setText(holeProvenance->text());
+        if (!holeCustomSizing->isChecked()) {
+            double u = unit();
+            if (resolved.diameter > 0)
+                holeDiameter->setValue(resolved.diameter / u);
+            if (resolved.counterbore_diameter)
+                holeCounterboreDia->setValue(*resolved.counterbore_diameter / u);
+            if (resolved.counterbore_depth)
+                holeCounterboreDepth->setValue(*resolved.counterbore_depth / u);
+            if (resolved.countersink_diameter)
+                holeCountersinkDia->setValue(*resolved.countersink_diameter / u);
+            if (resolved.countersink_angle)
+                holeCountersinkAngle->setValue(*resolved.countersink_angle * 180.0 / std::numbers::pi);
+            if (resolved.drill_angle)
+                holeDrillAngle->setValue(*resolved.drill_angle * 180.0 / std::numbers::pi);
+            if (resolved.tap_drill_diameter)
+                holeTapDiameter->setValue(*resolved.tap_drill_diameter / u);
+            if (resolved.pitch)
+                holeThreadPitch->setValue(*resolved.pitch / u);
+            if (resolved.cosmetic_thread && !resolved.thread_designation.isEmpty())
+                holeThreadDesignation->setText(resolved.thread_designation);
+            if (!resolved.family.isEmpty()) {
+                int idx = holeFamily->findText(resolved.family);
+                if (idx >= 0)
+                    holeFamily->setCurrentIndex(idx);
+            }
+        }
+    } catch (const domain::Error &) {
+        holeProvenance->setText(q.standard + " · " + q.size + " (spec unavailable)");
+    }
 }
 void FeaturePanel::installFilletRadii() {
     QMap<QString, QString> values;
@@ -3311,9 +3542,45 @@ QCborMap FeaturePanel::definitionModeling() const {
                                   {"pitch", holeThreadPitch->value() * u},
                                   {"depth", holeThreadDepth->value() * u}}));
         }
-        if (!holeCustomSizing->isChecked() &&
-            modelingDraft.value("sizing").toMap().value("mode") == "Catalog")
-            sizing = modelingDraft.value("sizing").toMap();
+        if (!holeCustomSizing->isChecked()) {
+            auto priorSizing = modelingDraft.value("sizing").toMap();
+            if (!holeCatalogModified && priorSizing.value("mode") == "Catalog") {
+                sizing = priorSizing;
+            } else {
+                features::HoleCatalogQuery q;
+                q.dataset = holeDataset->currentText();
+                q.standard = holeStandard->currentText();
+                q.type = holeType->currentText();
+                q.size = holeSize->currentText();
+                q.fit = holeFit->currentText();
+                auto resolved = features::resolveHoleCatalog(q);
+                sizing.insert(QStringLiteral("mode"), QStringLiteral("Catalog"));
+                sizing.insert(QStringLiteral("dataset"), q.dataset);
+                sizing.insert(QStringLiteral("standard"), q.standard);
+                sizing.insert(QStringLiteral("type"), q.type);
+                sizing.insert(QStringLiteral("size"), q.size);
+                sizing.insert(QStringLiteral("fit"), q.fit);
+                sizing.insert(QStringLiteral("diameter"), resolved.diameter);
+                if (resolved.counterbore_diameter)
+                    sizing.insert(QStringLiteral("counterbore_diameter"), *resolved.counterbore_diameter);
+                if (resolved.counterbore_depth)
+                    sizing.insert(QStringLiteral("counterbore_depth"), *resolved.counterbore_depth);
+                if (resolved.countersink_diameter)
+                    sizing.insert(QStringLiteral("countersink_diameter"), *resolved.countersink_diameter);
+                if (resolved.countersink_angle)
+                    sizing.insert(QStringLiteral("countersink_angle"), *resolved.countersink_angle);
+                if (resolved.drill_angle)
+                    sizing.insert(QStringLiteral("drill_angle"), *resolved.drill_angle);
+                if (resolved.tap_drill_diameter)
+                    sizing.insert(QStringLiteral("tap_drill_diameter"), *resolved.tap_drill_diameter);
+                if (resolved.pitch)
+                    sizing.insert(QStringLiteral("pitch"), *resolved.pitch);
+                if (resolved.cosmetic_thread) {
+                    sizing.insert(QStringLiteral("cosmetic_thread"), true);
+                    sizing.insert(QStringLiteral("thread_designation"), resolved.thread_designation);
+                }
+            }
+        }
         m.insert(QStringLiteral("sizing"), sizing);
 
         QCborMap term;

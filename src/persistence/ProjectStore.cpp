@@ -2983,7 +2983,7 @@ QCborMap ProjectStore::importGeometry(const wire::Envelope &request, QString pat
     auto after = deltaFor(edit, before);
     auto next = revision() + 1;
     apply(after, next);
-    db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN (?,?,?,?,?,?,?,?,?,?,?,?)",
+    db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN (?,?,?,?,?,?,?,?,?,?,?,?,?)",
             {db->scalar("SELECT count(*) FROM drawing_views").toInt() > 0
                  ? drawingManifest
                  : (db->scalar("SELECT count(*) FROM occurrences").toInt() > 0 ? assemblyManifest

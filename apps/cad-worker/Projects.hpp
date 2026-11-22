@@ -478,12 +478,23 @@ class Projects {
                     definitions = p.value("features").toArray();
                 } else if (e.command == "DisplayPart")
                     wire::keys(p, {"deflection_mm"});
-                else if (e.command == "EvaluateMassProperties")
-                    wire::keys(
-                        p, {"revision", "scope_type", "frame", "target_id", "override_density"});
-                else if (e.command == "EvaluateSectionProperties")
-                    wire::keys(p, {"revision", "target_type", "sketch", "mode", "face"});
-                else
+                else if (e.command == "EvaluateMassProperties") {
+                    QSet<QString> keys{"revision", "scope_type", "frame"};
+                    if (p.contains(QStringLiteral("target_id")))
+                        keys.insert("target_id");
+                    if (p.contains(QStringLiteral("override_density")))
+                        keys.insert("override_density");
+                    wire::keys(p, keys);
+                } else if (e.command == "EvaluateSectionProperties") {
+                    QSet<QString> keys{"revision", "target_type"};
+                    if (p.contains(QStringLiteral("sketch")))
+                        keys.insert("sketch");
+                    if (p.contains(QStringLiteral("mode")))
+                        keys.insert("mode");
+                    if (p.contains(QStringLiteral("face")))
+                        keys.insert("face");
+                    wire::keys(p, keys);
+                } else
                     wire::keys(p, {"body", "token", "second_token", "density_kg_m3"});
                 auto part = store->evaluatePart(e.context.document,
                                                 e.command == "PreviewFeatures" ||

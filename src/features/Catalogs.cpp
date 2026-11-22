@@ -177,6 +177,63 @@ QStringList availableHoleDatasets() {
     return {"ansi_inch", "ansi_metric", "iso", "din", "bsi", "jis", "gb", "gost", "custom"};
 }
 
+QStringList availableHoleStandards(const QString &dataset) {
+    QString ds = dataset.toLower();
+    if (ds == "ansi_metric")
+        return {"B18.3.4M", "B18.3.1M", "B18.6.7M", "MetricTapped", "ClearanceHole"};
+    if (ds == "ansi_inch")
+        return {"B18.3", "B18.6.3", "B18.2.1", "InchTapped", "ASME_B1.20.1"};
+    if (ds == "iso")
+        return {"ISO 4762", "ISO 10642", "ISO 273", "ISO 965-1"};
+    if (ds == "din")
+        return {"DIN 912", "DIN 7991", "DIN 74", "DIN 13-1"};
+    if (ds == "bsi")
+        return {"BS 4168", "BS 4183", "BS 3643", "ClearanceHole"};
+    if (ds == "jis")
+        return {"JIS B 1176", "JIS B 1194", "JIS B 1001", "JIS B 0205"};
+    if (ds == "gb")
+        return {"GB/T 70.1", "GB/T 70.3", "GB/T 5277", "GB/T 193"};
+    if (ds == "gost")
+        return {"GOST 11738", "GOST 17475", "GOST 11284", "GOST 8724"};
+    return {"Custom"};
+}
+
+QStringList availableHoleTypes(const QString &dataset, const QString &standard) {
+    QString ds = dataset.toLower();
+    if (standard == "B18.3.4M")
+        return {"SocketButtonHeadCapScrew"};
+    if (standard == "B18.3.1M" || standard == "B18.3" || standard == "ISO 4762" ||
+        standard == "DIN 912" || standard == "BS 4168" || standard == "JIS B 1176" ||
+        standard == "GB/T 70.1" || standard == "GOST 11738")
+        return {"SocketHeadCapScrew"};
+    if (standard == "B18.6.7M" || standard == "B18.6.3" || standard == "ISO 10642" ||
+        standard == "DIN 7991" || standard == "BS 4183" || standard == "JIS B 1194" ||
+        standard == "GB/T 70.3" || standard == "GOST 17475")
+        return {"CountersunkHeadScrew", "CountersunkFlatHead"};
+    if (standard == "B18.2.1")
+        return {"HexBolt", "ClearanceHole"};
+    if (standard.contains("Tapped", Qt::CaseInsensitive) || standard == "ISO 965-1" ||
+        standard == "DIN 13-1" || standard == "BS 3643" || standard == "JIS B 0205" ||
+        standard == "GB/T 193" || standard == "GOST 8724")
+        return {"TappedHole"};
+    if (standard == "ASME_B1.20.1")
+        return {"PipeTap"};
+    return {"ClearanceHole", "Simple"};
+}
+
+QStringList availableHoleSizes(const QString &dataset, const QString &standard, const QString &type) {
+    QString ds = dataset.toLower();
+    if (ds == "ansi_inch" || standard == "B18.3" || standard == "B18.6.3" || standard == "B18.2.1" || standard == "InchTapped")
+        return {"1/4-20", "#4-40", "#6-32", "#8-32", "#10-24", "5/16-18", "3/8-16", "1/2-13"};
+    if (standard == "ASME_B1.20.1" || type == "PipeTap")
+        return {"1/4-18 NPT", "1/8-27", "1/4-18", "3/8-18", "1/2-14", "3/4-14"};
+    return {"M8", "M6", "M5", "M4", "M3", "M10", "M12", "M16", "M20"};
+}
+
+QStringList availableHoleFits(const QString &dataset, const QString &standard, const QString &type, const QString &size) {
+    return {"Close", "Normal", "Loose"};
+}
+
 HoleCatalogResolved resolveHoleCatalog(const HoleCatalogQuery &query) {
     QString ds = query.dataset.toLower();
     check(availableHoleDatasets().contains(ds), "UnsupportedOperation",

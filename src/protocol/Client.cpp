@@ -607,6 +607,24 @@ void Client::receive(const QCborMap &m) {
         pump();
         return;
     }
+    if (e.command == "EvaluateMassProperties") {
+        pending.erase(found);
+        projection.phase = Phase::Ready;
+        projection.job = "Mass properties ready";
+        emit partResult(data);
+        emit changed();
+        pump();
+        return;
+    }
+    if (e.command == "EvaluateSectionProperties") {
+        pending.erase(found);
+        projection.phase = Phase::Ready;
+        projection.job = "Section properties ready";
+        emit partResult(data);
+        emit changed();
+        pump();
+        return;
+    }
     if (e.command == "SupportGeometry") {
         wire::keys(data, {"support_geometry"});
         wire::require(data.value("support_geometry").isMap(), "Datum geometry reply required");

@@ -92,8 +92,16 @@ class FeaturePanel : public QWidget {
     QDoubleSpinBox *holeTapDiameter = nullptr, *holeTaperAngle = nullptr;
     QDoubleSpinBox *holeThreadPitch = nullptr, *holeThreadDepth = nullptr;
     QLineEdit *holeThreadDesignation = nullptr;
+    QLineEdit *holeCatalogSearch = nullptr;
+    QComboBox *holeDataset = nullptr;
+    QComboBox *holeStandard = nullptr;
+    QComboBox *holeType = nullptr;
+    QComboBox *holeSize = nullptr;
+    QComboBox *holeFit = nullptr;
+    QLabel *holeProvenance = nullptr;
     QCheckBox *holeCustomSizing = nullptr;
     QLabel *holeCatalog = nullptr;
+    bool holeCatalogModified = false;
     QDoubleSpinBox *holeDiameter = nullptr;
     QDoubleSpinBox *holeDepth = nullptr;
     QDoubleSpinBox *holeCounterboreDia = nullptr;
@@ -163,6 +171,8 @@ class FeaturePanel : public QWidget {
     QDoubleSpinBox *threadDepth = nullptr;
     QCborMap availableModelingInputs;
     void installHolePoints();
+    void installHoleCatalog();
+    void updateHoleCatalogSizing();
     void installPatternSeeds();
     void installFilletRadii();
 
