@@ -152,6 +152,7 @@ MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRo
             depthInput->setValue(mesh->maximum.z() - mesh->minimum.z());
         }
         rebuildTree();
+        syncViewportSupports();
     });
     connect(client, &Client::measured, this, [this](QString text) { notice->setText(text); });
     connect(viewport, &Viewport::selected, this, &MainWindow::choose);

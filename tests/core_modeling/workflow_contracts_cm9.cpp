@@ -355,6 +355,73 @@ class WorkflowContractsCM9 : public QObject {
         QCOMPARE(matObj.value("id").toString(), QString("al_6061_t6"));
 
         // ====================================================================
+        // 3b. Appearance Workflow
+        // ====================================================================
+        auto *appAction = window.command("appearance.manage");
+        QVERIFY(appAction != nullptr);
+        QVERIFY(appAction->isEnabled());
+        appAction->trigger();
+
+        auto *appDialog = window.findChild<AppearanceDialog *>("appearanceDialog");
+        QVERIFY(appDialog != nullptr);
+        QVERIFY(appDialog->isVisible());
+
+        auto *appScope = appDialog->findChild<QComboBox *>("appearanceScope");
+        auto *appApply = appDialog->findChild<QPushButton *>("appearanceApplyButton");
+        QVERIFY(appScope != nullptr);
+        QVERIFY(appApply != nullptr);
+
+        // 1. Part-level appearance: Green (0, 1, 0, 1)
+        appDialog->setScope("Entire Part");
+        appDialog->setColor(QVector4D(0.0f, 1.0f, 0.0f, 1.0f));
+        appDialog->updatePreview();
+
+        auto greenCol = viewport->resolveAppearance("any_face", QVector4D(0.5f, 0.5f, 0.5f, 1.0f));
+        checkNear(greenCol.x(), 0.0, 1e-3);
+        checkNear(greenCol.y(), 1.0, 1e-3);
+        checkNear(greenCol.z(), 0.0, 1e-3);
+
+        appApply->click();
+        QVERIFY(session.idle());
+        QVERIFY(!appDialog->isVisible());
+
+        // 2. Face-level override: Red (1, 0, 0, 1) on top face
+        QVERIFY(client->mesh() != nullptr);
+        QVERIFY(!client->mesh()->faceIds.isEmpty());
+        QString meshFace = client->mesh()->faceIds.first();
+        Selection faceSelection{"Face", meshFace, "part"};
+        client->select(faceSelection);
+        appAction->trigger();
+        QVERIFY(appDialog->isVisible());
+        appDialog->refreshTarget();
+        QCOMPARE(appScope->currentText(), QString("Face"));
+
+        appDialog->setColor(QVector4D(1.0f, 0.0f, 0.0f, 1.0f));
+        appDialog->updatePreview();
+
+        // Verify precedence: face override takes precedence over part appearance
+        auto resolvedFaceCol =
+            viewport->resolveAppearance(meshFace, QVector4D(0.5f, 0.5f, 0.5f, 1.0f));
+        checkNear(resolvedFaceCol.x(), 1.0, 1e-3);
+        checkNear(resolvedFaceCol.y(), 0.0, 1e-3);
+
+        auto resolvedOtherCol =
+            viewport->resolveAppearance("other_face", QVector4D(0.5f, 0.5f, 0.5f, 1.0f));
+        checkNear(resolvedOtherCol.x(), 0.0, 1e-3);
+        checkNear(resolvedOtherCol.y(), 1.0, 1e-3);
+
+        appApply->click();
+        QVERIFY(session.idle());
+        QVERIFY(!appDialog->isVisible());
+
+        auto docWithApp = session.document();
+        auto supWithApp = docWithApp.contains(QStringLiteral("model_supports"))
+                              ? docWithApp.value("model_supports").toMap()
+                              : docWithApp.value("supports").toMap();
+        QVERIFY(supWithApp.contains(QStringLiteral("appearance_overrides")));
+        QCOMPARE(supWithApp.value("appearance_overrides").toArray().size(), 2);
+
+        // ====================================================================
         // 4. Evaluate: Mass Properties & Section Properties
         // ====================================================================
         auto *massAction = window.command("massProperties");
@@ -397,7 +464,7 @@ class WorkflowContractsCM9 : public QObject {
         QVERIFY(secDialog->isVisible());
 
         // Select a face and evaluate
-        Selection faceSel{"Face", face.topology, baseId};
+        Selection faceSel{"Face", meshFace, "part"};
         client->select(faceSel);
 
         auto *secRecalc = secDialog->findChild<QPushButton *>("sectionRecalculateButton");
@@ -405,6 +472,16 @@ class WorkflowContractsCM9 : public QObject {
         secRecalc->click();
         QVERIFY(session.idle());
 
+        secDialog->accept();
+        QVERIFY(!secDialog->isVisible());
+
+        // Test Section Properties on a planar sketch as well (CM-241)
+        Selection sketchSel{"Sketch", sHole.id};
+        client->select(sketchSel);
+        secAction->trigger();
+        QVERIFY(secDialog->isVisible());
+        secRecalc->click();
+        QVERIFY(session.idle());
         secDialog->accept();
         QVERIFY(!secDialog->isVisible());
 
@@ -424,12 +501,14 @@ class WorkflowContractsCM9 : public QObject {
         auto *secViewOffset = secViewDialog->findChild<QDoubleSpinBox *>("sectionViewOffset");
         auto *secViewFlip = secViewDialog->findChild<QCheckBox *>("sectionViewFlip");
         auto *secViewApply = secViewDialog->findChild<QPushButton *>("sectionViewApplyButton");
+        auto *secViewNew = secViewDialog->findChild<QPushButton *>("sectionViewNewButton");
 
         QVERIFY(secViewName != nullptr);
         QVERIFY(secViewActive != nullptr);
         QVERIFY(secViewOffset != nullptr);
         QVERIFY(secViewFlip != nullptr);
         QVERIFY(secViewApply != nullptr);
+        QVERIFY(secViewNew != nullptr);
 
         secViewName->setText("Inspection Cut Plane");
         secViewActive->setChecked(true);
@@ -446,12 +525,23 @@ class WorkflowContractsCM9 : public QObject {
         QVERIFY(session.idle());
         QVERIFY(!secViewDialog->isVisible());
 
+        // Create a second named section view to verify multiple views are preserved
+        secViewAction->trigger();
+        QVERIFY(secViewDialog->isVisible());
+        secViewNew->click();
+        secViewName->setText("Section Two");
+        secViewOffset->setValue(10.0);
+        secViewActive->setChecked(true);
+        secViewApply->click();
+        QVERIFY(session.idle());
+        QVERIFY(!secViewDialog->isVisible());
+
         auto docWithSec = session.document();
         auto supWithSec = docWithSec.contains(QStringLiteral("model_supports"))
                               ? docWithSec.value("model_supports").toMap()
                               : docWithSec.value("supports").toMap();
         auto secViewsArr = supWithSec.value("section_views").toArray();
-        QVERIFY(!secViewsArr.isEmpty());
+        QCOMPARE(secViewsArr.size(), 2);
         auto firstSv = secViewsArr[0].toMap();
         QCOMPARE(firstSv.value("name").toString(), QString("Inspection Cut Plane"));
         QVERIFY(firstSv.value("active").toBool());
@@ -498,6 +588,22 @@ class WorkflowContractsCM9 : public QObject {
                                     : reopenedDoc.value("supports").toMap();
         QVERIFY(reopenedSupports.contains(QStringLiteral("material")));
         QVERIFY(reopenedSupports.contains(QStringLiteral("section_views")));
+        QCOMPARE(reopenedSupports.value("section_views").toArray().size(), 2);
+        QVERIFY(reopenedSupports.contains(QStringLiteral("appearance_overrides")));
+        QCOMPARE(reopenedSupports.value("appearance_overrides").toArray().size(), 2);
+
+        // Verify viewport appearance and section clipping synchronized on project reopen
+        auto reopenedFaceCol =
+            viewport->resolveAppearance(meshFace, QVector4D(0.5f, 0.5f, 0.5f, 1.0f));
+        checkNear(reopenedFaceCol.x(), 1.0, 1e-3);
+        checkNear(reopenedFaceCol.y(), 0.0, 1e-3);
+
+        auto reopenedOtherCol =
+            viewport->resolveAppearance("other_face", QVector4D(0.5f, 0.5f, 0.5f, 1.0f));
+        checkNear(reopenedOtherCol.x(), 0.0, 1e-3);
+        checkNear(reopenedOtherCol.y(), 1.0, 1e-3);
+
+        QVERIFY(viewport->sectionClippingActive());
 
         if (qEnvironmentVariableIsSet("CAD_NATIVE_TEST")) {
             auto directory = qEnvironmentVariable("CAD_ARTIFACT_DIR");

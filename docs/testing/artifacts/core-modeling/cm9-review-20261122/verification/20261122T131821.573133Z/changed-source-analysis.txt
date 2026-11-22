@@ -1,0 +1,6 @@
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed apps/desktop/ProjectUI.cpp
+Analyzed apps/desktop/WorkspaceChrome.cpp
+Analyzed apps/desktop/EvaluationUI.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed tests/core_modeling/workflow_contracts_cm9.cpp

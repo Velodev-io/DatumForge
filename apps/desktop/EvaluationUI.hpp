@@ -102,6 +102,8 @@ class SectionViewDialog : public QDialog {
     QPushButton *newButton = nullptr;
     QPushButton *deleteButton = nullptr;
     bool initialClippingActive = false;
+    QMap<QString, features::SectionView> loadedSections;
+    bool updatingSelection = false;
 
   public:
     explicit SectionViewDialog(MainWindow *win, Client *cli, Viewport *vp,
@@ -111,6 +113,44 @@ class SectionViewDialog : public QDialog {
     void apply();
     void createNew();
     void removeCurrent();
+    void onCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
+  protected:
+    void reject() override;
+};
+
+class AppearanceDialog : public QDialog {
+    Q_OBJECT
+    MainWindow *window = nullptr;
+    Client *client = nullptr;
+    Viewport *viewport = nullptr;
+
+    QComboBox *scopeCombo = nullptr;
+    QLabel *targetLabel = nullptr;
+    QLabel *colorSwatch = nullptr;
+    QPushButton *colorButton = nullptr;
+    QDoubleSpinBox *roughnessSpin = nullptr;
+    QDoubleSpinBox *metalnessSpin = nullptr;
+    QDoubleSpinBox *transparencySpin = nullptr;
+    QPushButton *applyButton = nullptr;
+    QPushButton *removeButton = nullptr;
+    QPushButton *closeButton = nullptr;
+
+    QVector4D currentColor{0.7f, 0.7f, 0.7f, 1.0f};
+    QString currentTarget;
+    domain::GeometryReference currentFaceRef;
+    bool initialSaved = false;
+    QCborArray initialOverrides;
+
+  public:
+    explicit AppearanceDialog(MainWindow *win, Client *cli, Viewport *vp,
+                              QWidget *parent = nullptr);
+    void refreshTarget();
+    void setScope(const QString &scope);
+    void setColor(const QVector4D &color);
+    void updatePreview();
+    void apply();
+    void remove();
 
   protected:
     void reject() override;

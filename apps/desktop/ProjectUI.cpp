@@ -554,5 +554,6 @@ void MainWindow::refreshProjectUI() {
     } else
         documents->setEnabled(idle);
     refreshCommandTabs();
+    syncViewportSupports();
 }
 } // namespace cad

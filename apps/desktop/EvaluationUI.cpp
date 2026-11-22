@@ -2,6 +2,7 @@
 #include "features/Catalogs.hpp"
 #include "model/Supports.hpp"
 #include "render/Viewport.hpp"
+#include <QColorDialog>
 #include <QDialogButtonBox>
 #include <QFormLayout>
 #include <QGroupBox>
@@ -278,6 +279,7 @@ void MaterialDialog::addCustomMaterial() {
     m.properties.density_kg_m3 = density;
     customMaterials.push_back(m);
     populateTree(materialSearch->text());
+    selectMaterial(m.id);
 }
 
 void MaterialDialog::applyMaterial() {
@@ -534,17 +536,37 @@ void SectionPropertiesDialog::calculate() {
     if (!client || !window)
         return;
     auto sel = window->state().selection;
+    if (sel.kind == "Sketch" && !sel.entity.isEmpty()) {
+        faceLabel->setText("Selected Sketch: " + sel.entity);
+        features::SectionPropertiesRequest req;
+        req.revision = window->state().revision;
+        req.targetType = "Sketch";
+        req.sketchId = sel.entity;
+        client->projectCommand("EvaluateSectionProperties", req.map());
+        statusLabel->setText("Computing exact planar sketch section properties...");
+        return;
+    }
     if (sel.kind != "Face" || sel.entity.isEmpty()) {
-        statusLabel->setText("Please select a planar face in the Viewport first.");
+        statusLabel->setText("Please select a planar face or closed sketch first.");
         return;
     }
 
     faceLabel->setText("Selected Face: " + sel.entity);
 
     domain::GeometryReference ref;
+    ref.document = "Self";
     ref.role = "Face";
-    ref.object = sel.occurrence.isEmpty() ? sel.entity : sel.occurrence;
-    ref.topology = sel.entity;
+    QString top = sel.entity;
+    QString obj = window->state().activeDocument;
+    if (top.contains('/')) {
+        int slash = top.indexOf('/');
+        QString maybeUuid = top.left(slash);
+        if (wire::uuid(maybeUuid))
+            obj = maybeUuid;
+        top = top.mid(slash + 1);
+    }
+    ref.object = obj;
+    ref.topology = top;
 
     features::SectionPropertiesRequest req;
     req.revision = window->state().revision;
@@ -634,6 +656,8 @@ SectionViewDialog::SectionViewDialog(MainWindow *win, Client *cli, Viewport *vp,
 
     mainLayout->addLayout(rightCol, 1);
 
+    connect(sectionList, &QListWidget::currentItemChanged, this,
+            &SectionViewDialog::onCurrentItemChanged);
     connect(newButton, &QPushButton::clicked, this, &SectionViewDialog::createNew);
     connect(deleteButton, &QPushButton::clicked, this, &SectionViewDialog::removeCurrent);
     connect(activeCheck, &QCheckBox::toggled, this, &SectionViewDialog::updatePreview);
@@ -648,9 +672,13 @@ SectionViewDialog::SectionViewDialog(MainWindow *win, Client *cli, Viewport *vp,
 }
 
 void SectionViewDialog::populateSections() {
+    updatingSelection = true;
     sectionList->clear();
-    if (!window)
+    loadedSections.clear();
+    if (!window) {
+        updatingSelection = false;
         return;
+    }
 
     auto activeDoc = window->state().activeDocument;
     QCborMap activeRecord;
@@ -668,11 +696,35 @@ void SectionViewDialog::populateSections() {
         auto sv = features::SectionView::parse(val.toMap());
         auto *item = new QListWidgetItem(sv.name, sectionList);
         item->setData(Qt::UserRole, sv.id);
+        loadedSections[sv.id] = sv;
     }
+    updatingSelection = false;
     if (sectionList->count() == 0)
         createNew();
     else
         sectionList->setCurrentRow(0);
+}
+
+void SectionViewDialog::onCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *) {
+    if (updatingSelection || !current)
+        return;
+    QString id = current->data(Qt::UserRole).toString();
+    if (loadedSections.contains(id)) {
+        const auto &sv = loadedSections[id];
+        nameEdit->setText(sv.name);
+        activeCheck->setChecked(sv.active);
+        offsetSpin->setValue(sv.offset * 1000.0);
+        flipCheck->setChecked(sv.flip);
+        if (sv.support.role == "Plane") {
+            if (sv.support.object.contains("Top") || sv.support.object.contains("XZ"))
+                supportCombo->setCurrentText("Top Plane");
+            else if (sv.support.object.contains("Right") || sv.support.object.contains("YZ"))
+                supportCombo->setCurrentText("Right Plane");
+            else
+                supportCombo->setCurrentText("Front Plane");
+        }
+        updatePreview();
+    }
 }
 
 void SectionViewDialog::updatePreview() {
@@ -694,17 +746,24 @@ void SectionViewDialog::updatePreview() {
 void SectionViewDialog::createNew() {
     int count = sectionList->count() + 1;
     QString name = QString("Section %1").arg(count);
-    auto *item = new QListWidgetItem(name, sectionList);
     features::SectionView sv;
     sv.id = QUuid::createUuid().toString(QUuid::WithoutBraces);
     sv.name = name;
     sv.active = true;
+    sv.offset = 0.0;
+    sv.flip = false;
+    loadedSections[sv.id] = sv;
+
+    updatingSelection = true;
+    auto *item = new QListWidgetItem(name, sectionList);
     item->setData(Qt::UserRole, sv.id);
     sectionList->setCurrentItem(item);
     nameEdit->setText(name);
     activeCheck->setChecked(true);
     offsetSpin->setValue(0.0);
     flipCheck->setChecked(false);
+    updatingSelection = false;
+
     updatePreview();
 }
 
@@ -712,6 +771,8 @@ void SectionViewDialog::removeCurrent() {
     auto *item = sectionList->currentItem();
     if (!item)
         return;
+    QString id = item->data(Qt::UserRole).toString();
+    loadedSections.remove(id);
     delete item;
     if (sectionList->count() == 0) {
         if (viewport)
@@ -742,63 +803,84 @@ void SectionViewDialog::apply() {
     auto model = model::SupportDefinition::parse(supMap);
     model.document = activeDoc;
 
-    features::SectionView sv;
     auto currentItem = sectionList->currentItem();
-    if (currentItem && !currentItem->data(Qt::UserRole).toString().isEmpty() &&
-        wire::uuid(currentItem->data(Qt::UserRole).toString())) {
-        sv.id = currentItem->data(Qt::UserRole).toString();
-    } else {
-        sv.id = QUuid::createUuid().toString(QUuid::WithoutBraces);
-    }
-    sv.name = nameEdit->text();
-    sv.active = activeCheck->isChecked();
-    sv.offset = offsetSpin->value() / 1000.0; // convert mm to meters SI
-    sv.flip = flipCheck->isChecked();
+    if (currentItem) {
+        QString id = currentItem->data(Qt::UserRole).toString();
+        if (id.isEmpty() || !wire::uuid(id)) {
+            id = QUuid::createUuid().toString(QUuid::WithoutBraces);
+            currentItem->setData(Qt::UserRole, id);
+        }
+        features::SectionView &sv = loadedSections[id];
+        sv.id = id;
+        sv.name = nameEdit->text();
+        currentItem->setText(sv.name);
+        sv.active = activeCheck->isChecked();
+        sv.offset = offsetSpin->value() / 1000.0; // convert mm to meters SI
+        sv.flip = flipCheck->isChecked();
 
-    bool resolvedSupport = false;
-    auto sel = window->state().selection;
-    if (supportCombo->currentText().contains("Selected Face") && sel.kind == "Face" &&
-        !sel.entity.isEmpty() && wire::uuid(sel.occurrence)) {
-        domain::GeometryReference ref;
-        ref.role = "Face";
-        ref.object = sel.occurrence;
-        ref.topology = sel.entity;
-        sv.support = ref;
-        resolvedSupport = true;
-    }
-    if (!resolvedSupport) {
-        QString planeName = supportCombo->currentText();
-        QString paramPlane =
-            planeName.contains("Top") ? "XZ" : (planeName.contains("Right") ? "YZ" : "XY");
-        QString datumId;
-        for (const auto &d : model.datums) {
-            if (d.kind == "DatumPlane" && d.mode == "Principal" &&
-                d.parameters.value("plane").toString() == paramPlane) {
-                datumId = d.id;
-                break;
+        bool resolvedSupport = false;
+        auto sel = window->state().selection;
+        if (supportCombo->currentText().contains("Selected Face") && sel.kind == "Face" &&
+            !sel.entity.isEmpty()) {
+            domain::GeometryReference ref;
+            ref.document = "Self";
+            ref.role = "Face";
+            QString top = sel.entity;
+            QString obj = activeDoc;
+            if (top.contains('/')) {
+                int slash = top.indexOf('/');
+                QString maybeUuid = top.left(slash);
+                if (wire::uuid(maybeUuid))
+                    obj = maybeUuid;
+                top = top.mid(slash + 1);
             }
+            ref.object = obj;
+            ref.topology = top;
+            sv.support = ref;
+            resolvedSupport = true;
         }
-        if (datumId.isEmpty()) {
-            model::Datum pl;
-            pl.kind = "DatumPlane";
-            pl.mode = "Principal";
-            pl.parameters = fields({{"plane", paramPlane}});
-            model.datums.push_back(pl);
-            model.sequence();
-            datumId = pl.id;
+        if (!resolvedSupport) {
+            QString planeName = supportCombo->currentText();
+            QString paramPlane =
+                planeName.contains("Top") ? "XZ" : (planeName.contains("Right") ? "YZ" : "XY");
+            QString datumId;
+            for (const auto &d : model.datums) {
+                if (d.kind == "DatumPlane" && d.mode == "Principal" &&
+                    d.parameters.value("plane").toString() == paramPlane) {
+                    datumId = d.id;
+                    break;
+                }
+            }
+            if (datumId.isEmpty()) {
+                model::Datum pl;
+                pl.kind = "DatumPlane";
+                pl.mode = "Principal";
+                pl.parameters = fields({{"plane", paramPlane}});
+                model.datums.push_back(pl);
+                model.sequence();
+                datumId = pl.id;
+            }
+            domain::GeometryReference ref;
+            ref.document = "Self";
+            ref.role = "Plane";
+            ref.object = datumId;
+            sv.support = ref;
         }
-        domain::GeometryReference ref;
-        ref.role = "Plane";
-        ref.object = datumId;
-        sv.support = ref;
     }
 
     QCborArray views;
-    views.append(sv.map());
+    for (int i = 0; i < sectionList->count(); ++i) {
+        QString id = sectionList->item(i)->data(Qt::UserRole).toString();
+        if (loadedSections.contains(id)) {
+            views.append(loadedSections[id].map());
+        }
+    }
     model.section_views = views;
 
     client->projectCommand("SetModelSupports", fields({{"model", model.map()}}));
-    initialClippingActive = sv.active;
+    if (currentItem && loadedSections.contains(currentItem->data(Qt::UserRole).toString())) {
+        initialClippingActive = loadedSections[currentItem->data(Qt::UserRole).toString()].active;
+    }
     updatePreview();
     accept();
 }
@@ -806,6 +888,366 @@ void SectionViewDialog::apply() {
 void SectionViewDialog::reject() {
     if (viewport)
         viewport->setSectionClipping(initialClippingActive);
+    QDialog::reject();
+}
+
+// ============================================================================
+// AppearanceDialog
+// ============================================================================
+
+AppearanceDialog::AppearanceDialog(MainWindow *win, Client *cli, Viewport *vp, QWidget *parent)
+    : QDialog(parent ? parent : win), window(win), client(cli), viewport(vp) {
+    setObjectName("appearanceDialog");
+    setWindowTitle("Appearance Overrides");
+    resize(420, 320);
+
+    auto *mainLayout = new QVBoxLayout(this);
+    auto *form = new QFormLayout;
+
+    scopeCombo = new QComboBox(this);
+    scopeCombo->setObjectName("appearanceScope");
+    scopeCombo->addItems({"Entire Part", "Body", "Feature", "Face"});
+    form->addRow("Scope:", scopeCombo);
+
+    targetLabel = new QLabel("Part", this);
+    targetLabel->setObjectName("appearanceTarget");
+    form->addRow("Target:", targetLabel);
+
+    auto *colorLayout = new QHBoxLayout;
+    colorSwatch = new QLabel(this);
+    colorSwatch->setObjectName("appearanceColorSwatch");
+    colorSwatch->setFixedSize(36, 24);
+    colorSwatch->setAutoFillBackground(true);
+    colorButton = new QPushButton("Choose Color...", this);
+    colorButton->setObjectName("appearanceChooseColor");
+    colorLayout->addWidget(colorSwatch);
+    colorLayout->addWidget(colorButton);
+    colorLayout->addStretch(1);
+    form->addRow("Color:", colorLayout);
+
+    roughnessSpin = new QDoubleSpinBox(this);
+    roughnessSpin->setObjectName("appearanceRoughness");
+    roughnessSpin->setRange(0.0, 1.0);
+    roughnessSpin->setSingleStep(0.05);
+    roughnessSpin->setValue(0.5);
+    form->addRow("Roughness:", roughnessSpin);
+
+    metalnessSpin = new QDoubleSpinBox(this);
+    metalnessSpin->setObjectName("appearanceMetalness");
+    metalnessSpin->setRange(0.0, 1.0);
+    metalnessSpin->setSingleStep(0.05);
+    metalnessSpin->setValue(0.0);
+    form->addRow("Metalness:", metalnessSpin);
+
+    transparencySpin = new QDoubleSpinBox(this);
+    transparencySpin->setObjectName("appearanceTransparency");
+    transparencySpin->setRange(0.0, 1.0);
+    transparencySpin->setSingleStep(0.05);
+    transparencySpin->setValue(0.0);
+    form->addRow("Transparency:", transparencySpin);
+
+    mainLayout->addLayout(form);
+    mainLayout->addStretch(1);
+
+    auto *btnLayout = new QHBoxLayout;
+    applyButton = new QPushButton("Apply", this);
+    applyButton->setObjectName("appearanceApplyButton");
+    btnLayout->addWidget(applyButton);
+
+    removeButton = new QPushButton("Remove", this);
+    removeButton->setObjectName("appearanceRemoveButton");
+    btnLayout->addWidget(removeButton);
+
+    closeButton = new QPushButton("Close", this);
+    closeButton->setObjectName("appearanceCloseButton");
+    btnLayout->addWidget(closeButton);
+
+    mainLayout->addLayout(btnLayout);
+
+    setColor(QVector4D(0.7f, 0.7f, 0.7f, 1.0f));
+
+    connect(scopeCombo, &QComboBox::currentTextChanged, this,
+            [this](const QString &scope) { setScope(scope); });
+
+    connect(colorButton, &QPushButton::clicked, this, [this] {
+        QColor initCol(int(currentColor.x() * 255), int(currentColor.y() * 255),
+                       int(currentColor.z() * 255), int(currentColor.w() * 255));
+        QColor chosen = QColorDialog::getColor(initCol, this, "Select Appearance Color");
+        if (chosen.isValid()) {
+            setColor(QVector4D(chosen.redF(), chosen.greenF(), chosen.blueF(), chosen.alphaF()));
+            updatePreview();
+        }
+    });
+
+    connect(roughnessSpin, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
+            &AppearanceDialog::updatePreview);
+    connect(metalnessSpin, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
+            &AppearanceDialog::updatePreview);
+    connect(transparencySpin, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
+            &AppearanceDialog::updatePreview);
+
+    connect(applyButton, &QPushButton::clicked, this, &AppearanceDialog::apply);
+    connect(removeButton, &QPushButton::clicked, this, &AppearanceDialog::remove);
+    connect(closeButton, &QPushButton::clicked, this, &QDialog::accept);
+}
+
+void AppearanceDialog::setColor(const QVector4D &color) {
+    currentColor = color;
+    if (colorSwatch) {
+        int r = qBound(0, int(currentColor.x() * 255), 255);
+        int g = qBound(0, int(currentColor.y() * 255), 255);
+        int b = qBound(0, int(currentColor.z() * 255), 255);
+        colorSwatch->setStyleSheet(
+            QString(
+                "background-color: rgb(%1, %2, %3); border: 1px solid #555; border-radius: 3px;")
+                .arg(r)
+                .arg(g)
+                .arg(b));
+    }
+}
+
+void AppearanceDialog::refreshTarget() {
+    if (!window)
+        return;
+    auto activeDoc = window->state().activeDocument;
+    QCborMap activeRecord;
+    for (auto val : window->state().documentRecords) {
+        auto d = val.toMap();
+        if (d.value("id").toString() == activeDoc)
+            activeRecord = d;
+    }
+    auto supMap = activeRecord.contains(QStringLiteral("model_supports"))
+                      ? activeRecord.value("model_supports").toMap()
+                      : activeRecord.value("supports").toMap();
+    initialOverrides = supMap.value("appearance_overrides").toArray();
+    initialSaved = true;
+
+    auto sel = window->state().selection;
+    if (sel.kind == "Face" && !sel.entity.isEmpty()) {
+        scopeCombo->setCurrentText("Face");
+        currentFaceRef.document = "Self";
+        currentFaceRef.role = "Face";
+        QString top = sel.entity;
+        QString obj = activeDoc;
+        if (top.contains('/')) {
+            int slash = top.indexOf('/');
+            QString maybeUuid = top.left(slash);
+            if (wire::uuid(maybeUuid))
+                obj = maybeUuid;
+            top = top.mid(slash + 1);
+        }
+        currentFaceRef.object = obj;
+        currentFaceRef.topology = top;
+        currentTarget = sel.entity;
+        targetLabel->setText("Face: " + sel.entity);
+    } else if (sel.kind == "Feature" && !sel.entity.isEmpty()) {
+        scopeCombo->setCurrentText("Feature");
+        currentTarget = sel.entity;
+        targetLabel->setText("Feature: " + sel.entity);
+    } else if (sel.kind == "Body" && !sel.occurrence.isEmpty()) {
+        scopeCombo->setCurrentText("Body");
+        currentTarget = sel.occurrence;
+        targetLabel->setText("Body: " + sel.occurrence);
+    } else {
+        scopeCombo->setCurrentText("Entire Part");
+        currentTarget = activeDoc;
+        targetLabel->setText("Part: " + (activeRecord.value("name").toString().isEmpty()
+                                             ? activeDoc
+                                             : activeRecord.value("name").toString()));
+    }
+}
+
+void AppearanceDialog::setScope(const QString &scope) {
+    if (!window)
+        return;
+    auto activeDoc = window->state().activeDocument;
+    auto sel = window->state().selection;
+    if (scope == "Entire Part") {
+        currentTarget = activeDoc;
+        targetLabel->setText("Part: " + activeDoc);
+    } else if (scope == "Body") {
+        currentTarget = sel.occurrence.isEmpty() ? "body_1" : sel.occurrence;
+        targetLabel->setText("Body: " + currentTarget);
+    } else if (scope == "Feature") {
+        currentTarget = sel.entity.isEmpty() ? "feature_1" : sel.entity;
+        targetLabel->setText("Feature: " + currentTarget);
+    } else if (scope == "Face") {
+        currentFaceRef.document = "Self";
+        currentFaceRef.role = "Face";
+        QString top = sel.entity;
+        QString obj = activeDoc;
+        if (top.contains('/')) {
+            int slash = top.indexOf('/');
+            QString maybeUuid = top.left(slash);
+            if (wire::uuid(maybeUuid))
+                obj = maybeUuid;
+            top = top.mid(slash + 1);
+        }
+        currentFaceRef.object = obj;
+        currentFaceRef.topology = top;
+        currentTarget = sel.entity;
+        targetLabel->setText("Face: " + currentTarget);
+    }
+    updatePreview();
+}
+
+void AppearanceDialog::updatePreview() {
+    if (!viewport)
+        return;
+    QString scope = scopeCombo->currentText();
+    if (scope == "Entire Part") {
+        viewport->setPartAppearance(currentColor);
+    } else if (scope == "Body") {
+        viewport->setBodyAppearance(currentTarget, currentColor);
+    } else if (scope == "Feature") {
+        viewport->setFeatureAppearance(currentTarget, currentColor);
+    } else if (scope == "Face") {
+        viewport->setFaceAppearance(currentTarget, currentColor);
+        int slash = currentTarget.indexOf('/');
+        if (slash > 0)
+            viewport->setFaceAppearance(currentTarget.mid(slash + 1), currentColor);
+    }
+}
+
+void AppearanceDialog::apply() {
+    if (!client || !window)
+        return;
+    auto activeDoc = window->state().activeDocument;
+    if (activeDoc.isEmpty())
+        return;
+    QCborMap activeRecord;
+    for (auto val : window->state().documentRecords) {
+        auto d = val.toMap();
+        if (d.value("id").toString() == activeDoc)
+            activeRecord = d;
+    }
+    auto supMap = activeRecord.contains(QStringLiteral("model_supports"))
+                      ? activeRecord.value("model_supports").toMap()
+                      : activeRecord.value("supports").toMap();
+    auto model = model::SupportDefinition::parse(supMap);
+    model.document = activeDoc;
+
+    QString scope = scopeCombo->currentText();
+    QString level = scope == "Entire Part" ? "Part" : scope;
+
+    features::AppearanceOverride o;
+    o.id = QUuid::createUuid().toString(QUuid::WithoutBraces);
+    o.level = level;
+    o.target = currentTarget;
+    if (level == "Face") {
+        o.faceReference = currentFaceRef;
+        o.target = currentTarget;
+    }
+    o.appearance.color_rgba = {float(currentColor.x()), float(currentColor.y()),
+                               float(currentColor.z()), float(currentColor.w())};
+    o.appearance.roughness = float(roughnessSpin->value());
+    o.appearance.metalness = float(metalnessSpin->value());
+    o.appearance.transparency = float(transparencySpin->value());
+
+    QCborArray updatedOverrides;
+    for (auto val : model.appearance_overrides) {
+        auto existing = features::AppearanceOverride::parse(val.toMap());
+        if (existing.level == level) {
+            if (level == "Part")
+                continue;
+            if (level == "Face" && (existing.faceReference.topology == o.faceReference.topology ||
+                                    existing.target == o.target))
+                continue;
+            if ((level == "Body" || level == "Feature") && existing.target == o.target)
+                continue;
+        }
+        updatedOverrides.append(val);
+    }
+    updatedOverrides.append(o.map());
+    model.appearance_overrides = updatedOverrides;
+
+    client->projectCommand("SetModelSupports", fields({{"model", model.map()}}));
+    initialOverrides = updatedOverrides;
+    updatePreview();
+    accept();
+}
+
+void AppearanceDialog::remove() {
+    if (!client || !window)
+        return;
+    auto activeDoc = window->state().activeDocument;
+    if (activeDoc.isEmpty())
+        return;
+    QCborMap activeRecord;
+    for (auto val : window->state().documentRecords) {
+        auto d = val.toMap();
+        if (d.value("id").toString() == activeDoc)
+            activeRecord = d;
+    }
+    auto supMap = activeRecord.contains(QStringLiteral("model_supports"))
+                      ? activeRecord.value("model_supports").toMap()
+                      : activeRecord.value("supports").toMap();
+    auto model = model::SupportDefinition::parse(supMap);
+    model.document = activeDoc;
+
+    QString scope = scopeCombo->currentText();
+    QString level = scope == "Entire Part" ? "Part" : scope;
+
+    QCborArray updatedOverrides;
+    for (auto val : model.appearance_overrides) {
+        auto existing = features::AppearanceOverride::parse(val.toMap());
+        if (existing.level == level) {
+            if (level == "Part")
+                continue;
+            if (level == "Face" && (existing.faceReference.topology == currentTarget ||
+                                    existing.target == currentTarget))
+                continue;
+            if ((level == "Body" || level == "Feature") && existing.target == currentTarget)
+                continue;
+        }
+        updatedOverrides.append(val);
+    }
+    model.appearance_overrides = updatedOverrides;
+    client->projectCommand("SetModelSupports", fields({{"model", model.map()}}));
+    initialOverrides = updatedOverrides;
+
+    if (viewport) {
+        viewport->clearAppearanceOverrides();
+        for (auto val : updatedOverrides) {
+            auto ov = features::AppearanceOverride::parse(val.toMap());
+            QVector4D col(ov.appearance.color_rgba[0], ov.appearance.color_rgba[1],
+                          ov.appearance.color_rgba[2], ov.appearance.color_rgba[3]);
+            if (ov.level == "Part")
+                viewport->setPartAppearance(col);
+            else if (ov.level == "Body")
+                viewport->setBodyAppearance(ov.target, col);
+            else if (ov.level == "Feature")
+                viewport->setFeatureAppearance(ov.target, col);
+            else if (ov.level == "Face") {
+                QString fid =
+                    ov.faceReference.topology.isEmpty() ? ov.target : ov.faceReference.topology;
+                viewport->setFaceAppearance(fid, col);
+            }
+        }
+    }
+    accept();
+}
+
+void AppearanceDialog::reject() {
+    if (viewport && initialSaved) {
+        viewport->clearAppearanceOverrides();
+        for (auto val : initialOverrides) {
+            auto ov = features::AppearanceOverride::parse(val.toMap());
+            QVector4D col(ov.appearance.color_rgba[0], ov.appearance.color_rgba[1],
+                          ov.appearance.color_rgba[2], ov.appearance.color_rgba[3]);
+            if (ov.level == "Part")
+                viewport->setPartAppearance(col);
+            else if (ov.level == "Body")
+                viewport->setBodyAppearance(ov.target, col);
+            else if (ov.level == "Feature")
+                viewport->setFeatureAppearance(ov.target, col);
+            else if (ov.level == "Face") {
+                QString fid =
+                    ov.faceReference.topology.isEmpty() ? ov.target : ov.faceReference.topology;
+                viewport->setFaceAppearance(fid, col);
+            }
+        }
+    }
     QDialog::reject();
 }
 
@@ -818,6 +1260,7 @@ void MainWindow::buildEvaluationUI() {
     auto *massDlg = new MassPropertiesDialog(this, client, this);
     auto *secDlg = new SectionPropertiesDialog(this, client, this);
     auto *secViewDlg = new SectionViewDialog(this, client, viewport, this);
+    auto *appDlg = new AppearanceDialog(this, client, viewport, this);
 
     connect(commands.get("material.manage"), &QAction::triggered, matDlg, [matDlg] {
         matDlg->populateTree();
@@ -838,6 +1281,11 @@ void MainWindow::buildEvaluationUI() {
     connect(commands.get("sectionView"), &QAction::triggered, secViewDlg, [secViewDlg] {
         secViewDlg->populateSections();
         secViewDlg->show();
+    });
+
+    connect(commands.get("appearance.manage"), &QAction::triggered, appDlg, [appDlg] {
+        appDlg->refreshTarget();
+        appDlg->show();
     });
 
     auto *hiddenLinesAction = commands.add(this, "view.hiddenLines", "Hidden Lines Visible");
@@ -868,6 +1316,8 @@ void MainWindow::refreshEvaluationUI() {
 
     if (commands.get("material.manage"))
         commands.get("material.manage")->setEnabled(hasPart && idle);
+    if (commands.get("appearance.manage"))
+        commands.get("appearance.manage")->setEnabled(hasPart && idle);
     if (commands.get("massProperties"))
         commands.get("massProperties")->setEnabled(hasPart && idle);
     if (commands.get("sectionProperties"))
@@ -878,6 +1328,103 @@ void MainWindow::refreshEvaluationUI() {
         commands.get("view.hiddenLines")->setEnabled(bool(client->mesh()) && idle);
     if (commands.get("view.shadows"))
         commands.get("view.shadows")->setEnabled(bool(client->mesh()) && idle);
+}
+
+void MainWindow::syncViewportSupports() {
+    if (!viewport)
+        return;
+    if (auto *appDlg = findChild<AppearanceDialog *>("appearanceDialog");
+        appDlg && appDlg->isVisible())
+        return;
+    if (auto *secDlg = findChild<SectionViewDialog *>("sectionViewDialog");
+        secDlg && secDlg->isVisible())
+        return;
+
+    const auto &s = state();
+    if (!s.projectOpen || s.activeDocument.isEmpty()) {
+        viewport->clearAppearanceOverrides();
+        viewport->setSectionClipping(false);
+        return;
+    }
+    QCborMap active;
+    for (auto item : s.documentRecords) {
+        auto d = item.toMap();
+        if (d.value("id").toString() == s.activeDocument) {
+            active = d;
+            break;
+        }
+    }
+    if (active.isEmpty()) {
+        viewport->clearAppearanceOverrides();
+        viewport->setSectionClipping(false);
+        return;
+    }
+
+    auto supMap = active.contains(QStringLiteral("model_supports"))
+                      ? active.value("model_supports").toMap()
+                      : active.value("supports").toMap();
+
+    // 1. Appearance overrides
+    viewport->clearAppearanceOverrides();
+    if (supMap.contains(QStringLiteral("appearance_overrides"))) {
+        for (auto val : supMap.value("appearance_overrides").toArray()) {
+            auto ov = features::AppearanceOverride::parse(val.toMap());
+            QVector4D col(ov.appearance.color_rgba[0], ov.appearance.color_rgba[1],
+                          ov.appearance.color_rgba[2], ov.appearance.color_rgba[3]);
+            if (ov.level == "Part")
+                viewport->setPartAppearance(col);
+            else if (ov.level == "Body")
+                viewport->setBodyAppearance(ov.target, col);
+            else if (ov.level == "Feature")
+                viewport->setFeatureAppearance(ov.target, col);
+            else if (ov.level == "Face") {
+                QString fid =
+                    ov.faceReference.topology.isEmpty() ? ov.target : ov.faceReference.topology;
+                if (!fid.isEmpty()) {
+                    viewport->setFaceAppearance(fid, col);
+                    int slash = fid.indexOf('/');
+                    if (slash > 0)
+                        viewport->setFaceAppearance(fid.mid(slash + 1), col);
+                }
+                if (!ov.target.isEmpty() && ov.target != fid) {
+                    viewport->setFaceAppearance(ov.target, col);
+                    int slash = ov.target.indexOf('/');
+                    if (slash > 0)
+                        viewport->setFaceAppearance(ov.target.mid(slash + 1), col);
+                }
+            }
+        }
+    }
+
+    // 2. Section views
+    bool activeClipping = false;
+    if (supMap.contains(QStringLiteral("section_views"))) {
+        for (auto val : supMap.value("section_views").toArray()) {
+            auto sv = features::SectionView::parse(val.toMap());
+            if (sv.active) {
+                QVector3D norm(0, 0, 1);
+                QString supName = sv.support.object;
+                if (supName.contains("Top") ||
+                    (sv.support.role == "Plane" && supName.contains("XZ")))
+                    norm = QVector3D(0, 1, 0);
+                else if (supName.contains("Right") ||
+                         (sv.support.role == "Plane" && supName.contains("YZ")))
+                    norm = QVector3D(1, 0, 0);
+                if (sv.cap_color_rgba.has_value()) {
+                    viewport->setSectionCapColor(
+                        QVector4D((*sv.cap_color_rgba)[0], (*sv.cap_color_rgba)[1],
+                                  (*sv.cap_color_rgba)[2], (*sv.cap_color_rgba)[3]));
+                }
+                viewport->setSectionClipping(true, QVector3D(0, 0, 0), norm, sv.offset * 1000.0,
+                                             sv.flip);
+                activeClipping = true;
+                break;
+            }
+        }
+    }
+    if (!activeClipping) {
+        viewport->setSectionClipping(false);
+    }
 }
 
 } // namespace cad
