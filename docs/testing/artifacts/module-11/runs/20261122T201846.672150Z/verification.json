@@ -1,0 +1,176 @@
+{
+  "scope": "Module 11 real 8 GB performance benchmarks and cross-module acceptance reconciliation",
+  "status": "Pass: Module 11 benchmarks and available-Mac checks; full cross-platform acceptance Blocked",
+  "artifacts": "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z",
+  "steps": [
+    {
+      "name": "fixture-check",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/fixtures/generate.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.04763449996244162
+    },
+    {
+      "name": "build",
+      "command": [
+        "cmake",
+        "--build",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-benchmark",
+        "-j8"
+      ],
+      "exit_code": 0,
+      "seconds": 0.21039108303375542
+    },
+    {
+      "name": "module11-benchmarks",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-benchmark/module11_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 261.86047012504423
+    },
+    {
+      "name": "b4-exchange",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-benchmark/module6_exchange"
+      ],
+      "exit_code": 0,
+      "seconds": 0.20906912500504404
+    },
+    {
+      "name": "b5-drawing",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-benchmark/module8_drawing",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/module8-B5.pdf",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/module8-B5.json"
+      ],
+      "exit_code": 0,
+      "seconds": 14.220824332966004
+    },
+    {
+      "name": "b5-pdf-inspection",
+      "command": [
+        "swift",
+        "-module-cache-path",
+        "/private/tmp/cad-pdf-swift-cache",
+        "tools/inspect_drawing_pdf.swift",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/module8-B5.pdf",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/pdf"
+      ],
+      "exit_code": 0,
+      "seconds": 1.7320841670152731
+    },
+    {
+      "name": "b6-fault-matrix",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tests/module10/fault_matrix.py",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-benchmark/module10_fault_worker",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/module10-fault-matrix.json"
+      ],
+      "exit_code": 0,
+      "seconds": 32.52580191596644
+    },
+    {
+      "name": "ctest-full",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-benchmark",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 531.0248332080082
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 2.039854332979303
+    },
+    {
+      "name": "static-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/static_analysis.py",
+        "build/macos-benchmark/compile_commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 313.48394204099895
+    },
+    {
+      "name": "ownership",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-benchmark",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/architecture.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.14703662495594472
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.2592797090183012
+    },
+    {
+      "name": "offline",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/offline_workflows.py",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/offline",
+        "--build-dir",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-benchmark"
+      ],
+      "exit_code": 0,
+      "seconds": 90.92160979198525
+    }
+  ],
+  "host": {
+    "platform": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "physical_ram_bytes": 8589934592,
+    "physical_ram_gib": 8.0,
+    "cpu": "Apple M2",
+    "driver": "Apple M2 (Metal 3.0)",
+    "swap": "total = 4096.00M  used = 3601.62M  free = 494.38M  (encrypted)",
+    "power": "Now drawing from 'Battery Power'\n -InternalBattery-0 (id=23330915)\t13%; discharging; 0:19 remaining present: true",
+    "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+    "background_load": {
+      "1m": 14.9013671875,
+      "5m": 12.568359375,
+      "15m": 7.37158203125
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 800,
+      "scale": 1.0,
+      "depth_bits": 24,
+      "deflection_mm": 0.2,
+      "mode": "Shaded with edges"
+    },
+    "build_profile": "RelWithDebInfo",
+    "build_flags": "-O2 -g -DNDEBUG"
+  },
+  "blocked": [
+    "Prior Module 6.1b and 6.4c deferred parser/resource/platform gates",
+    "Prior Module 7.4c full resource/platform gate",
+    "Windows/Linux/minimum macOS/other GPU/installed release builds (Module 12)",
+    "VoiceOver/NVDA/Orca assistive technology matrix",
+    "Installed package offline smoke/critical suite (Module 12)"
+  ]
+}

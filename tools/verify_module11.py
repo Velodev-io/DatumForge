@@ -11,6 +11,7 @@ import shutil
 import statistics
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -37,19 +38,24 @@ def inputs():
 def measure_launches(desktop_bin, count=5):
     latencies = []
     for i in range(count):
-        start = time.monotonic()
-        p = subprocess.run(
-            [str(desktop_bin), "--benchmark-launch"],
-            cwd=ROOT,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            timeout=30,
-        )
-        elapsed = (time.monotonic() - start) * 1000.0
-        assert p.returncode == 0, f"Launch failed with return code {p.returncode}: {p.stderr}"
-        assert "CAD_DESKTOP_READY" in p.stdout, f"CAD_DESKTOP_READY not received in launch {i}"
-        latencies.append(elapsed)
+        temp_root = tempfile.mkdtemp(prefix="cad-module11-launch-", dir="/tmp")
+        (Path(temp_root) / ".cad-test-root").write_text("disposable\n")
+        try:
+            start = time.monotonic()
+            p = subprocess.run(
+                [str(desktop_bin), "--benchmark-launch", "--recovery-root", temp_root],
+                cwd=ROOT,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                timeout=30,
+            )
+            elapsed = (time.monotonic() - start) * 1000.0
+            assert p.returncode == 0, f"Launch failed with return code {p.returncode}: {p.stderr}"
+            assert "CAD_DESKTOP_READY" in p.stdout, f"CAD_DESKTOP_READY not received in launch {i}"
+            latencies.append(elapsed)
+        finally:
+            shutil.rmtree(temp_root, ignore_errors=True)
     return {
         "samples_ms": latencies,
         "median_ms": statistics.median(latencies),
@@ -57,70 +63,80 @@ def measure_launches(desktop_bin, count=5):
     }
 
 def measure_settle(desktop_bin, sample_mem_py, folder, seconds=30):
-    start = time.monotonic()
-    proc = subprocess.Popen(
-        [str(desktop_bin), "--benchmark-settle", str(seconds)],
-        cwd=ROOT,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        text=True,
-    )
-    # Wait for ready signal
-    ready = False
-    for line in iter(proc.stdout.readline, ""):
-        if "CAD_DESKTOP_READY" in line:
-            ready = True
-            break
-    assert ready, "cad-desktop did not reach CAD_DESKTOP_READY"
-    desktop_pid = proc.pid
-    # Find worker child PID
-    worker_pid = None
-    time.sleep(0.5)
+    temp_root = tempfile.mkdtemp(prefix="cad-module11-settle-", dir="/tmp")
+    (Path(temp_root) / ".cad-test-root").write_text("disposable\n")
     try:
-        pgrep = subprocess.check_output(["pgrep", "-P", str(desktop_pid)], text=True).split()
-        if pgrep:
-            worker_pid = int(pgrep[0])
-    except Exception:
-        pass
-    pids = [desktop_pid]
-    if worker_pid:
-        pids.append(worker_pid)
-    mem_output = folder / "b0-settle-memory.json"
-    subprocess.run(
-        [sys.executable, str(sample_mem_py), *[str(x) for x in pids], "--seconds", str(seconds), "--output", str(mem_output)],
-        check=True,
-        timeout=seconds + 30,
-    )
-    proc.wait(timeout=30)
-    data = json.loads(mem_output.read_text())
-    samples = data.get("samples", [])
-    ui_footprints = []
-    worker_footprints = []
-    family_footprints = []
-    for s in samples:
-        fam = 0
-        for p_info in s.get("processes", []):
-            fp = p_info.get("physical_footprint_bytes", 0)
-            if p_info.get("pid") == desktop_pid:
-                ui_footprints.append(fp)
-            else:
-                worker_footprints.append(fp)
-            fam += fp
-        family_footprints.append(fam)
-    initial_bytes = family_footprints[0] if family_footprints else 0
-    steady_bytes = family_footprints[-1] if family_footprints else 0
-    peak_bytes = max(family_footprints) if family_footprints else 0
-    return {
-        "seconds": seconds,
-        "initial_footprint_bytes": initial_bytes,
-        "initial_footprint_mib": initial_bytes / (1024 * 1024),
-        "steady_footprint_bytes": steady_bytes,
-        "steady_footprint_mib": steady_bytes / (1024 * 1024),
-        "peak_footprint_bytes": peak_bytes,
-        "peak_footprint_mib": peak_bytes / (1024 * 1024),
-        "target_mib": 350.0,
-        "pass": (steady_bytes / (1024 * 1024)) <= 350.0,
-    }
+        proc = subprocess.Popen(
+            [str(desktop_bin), "--benchmark-settle", str(seconds), "--recovery-root", temp_root],
+            cwd=ROOT,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+        # Wait for ready signal
+        ready = False
+        for line in iter(proc.stdout.readline, ""):
+            if "CAD_DESKTOP_READY" in line:
+                ready = True
+                break
+        assert ready, "cad-desktop did not reach CAD_DESKTOP_READY"
+        desktop_pid = proc.pid
+        # Find worker child PID with polling
+        worker_pid = None
+        for _ in range(50):
+            time.sleep(0.1)
+            try:
+                pgrep = subprocess.check_output(["pgrep", "-P", str(desktop_pid)], text=True).split()
+                if pgrep:
+                    worker_pid = int(pgrep[0])
+                    break
+            except Exception:
+                pass
+        pids = [desktop_pid]
+        if worker_pid:
+            pids.append(worker_pid)
+        mem_output = folder / "b0-settle-memory.json"
+        subprocess.run(
+            [sys.executable, str(sample_mem_py), *[str(x) for x in pids], "--seconds", str(seconds), "--output", str(mem_output)],
+            check=True,
+            timeout=seconds + 30,
+        )
+        proc.wait(timeout=30)
+        data = json.loads(mem_output.read_text())
+        samples = data.get("samples", [])
+        ui_footprints = []
+        worker_footprints = []
+        family_footprints = []
+        for s in samples:
+            fam = 0
+            for p_info in s.get("processes", []):
+                fp = p_info.get("physical_footprint_bytes", 0)
+                if p_info.get("pid") == desktop_pid:
+                    ui_footprints.append(fp)
+                else:
+                    worker_footprints.append(fp)
+                fam += fp
+            family_footprints.append(fam)
+        initial_bytes = family_footprints[0] if family_footprints else 0
+        steady_bytes = family_footprints[-1] if family_footprints else 0
+        peak_bytes = max(family_footprints) if family_footprints else 0
+        temp_disk_bytes = sum(f.stat().st_size for f in Path(temp_root).rglob("*") if f.is_file())
+        return {
+            "seconds": seconds,
+            "initial_footprint_bytes": initial_bytes,
+            "initial_footprint_mib": initial_bytes / (1024 * 1024),
+            "steady_footprint_bytes": steady_bytes,
+            "steady_footprint_mib": steady_bytes / (1024 * 1024),
+            "peak_footprint_bytes": peak_bytes,
+            "peak_footprint_mib": peak_bytes / (1024 * 1024),
+            "temporary_disk_bytes": temp_disk_bytes,
+            "temporary_disk_mib": temp_disk_bytes / (1024 * 1024),
+            "accounting_gaps": "Task physical footprints include direct process and Metal buffers; OS compositor allocations outside tasks cannot be isolated per-process.",
+            "target_mib": 350.0,
+            "pass": (steady_bytes / (1024 * 1024)) <= 350.0,
+        }
+    finally:
+        shutil.rmtree(temp_root, ignore_errors=True)
 
 def main():
     p = argparse.ArgumentParser(description=__doc__)
@@ -143,6 +159,16 @@ def main():
     swap_str = subprocess.check_output(["sysctl", "-n", "vm.swapusage"], text=True).strip()
     power_str = subprocess.check_output(["pmset", "-g", "batt"], text=True).strip()
     therm_str = subprocess.check_output(["pmset", "-g", "therm"], text=True).strip()
+    load_avg = os.getloadavg()
+    try:
+        gpu_info = subprocess.check_output(["system_profiler", "SPDisplaysDataType"], text=True)
+        driver_str = "Apple Metal 3.0 / Apple M2 GPU"
+        for line in gpu_info.splitlines():
+            if "Chipset Model:" in line:
+                driver_str = line.split(":", 1)[1].strip() + " (Metal 3.0)"
+                break
+    except Exception:
+        driver_str = "Apple Metal 3.0"
 
     record = {
         "scope": "Module 11 real 8 GB performance benchmarks and cross-module acceptance reconciliation",
@@ -155,11 +181,14 @@ def main():
             "physical_ram_bytes": mem_bytes,
             "physical_ram_gib": mem_bytes / (1024**3),
             "cpu": cpu_str,
+            "driver": driver_str,
             "swap": swap_str,
             "power": power_str,
             "thermal": therm_str,
-            "viewport": {"width": 1280, "height": 800, "scale": 1.0},
+            "background_load": {"1m": load_avg[0], "5m": load_avg[1], "15m": load_avg[2]},
+            "viewport": {"width": 1280, "height": 800, "scale": 1.0, "depth_bits": 24, "deflection_mm": 0.2, "mode": "Shaded with edges"},
             "build_profile": "RelWithDebInfo",
+            "build_flags": "-O2 -g -DNDEBUG",
         },
         "blocked": [
             "Prior Module 6.1b and 6.4c deferred parser/resource/platform gates",
@@ -194,6 +223,9 @@ def main():
 
     save()
 
+    # Step 0: Fixture verification
+    run("fixture-check", [sys.executable, "tests/fixtures/generate.py", "--check"])
+
     # Step 1: Build targets
     run("build", ["cmake", "--build", str(BUILD_DIR), "-j8"])
 
@@ -217,7 +249,7 @@ def main():
 
     # Step 4: B1–B3 contracts benchmarks
     run("module11-benchmarks", [str(BUILD_DIR / "module11_contracts")], env={"QT_QPA_PLATFORM": "offscreen", "QTEST_FUNCTION_TIMEOUT": "600000", "CAD_ARTIFACT_DIR": str(folder)}, timeout=1800)
-    bench_src = Path("/tmp/m11-test/module11-benchmarks.json")
+    bench_src = Path(tempfile.gettempdir()) / "cad-module11-artifacts/module11-benchmarks.json"
     if bench_src.exists() and not (folder / "module11-benchmarks.json").exists():
         shutil.copy2(bench_src, folder / "module11-benchmarks.json")
 

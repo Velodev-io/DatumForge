@@ -869,6 +869,7 @@ void Client::receive(const QCborMap &m) {
     if (data.contains(QStringLiteral("project_state"))) {
         wire::require(data.value("project_state").isMap(), "project state map");
         installProject(data.value("project_state").toMap());
+        bool isSave = (e.command == "SaveProject" || e.command == "SaveAs");
         pending.erase(found);
         for (auto value : projection.documentRecords) {
             auto d = value.toMap();
@@ -879,14 +880,14 @@ void Client::receive(const QCborMap &m) {
             }
             if (d.value("id").toString() == projection.activeDocument &&
                 d.value("type").toString() == "Assembly") {
-                if (projection.stale || !display)
+                if (!isSave || projection.stale || !display)
                     displayAssembly();
                 break;
             }
             if (d.value("id").toString() == projection.activeDocument &&
                 (!d.value("features").toArray().empty() ||
                  !d.value("modeling").toMap().value("intents").toArray().empty())) {
-                if (projection.stale || !display)
+                if (!isSave || projection.stale || !display)
                     displayPart();
                 break;
             }

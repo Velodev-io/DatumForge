@@ -14,7 +14,17 @@ int main(int argc, char **argv) {
     QApplication app(argc, argv);
     app.setOrganizationName("local.solidworks-clone.dev");
     app.setApplicationName("Solidworks Clone");
-    cad::MainWindow window;
+    QString settingsFile;
+    QString recoveryRoot;
+    for (int i = 1; i < argc; ++i) {
+        if (QString::fromLocal8Bit(argv[i]) == QStringLiteral("--recovery-root") && i + 1 < argc) {
+            recoveryRoot = QString::fromLocal8Bit(argv[++i]);
+        } else if (QString::fromLocal8Bit(argv[i]) == QStringLiteral("--settings") &&
+                   i + 1 < argc) {
+            settingsFile = QString::fromLocal8Bit(argv[++i]);
+        }
+    }
+    cad::MainWindow window(settingsFile, nullptr, recoveryRoot);
     window.show();
     if (app.arguments().contains(QStringLiteral("--benchmark-launch")) ||
         app.arguments().contains(QStringLiteral("--benchmark-settle"))) {

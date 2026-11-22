@@ -1505,10 +1505,10 @@
     "scope": "Cold/warm launches, B0 30-second idle settle, B1-B3 interaction/navigation/persistence benchmarks on physical 8 GB reference Mac (Apple M2, 8 GB RAM, macOS 27.2.1). Raw samples, median, nearest-rank p95, physical/resident memory, swap, and disk recorded.",
     "evidence": [
       "docs/testing/module-11.md",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/source-identity.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/b0-launch-settle.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module11-benchmarks.json"
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/source-identity.json",
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/b0-launch-settle.json",
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/module11-benchmarks.json"
     ]
   },
   "11.1b": {
@@ -1516,9 +1516,9 @@
     "scope": "Physical telemetry recorded: Apple M2 Mac14,2, 8 GB RAM, battery power, normal thermals, 1280x800 viewport. B1-B3 steady/peak memory, occurrence counts, and component definitions measured on physical host.",
     "evidence": [
       "docs/testing/module-11.md",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/b0-settle-memory.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module11-benchmarks.json"
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/b0-settle-memory.json",
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/module11-benchmarks.json"
     ]
   },
   "11.2a": {
@@ -1528,7 +1528,7 @@
       "docs/testing/module-11.md",
       "src/protocol/Client.cpp",
       "src/protocol/Limits.hpp",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json"
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/verification.json"
     ]
   },
   "11.2b": {
@@ -1536,9 +1536,9 @@
     "scope": "Reran affected workloads on benchmark profile; verified B1 analytic volume, B2 100-cycle undo/redo cache plateau, B3 assembly closure, and full enabled CTest regression suite.",
     "evidence": [
       "docs/testing/module-11.md",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module11-benchmarks.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/ctest-full.txt"
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/module11-benchmarks.json",
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/ctest-full.txt"
     ]
   },
   "11.3a": {
@@ -1548,7 +1548,7 @@
       "docs/testing/module-11.md",
       "docs/TRACEABILITY.md",
       "docs/testing/requirements.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json"
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/verification.json"
     ]
   },
   "11.3b": {
@@ -1557,7 +1557,7 @@
     "evidence": [
       "docs/testing/module-11.md",
       "docs/testing/requirements.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json"
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/verification.json"
     ]
   },
   "11.4a": {
@@ -1565,9 +1565,9 @@
     "scope": "T-41 through T-49 measured on physical 8 GB host: B0 cold/warm launch, B0 idle settle ≤350 MiB, B1-B3 input ack ≤100 ms, navigation ≥30 FPS and frame time ≤50 ms, preview ≤250 ms, edit ≤2s, B2 save ≤3s and reopen ≤5s, B3 coarse reopen ≤10s.",
     "evidence": [
       "docs/testing/module-11.md",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/b0-launch-settle.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module11-benchmarks.json"
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/b0-launch-settle.json",
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/module11-benchmarks.json"
     ]
   },
   "11.4b": {
@@ -1575,10 +1575,10 @@
     "scope": "T-52 through T-54, T-56: repeatable equivalent outcomes, architectural ownership, privacy/offline sandbox-exec network-denial, and B6 29-case SIGKILL fault matrix verified.",
     "evidence": [
       "docs/testing/module-11.md",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module10-fault-matrix.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/architecture.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/offline/offline.json"
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/module10-fault-matrix.json",
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/architecture.json",
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/offline/offline.json"
     ]
   },
   "11.4c": {
@@ -1588,7 +1588,7 @@
       "docs/testing/module-11.md",
       "docs/TRACEABILITY.md",
       "docs/testing/requirements.json",
-      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json"
+      "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/verification.json"
     ]
   },
   "CM0.a": {

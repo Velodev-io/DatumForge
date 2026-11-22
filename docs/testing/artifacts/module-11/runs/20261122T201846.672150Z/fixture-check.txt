@@ -1,0 +1,1 @@
+Pass: B0–B6 recipes and hashes deterministic; unexecuted future-model counts explicitly pending

@@ -1,0 +1,43 @@
+{
+  "cold_launch": {
+    "samples_ms": [
+      1577.702666982077,
+      743.2251659920439,
+      698.1231249519624,
+      734.1237079817802,
+      729.3865000247024
+    ],
+    "median_ms": 734.1237079817802,
+    "p95_ms": 1577.702666982077
+  },
+  "warm_launch": {
+    "samples_ms": [
+      699.9337500310503,
+      699.6295420103706,
+      751.1855409829877,
+      704.5348330284469,
+      710.860249993857,
+      733.9463329990394,
+      730.6682500056922,
+      735.6080840108916,
+      763.4137500426732,
+      644.5303749642335
+    ],
+    "median_ms": 720.7642499997746,
+    "p95_ms": 763.4137500426732
+  },
+  "idle_settle": {
+    "seconds": 30,
+    "initial_footprint_bytes": 239552072,
+    "initial_footprint_mib": 228.45465850830078,
+    "steady_footprint_bytes": 225756744,
+    "steady_footprint_mib": 215.29840850830078,
+    "peak_footprint_bytes": 239552072,
+    "peak_footprint_mib": 228.45465850830078,
+    "temporary_disk_bytes": 11,
+    "temporary_disk_mib": 1.049041748046875e-05,
+    "accounting_gaps": "Task physical footprints include direct process and Metal buffers; OS compositor allocations outside tasks cannot be isolated per-process.",
+    "target_mib": 350.0,
+    "pass": true
+  }
+}

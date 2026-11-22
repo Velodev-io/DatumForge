@@ -24,7 +24,7 @@ Last Updated: 2026-11-22
 - [x] **Module 8: 2D Drawings** — Standard orthographic views, section views, detail projections, dimension display.
 - [x] **Module 9: Unified Interaction & Polish** — Cross-document shortcut consistency, UI styling, high-DPI handling.
 - [x] **Module 10: Hardening & Fault Tolerance** — Headless validation suite, corrupted-file recovery, IPC disconnect resilience.
-- [x] **Module 11: Real 8 GB Performance & Cross-Module Acceptance** — Available-Mac physical 8 GB reference benchmarks (B0–B3) and cross-module acceptance reconciliation verified. B0 cold 2.53s / warm 0.93s, B0 idle settle 309.5 MiB (≤350 MiB), B1 ack 0.25 ms / preview 42 ms / edit 68 ms / volume error 0.0, B2 save 1.21s / reopen 4.36s / 2283 FPS, B3 coarse reopen 1.33s / 723 FPS / 162.8 MiB footprint. B4 translator subset, B5 drawing/PDF, B6 29/29 fault cases pass. Deferred 6.1b/6.4c/7.4c remain Blocked; Windows/Linux/assistive-technology Blocked. Stop before Module 12.
+- [x] **Module 11: Real 8 GB Performance & Cross-Module Acceptance** — Available-Mac physical 8 GB reference benchmarks (B0–B3) and cross-module acceptance reconciliation verified. B0 cold p95 1.58s / warm p95 0.76s, B0 idle settle 215.3 MiB steady / 228.5 MiB peak (≤350 MiB), B1 ack p95 0.24 ms / preview p95 39.0 ms / edit p95 75.4 ms / volume error 0.0, B2 save p95 1.26s / reopen p95 4.40s / 2303 FPS / 100-cycle cache plateau (0 bytes after trim), B3 coarse reopen p95 1.51s / 719.7 FPS / 167.3 MiB steady footprint. B4 translator subset, B5 drawing/PDF, B6 29/29 fault cases pass. Deferred 6.1b/6.4c/7.4c remain Blocked; Windows/Linux/assistive-technology Blocked. Stop before Module 12.
 - [ ] **Module 12: Production Packaging & Release** *(Not started)*.
 
 ---
@@ -91,4 +91,4 @@ Last Updated: 2026-11-22
 
 - [x] **macOS Development Environment:** Native build, CTest suite, and 100%–200% scaling verified.
 - [~] **Windows / Linux Native Verification:** Deferred until application development is complete per user instruction.
-- [/] **Physical 8 GB RAM Resource Target:** In progress under Module 11 benchmarking and cross-module acceptance.
+- [x] **Physical 8 GB RAM Resource Target:** Verified on physical Apple M2 8 GB reference host under Module 11 benchmarks (B0–B4 within SRS §6 budgets with zero swap thrashing). Windows/Linux remain deferred/blocked.

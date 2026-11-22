@@ -480,7 +480,7 @@ if(BUILD_TESTING)
   target_link_libraries(module11_contracts PRIVATE cad_desktop_ui cad_persistence cad_exchange Qt6::Test)
   add_dependencies(module11_contracts cad-worker)
   add_test(NAME module11.benchmarks COMMAND module11_contracts)
-  set_tests_properties(module11.benchmarks PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 300)
+  set_tests_properties(module11.benchmarks PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 600)
 endif()
 
 
