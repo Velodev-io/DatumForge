@@ -13,9 +13,6 @@
 #include "persistence/ProjectStore.hpp"
 #include "render/Viewport.hpp"
 #include <BRepAdaptor_Surface.hxx>
-#include <TopExp_Explorer.hxx>
-#include <TopoDS.hxx>
-#include <TopoDS_Face.hxx>
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDialogButtonBox>
@@ -31,6 +28,9 @@
 #include <QTemporaryDir>
 #include <QTest>
 #include <QTreeWidget>
+#include <TopExp_Explorer.hxx>
+#include <TopoDS.hxx>
+#include <TopoDS_Face.hxx>
 #include <numbers>
 
 using namespace cad;
@@ -246,8 +246,9 @@ class WorkflowContractsCM9 : public QObject {
         if (holePoints->count() > 0) {
             for (int i = 0; i < holePoints->count(); ++i)
                 holePoints->item(i)->setCheckState(
-                    holePoints->item(i)->data(Qt::UserRole).toString() == firstPoint ? Qt::Checked
-                                                                                 : Qt::Unchecked);
+                    holePoints->item(i)->data(Qt::UserRole).toString() == firstPoint
+                        ? Qt::Checked
+                        : Qt::Unchecked);
         }
 
         // Test dataset selection
@@ -298,7 +299,8 @@ class WorkflowContractsCM9 : public QObject {
 
         // Verify persisted hole intent has Catalog mode
         auto docWithHole = session.document();
-        auto holeIntent = docWithHole.value("modeling").toMap().value("intents").toArray()[1].toMap();
+        auto holeIntent =
+            docWithHole.value("modeling").toMap().value("intents").toArray()[1].toMap();
         auto holeSizing = holeIntent.value("sizing").toMap();
         QCOMPARE(holeSizing.value("mode").toString(), QString("Catalog"));
         QCOMPARE(holeSizing.value("standard").toString(), QString("B18.3.4M"));
@@ -378,7 +380,8 @@ class WorkflowContractsCM9 : public QObject {
 
         massRecalc->click();
         QVERIFY(session.idle());
-        QVERIFY(massStatus->text().contains("successfully") || massStatus->text().contains("Evaluated"));
+        QVERIFY(massStatus->text().contains("successfully") ||
+                massStatus->text().contains("Evaluated"));
         QVERIFY(massVal->text().contains("kg"));
 
         massDialog->accept();

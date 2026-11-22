@@ -442,8 +442,7 @@ SupportDefinition SupportDefinition::parse(const QCborMap &m) {
         d.materials = m.value("materials").toArray();
     }
     if (m.contains(QStringLiteral("material"))) {
-        check(m.value("material").isMap(), "InvalidInput",
-              "Typed material map required");
+        check(m.value("material").isMap(), "InvalidInput", "Typed material map required");
         features::Material::parse(m.value("material").toMap());
         d.material = m.value("material").toMap();
     }

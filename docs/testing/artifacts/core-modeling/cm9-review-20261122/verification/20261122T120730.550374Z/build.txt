@@ -1,0 +1,139 @@
+[1/126] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/Catalogs.cpp.o
+[2/126] Building CXX object CMakeFiles/cad_support_model.dir/src/model/Supports.cpp.o
+[3/126] Linking CXX static library libcad_feature_model.a
+[4/126] Linking CXX static library libcad_support_model.a
+[5/126] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Supports.cpp.o
+[6/126] Linking CXX static library libcad_support_geometry.a
+[7/126] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[8/126] Linking CXX static library libcad_persistence.a
+[9/126] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[10/126] Automatic MOC for target cad_desktop_ui
+[11/126] Building CXX object CMakeFiles/cm9_store.dir/tests/core_modeling/cm9_store.cpp.o
+[12/126] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[13/126] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[14/126] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[15/126] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/EvaluationUI.cpp.o
+[16/126] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[17/126] Linking CXX static library libcad_desktop_ui.a
+[18/126] Automatic MOC for target module4_contracts
+[19/125] Building CXX object CMakeFiles/cm9_repair.dir/tests/core_modeling/cm9_repair.cpp.o
+[20/125] Automatic MOC for target cm4_workflow_contracts
+[21/124] Automatic MOC for target cm5_workflow_contracts
+[22/123] Automatic MOC for target cm7_workflow_contracts
+[23/122] Automatic MOC for target cm8_workflow_contracts
+[24/121] Automatic MOC for target cm9_workflow_contracts
+[25/120] Building CXX object CMakeFiles/module4_contracts.dir/tests/module4/contracts.cpp.o
+[26/120] Building CXX object CMakeFiles/cm4_workflow_contracts.dir/tests/core_modeling/workflow_contracts.cpp.o
+[27/120] Building CXX object CMakeFiles/cm5_workflow_contracts.dir/tests/core_modeling/workflow_contracts_cm5.cpp.o
+[28/120] Building CXX object CMakeFiles/cm7_workflow_contracts.dir/tests/core_modeling/workflow_contracts_cm7.cpp.o
+[29/120] Building CXX object CMakeFiles/cm8_workflow_contracts.dir/tests/core_modeling/workflow_contracts_cm8.cpp.o
+[30/120] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[31/120] Linking CXX executable module1_contracts
+[32/120] Linking CXX executable module2_storage
+[33/120] Linking CXX executable module2_contracts
+[34/120] Building CXX object CMakeFiles/cm9_workflow_contracts.dir/tests/core_modeling/workflow_contracts_cm9.cpp.o
+[35/120] Linking CXX executable module2_fault_worker
+[36/120] Linking CXX executable module2_dispatch
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[37/120] Linking CXX executable module3_input
+[38/120] Linking CXX executable module3_persistence
+[39/120] Linking CXX executable module3_contracts
+[40/120] Linking CXX executable module4_workspace
+[41/120] Linking CXX executable module4_geometry
+[42/120] Linking CXX executable module4_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[43/120] Linking CXX executable module4_contracts
+[44/120] Linking CXX executable module5_plan
+[45/120] Linking CXX executable module4_variants
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[46/120] Linking CXX executable module5_engine
+[47/120] Linking CXX executable module5_persistence
+[48/120] Linking CXX executable module5_b2
+[49/120] Linking CXX executable module6_exchange
+[50/120] Linking CXX executable module5_contracts
+[51/120] Linking CXX executable module6_contracts
+[52/120] Linking CXX executable module6_persistence
+ld: warning: ignoring duplicate libraries: 'libcad_exchange.a'
+[53/120] Linking CXX executable module7_model
+[54/120] Linking CXX executable module7_geometry
+[55/120] Linking CXX executable module7_persistence
+[56/120] Linking CXX executable module7_b3
+[57/120] Linking CXX executable module7_contracts
+[58/120] Linking CXX executable module8_contracts
+[59/120] Linking CXX executable module8_drawing
+[60/120] Linking CXX executable module9_privacy
+[61/120] Linking CXX executable module8_geometry
+[62/120] Linking CXX executable module9_interaction
+[63/120] Linking CXX executable module10_fault_worker
+[64/120] Linking CXX executable module10_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a'
+[65/120] Linking CXX executable module10_hardening
+[66/120] Linking CXX executable cm1_contracts
+[67/120] Linking CXX executable cm1_relations
+[68/120] Linking CXX executable cm5_intent
+[69/120] Linking CXX executable cm6_contracts
+[70/120] Linking CXX executable cm7_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a', 'libcad_sketch_model.a'
+[71/120] Linking CXX executable cm8_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a', 'libcad_sketch_model.a'
+[72/120] Linking CXX executable cm9_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a', 'libcad_sketch_model.a'
+[73/120] Linking CXX executable cm7_solver
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a'
+[74/120] Linking CXX executable cm7_curves
+ld: warning: ignoring duplicate libraries: 'libcad_part.a', 'libcad_support_geometry.a'
+[75/120] Linking CXX executable cm7_store
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a', 'libcad_part.a', 'libcad_support_geometry.a'
+[76/120] Linking CXX executable cm5_profiles
+[77/120] Linking CXX executable cm7_review
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a', 'libcad_part.a', 'libcad_support_geometry.a'
+[78/120] Linking CXX executable cm5_features
+[79/120] Linking CXX executable cm6_features
+[80/120] Linking CXX executable cm8_features
+[81/120] Linking CXX executable cm9_features
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a', 'libcad_part.a', 'libcad_support_geometry.a'
+[82/120] Linking CXX executable cm5_records
+[83/120] Linking CXX executable cm5_contracts
+[84/120] Linking CXX executable cm5_store
+[85/120] Linking CXX executable cm5_repair
+[86/120] Linking CXX executable cm6_review
+[87/120] Linking CXX executable cm6_store
+[88/120] Linking CXX executable cm8_store
+[89/120] Linking CXX executable cm8_repair
+[90/120] Linking CXX executable cm8_review
+ld: warning: ignoring duplicate libraries: 'libcad_feature_model.a', 'libcad_part.a', 'libcad_support_geometry.a'
+[91/120] Linking CXX executable cm9_store
+[92/120] Linking CXX executable cm4_plan
+[93/120] Linking CXX executable cm9_repair
+[94/120] Linking CXX executable cm4_support_model
+[95/120] Linking CXX executable cm4_store
+[96/120] Linking CXX executable cm4_support_geometry
+[97/120] Linking CXX executable cm4_support_convert
+[98/120] Linking CXX executable cm4_support_engine
+[99/120] Linking CXX executable cm4_support_store
+[100/120] Linking CXX executable cm4_support_evolution
+[101/120] Linking CXX executable cm4_datum_contracts
+[102/120] Linking CXX executable cm4_support_contracts
+[103/120] Linking CXX executable cm4_workflow_contracts
+[104/120] Linking CXX executable cm5_workflow_contracts
+[105/120] Linking CXX executable cm6_workflow_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_support_geometry.a'
+[106/120] Linking CXX executable cm7_workflow_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_support_geometry.a'
+[107/120] Linking CXX executable cm8_workflow_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_support_geometry.a'
+[108/120] Linking CXX executable cm9_workflow_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_support_geometry.a'
+[109/120] Linking CXX executable cm1_rectangles
+[110/120] Linking CXX executable cm1_slots
+[111/120] Linking CXX executable cm1_curves
+[112/120] Linking CXX executable cm1_pierce
+[113/120] Linking CXX executable cm1_intent
+[114/120] Linking CXX executable cm2_editing
+[115/120] Linking CXX executable cm3_dimensions
+[116/120] Linking CXX executable cm3_associated_dimensions
+[117/120] Linking CXX executable cm3_dimension_contracts
+[118/120] Linking CXX executable cm3_completion
+[119/120] Linking CXX executable cm3_completion_contracts
+[120/120] Linking CXX executable cm2_contracts

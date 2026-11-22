@@ -8938,7 +8938,7 @@
       ],
       "category": "Materials/appearance",
       "variant": "Offline material families",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -8948,8 +8948,17 @@
       ],
       "analytical_fixture": "cm-228-geometry",
       "native_workflow": "cm-228-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-229",
@@ -8964,7 +8973,7 @@
       ],
       "category": "Materials/appearance",
       "variant": "Search/favorites/custom libraries",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -8974,8 +8983,17 @@
       ],
       "analytical_fixture": "cm-229-geometry",
       "native_workflow": "cm-229-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-230",
@@ -8990,7 +9008,7 @@
       ],
       "category": "Materials/appearance",
       "variant": "Physical properties",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9000,8 +9018,17 @@
       ],
       "analytical_fixture": "cm-230-geometry",
       "native_workflow": "cm-230-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-231",
@@ -9016,7 +9043,7 @@
       ],
       "category": "Materials/appearance",
       "variant": "Part appearance",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9026,8 +9053,17 @@
       ],
       "analytical_fixture": "cm-231-geometry",
       "native_workflow": "cm-231-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-232",
@@ -9042,7 +9078,7 @@
       ],
       "category": "Materials/appearance",
       "variant": "Body appearance",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9052,8 +9088,17 @@
       ],
       "analytical_fixture": "cm-232-geometry",
       "native_workflow": "cm-232-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-233",
@@ -9068,7 +9113,7 @@
       ],
       "category": "Materials/appearance",
       "variant": "Feature appearance",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9078,8 +9123,17 @@
       ],
       "analytical_fixture": "cm-233-geometry",
       "native_workflow": "cm-233-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-234",
@@ -9094,7 +9148,7 @@
       ],
       "category": "Materials/appearance",
       "variant": "Face/surface appearance",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9104,8 +9158,17 @@
       ],
       "analytical_fixture": "cm-234-geometry",
       "native_workflow": "cm-234-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-235",
@@ -9120,7 +9183,7 @@
       ],
       "category": "Materials/appearance",
       "variant": "Shadows",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9130,8 +9193,17 @@
       ],
       "analytical_fixture": "cm-235-geometry",
       "native_workflow": "cm-235-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-236",
@@ -9144,7 +9216,7 @@
       ],
       "category": "Evaluation",
       "variant": "Density/mass",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9154,8 +9226,17 @@
       ],
       "analytical_fixture": "cm-236-geometry",
       "native_workflow": "cm-236-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-237",
@@ -9168,7 +9249,7 @@
       ],
       "category": "Evaluation",
       "variant": "Volume/surface area",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9178,8 +9259,17 @@
       ],
       "analytical_fixture": "cm-237-geometry",
       "native_workflow": "cm-237-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-238",
@@ -9192,7 +9282,7 @@
       ],
       "category": "Evaluation",
       "variant": "Center of mass",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9202,8 +9292,17 @@
       ],
       "analytical_fixture": "cm-238-geometry",
       "native_workflow": "cm-238-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-239",
@@ -9216,7 +9315,7 @@
       ],
       "category": "Evaluation",
       "variant": "Principal axes/moments",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9226,8 +9325,17 @@
       ],
       "analytical_fixture": "cm-239-geometry",
       "native_workflow": "cm-239-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-240",
@@ -9240,7 +9348,7 @@
       ],
       "category": "Evaluation",
       "variant": "Inertia tensor",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9250,8 +9358,17 @@
       ],
       "analytical_fixture": "cm-240-geometry",
       "native_workflow": "cm-240-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-241",
@@ -9264,7 +9381,7 @@
       ],
       "category": "Evaluation",
       "variant": "Sketch section area",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9274,8 +9391,17 @@
       ],
       "analytical_fixture": "cm-241-geometry",
       "native_workflow": "cm-241-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-242",
@@ -9288,7 +9414,7 @@
       ],
       "category": "Evaluation",
       "variant": "Section centroid local/part",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9298,8 +9424,17 @@
       ],
       "analytical_fixture": "cm-242-geometry",
       "native_workflow": "cm-242-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-243",
@@ -9312,7 +9447,7 @@
       ],
       "category": "Evaluation",
       "variant": "Section inertia/polar/principal moments",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9322,8 +9457,17 @@
       ],
       "analytical_fixture": "cm-243-geometry",
       "native_workflow": "cm-243-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-244",
@@ -9336,7 +9480,7 @@
       ],
       "category": "Evaluation",
       "variant": "Planar-face section properties",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9346,8 +9490,17 @@
       ],
       "analytical_fixture": "cm-244-geometry",
       "native_workflow": "cm-244-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-245",
@@ -9361,7 +9514,7 @@
       ],
       "category": "Model display",
       "variant": "Hidden lines visible",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9371,8 +9524,17 @@
       ],
       "analytical_fixture": "cm-245-geometry",
       "native_workflow": "cm-245-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-246",
@@ -9386,7 +9548,7 @@
       ],
       "category": "Model display",
       "variant": "Shaded with edges",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9396,8 +9558,17 @@
       ],
       "analytical_fixture": "cm-246-geometry",
       "native_workflow": "cm-246-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-247",
@@ -9411,7 +9582,7 @@
       ],
       "category": "Model display",
       "variant": "Named section view",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9421,8 +9592,17 @@
       ],
       "analytical_fixture": "cm-247-geometry",
       "native_workflow": "cm-247-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-248",
@@ -9436,7 +9616,7 @@
       ],
       "category": "Model display",
       "variant": "Section plane/face selection",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9446,8 +9626,17 @@
       ],
       "analytical_fixture": "cm-248-geometry",
       "native_workflow": "cm-248-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-249",
@@ -9461,7 +9650,7 @@
       ],
       "category": "Model display",
       "variant": "Section offset manipulator",
-      "restriction": "",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9471,8 +9660,17 @@
       ],
       "analytical_fixture": "cm-249-geometry",
       "native_workflow": "cm-249-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-250",
@@ -9484,7 +9682,7 @@
       ],
       "category": "Catalog",
       "variant": "ANSI inch",
-      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9494,8 +9692,17 @@
       ],
       "analytical_fixture": "cm-250-geometry",
       "native_workflow": "cm-250-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-251",
@@ -9507,7 +9714,7 @@
       ],
       "category": "Catalog",
       "variant": "ANSI metric",
-      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9517,8 +9724,17 @@
       ],
       "analytical_fixture": "cm-251-geometry",
       "native_workflow": "cm-251-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-252",
@@ -9530,7 +9746,7 @@
       ],
       "category": "Catalog",
       "variant": "ISO",
-      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9540,8 +9756,17 @@
       ],
       "analytical_fixture": "cm-252-geometry",
       "native_workflow": "cm-252-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-253",
@@ -9553,7 +9778,7 @@
       ],
       "category": "Catalog",
       "variant": "DIN",
-      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9563,8 +9788,17 @@
       ],
       "analytical_fixture": "cm-253-geometry",
       "native_workflow": "cm-253-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-254",
@@ -9576,7 +9810,7 @@
       ],
       "category": "Catalog",
       "variant": "BSI",
-      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9586,8 +9820,17 @@
       ],
       "analytical_fixture": "cm-254-geometry",
       "native_workflow": "cm-254-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-255",
@@ -9599,7 +9842,7 @@
       ],
       "category": "Catalog",
       "variant": "JIS",
-      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9609,8 +9852,17 @@
       ],
       "analytical_fixture": "cm-255-geometry",
       "native_workflow": "cm-255-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-256",
@@ -9622,7 +9874,7 @@
       ],
       "category": "Catalog",
       "variant": "GB",
-      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9632,8 +9884,17 @@
       ],
       "analytical_fixture": "cm-256-geometry",
       "native_workflow": "cm-256-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     },
     {
       "id": "CM-257",
@@ -9645,7 +9906,7 @@
       ],
       "category": "Catalog",
       "variant": "GOST",
-      "restriction": "Broad requested expansion; source/license workstream required. Families beyond the examples are roadmap requirements, not claims of PDF table contents",
+      "restriction": "Supported subset only; complete source-course model replay remains open. See CM9 review evidence for offline catalog and evaluation specifications.",
       "tasks": [
         "CM9.a",
         "CM9.b",
@@ -9655,8 +9916,17 @@
       ],
       "analytical_fixture": "cm-257-geometry",
       "native_workflow": "cm-257-native",
-      "status": "Not run",
-      "evidence": []
+      "status": "In progress",
+      "evidence": [
+        "docs/testing/core-modeling-cm9-review.md",
+        "tests/core_modeling/cm9_contracts.cpp",
+        "tests/core_modeling/cm9_features.cpp",
+        "tests/core_modeling/cm9_store.cpp",
+        "tests/core_modeling/cm9_repair.cpp",
+        "tests/core_modeling/workflow_contracts_cm9.cpp",
+        "docs/testing/artifacts/core-modeling/cm9-review-20261122/verification/20261122T122725.874056Z/verification.json"
+      ],
+      "acceptance_scope": "Scoped analytical, storage, hole catalog, materials, exact evaluation, section views and native desktop regression evidence only; complete T5/T6 course acceptance remains open. Physical platform/device/resource acceptance remains open."
     }
   ],
   "source_verification": {

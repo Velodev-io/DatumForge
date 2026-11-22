@@ -104,12 +104,14 @@ class SectionViewDialog : public QDialog {
     bool initialClippingActive = false;
 
   public:
-    explicit SectionViewDialog(MainWindow *win, Client *cli, Viewport *vp, QWidget *parent = nullptr);
+    explicit SectionViewDialog(MainWindow *win, Client *cli, Viewport *vp,
+                               QWidget *parent = nullptr);
     void populateSections();
     void updatePreview();
     void apply();
     void createNew();
     void removeCurrent();
+
   protected:
     void reject() override;
 };

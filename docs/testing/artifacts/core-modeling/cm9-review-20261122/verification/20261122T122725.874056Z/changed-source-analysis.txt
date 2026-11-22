@@ -1,0 +1,12 @@
+Analyzed apps/desktop/MainWindow.cpp
+Analyzed apps/desktop/WorkspaceChrome.cpp
+Analyzed apps/desktop/FeaturePanel.cpp
+Analyzed apps/desktop/EvaluationUI.cpp
+Analyzed apps/cad-worker/main.cpp
+Analyzed src/persistence/ProjectStore.cpp
+Analyzed src/features/Catalogs.cpp
+Analyzed src/model/Supports.cpp
+Analyzed src/geometry/occt/Supports.cpp
+Analyzed tests/core_modeling/cm9_store.cpp
+Analyzed tests/core_modeling/cm9_repair.cpp
+Analyzed tests/core_modeling/workflow_contracts_cm9.cpp

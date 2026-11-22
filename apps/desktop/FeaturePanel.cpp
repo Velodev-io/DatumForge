@@ -2900,8 +2900,8 @@ void FeaturePanel::updateHoleCatalogSizing() {
         return;
     try {
         auto resolved = features::resolveHoleCatalog(q);
-        holeProvenance->setText(resolved.standard + " (" + resolved.dataset + ") · " + resolved.type +
-                                " · " + resolved.size + " (" + resolved.fit + ")");
+        holeProvenance->setText(resolved.standard + " (" + resolved.dataset + ") · " +
+                                resolved.type + " · " + resolved.size + " (" + resolved.fit + ")");
         holeCatalog->setText(holeProvenance->text());
         if (!holeCustomSizing->isChecked()) {
             double u = unit();
@@ -2914,7 +2914,8 @@ void FeaturePanel::updateHoleCatalogSizing() {
             if (resolved.countersink_diameter)
                 holeCountersinkDia->setValue(*resolved.countersink_diameter / u);
             if (resolved.countersink_angle)
-                holeCountersinkAngle->setValue(*resolved.countersink_angle * 180.0 / std::numbers::pi);
+                holeCountersinkAngle->setValue(*resolved.countersink_angle * 180.0 /
+                                               std::numbers::pi);
             if (resolved.drill_angle)
                 holeDrillAngle->setValue(*resolved.drill_angle * 180.0 / std::numbers::pi);
             if (resolved.tap_drill_diameter)
@@ -3562,22 +3563,26 @@ QCborMap FeaturePanel::definitionModeling() const {
                 sizing.insert(QStringLiteral("fit"), q.fit);
                 sizing.insert(QStringLiteral("diameter"), resolved.diameter);
                 if (resolved.counterbore_diameter)
-                    sizing.insert(QStringLiteral("counterbore_diameter"), *resolved.counterbore_diameter);
+                    sizing.insert(QStringLiteral("counterbore_diameter"),
+                                  *resolved.counterbore_diameter);
                 if (resolved.counterbore_depth)
                     sizing.insert(QStringLiteral("counterbore_depth"), *resolved.counterbore_depth);
                 if (resolved.countersink_diameter)
-                    sizing.insert(QStringLiteral("countersink_diameter"), *resolved.countersink_diameter);
+                    sizing.insert(QStringLiteral("countersink_diameter"),
+                                  *resolved.countersink_diameter);
                 if (resolved.countersink_angle)
                     sizing.insert(QStringLiteral("countersink_angle"), *resolved.countersink_angle);
                 if (resolved.drill_angle)
                     sizing.insert(QStringLiteral("drill_angle"), *resolved.drill_angle);
                 if (resolved.tap_drill_diameter)
-                    sizing.insert(QStringLiteral("tap_drill_diameter"), *resolved.tap_drill_diameter);
+                    sizing.insert(QStringLiteral("tap_drill_diameter"),
+                                  *resolved.tap_drill_diameter);
                 if (resolved.pitch)
                     sizing.insert(QStringLiteral("pitch"), *resolved.pitch);
                 if (resolved.cosmetic_thread) {
                     sizing.insert(QStringLiteral("cosmetic_thread"), true);
-                    sizing.insert(QStringLiteral("thread_designation"), resolved.thread_designation);
+                    sizing.insert(QStringLiteral("thread_designation"),
+                                  resolved.thread_designation);
                 }
             }
         }

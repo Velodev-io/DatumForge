@@ -113,46 +113,48 @@ int main(int argc, char **argv) {
         CHECK(store.evaluatePart(document).bodies.size() == 1);
 
         // 3. Test supportReferenceCandidates inspection for AppearanceOverride
-        auto inspOverride = store.supportReferenceCandidates(document, d.map(), faceOverride.id, 0, "face");
+        auto inspOverride =
+            store.supportReferenceCandidates(document, d.map(), faceOverride.id, 0, "face");
         CHECK(!inspOverride.value("replacements").toArray().isEmpty());
         CHECK(inspOverride.contains(QStringLiteral("fingerprint")));
         auto fingerprint1 = inspOverride.value("fingerprint").toByteArray();
 
         // 4. Test supportReferenceCandidates inspection for SectionView
-        auto inspSection = store.supportReferenceCandidates(document, d.map(), sectionViewA.id, 0, "support");
+        auto inspSection =
+            store.supportReferenceCandidates(document, d.map(), sectionViewA.id, 0, "support");
         CHECK(!inspSection.value("replacements").toArray().isEmpty());
         CHECK(inspSection.contains(QStringLiteral("fingerprint")));
 
         // 5. Test ResolveSupportReference for AppearanceOverride (repair/retarget to sideFaceRef)
-        auto repairOverrideCmd = command(
-            "ResolveSupportReference",
-            fields({{"model", d.map()},
-                    {"owner", faceOverride.id},
-                    {"replacement", sideFaceRef.map()},
-                    {"fingerprint", fingerprint1}}));
+        auto repairOverrideCmd =
+            command("ResolveSupportReference", fields({{"model", d.map()},
+                                                       {"owner", faceOverride.id},
+                                                       {"replacement", sideFaceRef.map()},
+                                                       {"fingerprint", fingerprint1}}));
         store.execute(repairOverrideCmd);
 
         auto stateAfterOverrideRepair = store.featureState(document).value("supports").toMap();
         auto parsedAfterOverrideRepair = model::SupportDefinition::parse(stateAfterOverrideRepair);
-        auto repOv = features::AppearanceOverride::parse(parsedAfterOverrideRepair.appearance_overrides[0].toMap());
+        auto repOv = features::AppearanceOverride::parse(
+            parsedAfterOverrideRepair.appearance_overrides[0].toMap());
         CHECK(repOv.faceReference.topology == sideFaceRef.topology);
 
         // 6. Test ResolveSupportReference for SectionView (repair/retarget to botFaceRef)
-        auto inspSection2 = store.supportReferenceCandidates(document, parsedAfterOverrideRepair.map(),
-                                                             sectionViewA.id, 0, "support");
+        auto inspSection2 = store.supportReferenceCandidates(
+            document, parsedAfterOverrideRepair.map(), sectionViewA.id, 0, "support");
         auto fingerprint2 = inspSection2.value("fingerprint").toByteArray();
 
-        auto repairSectionCmd = command(
-            "ResolveSupportReference",
-            fields({{"model", parsedAfterOverrideRepair.map()},
-                    {"owner", sectionViewA.id},
-                    {"replacement", botFaceRef.map()},
-                    {"fingerprint", fingerprint2}}));
+        auto repairSectionCmd =
+            command("ResolveSupportReference", fields({{"model", parsedAfterOverrideRepair.map()},
+                                                       {"owner", sectionViewA.id},
+                                                       {"replacement", botFaceRef.map()},
+                                                       {"fingerprint", fingerprint2}}));
         store.execute(repairSectionCmd);
 
         auto stateAfterSectionRepair = store.featureState(document).value("supports").toMap();
         auto parsedAfterSectionRepair = model::SupportDefinition::parse(stateAfterSectionRepair);
-        auto repSv = features::SectionView::parse(parsedAfterSectionRepair.section_views[0].toMap());
+        auto repSv =
+            features::SectionView::parse(parsedAfterSectionRepair.section_views[0].toMap());
         CHECK(repSv.support.topology == botFaceRef.topology);
 
         // 7. Verify broken reference behavior when face reference target is missing
@@ -182,7 +184,8 @@ int main(int argc, char **argv) {
         brokenSectionModel.section_views = QCborArray{brokenSection.map()};
 
         error("ReferenceMissing", [&] {
-            store.execute(command("SetModelSupports", fields({{"model", brokenSectionModel.map()}})));
+            store.execute(
+                command("SetModelSupports", fields({{"model", brokenSectionModel.map()}})));
         });
 
         puts("PASS: cm9 repair");

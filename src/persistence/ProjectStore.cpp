@@ -300,11 +300,26 @@ void compatible(Database &db) {
           "This is not a supported CAD project");
     check(db.scalar("PRAGMA user_version").toInt() == 1, "IncompatibleSchema",
           "Project schema is unsupported; original file was not changed");
-    check(QStringList{manifest, sketchManifest, featureManifest, historyManifest, exchangeManifest,
-                      assemblyManifest, drawingManifest, coreManifest, constructionManifest,
-                      primitiveManifest, editManifest, dimensionManifest,
-                      associatedDimensionManifest, interactionManifest, supportManifest,
-                      modelingManifest, cm6Manifest, cm7Manifest, cm8Manifest, cm9Manifest}
+    check(QStringList{manifest,
+                      sketchManifest,
+                      featureManifest,
+                      historyManifest,
+                      exchangeManifest,
+                      assemblyManifest,
+                      drawingManifest,
+                      coreManifest,
+                      constructionManifest,
+                      primitiveManifest,
+                      editManifest,
+                      dimensionManifest,
+                      associatedDimensionManifest,
+                      interactionManifest,
+                      supportManifest,
+                      modelingManifest,
+                      cm6Manifest,
+                      cm7Manifest,
+                      cm8Manifest,
+                      cm9Manifest}
               .contains(db.scalar("SELECT manifest FROM project_meta").toString()),
           "IncompatibleSchema",
           "Unsupported semantic/object encoding; original file was not changed");
@@ -520,8 +535,7 @@ QCborMap mergeSupportCollections(QCborMap modelMap, const QCborMap &priorSupport
     if (payload.contains(QStringLiteral("section_views"))) {
         check(payload.value("section_views").isArray(), "InvalidInput",
               "Typed section_views collection required");
-        modelMap.insert(QStringLiteral("section_views"),
-                        payload.value("section_views"));
+        modelMap.insert(QStringLiteral("section_views"), payload.value("section_views"));
     } else if (!modelMap.contains(QStringLiteral("section_views")) &&
                priorSupports.contains(QStringLiteral("section_views"))) {
         modelMap.insert(QStringLiteral("section_views"),
@@ -530,18 +544,15 @@ QCborMap mergeSupportCollections(QCborMap modelMap, const QCborMap &priorSupport
     if (payload.contains(QStringLiteral("materials"))) {
         check(payload.value("materials").isArray(), "InvalidInput",
               "Typed materials collection required");
-        modelMap.insert(QStringLiteral("materials"),
-                        payload.value("materials"));
+        modelMap.insert(QStringLiteral("materials"), payload.value("materials"));
     } else if (!modelMap.contains(QStringLiteral("materials")) &&
                priorSupports.contains(QStringLiteral("materials"))) {
         modelMap.insert(QStringLiteral("materials"),
                         priorSupports.value(QStringLiteral("materials")));
     }
     if (payload.contains(QStringLiteral("material"))) {
-        check(payload.value("material").isMap(), "InvalidInput",
-              "Typed material map required");
-        modelMap.insert(QStringLiteral("material"),
-                        payload.value("material"));
+        check(payload.value("material").isMap(), "InvalidInput", "Typed material map required");
+        modelMap.insert(QStringLiteral("material"), payload.value("material"));
     } else if (!modelMap.contains(QStringLiteral("material")) &&
                priorSupports.contains(QStringLiteral("material"))) {
         modelMap.insert(QStringLiteral("material"),

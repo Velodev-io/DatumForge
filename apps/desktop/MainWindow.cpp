@@ -354,7 +354,8 @@ void MainWindow::buildFrame() {
     connect(filter, &QComboBox::currentTextChanged, viewport, &Viewport::setFilter);
     viewMode = new QComboBox;
     viewMode->setObjectName("viewMode");
-    viewMode->addItems({"Shaded with edges", "Shaded", "Hidden Lines Visible", "Wireframe", "Hidden edges"});
+    viewMode->addItems(
+        {"Shaded with edges", "Shaded", "Hidden Lines Visible", "Wireframe", "Hidden edges"});
     controls->addWidget(new QLabel(" Display: "));
     controls->addWidget(viewMode);
     connect(viewMode, &QComboBox::currentTextChanged, viewport, &Viewport::setMode);

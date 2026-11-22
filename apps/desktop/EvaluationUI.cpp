@@ -223,9 +223,8 @@ void MaterialDialog::selectMaterial(const QString &id) {
     modulusLabel->setText(p.elastic_modulus_pa.has_value()
                               ? QString::number(*p.elastic_modulus_pa / 1e9, 'f', 1) + " GPa"
                               : "—");
-    poissonLabel->setText(p.poissons_ratio.has_value()
-                              ? QString::number(*p.poissons_ratio, 'f', 2)
-                              : "—");
+    poissonLabel->setText(p.poissons_ratio.has_value() ? QString::number(*p.poissons_ratio, 'f', 2)
+                                                       : "—");
     shearLabel->setText(p.shear_modulus_pa.has_value()
                             ? QString::number(*p.shear_modulus_pa / 1e9, 'f', 1) + " GPa"
                             : "—");
@@ -257,15 +256,18 @@ void MaterialDialog::toggleFavorite() {
         favorites.insert(matId);
     populateTree(materialSearch->text());
     selectMaterial(matId);
-    favoriteButton->setText(favorites.contains(matId) ? "Remove from Favorites" : "Add to Favorites");
+    favoriteButton->setText(favorites.contains(matId) ? "Remove from Favorites"
+                                                      : "Add to Favorites");
 }
 
 void MaterialDialog::addCustomMaterial() {
     bool ok = false;
-    QString name = QInputDialog::getText(this, "Add Custom Material", "Material Name:", QLineEdit::Normal, "Custom Alloy", &ok);
+    QString name = QInputDialog::getText(this, "Add Custom Material",
+                                         "Material Name:", QLineEdit::Normal, "Custom Alloy", &ok);
     if (!ok || name.trimmed().isEmpty())
         return;
-    double density = QInputDialog::getDouble(this, "Custom Material Density", "Density (kg/m³):", 7800.0, 1.0, 50000.0, 1, &ok);
+    double density = QInputDialog::getDouble(this, "Custom Material Density",
+                                             "Density (kg/m³):", 7800.0, 1.0, 50000.0, 1, &ok);
     if (!ok)
         return;
 
@@ -388,24 +390,28 @@ MassPropertiesDialog::MassPropertiesDialog(MainWindow *win, Client *cli, QWidget
                                         : "— (density missing)");
             volumeValueLabel->setText(QString::number(res.volume_m3 * 1e9, 'g', 6) + " mm³ (" +
                                       QString::number(res.volume_m3, 'g', 6) + " m³)");
-            surfaceAreaValueLabel->setText(QString::number(res.surface_area_m2 * 1e6, 'g', 6) + " mm² (" +
-                                           QString::number(res.surface_area_m2, 'g', 6) + " m²)");
+            surfaceAreaValueLabel->setText(QString::number(res.surface_area_m2 * 1e6, 'g', 6) +
+                                           " mm² (" + QString::number(res.surface_area_m2, 'g', 6) +
+                                           " m²)");
             centroidValueLabel->setText(QString("X = %1 mm, Y = %2 mm, Z = %3 mm")
                                             .arg(res.center_of_mass_m[0] * 1000.0, 0, 'f', 3)
                                             .arg(res.center_of_mass_m[1] * 1000.0, 0, 'f', 3)
                                             .arg(res.center_of_mass_m[2] * 1000.0, 0, 'f', 3));
-            momentsValueLabel->setText(QString("Ixx = %1, Iyy = %2, Izz = %3\nIxy = %4, Ixz = %5, Iyz = %6 kg·m²")
-                                           .arg(res.inertia_tensor_kg_m2[0], 0, 'e', 4)
-                                           .arg(res.inertia_tensor_kg_m2[1], 0, 'e', 4)
-                                           .arg(res.inertia_tensor_kg_m2[2], 0, 'e', 4)
-                                           .arg(res.inertia_tensor_kg_m2[3], 0, 'e', 4)
-                                           .arg(res.inertia_tensor_kg_m2[4], 0, 'e', 4)
-                                           .arg(res.inertia_tensor_kg_m2[5], 0, 'e', 4));
-            principalMomentsValueLabel->setText(QString("Ix = %1, Iy = %2, Iz = %3 kg·m²")
-                                                    .arg(res.principal_moments_kg_m2[0], 0, 'e', 4)
-                                                    .arg(res.principal_moments_kg_m2[1], 0, 'e', 4)
-                                                    .arg(res.principal_moments_kg_m2[2], 0, 'e', 4));
-            statusLabel->setText(QString("Evaluated %1 solid bodies successfully").arg(res.solids_count));
+            momentsValueLabel->setText(
+                QString("Ixx = %1, Iyy = %2, Izz = %3\nIxy = %4, Ixz = %5, Iyz = %6 kg·m²")
+                    .arg(res.inertia_tensor_kg_m2[0], 0, 'e', 4)
+                    .arg(res.inertia_tensor_kg_m2[1], 0, 'e', 4)
+                    .arg(res.inertia_tensor_kg_m2[2], 0, 'e', 4)
+                    .arg(res.inertia_tensor_kg_m2[3], 0, 'e', 4)
+                    .arg(res.inertia_tensor_kg_m2[4], 0, 'e', 4)
+                    .arg(res.inertia_tensor_kg_m2[5], 0, 'e', 4));
+            principalMomentsValueLabel->setText(
+                QString("Ix = %1, Iy = %2, Iz = %3 kg·m²")
+                    .arg(res.principal_moments_kg_m2[0], 0, 'e', 4)
+                    .arg(res.principal_moments_kg_m2[1], 0, 'e', 4)
+                    .arg(res.principal_moments_kg_m2[2], 0, 'e', 4));
+            statusLabel->setText(
+                QString("Evaluated %1 solid bodies successfully").arg(res.solids_count));
         }
     });
 }
@@ -496,26 +502,30 @@ SectionPropertiesDialog::SectionPropertiesDialog(MainWindow *win, Client *cli, Q
         if (!isVisible())
             return;
         if (data.contains(QStringLiteral("section_properties"))) {
-            auto res = features::SectionPropertiesResult::parse(data.value("section_properties").toMap());
+            auto res =
+                features::SectionPropertiesResult::parse(data.value("section_properties").toMap());
             if (!res.valid) {
                 statusLabel->setText("Evaluation failed: " + res.reason);
                 return;
             }
             areaValueLabel->setText(QString::number(res.area_m2 * 1e6, 'g', 6) + " mm² (" +
                                     QString::number(res.area_m2, 'g', 6) + " m²)");
-            centroidValueLabel->setText(QString("Local: u = %1 mm, v = %2 mm\nPart: X = %3 mm, Y = %4 mm, Z = %5 mm")
-                                            .arg(res.centroid_local_m[0] * 1000.0, 0, 'f', 3)
-                                            .arg(res.centroid_local_m[1] * 1000.0, 0, 'f', 3)
-                                            .arg(res.centroid_part_m[0] * 1000.0, 0, 'f', 3)
-                                            .arg(res.centroid_part_m[1] * 1000.0, 0, 'f', 3)
-                                            .arg(res.centroid_part_m[2] * 1000.0, 0, 'f', 3));
+            centroidValueLabel->setText(
+                QString("Local: u = %1 mm, v = %2 mm\nPart: X = %3 mm, Y = %4 mm, Z = %5 mm")
+                    .arg(res.centroid_local_m[0] * 1000.0, 0, 'f', 3)
+                    .arg(res.centroid_local_m[1] * 1000.0, 0, 'f', 3)
+                    .arg(res.centroid_part_m[0] * 1000.0, 0, 'f', 3)
+                    .arg(res.centroid_part_m[1] * 1000.0, 0, 'f', 3)
+                    .arg(res.centroid_part_m[2] * 1000.0, 0, 'f', 3));
             momentsValueLabel->setText(QString("Iuu = %1, Ivv = %2, Iuv = %3 mm⁴")
                                            .arg(res.second_moments_m4[0] * 1e12, 0, 'e', 4)
                                            .arg(res.second_moments_m4[1] * 1e12, 0, 'e', 4)
                                            .arg(res.second_moments_m4[2] * 1e12, 0, 'e', 4));
-            polarMomentValueLabel->setText(QString::number(res.polar_moment_m4 * 1e12, 'e', 4) + " mm⁴");
-            statusLabel->setText(QString("Section evaluated successfully; principal angle = %1°")
-                                     .arg(res.principal_angle_rad * 180.0 / std::numbers::pi, 0, 'f', 2));
+            polarMomentValueLabel->setText(QString::number(res.polar_moment_m4 * 1e12, 'e', 4) +
+                                           " mm⁴");
+            statusLabel->setText(
+                QString("Section evaluated successfully; principal angle = %1°")
+                    .arg(res.principal_angle_rad * 180.0 / std::numbers::pi, 0, 'f', 2));
         }
     });
 }
@@ -627,7 +637,8 @@ SectionViewDialog::SectionViewDialog(MainWindow *win, Client *cli, Viewport *vp,
     connect(newButton, &QPushButton::clicked, this, &SectionViewDialog::createNew);
     connect(deleteButton, &QPushButton::clicked, this, &SectionViewDialog::removeCurrent);
     connect(activeCheck, &QCheckBox::toggled, this, &SectionViewDialog::updatePreview);
-    connect(offsetSpin, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this, &SectionViewDialog::updatePreview);
+    connect(offsetSpin, QOverload<double>::of(&QDoubleSpinBox::valueChanged), this,
+            &SectionViewDialog::updatePreview);
     connect(flipCheck, &QCheckBox::toggled, this, &SectionViewDialog::updatePreview);
     connect(supportCombo, &QComboBox::currentIndexChanged, this, &SectionViewDialog::updatePreview);
     connect(applyButton, &QPushButton::clicked, this, &SectionViewDialog::apply);
@@ -757,7 +768,8 @@ void SectionViewDialog::apply() {
     }
     if (!resolvedSupport) {
         QString planeName = supportCombo->currentText();
-        QString paramPlane = planeName.contains("Top") ? "XZ" : (planeName.contains("Right") ? "YZ" : "XY");
+        QString paramPlane =
+            planeName.contains("Top") ? "XZ" : (planeName.contains("Right") ? "YZ" : "XY");
         QString datumId;
         for (const auto &d : model.datums) {
             if (d.kind == "DatumPlane" && d.mode == "Principal" &&

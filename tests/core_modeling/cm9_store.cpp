@@ -102,29 +102,27 @@ int main(int argc, char **argv) {
             findPlanarFace(evalBase.part.bodies[0].shape, baseId, gp_Dir(0, 0, 1), 0.050);
 
         // 2. CM9 Hole intent with resolved catalog snapshot (M8 normal counterbore)
-        auto holeIntent = fields(
-            {{"version", 1},
-             {"id", newId()},
-             {"kind", "Hole"},
-             {"operation", "Cut"},
-             {"target", body(baseId)},
-             {"family", "Counterbore"},
-             {"placement",
-              fields({{"face", topFaceRef.map()},
-                      {"sketch", plSk.id},
-                      {"points", QCborArray{pt1}}})},
-             {"sizing",
-              fields({{"mode", "Catalog"},
-                      {"dataset", "ansi_metric"},
-                      {"standard", "B18.3.4M"},
-                      {"type", "SocketButtonHeadCapScrew"},
-                      {"size", "M8"},
-                      {"fit", "Normal"},
-                      {"depth", 0.030},
-                      {"diameter", 0.0090},
-                      {"counterbore_diameter", 0.0150},
-                      {"counterbore_depth", 0.0088}})},
-             {"termination", fields({{"mode", "Blind"}, {"depth_reference", "Shoulder"}})}});
+        auto holeIntent =
+            fields({{"version", 1},
+                    {"id", newId()},
+                    {"kind", "Hole"},
+                    {"operation", "Cut"},
+                    {"target", body(baseId)},
+                    {"family", "Counterbore"},
+                    {"placement", fields({{"face", topFaceRef.map()},
+                                          {"sketch", plSk.id},
+                                          {"points", QCborArray{pt1}}})},
+                    {"sizing", fields({{"mode", "Catalog"},
+                                       {"dataset", "ansi_metric"},
+                                       {"standard", "B18.3.4M"},
+                                       {"type", "SocketButtonHeadCapScrew"},
+                                       {"size", "M8"},
+                                       {"fit", "Normal"},
+                                       {"depth", 0.030},
+                                       {"diameter", 0.0090},
+                                       {"counterbore_diameter", 0.0150},
+                                       {"counterbore_depth", 0.0088}})},
+                    {"termination", fields({{"mode", "Blind"}, {"depth_reference", "Shoulder"}})}});
 
         // 3. CM9 Material definition (Plain Carbon Steel 1020, density 7850 kg/m^3)
         features::Material steelMat;
@@ -163,10 +161,9 @@ int main(int argc, char **argv) {
         d.section_views = QCborArray{sectionViewA.map()};
 
         // 6. Commit to store
-        auto commit = command(
-            "SetModelSupports",
-            fields({{"model", d.map()},
-                    {"intents", QCborArray{baseExt, holeIntent}}}));
+        auto commit =
+            command("SetModelSupports",
+                    fields({{"model", d.map()}, {"intents", QCborArray{baseExt, holeIntent}}}));
         store.execute(commit);
         auto revision = store.revision();
         CHECK(revision > 0);
@@ -211,8 +208,8 @@ int main(int argc, char **argv) {
         near(reloadedMat.properties.density_kg_m3, 7850.0, 1e-3);
 
         // 9. Replay when live hole catalog query is bypassed / offline
-        // The sizing snapshot in holeIntent contains diameter, counterbore_diameter, counterbore_depth
-        // so rebuild succeeds without live external catalog database lookup.
+        // The sizing snapshot in holeIntent contains diameter, counterbore_diameter,
+        // counterbore_depth so rebuild succeeds without live external catalog database lookup.
         auto replaySupports = reloadedSupports;
         auto replayResult = store.evaluatePart(document);
         CHECK(!replayResult.bodies.empty());
@@ -253,7 +250,12 @@ int main(int argc, char **argv) {
         error("IncompatibleSchema", [&] {
             storage::Database testDb(savedPath, true);
             // Simulate older reader check that only recognizes manifests up to cm8
-            const QString cm8Manifest = "cad-semantic-v1;SI;objects=opaque-v1;strict-schema;no-feature-engine;sketch-v1;feature-history=1;history-dag=1;neutral-exchange=1;assembly-v1;drawing-v1;core-modeling-v1;sketch-relations=2;sketch-groups=1;sketch-primitives=1;sketch-edits=1;sketch-dimensions=1;sketch-associated-dimensions=1;sketch-interactions=1;model-supports=1;modeling-intents=1;cm6-features=1;cm7-spatial=1;cm8-sweep-loft-shell=1";
+            const QString cm8Manifest =
+                "cad-semantic-v1;SI;objects=opaque-v1;strict-schema;no-feature-engine;sketch-v1;"
+                "feature-history=1;history-dag=1;neutral-exchange=1;assembly-v1;drawing-v1;core-"
+                "modeling-v1;sketch-relations=2;sketch-groups=1;sketch-primitives=1;sketch-edits=1;"
+                "sketch-dimensions=1;sketch-associated-dimensions=1;sketch-interactions=1;model-"
+                "supports=1;modeling-intents=1;cm6-features=1;cm7-spatial=1;cm8-sweep-loft-shell=1";
             auto m = testDb.scalar("SELECT manifest FROM project_meta").toString();
             if (m != cm8Manifest) {
                 throw domain::Error("IncompatibleSchema", "CM9 manifest requires reader rank 14");

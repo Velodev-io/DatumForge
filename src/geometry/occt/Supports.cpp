@@ -316,8 +316,8 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
                 result.inspection = scene.inspect(sv.support);
                 return result;
             }
-            if (sv.active &&
-                (scene.planes.contains(sv.support.object) || scene.stages.contains(sv.support.object))) {
+            if (sv.active && (scene.planes.contains(sv.support.object) ||
+                              scene.stages.contains(sv.support.object))) {
                 scene.plane(sv.support);
             }
         }

@@ -221,16 +221,19 @@ QStringList availableHoleTypes(const QString &dataset, const QString &standard) 
     return {"ClearanceHole", "Simple"};
 }
 
-QStringList availableHoleSizes(const QString &dataset, const QString &standard, const QString &type) {
+QStringList availableHoleSizes(const QString &dataset, const QString &standard,
+                               const QString &type) {
     QString ds = dataset.toLower();
-    if (ds == "ansi_inch" || standard == "B18.3" || standard == "B18.6.3" || standard == "B18.2.1" || standard == "InchTapped")
+    if (ds == "ansi_inch" || standard == "B18.3" || standard == "B18.6.3" ||
+        standard == "B18.2.1" || standard == "InchTapped")
         return {"1/4-20", "#4-40", "#6-32", "#8-32", "#10-24", "5/16-18", "3/8-16", "1/2-13"};
     if (standard == "ASME_B1.20.1" || type == "PipeTap")
         return {"1/4-18 NPT", "1/8-27", "1/4-18", "3/8-18", "1/2-14", "3/4-14"};
     return {"M8", "M6", "M5", "M4", "M3", "M10", "M12", "M16", "M20"};
 }
 
-QStringList availableHoleFits(const QString &dataset, const QString &standard, const QString &type, const QString &size) {
+QStringList availableHoleFits(const QString &dataset, const QString &standard, const QString &type,
+                              const QString &size) {
     return {"Close", "Normal", "Loose"};
 }
 
