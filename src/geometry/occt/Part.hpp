@@ -1,4 +1,5 @@
 #pragma once
+#include "features/Catalogs.hpp"
 #include "features/Model.hpp"
 #include "protocol/Mesh.hpp"
 #include <TopoDS_Shape.hxx>
@@ -21,6 +22,11 @@ struct Part {
                       const SourceResolver &sources = {});
     QCborMap measure(qint64 revision, QString body = {}, QString token = {}, double density = 0,
                      QString secondToken = {}) const;
+    features::MassPropertiesResult
+    evaluateMassProperties(const features::MassPropertiesRequest &req) const;
+    features::SectionPropertiesResult
+    evaluateSectionProperties(const features::SectionPropertiesRequest &req,
+                              const QMap<QString, sketch::Sketch> &sketches = {}) const;
     DisplayMesh mesh(double deflectionMM = .2) const;
     QCborArray topology(QString body = {}) const;
     QCborMap reference(QString source, QString token, const Part &former) const;

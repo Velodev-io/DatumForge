@@ -26,6 +26,7 @@
 #include <BRepTools.hxx>
 #include <BRep_Builder.hxx>
 #include <BRep_Tool.hxx>
+#include <Eigen/Dense>
 #include <GProp_GProps.hxx>
 #include <Geom_Circle.hxx>
 #include <QElapsedTimer>
@@ -733,6 +734,233 @@ QCborMap Part::measure(qint64 revision, QString body, QString selected, double d
         r.insert(QStringLiteral("mass_kg"), v * density);
     }
     return r;
+}
+
+features::MassPropertiesResult
+Part::evaluateMassProperties(const features::MassPropertiesRequest &req) const {
+    check(!stale, "StaleResult", "Exact measurement requires a current result");
+    features::MassPropertiesResult res;
+    res.revision = req.revision;
+    res.valid = true;
+
+    std::vector<TopoDS_Shape> shapes;
+    for (const auto &b : bodies) {
+        if (req.scopeType == "Body") {
+            if (b.id == req.targetId)
+                shapes.push_back(b.shape);
+        } else {
+            shapes.push_back(b.shape);
+        }
+    }
+    if (req.scopeType == "Body") {
+        check(!shapes.empty(), "ReferenceMissing", "Measurement body is missing");
+    }
+
+    int solidCount = 0;
+    for (const auto &s : shapes) {
+        solidCount += count(s, TopAbs_SOLID);
+    }
+    res.solids_count = solidCount;
+
+    if (solidCount == 0) {
+        if (req.scopeType == "Body")
+            throw domain::Error("UnsupportedOperation",
+                                "Non-solid surface body has no volume or mass");
+        res.valid = false;
+        res.reason = "Non-solid surface bodies have no volume or mass";
+        return res;
+    }
+
+    auto comp = compound(shapes);
+    GProp_GProps volGProps;
+    BRepGProp::VolumeProperties(comp, volGProps);
+    GProp_GProps areaGProps;
+    BRepGProp::SurfaceProperties(comp, areaGProps);
+
+    double totalVol_mm3 = volGProps.Mass();
+    double totalVol_m3 = totalVol_mm3 * siVolume;
+    res.volume_m3 = totalVol_m3;
+    res.surface_area_m2 = areaGProps.Mass() * siArea;
+
+    gp_Pnt com = volGProps.CentreOfMass();
+    res.center_of_mass_m = {com.X() / mm, com.Y() / mm, com.Z() / mm};
+
+    double density = req.overrideDensity.value_or(0.0);
+    if (density <= 0.0) {
+        res.density_missing = true;
+        res.density_kg_m3 = std::nullopt;
+        res.mass_kg = std::nullopt;
+        res.inertia_tensor_kg_m2 = {0, 0, 0, 0, 0, 0};
+        res.principal_moments_kg_m2 = {0, 0, 0};
+        res.principal_axes = {{{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}};
+        return res;
+    }
+
+    res.density_missing = false;
+    res.density_kg_m3 = density;
+    double mass = totalVol_m3 * density;
+    res.mass_kg = mass;
+
+    gp_Mat occtMat = volGProps.MatrixOfInertia();
+    constexpr double conv = 1e-15;
+    double Ixx_com = occtMat.Value(1, 1) * conv * density;
+    double Iyy_com = occtMat.Value(2, 2) * conv * density;
+    double Izz_com = occtMat.Value(3, 3) * conv * density;
+    double Ixy_com = occtMat.Value(1, 2) * conv * density;
+    double Ixz_com = occtMat.Value(1, 3) * conv * density;
+    double Iyz_com = occtMat.Value(2, 3) * conv * density;
+
+    double Ixx = Ixx_com;
+    double Iyy = Iyy_com;
+    double Izz = Izz_com;
+    double Ixy = Ixy_com;
+    double Ixz = Ixz_com;
+    double Iyz = Iyz_com;
+
+    if (req.frame == "Part") {
+        double xc = res.center_of_mass_m[0];
+        double yc = res.center_of_mass_m[1];
+        double zc = res.center_of_mass_m[2];
+        Ixx = Ixx_com + mass * (yc * yc + zc * zc);
+        Iyy = Iyy_com + mass * (xc * xc + zc * zc);
+        Izz = Izz_com + mass * (xc * xc + yc * yc);
+        Ixy = Ixy_com - mass * (xc * yc);
+        Ixz = Ixz_com - mass * (xc * zc);
+        Iyz = Iyz_com - mass * (yc * zc);
+    }
+
+    res.inertia_tensor_kg_m2 = {Ixx, Iyy, Izz, Ixy, Ixz, Iyz};
+
+    Eigen::Matrix3d mat;
+    mat(0, 0) = Ixx;
+    mat(0, 1) = Ixy;
+    mat(0, 2) = Ixz;
+    mat(1, 0) = Ixy;
+    mat(1, 1) = Iyy;
+    mat(1, 2) = Iyz;
+    mat(2, 0) = Ixz;
+    mat(2, 1) = Iyz;
+    mat(2, 2) = Izz;
+
+    Eigen::SelfAdjointEigenSolver<Eigen::Matrix3d> es(mat);
+    if (es.info() == Eigen::Success) {
+        Eigen::Vector3d vals = es.eigenvalues();
+        Eigen::Matrix3d vecs = es.eigenvectors();
+        if (vecs.determinant() < 0) {
+            vecs.col(2) = -vecs.col(2);
+        }
+        res.principal_moments_kg_m2 = {vals(0), vals(1), vals(2)};
+        res.principal_axes = {{{vecs(0, 0), vecs(1, 0), vecs(2, 0)},
+                               {vecs(0, 1), vecs(1, 1), vecs(2, 1)},
+                               {vecs(0, 2), vecs(1, 2), vecs(2, 2)}}};
+    }
+    return res;
+}
+
+features::SectionPropertiesResult
+Part::evaluateSectionProperties(const features::SectionPropertiesRequest &req,
+                                const QMap<QString, sketch::Sketch> &sketches) const {
+    check(!stale, "StaleResult", "Exact measurement requires a current result");
+    features::SectionPropertiesResult res;
+    res.revision = req.revision;
+    res.valid = true;
+
+    TopoDS_Shape faceShape;
+    gp_Pnt origin;
+    gp_Dir dirU, dirV, dirN;
+
+    if (req.targetType == "Face") {
+        for (const auto &b : bodies) {
+            auto fmap = subshapes(b.shape, TopAbs_FACE);
+            if (fmap.contains(req.faceReference.topology)) {
+                faceShape = fmap.value(req.faceReference.topology);
+                break;
+            }
+        }
+        check(!faceShape.IsNull(), "ReferenceMissing", "Section target face missing");
+        TopoDS_Face face = TopoDS::Face(faceShape);
+        BRepAdaptor_Surface surf(face);
+        check(surf.GetType() == GeomAbs_Plane, "UnsupportedOperation",
+              "Section properties require a planar face");
+        gp_Pln pln = surf.Plane();
+        origin = pln.Location();
+        dirN = pln.Axis().Direction();
+        if (face.Orientation() == TopAbs_REVERSED)
+            dirN.Reverse();
+        dirU = pln.XAxis().Direction();
+        dirV = dirN.Crossed(dirU);
+    } else {
+        check(sketches.contains(req.sketchId), "ReferenceMissing", "Section sketch missing");
+        const auto &sk = sketches[req.sketchId];
+        TopoDS_Shape pShape;
+        try {
+            pShape = profileShape(sk);
+        } catch (const domain::Error &e) {
+            throw domain::Error("UnsupportedOperation",
+                                "Section properties require a closed profile: " +
+                                    QString::fromUtf8(e.what()));
+        }
+        check(!pShape.IsNull(), "InvalidInput", "Empty sketch profile");
+        int faceCount = count(pShape, TopAbs_FACE);
+        check(faceCount > 0, "UnsupportedOperation", "Section properties require a closed profile");
+        faceShape = pShape;
+        origin = point(sk.frame.origin);
+        dirU = gp_Dir(sk.frame.u[0], sk.frame.u[1], sk.frame.u[2]);
+        dirV = gp_Dir(sk.frame.v[0], sk.frame.v[1], sk.frame.v[2]);
+        dirN = dirU.Crossed(dirV);
+    }
+
+    GProp_GProps areaGProps;
+    BRepGProp::SurfaceProperties(faceShape, areaGProps);
+    double area_mm2 = areaGProps.Mass();
+    check(area_mm2 > 1e-12, "InvalidInput", "Section profile has zero area");
+    res.area_m2 = area_mm2 * siArea;
+
+    TopTools_IndexedMapOfShape edgeMap;
+    TopExp::MapShapes(faceShape, TopAbs_EDGE, edgeMap);
+    double perim_mm = 0.0;
+    for (int i = 1; i <= edgeMap.Extent(); ++i) {
+        GProp_GProps lg;
+        BRepGProp::LinearProperties(edgeMap(i), lg);
+        perim_mm += lg.Mass();
+    }
+    res.perimeter_m = perim_mm / mm;
+
+    gp_Pnt com = areaGProps.CentreOfMass();
+    res.centroid_part_m = {com.X() / mm, com.Y() / mm, com.Z() / mm};
+
+    gp_Vec vCom(origin, com);
+    double uc_mm = vCom.Dot(gp_Vec(dirU));
+    double vc_mm = vCom.Dot(gp_Vec(dirV));
+    res.centroid_local_m = {uc_mm / mm, vc_mm / mm};
+
+    gp_Ax3 fromAx(origin, dirN, dirU);
+    gp_Trsf trsf;
+    trsf.SetTransformation(fromAx);
+    BRepBuilderAPI_Transform xform(faceShape, trsf, true);
+    GProp_GProps xyGProps;
+    BRepGProp::SurfaceProperties(xform.Shape(), xyGProps);
+    gp_Mat occtMat = xyGProps.MatrixOfInertia();
+
+    double Iuu_mm4 = occtMat.Value(1, 1);
+    double Ivv_mm4 = occtMat.Value(2, 2);
+    double Iuv_mm4 = occtMat.Value(1, 2);
+
+    constexpr double convM4 = 1e-12;
+    double Iuu = Iuu_mm4 * convM4;
+    double Ivv = Ivv_mm4 * convM4;
+    double Iuv = Iuv_mm4 * convM4;
+
+    res.second_moments_m4 = {Iuu, Ivv, Iuv};
+    res.polar_moment_m4 = Iuu + Ivv;
+
+    double avg = (Iuu + Ivv) / 2.0;
+    double diff = (Iuu - Ivv) / 2.0;
+    double disc = std::sqrt(diff * diff + Iuv * Iuv);
+    res.principal_moments_m4 = {avg - disc, avg + disc};
+    res.principal_angle_rad = 0.5 * std::atan2(-2.0 * Iuv, Iuu - Ivv);
+
+    return res;
 }
 DisplayMesh Part::mesh(double deflection) const {
     check(std::isfinite(deflection) && deflection >= .01 && deflection <= 5, "InvalidInput",

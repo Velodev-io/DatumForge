@@ -4,7 +4,7 @@ Prepared 22 November 2026. The [CM9 execution plan](docs/decisions/core-modeling
 maps all 30 coverage requirements to implementation and verification gates.
 
 - [x] **CM9.a** — Freeze source pages, catalog coverage and redistribution evidence. Capture the baseline and define the semantic contracts.
-- [/] **CM9.b** — Build offline/custom catalog resolution, exact evaluation and model display.
+- [x] **CM9.b** — Build offline/custom catalog resolution, exact evaluation and model display.
 - [ ] **CM9.c** — Persist resolved snapshots, appearance overrides and named sections with compatible replay.
 - [ ] **CM9.d** — Wire the native Hole, Materials, Evaluate and View workflows.
 - [ ] **CM9.e** — Verify all coverage rows and record the remaining acceptance gates.

@@ -1,4 +1,5 @@
 #include "ModelingIntent.hpp"
+#include "Catalogs.hpp"
 #include "Model.hpp"
 #include <numbers>
 #include <set>
@@ -246,38 +247,9 @@ ModelingIntent ModelingIntent::parse(const QCborMap &m) {
         auto smode = wire::text(sizing, "mode");
         domain::check(smode == "Custom" || smode == "Catalog", "UnsupportedOperation",
                       "Unsupported sizing mode");
-        QSet<QString> szKeys{"mode", "diameter", "depth"};
-        double dia = number(sizing, "diameter", 1e-8, 1000);
+        QSet<QString> szKeys{"mode", "depth"};
+        double dia = 0.0;
         double depth = number(sizing, "depth", 1e-8, 1000);
-        if (family == "Counterbore" || family == "LegacyCounterboreDrill") {
-            szKeys.unite({"counterbore_diameter", "counterbore_depth"});
-            number(sizing, "counterbore_diameter", dia, 1000);
-            number(sizing, "counterbore_depth", 1e-8, depth);
-        }
-        if (family == "Countersink" || family == "LegacyCountersinkDrill") {
-            szKeys.unite({"countersink_diameter", "countersink_angle"});
-            number(sizing, "countersink_diameter", dia, 1000);
-            number(sizing, "countersink_angle", 1e-4, std::numbers::pi - 1e-4);
-        }
-        if (family == "Drilled" || family == "LegacySimpleDrilled" ||
-            family == "LegacyCounterboreDrill" || family == "LegacyCountersinkDrill") {
-            szKeys.insert("drill_angle");
-            number(sizing, "drill_angle", 1e-4, std::numbers::pi - 1e-4);
-        }
-        if (family == "Tapered" || family == "LegacyTapered" || family == "PipeTap") {
-            szKeys.insert("taper_angle");
-            number(sizing, "taper_angle", 1e-4, std::numbers::pi / 2 - 1e-4);
-        }
-        if (family == "Tapped" || family == "PipeTap") {
-            szKeys.unite({"tap_drill_diameter", "thread"});
-            number(sizing, "tap_drill_diameter", 1e-8, dia);
-            auto thread = object(sizing, "thread");
-            wire::keys(thread, {"cosmetic", "designation", "pitch", "depth"});
-            boolean(thread, "cosmetic");
-            domain::label(wire::text(thread, "designation"));
-            number(thread, "pitch", 1e-8, 1000);
-            number(thread, "depth", 1e-8, depth);
-        }
         if (smode == "Catalog") {
             szKeys.unite({"dataset", "standard", "type", "size", "fit"});
             domain::label(wire::text(sizing, "dataset"));
@@ -289,6 +261,66 @@ ModelingIntent ModelingIntent::parse(const QCborMap &m) {
             wire::text(sizing, "type");
             wire::text(sizing, "size");
             wire::text(sizing, "fit");
+            if (sizing.contains(QStringLiteral("custom_overrides"))) {
+                szKeys.insert("custom_overrides");
+            }
+            if (sizing.contains(QStringLiteral("diameter"))) {
+                szKeys.insert("diameter");
+                dia = number(sizing, "diameter", 1e-8, 1000);
+            } else {
+                features::HoleCatalogQuery q;
+                q.dataset = wire::text(sizing, "dataset");
+                q.standard = wire::text(sizing, "standard");
+                q.type = wire::text(sizing, "type");
+                q.size = wire::text(sizing, "size");
+                q.fit = wire::text(sizing, "fit");
+                if (sizing.contains(QStringLiteral("custom_overrides")))
+                    q.custom_overrides = sizing.value(QStringLiteral("custom_overrides")).toMap();
+                auto resolved = features::resolveHoleCatalog(q);
+                domain::check(resolved.valid, "UnsupportedOperation",
+                              "Hole catalog resolution failed: " + resolved.diagnostic);
+                dia = resolved.diameter;
+            }
+        } else {
+            szKeys.insert("diameter");
+            dia = number(sizing, "diameter", 1e-8, 1000);
+        }
+        if (family == "Counterbore" || family == "LegacyCounterboreDrill") {
+            if (smode == "Custom" || sizing.contains(QStringLiteral("counterbore_diameter"))) {
+                szKeys.unite({"counterbore_diameter", "counterbore_depth"});
+                number(sizing, "counterbore_diameter", dia, 1000);
+                number(sizing, "counterbore_depth", 1e-8, depth);
+            }
+        }
+        if (family == "Countersink" || family == "LegacyCountersinkDrill") {
+            if (smode == "Custom" || sizing.contains(QStringLiteral("countersink_diameter"))) {
+                szKeys.unite({"countersink_diameter", "countersink_angle"});
+                number(sizing, "countersink_diameter", dia, 1000);
+                number(sizing, "countersink_angle", 1e-4, std::numbers::pi - 1e-4);
+            }
+        }
+        if (family == "Drilled" || family == "LegacySimpleDrilled" ||
+            family == "LegacyCounterboreDrill" || family == "LegacyCountersinkDrill") {
+            if (smode == "Custom" || sizing.contains(QStringLiteral("drill_angle"))) {
+                szKeys.insert("drill_angle");
+                number(sizing, "drill_angle", 1e-4, std::numbers::pi - 1e-4);
+            }
+        }
+        if (family == "Tapered" || family == "LegacyTapered" || family == "PipeTap") {
+            szKeys.insert("taper_angle");
+            number(sizing, "taper_angle", 1e-4, std::numbers::pi / 2 - 1e-4);
+        }
+        if (family == "Tapped" || family == "PipeTap") {
+            if (smode == "Custom" || sizing.contains(QStringLiteral("tap_drill_diameter"))) {
+                szKeys.unite({"tap_drill_diameter", "thread"});
+                number(sizing, "tap_drill_diameter", 1e-8, dia);
+                auto thread = object(sizing, "thread");
+                wire::keys(thread, {"cosmetic", "designation", "pitch", "depth"});
+                boolean(thread, "cosmetic");
+                domain::label(wire::text(thread, "designation"));
+                number(thread, "pitch", 1e-8, 1000);
+                number(thread, "depth", 1e-8, depth);
+            }
         }
         wire::keys(sizing, szKeys);
         auto term = object(m, "termination");

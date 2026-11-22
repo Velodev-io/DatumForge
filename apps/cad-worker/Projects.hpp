@@ -88,6 +88,8 @@ class Projects {
                            "PreviewFeatures",
                            "DisplayPart",
                            "MeasurePart",
+                           "EvaluateMassProperties",
+                           "EvaluateSectionProperties",
                            "ImportGeometry",
                            "ExportGeometry",
                            "PortableCopy",
@@ -446,7 +448,8 @@ class Projects {
                 return reply;
             }
             if (e.command == "PreviewFeatures" || e.command == "DisplayPart" ||
-                e.command == "MeasurePart" || e.command == "PreviewHistory") {
+                e.command == "MeasurePart" || e.command == "PreviewHistory" ||
+                e.command == "EvaluateMassProperties" || e.command == "EvaluateSectionProperties") {
                 check(e.revision == store->revision(), "StaleRevision",
                       "Part result revision changed");
                 auto definitions = store->features(e.context.document);
@@ -475,7 +478,8 @@ class Projects {
                     definitions = p.value("features").toArray();
                 } else if (e.command == "DisplayPart")
                     wire::keys(p, {"deflection_mm"});
-                else
+                else if (e.command != "EvaluateMassProperties" &&
+                         e.command != "EvaluateSectionProperties")
                     wire::keys(p, {"body", "token", "second_token", "density_kg_m3"});
                 auto part = store->evaluatePart(e.context.document,
                                                 e.command == "PreviewFeatures" ||
@@ -514,6 +518,22 @@ class Projects {
                                                    ? features::number(p, "density_kg_m3", 0, 1e6)
                                                    : assignedDensity),
                                               wire::text(p, "second_token")));
+                } else if (e.command == "EvaluateMassProperties") {
+                    auto req = features::MassPropertiesRequest::parse(p);
+                    if (!req.overrideDensity.has_value() || *req.overrideDensity <= 0.0) {
+                        if (assignedDensity > 0.0)
+                            req.overrideDensity = assignedDensity;
+                    }
+                    reply.insert(QStringLiteral("mass_properties"),
+                                 part.evaluateMassProperties(req).map());
+                } else if (e.command == "EvaluateSectionProperties") {
+                    auto req = features::SectionPropertiesRequest::parse(p);
+                    QMap<QString, sketch::Sketch> sketchMap;
+                    for (const auto &sk : sketch::parse(store->sketches(e.context.document))) {
+                        sketchMap[sk.id] = sk;
+                    }
+                    reply.insert(QStringLiteral("section_properties"),
+                                 part.evaluateSectionProperties(req, sketchMap).map());
                 } else {
                     bool stale = part.stale;
                     if (part.bodies.empty())

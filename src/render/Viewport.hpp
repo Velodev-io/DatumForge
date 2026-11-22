@@ -41,6 +41,17 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     bool manipulatorReverse = false;
     bool manipulatorDragging = false;
     bool initialized = false, failed = false, stale = false, orthographic = false;
+    bool shadowsEnabled = false;
+    bool sectionActive = false;
+    QVector3D sectionOrigin;
+    QVector3D sectionNormal{0, 0, 1};
+    double sectionOffset = 0.0;
+    bool sectionFlip = false;
+    QVector4D sectionCapColor{0.8f, 0.4f, 0.2f, 1.0f};
+    QMap<QString, QVector4D> faceColorOverrides;
+    QMap<QString, QVector4D> featureColorOverrides;
+    QMap<QString, QVector4D> bodyColorOverrides;
+    std::optional<QVector4D> partColorOverride;
     QList<double> frameTimes;
     QElapsedTimer frameClock;
     QMatrix4x4 matrix() const;
@@ -105,6 +116,40 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     }
     void dragExtrudeDepthHandle(double deltaMM);
     void dragDraftAngleHandle(double deltaDeg);
+    void setShadows(bool enabled);
+    bool shadows() const {
+        return shadowsEnabled;
+    }
+    void setSectionClipping(bool active, QVector3D origin = {}, QVector3D normal = {0, 0, 1},
+                            double offsetMM = 0.0, bool flip = false);
+    bool sectionClippingActive() const {
+        return sectionActive;
+    }
+    QVector3D sectionClippingOrigin() const {
+        return sectionOrigin;
+    }
+    QVector3D sectionClippingNormal() const {
+        return sectionNormal;
+    }
+    double sectionClippingOffset() const {
+        return sectionOffset;
+    }
+    bool sectionClippingFlipped() const {
+        return sectionFlip;
+    }
+    void setSectionCapColor(const QVector4D &color) {
+        sectionCapColor = color;
+        update();
+    }
+    QVector4D getSectionCapColor() const {
+        return sectionCapColor;
+    }
+    void setFaceAppearance(const QString &faceId, const QVector4D &rgba);
+    void setFeatureAppearance(const QString &featureId, const QVector4D &rgba);
+    void setBodyAppearance(const QString &bodyId, const QVector4D &rgba);
+    void setPartAppearance(const std::optional<QVector4D> &rgba);
+    void clearAppearanceOverrides();
+    QVector4D resolveAppearance(const QString &faceId, const QVector4D &base) const;
   signals:
     void selected(cad::Selection selection);
     void componentDragged(QString occurrence, QVector3D deltaMM);

@@ -41,8 +41,20 @@ void Viewport::initializeGL() {
     connect(context(), &QOpenGLContext::aboutToBeDestroyed, this, &Viewport::cleanup,
             Qt::DirectConnection);
     bool okay = shader.addShaderFromSourceCode(
-        QOpenGLShader::Vertex, "#version 330 core\nlayout(location=0) in vec3 position; uniform "
-                               "mat4 matrix; void main(){gl_Position=matrix*vec4(position,1.0);}");
+        QOpenGLShader::Vertex,
+        "#version 330 core\n"
+        "layout(location=0) in vec3 position;\n"
+        "uniform mat4 matrix;\n"
+        "uniform vec4 clipPlane;\n"
+        "uniform int clipActive;\n"
+        "void main(){\n"
+        "    if (clipActive != 0) {\n"
+        "        gl_ClipDistance[0] = dot(clipPlane.xyz, position) + clipPlane.w;\n"
+        "    } else {\n"
+        "        gl_ClipDistance[0] = 1.0;\n"
+        "    }\n"
+        "    gl_Position = matrix * vec4(position, 1.0);\n"
+        "}");
     okay = okay &&
            shader.addShaderFromSourceCode(
                QOpenGLShader::Fragment,
@@ -77,6 +89,29 @@ QMatrix4x4 Viewport::matrix() const {
     m.translate(-center);
     return m;
 }
+static QVector<QVector3D> dashify(const QVector<QVector3D> &edges, float dashLen = 2.0f,
+                                  float gapLen = 1.5f) {
+    QVector<QVector3D> dashes;
+    dashes.reserve(edges.size() * 4);
+    for (int i = 0; i + 1 < edges.size(); i += 2) {
+        const auto &p1 = edges[i];
+        const auto &p2 = edges[i + 1];
+        auto delta = p2 - p1;
+        float len = delta.length();
+        if (len < 1e-4f)
+            continue;
+        auto dir = delta / len;
+        float step = dashLen + gapLen;
+        float t = 0.0f;
+        while (t < len) {
+            float tEnd = std::min(t + dashLen, len);
+            dashes.append(p1 + dir * t);
+            dashes.append(p1 + dir * tEnd);
+            t += step;
+        }
+    }
+    return dashes;
+}
 void Viewport::draw(const QVector<QVector3D> &vertices, GLenum primitive, const QVector4D &color,
                     const Instance &instance) {
     if (vertices.empty())
@@ -86,6 +121,24 @@ void Viewport::draw(const QVector<QVector3D> &vertices, GLenum primitive, const 
     m.rotate(instance.rotation);
     shader.setUniformValue("matrix", m);
     shader.setUniformValue("color", color);
+    if (sectionActive) {
+        shader.setUniformValue("clipActive", 1);
+        QVector3D n = sectionFlip ? -sectionNormal : sectionNormal;
+        QVector3D p0 = sectionOrigin + sectionNormal * float(sectionOffset);
+        QVector3D nLocal = instance.rotation.inverted().rotatedVector(n);
+        float dLocal = QVector3D::dotProduct(n, instance.translation - p0);
+        shader.setUniformValue("clipPlane", QVector4D(nLocal.x(), nLocal.y(), nLocal.z(), dLocal));
+#ifndef GL_CLIP_DISTANCE0
+#define GL_CLIP_DISTANCE0 0x3000
+#endif
+        glEnable(GL_CLIP_DISTANCE0);
+    } else {
+        shader.setUniformValue("clipActive", 0);
+#ifndef GL_CLIP_DISTANCE0
+#define GL_CLIP_DISTANCE0 0x3000
+#endif
+        glDisable(GL_CLIP_DISTANCE0);
+    }
     buffer.bind();
     buffer.allocate(vertices.constData(), int(vertices.size() * sizeof(QVector3D)));
     shader.enableAttributeArray(0);
@@ -106,6 +159,9 @@ void Viewport::paintGL() {
         for (auto i : mesh->indices)
             triangles.append(mesh->vertices[i]);
         const QVector4D base = stale ? QVector4D(.42, .46, .5, 1) : QVector4D(.3, .64, .83, 1);
+        bool hasAppearanceOverrides =
+            !faceColorOverrides.isEmpty() || !featureColorOverrides.isEmpty() ||
+            !bodyColorOverrides.isEmpty() || partColorOverride.has_value();
         for (const auto &instance : mesh->instances) {
             auto first = instance.firstTriangle;
             auto count =
@@ -116,8 +172,31 @@ void Viewport::paintGL() {
             if (mode != "Wireframe") {
                 glEnable(GL_POLYGON_OFFSET_FILL);
                 glPolygonOffset(1, 1);
-                draw(localTriangles, GL_TRIANGLES,
-                     mode == "Hidden edges" ? QVector4D(.09, .12, .16, 1) : base, instance);
+                if (mode == "Hidden edges" || mode == "Hidden lines visible" ||
+                    mode == "Hidden Lines Visible") {
+                    draw(localTriangles, GL_TRIANGLES, QVector4D(.09, .12, .16, 1), instance);
+                } else if (!hasAppearanceOverrides) {
+                    draw(localTriangles, GL_TRIANGLES, base, instance);
+                } else {
+                    QMap<quint32, QVector<QVector3D>> colorGroups;
+                    QMap<quint32, QVector4D> colorMap;
+                    for (int t = first; t < first + count; ++t) {
+                        quint32 role = mesh->triangleRoles[t];
+                        QString faceId =
+                            role < quint32(mesh->faceIds.size()) ? mesh->faceIds[role] : QString();
+                        QVector4D col = resolveAppearance(faceId, base);
+                        quint32 key = (quint32(qBound(0, int(col.x() * 255.f), 255)) << 24) |
+                                      (quint32(qBound(0, int(col.y() * 255.f), 255)) << 16) |
+                                      (quint32(qBound(0, int(col.z() * 255.f), 255)) << 8) |
+                                      (quint32(qBound(0, int(col.w() * 255.f), 255)));
+                        colorMap[key] = col;
+                        for (int k = 0; k < 3; ++k)
+                            colorGroups[key].append(mesh->vertices[mesh->indices[t * 3 + k]]);
+                    }
+                    for (auto it = colorGroups.cbegin(); it != colorGroups.cend(); ++it) {
+                        draw(it.value(), GL_TRIANGLES, colorMap.value(it.key()), instance);
+                    }
+                }
                 glDisable(GL_POLYGON_OFFSET_FILL);
             }
             QVector<QVector3D> ordinaryEdges, threadEdges;
@@ -129,6 +208,14 @@ void Viewport::paintGL() {
             }
             if (mode != "Shaded")
                 draw(ordinaryEdges, GL_LINES, QVector4D(.85, .9, .95, 1), instance);
+            if (mode == "Hidden lines visible" || mode == "Hidden Lines Visible") {
+                auto dashedEdges = dashify(ordinaryEdges);
+                glDepthMask(GL_FALSE);
+                glDepthFunc(GL_GREATER);
+                draw(dashedEdges, GL_LINES, QVector4D(.45, .55, .65, 1), instance);
+                glDepthFunc(GL_LEQUAL);
+                glDepthMask(GL_TRUE);
+            }
             if (cosmeticThreadsVisible)
                 draw(threadEdges, GL_LINES, QVector4D(.95, .75, .3, 1), instance);
             if (selection.occurrence != instance.id)
@@ -149,6 +236,30 @@ void Viewport::paintGL() {
                 }
             } else
                 draw(ordinaryEdges, GL_LINES, QVector4D(1, .65, .15, 1), instance);
+        }
+        if (shadowsEnabled && (mode == "Shaded" || mode == "Shaded with edges")) {
+            float y0 = mesh->minimum.y() - 0.05f;
+            QVector3D L(0.3f, 1.0f, 0.2f);
+            L.normalize();
+            QVector<QVector3D> shadowTriangles;
+            for (const auto &instance : mesh->instances) {
+                auto first = instance.firstTriangle;
+                auto count = instance.triangleCount < 0 ? mesh->triangleRoles.size()
+                                                        : instance.triangleCount;
+                for (int t = first; t < first + count; ++t) {
+                    for (int k = 0; k < 3; ++k) {
+                        auto w = instance.map(mesh->vertices[mesh->indices[t * 3 + k]]);
+                        float tRay = (w.y() - y0) / L.y();
+                        shadowTriangles.append({w.x() - tRay * L.x(), y0, w.z() - tRay * L.z()});
+                    }
+                }
+            }
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            glDepthMask(GL_FALSE);
+            draw(shadowTriangles, GL_TRIANGLES, QVector4D(0.04f, 0.05f, 0.07f, 0.35f), Instance{});
+            glDepthMask(GL_TRUE);
+            glDisable(GL_BLEND);
         }
     }
     for (auto &d : datums)
@@ -403,6 +514,13 @@ Selection Viewport::pick(QPointF pos) const {
                  c = instance.map(mesh->vertices[mesh->indices[t * 3 + 2]]);
             float d = intersect(a, b, c);
             if (d >= 0 && d < closest) {
+                if (sectionActive) {
+                    QVector3D n = sectionFlip ? -sectionNormal : sectionNormal;
+                    QVector3D p0 = sectionOrigin + sectionNormal * float(sectionOffset);
+                    QVector3D hitPt = near + direction * d;
+                    if (QVector3D::dotProduct(hitPt - p0, n) < 0.0f)
+                        continue;
+                }
                 closest = d;
                 hit = {"Face", mesh->faceIds[mesh->triangleRoles[t]], instance.id};
             }
@@ -433,6 +551,12 @@ Selection Viewport::pick(QPointF pos) const {
             double u = length > 0 ? qBound(0., QPointF::dotProduct(pos - pa, ab) / length, 1.) : 0;
             double pixels = QLineF(pos, pa + ab * u).length();
             auto point = a + (b - a) * u;
+            if (sectionActive) {
+                QVector3D n = sectionFlip ? -sectionNormal : sectionNormal;
+                QVector3D p0 = sectionOrigin + sectionNormal * float(sectionOffset);
+                if (QVector3D::dotProduct(point - p0, n) < 0.0f)
+                    continue;
+            }
             float d = QVector3D::dotProduct(point - near, direction);
             if (pixels <= best && d >= 0 &&
                 (closest == std::numeric_limits<float>::max() ||
@@ -598,5 +722,65 @@ QString Viewport::graphicsDescription() const {
                .arg(devicePixelRatioF())
                .arg(initialized && !failed) +
            "; " + graphicsDetails;
+}
+void Viewport::setShadows(bool enabled) {
+    shadowsEnabled = enabled;
+    update();
+}
+void Viewport::setSectionClipping(bool active, QVector3D origin, QVector3D normal, double offsetMM,
+                                  bool flip) {
+    sectionActive = active;
+    sectionOrigin = origin;
+    sectionNormal = normal.normalized();
+    sectionOffset = offsetMM;
+    sectionFlip = flip;
+    update();
+}
+void Viewport::setFaceAppearance(const QString &faceId, const QVector4D &rgba) {
+    faceColorOverrides[faceId] = rgba;
+    update();
+}
+void Viewport::setFeatureAppearance(const QString &featureId, const QVector4D &rgba) {
+    featureColorOverrides[featureId] = rgba;
+    update();
+}
+void Viewport::setBodyAppearance(const QString &bodyId, const QVector4D &rgba) {
+    bodyColorOverrides[bodyId] = rgba;
+    update();
+}
+void Viewport::setPartAppearance(const std::optional<QVector4D> &rgba) {
+    partColorOverride = rgba;
+    update();
+}
+void Viewport::clearAppearanceOverrides() {
+    faceColorOverrides.clear();
+    featureColorOverrides.clear();
+    bodyColorOverrides.clear();
+    partColorOverride.reset();
+    update();
+}
+QVector4D Viewport::resolveAppearance(const QString &faceId, const QVector4D &base) const {
+    if (faceColorOverrides.contains(faceId))
+        return faceColorOverrides.value(faceId);
+    int slash = faceId.indexOf('/');
+    if (slash > 0) {
+        QString token = faceId.mid(slash + 1);
+        if (faceColorOverrides.contains(token))
+            return faceColorOverrides.value(token);
+    }
+    for (auto it = featureColorOverrides.cbegin(); it != featureColorOverrides.cend(); ++it) {
+        if (!it.key().isEmpty() && faceId.contains(it.key()))
+            return it.value();
+    }
+    if (slash > 0) {
+        QString bodyId = faceId.left(slash);
+        if (bodyColorOverrides.contains(bodyId))
+            return bodyColorOverrides.value(bodyId);
+    }
+    if (bodyColorOverrides.contains(faceId))
+        return bodyColorOverrides.value(faceId);
+    if (partColorOverride.has_value())
+        return *partColorOverride;
+    return base;
 }
 } // namespace cad

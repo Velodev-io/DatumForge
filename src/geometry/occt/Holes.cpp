@@ -1,5 +1,6 @@
 #include "Holes.hpp"
 #include "SupportReferences.hpp"
+#include "features/Catalogs.hpp"
 #include <BRepAdaptor_Curve.hxx>
 #include <BRepAdaptor_Surface.hxx>
 #include <BRepAlgoAPI_Check.hxx>
@@ -26,6 +27,45 @@ TopoDS_Shape singleHole(const TopoDS_Shape &target, const QCborMap &intent, gp_P
                         gp_Vec direction, const Context &context, kernel::Part &part, QString owner,
                         const exchange::Control &control) {
     auto sizing = intent.value("sizing").toMap();
+    if (sizing.value("mode").toString() == "Catalog") {
+        features::HoleCatalogQuery q;
+        q.dataset = sizing.value("dataset").toString();
+        q.standard = sizing.value("standard").toString();
+        q.type = sizing.value("type").toString();
+        q.size = sizing.value("size").toString();
+        q.fit = sizing.value("fit").toString();
+        if (sizing.contains(QStringLiteral("custom_overrides")))
+            q.custom_overrides = sizing.value("custom_overrides").toMap();
+        try {
+            auto resolved = features::resolveHoleCatalog(q);
+            if (resolved.valid) {
+                sizing.insert(QStringLiteral("diameter"), resolved.diameter);
+                if (resolved.counterbore_diameter)
+                    sizing.insert(QStringLiteral("counterbore_diameter"),
+                                  *resolved.counterbore_diameter);
+                if (resolved.counterbore_depth)
+                    sizing.insert(QStringLiteral("counterbore_depth"), *resolved.counterbore_depth);
+                if (resolved.countersink_diameter)
+                    sizing.insert(QStringLiteral("countersink_diameter"),
+                                  *resolved.countersink_diameter);
+                if (resolved.countersink_angle)
+                    sizing.insert(QStringLiteral("countersink_angle"), *resolved.countersink_angle);
+                if (resolved.drill_angle)
+                    sizing.insert(QStringLiteral("drill_angle"), *resolved.drill_angle);
+                if (resolved.tap_drill_diameter)
+                    sizing.insert(QStringLiteral("tap_drill_diameter"),
+                                  *resolved.tap_drill_diameter);
+                if (resolved.pitch)
+                    sizing.insert(QStringLiteral("pitch"), *resolved.pitch);
+            } else if (!sizing.contains(QStringLiteral("diameter"))) {
+                check(false, "UnsupportedOperation",
+                      "Hole catalog resolution failed: " + resolved.diagnostic);
+            }
+        } catch (const std::exception &) {
+            if (!sizing.contains(QStringLiteral("diameter")))
+                throw;
+        }
+    }
     auto term = intent.value("termination").toMap();
     auto family = intent.value("family").toString();
     auto mode = term.value("mode").toString();
