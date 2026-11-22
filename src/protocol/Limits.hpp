@@ -2,7 +2,7 @@
 #include <cstddef>
 namespace cad::limits {
 constexpr int version = 1;
-constexpr std::size_t control = 1U << 20;
+constexpr std::size_t control = 4U << 20;
 constexpr std::size_t segment = 32U << 20;
 constexpr std::size_t transfer = 256U << 20;
 constexpr std::size_t text = 16U << 10;

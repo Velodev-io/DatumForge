@@ -3,7 +3,7 @@
 import argparse,json,os,socket,subprocess,sys,tempfile
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-p=argparse.ArgumentParser();p.add_argument('--probe',action='store_true');p.add_argument('--output',type=Path);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--probe',action='store_true');p.add_argument('--output',type=Path);p.add_argument('--build-dir',type=Path,default=ROOT/'build/macos-debug');a=p.parse_args()
 if a.probe:
     outcomes=[]
     for family,kind,destination in [(socket.AF_INET,socket.SOCK_STREAM,('1.1.1.1',443)),(socket.AF_INET,socket.SOCK_DGRAM,('1.1.1.1',53)),(socket.AF_INET6,socket.SOCK_STREAM,('::1',65534))]:
@@ -21,9 +21,9 @@ assert a.output;a.output.mkdir(parents=True,exist_ok=True)
 # Deny IP network sockets; retain local Unix IPC needed by the single worker.
 profile='(version 1) (allow default) (deny network* (remote ip "*:*")) (deny network* (local ip "*:*"))'
 commands=[('network-denial-probe',[sys.executable,str(Path(__file__).resolve()),'--probe'])]
-for module,case in [(3,'shapeEditing'),(4,'lifecycle'),(5,'lifecycle'),(6,'lifecycle'),(7,'lifecycle'),(8,'lifecycle')]:commands.append((f'module{module}',[str(ROOT/f'build/macos-debug/module{module}_contracts'),case]))
+for module,case in [(3,'shapeEditing'),(4,'lifecycle'),(5,'lifecycle'),(6,'lifecycle'),(7,'lifecycle'),(8,'lifecycle')]:commands.append((f'module{module}',[str(a.build_dir/f'module{module}_contracts'),case]))
 for target in ('module3_solver','module4_geometry','module5_b2','module6_exchange','module7_b3','module8_drawing'):
- command=[str(ROOT/'build/macos-debug'/target)]
+ command=[str(a.build_dir/target)]
  if target in ('module5_b2','module7_b3'):command.append(str(a.output/(target+'.json')))
  if target=='module8_drawing':command += [str(a.output/'B5-portable-updated.pdf'),str(a.output/'B5.json')]
  commands.append(('frozen-'+target,command))

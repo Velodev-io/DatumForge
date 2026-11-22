@@ -119,8 +119,10 @@ def main() -> int:
             errors.append("Module 6 requires explicit user authorization and a stop before 7.1a")
         if 7 in authorized and (not authorization.get("module_7_authorization", {}).get("quote") or (8 not in authorized and authorization.get("stop_before_task") != "8.1a")):
             errors.append("Module 7 requires explicit user authorization and a stop before 8.1a")
-        if any(module in authorized for module in (8,9,10)) and (not authorization.get("modules_8_10_authorization",{}).get("quote") or not {8,9,10}.issubset(authorized) or authorization.get("stop_before_module")!=11 or authorization.get("stop_before_task")!="11.1a"):
+        if any(module in authorized for module in (8,9,10)) and (not authorization.get("modules_8_10_authorization",{}).get("quote") or not {8,9,10}.issubset(authorized) or (11 not in authorized and (authorization.get("stop_before_module")!=11 or authorization.get("stop_before_task")!="11.1a"))):
             errors.append("Modules 8-10 require explicit authorization and a stop before Module 11")
+        if 11 in authorized and (not authorization.get("module_11_authorization", {}).get("quote") or authorization.get("stop_before_module") != 12 or authorization.get("stop_before_task") != "12.1a"):
+            errors.append("Module 11 requires explicit authorization and a stop before Module 12")
         if any(int(task.split(".")[0]) not in authorized and task not in permitted_tasks for task in checked):
             errors.append("Checked task is outside the explicitly authorized module/task scope")
     if len(set(task_ids)) != len(task_ids):

@@ -1500,6 +1500,97 @@
       "docs/testing/artifacts/module-10/runs/20261022T031119.905623Z/visual-review.json"
     ]
   },
+  "11.1a": {
+    "status": "Pass",
+    "scope": "Cold/warm launches, B0 30-second idle settle, B1-B3 interaction/navigation/persistence benchmarks on physical 8 GB reference Mac (Apple M2, 8 GB RAM, macOS 27.2.1). Raw samples, median, nearest-rank p95, physical/resident memory, swap, and disk recorded.",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/source-identity.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/b0-launch-settle.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module11-benchmarks.json"
+    ]
+  },
+  "11.1b": {
+    "status": "Pass",
+    "scope": "Physical telemetry recorded: Apple M2 Mac14,2, 8 GB RAM, battery power, normal thermals, 1280x800 viewport. B1-B3 steady/peak memory, occurrence counts, and component definitions measured on physical host.",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/b0-settle-memory.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module11-benchmarks.json"
+    ]
+  },
+  "11.2a": {
+    "status": "Pass",
+    "scope": "Identified and removed redundant display re-fetch/re-tessellation in Client::receive upon save; increased control protocol channel capacity to 4 MiB for 100-feature manifests.",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "src/protocol/Client.cpp",
+      "src/protocol/Limits.hpp",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json"
+    ]
+  },
+  "11.2b": {
+    "status": "Pass",
+    "scope": "Reran affected workloads on benchmark profile; verified B1 analytic volume, B2 100-cycle undo/redo cache plateau, B3 assembly closure, and full enabled CTest regression suite.",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module11-benchmarks.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/ctest-full.txt"
+    ]
+  },
+  "11.3a": {
+    "status": "Pass",
+    "scope": "AC-01 through AC-07 executed on reference host and reconciled against traceability register. Full native cross-platform matrix and assistive-technology remain Blocked.",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "docs/TRACEABILITY.md",
+      "docs/testing/requirements.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json"
+    ]
+  },
+  "11.3b": {
+    "status": "Pass",
+    "scope": "Preserved deferred gates 6.1b, 6.4c, 7.4c as Blocked. Documented physical 8 GB baseline evidence and scope boundaries; stop before Module 12.",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "docs/testing/requirements.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json"
+    ]
+  },
+  "11.4a": {
+    "status": "Pass",
+    "scope": "T-41 through T-49 measured on physical 8 GB host: B0 cold/warm launch, B0 idle settle ≤350 MiB, B1-B3 input ack ≤100 ms, navigation ≥30 FPS and frame time ≤50 ms, preview ≤250 ms, edit ≤2s, B2 save ≤3s and reopen ≤5s, B3 coarse reopen ≤10s.",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/b0-launch-settle.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module11-benchmarks.json"
+    ]
+  },
+  "11.4b": {
+    "status": "Pass",
+    "scope": "T-52 through T-54, T-56: repeatable equivalent outcomes, architectural ownership, privacy/offline sandbox-exec network-denial, and B6 29-case SIGKILL fault matrix verified.",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module10-fault-matrix.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/architecture.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/offline/offline.json"
+    ]
+  },
+  "11.4c": {
+    "status": "Pass",
+    "scope": "AC-07 and full traceability review: available-Mac physical 8 GB host results verified; missing Windows/Linux runners, assistive-technology, and release packaging recorded as Blocked.",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "docs/TRACEABILITY.md",
+      "docs/testing/requirements.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json"
+    ]
+  },
   "CM0.a": {
     "status": "In progress",
     "scope": "257 scheduled rows with page/task/fixture mappings; operand/restriction reconciliation still open. Restored original PDFs verified against original hashes on 2026-10-23; source-unavailability blocker cleared.",

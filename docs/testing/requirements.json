@@ -621,9 +621,16 @@
   },
   "NFR-001": {
     "test": "T-41",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/source-identity.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/b0-launch-settle.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module11-benchmarks.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Physical 8 GB Apple M2 reference host verified: B0 idle settle 309.5 MiB (≤350 MiB), B1 footprint 62.5 MiB (≤2 GiB), B2 footprint 160.5 MiB (≤2 GiB), B3 footprint 162.8 MiB (≤3 GiB steady, ≤4 GiB peak). Zero swap thrashing. Full native cross-platform acceptance remains Blocked."
   },
   "NFR-002": {
     "test": "T-42",
@@ -636,34 +643,56 @@
       "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/evidence-consistency.json",
       "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/b3-correctness.json",
       "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/visual-review.json",
-      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/memory-summary.json"
+      "docs/testing/artifacts/module-7/runs/20261021T183127.304947Z/memory-summary.json",
+      "docs/testing/module-11.md",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json"
     ],
     "owner": "See TRACEABILITY.md",
-    "reason": " Module 7 available-Mac rigid assembly/mate/interference/portable/recovery and B3 sharing/cache subsets pass; full native/device and physical/shared/GPU/steady/peak/FPS acceptance remain Blocked."
+    "reason": "macOS reference Apple Silicon verified; Windows 11 x64 and Ubuntu LTS native runners remain Blocked."
   },
   "NFR-003": {
     "test": "T-43",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/b0-launch-settle.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Cold launch median 911.3 ms, p95 2534.2 ms (≤5.0 s); warm launch median 814.9 ms, p95 931.6 ms (≤3.0 s) on physical reference Mac. Full cross-platform acceptance remains Blocked."
   },
   "NFR-004": {
     "test": "T-44",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module11-benchmarks.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "B1 input ack p95 0.25 ms, B2 input ack p95 0.63 ms, B3 input ack p95 1.74 ms (≤100 ms); B2 navigation 2283.5 FPS (frame time p95 0.47 ms), B3 navigation 723.4 FPS (frame time p95 1.40 ms) (≥30 FPS, ≤50 ms). Full cross-platform acceptance remains Blocked."
   },
   "NFR-005": {
     "test": "T-45",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module11-benchmarks.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "B1 single-feature edit preview median 34.4 ms, p95 42.0 ms (≤250 ms); accepted edit median 60.2 ms, p95 68.1 ms (≤2.0 s). Full cross-platform acceptance remains Blocked."
   },
   "NFR-006": {
     "test": "T-46",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-11.md",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/verification.json",
+      "docs/testing/artifacts/module-11/runs/20261122T182826.689828Z/module11-benchmarks.json"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "B2 100-feature save median 602.6 ms, p95 1209.3 ms (≤3.0 s); B2 reopen median 3600.6 ms, p95 4363.6 ms (≤5.0 s); B3 100-instance coarse reopen median 1039.5 ms, p95 1332.5 ms (≤10.0 s). Full cross-platform acceptance remains Blocked."
   },
   "NFR-007": {
     "test": "T-47",

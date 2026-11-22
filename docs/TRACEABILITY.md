@@ -48,12 +48,12 @@
 | FR-038 | 5, 13 | 9 | T-38 | Blocked |
 | FR-039 | 9 | 10 | T-39 | Blocked |
 | FR-040 | 13, 15 | 12 | T-40 | Not run |
-| NFR-001 | 12 | 11 | T-41 | Not run |
+| NFR-001 | 12 | 11 | T-41 | Blocked |
 | NFR-002 | 12 | 11 | T-42 | Blocked |
-| NFR-003 | 12 | 11 | T-43 | Not run |
-| NFR-004 | 5, 12 | 11 | T-44 | Not run |
-| NFR-005 | 4, 7, 12 | 11 | T-45 | Not run |
-| NFR-006 | 9, 12 | 11 | T-46 | Not run |
+| NFR-003 | 12 | 11 | T-43 | Blocked |
+| NFR-004 | 5, 12 | 11 | T-44 | Blocked |
+| NFR-005 | 4, 7, 12 | 11 | T-45 | Blocked |
+| NFR-006 | 9, 12 | 11 | T-46 | Blocked |
 | NFR-007 | 8, 11 | 4 | T-47 | Blocked |
 | NFR-008 | 3, 8 | 4 | T-48 | Blocked |
 | NFR-009 | 9, 12 | 5 | T-49 | Blocked |
@@ -110,6 +110,18 @@ T-08–T-10/T-34–T-35/T-39/T-49/T-51/T-56 and AC-06 exact CAD crash/cancel,
 manifest-upgrade and retention subsets. Full product rows remain Blocked for
 untested platform/device/assistive-technology/resource/installed acceptance.
 Deferred 6.1b/6.4c/7.4c statuses are preserved.
+
+Module 11 was explicitly authorized on 22 November 2026. The historical stop above
+is superseded; stop before **Module 12 / 12.1a**. [Module 11 evidence](testing/module-11.md)
+adds T-41–T-49/T-52–T-54/T-56 real 8 GB performance benchmark and cross-module acceptance
+subsets on the physical Apple M2 reference Mac. All SRS §6 quantitative budgets for B0 startup
+(cold 2.53s, warm 0.93s), B0 idle settle (309.5 MiB), B1 bracket (ack 0.25 ms, preview 42.0 ms,
+edit 68.1 ms, volume error 0.0), B2 pattern plate (ack 0.63 ms, 2283 FPS, frame time 0.47 ms,
+save 1.21s, reopen 4.36s, 100-cycle undo/redo cache plateau), and B3 assembly (ack 1.74 ms, 723 FPS,
+frame time 1.40 ms, coarse reopen 1.33s, footprint 162.8 MiB) pass on the reference host.
+B4 translator subset, B5 drawing/PDF, and B6 29-case SIGKILL fault matrix pass. Full product
+rows remain Blocked for untested Windows/Linux, assistive-technology, and installed package
+acceptance. Deferred 6.1b/6.4c/7.4c statuses are preserved. Stop before **Module 12 / 12.1a**.
 
 FR-012 / T-12 and FR-005 interaction follow-up: [Centerpoint Arc repair](testing/module-3-centerpoint-arc.md) covers pointer radius/start/end creation, local preview/cancel, unit conversion and semantic undo/save/reopen. Prior full native/device/resource gates remain unchanged.
 

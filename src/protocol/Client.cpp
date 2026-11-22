@@ -879,13 +879,15 @@ void Client::receive(const QCborMap &m) {
             }
             if (d.value("id").toString() == projection.activeDocument &&
                 d.value("type").toString() == "Assembly") {
-                displayAssembly();
+                if (projection.stale || !display)
+                    displayAssembly();
                 break;
             }
             if (d.value("id").toString() == projection.activeDocument &&
                 (!d.value("features").toArray().empty() ||
                  !d.value("modeling").toMap().value("intents").toArray().empty())) {
-                displayPart();
+                if (projection.stale || !display)
+                    displayPart();
                 break;
             }
         }

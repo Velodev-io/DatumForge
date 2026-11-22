@@ -3,7 +3,7 @@
 Living checklist maintained across sessions.
 Format: `[ ]` not started, `[/]` in progress, `[x]` done, `[~]` deferred/blocked.
 
-Last Updated: 2026-11-21
+Last Updated: 2026-11-22
 
 ---
 
@@ -24,7 +24,7 @@ Last Updated: 2026-11-21
 - [x] **Module 8: 2D Drawings** — Standard orthographic views, section views, detail projections, dimension display.
 - [x] **Module 9: Unified Interaction & Polish** — Cross-document shortcut consistency, UI styling, high-DPI handling.
 - [x] **Module 10: Hardening & Fault Tolerance** — Headless validation suite, corrupted-file recovery, IPC disconnect resilience.
-- [ ] **Module 11: Advanced Surfaces, Sheet Metal & Weldments** *(Not started; requires explicit user authorization)*.
+- [x] **Module 11: Real 8 GB Performance & Cross-Module Acceptance** — Available-Mac physical 8 GB reference benchmarks (B0–B3) and cross-module acceptance reconciliation verified. B0 cold 2.53s / warm 0.93s, B0 idle settle 309.5 MiB (≤350 MiB), B1 ack 0.25 ms / preview 42 ms / edit 68 ms / volume error 0.0, B2 save 1.21s / reopen 4.36s / 2283 FPS, B3 coarse reopen 1.33s / 723 FPS / 162.8 MiB footprint. B4 translator subset, B5 drawing/PDF, B6 29/29 fault cases pass. Deferred 6.1b/6.4c/7.4c remain Blocked; Windows/Linux/assistive-technology Blocked. Stop before Module 12.
 - [ ] **Module 12: Production Packaging & Release** *(Not started)*.
 
 ---
@@ -91,4 +91,4 @@ Last Updated: 2026-11-21
 
 - [x] **macOS Development Environment:** Native build, CTest suite, and 100%–200% scaling verified.
 - [~] **Windows / Linux Native Verification:** Deferred until application development is complete per user instruction.
-- [~] **Physical 8 GB RAM Resource Target:** Deferred until application development is complete per user instruction.
+- [/] **Physical 8 GB RAM Resource Target:** In progress under Module 11 benchmarking and cross-module acceptance.

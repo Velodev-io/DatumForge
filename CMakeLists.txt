@@ -472,6 +472,17 @@ if(BUILD_TESTING)
   add_test(NAME module10.contracts COMMAND module10_contracts cancellationAndRestart)
   set_tests_properties(module10.contracts PROPERTIES TIMEOUT 120)
 endif()
+if(BUILD_TESTING)
+  add_executable(module11_contracts tests/module11/contracts.cpp)
+  set_target_properties(module11_contracts PROPERTIES AUTOMOC ON)
+  target_include_directories(module11_contracts PRIVATE "${CMAKE_SOURCE_DIR}/tests")
+  target_compile_definitions(module11_contracts PRIVATE CAD_SOURCE_ROOT="${CMAKE_SOURCE_DIR}")
+  target_link_libraries(module11_contracts PRIVATE cad_desktop_ui cad_persistence cad_exchange Qt6::Test)
+  add_dependencies(module11_contracts cad-worker)
+  add_test(NAME module11.benchmarks COMMAND module11_contracts)
+  set_tests_properties(module11.benchmarks PROPERTIES ENVIRONMENT "QT_QPA_PLATFORM=offscreen" TIMEOUT 300)
+endif()
+
 
 # CM0-CM9 authorized 2026-10-22; isolated probes do not certify production tools.
 if(BUILD_TESTING)

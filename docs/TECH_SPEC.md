@@ -560,30 +560,30 @@ The user authorized the proposed implementation order on 20 October 2026: repair
 
 #### 11.1 — Measure the resource and interaction budgets
 
-- [ ] **11.1a:** Run the frozen cold/warm, B1–B5 modeling/navigation/rebuild/save/open procedures; collect raw samples, p95/median, UI/worker/GPU memory accounting, swap pressure, and temp disk.
-- [ ] **11.1b:** Separate steady from peak, count unique component definitions as well as occurrences, and record driver/OS/power/viewport/background conditions. Do not infer results from a library minimum.
+- [x] **11.1a:** Run the frozen cold/warm, B1–B5 modeling/navigation/rebuild/save/open procedures; collect raw samples, p95/median, UI/worker/GPU memory accounting, swap pressure, and temp disk.
+- [x] **11.1b:** Separate steady from peak, count unique component definitions as well as occurrences, and record driver/OS/power/viewport/background conditions. Do not infer results from a library minimum.
 
 #### 11.2 — Optimize from evidence
 
-- [ ] **11.2a:** Profile allocation/rebuild/render/save costs, then optimize the demonstrated bottleneck using instancing, cache limits, admission control, partial rebuilds, or bounded parallelism.
-- [ ] **11.2b:** Repeat affected measurements after changes, compare correctness invariants and resource regressions, and preserve the same acceptance fixtures.
+- [x] **11.2a:** Profile allocation/rebuild/render/save costs, then optimize the demonstrated bottleneck using instancing, cache limits, admission control, partial rebuilds, or bounded parallelism.
+- [x] **11.2b:** Repeat affected measurements after changes, compare correctness invariants and resource regressions, and preserve the same acceptance fixtures.
 
 #### 11.3 — Complete the acceptance register
 
-- [ ] **11.3a:** Run AC-01–AC-07 on each declared target; reconcile every FR/NFR against traceability and actual module evidence.
-- [ ] **11.3b:** Document limitations and any proposed scope/budget change explicitly. An unmet gate remains Fail/Blocked until resolved or the requirement is deliberately revised.
+- [x] **11.3a:** Run AC-01–AC-07 on each declared target; reconcile every FR/NFR against traceability and actual module evidence.
+- [x] **11.3b:** Document limitations and any proposed scope/budget change explicitly. An unmet gate remains Fail/Blocked until resolved or the requirement is deliberately revised.
 
 #### 11.4 — Required module tests
 
-- [ ] **11.4a — T-41–T-49:** Measure all resource, startup, response, exactness, tolerance, save/open, and retention targets with prescribed samples; retain raw results and measurement scripts.
-- [ ] **11.4b — T-52–T-54, T-56:** Verify repeatable equivalent outcomes, ownership, privacy, pressure responses, and unsupported-graphics behavior under measured workloads.
-- [ ] **11.4c — AC-07 and full traceability review:** Inspect per-platform native/offline/accessibility/fault evidence; report missing hardware/tests as Blocked. A larger host with a process cap cannot alone establish the 8 GB promise.
+- [x] **11.4a — T-41–T-49:** Measure all resource, startup, response, exactness, tolerance, save/open, and retention targets with prescribed samples; retain raw results and measurement scripts.
+- [x] **11.4b — T-52–T-54, T-56:** Verify repeatable equivalent outcomes, ownership, privacy, pressure responses, and unsupported-graphics behavior under measured workloads.
+- [x] **11.4c — AC-07 and full traceability review:** Inspect per-platform native/offline/accessibility/fault evidence; report missing hardware/tests as Blocked. A larger host with a process cap cannot alone establish the 8 GB promise.
 
 **Test pass criteria:** SRS workload budgets and required correctness gates pass on each claimed target, with reproducible raw measurements and no integrity regression.
 
 **Completion check:** All requirements have actual evidence or remain visibly release-blocking; no performance number is a placeholder.
 
-**Evidence:** `docs/testing/module-11.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-11.md`. **Current status:** Explicitly authorized on 22 November 2026; available-Mac physical 8 GB reference performance benchmarks and cross-module acceptance reconciliation complete; tasks 11.1a–11.4c checked for that scope. SRS §6 B0–B3 budgets pass on the Apple M2 reference host; B4 translator subset passes; B5 drawing/PDF passes; B6 29/29 fault cases pass. Deferred 6.1b/6.4c/7.4c remain Blocked; Windows/Linux/assistive-technology/release packaging Blocked. Stop before Module 12.
 
 
 ### Module 12 — Packaging, upgrades, installed builds, and release
