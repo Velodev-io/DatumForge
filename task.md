@@ -1,4 +1,26 @@
-# Active plan: CM8 — Shell, sweep and loft
+# Active plan — CM9 catalogs, material/evaluation and model display
+
+Prepared 22 November 2026. The [CM9 execution plan](docs/decisions/core-modeling-cm9-plan.md)
+maps all 30 coverage requirements to implementation and verification gates.
+
+- [x] **CM9.a** — Freeze source pages, catalog coverage and redistribution evidence. Capture the baseline and define the semantic contracts.
+- [/] **CM9.b** — Build offline/custom catalog resolution, exact evaluation and model display.
+- [ ] **CM9.c** — Persist resolved snapshots, appearance overrides and named sections with compatible replay.
+- [ ] **CM9.d** — Wire the native Hole, Materials, Evaluate and View workflows.
+- [ ] **CM9.e** — Verify all coverage rows and record the remaining acceptance gates.
+
+Start with CM9.a. A blocked catalog source leaves its coverage open and allows
+independent work to proceed. Verify each implementation slice on its review
+branch and stop before Module 11.
+
+The CM8 checklist below records its original planning state. See the
+[CM8 review evidence](docs/testing/core-modeling-cm8-review.md) and
+[milestone status](docs/CORE_MODELING.md#cm8--shell-sweep-and-loft) for the
+recorded outcomes. Earlier planning notes follow.
+
+---
+
+# Historical plan — CM8 shell, sweep and loft
 
 Prepared 21 November 2026. See the [CM8 completion plan](docs/decisions/core-modeling-cm8-plan.md)
 for integration points, all 27 requirements, exact-geometry risks and verification

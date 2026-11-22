@@ -69,7 +69,12 @@ Last Updated: 2026-11-21
   - [x] CM8.c: Durable definitions, topology history, manifest requirement 13, atomic rebuild and explicit repair.
   - [x] CM8.d: Native face/path/section/guide selection, connector handles, FeaturePanel integration, and 5-scale native verification (100–200% DPR).
   - [x] CM8.e: Complete course workflows (T8 shell, ordinary pipe, chair frame + mirror, impeller + circular pattern, multisection loft), 27-row evidence, regressions and native verification.
-- [ ] **CM9: Offline Catalogs, Materials & Evaluation Tools** *(Scheduled; not started)*.
+- [/] **CM9: Offline Catalogs, Materials & Evaluation Tools** *(In progress: CM9.a scope freeze & semantic contracts; CM9.b exact evaluation & display)*.
+  - [x] CM9.a: Freeze source pages, catalog coverage and redistribution evidence. Capture the baseline and define semantic contracts.
+  - [/] CM9.b: Build offline/custom catalog resolution, exact evaluation and model display.
+  - [ ] CM9.c: Persist resolved snapshots, appearance overrides and named sections with compatible replay.
+  - [ ] CM9.d: Wire the native Hole, Materials, Evaluate and View workflows.
+  - [ ] CM9.e: Verify all coverage rows and record the remaining acceptance gates.
 
 ---
 
