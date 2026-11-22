@@ -41,8 +41,10 @@ const QString modelingManifest = supportManifest + ";modeling-intents=1";
 const QString cm6Manifest = modelingManifest + ";cm6-features=1";
 const QString cm7Manifest = cm6Manifest + ";cm7-spatial=1";
 const QString cm8Manifest = cm7Manifest + ";cm8-sweep-loft-shell=1";
+const QString cm9Manifest = cm8Manifest + ";cm9-eval-display=1";
 int manifestRequirement(QString value) {
-    return value == cm8Manifest                   ? 13
+    return value == cm9Manifest                   ? 14
+           : value == cm8Manifest                 ? 13
            : value == cm7Manifest                 ? 12
            : value == cm6Manifest                 ? 11
            : value == modelingManifest            ? 10
@@ -74,10 +76,21 @@ int sketchRequirement(const QCborValue &value) {
             auto modelingMap = map.value("modeling").toMap();
             if (modelingMap.value("intents").isArray()) {
                 for (auto item : modelingMap.value("intents").toArray()) {
-                    auto kind = item.toMap().value("kind").toString();
+                    auto itemMap = item.toMap();
+                    auto kind = itemMap.value("kind").toString();
+                    if (kind == "Hole") {
+                        auto sz = itemMap.value("sizing").toMap();
+                        if (sz.value("mode").toString() == "Catalog" ||
+                            sz.contains(QStringLiteral("dataset")) ||
+                            sz.contains(QStringLiteral("custom_overrides")) ||
+                            itemMap.contains(QStringLiteral("catalog_query")) ||
+                            itemMap.contains(QStringLiteral("catalog_resolved"))) {
+                            result = 14;
+                            break;
+                        }
+                    }
                     if (QStringList{"Shell", "Sweep", "Loft"}.contains(kind)) {
-                        result = 13;
-                        break;
+                        result = std::max(result, 13);
                     }
                     if (QStringList{"Hole", "CosmeticThread", "Rib", "LinearPattern",
                                     "CircularPattern", "Mirror", "Fillet", "Chamfer"}
@@ -97,6 +110,20 @@ int sketchRequirement(const QCborValue &value) {
             QStringList{"SketchOnSketch", "SketchOnFaces", "CompositeCurve", "HelixSpiral"}
                 .contains(map.value("kind").toString())) {
             result = 12;
+        }
+        if ((map.contains(QStringLiteral("appearance_overrides")) &&
+             !map.value("appearance_overrides").toArray().isEmpty()) ||
+            (map.contains(QStringLiteral("section_views")) &&
+             !map.value("section_views").toArray().isEmpty()) ||
+            (map.contains(QStringLiteral("materials")) &&
+             !map.value("materials").toArray().isEmpty()) ||
+            (map.contains(QStringLiteral("material")) &&
+             !map.value("material").toMap().isEmpty()) ||
+            map.contains(QStringLiteral("material_id")) ||
+            QStringList{"AppearanceOverride", "SectionView", "Material", "HoleCatalogQuery",
+                        "HoleCatalogResolved"}
+                .contains(map.value("kind").toString())) {
+            result = 14;
         }
         if (map.contains(QStringLiteral("entities")) &&
             map.contains(QStringLiteral("constraints")) && map.value("version").toInteger() >= 2)
@@ -277,7 +304,7 @@ void compatible(Database &db) {
                       assemblyManifest, drawingManifest, coreManifest, constructionManifest,
                       primitiveManifest, editManifest, dimensionManifest,
                       associatedDimensionManifest, interactionManifest, supportManifest,
-                      modelingManifest, cm6Manifest, cm7Manifest, cm8Manifest}
+                      modelingManifest, cm6Manifest, cm7Manifest, cm8Manifest, cm9Manifest}
               .contains(db.scalar("SELECT manifest FROM project_meta").toString()),
           "IncompatibleSchema",
           "Unsupported semantic/object encoding; original file was not changed");
@@ -480,6 +507,46 @@ QCborMap mergeSupportCollections(QCborMap modelMap, const QCborMap &priorSupport
         for (auto v : priorSupports.value(QStringLiteral("derived_curves")).toArray())
             preservedIds.insert(v.toMap().value("id").toString());
     }
+    if (payload.contains(QStringLiteral("appearance_overrides"))) {
+        check(payload.value("appearance_overrides").isArray(), "InvalidInput",
+              "Typed appearance_overrides collection required");
+        modelMap.insert(QStringLiteral("appearance_overrides"),
+                        payload.value("appearance_overrides"));
+    } else if (!modelMap.contains(QStringLiteral("appearance_overrides")) &&
+               priorSupports.contains(QStringLiteral("appearance_overrides"))) {
+        modelMap.insert(QStringLiteral("appearance_overrides"),
+                        priorSupports.value(QStringLiteral("appearance_overrides")));
+    }
+    if (payload.contains(QStringLiteral("section_views"))) {
+        check(payload.value("section_views").isArray(), "InvalidInput",
+              "Typed section_views collection required");
+        modelMap.insert(QStringLiteral("section_views"),
+                        payload.value("section_views"));
+    } else if (!modelMap.contains(QStringLiteral("section_views")) &&
+               priorSupports.contains(QStringLiteral("section_views"))) {
+        modelMap.insert(QStringLiteral("section_views"),
+                        priorSupports.value(QStringLiteral("section_views")));
+    }
+    if (payload.contains(QStringLiteral("materials"))) {
+        check(payload.value("materials").isArray(), "InvalidInput",
+              "Typed materials collection required");
+        modelMap.insert(QStringLiteral("materials"),
+                        payload.value("materials"));
+    } else if (!modelMap.contains(QStringLiteral("materials")) &&
+               priorSupports.contains(QStringLiteral("materials"))) {
+        modelMap.insert(QStringLiteral("materials"),
+                        priorSupports.value(QStringLiteral("materials")));
+    }
+    if (payload.contains(QStringLiteral("material"))) {
+        check(payload.value("material").isMap(), "InvalidInput",
+              "Typed material map required");
+        modelMap.insert(QStringLiteral("material"),
+                        payload.value("material"));
+    } else if (!modelMap.contains(QStringLiteral("material")) &&
+               priorSupports.contains(QStringLiteral("material"))) {
+        modelMap.insert(QStringLiteral("material"),
+                        priorSupports.value(QStringLiteral("material")));
+    }
     if (!preservedIds.isEmpty() && priorSupports.contains(QStringLiteral("history"))) {
         auto priorHistory = priorSupports.value("history").toArray();
         auto currentHistory = modelMap.value("history").toArray();
@@ -665,7 +732,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                   QStringList{assemblyManifest, drawingManifest, coreManifest, constructionManifest,
                               primitiveManifest, editManifest, dimensionManifest,
                               associatedDimensionManifest, interactionManifest, supportManifest,
-                              modelingManifest, cm6Manifest, cm7Manifest, cm8Manifest}
+                              modelingManifest, cm6Manifest, cm7Manifest, cm8Manifest, cm9Manifest}
                       .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
               "InvalidProject", "Invalid assembly collection owner/manifest");
         auto m = assembly::Model::parse(decode(row[2]));
@@ -688,7 +755,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                   QStringList{drawingManifest, coreManifest, constructionManifest,
                               primitiveManifest, editManifest, dimensionManifest,
                               associatedDimensionManifest, interactionManifest, supportManifest,
-                              modelingManifest, cm6Manifest, cm7Manifest, cm8Manifest}
+                              modelingManifest, cm6Manifest, cm7Manifest, cm8Manifest, cm9Manifest}
                       .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
               "InvalidProject", "Invalid drawing collection owner/manifest");
         auto model = drawing::Model::parse(decode(row[3]));
@@ -748,7 +815,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                               drawingManifest, coreManifest, constructionManifest,
                               primitiveManifest, editManifest, dimensionManifest,
                               associatedDimensionManifest, interactionManifest, supportManifest,
-                              modelingManifest, cm6Manifest, cm7Manifest, cm8Manifest}
+                              modelingManifest, cm6Manifest, cm7Manifest, cm8Manifest, cm9Manifest}
                       .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
               "InvalidProject", "Invalid feature collection context or manifest");
         auto collection = decode(row[0]);
@@ -762,6 +829,17 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                 for (auto intent :
                      collection.value("modeling").toMap().value("intents").toArray()) {
                     auto kind = intent.toMap().value("kind").toString();
+                    if (kind == "Hole") {
+                        auto sz = intent.toMap().value("sizing").toMap();
+                        if (sz.value("mode").toString() == "Catalog" ||
+                            sz.contains(QStringLiteral("dataset")) ||
+                            sz.contains(QStringLiteral("custom_overrides")) ||
+                            intent.toMap().contains(QStringLiteral("catalog_query")) ||
+                            intent.toMap().contains(QStringLiteral("catalog_resolved"))) {
+                            check(semanticRequirement >= 14, "IncompatibleSchema",
+                                  "CM9 catalog hole reader manifest required");
+                        }
+                    }
                     if (QStringList{"Shell", "Sweep", "Loft"}.contains(kind)) {
                         check(semanticRequirement >= 13, "IncompatibleSchema",
                               "CM8 feature reader manifest required");
@@ -786,6 +864,11 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
             if (!model.spatial_sketches.isEmpty() || !model.derived_curves.isEmpty()) {
                 check(semanticRequirement >= 12, "IncompatibleSchema",
                       "CM7 spatial sketch and derived curve reader manifest required");
+            }
+            if (!model.appearance_overrides.isEmpty() || !model.section_views.isEmpty() ||
+                !model.materials.isEmpty() || !model.material.isEmpty()) {
+                check(semanticRequirement >= 14, "IncompatibleSchema",
+                      "CM9 evaluation and display reader manifest required");
             }
             for (const auto &s : sketch::parseSpatial(model.spatial_sketches)) {
                 check(!sketchIds.contains(s.id), "InvalidProject",
@@ -851,7 +934,7 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                                 constructionManifest, primitiveManifest, editManifest,
                                 dimensionManifest, associatedDimensionManifest, interactionManifest,
                                 supportManifest, modelingManifest, cm6Manifest, cm7Manifest,
-                                cm8Manifest}
+                                cm8Manifest, cm9Manifest}
                         .contains(candidate.scalar("SELECT manifest FROM project_meta").toString()),
                 "IncompatibleSchema", "History manifest required");
             check(collection.value("stale").isBool(), "InvalidProject",
@@ -1095,13 +1178,40 @@ QCborMap ProjectStore::supportReferenceCandidates(QString document, const QCborM
           "UnsupportedOperation", "Support inspection requires a Part");
     domain::id(owner);
     check(slot >= -1 && slot < 32, "InvalidInput", "Bounded support operand slot required");
-    auto result = geometry::evaluateSupports(
-                      model,
-                      [&](const QCborArray &sketches, const QCborArray &features) {
-                          return buildPart(*db, sketches, features, &resultCache);
-                      },
-                      control, owner, slot, path)
-                      .inspection;
+    bool isOverrideOrSection = false;
+    for (const auto &v : model.appearance_overrides) {
+        if (v.toMap().value("id").toString() == owner) {
+            isOverrideOrSection = true;
+            break;
+        }
+    }
+    if (!isOverrideOrSection) {
+        for (const auto &v : model.section_views) {
+            if (v.toMap().value("id").toString() == owner) {
+                isOverrideOrSection = true;
+                break;
+            }
+        }
+    }
+    auto intents = featureState(document).value("modeling").toMap().value("intents").toArray();
+    QCborMap result;
+    if (isOverrideOrSection && !intents.isEmpty()) {
+        result = geometry::evaluateModeling(
+                     model, intents,
+                     [&](const QCborArray &sketches, const QCborArray &features) {
+                         return buildPart(*db, sketches, features, &resultCache);
+                     },
+                     control, owner, path)
+                     .inspection;
+    } else {
+        result = geometry::evaluateSupports(
+                     model,
+                     [&](const QCborArray &sketches, const QCborArray &features) {
+                         return buildPart(*db, sketches, features, &resultCache);
+                     },
+                     control, owner, slot, path)
+                     .inspection;
+    }
     result.insert(
         QStringLiteral("fingerprint"),
         QCryptographicHash::hash(QCborValue(model.map()).toCbor(QCborValue::SortKeysInMaps),
@@ -1521,6 +1631,14 @@ QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse,
                 allowed.insert(QStringLiteral("spatial_sketches"));
             if (p.contains(QStringLiteral("derived_curves")))
                 allowed.insert(QStringLiteral("derived_curves"));
+            if (p.contains(QStringLiteral("appearance_overrides")))
+                allowed.insert(QStringLiteral("appearance_overrides"));
+            if (p.contains(QStringLiteral("section_views")))
+                allowed.insert(QStringLiteral("section_views"));
+            if (p.contains(QStringLiteral("materials")))
+                allowed.insert(QStringLiteral("materials"));
+            if (p.contains(QStringLiteral("material")))
+                allowed.insert(QStringLiteral("material"));
             wire::keys(p, allowed);
             auto id = domain::id(wire::text(p, "owner"));
             int slot = p.contains(QStringLiteral("slot")) ? int(wire::integer(p, "slot")) : 0;
@@ -1633,6 +1751,30 @@ QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse,
             }
             if (replaced && !parsedSpatial.empty())
                 model.spatial_sketches = sketch::encodeSpatial(parsedSpatial);
+            auto parsedOverrides = model.appearance_overrides;
+            for (qsizetype i = 0; i < parsedOverrides.size(); ++i) {
+                auto o = features::AppearanceOverride::parse(parsedOverrides[i].toMap());
+                if (o.id == id) {
+                    o.faceReference = domain::GeometryReference::parse(replacementMap);
+                    parsedOverrides[i] = o.map();
+                    replaced = true;
+                    break;
+                }
+            }
+            if (replaced)
+                model.appearance_overrides = parsedOverrides;
+            auto parsedViews = model.section_views;
+            for (qsizetype i = 0; i < parsedViews.size(); ++i) {
+                auto sv = features::SectionView::parse(parsedViews[i].toMap());
+                if (sv.id == id) {
+                    sv.support = domain::GeometryReference::parse(replacementMap);
+                    parsedViews[i] = sv.map();
+                    replaced = true;
+                    break;
+                }
+            }
+            if (replaced)
+                model.section_views = parsedViews;
             check(replaced, "ReferenceMissing", "Support owner is missing");
         } else {
             QSet<QString> allowed{"model"};
@@ -1642,6 +1784,14 @@ QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse,
                 allowed.insert(QStringLiteral("spatial_sketches"));
             if (p.contains(QStringLiteral("derived_curves")))
                 allowed.insert(QStringLiteral("derived_curves"));
+            if (p.contains(QStringLiteral("appearance_overrides")))
+                allowed.insert(QStringLiteral("appearance_overrides"));
+            if (p.contains(QStringLiteral("section_views")))
+                allowed.insert(QStringLiteral("section_views"));
+            if (p.contains(QStringLiteral("materials")))
+                allowed.insert(QStringLiteral("materials"));
+            if (p.contains(QStringLiteral("material")))
+                allowed.insert(QStringLiteral("material"));
             wire::keys(p, allowed);
         }
         check(!p.contains(QStringLiteral("intents")) || p.value("intents").isArray(),
@@ -1974,11 +2124,12 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
                         "definition=excluded.definition",
                         {entity, encode(collection)});
             db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN "
-                    "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     {historyManifest, exchangeManifest, assemblyManifest, drawingManifest,
                      coreManifest, constructionManifest, primitiveManifest, editManifest,
                      dimensionManifest, associatedDimensionManifest, interactionManifest,
-                     supportManifest, modelingManifest, cm6Manifest, cm7Manifest, cm8Manifest});
+                     supportManifest, modelingManifest, cm6Manifest, cm7Manifest, cm8Manifest,
+                     cm9Manifest});
         } else if (type == "set_features") {
             auto a = d.value("features").toArray();
             buildPart(*db, profileSketches(wire::text(d, "document"), a), a, &resultCache);
@@ -2005,12 +2156,12 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
                     "definition=excluded.definition",
                     {entity, bytes});
             db->run("UPDATE project_meta SET manifest=? WHERE manifest NOT IN "
-                    "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                    "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                     {sketchManifest, featureManifest, historyManifest, exchangeManifest,
                      assemblyManifest, drawingManifest, coreManifest, constructionManifest,
                      primitiveManifest, editManifest, dimensionManifest,
                      associatedDimensionManifest, interactionManifest, supportManifest,
-                     modelingManifest, cm6Manifest, cm7Manifest, cm8Manifest});
+                     modelingManifest, cm6Manifest, cm7Manifest, cm8Manifest, cm9Manifest});
         } else if (type == "set_parameter")
             db->run("INSERT INTO parameters VALUES(?,?,?,?) ON CONFLICT(owner,name) DO UPDATE SET "
                     "dimension=excluded.dimension,value_si=excluded.value_si",
@@ -2058,7 +2209,8 @@ void ProjectStore::apply(const QCborMap &d, qint64 revision) {
     // history may still contain extended sketches even when the active state does not.
     auto required = std::max(retainedRequirement, sketchRequirement(d));
     if (required >= 2)
-        db->run("UPDATE project_meta SET manifest=?", {required >= 13   ? cm8Manifest
+        db->run("UPDATE project_meta SET manifest=?", {required >= 14   ? cm9Manifest
+                                                       : required >= 13 ? cm8Manifest
                                                        : required >= 12 ? cm7Manifest
                                                        : required >= 11 ? cm6Manifest
                                                        : required >= 10 ? modelingManifest
@@ -2702,7 +2854,7 @@ void ProjectStore::migrationCopy(QString source, QString destination, const Boun
               prior != primitiveManifest && prior != editManifest && prior != dimensionManifest &&
               prior != associatedDimensionManifest && prior != interactionManifest &&
               prior != supportManifest && prior != modelingManifest && prior != cm6Manifest &&
-              prior != cm7Manifest && prior != cm8Manifest,
+              prior != cm7Manifest && prior != cm8Manifest && prior != cm9Manifest,
           "IncompatibleSchema", "Project already uses the current semantic manifest");
     spaceFor(QFileInfo(destination).absolutePath(), QFileInfo(source).size() * 2);
     QTemporaryFile staged(QFileInfo(destination).absolutePath() + "/.cad-migration-XXXXXX");
@@ -2838,7 +2990,7 @@ QCborMap ProjectStore::importGeometry(const wire::Envelope &request, QString pat
                                                                                : exchangeManifest),
              coreManifest, constructionManifest, primitiveManifest, editManifest, dimensionManifest,
              associatedDimensionManifest, interactionManifest, supportManifest, modelingManifest,
-             cm6Manifest, cm7Manifest, cm8Manifest});
+             cm6Manifest, cm7Manifest, cm8Manifest, cm9Manifest});
     auto cursor = db->scalar("SELECT history_cursor FROM project_meta").toLongLong();
     db->run("DELETE FROM history WHERE position>?", {cursor});
     db->run("UPDATE project_meta SET revision=?,history_cursor=?", {next, cursor + 1});

@@ -8,6 +8,7 @@
 #include "Shell.hpp"
 #include "Sweep.hpp"
 #include "Treatments.hpp"
+#include "features/Catalogs.hpp"
 #include "features/ModelingIntent.hpp"
 #include "features/ModelingRecords.hpp"
 #include "model/DerivedCurve.hpp"
@@ -445,6 +446,28 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
                 {{"id", id}, {"status", "Current"}, {"valid", true}, {"reused", false}}));
         }
         control.checkpoint("Exact modeling preview ready", 100);
+        for (const auto &v : d.section_views) {
+            auto sv = features::SectionView::parse(v.toMap());
+            if (sv.id == inspectOwner) {
+                result.inspection = context.references.inspect(sv.support);
+                return result;
+            }
+            if (sv.active) {
+                context.references.plane(sv.support);
+            }
+        }
+        for (const auto &v : d.appearance_overrides) {
+            auto o = features::AppearanceOverride::parse(v.toMap());
+            if (o.id == inspectOwner) {
+                check(o.level == "Face" && !o.faceReference.topology.isEmpty(), "InvalidInput",
+                      "Only face appearance overrides have geometric references");
+                result.inspection = context.references.inspect(o.faceReference);
+                return result;
+            }
+            if (o.level == "Face" && !o.faceReference.topology.isEmpty()) {
+                context.references.topology(o.faceReference);
+            }
+        }
         check(inspectOwner.isEmpty(), "ReferenceMissing", "Modeling inspection owner missing");
         for (auto value : context.references.evolution)
             if (!result.evolution.contains(value))

@@ -264,6 +264,13 @@ ModelingIntent ModelingIntent::parse(const QCborMap &m) {
             if (sizing.contains(QStringLiteral("custom_overrides"))) {
                 szKeys.insert("custom_overrides");
             }
+            for (auto optionalKey :
+                 {"counterbore_diameter", "counterbore_depth", "countersink_diameter",
+                  "countersink_angle", "drill_angle", "tap_drill_diameter", "pitch",
+                  "cosmetic_thread", "thread_designation", "thread"}) {
+                if (sizing.contains(QString::fromLatin1(optionalKey)))
+                    szKeys.insert(QString::fromLatin1(optionalKey));
+            }
             if (sizing.contains(QStringLiteral("diameter"))) {
                 szKeys.insert("diameter");
                 dia = number(sizing, "diameter", 1e-8, 1000);

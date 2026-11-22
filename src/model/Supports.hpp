@@ -40,6 +40,8 @@ struct SupportDefinition {
     std::vector<Attachment> attachments;
     std::vector<Conversion> conversions;
     QCborArray spatial_sketches, derived_curves;
+    QCborArray appearance_overrides, section_views, materials;
+    QCborMap material;
     QStringList history;
     evaluation::Graph graph(bool validateHistory = true) const;
     void sequence();

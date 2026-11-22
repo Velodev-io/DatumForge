@@ -1,6 +1,7 @@
 #include "Supports.hpp"
 #include "Convert.hpp"
 #include "SpatialCurve.hpp"
+#include "features/Catalogs.hpp"
 #include "model/DerivedCurve.hpp"
 #include "sketch/Solver.hpp"
 #include "sketch/SpatialSolver.hpp"
@@ -307,6 +308,30 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
                       "Support preview requires current exact geometry");
                 scene.stages = result.part.stages;
                 scene.history = result.part.history;
+            }
+        }
+        for (const auto &v : d.section_views) {
+            auto sv = features::SectionView::parse(v.toMap());
+            if (sv.id == inspectOwner) {
+                result.inspection = scene.inspect(sv.support);
+                return result;
+            }
+            if (sv.active &&
+                (scene.planes.contains(sv.support.object) || scene.stages.contains(sv.support.object))) {
+                scene.plane(sv.support);
+            }
+        }
+        for (const auto &v : d.appearance_overrides) {
+            auto o = features::AppearanceOverride::parse(v.toMap());
+            if (o.id == inspectOwner) {
+                check(o.level == "Face" && !o.faceReference.topology.isEmpty(), "InvalidInput",
+                      "Only face appearance overrides have geometric references");
+                result.inspection = scene.inspect(o.faceReference);
+                return result;
+            }
+            if (o.level == "Face" && !o.faceReference.topology.isEmpty() &&
+                scene.stages.contains(o.faceReference.object)) {
+                scene.topology(o.faceReference);
             }
         }
         check(inspectOwner.isEmpty(), "ReferenceMissing", "Support operand owner is missing");

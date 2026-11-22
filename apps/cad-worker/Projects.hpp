@@ -502,14 +502,28 @@ class Projects {
                     part.stages = prefix;
                 }
                 double assignedDensity = 0;
-                for (auto value : store->state().value("documents").toArray()) {
-                    auto d = value.toMap();
-                    if (d.value("id").toString() != e.context.document)
-                        continue;
-                    for (auto parameter : d.value("parameters").toArray()) {
-                        auto q = parameter.toMap();
-                        if (q.value("name").toString() == "MaterialDensityKgM3")
-                            assignedDensity = q.value("value_si").toDouble();
+                auto supports = store->featureState(e.context.document).value("supports").toMap();
+                if (supports.contains(QStringLiteral("material"))) {
+                    auto mat = features::Material::parse(supports.value("material").toMap());
+                    if (mat.properties.density_kg_m3 > 0.0)
+                        assignedDensity = mat.properties.density_kg_m3;
+                } else if (supports.contains(QStringLiteral("materials"))) {
+                    for (auto v : supports.value("materials").toArray()) {
+                        auto mat = features::Material::parse(v.toMap());
+                        if (mat.properties.density_kg_m3 > 0.0)
+                            assignedDensity = mat.properties.density_kg_m3;
+                    }
+                }
+                if (assignedDensity <= 0.0) {
+                    for (auto value : store->state().value("documents").toArray()) {
+                        auto d = value.toMap();
+                        if (d.value("id").toString() != e.context.document)
+                            continue;
+                        for (auto parameter : d.value("parameters").toArray()) {
+                            auto q = parameter.toMap();
+                            if (q.value("name").toString() == "MaterialDensityKgM3")
+                                assignedDensity = q.value("value_si").toDouble();
+                        }
                     }
                 }
 

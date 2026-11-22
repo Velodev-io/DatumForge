@@ -1,6 +1,7 @@
 #include "Supports.hpp"
 #include "DerivedCurve.hpp"
 #include "evaluation/Plan.hpp"
+#include "features/Catalogs.hpp"
 #include "sketch/Dependencies.hpp"
 #include "sketch/SpatialSketch.hpp"
 #include <algorithm>
@@ -352,6 +353,14 @@ QCborMap SupportDefinition::map() const {
         result.insert(QStringLiteral("spatial_sketches"), spatial_sketches);
     if (!derived_curves.isEmpty())
         result.insert(QStringLiteral("derived_curves"), derived_curves);
+    if (!appearance_overrides.isEmpty())
+        result.insert(QStringLiteral("appearance_overrides"), appearance_overrides);
+    if (!section_views.isEmpty())
+        result.insert(QStringLiteral("section_views"), section_views);
+    if (!materials.isEmpty())
+        result.insert(QStringLiteral("materials"), materials);
+    if (!material.isEmpty())
+        result.insert(QStringLiteral("material"), material);
     check(QCborValue(result).toCbor().size() <= qsizetype(limits::control), "ResourceLimit",
           "Support preview exceeds control admission");
     graph();
@@ -366,6 +375,14 @@ SupportDefinition SupportDefinition::parse(const QCborMap &m) {
         expectedKeys.insert(QStringLiteral("spatial_sketches"));
     if (m.contains(QStringLiteral("derived_curves")))
         expectedKeys.insert(QStringLiteral("derived_curves"));
+    if (m.contains(QStringLiteral("appearance_overrides")))
+        expectedKeys.insert(QStringLiteral("appearance_overrides"));
+    if (m.contains(QStringLiteral("section_views")))
+        expectedKeys.insert(QStringLiteral("section_views"));
+    if (m.contains(QStringLiteral("materials")))
+        expectedKeys.insert(QStringLiteral("materials"));
+    if (m.contains(QStringLiteral("material")))
+        expectedKeys.insert(QStringLiteral("material"));
     wire::keys(m, expectedKeys);
     check(wire::integer(m, "version") == 1, "IncompatibleSchema",
           "Unsupported support preview version");
@@ -390,6 +407,45 @@ SupportDefinition SupportDefinition::parse(const QCborMap &m) {
         check(m.value("derived_curves").isArray(), "InvalidInput",
               "Typed derived_curves collection required");
         d.derived_curves = m.value("derived_curves").toArray();
+    }
+    if (m.contains(QStringLiteral("appearance_overrides"))) {
+        check(m.value("appearance_overrides").isArray(), "InvalidInput",
+              "Typed appearance_overrides collection required");
+        check(m.value("appearance_overrides").toArray().size() <= 256, "ResourceLimit",
+              "Appearance overrides exceed admission limit");
+        for (auto v : m.value("appearance_overrides").toArray()) {
+            check(v.isMap(), "InvalidInput", "Appearance override map required");
+            features::AppearanceOverride::parse(v.toMap());
+        }
+        d.appearance_overrides = m.value("appearance_overrides").toArray();
+    }
+    if (m.contains(QStringLiteral("section_views"))) {
+        check(m.value("section_views").isArray(), "InvalidInput",
+              "Typed section_views collection required");
+        check(m.value("section_views").toArray().size() <= 64, "ResourceLimit",
+              "Section views exceed admission limit");
+        for (auto v : m.value("section_views").toArray()) {
+            check(v.isMap(), "InvalidInput", "Section view map required");
+            features::SectionView::parse(v.toMap());
+        }
+        d.section_views = m.value("section_views").toArray();
+    }
+    if (m.contains(QStringLiteral("materials"))) {
+        check(m.value("materials").isArray(), "InvalidInput",
+              "Typed materials collection required");
+        check(m.value("materials").toArray().size() <= 64, "ResourceLimit",
+              "Materials exceed admission limit");
+        for (auto v : m.value("materials").toArray()) {
+            check(v.isMap(), "InvalidInput", "Material map required");
+            features::Material::parse(v.toMap());
+        }
+        d.materials = m.value("materials").toArray();
+    }
+    if (m.contains(QStringLiteral("material"))) {
+        check(m.value("material").isMap(), "InvalidInput",
+              "Typed material map required");
+        features::Material::parse(m.value("material").toMap());
+        d.material = m.value("material").toMap();
     }
     auto each = [&](QString key, auto parse) {
         for (auto value : m.value(key).toArray()) {
