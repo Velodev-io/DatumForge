@@ -168,6 +168,33 @@ void testHoleCatalogResolutionAndOverrides() {
         support_fixture::error("UnsupportedOperation",
                                [&]() { evaluateModeling(d, {baseExt, badHole}); });
     }
+
+    // 1.4 Tapped hole catalog resolution (M8 Metric Tapped -> 6.8 mm tap drill)
+    {
+        auto tappedHole = fields(
+            {{"version", 1},
+             {"id", newId()},
+             {"kind", "Hole"},
+             {"operation", "Cut"},
+             {"target", body(baseId)},
+             {"family", "Tapped"},
+             {"placement",
+              fields({{"face", topFace.map()}, {"sketch", plSk.id}, {"points", QCborArray{pt1}}})},
+             {"sizing", fields({{"mode", "Catalog"},
+                                {"dataset", "ansi_metric"},
+                                {"standard", "MetricTapped"},
+                                {"type", "TappedHole"},
+                                {"size", "M8"},
+                                {"fit", "Normal"},
+                                {"depth", 0.020}})},
+             {"termination", fields({{"mode", "ThroughAll"}, {"depth_reference", "Shoulder"}})}});
+
+        auto res = evaluateModeling(d, {baseExt, tappedHole});
+        CHECK(res.part.bodies.size() == 1);
+        double cutVol = shapeVol(res.part.bodies[0].shape);
+        double expectedHoleVol = std::numbers::pi * (0.0068 / 2.0) * (0.0068 / 2.0) * 0.020;
+        near(initialVol - cutVol, expectedHoleVol, 1e-9);
+    }
 }
 
 // ============================================================================
@@ -302,6 +329,78 @@ void testMassPropertiesEvaluation() {
             near(lenSq, 1.0, 1e-6);
         }
     }
+
+    // 2.5 Asymmetric solid with non-zero products of inertia (Ixy != 0) & Parallel Axis
+    // verification
+    {
+        sketch::Sketch skL;
+        auto p0 = skL.point({0, 0});
+        auto p1 = skL.point({0.060, 0});
+        auto p2 = skL.point({0.060, 0.030});
+        auto p3 = skL.point({0.030, 0.030});
+        auto p4 = skL.point({0.030, 0.060});
+        auto p5 = skL.point({0, 0.060});
+        skL.line(p0, p1);
+        skL.line(p1, p2);
+        skL.line(p2, p3);
+        skL.line(p3, p4);
+        skL.line(p4, p5);
+        skL.line(p5, p0);
+
+        auto dL = base({skL});
+        auto extL = makeExtrude(skL.id, 0.020);
+        auto resL = evaluateModeling(dL, {extL});
+        CHECK(resL.part.bodies.size() == 1);
+
+        features::MassPropertiesRequest reqComL;
+        reqComL.revision = 1;
+        reqComL.scopeType = "Part";
+        reqComL.frame = "CenterOfMass";
+        reqComL.overrideDensity = density;
+
+        auto evalComL = resL.part.evaluateMassProperties(reqComL);
+        CHECK(evalComL.valid);
+        CHECK(evalComL.mass_kg.has_value());
+        double massL = *evalComL.mass_kg;
+        double xc = evalComL.center_of_mass_m[0];
+        double yc = evalComL.center_of_mass_m[1];
+        double zc = evalComL.center_of_mass_m[2];
+
+        // L-shape is symmetric across x=y: xc == yc
+        near(xc, yc, 1e-6);
+        // Off-diagonal Ixy in CenterOfMass frame is non-zero
+        CHECK(std::abs(evalComL.inertia_tensor_kg_m2[3]) > 1e-12);
+
+        // Evaluate in Part frame and verify 3D parallel axis theorem for ALL components
+        features::MassPropertiesRequest reqPartL;
+        reqPartL.revision = 1;
+        reqPartL.scopeType = "Part";
+        reqPartL.frame = "Part";
+        reqPartL.overrideDensity = density;
+
+        auto evalPartL = resL.part.evaluateMassProperties(reqPartL);
+        CHECK(evalPartL.valid);
+        near(evalPartL.inertia_tensor_kg_m2[0],
+             evalComL.inertia_tensor_kg_m2[0] + massL * (yc * yc + zc * zc), 1e-9);
+        near(evalPartL.inertia_tensor_kg_m2[1],
+             evalComL.inertia_tensor_kg_m2[1] + massL * (xc * xc + zc * zc), 1e-9);
+        near(evalPartL.inertia_tensor_kg_m2[2],
+             evalComL.inertia_tensor_kg_m2[2] + massL * (xc * xc + yc * yc), 1e-9);
+        near(evalPartL.inertia_tensor_kg_m2[3],
+             evalComL.inertia_tensor_kg_m2[3] - massL * (xc * yc), 1e-9);
+        near(evalPartL.inertia_tensor_kg_m2[4],
+             evalComL.inertia_tensor_kg_m2[4] - massL * (xc * zc), 1e-9);
+        near(evalPartL.inertia_tensor_kg_m2[5],
+             evalComL.inertia_tensor_kg_m2[5] - massL * (yc * zc), 1e-9);
+
+        // 2.6 AssemblyOccurrence scope rejection on Part
+        features::MassPropertiesRequest reqOcc;
+        reqOcc.revision = 1;
+        reqOcc.scopeType = "AssemblyOccurrence";
+        reqOcc.targetId = "occ/1";
+        support_fixture::error("UnsupportedOperation",
+                               [&]() { resL.part.evaluateMassProperties(reqOcc); });
+    }
 }
 
 // ============================================================================
@@ -424,6 +523,66 @@ void testSectionPropertiesEvaluation() {
     support_fixture::error("UnsupportedOperation", [&]() {
         cylRes.part.evaluateSectionProperties(nonPlanarReq, sketchMap);
     });
+
+    // 3.6 Aspect ratio where Iuu > Ivv (height > width)
+    // w = 50 mm, h = 100 mm -> Iuu = (1/12)*w*h^3 > Ivv = (1/12)*h*w^3
+    {
+        double wVert = 0.050, hVert = 0.100;
+        sketch::Sketch skVert;
+        skVert.rectangle({0, 0}, {wVert, hVert});
+        sketchMap[skVert.id] = skVert;
+
+        features::SectionPropertiesRequest vertReq;
+        vertReq.revision = 1;
+        vertReq.targetType = "Sketch";
+        vertReq.sketchId = skVert.id;
+        vertReq.sketchMode = "AllClosed";
+
+        auto vertEval = part.evaluateSectionProperties(vertReq, sketchMap);
+        CHECK(vertEval.valid);
+        double expIuu = (1.0 / 12.0) * wVert * hVert * hVert * hVert;
+        double expIvv = (1.0 / 12.0) * hVert * wVert * wVert * wVert;
+        near(vertEval.second_moments_m4[0], expIuu, 1e-11);
+        near(vertEval.second_moments_m4[1], expIvv, 1e-11);
+        near(vertEval.second_moments_m4[2], 0.0, 1e-11);
+        near(vertEval.principal_moments_m4[0], expIvv, 1e-11);
+        near(vertEval.principal_moments_m4[1], expIuu, 1e-11);
+        near(vertEval.principal_angle_rad, std::numbers::pi / 2.0, 1e-6);
+    }
+
+    // 3.7 Asymmetric cross section with non-zero product of inertia (Iuv != 0)
+    {
+        sketch::Sketch skLSec;
+        auto p0 = skLSec.point({0, 0});
+        auto p1 = skLSec.point({0.060, 0});
+        auto p2 = skLSec.point({0.060, 0.030});
+        auto p3 = skLSec.point({0.030, 0.030});
+        auto p4 = skLSec.point({0.030, 0.060});
+        auto p5 = skLSec.point({0, 0.060});
+        skLSec.line(p0, p1);
+        skLSec.line(p1, p2);
+        skLSec.line(p2, p3);
+        skLSec.line(p3, p4);
+        skLSec.line(p4, p5);
+        skLSec.line(p5, p0);
+        sketchMap[skLSec.id] = skLSec;
+
+        features::SectionPropertiesRequest lReq;
+        lReq.revision = 1;
+        lReq.targetType = "Sketch";
+        lReq.sketchId = skLSec.id;
+        lReq.sketchMode = "AllClosed";
+
+        auto lEval = part.evaluateSectionProperties(lReq, sketchMap);
+        CHECK(lEval.valid);
+        near(lEval.area_m2, 0.0027, 1e-8);
+        near(lEval.centroid_local_m[0], lEval.centroid_local_m[1], 1e-6);
+        CHECK(std::abs(lEval.second_moments_m4[2]) > 1e-12);
+        near(lEval.polar_moment_m4, lEval.second_moments_m4[0] + lEval.second_moments_m4[1], 1e-12);
+        CHECK(lEval.principal_moments_m4[0] <= lEval.principal_moments_m4[1]);
+        double ang = std::abs(lEval.principal_angle_rad);
+        near(ang, std::numbers::pi / 4.0, 1e-4);
+    }
 }
 
 // ============================================================================
@@ -481,6 +640,20 @@ void testViewportDisplayAppearanceAndClipping() {
     // Clear overrides restores base
     vp.clearAppearanceOverrides();
     near(vp.resolveAppearance(faceId, baseColor).x(), baseColor.x(), 1e-5);
+
+    // 4.3.1 Prefix Collision Immunity: feat-1 must not falsely match feat-10
+    QString feat10Id = "feat-10";
+    QString face10Id = bodyId + "/feat-10/face/fedcba9876543210";
+    vp.setBodyAppearance(bodyId, bodyColor);
+    vp.setFeatureAppearance(featId, featColor); // feat-1 has featColor (0.6)
+    // face10Id belongs to feat-10, NOT feat-1; should resolve to bodyColor (0.4), NOT featColor
+    // (0.6)
+    near(vp.resolveAppearance(face10Id, baseColor).x(), bodyColor.x(), 1e-5);
+    // Explicit feat-10 override now correctly overrides bodyColor for face10Id
+    QVector4D feat10Color(0.7f, 0.7f, 0.7f, 1.0f);
+    vp.setFeatureAppearance(feat10Id, feat10Color);
+    near(vp.resolveAppearance(face10Id, baseColor).x(), feat10Color.x(), 1e-5);
+    vp.clearAppearanceOverrides();
 
     // 4.4 View-only Clipping and Matching Picking
     auto mesh = std::make_shared<DisplayMesh>();

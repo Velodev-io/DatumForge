@@ -768,8 +768,9 @@ QVector4D Viewport::resolveAppearance(const QString &faceId, const QVector4D &ba
         if (faceColorOverrides.contains(token))
             return faceColorOverrides.value(token);
     }
+    QString wrapped = "/" + faceId + "/";
     for (auto it = featureColorOverrides.cbegin(); it != featureColorOverrides.cend(); ++it) {
-        if (!it.key().isEmpty() && faceId.contains(it.key()))
+        if (!it.key().isEmpty() && wrapped.contains("/" + it.key() + "/"))
             return it.value();
     }
     if (slash > 0) {

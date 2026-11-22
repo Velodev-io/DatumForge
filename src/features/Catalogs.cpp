@@ -557,6 +557,12 @@ HoleCatalogResolved resolveHoleCatalog(const HoleCatalogQuery &query) {
         if (ov.contains(QStringLiteral("drill_angle"))) {
             res.drill_angle = optDouble(ov, "drill_angle", 1e-4, std::numbers::pi - 1e-4);
         }
+        if (ov.contains(QStringLiteral("tap_drill_diameter"))) {
+            res.tap_drill_diameter = optDouble(ov, "tap_drill_diameter", 1e-8, 1000.0);
+        }
+        if (ov.contains(QStringLiteral("pitch"))) {
+            res.pitch = optDouble(ov, "pitch", 1e-8, 1000.0);
+        }
     }
 
     return res;

@@ -478,8 +478,12 @@ class Projects {
                     definitions = p.value("features").toArray();
                 } else if (e.command == "DisplayPart")
                     wire::keys(p, {"deflection_mm"});
-                else if (e.command != "EvaluateMassProperties" &&
-                         e.command != "EvaluateSectionProperties")
+                else if (e.command == "EvaluateMassProperties")
+                    wire::keys(
+                        p, {"revision", "scope_type", "frame", "target_id", "override_density"});
+                else if (e.command == "EvaluateSectionProperties")
+                    wire::keys(p, {"revision", "target_type", "sketch", "mode", "face"});
+                else
                     wire::keys(p, {"body", "token", "second_token", "density_kg_m3"});
                 auto part = store->evaluatePart(e.context.document,
                                                 e.command == "PreviewFeatures" ||

@@ -743,6 +743,11 @@ Part::evaluateMassProperties(const features::MassPropertiesRequest &req) const {
     res.revision = req.revision;
     res.valid = true;
 
+    if (req.scopeType == "AssemblyOccurrence") {
+        throw domain::Error("UnsupportedOperation",
+                            "Part evaluation does not support AssemblyOccurrence scope");
+    }
+
     std::vector<TopoDS_Shape> shapes;
     for (const auto &b : bodies) {
         if (req.scopeType == "Body") {
@@ -756,10 +761,14 @@ Part::evaluateMassProperties(const features::MassPropertiesRequest &req) const {
         check(!shapes.empty(), "ReferenceMissing", "Measurement body is missing");
     }
 
-    int solidCount = 0;
+    // Separate solid shapes from non-solid surface shapes
+    std::vector<TopoDS_Shape> solids;
     for (const auto &s : shapes) {
-        solidCount += count(s, TopAbs_SOLID);
+        for (TopExp_Explorer ex(s, TopAbs_SOLID); ex.More(); ex.Next()) {
+            solids.push_back(ex.Current());
+        }
     }
+    int solidCount = static_cast<int>(solids.size());
     res.solids_count = solidCount;
 
     if (solidCount == 0) {
@@ -771,16 +780,21 @@ Part::evaluateMassProperties(const features::MassPropertiesRequest &req) const {
         return res;
     }
 
-    auto comp = compound(shapes);
+    // Surface area across all evaluated shapes
+    GProp_GProps areaGProps;
+    for (const auto &s : shapes) {
+        BRepGProp::SurfaceProperties(s, areaGProps);
+    }
+    res.surface_area_m2 = areaGProps.Mass() * siArea;
+
+    // Volume, COM, and inertia evaluated strictly on closed solid bodies
+    auto comp = compound(solids);
     GProp_GProps volGProps;
     BRepGProp::VolumeProperties(comp, volGProps);
-    GProp_GProps areaGProps;
-    BRepGProp::SurfaceProperties(comp, areaGProps);
 
     double totalVol_mm3 = volGProps.Mass();
     double totalVol_m3 = totalVol_mm3 * siVolume;
     res.volume_m3 = totalVol_m3;
-    res.surface_area_m2 = areaGProps.Mass() * siArea;
 
     gp_Pnt com = volGProps.CentreOfMass();
     res.center_of_mass_m = {com.X() / mm, com.Y() / mm, com.Z() / mm};
@@ -954,11 +968,28 @@ Part::evaluateSectionProperties(const features::SectionPropertiesRequest &req,
     res.second_moments_m4 = {Iuu, Ivv, Iuv};
     res.polar_moment_m4 = Iuu + Ivv;
 
-    double avg = (Iuu + Ivv) / 2.0;
-    double diff = (Iuu - Ivv) / 2.0;
-    double disc = std::sqrt(diff * diff + Iuv * Iuv);
-    res.principal_moments_m4 = {avg - disc, avg + disc};
-    res.principal_angle_rad = 0.5 * std::atan2(-2.0 * Iuv, Iuu - Ivv);
+    // Solve 2D eigenvalue problem for principal moments and principal angle
+    Eigen::Matrix2d mat2d;
+    mat2d << Iuu, Iuv, Iuv, Ivv;
+    Eigen::SelfAdjointEigenSolver<Eigen::Matrix2d> es(mat2d);
+    if (es.info() == Eigen::Success) {
+        Eigen::Vector2d vals = es.eigenvalues();
+        Eigen::Matrix2d vecs = es.eigenvectors();
+        res.principal_moments_m4 = {vals(0), vals(1)};
+        // First principal axis corresponds to vals(0) (minimum second moment)
+        Eigen::Vector2d v1 = vecs.col(0);
+        // Canonicalize direction: ensure non-negative u-component (or positive v if u==0)
+        if (v1(0) < 0.0 || (std::abs(v1(0)) < 1e-12 && v1(1) < 0.0)) {
+            v1 = -v1;
+        }
+        res.principal_angle_rad = std::atan2(v1(1), v1(0));
+    } else {
+        double avg = (Iuu + Ivv) / 2.0;
+        double diff = (Iuu - Ivv) / 2.0;
+        double disc = std::sqrt(diff * diff + Iuv * Iuv);
+        res.principal_moments_m4 = {avg - disc, avg + disc};
+        res.principal_angle_rad = 0.0;
+    }
 
     return res;
 }
