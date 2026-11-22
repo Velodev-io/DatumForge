@@ -112,6 +112,21 @@ void testHoleCatalogResolutionAndOverrides() {
         // Resolved diameter for M8 Normal is 9.0 mm (0.009 m)
         double expectedHoleVol = std::numbers::pi * (0.009 / 2.0) * (0.009 / 2.0) * 0.020;
         near(initialVol - cutVol, expectedHoleVol, 1e-9);
+        bool foundHoleFace = false;
+        for (auto value : res.part.topology({}, true)) {
+            const auto face = value.toMap();
+            if (face.value("feature") == holeFeature.value("id"))
+                foundHoleFace = true;
+        }
+        CHECK(foundHoleFace);
+
+        auto snapshot = features::ModelingIntent::parse(holeFeature).map();
+        auto sizing = snapshot.value("sizing").toMap();
+        sizing.insert(QStringLiteral("diameter"), 0.011);
+        snapshot.insert(QStringLiteral("sizing"), sizing);
+        auto replay = evaluateModeling(d, {baseExt, snapshot});
+        near(initialVol - shapeVol(replay.part.bodies.front().shape),
+             std::numbers::pi * 0.0055 * 0.0055 * 0.020, 1e-9);
     }
 
     // 1.2 T7 p. 29 Custom Override Fixture (M8 counterbore with 8.5 / 14 / 4.2 mm)
@@ -328,6 +343,18 @@ void testMassPropertiesEvaluation() {
                            cubeEval.principal_axes[i][2] * cubeEval.principal_axes[i][2];
             near(lenSq, 1.0, 1e-6);
         }
+    }
+
+    {
+        sketch::Sketch second;
+        second.frame.origin = {0.2, 0, 0};
+        second.rectangle({0, 0}, {0.03, 0.04});
+        const auto multi =
+            evaluateModeling(base({s, second}), {boxExt, makeExtrude(second.id, 0.02)});
+        CHECK(multi.part.bodies.size() == 2);
+        const auto props = multi.part.evaluateMassProperties(reqCom);
+        near(props.surface_area_m2, expectedArea + 2 * (0.03 * 0.04 + 0.03 * 0.02 + 0.04 * 0.02),
+             1e-9);
     }
 
     // 2.5 Asymmetric solid with non-zero products of inertia (Ixy != 0) & Parallel Axis
@@ -616,7 +643,9 @@ void testViewportDisplayAppearanceAndClipping() {
 
     QString bodyId = "body-1";
     QString featId = "feat-1";
-    QString faceId = bodyId + "/feat-1/face/0123456789abcdef";
+    QString faceId = bodyId + "/face/0123456789abcdef";
+    QString face10Id = bodyId + "/face/fedcba9876543210";
+    vp.setFaceFeatures({{faceId, featId}, {face10Id, "feat-10"}});
 
     // Level 0: Default base
     near(vp.resolveAppearance(faceId, baseColor).x(), baseColor.x(), 1e-5);
@@ -643,7 +672,6 @@ void testViewportDisplayAppearanceAndClipping() {
 
     // 4.3.1 Prefix Collision Immunity: feat-1 must not falsely match feat-10
     QString feat10Id = "feat-10";
-    QString face10Id = bodyId + "/feat-10/face/fedcba9876543210";
     vp.setBodyAppearance(bodyId, bodyColor);
     vp.setFeatureAppearance(featId, featColor); // feat-1 has featColor (0.6)
     // face10Id belongs to feat-10, NOT feat-1; should resolve to bodyColor (0.4), NOT featColor

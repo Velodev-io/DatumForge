@@ -59,6 +59,15 @@ int manifestRequirement(QString value) {
                                                   : 0;
 }
 const QString manifest = "cad-semantic-v1;SI;objects=opaque-v1;strict-schema;no-feature-engine";
+bool extendedCatalog(const QCborMap &intent) {
+    auto sizing = intent.value("sizing").toMap();
+    return intent.value("kind") == "Hole" && sizing.value("mode") == "Catalog" &&
+           (!sizing.contains(QStringLiteral("diameter")) ||
+            sizing.contains(QStringLiteral("custom_overrides")) ||
+            sizing.contains(QStringLiteral("pitch")) ||
+            sizing.contains(QStringLiteral("cosmetic_thread")) ||
+            sizing.contains(QStringLiteral("thread_designation")));
+}
 int sketchRequirement(const QCborValue &value) {
     int result = 0;
     if (value.isArray()) {
@@ -78,16 +87,9 @@ int sketchRequirement(const QCborValue &value) {
                 for (auto item : modelingMap.value("intents").toArray()) {
                     auto itemMap = item.toMap();
                     auto kind = itemMap.value("kind").toString();
-                    if (kind == "Hole") {
-                        auto sz = itemMap.value("sizing").toMap();
-                        if (sz.value("mode").toString() == "Catalog" ||
-                            sz.contains(QStringLiteral("dataset")) ||
-                            sz.contains(QStringLiteral("custom_overrides")) ||
-                            itemMap.contains(QStringLiteral("catalog_query")) ||
-                            itemMap.contains(QStringLiteral("catalog_resolved"))) {
-                            result = 14;
-                            break;
-                        }
+                    if (extendedCatalog(itemMap)) {
+                        result = 14;
+                        break;
                     }
                     if (QStringList{"Shell", "Sweep", "Loft"}.contains(kind)) {
                         result = std::max(result, 13);
@@ -840,21 +842,12 @@ void validateSnapshot(Database &candidate, bool saved, kernel::ResultCache &resu
                 for (auto intent :
                      collection.value("modeling").toMap().value("intents").toArray()) {
                     auto kind = intent.toMap().value("kind").toString();
-                    if (kind == "Hole") {
-                        auto sz = intent.toMap().value("sizing").toMap();
-                        if (sz.value("mode").toString() == "Catalog" ||
-                            sz.contains(QStringLiteral("dataset")) ||
-                            sz.contains(QStringLiteral("custom_overrides")) ||
-                            intent.toMap().contains(QStringLiteral("catalog_query")) ||
-                            intent.toMap().contains(QStringLiteral("catalog_resolved"))) {
-                            check(semanticRequirement >= 14, "IncompatibleSchema",
-                                  "CM9 catalog hole reader manifest required");
-                        }
-                    }
+                    if (extendedCatalog(intent.toMap()))
+                        check(semanticRequirement >= 14, "IncompatibleSchema",
+                              "CM9 catalog hole reader manifest required");
                     if (QStringList{"Shell", "Sweep", "Loft"}.contains(kind)) {
                         check(semanticRequirement >= 13, "IncompatibleSchema",
                               "CM8 feature reader manifest required");
-                        break;
                     }
                     if (QStringList{"Hole", "CosmeticThread", "Rib", "LinearPattern",
                                     "CircularPattern", "Mirror", "Fillet", "Chamfer"}
@@ -1189,40 +1182,14 @@ QCborMap ProjectStore::supportReferenceCandidates(QString document, const QCborM
           "UnsupportedOperation", "Support inspection requires a Part");
     domain::id(owner);
     check(slot >= -1 && slot < 32, "InvalidInput", "Bounded support operand slot required");
-    bool isOverrideOrSection = false;
-    for (const auto &v : model.appearance_overrides) {
-        if (v.toMap().value("id").toString() == owner) {
-            isOverrideOrSection = true;
-            break;
-        }
-    }
-    if (!isOverrideOrSection) {
-        for (const auto &v : model.section_views) {
-            if (v.toMap().value("id").toString() == owner) {
-                isOverrideOrSection = true;
-                break;
-            }
-        }
-    }
     auto intents = featureState(document).value("modeling").toMap().value("intents").toArray();
-    QCborMap result;
-    if (isOverrideOrSection && !intents.isEmpty()) {
-        result = geometry::evaluateModeling(
-                     model, intents,
-                     [&](const QCborArray &sketches, const QCborArray &features) {
-                         return buildPart(*db, sketches, features, &resultCache);
-                     },
-                     control, owner, path)
-                     .inspection;
-    } else {
-        result = geometry::evaluateSupports(
-                     model,
-                     [&](const QCborArray &sketches, const QCborArray &features) {
-                         return buildPart(*db, sketches, features, &resultCache);
-                     },
-                     control, owner, slot, path)
-                     .inspection;
-    }
+    auto result = geometry::evaluateModeling(
+                      model, intents,
+                      [&](const QCborArray &sketches, const QCborArray &features) {
+                          return buildPart(*db, sketches, features, &resultCache);
+                      },
+                      control, owner, path, slot)
+                      .inspection;
     result.insert(
         QStringLiteral("fingerprint"),
         QCryptographicHash::hash(QCborValue(model.map()).toCbor(QCborValue::SortKeysInMaps),
@@ -1462,11 +1429,18 @@ QCborMap ProjectStore::supportGeometry(QString document, const exchange::Control
               db->scalar("SELECT type FROM documents WHERE id=?", {document}).toString() == "Part",
           "UnsupportedOperation", "Datum inspection requires a Part document");
     auto collection = featureState(document);
-    QCborArray datums;
-    if (collection.contains(QStringLiteral("supports")))
-        datums = rebuildSupports(*db, collection, &resultCache, control).datumGeometry();
-    return values(
-        {{"version", 1}, {"document", document}, {"revision", revision()}, {"datums", datums}});
+    auto result = values({{"version", 1},
+                          {"document", document},
+                          {"revision", revision()},
+                          {"datums", QCborArray{}}});
+    if (collection.contains(QStringLiteral("supports"))) {
+        const auto evaluated = rebuildSupports(*db, collection, &resultCache, control);
+        result.insert(QStringLiteral("datums"), evaluated.datumGeometry());
+        const auto frames = evaluated.sectionGeometry();
+        if (!frames.isEmpty())
+            result.insert(QStringLiteral("section_frames"), frames);
+    }
+    return result;
 }
 QCborMap ProjectStore::outcome(QString op) const {
     domain::id(op);
@@ -1807,10 +1781,52 @@ QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse,
         }
         check(!p.contains(QStringLiteral("intents")) || p.value("intents").isArray(),
               "InvalidInput", "Typed modeling intents required");
-        auto priorModeling = featureState(doc).value("modeling").toMap();
+        const auto accepted = featureState(doc);
+        auto priorModeling = accepted.value("modeling").toMap();
+        // Anchor a legacy ordinal to the accepted geometry before validating upstream edits.
+        QMap<QString, QCborMap> priorCurves;
+        for (auto value : accepted.value("supports").toMap().value("derived_curves").toArray())
+            priorCurves.insert(value.toMap().value("id").toString(), value.toMap());
+        auto legacyBranch = [](const QCborMap &branch) {
+            return branch.value("index").isInteger() &&
+                   branch.value("token") ==
+                       QString("branch/%1").arg(branch.value("index").toInteger());
+        };
+        std::optional<geometry::SupportResult> priorResult;
+        for (qsizetype i = 0; i < model.derived_curves.size(); ++i) {
+            auto curve = model.derived_curves[i].toMap();
+            auto definition = curve.value("definition").toMap();
+            auto branch = definition.value("branch").toMap();
+            if (!legacyBranch(branch))
+                continue;
+            const auto id = curve.value("id").toString();
+            auto prior = priorCurves.value(id).value("definition").toMap();
+            auto priorBranch = prior.take(QStringLiteral("branch")).toMap();
+            auto operands = definition;
+            operands.remove(QStringLiteral("branch"));
+            if (prior != operands || priorBranch.isEmpty() ||
+                priorBranch.value("index") != branch.value("index"))
+                continue;
+            auto token = priorBranch.value("token").toString();
+            if (legacyBranch(priorBranch)) {
+                if (!priorResult)
+                    priorResult = rebuildSupports(*db, accepted, &resultCache, control);
+                const auto resolved = priorResult->derived.value(id);
+                token = resolved.empty() ? QString{} : resolved.front().projectionToken;
+            }
+            check(!token.isEmpty(), "ReferenceMissing", "Select the projection branch explicitly");
+            branch.insert(QStringLiteral("token"), token);
+            definition.insert(QStringLiteral("branch"), branch);
+            curve.insert(QStringLiteral("definition"), definition);
+            model.derived_curves[i] = curve;
+        }
         auto intents = p.contains(QStringLiteral("intents"))
                            ? p.value("intents").toArray()
                            : priorModeling.value("intents").toArray();
+        for (qsizetype i = 0; i < intents.size(); ++i) {
+            check(intents[i].isMap(), "InvalidInput", "Versioned modeling intent required");
+            intents[i] = features::ModelingIntent::parse(intents[i].toMap()).map();
+        }
         auto collection = values({{"features", model.features},
                                   {"supports", model.map()},
                                   {"support_evolution", QCborArray{}}});
@@ -1819,6 +1835,19 @@ QCborMap ProjectStore::deltaFor(const wire::Envelope &e, QCborMap &inverse,
                 QStringLiteral("modeling"),
                 values({{"version", 1}, {"intents", intents}, {"provenance", QCborArray{}}}));
         auto result = rebuildSupports(*db, collection, &resultCache, control);
+        for (qsizetype i = 0; i < model.derived_curves.size(); ++i) {
+            auto curve = model.derived_curves[i].toMap();
+            const auto exact = result.derived.value(curve.value("id").toString());
+            if (exact.empty() || exact.front().projectionToken.isEmpty())
+                continue;
+            auto definition = curve.value("definition").toMap();
+            auto branch = definition.value("branch").toMap();
+            branch.insert(QStringLiteral("token"), exact.front().projectionToken);
+            definition.insert(QStringLiteral("branch"), branch);
+            curve.insert(QStringLiteral("definition"), definition);
+            model.derived_curves[i] = curve;
+        }
+        collection.insert(QStringLiteral("supports"), model.map());
         if (collection.contains(QStringLiteral("modeling")))
             collection.insert(QStringLiteral("modeling"),
                               values({{"version", 1},

@@ -86,3 +86,32 @@ Artifacts generated under:
 - Architecture, Research-isolation, Coverage (257/257 CM requirements), Specifications: all PASS.
 - Native workflows (100%, 125%, 150%, 175%, 200% DPR): all PASS with native widget interactions and screenshots captured.
 - Status: `Pass: development-build scope; blocked acceptance remains separate`.
+
+## CM7–CM9 review repairs
+
+The follow-up covers compatibility with CM6 catalog-hole files, replay from saved
+hole dimensions, actual body and feature identities in evaluation and appearance,
+multibody area accumulation, and resolved section supports through reopen. The
+worker evaluates spatial and derived curves alongside the modeling intents they
+reference. New projection commits store an exact branch signature. If the branch
+geometry changes and no unique signature resolves, the edit requires explicit
+reference repair. Spatial splines retain custom knots, and helix/spiral
+interpolation applies a bounded geometric error budget before admission.
+
+For CM8, failed thin-wall construction rejects the edit. The exact worker reports
+unsupported guide, end condition, connector, and section layout combinations
+documented in [the roadmap](../CORE_MODELING.md#cm8--shell-sweep-and-loft).
+
+Regression fixtures cover differing saved and catalog hole dimensions, CM6
+manifest reopen, projection and sketch constraints on intent-produced faces,
+nonuniform spatial splines, thin-loft wall volume and failure, unequal-area
+bodies, face provenance, collection removal, and named section orientation after
+native save and reopen.
+
+On the available Mac, all 15 CM7–CM9 native workflow runs passed across 100%,
+125%, 150%, 175%, and 200% effective scaling. Each run covered millimeters and
+inches. The build, changed-source Clang analysis, pinned format, worker ownership,
+research isolation, coverage mappings, and specification structure checks passed.
+The full `macos-debug` CTest run passed all 120 enabled tests in 616.56 seconds.
+The deliberate failure harness stayed disabled. The physical device, installed
+release, 8 GB, Windows/Linux, and full course acceptance gates remain open.

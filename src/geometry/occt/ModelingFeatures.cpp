@@ -130,50 +130,6 @@ void publish(kernel::Part &part, modeling::Context &context, const QCborMap &m,
     context.bodyStages[id] = std::move(changed);
     part.tools[id] = tool;
 }
-std::vector<evaluation::GraphNode> baseNodes(const model::SupportDefinition &d,
-                                             const SupportResult &result) {
-    auto graph = d.graph();
-    auto sketches = sketch::dependencyNodes(result.sketches);
-    QMap<QString, QString> kinds;
-    for (auto &s : sketches)
-        kinds[s.id] = "Sketch";
-    for (auto f : features::parse(d.features))
-        kinds[f.id] = "Feature";
-    for (auto &datum : d.datums)
-        for (auto id : datum.outputs())
-            kinds[id] = datum.kind;
-    for (auto &c : d.conversions)
-        kinds[c.id] = "DerivedCurve";
-    std::vector<sketch::SpatialSketch> spatialSketches;
-    if (!d.spatial_sketches.isEmpty()) {
-        spatialSketches = sketch::parseSpatial(d.spatial_sketches);
-        for (const auto &s : spatialSketches)
-            kinds[s.id] = "SpatialSketch";
-    }
-    std::vector<model::DerivedCurve> derivedCurves;
-    if (!d.derived_curves.isEmpty()) {
-        derivedCurves = model::parseDerivedCurves(d.derived_curves);
-        for (const auto &c : derivedCurves)
-            kinds[c.id] = "DerivedCurve";
-    }
-    std::vector<evaluation::GraphNode> nodes;
-    for (auto id : d.history) {
-        evaluation::GraphNode node{id, kinds.value(id), {}, {}};
-        for (auto &s : sketches)
-            if (s.id == id)
-                node.members = s.members;
-        for (auto &s : spatialSketches)
-            if (s.id == id)
-                node.members = s.members();
-        for (auto parent : graph.dependencies(id)) {
-            domain::GeometryReference r;
-            r.object = parent;
-            node.references.push_back(r);
-        }
-        nodes.push_back(std::move(node));
-    }
-    return nodes;
-}
 TopoDS_Shape revolve(const ModelingProfile &profile, const QCborMap &m,
                      const modeling::Context &context, kernel::Part &part) {
     check(!profile.open, "UnsupportedOperation", "Open revolve requires a thin section");
@@ -208,7 +164,7 @@ TopoDS_Shape revolve(const ModelingProfile &profile, const QCborMap &m,
 } // namespace
 SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArray &definitions,
                                const SupportBuild &build, const exchange::Control &control,
-                               QString inspectOwner, QString inspectPath) {
+                               QString inspectOwner, QString inspectPath, int inspectSlot) {
     auto combined = d.features;
     for (auto value : definitions)
         combined.append(value);
@@ -219,266 +175,219 @@ SupportResult evaluateModeling(const model::SupportDefinition &d, const QCborArr
                       .toCbor()
                       .size() <= 262144,
           "ResourceLimit", "Modeling preview exceeds existing feature/control admission");
+    auto nodes = d.nodes();
+    QMap<QString, qsizetype> priorities;
+    for (qsizetype i = 0; i < d.history.size(); ++i)
+        priorities.insert(d.history[i], i);
+    std::stable_sort(nodes.begin(), nodes.end(), [&](const auto &a, const auto &b) {
+        return priorities.value(a.id) < priorities.value(b.id);
+    });
+
+    QString previous;
+    auto keepOrder = [&](evaluation::GraphNode &node) {
+        if (!previous.isEmpty()) {
+            domain::GeometryReference predecessor;
+            predecessor.object = previous;
+            node.references.push_back(predecessor);
+        }
+        previous = node.id;
+    };
+    for (auto &node : nodes)
+        if (node.kind == "Feature")
+            keepOrder(node);
     std::vector<features::ModelingIntent> intents;
+    QMap<QString, QCborMap> byId;
     for (auto value : definitions) {
         check(value.isMap(), "InvalidInput", "Versioned modeling intent required");
-        intents.push_back(features::ModelingIntent::parse(value.toMap()));
-    }
-    control.checkpoint("Preparing exact modeling preview", 0);
-    auto result = evaluateSupports(d, build, control);
-    auto nodes = baseNodes(d, result);
-    QSet<QString> identities;
-    QMap<QString, sketch::Sketch> sketches;
-    for (auto &s : result.sketches) {
-        sketches.insert(s.id, s);
-        for (auto &entity : s.entities)
-            identities.insert(entity.id);
-        for (auto &c : s.constraints)
-            identities.insert(c.id);
-        for (auto &g : s.groups)
-            identities.insert(g.id);
-        for (auto edit : s.edits)
-            identities.insert(edit.toMap().value("id").toString());
-    }
-    for (auto &intent : intents) {
+        auto intent = features::ModelingIntent::parse(value.toMap());
         auto node = intent.graphNode();
-        check(!identities.contains(node.id), "InvalidInput",
-              "Modeling identity collides with an existing member");
-        identities.insert(node.id);
-        nodes.push_back(node);
-        result.order.append(node.id);
+        byId.insert(node.id, intent.map());
+        keepOrder(node);
+        nodes.push_back(std::move(node));
+        intents.push_back(std::move(intent));
     }
-    for (size_t i = 0; i < intents.size(); ++i) {
+    evaluation::Graph graph(nodes, d.history, d.document);
+    const auto order = graph.order();
+    for (qsizetype i = 0; i < qsizetype(intents.size()); ++i) {
         auto upstream = nodes;
         upstream.erase(upstream.begin() + (nodes.size() - intents.size() + i));
-        intents[i].graph(upstream, result.order, d.document);
+        intents[i].graph(upstream, order, d.document);
     }
+
     modeling::Context context;
-    context.references.document = d.document;
-    context.references.sketches = sketches;
-    context.references.spatialSketches = result.spatialSketches;
-    context.references.planes = result.planes;
-    context.references.axes = result.axes;
-    context.references.derived = result.derived;
-    for (auto value : result.conversions) {
-        auto conversion = value.toMap();
-        auto sketchId = conversion.value("sketch").toString();
-        check(sketches.contains(sketchId), "ReferenceMissing",
-              "Converted axis source sketch is missing");
-        const auto &s = sketches.constFind(sketchId).value();
-        std::vector<SupportCurve> curves;
-        for (auto identity : conversion.value("entities").toArray()) {
-            auto &entity = s.entity(identity.toString());
-            if (entity.kind == "Point")
-                continue;
-            auto exact = sketchCurve(s, entity);
-            curves.push_back(
-                {entity.id, exact.curve, exact.first, exact.last, exact.parameterScale, false, {}});
+    bool initialized = false;
+    auto evaluateIntent = [&](const QString &id, SupportResult &result, SupportReferences &scene) {
+        context.references = scene;
+        auto &sketches = context.references.sketches;
+        if (!initialized) {
+            for (const auto &feature : features::parse(d.features)) {
+                if (!result.part.stages.contains(feature.id))
+                    continue;
+                auto stage = result.part.stages.value(feature.id);
+                if (feature.parameters.value("operation") == "NewBody") {
+                    int ordinal = 0;
+                    for (TopExp_Explorer solid(stage, TopAbs_SOLID); solid.More(); solid.Next())
+                        context.bodyStages[feature.id].push_back(
+                            {bodyId(feature.id, ordinal++), solid.Current()});
+                } else {
+                    context.bodyStages[feature.id].push_back(
+                        {feature.parameters.value("target").toString(), stage});
+                }
+            }
+            initialized = true;
         }
-        context.references.derived[conversion.value("id").toString()] = std::move(curves);
-    }
-    context.references.stages = result.part.stages;
-    context.references.history = result.part.history;
-    for (auto f : features::parse(d.features)) {
-        if (!result.part.stages.contains(f.id))
-            continue;
-        auto stage = result.part.stages.value(f.id);
-        if (f.parameters.value("operation").toString() == "NewBody") {
-            int ordinal = 0;
-            for (TopExp_Explorer solid(stage, TopAbs_SOLID); solid.More(); solid.Next())
-                context.bodyStages[f.id].push_back({bodyId(f.id, ordinal++), solid.Current()});
-        } else
-            context.bodyStages[f.id].push_back({f.parameters.value("target").toString(), stage});
-    }
-    for (qsizetype i = 0; i < result.order.size(); ++i)
-        context.references.stageOrder[result.order[i]] = i;
-    try {
-        for (size_t i = 0; i < intents.size(); ++i) {
-            control.checkpoint("Evaluating exact solid intent", int(i * 100 / intents.size()));
-            auto m = intents[i].map();
-            auto id = m.value("id").toString();
-            if (id == inspectOwner) {
-                result.inspection =
-                    context.references.inspect(features::intentReference(m, inspectPath));
-                return result;
-            }
-            QCborArray provenance;
-            auto kind = m.value("kind").toString();
-            check(QStringList{"Extrude", "Revolve", "Draft", "Hole", "CosmeticThread", "Rib",
-                              "LinearPattern", "CircularPattern", "Mirror", "Fillet", "Chamfer",
-                              "Shell", "Sweep", "Loft"}
-                      .contains(kind),
-                  "UnsupportedOperation", "Modeling adapter required");
-            TopoDS_Shape target;
-            if (m.value("operation").toString() != "NewBody") {
-                auto selected = modeling::body(context, m.value("target").toMap());
-                auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
-                                            [&](auto &b) { return b.id == selected.id; });
-                check(current != result.part.bodies.end() && selected.shape.IsSame(current->shape),
-                      "ReferenceMissing",
-                      "Writable body selection is not the current target stage");
-                target = current->shape;
-            }
-            auto historyStart = result.part.history.size();
-            if (kind == "Draft") {
-                std::vector<TopoDS_Face> faces;
-                for (auto value : m.value("faces").toArray())
-                    faces.push_back(TopoDS::Face(context.references.topology(
-                        domain::GeometryReference::parse(value.toMap()))));
-                auto frame = context.references.plane(
-                    domain::GeometryReference::parse(m.value("neutral").toMap()));
-                auto axis = context.references.axis(
-                    domain::GeometryReference::parse(m.value("pull").toMap()));
-                auto shape = modeling::draft(
-                    target, faces, gp_Dir(vector(axis.direction)),
-                    gp_Pln(kernelPoint(frame.origin),
-                           gp_Dir(vector(frame.u).Crossed(vector(frame.v)))),
-                    m.value("angle").toDouble(), m.value("outward").toBool(), result.part, id);
-                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
-                    provenance.append(result.part.history[n]);
-                auto selected = m.value("target").toMap().value("body").toString();
-                auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
-                                            [&](auto &b) { return b.id == selected; });
-                check(current != result.part.bodies.end(), "ReferenceMissing",
-                      "Draft target disappeared");
-                current->shape = shape;
-                result.part.stages[id] = shape;
-                context.bodyStages[id] = {*current};
-            } else if (kind == "Fillet") {
-                auto shape = modeling::fillet(target, m, context, result.part, id);
-                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
-                    provenance.append(result.part.history[n]);
-                auto selected = m.value("target").toMap().value("body").toString();
-                auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
-                                            [&](auto &b) { return b.id == selected; });
-                current->shape = shape;
-                result.part.stages[id] = shape;
-                context.bodyStages[id] = {*current};
-            } else if (kind == "Chamfer") {
-                auto shape = modeling::chamfer(target, m, context, result.part, id);
-                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
-                    provenance.append(result.part.history[n]);
-                auto selected = m.value("target").toMap().value("body").toString();
-                auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
-                                            [&](auto &b) { return b.id == selected; });
-                current->shape = shape;
-                result.part.stages[id] = shape;
-                context.bodyStages[id] = {*current};
-            } else if (kind == "Shell") {
-                auto shape = modeling::shell(target, m, context, result.part, id);
-                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
-                    provenance.append(result.part.history[n]);
-                auto selected = m.value("target").toMap().value("body").toString();
-                auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
-                                            [&](auto &b) { return b.id == selected; });
-                check(current != result.part.bodies.end(), "ReferenceMissing",
-                      "Shell target disappeared");
-                current->shape = shape;
-                result.part.stages[id] = shape;
-                context.bodyStages[id] = {*current};
-            } else if (kind == "Sweep") {
-                auto tool = modeling::sweep(target, m, context, result.part, id);
-                publish(result.part, context, m, tool);
-                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
-                    provenance.append(result.part.history[n]);
-            } else if (kind == "Loft") {
-                auto tool = modeling::loft(target, m, context, result.part, id);
-                publish(result.part, context, m, tool);
-                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
-                    provenance.append(result.part.history[n]);
-            } else if (kind == "Hole") {
-                auto tool = modeling::hole(target, m, context, result.part, id, control);
-                publish(result.part, context, m, tool);
-                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
-                    provenance.append(result.part.history[n]);
-            } else if (kind == "CosmeticThread") {
-                result.part.cosmeticThreads.append(modeling::cosmeticThread(m, context));
-                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
-                    provenance.append(result.part.history[n]);
-                result.part.stages[id] = target;
-                auto selected = m.value("target").toMap().value("body").toString();
-                auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
-                                            [&](auto &b) { return b.id == selected; });
-                context.bodyStages[id] = {*current};
-            } else if (kind == "Rib") {
-                auto tool = modeling::rib(target, m, context, result.part, id, control);
-                publish(result.part, context, m, tool);
-                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
-                    provenance.append(result.part.history[n]);
-            } else if (kind == "LinearPattern" || kind == "CircularPattern" || kind == "Mirror") {
-                QStringList identities;
-                auto tool =
-                    kind == "Mirror"
-                        ? modeling::mirror(m, context, result.part, id, identities)
-                        : modeling::pattern(m, context, result.part, id, identities, control);
-                publish(result.part, context, m, tool, identities);
-                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
-                    provenance.append(result.part.history[n]);
-            } else {
-                auto selection = m.value("profile").toMap();
-                check(sketches.contains(selection.value("sketch").toString()), "ReferenceMissing",
-                      "Profile sketch missing");
-                auto profile = modelingProfile(sketches.value(selection.value("sketch").toString()),
-                                               selection, m.value("thin").toMap());
-                auto tool =
-                    m.value("kind").toString() == "Revolve"
-                        ? revolve(profile, m, context, result.part)
-                        : modeling::extrude(profile, m, context, target, result.part, control);
-                publish(result.part, context, m, tool);
-                for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
-                    provenance.append(result.part.history[n]);
-            }
-            QCborArray outputs;
-            for (auto &b : context.bodyStages.value(id))
-                outputs.append(b.id);
-            bool directOp = kind == "Draft" || kind == "Fillet" || kind == "Chamfer" ||
-                            kind == "CosmeticThread" || kind == "Shell";
-            result.modelingProvenance.append(sketch::fields(
-                {{"feature", id},
-                 {"kind", m.value("kind")},
-                 {"operation", directOp ? QCborValue(m.value("kind")) : m.value("operation")},
-                 {"target", m.value("target")},
-                 {"outputs", outputs},
-                 {"history", provenance}}));
-            context.references.stages = result.part.stages;
-            context.references.history = result.part.history;
-            result.part.diagnostics.append(sketch::fields(
-                {{"id", id}, {"status", "Current"}, {"valid", true}, {"reused", false}}));
+        const auto m = byId.value(id);
+        if (id == inspectOwner) {
+            result.inspection =
+                context.references.inspect(features::intentReference(m, inspectPath));
+            return true;
         }
-        control.checkpoint("Exact modeling preview ready", 100);
-        for (const auto &v : d.section_views) {
-            auto sv = features::SectionView::parse(v.toMap());
-            if (sv.id == inspectOwner) {
-                result.inspection = context.references.inspect(sv.support);
-                return result;
-            }
-            if (sv.active) {
-                context.references.plane(sv.support);
-            }
+        QCborArray provenance;
+        auto kind = m.value("kind").toString();
+        check(QStringList{"Extrude", "Revolve", "Draft", "Hole", "CosmeticThread", "Rib",
+                          "LinearPattern", "CircularPattern", "Mirror", "Fillet", "Chamfer",
+                          "Shell", "Sweep", "Loft"}
+                  .contains(kind),
+              "UnsupportedOperation", "Modeling adapter required");
+        TopoDS_Shape target;
+        if (m.value("operation").toString() != "NewBody") {
+            auto selected = modeling::body(context, m.value("target").toMap());
+            auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
+                                        [&](auto &b) { return b.id == selected.id; });
+            check(current != result.part.bodies.end() && selected.shape.IsSame(current->shape),
+                  "ReferenceMissing", "Writable body selection is not the current target stage");
+            target = current->shape;
         }
-        for (const auto &v : d.appearance_overrides) {
-            auto o = features::AppearanceOverride::parse(v.toMap());
-            if (o.id == inspectOwner) {
-                check(o.level == "Face" && !o.faceReference.topology.isEmpty(), "InvalidInput",
-                      "Only face appearance overrides have geometric references");
-                result.inspection = context.references.inspect(o.faceReference);
-                return result;
-            }
-            if (o.level == "Face" && !o.faceReference.topology.isEmpty()) {
-                context.references.topology(o.faceReference);
-            }
+        auto historyStart = result.part.history.size();
+        if (kind == "Draft") {
+            std::vector<TopoDS_Face> faces;
+            for (auto value : m.value("faces").toArray())
+                faces.push_back(TopoDS::Face(
+                    context.references.topology(domain::GeometryReference::parse(value.toMap()))));
+            auto frame = context.references.plane(
+                domain::GeometryReference::parse(m.value("neutral").toMap()));
+            auto axis =
+                context.references.axis(domain::GeometryReference::parse(m.value("pull").toMap()));
+            auto shape = modeling::draft(
+                target, faces, gp_Dir(vector(axis.direction)),
+                gp_Pln(kernelPoint(frame.origin), gp_Dir(vector(frame.u).Crossed(vector(frame.v)))),
+                m.value("angle").toDouble(), m.value("outward").toBool(), result.part, id);
+            for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                provenance.append(result.part.history[n]);
+            auto selected = m.value("target").toMap().value("body").toString();
+            auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
+                                        [&](auto &b) { return b.id == selected; });
+            check(current != result.part.bodies.end(), "ReferenceMissing",
+                  "Draft target disappeared");
+            current->shape = shape;
+            result.part.stages[id] = shape;
+            context.bodyStages[id] = {*current};
+        } else if (kind == "Fillet") {
+            auto shape = modeling::fillet(target, m, context, result.part, id);
+            for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                provenance.append(result.part.history[n]);
+            auto selected = m.value("target").toMap().value("body").toString();
+            auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
+                                        [&](auto &b) { return b.id == selected; });
+            current->shape = shape;
+            result.part.stages[id] = shape;
+            context.bodyStages[id] = {*current};
+        } else if (kind == "Chamfer") {
+            auto shape = modeling::chamfer(target, m, context, result.part, id);
+            for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                provenance.append(result.part.history[n]);
+            auto selected = m.value("target").toMap().value("body").toString();
+            auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
+                                        [&](auto &b) { return b.id == selected; });
+            current->shape = shape;
+            result.part.stages[id] = shape;
+            context.bodyStages[id] = {*current};
+        } else if (kind == "Shell") {
+            auto shape = modeling::shell(target, m, context, result.part, id);
+            for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                provenance.append(result.part.history[n]);
+            auto selected = m.value("target").toMap().value("body").toString();
+            auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
+                                        [&](auto &b) { return b.id == selected; });
+            check(current != result.part.bodies.end(), "ReferenceMissing",
+                  "Shell target disappeared");
+            current->shape = shape;
+            result.part.stages[id] = shape;
+            context.bodyStages[id] = {*current};
+        } else if (kind == "Sweep") {
+            auto tool = modeling::sweep(target, m, context, result.part, id);
+            publish(result.part, context, m, tool);
+            for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                provenance.append(result.part.history[n]);
+        } else if (kind == "Loft") {
+            auto tool = modeling::loft(target, m, context, result.part, id);
+            publish(result.part, context, m, tool);
+            for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                provenance.append(result.part.history[n]);
+        } else if (kind == "Hole") {
+            auto tool = modeling::hole(target, m, context, result.part, id, control);
+            publish(result.part, context, m, tool);
+            for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                provenance.append(result.part.history[n]);
+        } else if (kind == "CosmeticThread") {
+            result.part.cosmeticThreads.append(modeling::cosmeticThread(m, context));
+            for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                provenance.append(result.part.history[n]);
+            result.part.stages[id] = target;
+            auto selected = m.value("target").toMap().value("body").toString();
+            auto current = std::find_if(result.part.bodies.begin(), result.part.bodies.end(),
+                                        [&](auto &b) { return b.id == selected; });
+            context.bodyStages[id] = {*current};
+        } else if (kind == "Rib") {
+            auto tool = modeling::rib(target, m, context, result.part, id, control);
+            publish(result.part, context, m, tool);
+            for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                provenance.append(result.part.history[n]);
+        } else if (kind == "LinearPattern" || kind == "CircularPattern" || kind == "Mirror") {
+            QStringList identities;
+            auto tool = kind == "Mirror"
+                            ? modeling::mirror(m, context, result.part, id, identities)
+                            : modeling::pattern(m, context, result.part, id, identities, control);
+            publish(result.part, context, m, tool, identities);
+            for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                provenance.append(result.part.history[n]);
+        } else {
+            auto selection = m.value("profile").toMap();
+            check(sketches.contains(selection.value("sketch").toString()), "ReferenceMissing",
+                  "Profile sketch missing");
+            auto profile = modelingProfile(sketches.value(selection.value("sketch").toString()),
+                                           selection, m.value("thin").toMap());
+            auto tool = m.value("kind").toString() == "Revolve"
+                            ? revolve(profile, m, context, result.part)
+                            : modeling::extrude(profile, m, context, target, result.part, control);
+            publish(result.part, context, m, tool);
+            for (qsizetype n = historyStart; n < result.part.history.size(); ++n)
+                provenance.append(result.part.history[n]);
         }
-        check(inspectOwner.isEmpty(), "ReferenceMissing", "Modeling inspection owner missing");
-        for (auto value : context.references.evolution)
-            if (!result.evolution.contains(value))
-                result.evolution.append(value);
+        QCborArray outputs;
+        for (auto &b : context.bodyStages.value(id))
+            outputs.append(b.id);
+        bool directOp = kind == "Draft" || kind == "Fillet" || kind == "Chamfer" ||
+                        kind == "CosmeticThread" || kind == "Shell";
+        result.modelingProvenance.append(sketch::fields(
+            {{"feature", id},
+             {"kind", m.value("kind")},
+             {"operation", directOp ? QCborValue(m.value("kind")) : m.value("operation")},
+             {"target", m.value("target")},
+             {"outputs", outputs},
+             {"history", provenance}}));
+        scene.stages = result.part.stages;
+        scene.history = result.part.history;
+        scene.evolution = context.references.evolution;
+        result.part.diagnostics.append(sketch::fields(
+            {{"id", id}, {"status", "Current"}, {"valid", true}, {"reused", false}}));
+        return false;
+    };
+    auto result = evaluateSupports(d, build, control, inspectOwner, inspectSlot, inspectPath, order,
+                                   evaluateIntent);
+    if (inspectOwner.isEmpty())
         features::validateModelingRecords(sketch::fields(
             {{"version", 1}, {"intents", definitions}, {"provenance", result.modelingProvenance}}));
-        result.map();
-        return result;
-    } catch (const Standard_Failure &e) {
-        throw domain::Error("InvalidGeometry",
-                            QString("Exact solid intent failed: ") + e.GetMessageString());
-    }
+    return result;
 }
 } // namespace cad::geometry

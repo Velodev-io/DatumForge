@@ -148,6 +148,9 @@ TopoDS_Shape sweep(const TopoDS_Shape & /*target*/, const QCborMap &intent, cons
         auto pathWire = resolvePathWire(pathRef, reversePath, context);
 
         auto guidesArr = intent.value("guides").toArray();
+        check(guidesArr.size() <= 1, "UnsupportedOperation", "Sweep supports one guide curve");
+        check(intent.value("start_tangency") == "None" && intent.value("end_tangency") == "None",
+              "UnsupportedOperation", "Explicit sweep end tangency is unavailable");
         auto profileObj = intent.value("profile").toMap();
         auto profileType = profileObj.value("type").toString();
         auto thinObj = intent.value("thin").toMap();
@@ -256,7 +259,8 @@ TopoDS_Shape sweep(const TopoDS_Shape & /*target*/, const QCborMap &intent, cons
                 }
                 tool = combined;
             } else {
-                // Open profile wire
+                check(!prof.open, "UnsupportedOperation",
+                      "Sweep with an open, zero-thickness cut profile is unavailable");
                 TopTools_IndexedMapOfShape wireMap;
                 TopExp::MapShapes(prof.shape, TopAbs_WIRE, wireMap);
                 check(wireMap.Extent() >= 1, "InvalidGeometry", "No wires in sweep profile");

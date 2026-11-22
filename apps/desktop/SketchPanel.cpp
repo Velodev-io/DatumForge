@@ -785,17 +785,6 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
                                           .map()}});
                 committing = true;
                 client->projectCommand("SetModelSupports", payload);
-                editing = false;
-                is3D = false;
-                view->set3D(false);
-                spatialActivePlane->setVisible(false);
-                if (selectedZ)
-                    selectedZ->setVisible(false);
-                applySpatialProposalBtn->setVisible(false);
-                spatialProposalsList->setVisible(false);
-                plane->setVisible(true);
-                sketches->setVisible(true);
-                emit editingChanged();
             });
             return;
         }
@@ -849,6 +838,18 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
         }
     });
     connect(client, &Client::modelSupportsPreview, this, [this](QCborMap result) {
+        if (editing && is3D && supportPreviewPending) {
+            supportPreviewPending = false;
+            const auto solved = sketch::parseSpatial(result.value("spatial_sketches").toArray());
+            for (const auto &sketch : solved)
+                if (sketch.id == currentSpatial().id) {
+                    currentSpatial() = sketch;
+                    refreshSpatial();
+                    break;
+                }
+            context->setText("Exact 3D sketch preview ready");
+            return;
+        }
         if (editing && supportPreviewPending && !dimensionEditing &&
             supportDocument.contains(QStringLiteral("model_supports"))) {
             supportPreviewPending = false;
@@ -929,6 +930,12 @@ SketchPanel::SketchPanel(Client *c, QWidget *p) : QWidget(p), client(c) {
                     row->setBackground(QColor(150, 125, 45));
                 }
             }
+        }
+    });
+    connect(client, &Client::projectChanged, this, [this] {
+        if (is3D && committing) {
+            committing = false;
+            discard();
         }
     });
     connect(client, &Client::changed, this, [this] {
@@ -1781,6 +1788,15 @@ void SketchPanel::finishSplineInput() {
     rebuild();
 }
 void SketchPanel::previewDraft() {
+    if (is3D) {
+        guard([&] {
+            auto model = model::editSupportedSpatialSketches(supportDocument,
+                                                             sketch::encodeSpatial(draftSpatial));
+            supportPreviewPending = true;
+            client->projectCommand("PreviewModelSupports", fields({{"model", model.map()}}));
+        });
+        return;
+    }
     clearInference();
     if (view->sizingCircle() || view->sizingArc()) {
         context->setText("Finish or cancel the circle/arc before solving");

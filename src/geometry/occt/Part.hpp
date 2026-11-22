@@ -13,7 +13,7 @@ using SourceResolver = std::function<TopoDS_Shape(const features::Feature &)>;
 class ResultCache;
 struct Part {
     std::vector<Body> bodies;
-    QCborArray diagnostics, history, cosmeticThreads;
+    QCborArray diagnostics, history, cosmeticThreads, sectionFrames;
     bool stale = false;
     QCborArray errors;
     QMap<QString, TopoDS_Shape> stages, tools;
@@ -28,7 +28,7 @@ struct Part {
     evaluateSectionProperties(const features::SectionPropertiesRequest &req,
                               const QMap<QString, sketch::Sketch> &sketches = {}) const;
     DisplayMesh mesh(double deflectionMM = .2) const;
-    QCborArray topology(QString body = {}) const;
+    QCborArray topology(QString body = {}, bool displayMetadata = false) const;
     QCborMap reference(QString source, QString token, const Part &former) const;
 };
 QCborArray trace(BRepBuilderAPI_MakeShape &operation, const TopoDS_Shape &input);

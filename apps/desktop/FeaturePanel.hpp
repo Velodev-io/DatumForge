@@ -182,7 +182,9 @@ class FeaturePanel : public QWidget {
     QPushButton *applyRepairButton = nullptr;
 
     // CM7 Derived Curve Controls
-    bool isDerivedCurve = false;
+    bool isDerivedCurve = false, branchPreviewPending = false;
+    QCborMap derivedDraftModel() const;
+    void previewDerivedDraft();
     model::DerivedCurve curveDraft;
     QString currentCurveKind;
 

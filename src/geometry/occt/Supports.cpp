@@ -23,8 +23,13 @@ sketch::Frame attachmentFrame(const model::Attachment &a, const SupportReference
 }
 SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportBuild &build,
                                const exchange::Control &control, QString inspectOwner,
-                               int inspectSlot, QString inspectPath) {
-    d.map(); // Validate the complete graph/history and transport admission first.
+                               int inspectSlot, QString inspectPath, QStringList executionOrder,
+                               const IntentEvaluation &evaluateIntent) {
+    d.map();
+    if (!evaluateIntent) {
+        evaluation::Graph(d.nodes(), d.history, d.document);
+        executionOrder = d.history;
+    }
     control.checkpoint("Preparing model supports", 0);
     auto base = sketch::parse(d.sketches);
     auto features = features::parse(d.features);
@@ -54,7 +59,6 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
     }
     for (auto &f : features) {
         byFeature.insert(f.id, &f);
-        scene.stageOrder.insert(f.id, d.history.indexOf(f.id));
         admit(f.id);
     }
     for (auto &datum : d.datums) {
@@ -68,6 +72,12 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
     for (auto &c : d.conversions) {
         byConversion.insert(c.id, &c);
         admit(c.id);
+    }
+    for (qsizetype i = 0; i < executionOrder.size(); ++i) {
+        const auto &id = executionOrder[i];
+        if (!d.history.contains(id))
+            admit(id);
+        scene.stageOrder.insert(id, i);
     }
     auto parsedSpatial = sketch::parseSpatial(d.spatial_sketches);
     QMap<QString, size_t> spatialIndex;
@@ -96,11 +106,17 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
     QSet<QString> evaluatedDatums;
     QCborArray prefix;
     SupportResult result;
-    result.order = d.history;
+    result.order = executionOrder;
     try {
-        for (qsizetype position = 0; position < d.history.size(); ++position) {
-            control.checkpoint("Evaluating model supports", int(position * 100 / d.history.size()));
-            auto id = d.history[position];
+        for (qsizetype position = 0; position < executionOrder.size(); ++position) {
+            control.checkpoint("Evaluating model supports",
+                               int(position * 100 / executionOrder.size()));
+            auto id = executionOrder[position];
+            if (evaluateIntent && !d.history.contains(id)) {
+                if (evaluateIntent(id, result, scene))
+                    return result;
+                continue;
+            }
             bool inspectAttachment =
                 attachments.contains(inspectOwner) &&
                 (id == inspectOwner ||
@@ -144,7 +160,8 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
                             result.inspection = scene.inspect(def.faces[fidx]);
                             return result;
                         }
-                        check(inspectSlot <= int(def.faces.size()) + (def.direction ? 1 : 0),
+                        check(inspectSlot >= 0 &&
+                                  inspectSlot <= int(def.faces.size()) + (def.direction ? 1 : 0),
                               "InvalidInput", "Choose a valid slot");
                         auto ref = inspectSlot == 0 ? def.sketch
                                    : inspectSlot <= int(def.faces.size())
@@ -316,9 +333,8 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
                 result.inspection = scene.inspect(sv.support);
                 return result;
             }
-            if (sv.active && (scene.planes.contains(sv.support.object) ||
-                              scene.stages.contains(sv.support.object))) {
-                scene.plane(sv.support);
+            if (sv.active) {
+                result.sectionFrames.insert(sv.id, scene.plane(sv.support));
             }
         }
         for (const auto &v : d.appearance_overrides) {
@@ -329,8 +345,7 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
                 result.inspection = scene.inspect(o.faceReference);
                 return result;
             }
-            if (o.level == "Face" && !o.faceReference.topology.isEmpty() &&
-                scene.stages.contains(o.faceReference.object)) {
+            if (o.level == "Face" && !o.faceReference.topology.isEmpty()) {
                 scene.topology(o.faceReference);
             }
         }
@@ -341,6 +356,7 @@ SupportResult evaluateSupports(const model::SupportDefinition &d, const SupportB
         result.planes = scene.planes;
         result.axes = scene.axes;
         result.derived = scene.derived;
+        result.part.sectionFrames = result.sectionGeometry();
         control.checkpoint("Model supports ready", 100);
         result.map(); // Refuse oversized output before publication.
         return result;
@@ -364,6 +380,14 @@ QCborArray SupportResult::datumGeometry() const {
                               {"direction", features::array(it->direction)}}));
     return datums;
 }
+QCborArray SupportResult::sectionGeometry() const {
+    QCborArray frames;
+    for (auto it = sectionFrames.cbegin(); it != sectionFrames.cend(); ++it)
+        frames.append(fields({{"id", it.key()},
+                              {"origin", features::array(it->origin)},
+                              {"normal", features::array(sketch::cross(it->u, it->v))}}));
+    return frames;
+}
 QCborMap SupportResult::map(qint64 revision) const {
     QCborArray history;
     for (auto id : order)
@@ -379,6 +403,12 @@ QCborMap SupportResult::map(qint64 revision) const {
           part.bodies.empty()
               ? fields({{"revision", revision}, {"valid", false}, {"reason", "No solid features"}})
               : part.measure(revision)}});
+    if (!spatialSketches.isEmpty()) {
+        QCborArray spatial;
+        for (auto it = spatialSketches.cbegin(); it != spatialSketches.cend(); ++it)
+            spatial.append(it->map());
+        result.insert(QStringLiteral("spatial_sketches"), spatial);
+    }
     check(QCborValue(result).toCbor().size() <= qsizetype(limits::control), "ResourceLimit",
           "Support preview output exceeds control admission");
     return result;

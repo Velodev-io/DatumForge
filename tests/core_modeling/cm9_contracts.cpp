@@ -48,6 +48,13 @@ QCborMap planeRef(QString owner) {
 // ============================================================================
 
 void testHoleCatalogContracts() {
+    CHECK(features::availableHoleSizes("iso", "ISO 4762", "SocketHeadCapScrew") ==
+          QStringList{"M8"});
+    CHECK(features::availableHoleSizes("ansi_inch", "ASME_B1.20.1", "PipeTap") ==
+          QStringList{"1/4-18 NPT"});
+    auto fits = features::availableHoleFits("iso", "ISO 4762", "SocketHeadCapScrew", "M8");
+    CHECK(fits.size() == 3 && fits.first() == "Fine" && fits.last() == "Coarse");
+
     // 1.1 ANSI Metric - T7 p. 21 nominal fixture: M8 Socket Button Head Cap Screw
     {
         HoleCatalogQuery q;

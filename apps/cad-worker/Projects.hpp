@@ -596,11 +596,14 @@ class Projects {
                               : part.measure(e.revision, {}, {}, assignedDensity));
                     reply.insert(QStringLiteral("feature_diagnostics"), part.diagnostics);
                     reply.insert(QStringLiteral("topology_history"), part.history);
-                    reply.insert(QStringLiteral("topology"), part.topology());
+                    reply.insert(QStringLiteral("topology"),
+                                 part.topology({}, e.command == "DisplayPart"));
                     QCborArray bodies;
                     for (auto &b : part.bodies)
                         bodies.append(b.id);
                     reply.insert(QStringLiteral("bodies"), bodies);
+                    if (!part.sectionFrames.isEmpty())
+                        reply.insert(QStringLiteral("section_frames"), part.sectionFrames);
                 }
                 return reply;
             }

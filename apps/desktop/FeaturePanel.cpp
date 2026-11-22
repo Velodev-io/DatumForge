@@ -937,6 +937,33 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
     connect(client, &Client::supportReferenceResolution, this, [this](QCborMap resolution) {
         if (!editing)
             return;
+        if (branchPreviewPending && resolution.value("owner") == curveDraft.id &&
+            resolution.value("path") == "branch") {
+            branchPreviewPending = false;
+            const auto candidates = resolution.value("replacements").toArray();
+            int index = projectedBranch->value();
+            projectedBranchLabel->setText(QString("%1 branches available").arg(candidates.size()));
+            const auto token = resolution.value("reference").toMap().value("token").toString();
+            if (token.startsWith("edge/")) {
+                index = -1;
+                for (qsizetype i = 0; i < candidates.size(); ++i)
+                    if (candidates[i].toMap().value("token") == token) {
+                        index = int(i);
+                        break;
+                    }
+            }
+            if (index < 0 || index >= candidates.size()) {
+                diagnostic->setText("Choose a branch from the available projection results.");
+                return;
+            }
+            const auto chosen = model::BranchSelection::parse(candidates[index].toMap());
+            if (curveDraft.sketchOnSketch)
+                curveDraft.sketchOnSketch->branch = chosen;
+            else
+                curveDraft.sketchOnFaces->branch = chosen;
+            previewDerivedDraft();
+            return;
+        }
         repairCandidate->clear();
         repairResolution = resolution;
         QCborArray list = resolution.contains(QStringLiteral("replacements"))
@@ -1088,6 +1115,7 @@ FeaturePanel::FeaturePanel(Client *c) : client(c) {
             previewButton->setEnabled(idle);
             if (client->state().phase == Phase::Failed) {
                 supportPreviewPending = false;
+                branchPreviewPending = false;
                 validPreview = false;
                 commitPending = false;
                 diagnostic->setText(client->state().message);
@@ -1871,6 +1899,66 @@ void FeaturePanel::begin(QString kind, QString editId) {
         }
         if (projectedSketch2->count() > 1)
             projectedSketch2->setCurrentIndex(1);
+
+        projectedFaces->clear();
+        compositeMembers->clear();
+        auto addMember = [](QListWidget *list, const QString &label,
+                            const domain::GeometryReference &ref, bool checked) {
+            auto *item = new QListWidgetItem(label, list);
+            item->setData(Qt::UserRole, QVariant::fromValue(ref.map()));
+            item->setCheckState(checked ? Qt::Checked : Qt::Unchecked);
+        };
+        QCborArray priorFaces, priorMembers;
+        if (!editId.isEmpty()) {
+            if (curveDraft.sketchOnFaces)
+                for (const auto &face : curveDraft.sketchOnFaces->faces) {
+                    priorFaces.append(face.map());
+                    addMember(projectedFaces, "Face " + face.topology.right(8), face, true);
+                }
+            if (curveDraft.compositeCurve)
+                for (const auto &member : curveDraft.compositeCurve->members) {
+                    priorMembers.append(member.source.map());
+                    addMember(compositeMembers, "Curve " + member.source.object.right(8),
+                              member.source, true);
+                    compositeMembers->item(compositeMembers->count() - 1)
+                        ->setData(Qt::UserRole + 1, member.reversed);
+                }
+        }
+        for (auto value : client->acceptedPart().value("topology").toArray()) {
+            auto entry = value.toMap();
+            auto token = entry.value("token").toString();
+            domain::GeometryReference ref;
+            ref.object = entry.value("stage").toString();
+            ref.topology = token;
+            if (!wire::uuid(ref.object))
+                continue;
+            ref.role = token.startsWith("face/") ? "Face" : "Edge";
+            auto *list = ref.role == "Face" ? projectedFaces : compositeMembers;
+            if (!(ref.role == "Face" ? priorFaces : priorMembers).contains(ref.map()))
+                addMember(list, ref.role + " " + token.right(8), ref, false);
+        }
+        auto model = model::editableSupports(document);
+        for (const auto &curve : model::parseDerivedCurves(model.derived_curves)) {
+            if (curve.id == draft.id)
+                continue;
+            auto ref = makeRef(curve.id, "Curve");
+            if (!priorMembers.contains(ref.map()))
+                addMember(compositeMembers, curve.name, ref, false);
+        }
+        for (const auto &sk : sketch::parse(document.value("sketches").toArray()))
+            for (const auto &entity : sk.entities)
+                if (entity.kind != "Point" && !entity.construction) {
+                    auto ref = makeRef(sk.id, "Curve", entity.id);
+                    if (!priorMembers.contains(ref.map()))
+                        addMember(compositeMembers, sk.name + " / " + entity.kind, ref, false);
+                }
+        for (const auto &sk : sketch::parseSpatial(model.spatial_sketches))
+            for (const auto &entity : sk.entities)
+                if (entity.kind != "Point" && !entity.construction) {
+                    auto ref = makeRef(sk.id, "Curve", entity.id);
+                    if (!priorMembers.contains(ref.map()))
+                        addMember(compositeMembers, sk.name + " / " + entity.kind, ref, false);
+                }
 
         helixAxis->clear();
         projectedDirection->clear();
@@ -3546,7 +3634,9 @@ QCborMap FeaturePanel::definitionModeling() const {
         if (!holeCustomSizing->isChecked()) {
             auto priorSizing = modelingDraft.value("sizing").toMap();
             if (!holeCatalogModified && priorSizing.value("mode") == "Catalog") {
+                const auto depth = sizing.value("depth");
                 sizing = priorSizing;
+                sizing.insert(QStringLiteral("depth"), depth);
             } else {
                 features::HoleCatalogQuery q;
                 q.dataset = holeDataset->currentText();
@@ -3557,6 +3647,7 @@ QCborMap FeaturePanel::definitionModeling() const {
                 auto resolved = features::resolveHoleCatalog(q);
                 sizing.insert(QStringLiteral("mode"), QStringLiteral("Catalog"));
                 sizing.insert(QStringLiteral("dataset"), q.dataset);
+                sizing.insert(QStringLiteral("version"), QStringLiteral("builtin-1"));
                 sizing.insert(QStringLiteral("standard"), q.standard);
                 sizing.insert(QStringLiteral("type"), q.type);
                 sizing.insert(QStringLiteral("size"), q.size);
@@ -4039,7 +4130,8 @@ QCborMap FeaturePanel::definitionModeling() const {
             if (thinMode->currentText() == "OneDirection" ||
                 thinMode->currentText() == "Midplane") {
                 th.insert(QStringLiteral("thickness"), thickness1->value() * u);
-                th.insert(QStringLiteral("reverse"), thinReverse->isChecked());
+                if (thinMode->currentText() == "OneDirection")
+                    th.insert(QStringLiteral("reverse"), thinReverse->isChecked());
             } else if (thinMode->currentText() == "TwoDirection") {
                 th.insert(QStringLiteral("thickness1"), thickness1->value() * u);
                 th.insert(QStringLiteral("thickness2"), thickness2->value() * u);
@@ -4256,11 +4348,33 @@ QCborArray FeaturePanel::definitionsModeling() const {
     return all;
 }
 
+QCborMap FeaturePanel::derivedDraftModel() const {
+    auto model = model::editableSupports(document);
+    auto curves = model::parseDerivedCurves(model.derived_curves);
+    auto existing = std::find_if(curves.begin(), curves.end(),
+                                 [&](const auto &curve) { return curve.id == curveDraft.id; });
+    if (existing == curves.end())
+        curves.push_back(curveDraft);
+    else
+        *existing = curveDraft;
+    return model::editSupportedDerivedCurves(document, model::encodeDerivedCurves(curves)).map();
+}
+
+void FeaturePanel::previewDerivedDraft() {
+    supportPreviewPending = true;
+    client->projectCommand("PreviewModelSupports", fields({{"model", derivedDraftModel()}}));
+}
+
 void FeaturePanel::preview() {
     try {
         if (isDerivedCurve) {
-            curveDraft.id =
-                draft.id.isEmpty() ? QUuid::createUuid().toString(QUuid::WithoutBraces) : draft.id;
+            validPreview = false;
+            accept->setEnabled(false);
+            const auto previous = curveDraft;
+            curveDraft = {};
+            if (!previous.id.isEmpty())
+                curveDraft.id = previous.id;
+            curveDraft.id = draft.id.isEmpty() ? curveDraft.id : draft.id;
             curveDraft.name =
                 name->text().trimmed().isEmpty() ? draft.kind : name->text().trimmed();
             if (draft.kind == "HelixSpiral") {
@@ -4271,8 +4385,7 @@ void FeaturePanel::preview() {
                 QString axisObj = helixAxis->currentData().toString();
                 if (!wire::uuid(axisObj)) {
                     QString axName = axisObj.startsWith("axis/") ? axisObj.mid(5) : "Z";
-                    auto sup =
-                        model::SupportDefinition::parse(document.value("model_supports").toMap());
+                    auto sup = model::editableSupports(document);
                     QString foundId;
                     for (const auto &d : sup.datums) {
                         if (d.kind == "DatumAxis" && d.mode == "Principal" &&
@@ -4312,9 +4425,7 @@ void FeaturePanel::preview() {
                 hd.clockwise = helixClockwise->isChecked();
                 curveDraft.helixSpiral = hd;
                 curveDraft.validate();
-                diagnostic->setText("Preview ready · Helix/spiral valid");
-                validPreview = true;
-                accept->setEnabled(true);
+                previewDerivedDraft();
                 return;
             } else if (draft.kind == "CompositeCurve") {
                 curveDraft.kind = "CompositeCurve";
@@ -4326,14 +4437,13 @@ void FeaturePanel::preview() {
                         model::CompositeCurveMember m;
                         m.source = domain::GeometryReference::parse(
                             item->data(Qt::UserRole).value<QCborMap>());
+                        m.reversed = item->data(Qt::UserRole + 1).toBool();
                         cd.members.push_back(m);
                     }
                 }
                 curveDraft.compositeCurve = cd;
                 curveDraft.validate();
-                diagnostic->setText("Preview ready · Composite curve valid");
-                validPreview = true;
-                accept->setEnabled(true);
+                previewDerivedDraft();
                 return;
             } else if (draft.kind == "ProjectedCurve") {
                 auto pmode = projectedMode->currentText();
@@ -4352,13 +4462,18 @@ void FeaturePanel::preview() {
                     sos.branch.reversed = projectedReversed->isChecked();
                     sos.branch.startParam = projectedStartParam->value();
                     sos.branch.endParam = projectedEndParam->value();
+                    if (previous.sketchOnSketch &&
+                        previous.sketchOnSketch->sketch1.map() == sos.sketch1.map() &&
+                        previous.sketchOnSketch->sketch2.map() == sos.sketch2.map() &&
+                        previous.sketchOnSketch->branch.index == sos.branch.index)
+                        sos.branch.token = previous.sketchOnSketch->branch.token;
                     curveDraft.sketchOnSketch = sos;
                     curveDraft.validate();
-                    projectedBranchLabel->setText(
-                        QString("Branch index %1").arg(projectedBranch->value()));
-                    diagnostic->setText("Preview ready · Projected curve valid");
-                    validPreview = true;
-                    accept->setEnabled(true);
+                    auto model = derivedDraftModel();
+                    branchPreviewPending = true;
+                    client->projectCommand(
+                        "SupportReferenceCandidates",
+                        fields({{"model", model}, {"owner", curveDraft.id}, {"path", "branch"}}));
                     return;
                 } else if (pmode == "SketchOnFaces") {
                     model::SketchOnFacesDefinition sof;
@@ -4372,8 +4487,7 @@ void FeaturePanel::preview() {
                         QString dirObj = projectedDirection->currentData().toString();
                         if (!wire::uuid(dirObj)) {
                             QString axName = dirObj.startsWith("axis/") ? dirObj.mid(5) : "Z";
-                            auto sup = model::SupportDefinition::parse(
-                                document.value("model_supports").toMap());
+                            auto sup = model::editableSupports(document);
                             QString foundId;
                             for (const auto &d : sup.datums) {
                                 if (d.kind == "DatumAxis" && d.mode == "Principal" &&
@@ -4410,12 +4524,25 @@ void FeaturePanel::preview() {
                     sof.branch.startParam = projectedStartParam->value();
                     sof.branch.endParam = projectedEndParam->value();
                     curveDraft.sketchOnFaces = sof;
+                    if (previous.sketchOnFaces && previous.sketchOnFaces->mode == sof.mode &&
+                        previous.sketchOnFaces->branch.index == sof.branch.index) {
+                        const auto same = [&] {
+                            auto a = previous.sketchOnFaces->map();
+                            auto b = sof.map();
+                            a.remove(QStringLiteral("branch"));
+                            b.remove(QStringLiteral("branch"));
+                            return a == b;
+                        };
+                        if (same())
+                            curveDraft.sketchOnFaces->branch.token =
+                                previous.sketchOnFaces->branch.token;
+                    }
                     curveDraft.validate();
-                    projectedBranchLabel->setText(
-                        QString("Branch index %1").arg(projectedBranch->value()));
-                    diagnostic->setText("Preview ready · Projected curve valid");
-                    validPreview = true;
-                    accept->setEnabled(true);
+                    auto model = derivedDraftModel();
+                    branchPreviewPending = true;
+                    client->projectCommand(
+                        "SupportReferenceCandidates",
+                        fields({{"model", model}, {"owner", curveDraft.id}, {"path", "branch"}}));
                     return;
                 }
             }
@@ -4477,26 +4604,10 @@ void FeaturePanel::finish() {
         return;
     try {
         if (isDerivedCurve) {
-            auto sup = model::SupportDefinition::parse(document.value("model_supports").toMap());
-            auto curves = model::parseDerivedCurves(sup.derived_curves);
-            bool replaced = false;
-            for (auto &existing : curves) {
-                if (existing.id == curveDraft.id) {
-                    existing = curveDraft;
-                    replaced = true;
-                    break;
-                }
-            }
-            if (!replaced)
-                curves.push_back(curveDraft);
-            auto modelDef =
-                model::editSupportedDerivedCurves(document, model::encodeDerivedCurves(curves));
+            const auto model = derivedDraftModel();
             commitPending = true;
             validPreview = false;
-            client->projectCommand("SetModelSupports", fields({{"model", modelDef.map()}}));
-            editing = false;
-            isDerivedCurve = false;
-            emit editingChanged();
+            client->projectCommand("SetModelSupports", fields({{"model", model}}));
             return;
         }
         if (isModeling) {

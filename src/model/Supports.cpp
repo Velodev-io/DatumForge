@@ -237,7 +237,7 @@ Conversion Conversion::parse(const QCborMap &m) {
     c.map();
     return c;
 }
-evaluation::Graph SupportDefinition::graph(bool validateHistory) const {
+std::vector<evaluation::GraphNode> SupportDefinition::nodes() const {
     check(datums.size() <= 32 && attachments.size() <= 16 && conversions.size() <= 32,
           "ResourceLimit", "Bounded support definition collections required");
     auto parsed = cad::sketch::parse(sketches);
@@ -302,8 +302,24 @@ evaluation::Graph SupportDefinition::graph(bool validateHistory) const {
         for (const auto &c : parsedDerived)
             nodes.push_back(c.graphNode());
     }
-    auto graph = evaluation::Graph(nodes, validateHistory ? history : QStringList{}, document);
-    check(!validateHistory || history.size() == qsizetype(nodes.size()), "InvalidInput",
+    return nodes;
+}
+evaluation::Graph SupportDefinition::graph(bool validateHistory) const {
+    auto local = nodes();
+    QSet<QString> identities;
+    for (const auto &node : local)
+        identities.insert(node.id);
+    // Intent stages are stored beside supports and validated together in the worker.
+    for (auto &node : local)
+        if (node.kind == "SpatialSketch" || node.kind == "DerivedCurve")
+            std::erase_if(node.references, [&](const auto &ref) {
+                ref.validate();
+                return (ref.document == "Self" || ref.document == document) &&
+                       !identities.contains(ref.object) &&
+                       (ref.role == "Face" || ref.role == "Edge" || ref.role == "Vertex");
+            });
+    auto graph = evaluation::Graph(local, validateHistory ? history : QStringList{}, document);
+    check(!validateHistory || history.size() == qsizetype(local.size()), "InvalidInput",
           "Complete explicit model history required");
     return graph;
 }

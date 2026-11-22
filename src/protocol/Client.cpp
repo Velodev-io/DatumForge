@@ -1,6 +1,7 @@
 #include "Client.hpp"
 #include "domain/Documents.hpp"
 #include "drawing/Paths.hpp"
+#include "features/Model.hpp"
 #include "features/ModelingRecords.hpp"
 #include "model/DatumGeometry.hpp"
 #include "model/Supports.hpp"
@@ -506,6 +507,12 @@ void Client::receive(const QCborMap &m) {
                                                          : "Reference scene ready";
         projection.message.clear();
         pending.erase(found);
+        if (e.command == "DisplayPart") {
+            acceptedPartReply = partReply;
+            acceptedPartDocument = e.context.document;
+            acceptedPartRevision = revision;
+            acceptedPartEpoch = projection.epoch;
+        }
         emit meshChanged(display);
         if (e.command == "PreviewModelSupports") {
             projection.job = "Model support preview · not committed";
@@ -591,6 +598,8 @@ void Client::receive(const QCborMap &m) {
         projection.stale = data.value("part_stale").toBool();
         projection.phase = e.command == "PreviewHistory" ? Phase::PreviewReady : Phase::Ready;
         partReply = data;
+        if (e.command == "DisplayPart")
+            acceptedPartReply.clear();
         emit meshChanged({});
         emit partResult(data);
         emit changed();
@@ -629,7 +638,21 @@ void Client::receive(const QCborMap &m) {
         wire::keys(data, {"support_geometry"});
         wire::require(data.value("support_geometry").isMap(), "Datum geometry reply required");
         auto result = data.value("support_geometry").toMap();
-        wire::keys(result, {"version", "document", "revision", "datums"});
+        QSet<QString> keys{"version", "document", "revision", "datums"};
+        if (result.contains(QStringLiteral("section_frames"))) {
+            keys.insert(QStringLiteral("section_frames"));
+            wire::require(result.value("section_frames").isArray() &&
+                              result.value("section_frames").toArray().size() <= 64,
+                          "Bounded section geometry required");
+            for (auto value : result.value("section_frames").toArray()) {
+                auto frame = value.toMap();
+                wire::keys(frame, {"id", "origin", "normal"});
+                domain::id(wire::text(frame, "id"));
+                features::vector(frame, "origin");
+                features::vector(frame, "normal", true);
+            }
+        }
+        wire::keys(result, keys);
         wire::require(wire::integer(result, "version") == 1 &&
                           wire::text(result, "document") == e.context.document &&
                           wire::integer(result, "revision") == revision &&
@@ -720,8 +743,14 @@ void Client::receive(const QCborMap &m) {
                              : QSet<QString>{"model_support_preview"});
         wire::require(data.value("model_support_preview").isMap(), "model support preview map");
         auto result = data.value("model_support_preview").toMap();
-        wire::keys(result, {"version", "sketches", "datums", "conversions", "evaluation_order",
-                            "part_empty", "measurement"});
+        QSet<QString> keys{"version",          "sketches",   "datums",     "conversions",
+                           "evaluation_order", "part_empty", "measurement"};
+        if (result.contains(QStringLiteral("spatial_sketches"))) {
+            keys.insert(QStringLiteral("spatial_sketches"));
+            wire::require(result.value("spatial_sketches").isArray(),
+                          "Spatial sketch array required");
+        }
+        wire::keys(result, keys);
         wire::require(wire::integer(result, "version") == 1 &&
                           result.value("part_empty").isBool() &&
                           result.value("measurement").isMap(),

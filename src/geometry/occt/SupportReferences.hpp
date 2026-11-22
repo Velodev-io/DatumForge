@@ -15,6 +15,7 @@ struct SupportCurve {
     double first = 0, last = 1, parameterScale = 1;
     bool edge = false;
     std::optional<gp_Pnt> point;
+    QString projectionToken = {};
 };
 gp_Pnt kernelPoint(sketch::Vec3 point);
 sketch::Vec3 siPoint(gp_Pnt point);

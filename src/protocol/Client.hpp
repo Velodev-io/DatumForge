@@ -47,7 +47,9 @@ class Client : public QObject {
     QTimer deadlines;
     int referenceInstances = 1;
     QString lastOperation;
-    QCborMap partReply;
+    QCborMap partReply, acceptedPartReply;
+    QString acceptedPartDocument, acceptedPartEpoch;
+    qint64 acceptedPartRevision = -1;
     void receive(const QCborMap &map);
     void installProject(const QCborMap &state);
     bool projectReady();
@@ -67,6 +69,13 @@ class Client : public QObject {
     }
     MeshPtr mesh() const {
         return display;
+    }
+    QCborMap acceptedPart() const {
+        return acceptedPartDocument == projection.activeDocument &&
+                       acceptedPartRevision == projection.revision &&
+                       acceptedPartEpoch == projection.epoch
+                   ? acceptedPartReply
+                   : QCborMap{};
     }
     bool ready() const {
         return authenticated;

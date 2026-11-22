@@ -638,7 +638,45 @@ Part Part::build(const QCborArray &sketches, const QCborArray &definitions, Resu
     }
     return out;
 }
-QCborArray Part::topology(QString body) const {
+QCborArray Part::topology(QString body, bool displayMetadata) const {
+    QMap<QString, QString> faceFeatures, topologyStages;
+    if (displayMetadata) {
+        QMap<QString, QSet<QString>> toolFaces;
+        for (auto value : history) {
+            auto change = value.toMap();
+            auto input = change.value("input").toString();
+            auto feature = change.value("feature").toString();
+            if (input.startsWith("face/") && tools.contains(feature) &&
+                !toolFaces.contains(feature)) {
+                QSet<QString> tokens;
+                const auto faces = subshapes(tools.value(feature), TopAbs_FACE);
+                for (auto it = faces.cbegin(); it != faces.cend(); ++it)
+                    tokens.insert(it.key());
+                toolFaces.insert(feature, tokens);
+            }
+            for (auto key : {"modified", "generated"})
+                for (auto output : change.value(QString::fromLatin1(key)).toArray()) {
+                    const auto token = output.toString();
+                    topologyStages[token] = feature;
+                    if (!token.startsWith("face/"))
+                        continue;
+                    if (qstrcmp(key, "generated") == 0)
+                        faceFeatures[token] = feature;
+                    else if (faceFeatures.contains(input))
+                        faceFeatures[token] = faceFeatures.value(input);
+                    else if (toolFaces.contains(feature) &&
+                             toolFaces.constFind(feature)->contains(input))
+                        faceFeatures[token] = feature;
+                }
+        }
+        for (auto it = tools.cbegin(); it != tools.cend(); ++it)
+            if (!toolFaces.contains(it.key())) {
+                const auto faces = subshapes(it.value(), TopAbs_FACE);
+                for (auto face = faces.cbegin(); face != faces.cend(); ++face)
+                    if (!faceFeatures.contains(face.key()))
+                        faceFeatures.insert(face.key(), it.key());
+            }
+    }
     QCborArray a;
     for (auto &b : bodies)
         if (body.isEmpty() || b.id == body) {
@@ -651,11 +689,28 @@ QCborArray Part::topology(QString body) const {
                     else
                         BRepGProp::SurfaceProperties(it.value(), g);
                     auto p = g.CentreOfMass();
-                    a.append(fields(
+                    auto item = fields(
                         {{"body", b.id},
                          {"token", it.key()},
                          {"center_si", QCborArray{p.X() / mm, p.Y() / mm, p.Z() / mm}},
-                         {"measure_si", g.Mass() * (kind == TopAbs_EDGE ? 1 / mm : siArea)}}));
+                         {"measure_si", g.Mass() * (kind == TopAbs_EDGE ? 1 / mm : siArea)}});
+                    if (displayMetadata)
+                        item.insert(
+                            QStringLiteral("stage"),
+                            topologyStages.value(it.key(), faceFeatures.value(it.key(), b.id)));
+                    if (displayMetadata && kind == TopAbs_FACE) {
+                        item.insert(QStringLiteral("feature"), faceFeatures.value(it.key(), b.id));
+                        auto face = TopoDS::Face(it.value());
+                        BRepAdaptor_Surface surface(face);
+                        if (surface.GetType() == GeomAbs_Plane) {
+                            auto normal = surface.Plane().Axis().Direction();
+                            if (face.Orientation() == TopAbs_REVERSED)
+                                normal.Reverse();
+                            item.insert(QStringLiteral("normal"),
+                                        QCborArray{normal.X(), normal.Y(), normal.Z()});
+                        }
+                    }
+                    a.append(item);
                 }
             }
         }
@@ -780,11 +835,8 @@ Part::evaluateMassProperties(const features::MassPropertiesRequest &req) const {
         return res;
     }
 
-    // Surface area across all evaluated shapes
     GProp_GProps areaGProps;
-    for (const auto &s : shapes) {
-        BRepGProp::SurfaceProperties(s, areaGProps);
-    }
+    BRepGProp::SurfaceProperties(compound(shapes), areaGProps);
     res.surface_area_m2 = areaGProps.Mass() * siArea;
 
     // Volume, COM, and inertia evaluated strictly on closed solid bodies

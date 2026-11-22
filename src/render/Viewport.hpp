@@ -47,6 +47,7 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     QVector3D sectionNormal{0, 0, 1};
     double sectionOffset = 0.0;
     bool sectionFlip = false;
+    QMap<QString, QString> faceFeatures;
     QVector4D sectionCapColor{0.8f, 0.4f, 0.2f, 1.0f};
     QMap<QString, QVector4D> faceColorOverrides;
     QMap<QString, QVector4D> featureColorOverrides;
@@ -143,6 +144,10 @@ class Viewport : public QOpenGLWidget, protected QOpenGLFunctions {
     }
     QVector4D getSectionCapColor() const {
         return sectionCapColor;
+    }
+    void setFaceFeatures(QMap<QString, QString> owners) {
+        faceFeatures = std::move(owners);
+        update();
     }
     void setFaceAppearance(const QString &faceId, const QVector4D &rgba);
     void setFeatureAppearance(const QString &featureId, const QVector4D &rgba);

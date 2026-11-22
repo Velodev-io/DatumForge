@@ -578,7 +578,16 @@ void testLoftFeatures() {
 
     auto resThin = evaluateModeling(d, {loftThin});
     CHECK(resThin.part.bodies.size() == 1);
-    CHECK(volume(resThin.part.bodies[0].shape) > 0);
+    const double thinVolume = volume(resThin.part.bodies[0].shape);
+    CHECK(thinVolume > 0 && thinVolume < volLoft);
+    const auto invalidThin =
+        fields({{"mode", "OneDirection"}, {"thickness", 1.0}, {"reverse", false}});
+    loftThin.insert(QStringLiteral("thin"), invalidThin);
+    support_fixture::error("InvalidGeometry", [&] { evaluateModeling(d, {loftThin}); });
+
+    auto tangent = loftSolid;
+    tangent.insert(QStringLiteral("start_condition"), QStringLiteral("NormalToSection"));
+    support_fixture::error("UnsupportedOperation", [&] { evaluateModeling(d, {tangent}); });
 
     puts("cm8 loft features verified");
 }

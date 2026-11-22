@@ -1,6 +1,7 @@
 #include "EvaluationUI.hpp"
 #include "features/Catalogs.hpp"
-#include "model/Supports.hpp"
+#include "features/Model.hpp"
+#include "model/SupportEditing.hpp"
 #include "render/Viewport.hpp"
 #include <QColorDialog>
 #include <QDialogButtonBox>
@@ -18,6 +19,42 @@
 
 namespace cad {
 using sketch::fields;
+
+namespace {
+QCborMap activePart(const MainWindow &window) {
+    for (auto val : window.state().documentRecords) {
+        auto record = val.toMap();
+        if (record.value("id") == window.state().activeDocument && record.value("type") == "Part")
+            return record;
+    }
+    return {};
+}
+
+QCborMap selectedFace(const Client &client, const Selection &selection) {
+    if (selection.kind != "Face")
+        return {};
+    for (auto value : client.acceptedPart().value("topology").toArray()) {
+        auto face = value.toMap();
+        if (face.value("body").toString() + "/" + face.value("token").toString() ==
+            selection.entity)
+            return face;
+    }
+    return {};
+}
+
+domain::GeometryReference faceReference(const QCborMap &face) {
+    domain::GeometryReference ref;
+    ref.role = "Face";
+    ref.object = face.value("stage").toString();
+    ref.topology = face.value("token").toString();
+    return ref;
+}
+
+QVector3D displayVector(const QCborMap &record, QString key) {
+    auto v = features::vector(record, key);
+    return {float(v[0]), float(v[1]), float(v[2])};
+}
+} // namespace
 
 // ============================================================================
 // MaterialDialog
@@ -290,19 +327,7 @@ void MaterialDialog::applyMaterial() {
     if (activeDoc.isEmpty())
         return;
 
-    // Update document model support with material definition
-    QCborMap activeRecord;
-    for (auto val : window->state().documentRecords) {
-        auto d = val.toMap();
-        if (d.value("id").toString() == activeDoc)
-            activeRecord = d;
-    }
-
-    auto supMap = activeRecord.contains(QStringLiteral("model_supports"))
-                      ? activeRecord.value("model_supports").toMap()
-                      : activeRecord.value("supports").toMap();
-    auto model = model::SupportDefinition::parse(supMap);
-    model.document = activeDoc;
+    auto model = model::editableSupports(activePart(*window));
     model.material = currentMaterial->map();
 
     client->projectCommand("SetModelSupports", fields({{"model", model.map()}}));
@@ -421,11 +446,11 @@ MassPropertiesDialog::MassPropertiesDialog(MainWindow *win, Client *cli, QWidget
 void MassPropertiesDialog::refreshScopes() {
     scopeCombo->clear();
     scopeCombo->addItem("Entire Part");
-    if (client && client->mesh()) {
-        for (const auto &inst : client->mesh()->instances) {
-            scopeCombo->addItem("Body " + inst.id, inst.id);
+    if (client)
+        for (auto value : client->acceptedPart().value("bodies").toArray()) {
+            const auto id = value.toString();
+            scopeCombo->addItem("Body " + id.right(8), id);
         }
-    }
 }
 
 void MassPropertiesDialog::calculate() {
@@ -587,8 +612,6 @@ SectionViewDialog::SectionViewDialog(MainWindow *win, Client *cli, Viewport *vp,
     setWindowTitle("Named Section Views");
     resize(500, 360);
 
-    initialClippingActive = viewport ? viewport->sectionClippingActive() : false;
-
     auto *mainLayout = new QHBoxLayout(this);
 
     // Left: Section View List
@@ -625,9 +648,6 @@ SectionViewDialog::SectionViewDialog(MainWindow *win, Client *cli, Viewport *vp,
 
     supportCombo = new QComboBox(this);
     supportCombo->setObjectName("sectionViewSupport");
-    supportCombo->addItem("Front Plane", "datum/front");
-    supportCombo->addItem("Top Plane", "datum/top");
-    supportCombo->addItem("Right Plane", "datum/right");
     form->addRow("Support Plane:", supportCombo);
 
     offsetSpin = new QDoubleSpinBox(this);
@@ -667,32 +687,22 @@ SectionViewDialog::SectionViewDialog(MainWindow *win, Client *cli, Viewport *vp,
     connect(supportCombo, &QComboBox::currentIndexChanged, this, &SectionViewDialog::updatePreview);
     connect(applyButton, &QPushButton::clicked, this, &SectionViewDialog::apply);
     connect(closeBtn, &QPushButton::clicked, this, &QDialog::accept);
-
-    populateSections();
 }
 
 void SectionViewDialog::populateSections() {
+    if (viewport) {
+        initialClippingActive = viewport->sectionClippingActive();
+        initialOrigin = viewport->sectionClippingOrigin();
+        initialNormal = viewport->sectionClippingNormal();
+        initialOffset = viewport->sectionClippingOffset();
+        initialFlip = viewport->sectionClippingFlipped();
+    }
     updatingSelection = true;
     sectionList->clear();
     loadedSections.clear();
-    if (!window) {
-        updatingSelection = false;
-        return;
-    }
-
-    auto activeDoc = window->state().activeDocument;
-    QCborMap activeRecord;
-    for (auto val : window->state().documentRecords) {
-        auto d = val.toMap();
-        if (d.value("id").toString() == activeDoc)
-            activeRecord = d;
-    }
-
-    auto supMap = activeRecord.contains(QStringLiteral("model_supports"))
-                      ? activeRecord.value("model_supports").toMap()
-                      : activeRecord.value("supports").toMap();
-
-    for (auto val : supMap.value("section_views").toArray()) {
+    loadSupportChoices();
+    for (auto val :
+         activePart(*window).value("model_supports").toMap().value("section_views").toArray()) {
         auto sv = features::SectionView::parse(val.toMap());
         auto *item = new QListWidgetItem(sv.name, sectionList);
         item->setData(Qt::UserRole, sv.id);
@@ -705,45 +715,130 @@ void SectionViewDialog::populateSections() {
         sectionList->setCurrentRow(0);
 }
 
-void SectionViewDialog::onCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *) {
-    if (updatingSelection || !current)
-        return;
-    QString id = current->data(Qt::UserRole).toString();
-    if (loadedSections.contains(id)) {
-        const auto &sv = loadedSections[id];
-        nameEdit->setText(sv.name);
-        activeCheck->setChecked(sv.active);
-        offsetSpin->setValue(sv.offset * 1000.0);
-        flipCheck->setChecked(sv.flip);
-        if (sv.support.role == "Plane") {
-            if (sv.support.object.contains("Top") || sv.support.object.contains("XZ"))
-                supportCombo->setCurrentText("Top Plane");
-            else if (sv.support.object.contains("Right") || sv.support.object.contains("YZ"))
-                supportCombo->setCurrentText("Right Plane");
-            else
-                supportCombo->setCurrentText("Front Plane");
-        }
-        updatePreview();
+void SectionViewDialog::loadSupportChoices() {
+    supportCombo->clear();
+    const auto record = activePart(*window);
+    auto model = model::editableSupports(record);
+    for (auto plane : {"XY", "XZ", "YZ"}) {
+        const auto existing =
+            std::find_if(model.datums.begin(), model.datums.end(), [&](const auto &datum) {
+                return datum.mode == "Principal" && datum.kind == "DatumPlane" &&
+                       datum.parameters.value("plane") == plane;
+            });
+        supportCombo->addItem(QString(plane) + " Plane", "principal/" + QString(plane));
+        if (existing != model.datums.end())
+            supportCombo->setItemData(supportCombo->count() - 1, existing->id, Qt::UserRole + 1);
+    }
+    for (auto it = window->datumGeometry.cbegin(); it != window->datumGeometry.cend(); ++it)
+        if (it->kind == "DatumPlane" && wire::uuid(it.key()) &&
+            supportCombo->findData(it.key(), Qt::UserRole + 1) < 0)
+            supportCombo->addItem(window->datumLabels.value(it.key()), it.key());
+    const auto face = selectedFace(*client, window->state().selection);
+    if (face.contains(QStringLiteral("normal"))) {
+        const auto ref = faceReference(face);
+        if (wire::uuid(ref.object))
+            supportCombo->addItem("Selected Face", QVariant::fromValue(ref.map()));
     }
 }
 
-void SectionViewDialog::updatePreview() {
-    if (!viewport)
+void SectionViewDialog::saveCurrent(QListWidgetItem *item) {
+    if (!item || !loadedSections.contains(item->data(Qt::UserRole).toString()))
         return;
-    bool active = activeCheck->isChecked();
-    double offsetMM = offsetSpin->value();
-    bool flip = flipCheck->isChecked();
-    auto sup = supportCombo->currentText();
-    QVector3D norm(0, 0, 1);
-    if (sup.contains("Top"))
-        norm = QVector3D(0, 1, 0);
-    else if (sup.contains("Right"))
-        norm = QVector3D(1, 0, 0);
+    auto &view = loadedSections[item->data(Qt::UserRole).toString()];
+    view.name = nameEdit->text().trimmed();
+    item->setText(view.name);
+    view.active = activeCheck->isChecked();
+    view.offset = offsetSpin->value() / 1000.0;
+    view.flip = flipCheck->isChecked();
+    if (supportCombo->currentData().canConvert<QCborMap>()) {
+        view.support =
+            domain::GeometryReference::parse(supportCombo->currentData().value<QCborMap>());
+    } else {
+        view.support = {};
+        view.support.role = "Plane";
+        view.support.object = supportCombo->currentData().toString();
+    }
+}
 
-    viewport->setSectionClipping(active, QVector3D(0, 0, 0), norm, offsetMM, flip);
+void SectionViewDialog::onCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous) {
+    if (updatingSelection || !current)
+        return;
+    saveCurrent(previous);
+    updatingSelection = true;
+    const auto view = loadedSections.value(current->data(Qt::UserRole).toString());
+    nameEdit->setText(view.name);
+    activeCheck->setChecked(view.active);
+    offsetSpin->setValue(view.offset * 1000.0);
+    flipCheck->setChecked(view.flip);
+    if (view.support.role == "Face") {
+        const auto data = QVariant::fromValue(view.support.map());
+        int index = supportCombo->findData(data);
+        if (index < 0) {
+            supportCombo->addItem("Saved Face", data);
+            index = supportCombo->count() - 1;
+        }
+        supportCombo->setCurrentIndex(index);
+    } else if (!view.support.object.isEmpty()) {
+        int index = supportCombo->findData(view.support.object);
+        if (index < 0)
+            index = supportCombo->findData(view.support.object, Qt::UserRole + 1);
+        if (index < 0) {
+            supportCombo->addItem("Saved Plane", view.support.object);
+            index = supportCombo->count() - 1;
+        }
+        supportCombo->setCurrentIndex(index);
+    }
+    updatingSelection = false;
+    updatePreview();
+}
+
+void SectionViewDialog::updatePreview() {
+    if (!viewport || updatingSelection)
+        return;
+    const auto choice = supportCombo->currentData();
+    if (choice.canConvert<QCborMap>()) {
+        const auto ref = domain::GeometryReference::parse(choice.value<QCborMap>());
+        for (auto value : client->acceptedPart().value("topology").toArray()) {
+            const auto face = value.toMap();
+            if (face.value("stage") == ref.object && face.value("token") == ref.topology &&
+                face.contains(QStringLiteral("normal"))) {
+                viewport->setSectionClipping(
+                    activeCheck->isChecked(), displayVector(face, "center_si") * 1000,
+                    displayVector(face, "normal"), offsetSpin->value(), flipCheck->isChecked());
+                return;
+            }
+        }
+        auto item = sectionList->currentItem();
+        if (item &&
+            loadedSections.value(item->data(Qt::UserRole).toString()).support.map() == ref.map() &&
+            window->datumResultKey == window->datumKey()) {
+            for (auto value : window->acceptedSections) {
+                const auto frame = value.toMap();
+                if (frame.value("id") == item->data(Qt::UserRole).toString()) {
+                    viewport->setSectionClipping(activeCheck->isChecked(),
+                                                 displayVector(frame, "origin") * 1000,
+                                                 displayVector(frame, "normal"),
+                                                 offsetSpin->value(), flipCheck->isChecked());
+                    return;
+                }
+            }
+        }
+    } else {
+        const auto it = window->datumGeometry.constFind(choice.toString());
+        if (it != window->datumGeometry.cend()) {
+            const auto &f = it->frame;
+            QVector3D u(f.u[0], f.u[1], f.u[2]), v(f.v[0], f.v[1], f.v[2]);
+            viewport->setSectionClipping(
+                activeCheck->isChecked(), QVector3D(f.origin[0], f.origin[1], f.origin[2]) * 1000,
+                QVector3D::crossProduct(u, v), offsetSpin->value(), flipCheck->isChecked());
+            return;
+        }
+    }
+    viewport->setSectionClipping(false);
 }
 
 void SectionViewDialog::createNew() {
+    saveCurrent(sectionList->currentItem());
     int count = sectionList->count() + 1;
     QString name = QString("Section %1").arg(count);
     features::SectionView sv;
@@ -762,6 +857,7 @@ void SectionViewDialog::createNew() {
     activeCheck->setChecked(true);
     offsetSpin->setValue(0.0);
     flipCheck->setChecked(false);
+    supportCombo->setCurrentIndex(0);
     updatingSelection = false;
 
     updatePreview();
@@ -786,108 +882,46 @@ void SectionViewDialog::apply() {
     if (!client || !window)
         return;
 
-    auto activeDoc = window->state().activeDocument;
-    if (activeDoc.isEmpty())
-        return;
-
-    QCborMap activeRecord;
-    for (auto val : window->state().documentRecords) {
-        auto d = val.toMap();
-        if (d.value("id").toString() == activeDoc)
-            activeRecord = d;
-    }
-
-    auto supMap = activeRecord.contains(QStringLiteral("model_supports"))
-                      ? activeRecord.value("model_supports").toMap()
-                      : activeRecord.value("supports").toMap();
-    auto model = model::SupportDefinition::parse(supMap);
-    model.document = activeDoc;
-
-    auto currentItem = sectionList->currentItem();
-    if (currentItem) {
-        QString id = currentItem->data(Qt::UserRole).toString();
-        if (id.isEmpty() || !wire::uuid(id)) {
-            id = QUuid::createUuid().toString(QUuid::WithoutBraces);
-            currentItem->setData(Qt::UserRole, id);
-        }
-        features::SectionView &sv = loadedSections[id];
-        sv.id = id;
-        sv.name = nameEdit->text();
-        currentItem->setText(sv.name);
-        sv.active = activeCheck->isChecked();
-        sv.offset = offsetSpin->value() / 1000.0; // convert mm to meters SI
-        sv.flip = flipCheck->isChecked();
-
-        bool resolvedSupport = false;
-        auto sel = window->state().selection;
-        if (supportCombo->currentText().contains("Selected Face") && sel.kind == "Face" &&
-            !sel.entity.isEmpty()) {
-            domain::GeometryReference ref;
-            ref.document = "Self";
-            ref.role = "Face";
-            QString top = sel.entity;
-            QString obj = activeDoc;
-            if (top.contains('/')) {
-                int slash = top.indexOf('/');
-                QString maybeUuid = top.left(slash);
-                if (wire::uuid(maybeUuid))
-                    obj = maybeUuid;
-                top = top.mid(slash + 1);
-            }
-            ref.object = obj;
-            ref.topology = top;
-            sv.support = ref;
-            resolvedSupport = true;
-        }
-        if (!resolvedSupport) {
-            QString planeName = supportCombo->currentText();
-            QString paramPlane =
-                planeName.contains("Top") ? "XZ" : (planeName.contains("Right") ? "YZ" : "XY");
-            QString datumId;
-            for (const auto &d : model.datums) {
-                if (d.kind == "DatumPlane" && d.mode == "Principal" &&
-                    d.parameters.value("plane").toString() == paramPlane) {
-                    datumId = d.id;
-                    break;
+    try {
+        auto model = model::editableSupports(activePart(*window));
+        saveCurrent(sectionList->currentItem());
+        QCborArray views;
+        for (int i = 0; i < sectionList->count(); ++i) {
+            const auto id = sectionList->item(i)->data(Qt::UserRole).toString();
+            auto view = loadedSections.value(id);
+            if (view.support.object.startsWith("principal/")) {
+                const auto plane = view.support.object.mid(10);
+                auto existing =
+                    std::find_if(model.datums.begin(), model.datums.end(), [&](const auto &datum) {
+                        return datum.mode == "Principal" && datum.kind == "DatumPlane" &&
+                               datum.parameters.value("plane") == plane;
+                    });
+                if (existing == model.datums.end()) {
+                    model::Datum principal;
+                    principal.kind = "DatumPlane";
+                    principal.mode = "Principal";
+                    principal.parameters = fields({{"plane", plane}});
+                    model.datums.push_back(principal);
+                    view.support.object = principal.id;
+                } else {
+                    view.support.object = existing->id;
                 }
             }
-            if (datumId.isEmpty()) {
-                model::Datum pl;
-                pl.kind = "DatumPlane";
-                pl.mode = "Principal";
-                pl.parameters = fields({{"plane", paramPlane}});
-                model.datums.push_back(pl);
-                model.sequence();
-                datumId = pl.id;
-            }
-            domain::GeometryReference ref;
-            ref.document = "Self";
-            ref.role = "Plane";
-            ref.object = datumId;
-            sv.support = ref;
+            views.append(view.map());
         }
+        model.sequence();
+        client->projectCommand("SetModelSupports",
+                               fields({{"model", model.map()}, {"section_views", views}}));
+        accept();
+    } catch (const std::exception &e) {
+        QMessageBox::warning(this, "Section View", QString::fromUtf8(e.what()));
     }
-
-    QCborArray views;
-    for (int i = 0; i < sectionList->count(); ++i) {
-        QString id = sectionList->item(i)->data(Qt::UserRole).toString();
-        if (loadedSections.contains(id)) {
-            views.append(loadedSections[id].map());
-        }
-    }
-    model.section_views = views;
-
-    client->projectCommand("SetModelSupports", fields({{"model", model.map()}}));
-    if (currentItem && loadedSections.contains(currentItem->data(Qt::UserRole).toString())) {
-        initialClippingActive = loadedSections[currentItem->data(Qt::UserRole).toString()].active;
-    }
-    updatePreview();
-    accept();
 }
 
 void SectionViewDialog::reject() {
     if (viewport)
-        viewport->setSectionClipping(initialClippingActive);
+        viewport->setSectionClipping(initialClippingActive, initialOrigin, initialNormal,
+                                     initialOffset, initialFlip);
     QDialog::reject();
 }
 
@@ -1025,29 +1059,17 @@ void AppearanceDialog::refreshTarget() {
     auto sel = window->state().selection;
     if (sel.kind == "Face" && !sel.entity.isEmpty()) {
         scopeCombo->setCurrentText("Face");
-        currentFaceRef.document = "Self";
-        currentFaceRef.role = "Face";
-        QString top = sel.entity;
-        QString obj = activeDoc;
-        if (top.contains('/')) {
-            int slash = top.indexOf('/');
-            QString maybeUuid = top.left(slash);
-            if (wire::uuid(maybeUuid))
-                obj = maybeUuid;
-            top = top.mid(slash + 1);
-        }
-        currentFaceRef.object = obj;
-        currentFaceRef.topology = top;
+        currentFaceRef = faceReference(selectedFace(*client, sel));
         currentTarget = sel.entity;
         targetLabel->setText("Face: " + sel.entity);
     } else if (sel.kind == "Feature" && !sel.entity.isEmpty()) {
         scopeCombo->setCurrentText("Feature");
         currentTarget = sel.entity;
         targetLabel->setText("Feature: " + sel.entity);
-    } else if (sel.kind == "Body" && !sel.occurrence.isEmpty()) {
+    } else if (sel.kind == "Body" && wire::uuid(sel.entity)) {
         scopeCombo->setCurrentText("Body");
-        currentTarget = sel.occurrence;
-        targetLabel->setText("Body: " + sel.occurrence);
+        currentTarget = sel.entity;
+        targetLabel->setText("Body: " + currentTarget);
     } else {
         scopeCombo->setCurrentText("Entire Part");
         currentTarget = activeDoc;
@@ -1066,28 +1088,19 @@ void AppearanceDialog::setScope(const QString &scope) {
         currentTarget = activeDoc;
         targetLabel->setText("Part: " + activeDoc);
     } else if (scope == "Body") {
-        currentTarget = sel.occurrence.isEmpty() ? "body_1" : sel.occurrence;
+        currentTarget = sel.kind == "Body" && wire::uuid(sel.entity) ? sel.entity : QString{};
         targetLabel->setText("Body: " + currentTarget);
     } else if (scope == "Feature") {
-        currentTarget = sel.entity.isEmpty() ? "feature_1" : sel.entity;
+        currentTarget = sel.kind == "Feature" && wire::uuid(sel.entity) ? sel.entity : QString{};
         targetLabel->setText("Feature: " + currentTarget);
     } else if (scope == "Face") {
-        currentFaceRef.document = "Self";
-        currentFaceRef.role = "Face";
-        QString top = sel.entity;
-        QString obj = activeDoc;
-        if (top.contains('/')) {
-            int slash = top.indexOf('/');
-            QString maybeUuid = top.left(slash);
-            if (wire::uuid(maybeUuid))
-                obj = maybeUuid;
-            top = top.mid(slash + 1);
-        }
-        currentFaceRef.object = obj;
-        currentFaceRef.topology = top;
+        currentFaceRef = faceReference(selectedFace(*client, sel));
         currentTarget = sel.entity;
         targetLabel->setText("Face: " + currentTarget);
     }
+    bool valid = scope == "Face" ? wire::uuid(currentFaceRef.object) : wire::uuid(currentTarget);
+    applyButton->setEnabled(valid);
+    removeButton->setEnabled(valid);
     updatePreview();
 }
 
@@ -1115,17 +1128,7 @@ void AppearanceDialog::apply() {
     auto activeDoc = window->state().activeDocument;
     if (activeDoc.isEmpty())
         return;
-    QCborMap activeRecord;
-    for (auto val : window->state().documentRecords) {
-        auto d = val.toMap();
-        if (d.value("id").toString() == activeDoc)
-            activeRecord = d;
-    }
-    auto supMap = activeRecord.contains(QStringLiteral("model_supports"))
-                      ? activeRecord.value("model_supports").toMap()
-                      : activeRecord.value("supports").toMap();
-    auto model = model::SupportDefinition::parse(supMap);
-    model.document = activeDoc;
+    auto model = model::editableSupports(activePart(*window));
 
     QString scope = scopeCombo->currentText();
     QString level = scope == "Entire Part" ? "Part" : scope;
@@ -1173,17 +1176,7 @@ void AppearanceDialog::remove() {
     auto activeDoc = window->state().activeDocument;
     if (activeDoc.isEmpty())
         return;
-    QCborMap activeRecord;
-    for (auto val : window->state().documentRecords) {
-        auto d = val.toMap();
-        if (d.value("id").toString() == activeDoc)
-            activeRecord = d;
-    }
-    auto supMap = activeRecord.contains(QStringLiteral("model_supports"))
-                      ? activeRecord.value("model_supports").toMap()
-                      : activeRecord.value("supports").toMap();
-    auto model = model::SupportDefinition::parse(supMap);
-    model.document = activeDoc;
+    auto model = model::editableSupports(activePart(*window));
 
     QString scope = scopeCombo->currentText();
     QString level = scope == "Entire Part" ? "Part" : scope;
@@ -1202,8 +1195,9 @@ void AppearanceDialog::remove() {
         }
         updatedOverrides.append(val);
     }
-    model.appearance_overrides = updatedOverrides;
-    client->projectCommand("SetModelSupports", fields({{"model", model.map()}}));
+    client->projectCommand(
+        "SetModelSupports",
+        fields({{"model", model.map()}, {"appearance_overrides", updatedOverrides}}));
     initialOverrides = updatedOverrides;
 
     if (viewport) {
@@ -1364,6 +1358,15 @@ void MainWindow::syncViewportSupports() {
                       ? active.value("model_supports").toMap()
                       : active.value("supports").toMap();
 
+    QMap<QString, QString> faceFeatures;
+    for (auto value : client->acceptedPart().value("topology").toArray()) {
+        auto face = value.toMap();
+        if (face.contains(QStringLiteral("feature")))
+            faceFeatures.insert(face.value("body").toString() + "/" +
+                                    face.value("token").toString(),
+                                face.value("feature").toString());
+    }
+    viewport->setFaceFeatures(std::move(faceFeatures));
     // 1. Appearance overrides
     viewport->clearAppearanceOverrides();
     if (supMap.contains(QStringLiteral("appearance_overrides"))) {
@@ -1396,35 +1399,31 @@ void MainWindow::syncViewportSupports() {
         }
     }
 
-    // 2. Section views
-    bool activeClipping = false;
-    if (supMap.contains(QStringLiteral("section_views"))) {
-        for (auto val : supMap.value("section_views").toArray()) {
-            auto sv = features::SectionView::parse(val.toMap());
-            if (sv.active) {
-                QVector3D norm(0, 0, 1);
-                QString supName = sv.support.object;
-                if (supName.contains("Top") ||
-                    (sv.support.role == "Plane" && supName.contains("XZ")))
-                    norm = QVector3D(0, 1, 0);
-                else if (supName.contains("Right") ||
-                         (sv.support.role == "Plane" && supName.contains("YZ")))
-                    norm = QVector3D(1, 0, 0);
-                if (sv.cap_color_rgba.has_value()) {
-                    viewport->setSectionCapColor(
-                        QVector4D((*sv.cap_color_rgba)[0], (*sv.cap_color_rgba)[1],
-                                  (*sv.cap_color_rgba)[2], (*sv.cap_color_rgba)[3]));
-                }
-                viewport->setSectionClipping(true, QVector3D(0, 0, 0), norm, sv.offset * 1000.0,
-                                             sv.flip);
-                activeClipping = true;
-                break;
+    const auto part = client->acceptedPart();
+    const auto sectionFrames = part.contains(QStringLiteral("section_frames"))
+                                   ? part.value("section_frames").toArray()
+                               : datumResultKey == datumKey() ? acceptedSections
+                                                              : QCborArray{};
+    for (auto val : supMap.value("section_views").toArray()) {
+        const auto view = features::SectionView::parse(val.toMap());
+        if (!view.active)
+            continue;
+        for (auto value : sectionFrames) {
+            const auto frame = value.toMap();
+            if (frame.value("id") != view.id)
+                continue;
+            if (view.cap_color_rgba) {
+                const auto &color = *view.cap_color_rgba;
+                viewport->setSectionCapColor(
+                    {float(color[0]), float(color[1]), float(color[2]), float(color[3])});
             }
+            viewport->setSectionClipping(true, displayVector(frame, "origin") * 1000,
+                                         displayVector(frame, "normal"), view.offset * 1000.0,
+                                         view.flip);
+            return;
         }
     }
-    if (!activeClipping) {
-        viewport->setSectionClipping(false);
-    }
+    viewport->setSectionClipping(false);
 }
 
 } // namespace cad

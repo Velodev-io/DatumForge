@@ -450,6 +450,13 @@ class WorkflowContractsCM9 : public QObject {
         QVERIFY(massStatus->text().contains("successfully") ||
                 massStatus->text().contains("Evaluated"));
         QVERIFY(massVal->text().contains("kg"));
+        auto *massScope = massDialog->findChild<QComboBox *>("massScopeCombo");
+        QVERIFY(massScope);
+        QCOMPARE(massScope->itemData(1).toString(), baseId);
+        massScope->setCurrentIndex(1);
+        massRecalc->click();
+        QVERIFY(session.idle());
+        QVERIFY(massStatus->text().contains("Evaluated"));
 
         massDialog->accept();
         QVERIFY(!massDialog->isVisible());
@@ -510,6 +517,9 @@ class WorkflowContractsCM9 : public QObject {
         QVERIFY(secViewApply != nullptr);
         QVERIFY(secViewNew != nullptr);
 
+        auto *sectionSupport = secViewDialog->findChild<QComboBox *>("sectionViewSupport");
+        QVERIFY(sectionSupport);
+        sectionSupport->setCurrentIndex(sectionSupport->findData("principal/XZ"));
         secViewName->setText("Inspection Cut Plane");
         secViewActive->setChecked(true);
         secViewOffset->setValue(-15.0);
@@ -517,6 +527,7 @@ class WorkflowContractsCM9 : public QObject {
 
         // Verify live viewport clipping reflection
         QVERIFY(viewport->sectionClippingActive());
+        checkNear(std::abs(viewport->sectionClippingNormal().y()), 1.0, 1e-6);
         checkNear(viewport->sectionClippingOffset(), -15.0, 1e-4);
         QVERIFY(viewport->sectionClippingFlipped());
 
@@ -603,7 +614,10 @@ class WorkflowContractsCM9 : public QObject {
         checkNear(reopenedOtherCol.x(), 0.0, 1e-3);
         checkNear(reopenedOtherCol.y(), 1.0, 1e-3);
 
-        QVERIFY(viewport->sectionClippingActive());
+        QVERIFY2(waitFor([&] { return viewport->sectionClippingActive(); }),
+                 qPrintable(client->state().message));
+        checkNear(std::abs(viewport->sectionClippingNormal().y()), 1.0, 1e-6);
+        checkNear(viewport->sectionClippingOffset(), -15.0, 1e-4);
 
         if (qEnvironmentVariableIsSet("CAD_NATIVE_TEST")) {
             auto directory = qEnvironmentVariable("CAD_ARTIFACT_DIR");

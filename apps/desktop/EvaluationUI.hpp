@@ -101,7 +101,11 @@ class SectionViewDialog : public QDialog {
     QPushButton *applyButton = nullptr;
     QPushButton *newButton = nullptr;
     QPushButton *deleteButton = nullptr;
-    bool initialClippingActive = false;
+    bool initialClippingActive = false, initialFlip = false;
+    QVector3D initialOrigin, initialNormal;
+    double initialOffset = 0.0;
+    void saveCurrent(QListWidgetItem *item);
+    void loadSupportChoices();
     QMap<QString, features::SectionView> loadedSections;
     bool updatingSelection = false;
 

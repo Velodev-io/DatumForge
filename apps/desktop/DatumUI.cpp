@@ -135,8 +135,10 @@ void MainWindow::buildDatumUI() {
             datumRequestedKey != datumKey())
             return;
         acceptedDatums = result.value("datums").toArray();
+        acceptedSections = result.value("section_frames").toArray();
         datumResultKey = datumKey();
         refreshDatumUI();
+        syncViewportSupports();
     });
 }
 void MainWindow::selectDatum(QString id) {

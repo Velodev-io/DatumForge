@@ -6,7 +6,7 @@ using SupportBuild = std::function<kernel::Part(const QCborArray &, const QCborA
 struct SupportResult {
     std::vector<sketch::Sketch> sketches;
     QMap<QString, sketch::SpatialSketch> spatialSketches;
-    QMap<QString, sketch::Frame> planes;
+    QMap<QString, sketch::Frame> planes, sectionFrames;
     QMap<QString, SupportAxis> axes;
     QMap<QString, std::vector<SupportCurve>> derived;
     QCborArray conversions;
@@ -16,12 +16,16 @@ struct SupportResult {
     QCborArray modelingProvenance;
     QCborMap inspection;
     QCborArray datumGeometry() const;
+    QCborArray sectionGeometry() const;
     QCborMap map(qint64 revision = 0) const;
 };
+using IntentEvaluation = std::function<bool(const QString &, SupportResult &, SupportReferences &)>;
 sketch::Frame attachmentFrame(const model::Attachment &attachment,
                               const SupportReferences &references);
 SupportResult evaluateSupports(const model::SupportDefinition &definition,
                                const SupportBuild &build = {},
                                const exchange::Control &control = {}, QString inspectOwner = {},
-                               int inspectSlot = -1, QString inspectPath = {});
+                               int inspectSlot = -1, QString inspectPath = {},
+                               QStringList executionOrder = {},
+                               const IntentEvaluation &evaluateIntent = {});
 } // namespace cad::geometry

@@ -275,6 +275,21 @@ int main(int argc, char **argv) {
         CHECK(parsedPreserved.section_views.size() == 1);
         CHECK(!parsedPreserved.material.isEmpty());
 
+        auto geometry = store.supportGeometry(document);
+        const auto sectionFrames = geometry.value("section_frames").toArray();
+        CHECK(sectionFrames.size() == 1);
+        const auto plane = sectionFrames[0].toMap();
+        near(plane.value("origin").toArray()[2].toDouble(), 0.050, 1e-9);
+        near(plane.value("normal").toArray()[2].toDouble(), 1.0, 1e-9);
+
+        store.execute(
+            command("SetModelSupports", fields({{"model", currentModelMap},
+                                                {"section_views", QCborArray{}},
+                                                {"appearance_overrides", QCborArray{}}})));
+        const auto cleared = store.featureState(document).value("supports").toMap();
+        CHECK(!cleared.contains(QStringLiteral("section_views")));
+        CHECK(!cleared.contains(QStringLiteral("appearance_overrides")));
+
         puts("PASS: cm9 store");
     });
 }

@@ -57,7 +57,8 @@ class MainWindow : public QMainWindow {
     QMap<QString, QString> datumLabels;
     QMap<QString, QMap<QString, bool>> datumVisibility;
     QString datumProject, datumScope, selectedDatum, datumRequestedKey, datumResultKey;
-    QCborArray acceptedDatums;
+    QCborArray acceptedDatums, acceptedSections;
+    friend class SectionViewDialog;
     QByteArray datumProjection;
     bool syncingDatums = false;
     QTreeWidget *tree = nullptr;

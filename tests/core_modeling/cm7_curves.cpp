@@ -89,6 +89,15 @@ void testSpatialEntitiesExactCurves() {
     // Spline check
     auto splineCurve = geometry::spatialEntityCurve(s, s.entity(splineEnt.id));
     CHECK(!splineCurve.curve.IsNull());
+    auto nonuniform = splineEnt;
+    nonuniform.degree = 2;
+    nonuniform.knots = {0, 0, 0, 0.2, 1, 1, 1};
+    auto uniform = nonuniform;
+    uniform.knots.clear();
+    const auto customCurve = geometry::spatialEntityCurve(s, nonuniform);
+    const auto defaultCurve = geometry::spatialEntityCurve(s, uniform);
+    CHECK(customCurve.curve->Value(0.5).Distance(defaultCurve.curve->Value(0.5)) > 1e-3);
+
     gp_Pnt spStart = splineCurve.curve->Value(splineCurve.first);
     near(spStart.X(), 0.0, 1e-4);
     near(spStart.Y(), 0.0, 1e-4);
@@ -202,7 +211,12 @@ void testSketchOnFacesProjection() {
     sof.branch.token = QStringLiteral("branch/0");
     dc.sketchOnFaces = sof;
 
+    const auto branchChoices = geometry::enumerateSketchOnFacesBranches(dc, scene);
+    CHECK(branchChoices.size() > 1);
+    dc.sketchOnFaces->branch.token = branchChoices.front().token;
+    dc.sketchOnFaces->branch.index = int(branchChoices.size()) - 1;
     auto result = geometry::evaluateSketchOnFaces(dc, scene);
+    CHECK(result.front().projectionToken == branchChoices.front().token);
     CHECK(result.size() >= 1);
     const auto &sc = result[0];
     CHECK(!sc.curve.IsNull());
@@ -224,6 +238,8 @@ void testSketchOnFacesProjection() {
     sofNormal.branch.token = QStringLiteral("branch/0");
     dcNormal.sketchOnFaces = sofNormal;
 
+    dcNormal.sketchOnFaces->branch.token =
+        geometry::enumerateSketchOnFacesBranches(dcNormal, scene).front().token;
     auto resNormal = geometry::evaluateSketchOnFaces(dcNormal, scene);
     CHECK(!resNormal.empty());
     gp_Pnt ptNormal = resNormal[0].curve->Value(resNormal[0].first);

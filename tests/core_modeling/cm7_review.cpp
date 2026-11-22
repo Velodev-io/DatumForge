@@ -572,6 +572,12 @@ void testCompositeAndEdgeCasesFixture() {
     childSos.branch = model::BranchSelection{0, "branch/0", false, 0.0, 1.0};
     childDc.sketchOnSketch = childSos;
 
+    geometry::SupportReferences projectionScene;
+    projectionScene.sketches.insert(parentSk1.id, parentSk1);
+    projectionScene.sketches.insert(parentSk2.id, parentSk2);
+    childDc.sketchOnSketch->branch.token =
+        geometry::enumerateSketchOnSketchBranches(childDc, projectionScene).front().token;
+
     model::SupportDefinition supValid;
     supValid.document = document;
     supValid.sketches = sketch::encode({parentSk1, parentSk2});
@@ -598,6 +604,53 @@ void testCompositeAndEdgeCasesFixture() {
     });
 }
 
+void testReferencesToModelingIntentStages() {
+    sketch::Sketch profile, source;
+    profile.rectangle({0, 0}, {.05, .05});
+    source.frame.origin = {0, 0, .02};
+    auto a = source.point({.01, .01}), b = source.point({.04, .01});
+    auto line = source.line(a, b);
+    auto intent = extrude(profile.id);
+    const auto id = intent.value("id").toString();
+    auto definition = base({profile, source});
+    const auto part = geometry::evaluateModeling(definition, {intent}).part;
+    domain::GeometryReference top;
+    for (TopExp_Explorer face(part.bodies.front().shape, TopAbs_FACE); face.More(); face.Next()) {
+        BRepAdaptor_Surface surface(TopoDS::Face(face.Current()));
+        if (surface.GetType() == GeomAbs_Plane &&
+            std::abs(surface.Plane().Location().Z() - 10) < 1e-6) {
+            top = support_fixture::ref(id, "Face");
+            top.topology = geometry::supportToken(face.Current());
+        }
+    }
+    CHECK(!top.topology.isEmpty());
+
+    model::DerivedCurve projection;
+    projection.kind = "SketchOnFaces";
+    auto &projected = projection.sketchOnFaces.emplace();
+    projected.sketch = sketchRef(source.id, line);
+    projected.mode = "NormalToFace";
+    projected.faces.push_back(top);
+    projected.branch.token = "branch/0";
+
+    sketch::SpatialSketch spatial;
+    auto point = spatial.point({.01, .01, .02});
+    sketch::SpatialConstraint onFace;
+    onFace.kind = "OnPlane";
+    onFace.a = point;
+    onFace.plane = top;
+    spatial.constraints.push_back(onFace);
+
+    definition.spatial_sketches = sketch::encodeSpatial({spatial});
+    definition.derived_curves = model::encodeDerivedCurves({projection});
+    definition.sequence();
+    const auto result = geometry::evaluateModeling(definition, {intent});
+    CHECK(result.order.indexOf(id) < result.order.indexOf(projection.id));
+    CHECK(result.derived.value(projection.id).size() == 1);
+    near(result.spatialSketches.value(spatial.id).entity(point).point[2], .01, 1e-7);
+    error("ReferenceMissing", [&] { geometry::evaluateModeling(definition, {}); });
+}
+
 } // namespace
 
 int main(int argc, char **argv) {
@@ -606,5 +659,6 @@ int main(int argc, char **argv) {
         testT8ProjectedPathFixture();
         testChairFramePathFixture();
         testCompositeAndEdgeCasesFixture();
+        testReferencesToModelingIntentStages();
     });
 }

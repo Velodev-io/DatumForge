@@ -11,18 +11,13 @@
 #include <BRep_Tool.hxx>
 #include <GC_MakeArcOfCircle.hxx>
 #include <GC_MakeSegment.hxx>
-#include <GeomAPI_Interpolate.hxx>
 #include <GeomConvert_CompCurveToBSplineCurve.hxx>
 #include <Geom_BSplineCurve.hxx>
 #include <Geom_Circle.hxx>
 #include <Geom_TrimmedCurve.hxx>
 #include <TColStd_Array1OfInteger.hxx>
 #include <TColStd_Array1OfReal.hxx>
-#include <TColStd_HArray1OfBoolean.hxx>
 #include <TColgp_Array1OfPnt.hxx>
-#include <TColgp_Array1OfVec.hxx>
-#include <TColgp_HArray1OfPnt.hxx>
-#include <TColgp_HArray1OfVec.hxx>
 #include <TopExp_Explorer.hxx>
 #include <TopoDS.hxx>
 #include <TopoDS_Compound.hxx>
@@ -73,71 +68,46 @@ SupportCurve spatialEntityCurve(const sketch::SpatialSketch &s, const sketch::Sp
             poles(i + 1) = kernelPoint(s.entity(e.poles[i]).point);
         }
 
-        int degree = e.degree;
-        if (!e.weights.empty()) {
+        std::vector<double> knots;
+        std::vector<int> multiplicities;
+        if (e.knots.empty()) {
+            const int count = nPoles - e.degree + 1;
+            for (int i = 0; i < count; ++i) {
+                knots.push_back(double(i) / (count - 1));
+                multiplicities.push_back(i == 0 || i == count - 1 ? e.degree + 1 : 1);
+            }
+        } else {
+            for (double knot : e.knots) {
+                if (knots.empty() || knot != knots.back()) {
+                    knots.push_back(knot);
+                    multiplicities.push_back(1);
+                } else {
+                    ++multiplicities.back();
+                }
+            }
+        }
+        TColStd_Array1OfReal occtKnots(1, int(knots.size()));
+        TColStd_Array1OfInteger occtMults(1, int(knots.size()));
+        for (size_t i = 0; i < knots.size(); ++i) {
+            occtKnots(int(i) + 1) = knots[i];
+            occtMults(int(i) + 1) = multiplicities[i];
+        }
+        Handle(Geom_BSplineCurve) spline;
+        if (e.weights.empty()) {
+            spline = new Geom_BSplineCurve(poles, occtKnots, occtMults, e.degree);
+        } else {
             TColStd_Array1OfReal weights(1, nPoles);
             for (int i = 0; i < nPoles; ++i)
                 weights(i + 1) = e.weights[size_t(i)];
-            if (!e.knots.empty()) {
-                std::vector<double> uKnots;
-                std::vector<int> uMults;
-                for (double k : e.knots) {
-                    if (uKnots.empty() || std::abs(k - uKnots.back()) > 1e-8) {
-                        uKnots.push_back(k);
-                        uMults.push_back(1);
-                    } else {
-                        uMults.back()++;
-                    }
-                }
-                int nK = int(uKnots.size());
-                TColStd_Array1OfReal occtKnots(1, nK);
-                TColStd_Array1OfInteger occtMults(1, nK);
-                for (int i = 0; i < nK; ++i) {
-                    occtKnots(i + 1) = uKnots[size_t(i)];
-                    occtMults(i + 1) = uMults[size_t(i)];
-                }
-                auto spline = new Geom_BSplineCurve(poles, weights, occtKnots, occtMults, degree);
-                return {e.id,
-                        spline,
-                        spline->FirstParameter(),
-                        spline->LastParameter(),
-                        spline->LastParameter() - spline->FirstParameter(),
-                        false,
-                        {}};
-            } else {
-                int nK = nPoles - degree + 1;
-                TColStd_Array1OfReal occtKnots(1, nK);
-                TColStd_Array1OfInteger occtMults(1, nK);
-                for (int i = 1; i <= nK; ++i) {
-                    occtKnots(i) = double(i - 1) / double(nK - 1);
-                    occtMults(i) = (i == 1 || i == nK) ? (degree + 1) : 1;
-                }
-                auto spline = new Geom_BSplineCurve(poles, weights, occtKnots, occtMults, degree);
-                return {e.id,
-                        spline,
-                        spline->FirstParameter(),
-                        spline->LastParameter(),
-                        spline->LastParameter() - spline->FirstParameter(),
-                        false,
-                        {}};
-            }
-        } else {
-            int nK = nPoles - degree + 1;
-            TColStd_Array1OfReal occtKnots(1, nK);
-            TColStd_Array1OfInteger occtMults(1, nK);
-            for (int i = 1; i <= nK; ++i) {
-                occtKnots(i) = double(i - 1) / double(nK - 1);
-                occtMults(i) = (i == 1 || i == nK) ? (degree + 1) : 1;
-            }
-            auto spline = new Geom_BSplineCurve(poles, occtKnots, occtMults, degree);
-            return {e.id,
-                    spline,
-                    spline->FirstParameter(),
-                    spline->LastParameter(),
-                    spline->LastParameter() - spline->FirstParameter(),
-                    false,
-                    {}};
+            spline = new Geom_BSplineCurve(poles, weights, occtKnots, occtMults, e.degree);
         }
+        return {e.id,
+                spline,
+                spline->FirstParameter(),
+                spline->LastParameter(),
+                spline->LastParameter() - spline->FirstParameter(),
+                false,
+                {}};
     }
     throw domain::Error("InvalidInput",
                         "Unsupported spatial entity kind for exact curve: " + e.kind);
@@ -269,6 +239,7 @@ std::vector<BranchCandidate> enumerateSketchOnSketchBranches(const model::Derive
             gp_Pnt pEnd = curve->Value(l);
             if (pStart.Distance(pEnd) > 1e-6 || std::abs(l - f) > 1e-3) {
                 BranchCandidate cand;
+                cand.token = supportToken(edge);
                 cand.curve = new Geom_TrimmedCurve(curve, f, l);
                 cand.first = f;
                 cand.last = l;
@@ -291,11 +262,27 @@ std::vector<BranchCandidate> enumerateSketchOnSketchBranches(const model::Derive
         return a.startPt.Z() < b.startPt.Z();
     });
 
-    for (size_t i = 0; i < candidates.size(); ++i) {
-        candidates[i].token = QString("branch/%1").arg(i);
-    }
     return candidates;
 }
+
+namespace {
+const BranchCandidate &selectedBranch(const std::vector<BranchCandidate> &candidates,
+                                      const model::BranchSelection &selection) {
+    if (selection.token == QString("branch/%1").arg(selection.index)) {
+        check(selection.index >= 0 && size_t(selection.index) < candidates.size(),
+              "ReferenceMissing", "Legacy projection branch is missing");
+        return candidates[size_t(selection.index)];
+    }
+    const BranchCandidate *match = nullptr;
+    for (const auto &candidate : candidates)
+        if (candidate.token == selection.token) {
+            check(!match, "ReferenceAmbiguous", "Multiple branches have the saved geometry");
+            match = &candidate;
+        }
+    check(match, "ReferenceMissing", "Selected branch changed or is missing; repair explicitly");
+    return *match;
+}
+} // namespace
 
 std::vector<SupportCurve> evaluateSketchOnSketch(const model::DerivedCurve &c,
                                                  const SupportReferences &scene) {
@@ -303,14 +290,8 @@ std::vector<SupportCurve> evaluateSketchOnSketch(const model::DerivedCurve &c,
     const auto &def = *c.sketchOnSketch;
     auto candidates = enumerateSketchOnSketchBranches(c, scene);
 
-    int branchCount = int(candidates.size());
     const auto &sel = def.branch;
-    check(sel.index >= 0 && sel.index < branchCount, "ReferenceAmbiguous",
-          "Select one projection branch");
-    check(candidates[size_t(sel.index)].token == sel.token, "ReferenceMissing",
-          "Selected branch changed or missing; repair explicitly");
-
-    const auto &chosen = candidates[size_t(sel.index)];
+    const auto &chosen = selectedBranch(candidates, sel);
     Handle(Geom_Curve) finalCurve = chosen.curve;
     double f = chosen.first, l = chosen.last;
 
@@ -331,6 +312,7 @@ std::vector<SupportCurve> evaluateSketchOnSketch(const model::DerivedCurve &c,
 
     SupportCurve sc;
     sc.key = c.id;
+    sc.projectionToken = chosen.token;
     sc.curve = finalCurve;
     sc.first = f;
     sc.last = l;
@@ -375,6 +357,7 @@ std::vector<BranchCandidate> enumerateSketchOnFacesBranches(const model::Derived
                 Handle(Geom_Curve) curve = BRep_Tool::Curve(edge, f, l);
                 if (!curve.IsNull() && std::abs(l - f) > 1e-6) {
                     BranchCandidate cand;
+                    cand.token = supportToken(edge);
                     cand.curve = new Geom_TrimmedCurve(curve, f, l);
                     cand.first = f;
                     cand.last = l;
@@ -409,6 +392,7 @@ std::vector<BranchCandidate> enumerateSketchOnFacesBranches(const model::Derived
                     Handle(Geom_Curve) curve = BRep_Tool::Curve(edge, f, l);
                     if (!curve.IsNull() && std::abs(l - f) > 1e-6) {
                         BranchCandidate cand;
+                        cand.token = supportToken(edge);
                         cand.curve = new Geom_TrimmedCurve(curve, f, l);
                         cand.first = f;
                         cand.last = l;
@@ -432,9 +416,6 @@ std::vector<BranchCandidate> enumerateSketchOnFacesBranches(const model::Derived
         return a.startPt.Z() < b.startPt.Z();
     });
 
-    for (size_t i = 0; i < candidates.size(); ++i) {
-        candidates[i].token = QString("branch/%1").arg(i);
-    }
     return candidates;
 }
 
@@ -444,14 +425,8 @@ std::vector<SupportCurve> evaluateSketchOnFaces(const model::DerivedCurve &c,
     const auto &def = *c.sketchOnFaces;
     auto candidates = enumerateSketchOnFacesBranches(c, scene);
 
-    int branchCount = int(candidates.size());
     const auto &sel = def.branch;
-    check(sel.index >= 0 && sel.index < branchCount, "ReferenceAmbiguous",
-          "Select one projection branch");
-    check(candidates[size_t(sel.index)].token == sel.token, "ReferenceMissing",
-          "Selected branch changed or missing; repair explicitly");
-
-    const auto &chosen = candidates[size_t(sel.index)];
+    const auto &chosen = selectedBranch(candidates, sel);
     Handle(Geom_Curve) finalCurve = chosen.curve;
     double f = chosen.first, l = chosen.last;
 
@@ -472,6 +447,7 @@ std::vector<SupportCurve> evaluateSketchOnFaces(const model::DerivedCurve &c,
 
     SupportCurve sc;
     sc.key = c.id;
+    sc.projectionToken = chosen.token;
     sc.curve = finalCurve;
     sc.first = f;
     sc.last = l;
@@ -591,39 +567,41 @@ std::vector<SupportCurve> evaluateHelixSpiral(const model::DerivedCurve &c,
     gp_Dir xDir = ax.XDirection();
     gp_Dir yDir = ax.YDirection();
 
-    int nSegments = std::clamp(int(32 * N), 32, 2048);
-    Handle(TColgp_HArray1OfPnt) pts = new TColgp_HArray1OfPnt(1, nSegments + 1);
-    TColgp_Array1OfVec tgts(1, nSegments + 1);
-    Handle(TColStd_HArray1OfBoolean) flags = new TColStd_HArray1OfBoolean(1, nSegments + 1);
-    flags->Init(Standard_True);
-
-    for (int i = 0; i <= nSegments; ++i) {
-        double t = double(i) / double(nSegments);
-        double theta = theta0 + (cw ? -1.0 : 1.0) * (2.0 * std::numbers::pi * N * t);
-        double z = H * t;
-        double r = (def.mode == "Spiral") ? (R + P * N * t) : (R + z * std::tan(taper));
-        check(r > 0.0, "InvalidGeometry", "Conical helix taper caused radius to collapse to zero");
-
-        gp_Pnt pt = origin.XYZ() + xDir.XYZ() * (r * std::cos(theta)) +
-                    yDir.XYZ() * (r * std::sin(theta)) + axisDir.XYZ() * z;
-        pts->SetValue(i + 1, pt);
-
-        double dr = (def.mode == "Spiral") ? (P * N) : (H * std::tan(taper));
-        double dtheta = (cw ? -1.0 : 1.0) * (2.0 * std::numbers::pi * N);
-        double dx = dr * std::cos(theta) - r * std::sin(theta) * dtheta;
-        double dy = dr * std::sin(theta) + r * std::cos(theta) * dtheta;
-        double dz = H;
-
-        gp_Vec tgt = xDir.XYZ() * dx + yDir.XYZ() * dy + axisDir.XYZ() * dz;
-        tgts(i + 1) = tgt;
+    check(std::isfinite(N) && N > 0 && N <= 1000, "ResourceLimit",
+          "Helix or spiral exceeds the 1000-turn limit");
+    const double omega = (cw ? -1.0 : 1.0) * (2.0 * std::numbers::pi * N);
+    const double radialChange = def.mode == "Spiral" ? P * N : H * std::tan(taper);
+    const double maxRadius = std::max(R, R + radialChange);
+    // Cubic Hermite coordinate error is bounded by the fourth derivative times h^4 / 384.
+    const double fourthDerivative =
+        maxRadius * std::pow(omega, 4) + 4 * std::abs(radialChange * std::pow(omega, 3));
+    constexpr double errorMM = 1e-4;
+    const double required =
+        std::ceil(std::pow(std::numbers::sqrt2 * fourthDerivative / (384 * errorMM), 0.25));
+    check(std::isfinite(required) && required <= 2048, "ResourceLimit",
+          "Helix or spiral exceeds the curve accuracy budget");
+    const int segments = std::max(32, int(required));
+    TColgp_Array1OfPnt poles(1, 3 * segments + 1);
+    TColStd_Array1OfReal knots(1, segments + 1);
+    TColStd_Array1OfInteger multiplicities(1, segments + 1);
+    for (int i = 0; i <= segments; ++i) {
+        const double t = double(i) / segments;
+        const double theta = theta0 + omega * t;
+        const double r = R + radialChange * t;
+        const gp_XYZ radial = xDir.XYZ() * std::cos(theta) + yDir.XYZ() * std::sin(theta);
+        const gp_XYZ tangent = xDir.XYZ() * -std::sin(theta) + yDir.XYZ() * std::cos(theta);
+        const gp_XYZ point = origin.XYZ() + radial * r + axisDir.XYZ() * (H * t);
+        const gp_XYZ handle =
+            (radial * radialChange + tangent * (r * omega) + axisDir.XYZ() * H) / (3.0 * segments);
+        poles(3 * i + 1) = gp_Pnt(point);
+        if (i > 0)
+            poles(3 * i) = gp_Pnt(point - handle);
+        if (i < segments)
+            poles(3 * i + 2) = gp_Pnt(point + handle);
+        knots(i + 1) = t;
+        multiplicities(i + 1) = i == 0 || i == segments ? 4 : 3;
     }
-
-    GeomAPI_Interpolate interp(pts, Standard_False, 1e-7);
-    interp.Load(tgts, flags);
-    interp.Perform();
-    check(interp.IsDone(), "InvalidGeometry", "Helix/spiral interpolation failed");
-
-    Handle(Geom_BSplineCurve) curve = interp.Curve();
+    Handle(Geom_BSplineCurve) curve = new Geom_BSplineCurve(poles, knots, multiplicities, 3);
     SupportCurve sc;
     sc.key = c.id;
     sc.curve = curve;
@@ -664,18 +642,18 @@ QCborMap inspectBranchCandidates(const model::DerivedCurve &c, const SupportRefe
     QCborArray replacements;
     QCborArray descriptions;
     QCborArray candidateTokens;
-    int matchingIndex = -1;
+    int matches = 0;
     for (size_t i = 0; i < candidates.size(); ++i) {
         const auto &cand = candidates[i];
         candidateTokens.append(cand.token);
         if (cand.token == currentBranch.token)
-            matchingIndex = int(i);
+            ++matches;
         model::BranchSelection sel;
         sel.index = int(i);
         sel.token = cand.token;
-        sel.reversed = false;
-        sel.startParam = 0.0;
-        sel.endParam = 1.0;
+        sel.reversed = currentBranch.reversed;
+        sel.startParam = currentBranch.startParam;
+        sel.endParam = currentBranch.endParam;
         replacements.append(sel.map());
         descriptions.append(sketch::fields(
             {{"index", int(i)},
@@ -689,10 +667,10 @@ QCborMap inspectBranchCandidates(const model::DerivedCurve &c, const SupportRefe
     QString state;
     if (candidates.empty())
         state = "Missing";
-    else if (matchingIndex < 0)
-        state = candidates.size() > 1 ? "Ambiguous" : "Missing";
-    else if (candidates.size() > 1 && currentBranch.index != matchingIndex)
+    else if (matches > 1 || (!matches && candidates.size() > 1))
         state = "Ambiguous";
+    else if (!matches)
+        state = "Missing";
     else
         state = "Direct";
 

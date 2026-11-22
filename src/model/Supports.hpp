@@ -43,6 +43,7 @@ struct SupportDefinition {
     QCborArray appearance_overrides, section_views, materials;
     QCborMap material;
     QStringList history;
+    std::vector<evaluation::GraphNode> nodes() const;
     evaluation::Graph graph(bool validateHistory = true) const;
     void sequence();
     QCborMap map() const;

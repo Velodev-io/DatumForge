@@ -109,7 +109,14 @@ int main(int argc, char **argv) {
              {"family", "Simple"},
              {"placement",
               fields({{"face", topFace.map()}, {"sketch", plSk.id}, {"points", QCborArray{pt1}}})},
-             {"sizing", fields({{"mode", "Custom"}, {"diameter", 0.010}, {"depth", 0.020}})},
+             {"sizing", fields({{"mode", "Catalog"},
+                                {"dataset", "ansi_metric"},
+                                {"standard", "B18.3.4M"},
+                                {"type", "SocketButtonHeadCapScrew"},
+                                {"size", "M8"},
+                                {"fit", "Normal"},
+                                {"diameter", 0.010},
+                                {"depth", 0.020}})},
              {"termination", fields({{"mode", "ThroughAll"}, {"depth_reference", "Shoulder"}})}});
         auto holeId = hole.value("id").toString();
 
@@ -152,7 +159,7 @@ int main(int argc, char **argv) {
         {
             storage::Database db(path);
             auto manifest = db.scalar("SELECT manifest FROM project_meta").toString();
-            CHECK(manifest.contains(";cm6-features=1"));
+            CHECK(manifest.endsWith(";cm6-features=1"));
         }
 
         // 3. Roundtrip reopen and verify exact geometry
