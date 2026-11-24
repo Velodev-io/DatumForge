@@ -1,0 +1,44 @@
+{
+  "version": "0.1.0",
+  "build_id": "20261123-arm64-release",
+  "target_os": "macOS",
+  "target_architecture": "arm64",
+  "artifacts": {
+    "app_bundle": {
+      "name": "DatumForge.app",
+      "path": "out/packages/staging/DatumForge.app",
+      "codesign_verified": true
+    },
+    "dmg": {
+      "name": "DatumForge-0.1.0-mac-arm64.dmg",
+      "path": "out/packages/DatumForge-0.1.0-mac-arm64.dmg",
+      "size_bytes": 37529374,
+      "sha256": "48f01ce2544d7ab3bba79e8f8fade746699b7d3080c0501faae024b6290b16e7"
+    },
+    "zip": {
+      "name": "DatumForge-0.1.0-mac-arm64.zip",
+      "path": "out/packages/DatumForge-0.1.0-mac-arm64.zip",
+      "size_bytes": 32695479,
+      "sha256": "b9a2f05c5df2dea70d70a332aa03bdb4af699d766b8ef31917392140bbd717a6"
+    }
+  },
+  "contents": {
+    "product_name": "DatumForge",
+    "application_id": "com.datumforge.desktop",
+    "version": "0.1.0",
+    "build_id": "20261123-arm64-release",
+    "target_os": "macOS",
+    "target_architecture": "arm64",
+    "minimum_system_version": "13.0",
+    "schema_version": 4,
+    "kernel": "OpenCASCADE 7.9.2",
+    "gui_toolkit": "Qt 6.10.0",
+    "solver": "PlaneGCS (FreeCAD 1.0.2 pinned revision)",
+    "storage": "SQLite 3.50.4",
+    "distribution_license": "Proprietary Commercial / Source-Available Evaluation",
+    "code_signing_policy": "ad-hoc (developer ID unprovisioned)",
+    "network_dependency": "none (100% offline, zero external network dependency)",
+    "debug_endpoints": false,
+    "bundled_libraries_count": 36
+  }
+}

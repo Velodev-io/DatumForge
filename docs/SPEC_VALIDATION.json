@@ -1,8 +1,8 @@
 {
   "scope": "Documentation structure only; no product acceptance tests executed",
-  "checked_at_utc": "2026-11-22T20:51:06.698119+00:00",
+  "checked_at_utc": "2026-11-24T20:23:02.390579+00:00",
   "status": "pass",
-  "product_implementation": "Modules 1-10 scoped implementation on the available Mac; CM0-CM9 authorized and incomplete, with selected CM1 primitives/relations, CM2 straight-line editing and CM3 dimension slices; full acceptance remains Blocked",
+  "product_implementation": "Modules 1-12 scoped implementation on the available Mac; CM0-CM9 authorized and incomplete, with selected CM1 primitives/relations, CM2 straight-line editing and CM3 dimension slices; full acceptance remains Blocked",
   "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
   "documents": {
     "README.md": {
@@ -21,9 +21,9 @@
       "words": 4701
     },
     "TECH_SPEC.md": {
-      "sha256": "4d7c0b7097644b07593810ba1fc754317b404675d486cd23e397770e26394591",
+      "sha256": "5767cda6dc8e8b5b9e16986b613c4e11c63b1f5db3e713391b58bdb1d5bfe8d2",
       "lines": 695,
-      "words": 8129
+      "words": 8216
     },
     "STEP_ZERO.md": {
       "sha256": "6167d9864b36d9d5e3d56763b02400d18ac0219859a9c8a21174fe0ed84b9ae2",
@@ -31,9 +31,9 @@
       "words": 1950
     },
     "TRACEABILITY.md": {
-      "sha256": "867d1c38d01774bd344e54665f442430eff23541b8512046046a8c48bcd27735",
-      "lines": 162,
-      "words": 1933
+      "sha256": "f9c9b2f40a0102cb7daa4b3850332a099d6ed8c22b7a81b9b8498a480e0215a6",
+      "lines": 170,
+      "words": 2006
     },
     "REFERENCES.md": {
       "sha256": "9df2410a2d7dec2b39308e4058d1bcecf5ec65794bb693c8455b98230bc7f5bc",
@@ -49,8 +49,8 @@
   "requirements": 56,
   "traceability_rows": 56,
   "modules": 13,
-  "unchecked_engineering_tasks": 30,
-  "completed_engineering_tasks": 129,
+  "unchecked_engineering_tasks": 21,
+  "completed_engineering_tasks": 138,
   "core_modeling_tasks": 50,
   "completed_core_modeling_tasks": 28,
   "errors": []

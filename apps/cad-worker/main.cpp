@@ -369,8 +369,14 @@ class Worker : public QObject {
 int main(int argc, char **argv) {
     qputenv("QT_QPA_PLATFORM", "offscreen");
     QGuiApplication app(argc, argv);
+#ifdef CAD_RELEASE_PACKAGE
+    app.setOrganizationName("DatumForge");
+    app.setOrganizationDomain("com.datumforge.desktop");
+    app.setApplicationName("DatumForge");
+#else
     app.setOrganizationName("local.solidworks-clone.dev");
     app.setApplicationName("Solidworks Clone");
+#endif
     try {
         QFile inherited;
         if (!inherited.open(stdin, QIODevice::ReadOnly))

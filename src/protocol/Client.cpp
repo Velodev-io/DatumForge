@@ -14,8 +14,15 @@ namespace cad {
 Client::Client(QObject *parent, QString workerExecutable, QString recoveryRoot)
     : QObject(parent), privateRoot(QDir::tempPath() + "/cad-worker-XXXXXX"),
       executable(workerExecutable), recoveryDirectory(recoveryRoot) {
-    if (executable.isEmpty())
-        executable = QCoreApplication::applicationDirPath() + "/cad-worker";
+    if (executable.isEmpty()) {
+#ifndef CAD_RELEASE_PACKAGE
+        const auto envWorker = qEnvironmentVariable("CAD_WORKER_EXECUTABLE");
+        if (!envWorker.isEmpty())
+            executable = envWorker;
+        else
+#endif
+            executable = QCoreApplication::applicationDirPath() + "/cad-worker";
+    }
 #ifdef Q_OS_WIN
     if (!executable.endsWith(".exe"))
         executable += ".exe";

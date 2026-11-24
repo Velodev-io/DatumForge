@@ -121,8 +121,10 @@ def main() -> int:
             errors.append("Module 7 requires explicit user authorization and a stop before 8.1a")
         if any(module in authorized for module in (8,9,10)) and (not authorization.get("modules_8_10_authorization",{}).get("quote") or not {8,9,10}.issubset(authorized) or (11 not in authorized and (authorization.get("stop_before_module")!=11 or authorization.get("stop_before_task")!="11.1a"))):
             errors.append("Modules 8-10 require explicit authorization and a stop before Module 11")
-        if 11 in authorized and (not authorization.get("module_11_authorization", {}).get("quote") or authorization.get("stop_before_module") != 12 or authorization.get("stop_before_task") != "12.1a"):
+        if 11 in authorized and (not authorization.get("module_11_authorization", {}).get("quote") or (12 not in authorized and (authorization.get("stop_before_module") != 12 or authorization.get("stop_before_task") != "12.1a"))):
             errors.append("Module 11 requires explicit authorization and a stop before Module 12")
+        if 12 in authorized and (not authorization.get("module_12_authorization", {}).get("quote") or authorization.get("stop_before_module") != 13):
+            errors.append("Module 12 requires explicit authorization and a stop before Module 13")
         if any(int(task.split(".")[0]) not in authorized and task not in permitted_tasks for task in checked):
             errors.append("Checked task is outside the explicitly authorized module/task scope")
     if len(set(task_ids)) != len(task_ids):
@@ -147,7 +149,7 @@ def main() -> int:
         "scope": "Documentation structure only; no product acceptance tests executed",
         "checked_at_utc": datetime.now(timezone.utc).isoformat(),
         "status": "pass" if not errors else "fail",
-        "product_implementation": "Modules 1-10 scoped implementation on the available Mac; CM0-CM9 authorized and incomplete, with selected CM1 primitives/relations, CM2 straight-line editing and CM3 dimension slices; full acceptance remains Blocked",
+        "product_implementation": "Modules 1-12 scoped implementation on the available Mac; CM0-CM9 authorized and incomplete, with selected CM1 primitives/relations, CM2 straight-line editing and CM3 dimension slices; full acceptance remains Blocked",
         "product_acceptance_tests": "Available-Mac subsets are recorded per task; full R1 requirements remain Not run or Blocked",
         "documents": {name: {"sha256": hashlib.sha256(text.encode()).hexdigest(),
                              "lines": len(text.splitlines()), "words": len(text.split())}

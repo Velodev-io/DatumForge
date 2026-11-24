@@ -12,8 +12,8 @@
 | Curated colored/damaged/mixed-unit B4 | Not run; analytic box translator corpus only in Module 0 | Module 6; full import robustness and measured counts pending |
 | B5 associative drawings/PDF | Not run; recipe exists, no drawing implementation | Module 8; paper scale/BOM/associativity acceptance pending |
 | Physical power-loss filesystem behavior | Blocked: process-exit matrix is not power-loss hardware evidence | Modules 10/12; document actual filesystem guarantees |
-| Product identity/license/signing | Blocked: product owner choices/credentials unavailable | OD-01, Module 12; no distribution/publication implied |
-| Installed clean builds/upgrades | Blocked until actual product packages exist | Module 12; source archive is not an installer |
+| Product identity/license/signing | Resolved for Mac arm64 standalone distribution (Module 12); developer ID credentials unprovisioned | OD-01, Module 12 |
+| Installed clean builds/upgrades | Pass for Mac arm64 standalone app/DMG; Windows/Linux unprovisioned packages Blocked | Module 12; packaged DatumForge.app and DMG verified |
 | Other-platform formatter/toolchains | Blocked: only Mac arm64 clang-format 21.1.8 wheel and native compiler verified | Build maintainer; select native tool pins on each host |
 
 The user authorized Modules 1 and 2 on 19 October 2026; available-Mac evidence is in [module-1](../testing/module-1.md) and [module-2](../testing/module-2.md). The cross-platform matrix remains Blocked. Modules 3 and 4 were subsequently explicitly authorized; their available-Mac scope is recorded in [Module 3](../testing/module-3.md) and [Module 4](../testing/module-4.md). Stop before Module 5. Release gates are

@@ -1,0 +1,316 @@
+{
+  "module": "12",
+  "title": "Packaging, upgrades, installed builds, and release",
+  "date_utc": "2026-11-24T20:07:01.672308+00:00",
+  "status": "Pass: Module 12 release packaging and available-Mac installed verification passed; cross-platform and notarization gates remain Blocked",
+  "native_requested": true,
+  "telemetry": {
+    "os": "macOS-27.2.1-arm64-arm-64bit-Mach-O",
+    "arch": "arm64",
+    "system": "Darwin",
+    "release": "27.2.0",
+    "version": "Darwin Kernel Version 27.2.0: Wed Oct 14 23:48:16 PDT 2026; root:xnu-13432.41.4~25/RELEASE_ARM64_T8112",
+    "hardware": {
+      "model": "Mac14,2",
+      "ncpu": 8,
+      "memsize_bytes": 8589934592
+    },
+    "physical_8gb_baseline": true
+  },
+  "steps": [
+    {
+      "name": "configure-release",
+      "command": [
+        "cmake",
+        "-S",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone",
+        "-B",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-release",
+        "-G",
+        "Ninja",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_PREFIX_PATH=/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install",
+        "-DCMAKE_MAKE_PROGRAM=/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/bin/ninja",
+        "-DBUILD_TESTING=OFF",
+        "-DCAD_GEOMETRY_SPIKES=OFF",
+        "-DCAD_RELEASE_PACKAGE=ON",
+        "-DCMAKE_OSX_DEPLOYMENT_TARGET=13.0",
+        "-DCMAKE_OSX_SYSROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX26.5.sdk"
+      ],
+      "exit_code": 0,
+      "seconds": 4.6898404589999245
+    },
+    {
+      "name": "build-release",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/bin/ninja",
+        "-C",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-release",
+        "cad-desktop"
+      ],
+      "exit_code": 0,
+      "seconds": 61.202820457999906
+    },
+    {
+      "name": "build-tests",
+      "command": [
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/.deps/install/bin/ninja",
+        "-C",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-benchmark",
+        "module12_contracts",
+        "cad-desktop"
+      ],
+      "exit_code": 0,
+      "seconds": 12.69827254200004
+    },
+    {
+      "name": "package-distribution",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/package_release.py",
+        "--build-dir",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-release",
+        "--output-dir",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages"
+      ],
+      "exit_code": 0,
+      "seconds": 14.442620000000034
+    },
+    {
+      "name": "shipped-sandbox-launch-offscreen",
+      "command": [
+        "sandbox-exec",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/MacOS/DatumForge"
+      ],
+      "exit_code": 0,
+      "seconds": 2.13075816699984,
+      "details": {
+        "ui_pid": 4533,
+        "worker_pids": [
+          4541
+        ],
+        "settle_seconds": 2.126,
+        "dylib_isolation_clean": true
+      }
+    },
+    {
+      "name": "shipped-sandbox-launch-native",
+      "command": [
+        "sandbox-exec",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/MacOS/DatumForge"
+      ],
+      "exit_code": 0,
+      "seconds": 2.386048542000026,
+      "details": {
+        "ui_pid": 4548,
+        "worker_pids": [
+          4558
+        ],
+        "settle_seconds": 2.379,
+        "dylib_isolation_clean": true
+      }
+    },
+    {
+      "name": "installed-smoke-contracts",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-p",
+        "(version 1) (allow default) (deny network* (remote ip \"*:*\")) (deny network* (local ip \"*:*\"))",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-benchmark/module12_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 3.139287374999867
+    },
+    {
+      "name": "installed-smoke-contracts-native",
+      "command": [
+        "/usr/bin/sandbox-exec",
+        "-p",
+        "(version 1) (allow default) (deny network* (remote ip \"*:*\")) (deny network* (local ip \"*:*\"))",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-benchmark/module12_contracts"
+      ],
+      "exit_code": 0,
+      "seconds": 9.337235041999975
+    },
+    {
+      "name": "ctest-full",
+      "command": [
+        "ctest",
+        "--test-dir",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-benchmark",
+        "--output-on-failure"
+      ],
+      "exit_code": 0,
+      "seconds": 510.6964349579998
+    },
+    {
+      "name": "format",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/format_sources.py"
+      ],
+      "exit_code": 0,
+      "seconds": 2.1009247920001144
+    },
+    {
+      "name": "static-analysis",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/static_analysis.py",
+        "build/macos-benchmark/compile_commands.json"
+      ],
+      "exit_code": 0,
+      "seconds": 195.80221966600038
+    },
+    {
+      "name": "ownership-benchmark",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-benchmark",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-12/runs/20261124T200701Z/architecture-benchmark.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.18627008299972658
+    },
+    {
+      "name": "ownership-release",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_architecture.py",
+        "build/macos-release",
+        "--output",
+        "/Users/binova/Documents/Projects/Suru/Solidworks Clone/docs/testing/artifacts/module-12/runs/20261124T200701Z/architecture-release.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.13251362499977404
+    },
+    {
+      "name": "research-isolation",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "tools/check_isolation.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.29562229199973444
+    },
+    {
+      "name": "check-specs",
+      "command": [
+        "/opt/homebrew/opt/python@3.14/bin/python3.14",
+        "docs/scripts/check_specs.py",
+        "--write-report"
+      ],
+      "exit_code": 0,
+      "seconds": 0.13234579199979635
+    }
+  ],
+  "artifacts": {},
+  "acceptance": {
+    "T-40": "Blocked (macOS arm64 standalone release bundle/DMG verified offline without dev tools; Windows/Linux/macOS x86_64/13.0 minimum unprovisioned)",
+    "T-55": "Blocked (macOS arm64 bundle notices/manifest, zero test endpoints, and project preservation verified; Apple Developer ID notarization & Windows/Linux unprovisioned)",
+    "AC-01_to_AC-07": "Pass on packaged macOS arm64 worker + native/offscreen client; full cross-platform release matrix Blocked",
+    "Windows_Linux_matrix": "Blocked: native Windows and Linux platform packaging not provisioned",
+    "Apple_Developer_ID_notarization": "Blocked: external signing credentials unprovisioned; ad-hoc codesign verified"
+  },
+  "package_manifest": {
+    "version": "0.1.0",
+    "build_id": "20261123-arm64-release",
+    "target_os": "macOS",
+    "target_architecture": "arm64",
+    "artifacts": {
+      "app_bundle": {
+        "name": "DatumForge.app",
+        "path": "out/packages/staging/DatumForge.app",
+        "codesign_verified": true
+      },
+      "dmg": {
+        "name": "DatumForge-0.1.0-mac-arm64.dmg",
+        "path": "out/packages/DatumForge-0.1.0-mac-arm64.dmg",
+        "size_bytes": 37529374,
+        "sha256": "48f01ce2544d7ab3bba79e8f8fade746699b7d3080c0501faae024b6290b16e7"
+      },
+      "zip": {
+        "name": "DatumForge-0.1.0-mac-arm64.zip",
+        "path": "out/packages/DatumForge-0.1.0-mac-arm64.zip",
+        "size_bytes": 32695479,
+        "sha256": "b9a2f05c5df2dea70d70a332aa03bdb4af699d766b8ef31917392140bbd717a6"
+      }
+    },
+    "contents": {
+      "product_name": "DatumForge",
+      "application_id": "com.datumforge.desktop",
+      "version": "0.1.0",
+      "build_id": "20261123-arm64-release",
+      "target_os": "macOS",
+      "target_architecture": "arm64",
+      "minimum_system_version": "13.0",
+      "schema_version": 4,
+      "kernel": "OpenCASCADE 7.9.2",
+      "gui_toolkit": "Qt 6.10.0",
+      "solver": "PlaneGCS (FreeCAD 1.0.2 pinned revision)",
+      "storage": "SQLite 3.50.4",
+      "distribution_license": "Proprietary Commercial / Source-Available Evaluation",
+      "code_signing_policy": "ad-hoc (developer ID unprovisioned)",
+      "network_dependency": "none (100% offline, zero external network dependency)",
+      "debug_endpoints": false,
+      "bundled_libraries_count": 36
+    }
+  },
+  "inspection": {
+    "codesign_exit_code": 0,
+    "codesign_valid": true,
+    "codesign_output": "--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/platforms/libqminimal.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/platforms/libqminimal.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/imageformats/libqjpeg.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/imageformats/libqjpeg.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/imageformats/libqgif.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/styles/libqmacstyle.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/imageformats/libqgif.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/styles/libqmacstyle.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/platforms/libqoffscreen.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/platforms/libqoffscreen.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/platforms/libqcocoa.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/platforms/libqcocoa.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/imageformats/libqico.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/PlugIns/imageformats/libqico.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/MacOS/cad-worker\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKDE.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/MacOS/cad-worker\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKDE.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libQt6OpenGL.6.10.0.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libQt6OpenGL.6.10.0.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKG3d.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKG3d.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKXSBase.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKXSBase.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKBool.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKV3d.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKV3d.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKBool.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKMesh.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKMesh.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKG2d.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKG2d.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKMath.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKMath.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKShHealing.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKShHealing.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKDESTEP.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKDESTEP.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libQt6OpenGLWidgets.6.10.0.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libQt6OpenGLWidgets.6.10.0.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKLCAF.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKLCAF.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKernel.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKernel.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKDEIGES.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKDEIGES.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKCAF.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKCAF.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKBO.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKBO.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libQt6Widgets.6.10.0.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libQt6Widgets.6.10.0.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKService.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKService.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKFeat.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKFeat.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKTopAlgo.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKTopAlgo.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKFillet.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKFillet.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKHLR.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKHLR.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKVCAF.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKVCAF.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKDESTL.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKDESTL.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libcad_planegcs.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libcad_planegcs.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libQt6Network.6.10.0.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libQt6Network.6.10.0.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKBRep.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKBRep.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKCDF.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKCDF.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKGeomAlgo.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKGeomAlgo.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKGeomBase.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKGeomBase.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libQt6Gui.6.10.0.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libQt6Gui.6.10.0.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKXCAF.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKXCAF.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libQt6Core.6.10.0.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libQt6Core.6.10.0.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKPrim.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKPrim.7.9.2.dylib\n--prepared:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKOffset.7.9.2.dylib\n--validated:/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/Frameworks/libTKOffset.7.9.2.dylib\n/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app: valid on disk\n/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app: satisfies its Designated Requirement",
+    "dmg_codesign_valid": true,
+    "binary_arch": "/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/MacOS/DatumForge: Mach-O 64-bit executable arm64",
+    "is_arm64": true,
+    "no_deps_or_build_paths": true,
+    "has_frameworks_rpath": true,
+    "planegcs_dynamically_linked": true,
+    "planegcs_bundled": true,
+    "has_manifest": true,
+    "has_notices": true,
+    "has_licenses": true,
+    "manifest_data": {
+      "product_name": "DatumForge",
+      "application_id": "com.datumforge.desktop",
+      "version": "0.1.0",
+      "build_id": "20261123-arm64-release",
+      "target_os": "macOS",
+      "target_architecture": "arm64",
+      "minimum_system_version": "13.0",
+      "schema_version": 4,
+      "kernel": "OpenCASCADE 7.9.2",
+      "gui_toolkit": "Qt 6.10.0",
+      "solver": "PlaneGCS (FreeCAD 1.0.2 pinned revision)",
+      "storage": "SQLite 3.50.4",
+      "distribution_license": "Proprietary Commercial / Source-Available Evaluation",
+      "code_signing_policy": "ad-hoc (developer ID unprovisioned)",
+      "network_dependency": "none (100% offline, zero external network dependency)",
+      "debug_endpoints": false,
+      "bundled_libraries_count": 36
+    },
+    "forbidden_test_strings_found": [],
+    "no_test_backdoors": true,
+    "version_output": "DatumForge version 0.1.0 (Darwin arm64 release)\nApplication ID: com.datumforge.desktop\nBuild ID: release-20261123-arm64\nSchema version: 4\nKernel: OpenCASCADE 7.9.2, Qt 6.10.0, PlaneGCS, SQLite 3.50.4",
+    "version_exit_code": 0,
+    "help_output": "Usage: DatumForge [options]\nOptions:\n  --version, -v        Print version manifest and build information\n  --help, -h           Print this help message",
+    "help_exit_code": 0
+  },
+  "dmg_inspection": {
+    "files": [
+      "NOTICES.txt",
+      "DatumForge.app",
+      "Applications",
+      "README.txt",
+      "LICENSE.txt"
+    ],
+    "has_app": true,
+    "has_applications_link": true,
+    "has_readme": true,
+    "has_notices": true,
+    "has_license": true,
+    "mount_and_detach_clean": true
+  }
+}

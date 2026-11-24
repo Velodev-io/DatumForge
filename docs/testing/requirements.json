@@ -615,9 +615,19 @@
   },
   "FR-040": {
     "test": "T-40",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-12.md",
+      "docs/decisions/module-12-packaging.md",
+      "docs/user-guide/INSTALLATION.md",
+      "docs/user-guide/RELEASE_CHECKLIST.md",
+      "docs/testing/artifacts/module-12/runs/20261124T200701Z/verification.json",
+      "tools/package_release.py",
+      "tools/verify_module12.py",
+      "tests/module12/contracts.cpp"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Native macOS arm64 standalone application bundle (DatumForge.app, 88 MB) and disk image (DatumForge-0.1.0-mac-arm64.dmg) packaged with 36 bundled runtime libraries (Qt 6.10.0, OCCT 7.9.2, dynamic libcad_planegcs.dylib), ad-hoc codesigned, verified in clean isolated environment without dev tools or DYLD_* under sandbox-exec network denial (both offscreen and native Cocoa), plus AC-01–AC-07 smoke suite on shipped cad-worker. Full multi-platform T-40 remains Blocked pending Windows x86_64, Linux, macOS x86_64/13.0, and Apple Developer ID notarization gates."
   },
   "NFR-001": {
     "test": "T-41",
@@ -828,9 +838,19 @@
   },
   "NFR-015": {
     "test": "T-55",
-    "status": "Not run",
-    "evidence": [],
-    "owner": "See TRACEABILITY.md"
+    "status": "Blocked",
+    "evidence": [
+      "docs/testing/module-12.md",
+      "docs/decisions/module-12-packaging.md",
+      "docs/user-guide/INSTALLATION.md",
+      "docs/user-guide/RELEASE_CHECKLIST.md",
+      "docs/testing/artifacts/module-12/runs/20261124T200701Z/verification.json",
+      "tools/package_release.py",
+      "tools/verify_module12.py",
+      "tests/module12/contracts.cpp"
+    ],
+    "owner": "See TRACEABILITY.md",
+    "reason": "Native macOS arm64 release package bundles complete third-party license notices (NOTICES.txt, LICENSES/), version manifest (version-manifest.json), dynamic libcad_planegcs.dylib, excludes test-only endpoints (--benchmark-launch, --benchmark-settle, --recovery-root, CAD_WORKER_EXECUTABLE, transport_test, deliberate_failure), and preserves user projects on migration/uninstall. Full multi-platform T-55 remains Blocked pending Windows/Linux packages and Apple Developer ID notarization."
   },
   "NFR-016": {
     "test": "T-56",

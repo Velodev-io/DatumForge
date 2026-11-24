@@ -47,7 +47,7 @@
 | FR-037 | 1, 13 | 9 | T-37 | Blocked |
 | FR-038 | 5, 13 | 9 | T-38 | Blocked |
 | FR-039 | 9 | 10 | T-39 | Blocked |
-| FR-040 | 13, 15 | 12 | T-40 | Not run |
+| FR-040 | 13, 15 | 12 | T-40 | Blocked |
 | NFR-001 | 12 | 11 | T-41 | Blocked |
 | NFR-002 | 12 | 11 | T-42 | Blocked |
 | NFR-003 | 12 | 11 | T-43 | Blocked |
@@ -62,7 +62,7 @@
 | NFR-012 | 6, 8, 15 | 11 | T-52 | Blocked |
 | NFR-013 | 2, 5 | 1 | T-53 | Blocked |
 | NFR-014 | 13 | 9 | T-54 | Blocked |
-| NFR-015 | 13, 15 | 12 | T-55 | Not run |
+| NFR-015 | 13, 15 | 12 | T-55 | Blocked |
 | NFR-016 | 4, 9, 12, 13 | 10 | T-56 | Blocked |
 
 UI staging for FR-001, FR-003–FR-005: Module 1 supplies the native shell; [TECH_SPEC 4.0](TECH_SPEC.md#40--align-the-native-modeling-workspace-before-adding-solid-tools) explicitly owns command tabs, the left PropertyManager and the modeling layout before solid-feature controls. Module 9 completes cross-document consistency and accessibility. Primary owners above remain unchanged. The authorized [4.0 workspace implementation](testing/module-4.md) and [Module 3 input repair](testing/module-3-input-repair.md) supply available-Mac subset evidence, while full requirements remain Blocked for platform/device/accessibility/later-engine acceptance.
@@ -121,7 +121,15 @@ save 1.21s, reopen 4.36s, 100-cycle undo/redo cache plateau), and B3 assembly (a
 frame time 1.40 ms, coarse reopen 1.33s, footprint 162.8 MiB) pass on the reference host.
 B4 translator subset, B5 drawing/PDF, and B6 29-case SIGKILL fault matrix pass. Full product
 rows remain Blocked for untested Windows/Linux, assistive-technology, and installed package
-acceptance. Deferred 6.1b/6.4c/7.4c statuses are preserved. Stop before **Module 12 / 12.1a**.
+acceptance. Deferred 6.1b/6.4c/7.4c statuses are preserved.
+
+Module 12 was explicitly authorized on 23 November 2026. [Module 12 evidence](testing/module-12.md)
+adds T-40 / T-55 and AC-01–AC-07 standalone distribution packaging and isolated installed-build
+verification on macOS arm64 (`DatumForge.app`, `DatumForge-0.1.0-mac-arm64.dmg`, 36 bundled runtime
+dylibs including Qt 6.10.0, OCCT 7.9.2, and dynamic `libcad_planegcs.dylib`; ad-hoc signed, zero
+test endpoints or env overrides, clean sandbox-exec launch and AC-01–AC-07 smoke suite verified).
+Full `FR-040` / `NFR-015` rows remain **Blocked** pending Windows, Linux, macOS x86_64/13.0, and
+Apple Developer ID notarization gates. Deferred 6.1b/6.4c/7.4c statuses remain preserved.
 
 FR-012 / T-12 and FR-005 interaction follow-up: [Centerpoint Arc repair](testing/module-3-centerpoint-arc.md) covers pointer radius/start/end creation, local preview/cancel, unit conversion and semantic undo/save/reopen. Prior full native/device/resource gates remain unchanged.
 

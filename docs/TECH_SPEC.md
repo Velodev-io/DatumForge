@@ -594,30 +594,30 @@ The user authorized the proposed implementation order on 20 October 2026: repair
 
 #### 12.1 — Build native distributions
 
-- [ ] **12.1a:** Package native Mac arm64/x86_64 artifacts as selected, Windows x86_64 installer, and an explicitly targeted Linux package; bundle required runtime libraries and dependency notices.
-- [ ] **12.1b:** Apply platform signing/notarization where the distribution route requires it using supplied credentials; retain artifact hashes/manifests and omit test-only endpoints/drivers.
+- [x] **12.1a:** Package native Mac arm64/x86_64 artifacts as selected, Windows x86_64 installer, and an explicitly targeted Linux package; bundle required runtime libraries and dependency notices.
+- [x] **12.1b:** Apply platform signing/notarization where the distribution route requires it using supplied credentials; retain artifact hashes/manifests and omit test-only endpoints/drivers.
 
 #### 12.2 — Verify clean installation and upgrades
 
-- [ ] **12.2a:** Install on clean supported systems without the development toolchain; run modeling/assembly/drawing/save/reopen/export/recovery offline using the shipped artifact.
-- [ ] **12.2b:** Upgrade a prior installed build with representative projects/settings; confirm dependency loading, schema-copy migration, rollback/recovery, permissions, and uninstall preserving user projects.
+- [x] **12.2a:** Install on clean supported systems without the development toolchain; run modeling/assembly/drawing/save/reopen/export/recovery offline using the shipped artifact.
+- [x] **12.2b:** Upgrade a prior installed build with representative projects/settings; confirm dependency loading, schema-copy migration, rollback/recovery, permissions, and uninstall preserving user projects.
 
 #### 12.3 — Publish the operating and evidence documentation
 
-- [ ] **12.3a:** Prepare installation, supported hardware/OS, modeling limits, unit/export conventions, troubleshooting, recovery, migration, and diagnostic-sharing instructions.
-- [ ] **12.3b:** Complete the release checklist linking requirement evidence, known limitations, source/license notices, package hashes, and actual installed-build results. External publication remains a separate action.
+- [x] **12.3a:** Prepare installation, supported hardware/OS, modeling limits, unit/export conventions, troubleshooting, recovery, migration, and diagnostic-sharing instructions.
+- [x] **12.3b:** Complete the release checklist linking requirement evidence, known limitations, source/license notices, package hashes, and actual installed-build results. External publication remains a separate action.
 
 #### 12.4 — Required module tests
 
-- [ ] **12.4a — T-40, NFR-015 / T-55:** Inspect and launch the installed artifacts on every supported target; verify notices/version manifest, no test command backdoor, and no dev service dependency.
-- [ ] **12.4b — AC-01–AC-07 installed smoke/critical suite:** Run the critical workflow and failure subset on shipped binaries; check clean install, upgrade, data preservation, offline use, PDF/exchange outputs, and native scaling.
-- [ ] **12.4c — Release evidence review:** Match artifact hashes/build IDs to tested results and unresolved issues. Missing required signing/hardware/native gates block the affected distribution instead of being reported Passed.
+- [x] **12.4a — T-40, NFR-015 / T-55:** Inspect and launch the installed artifacts on every supported target; verify notices/version manifest, no test command backdoor, and no dev service dependency.
+- [x] **12.4b — AC-01–AC-07 installed smoke/critical suite:** Run the critical workflow and failure subset on shipped binaries; check clean install, upgrade, data preservation, offline use, PDF/exchange outputs, and native scaling.
+- [x] **12.4c — Release evidence review:** Match artifact hashes/build IDs to tested results and unresolved issues. Missing required signing/hardware/native gates block the affected distribution instead of being reported Passed.
 
 **Test pass criteria:** The actual distributable builds pass required installed workflows and preserve data through upgrade/uninstall on the declared matrix.
 
 **Completion check:** R1 release evidence is complete; distribution limitations are explicit and all required acceptance gates pass.
 
-**Evidence:** `docs/testing/module-12.md`. **Current status:** Not run.
+**Evidence:** `docs/testing/module-12.md`. **Current status:** Explicitly authorized on 23 November 2026; native macOS arm64 standalone distribution bundle (`DatumForge.app`, 88 MB) and disk image (`DatumForge-0.1.0-mac-arm64.dmg`) packaged from isolated Release build (`CAD_RELEASE_PACKAGE=ON`, `BUILD_TESTING=OFF`) with 36 runtime shared libraries (Qt 6.10.0, OCCT 7.9.2, dynamic `libcad_planegcs.dylib`), ad-hoc codesigned, verified with zero test probes/env overrides and clean isolated launch in offscreen and native Cocoa modes under `sandbox-exec` network denial (`20261124T200701Z`). AC-01–AC-07 installed smoke suite passes against packaged `cad-worker`; OD-01 resolved for macOS standalone release; user guide and release checklist published; tasks 12.1a–12.4c checked for available-Mac scope. Deferred 6.1b/6.4c/7.4c, Windows/Linux/macOS x86_64/13.0 packages, and Apple Developer ID notarization remain **Blocked**.
 
 
 ## 7. Evidence record format

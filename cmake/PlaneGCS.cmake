@@ -9,10 +9,17 @@ file(WRITE "${GCS_ROOT}/SketcherGlobal.h" "#pragma once\n#define SketcherExport\
 file(WRITE "${GCS_ROOT}/FCConfig.h" "#pragma once\n")
 file(WRITE "${GCS_ROOT}/boost_graph_adjacency_list.hpp" "#pragma once\n#include <boost/graph/adjacency_list.hpp>\n")
 configure_file("${CMAKE_SOURCE_DIR}/tests/support/Console.h" "${GCS_ROOT}/Base/Console.h" COPYONLY)
-add_library(cad_planegcs STATIC
+set(CAD_PLANEGCS_TYPE STATIC)
+if(CAD_RELEASE_PACKAGE)
+  set(CAD_PLANEGCS_TYPE SHARED)
+endif()
+add_library(cad_planegcs ${CAD_PLANEGCS_TYPE}
   "${GCS_ROOT}/src/planegcs/GCS.cpp" "${GCS_ROOT}/src/planegcs/Constraints.cpp"
   "${GCS_ROOT}/src/planegcs/Geo.cpp" "${GCS_ROOT}/src/planegcs/SubSystem.cpp"
   "${GCS_ROOT}/src/planegcs/qp_eq.cpp")
+if(CAD_RELEASE_PACKAGE AND APPLE)
+  set_target_properties(cad_planegcs PROPERTIES MACOSX_RPATH ON INSTALL_NAME_DIR "@rpath")
+endif()
 target_include_directories(cad_planegcs SYSTEM PUBLIC "${GCS_ROOT}/src/planegcs" "${DEPS}/boost" PRIVATE "${GCS_ROOT}")
 target_link_libraries(cad_planegcs PUBLIC cad_eigen)
 if(NOT MSVC)

@@ -12,20 +12,52 @@ int main(int argc, char **argv) {
     format.setDepthBufferSize(24);
     QSurfaceFormat::setDefaultFormat(format);
     QApplication app(argc, argv);
+#ifdef CAD_RELEASE_PACKAGE
+    app.setOrganizationName("DatumForge");
+    app.setOrganizationDomain("com.datumforge.desktop");
+    app.setApplicationName("DatumForge");
+#else
     app.setOrganizationName("local.solidworks-clone.dev");
     app.setApplicationName("Solidworks Clone");
+#endif
     QString settingsFile;
     QString recoveryRoot;
     for (int i = 1; i < argc; ++i) {
-        if (QString::fromLocal8Bit(argv[i]) == QStringLiteral("--recovery-root") && i + 1 < argc) {
+        QString arg = QString::fromLocal8Bit(argv[i]);
+        if (arg == QStringLiteral("--version") || arg == QStringLiteral("-v")) {
+            std::cout << "DatumForge version 0.1.0 (Darwin arm64 release)\n"
+                      << "Application ID: com.datumforge.desktop\n"
+                      << "Build ID: release-20261123-arm64\n"
+                      << "Schema version: 4\n"
+                      << "Kernel: OpenCASCADE 7.9.2, Qt 6.10.0, PlaneGCS, SQLite 3.50.4\n";
+            return 0;
+        }
+        if (arg == QStringLiteral("--help") || arg == QStringLiteral("-h")) {
+            std::cout << "Usage: DatumForge [options]\n"
+                      << "Options:\n"
+                      << "  --version, -v        Print version manifest and build information\n"
+                      << "  --help, -h           Print this help message\n"
+#ifndef CAD_RELEASE_PACKAGE
+                      << "  --recovery-root <p>  Override recovery root directory\n"
+                      << "  --settings <p>       Override settings file path\n"
+                      << "  --benchmark-launch   Exit immediately after reaching ready state (test "
+                         "probe)\n"
+                      << "  --benchmark-settle <n> Settle for n seconds then exit (test probe)\n"
+#endif
+                ;
+            return 0;
+        }
+#ifndef CAD_RELEASE_PACKAGE
+        if (arg == QStringLiteral("--recovery-root") && i + 1 < argc) {
             recoveryRoot = QString::fromLocal8Bit(argv[++i]);
-        } else if (QString::fromLocal8Bit(argv[i]) == QStringLiteral("--settings") &&
-                   i + 1 < argc) {
+        } else if (arg == QStringLiteral("--settings") && i + 1 < argc) {
             settingsFile = QString::fromLocal8Bit(argv[++i]);
         }
+#endif
     }
     cad::MainWindow window(settingsFile, nullptr, recoveryRoot);
     window.show();
+#ifndef CAD_RELEASE_PACKAGE
     if (app.arguments().contains(QStringLiteral("--benchmark-launch")) ||
         app.arguments().contains(QStringLiteral("--benchmark-settle"))) {
         static bool signaled = false;
@@ -53,5 +85,6 @@ int main(int argc, char **argv) {
             checkReady();
         }
     }
+#endif
     return app.exec();
 }

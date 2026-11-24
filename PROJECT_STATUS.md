@@ -3,11 +3,11 @@
 Living checklist maintained across sessions.
 Format: `[ ]` not started, `[/]` in progress, `[x]` done, `[~]` deferred/blocked.
 
-Last Updated: 2026-11-22
+Last Updated: 2026-11-25
 
 ---
 
-## 1. Core Modules (M0–M10 Completed on Mac; M11–M12 Out of Scope)
+## 1. Core Modules (M0–M12 Completed on Mac)
 
 - [x] **Module 0: Step Zero & Feasibility** — Research baseline, toolchains, isolated feasibility experiments.
 - [x] **Module 1: Architecture & IPC** — Native desktop shell (Qt 6) + dedicated CAD worker process (OCCT/PlaneGCS) over local IPC.
@@ -24,8 +24,8 @@ Last Updated: 2026-11-22
 - [x] **Module 8: 2D Drawings** — Standard orthographic views, section views, detail projections, dimension display.
 - [x] **Module 9: Unified Interaction & Polish** — Cross-document shortcut consistency, UI styling, high-DPI handling.
 - [x] **Module 10: Hardening & Fault Tolerance** — Headless validation suite, corrupted-file recovery, IPC disconnect resilience.
-- [x] **Module 11: Real 8 GB Performance & Cross-Module Acceptance** — Available-Mac physical 8 GB reference benchmarks (B0–B3) and cross-module acceptance reconciliation verified. B0 cold p95 1.58s / warm p95 0.76s, B0 idle settle 215.3 MiB steady / 228.5 MiB peak (≤350 MiB), B1 ack p95 0.24 ms / preview p95 39.0 ms / edit p95 75.4 ms / volume error 0.0, B2 save p95 1.26s / reopen p95 4.40s / 2303 FPS / 100-cycle cache plateau (0 bytes after trim), B3 coarse reopen p95 1.51s / 719.7 FPS / 167.3 MiB steady footprint. B4 translator subset, B5 drawing/PDF, B6 29/29 fault cases pass. Deferred 6.1b/6.4c/7.4c remain Blocked; Windows/Linux/assistive-technology Blocked. Stop before Module 12.
-- [ ] **Module 12: Production Packaging & Release** *(Not started)*.
+- [x] **Module 11: Real 8 GB Performance & Cross-Module Acceptance** — Available-Mac physical 8 GB reference benchmarks (B0–B3) and cross-module acceptance reconciliation verified. B0 cold p95 1.58s / warm p95 0.76s, B0 idle settle 215.3 MiB steady / 228.5 MiB peak (≤350 MiB), B1 ack p95 0.24 ms / preview p95 39.0 ms / edit p95 75.4 ms / volume error 0.0, B2 save p95 1.26s / reopen p95 4.40s / 2303 FPS / 100-cycle cache plateau (0 bytes after trim), B3 coarse reopen p95 1.51s / 719.7 FPS / 167.3 MiB steady footprint. B4 translator subset, B5 drawing/PDF, B6 29/29 fault cases pass. Deferred 6.1b/6.4c/7.4c remain Blocked; Windows/Linux/assistive-technology Blocked.
+- [x] **Module 12: Production Packaging & Release** — Native macOS arm64 standalone distribution bundle (`DatumForge.app`, 88 MB) and disk image (`DatumForge-0.1.0-mac-arm64.dmg`) packaged from `CAD_RELEASE_PACKAGE=ON` build with 36 runtime shared libraries (Qt 6.10.0, OCCT 7.9.2, dynamic `libcad_planegcs.dylib`), ad-hoc codesigned, verified with zero test probes/overrides in clean isolated environment under macOS `sandbox-exec` network denial (offscreen + native Cocoa). AC-01–AC-07 installed smoke suite passes on shipped `cad-worker`; OD-01 resolved; installation guide and release checklist published. Deferred 6.1b/6.4c/7.4c, Windows/Linux/macOS x86_64/13.0 packages, and Apple Developer ID notarization remain **Blocked**.
 
 ---
 

@@ -21,7 +21,11 @@ namespace cad {
 MainWindow::MainWindow(QString settingsFile, QWidget *parent, QString recoveryRoot)
     : QMainWindow(parent) {
     setObjectName("cadMainWindow");
+#ifdef CAD_RELEASE_PACKAGE
+    setWindowTitle("DatumForge");
+#else
     setWindowTitle("CAD Workbench");
+#endif
     resize(1280, 800);
     settings = settingsFile.isEmpty()
                    ? std::make_unique<QSettings>()

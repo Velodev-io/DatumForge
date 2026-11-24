@@ -1,0 +1,16 @@
+********* Start testing of Module12Contracts *********
+Config: Using QtTest library 6.10.0, Qt 6.10.0 (arm64-little_endian-lp64 shared (dynamic) release build; by Apple LLVM 21.0.0 (clang-2100.1.1.101)), macos 27.2.1
+[Module12Contracts] Initializing packaging and installed smoke test suite
+PASS   : Module12Contracts::initTestCase()
+  [AC-01] Part modeling verified: mesh indices = 1872
+  [AC-06] Neutral CAD exchange (STEP/STL) export verified (47976 / 36084 bytes)
+  [AC-02] Undo/Redo history verified across revisions
+  [AC-03] Project persistence save and reopen verified (225280 bytes)
+  [AC-04] Assembly multi-instance modeling + Distance mate (100 mm, freedom 5) verified (2 instances)
+  [AC-05] 2-sheet Drawing (Front + Top views) and vector PDF verified (9860 bytes)
+  [AC-06] Neutral CAD exchange re-import verified (mesh indices = 1872)
+  [AC-07] Prior-manifest migration copy, failed-migration preservation, worker crash recovery (rev 2), and user project preservation verified
+PASS   : Module12Contracts::installedSmokeSuite()
+PASS   : Module12Contracts::cleanupTestCase()
+Totals: 3 passed, 0 failed, 0 skipped, 0 blacklisted, 9097ms
+********* Finished testing of Module12Contracts *********

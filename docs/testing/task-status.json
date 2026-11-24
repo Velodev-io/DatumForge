@@ -1591,6 +1591,88 @@
       "docs/testing/artifacts/module-11/runs/20261122T201846.672150Z/verification.json"
     ]
   },
+  "12.1a": {
+    "status": "Pass",
+    "scope": "Packaged native macOS arm64 standalone distribution bundle (DatumForge.app), disk image (DatumForge-0.1.0-mac-arm64.dmg), and zip archive bundling Qt 6.10.0, OCCT 7.9.2, and dynamic PlaneGCS (libcad_planegcs.dylib) runtime libraries, qt.conf, version-manifest.json, NOTICES.txt and LICENSES/. Windows and Linux packages remain Blocked pending target runners.",
+    "evidence": [
+      "docs/testing/module-12.md",
+      "docs/decisions/module-12-packaging.md",
+      "docs/testing/artifacts/module-12/verification.json",
+      "tools/package_release.py",
+      "tools/verify_module12.py"
+    ]
+  },
+  "12.1b": {
+    "status": "Pass",
+    "scope": "Resolved OD-01 product release identity (DatumForge, com.datumforge.desktop, 0.1.0), distribution license (evaluation/commercial compliant with LGPL-3.0, LGPL-2.1+Exception, MPL-2.0, BSL-1.0, Public Domain), and code signing policy (ad-hoc signing with external Apple Developer ID / notarization credentials gap explicitly documented; debug backdoors stripped).",
+    "evidence": [
+      "docs/testing/module-12.md",
+      "docs/decisions/distribution.md",
+      "docs/decisions/module-12-packaging.md",
+      "apps/desktop/main.cpp",
+      "tools/package_release.py"
+    ]
+  },
+  "12.2a": {
+    "status": "Pass",
+    "scope": "Clean isolated environment launch verified without development toolchain or .deps in PATH/DYLD; offline modeling, assembly, drawing, save, reopen, exchange, and recovery using shipped standalone application binary under macOS sandbox-exec network denial verified with zero external network dependency.",
+    "evidence": [
+      "docs/testing/module-12.md",
+      "tools/verify_module12.py",
+      "tests/module12/contracts.cpp"
+    ]
+  },
+  "12.2b": {
+    "status": "Pass",
+    "scope": "Upgrade behavior verified over prior installed build/database (ProjectStore::migrationCopy), confirming library loading, schema migration, recovery, and user project preservation on uninstall.",
+    "evidence": [
+      "docs/testing/module-12.md",
+      "tests/module12/contracts.cpp"
+    ]
+  },
+  "12.3a": {
+    "status": "Pass",
+    "scope": "Authored comprehensive user-facing installation, supported OS/hardware matrix, modeling conventions, recovery, and troubleshooting guide.",
+    "evidence": [
+      "docs/user-guide/INSTALLATION.md"
+    ]
+  },
+  "12.3b": {
+    "status": "Pass",
+    "scope": "Completed release checklist linking requirement evidence, known limitations, source/license notices, and package SHA-256 hashes.",
+    "evidence": [
+      "docs/user-guide/RELEASE_CHECKLIST.md"
+    ]
+  },
+  "12.4a": {
+    "status": "Pass",
+    "scope": "T-40, NFR-015 / T-55: Inspected and launched installed artifact; verified license notices, version manifest, absence of debug backdoors, zero external network dependency under sandbox-exec denial.",
+    "evidence": [
+      "docs/testing/module-12.md",
+      "docs/decisions/module-12-packaging.md",
+      "tools/verify_module12.py"
+    ]
+  },
+  "12.4b": {
+    "status": "Pass",
+    "scope": "AC-01 through AC-07 installed smoke suite executed on packaged application worker binary (DatumForge.app/Contents/MacOS/cad-worker) in isolated network-denied sandbox (offscreen + native Cocoa), covering Part modeling, Undo/Redo durability, Persistence save/reopen, Assemblies + 100 mm Distance mate, 2-sheet Drawing (Front + Top) and vector PDF, Neutral CAD exchange (STEP/STL), and Prior-manifest migration copy/worker crash recovery/uninstall preservation. Cross-platform installed matrices remain Blocked.",
+    "evidence": [
+      "docs/testing/module-12.md",
+      "docs/testing/artifacts/module-12/verification.json",
+      "tests/module12/contracts.cpp",
+      "tools/verify_module12.py"
+    ]
+  },
+  "12.4c": {
+    "status": "Pass",
+    "scope": "Release evidence review completed in docs/testing/module-12.md, preserving deferred Blocked gates 6.1b, 6.4c, 7.4c, and unrun platform/notarization matrices.",
+    "evidence": [
+      "docs/testing/module-12.md",
+      "docs/TRACEABILITY.md",
+      "docs/testing/requirements.json",
+      "docs/testing/task-status.json"
+    ]
+  },
   "CM0.a": {
     "status": "In progress",
     "scope": "257 scheduled rows with page/task/fixture mappings; operand/restriction reconciliation still open. Restored original PDFs verified against original hashes on 2026-10-23; source-unavailability blocker cleared.",

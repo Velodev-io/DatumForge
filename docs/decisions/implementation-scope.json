@@ -11,7 +11,8 @@
     8,
     9,
     10,
-    11
+    11,
+    12
   ],
   "module_1_authorization": {
     "source": "Direct user instruction in this chat",
@@ -19,7 +20,7 @@
     "quote": "proceed with module 1",
     "scope": "Implement and verify feasible Module 1 work on the verified Mac. Preserve native macOS/Windows/Linux architecture and physical 8 GB baseline. Unavailable checks remain Blocked."
   },
-  "stop_before_module": 12,
+  "stop_before_module": 13,
   "module_0_gaps": "Cross-platform, renderer longevity, physical-power-loss, release identity/licensing, accessibility and full workload budgets remain open. STEP_ZERO explicitly permits independent work on verified targets.",
   "module_2_authorization": {
     "source": "Direct user instruction in this chat",
@@ -50,7 +51,7 @@
       "4.0c"
     ]
   },
-  "stop_before_task": "12.1a",
+  "stop_before_task": "13.1a",
   "module_4_authorization": {
     "source": "Direct user instruction in this chat",
     "date": "2026-10-20",
@@ -86,6 +87,12 @@
     "source": "Direct user instruction in this chat",
     "quote": "Measure DatumForge against the existing SRS budgets on the physical 8 GB reference Mac, fix bottlenecks the measurements identify, and reconcile the release acceptance register. Start from reviewed commit 0ea8e4d, which passed 120 enabled macOS tests and 15 native workflow runs. Use the technical specification as the source of truth and correct the conflicting Module 11 title in the project status during execution.",
     "scope": "Measure real 8 GB performance against SRS budgets, profile and optimize demonstrated bottlenecks, reconcile AC-01-AC-07 against T-41-T-49, T-52-T-54, T-56. Preserve 6.1b/6.4c/7.4c Blocked; stop before Module 12."
+  },
+  "module_12_authorization": {
+    "date": "2026-11-23",
+    "source": "Direct user instruction in this chat",
+    "quote": "okk so resolve these /boost",
+    "scope": "Resolve OD-01 product identity (DatumForge, com.datumforge.desktop, commercial/evaluation distribution compliant with LGPL-3.0/LGPL-2.1/MPL/BSL/Public Domain) and signing policy (ad-hoc codesign). Package native macOS arm64 standalone distribution bundle and dmg with bundled shared libraries (OCCT 7.9.2, Qt 6.10.0, PlaneGCS, SQLite), notices, and version manifest. Verify isolated clean launch, offline modeling, assembly, drawing, save/reopen, exchange, and recovery without dev tools in PATH/DYLD. Windows and Linux native distribution remain documented as Blocked per project rules."
   },
   "module_3_centerpoint_arc_authorization": {
     "date": "2026-10-22",

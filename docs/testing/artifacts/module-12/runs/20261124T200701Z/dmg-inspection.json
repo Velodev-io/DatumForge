@@ -1,0 +1,15 @@
+{
+  "files": [
+    "NOTICES.txt",
+    "DatumForge.app",
+    "Applications",
+    "README.txt",
+    "LICENSE.txt"
+  ],
+  "has_app": true,
+  "has_applications_link": true,
+  "has_readme": true,
+  "has_notices": true,
+  "has_license": true,
+  "mount_and_detach_clean": true
+}

@@ -1,0 +1,6 @@
+command=['/usr/bin/sandbox-exec', '-p', '(version 1) (allow default) (deny network* (remote ip "*:*")) (deny network* (local ip "*:*"))', '/Users/binova/Documents/Projects/Suru/Solidworks Clone/out/packages/staging/DatumForge.app/Contents/MacOS/DatumForge']
+ui_pid=4548
+worker_pids=[4558]
+lsof_exit=0
+stdout:
+

@@ -32,7 +32,7 @@ Owners are roles, not invented people. A later-module owner does not close a gat
 
 | ID | Owner | Status / blocking scope | Evidence needed |
 |---|---|---|---|
-| OD-01 | Product owner | Unresolved; release identity/license blocked | Final name, application ID, product license and distribution route |
+| OD-01 | Product owner | Resolved for Mac arm64 standalone release (Module 12); external publication/notarization blocked | Final name: DatumForge, app ID: com.datumforge.desktop, commercial/evaluation license compliant with LGPL/MPL/BSL/Public Domain, ad-hoc signing |
 | OD-02 | Build maintainer | Mac compatibility verified; other platform pins/validation Blocked | Immutable sources/hashes, compatibility builds and native OS matrix |
 | OD-03 | Sketch maintainer | Initial extraction/diagnostics feasible; Module 3 production integration pending | Pinned PlaneGCS extraction, residual/drag/conflict corpus and notices |
 | OD-04 | Renderer maintainer | Unresolved; Mac viewport gated | Native GPU/picking/scale/resize/driver results, future Metal route |

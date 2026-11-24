@@ -11,8 +11,8 @@ a = p.parse_args()
 coverage = json.loads((ROOT/'docs/research/core-modeling-coverage.json').read_text())
 auth = json.loads((ROOT/'docs/decisions/implementation-scope.json').read_text())
 assert auth['core_modeling_authorization']['milestones'] == [f'CM{i}' for i in range(10)]
-assert (auth['stop_before_module'], auth['stop_before_task']) in [(11, '11.1a'), (12, '12.1a')]
-assert max(auth['authorized_modules']) in (10, 11)
+assert (auth['stop_before_module'], auth['stop_before_task']) in [(11, '11.1a'), (12, '12.1a'), (13, '13.1a')]
+assert max(auth['authorized_modules']) in (10, 11, 12)
 seen = set()
 for row in coverage['entries']:
     assert row['id'] not in seen, row['id']

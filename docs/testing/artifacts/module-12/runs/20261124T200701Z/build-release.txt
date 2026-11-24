@@ -1,0 +1,118 @@
+ninja: Entering directory `/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-release'
+[1/116] Building CXX object CMakeFiles/cad_model_graph.dir/src/domain/GeometryReference.cpp.o
+[2/116] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/EditHistory.cpp.o
+[3/116] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Dimensions.cpp.o
+[4/116] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Curves.cpp.o
+[5/116] Building CXX object CMakeFiles/cad_model_graph.dir/src/evaluation/Graph.cpp.o
+[6/116] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Editing.cpp.o
+[7/116] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Slots.cpp.o
+[8/116] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Constructions.cpp.o
+[9/116] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/SpatialSketch.cpp.o
+[10/116] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Sketch.cpp.o
+[11/116] Building CXX object CMakeFiles/cad_sketch_model.dir/src/sketch/Dependencies.cpp.o
+[12/116] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/Model.cpp.o
+[13/116] Linking CXX static library libcad_model_graph.a
+[14/116] Building CXX object CMakeFiles/cad_expressions.dir/src/domain/Expressions.cpp.o
+[15/116] Linking CXX static library libcad_sketch_model.a
+[16/116] Linking CXX static library libcad_expressions.a
+[17/116] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/ModelingRecords.cpp.o
+[18/116] Building CXX object CMakeFiles/cad_protocol.dir/src/protocol/Mesh.cpp.o
+[19/116] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/Catalogs.cpp.o
+[20/116] Building CXX object CMakeFiles/cad_support_model.dir/src/model/DatumGeometry.cpp.o
+[21/116] Building CXX object CMakeFiles/cad_curve_geometry.dir/src/geometry/occt/SketchCurve.cpp.o
+[22/116] Building CXX object CMakeFiles/cad_feature_model.dir/src/features/ModelingIntent.cpp.o
+[23/116] Building CXX object CMakeFiles/cad_support_model.dir/src/model/SupportEditing.cpp.o
+[24/116] Linking CXX static library libcad_feature_model.a
+[25/116] Linking CXX static library libcad_protocol.a
+[26/116] Linking CXX static library libcad_curve_geometry.a
+[27/116] Building CXX object CMakeFiles/cad_evaluation_plan.dir/src/evaluation/Plan.cpp.o
+[28/116] Linking CXX static library libcad_evaluation_plan.a
+[29/116] Building CXX object CMakeFiles/cad_support_model.dir/src/model/DerivedCurve.cpp.o
+[30/116] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[31/116] Building CXX object CMakeFiles/cad_assembly_model.dir/src/assembly/Model.cpp.o
+[32/116] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[33/116] Linking CXX static library libcad_assembly_model.a
+[34/116] Building CXX object CMakeFiles/cad_support_model.dir/src/model/Supports.cpp.o
+[35/116] Linking CXX static library libcad_support_model.a
+[36/116] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[37/116] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/References.cpp.o
+[38/116] Building CXX object CMakeFiles/cad_exchange.dir/src/exchange/Exchange.cpp.o
+[39/116] Automatic MOC for target cad_client
+[40/116] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/qp_eq.cpp.o
+[41/116] Building CXX object CMakeFiles/cad_assembly_geometry.dir/src/assembly/Geometry.cpp.o
+[42/116] Building CXX object CMakeFiles/cad_drawing_model.dir/src/drawing/Model.cpp.o
+[43/116] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/LineEditing.cpp.o
+[44/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Datums.cpp.o
+[45/116] Building CXX object CMakeFiles/cad_assembly_solver.dir/src/assembly/Solver.cpp.o
+[46/116] Linking CXX static library libcad_assembly_solver.a
+[47/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Convert.cpp.o
+[48/116] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[49/116] Linking CXX shared library libcad_planegcs.dylib
+[50/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/SupportReferences.cpp.o
+[51/116] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[52/116] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/SpatialSolver.cpp.o
+[53/116] Linking CXX static library libcad_sketch_solver.a
+[54/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingProfiles.cpp.o
+[55/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/SpatialCurve.cpp.o
+[56/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingExtents.cpp.o
+[57/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Treatments.cpp.o
+[58/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Supports.cpp.o
+[59/116] Building CXX object CMakeFiles/cad_part.dir/src/geometry/occt/Part.cpp.o
+[60/116] Linking CXX static library libcad_exchange.a
+[61/116] Linking CXX static library libcad_part.a
+[62/116] Linking CXX static library libcad_drawing_model.a
+[63/116] Linking CXX static library libcad_assembly_geometry.a
+[64/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Holes.cpp.o
+[65/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/ModelingFeatures.cpp.o
+[66/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Repetition.cpp.o
+[67/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Ribs.cpp.o
+[68/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Shell.cpp.o
+[69/116] Building CXX object CMakeFiles/cad_drawing_paint.dir/src/drawing/Paint.cpp.o
+[70/116] Building CXX object CMakeFiles/cad_diagnostics.dir/src/diagnostics/Journal.cpp.o
+[71/116] Building CXX object CMakeFiles/cad_client.dir/cad_client_autogen/mocs_compilation.cpp.o
+[72/116] Linking CXX static library libcad_drawing_paint.a
+[73/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Sweep.cpp.o
+[74/116] Linking CXX static library libcad_diagnostics.a
+[75/116] Building CXX object CMakeFiles/cad_support_geometry.dir/src/geometry/occt/Loft.cpp.o
+[76/116] Linking CXX static library libcad_support_geometry.a
+[77/116] Building CXX object CMakeFiles/cad_drawing_geometry.dir/src/drawing/Geometry.cpp.o
+[78/116] Linking CXX static library libcad_drawing_geometry.a
+[79/116] Building CXX object CMakeFiles/cad_geometry.dir/src/geometry/occt/ReferenceScene.cpp.o
+[80/116] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Database.cpp.o
+[81/116] Linking CXX static library libcad_geometry.a
+[82/116] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/Files.cpp.o
+[83/116] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[84/116] Linking CXX static library libcad_client.a
+[85/116] Automatic MOC for target cad_desktop_ui
+[86/116] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[87/116] Building C object CMakeFiles/cad_sqlite.dir/.deps/src/sqlite/sqlite3.c.o
+[88/116] Linking C static library libcad_sqlite.a
+[89/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchEditingUI.cpp.o
+[90/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/Viewport.cpp.o
+[91/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/cad_desktop_ui_autogen/mocs_compilation.cpp.o
+[92/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/WorkspaceChrome.cpp.o
+[93/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[94/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ProjectUI.cpp.o
+[95/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DimensionUI.cpp.o
+[96/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeatureUI.cpp.o
+[97/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchProposalUI.cpp.o
+[98/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/src/render/SketchView.cpp.o
+[99/116] Building CXX object CMakeFiles/cad_persistence.dir/src/persistence/ProjectStore.cpp.o
+[100/116] Linking CXX static library libcad_persistence.a
+[101/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SketchPanel.cpp.o
+[102/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DatumUI.cpp.o
+[103/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/EvaluationUI.cpp.o
+[104/116] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[105/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/HistoryPanel.cpp.o
+[106/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyUI.cpp.o
+[107/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/SupportEditor.cpp.o
+[108/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/ExchangeUI.cpp.o
+[109/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/AssemblyPanel.cpp.o
+[110/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DrawingUI.cpp.o
+[111/116] Building CXX object CMakeFiles/cad-desktop.dir/apps/desktop/main.cpp.o
+[112/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/DrawingPanel.cpp.o
+[113/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/InteractionUI.cpp.o
+[114/116] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/FeaturePanel.cpp.o
+[115/116] Linking CXX static library libcad_desktop_ui.a
+[116/116] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop

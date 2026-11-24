@@ -1,0 +1,27 @@
+ninja: Entering directory `/Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-benchmark'
+[0/1] Re-running CMake...
+-- Configuring done (0.4s)
+-- Generating done (0.3s)
+-- Build files have been written to: /Users/binova/Documents/Projects/Suru/Solidworks Clone/build/macos-benchmark
+[1/24] Automatic MOC for target cad_client
+[2/23] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Geo.cpp.o
+[3/23] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/Constraints.cpp.o
+[4/23] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/SubSystem.cpp.o
+[5/23] Building CXX object CMakeFiles/cad_client.dir/src/protocol/Client.cpp.o
+[6/23] Linking CXX static library libcad_client.a
+[7/23] Automatic MOC for target cad_desktop_ui
+[8/22] Building CXX object CMakeFiles/cad-worker.dir/apps/cad-worker/main.cpp.o
+[9/22] Building CXX object CMakeFiles/cad_sketch_solver.dir/src/sketch/Solver.cpp.o
+[10/22] Building CXX object CMakeFiles/cad_desktop_ui.dir/apps/desktop/MainWindow.cpp.o
+[11/22] Linking CXX static library libcad_desktop_ui.a
+[12/22] Building CXX object CMakeFiles/cad_planegcs.dir/planegcs/src/planegcs/GCS.cpp.o
+[13/22] Linking CXX static library libcad_planegcs.a
+[14/22] Linking CXX static library libcad_sketch_solver.a
+[15/22] Linking CXX executable cad-worker
+ld: warning: ignoring duplicate libraries: 'libcad_part.a'
+[16/22] Automatic MOC for target module12_contracts
+[17/21] Building CXX object CMakeFiles/cad-desktop.dir/apps/desktop/main.cpp.o
+[18/21] Linking CXX executable cad-desktop.app/Contents/MacOS/cad-desktop
+[19/21] Building CXX object CMakeFiles/module12_contracts.dir/tests/module12/contracts.cpp.o
+[20/21] Linking CXX executable module12_contracts
+ld: warning: ignoring duplicate libraries: 'libcad_support_geometry.a'

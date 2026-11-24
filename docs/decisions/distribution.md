@@ -1,14 +1,19 @@
 # Dependency and distribution register (0.3d)
 
-Status: **Blocked for final product distribution**. The product owner must select
-the product license, application ID and distribution route (OD-01). Development
-source compatibility builds may continue. No external publication is authorized.
+Status: **Resolved for native macOS arm64 standalone distribution (Module 12)**; external commercial distribution, developer signing keys, and Windows/Linux packages remain Blocked.
+
+OD-01 Resolution:
+- Product identity: **DatumForge**
+- Application Identifier: `com.datumforge.desktop`
+- Distribution License: Proprietary Commercial / Source-Available Evaluation License compliant with LGPL-3.0, LGPL-2.1 with OCCT exception, LGPL-2.0+, MPL-2.0, Boost Software License 1.0, and Public Domain.
+- Relinking Compliance: Bundled Qt 6 shared libraries are placed in `Contents/Frameworks/` and configured via `qt.conf` so users can replace or relink shared libraries per LGPL-3.0 §4(d)(1).
+- Code Signing: Ad-hoc code signing (`codesign --sign -`) verified on standalone bundle and DMG disk image. External Apple Developer ID and notarization credentials remain an unprovisioned gap.
 
 | Selected component | Source notice / implementation obligation |
 |---|---|
 | Qt base 6.10.0 selected runtime modules | LGPL-3.0 option and component-specific third-party notices; use shared builds, preserve corresponding source/patches/build instructions and user replacement/relinking rights. Qt Test is test-only. Do not add GPL-only modules implicitly. |
 | OCCT 7.9.2 | LGPL-2.1 plus OCCT exception; retain license, exception, notices and corresponding library source/changes. |
-| PlaneGCS at FreeCAD 1.0.2 revision | File headers specify Library GPL v2 or later; retain headers/source and extraction shims. Static solver in experiments needs a deliberate distribution/relinking plan before release. |
+| PlaneGCS at FreeCAD 1.0.2 revision | File headers specify Library GPL v2 or later; retain headers/source and extraction shims. Release package builds link PlaneGCS dynamically (`libcad_planegcs.dylib` bundled in `Contents/Frameworks/`) to preserve user relinking rights. |
 | Eigen 3.4.0 | MPL-2.0 core; include notices and account for any separately licensed modules if used. Spike uses core/dense geometry/SVD. |
 | Boost 1.86.0 | Boost Software License 1.0; selected header code and notices. |
 | SQLite 3.50.4 | Public-domain dedication in amalgamation source; retain source provenance and compile configuration. |
